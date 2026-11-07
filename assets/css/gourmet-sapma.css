@@ -136,3 +136,7 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 .vt-metin{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}.vt-metin b{font-size:14.5px;line-height:1.25}.vt-metin small{font-size:12.5px;color:var(--muted,#6f6f6f)}
 .vt-sutun .see-all{margin-top:auto;align-self:flex-start}
 @media(max-width:980px){.vt-izgara{grid-template-columns:minmax(0,1fr)}.gm-vitrin{padding:40px 0}}
+
+/* Rezervasyon penceresi: boş hata kutusu ve üst görsel */
+#rsvClientError[hidden]{display:none}
+.rsv-av{background:url("../o/medya/252-400.webp") center/cover no-repeat}

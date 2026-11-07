@@ -6,7 +6,7 @@
   for (var i = 1; i <= 14; i++) {
     var d = new Date(); d.setDate(d.getDate() + i);
     var iso = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-    t[iso] = { label: gun[d.getDay()] + ' ' + d.getDate(), day_number: d.getDate(), state: d.getDay() === 1 ? 'closed' : 'open', slots: saatler.map(function (s) { return { time: s, state: 'open', label: s }; }) };
+    t[iso] = { label: gun[d.getDay()] + ' ' + d.getDate(), day_number: d.getDate(), state: d.getDay() === 1 ? 'closed' : 'open', slots: saatler.map(function (s) { return { time: s, state: 'open', label: s, bookable: true }; }) };
   }
   el.textContent = JSON.stringify(t);
 })();
