@@ -10,6 +10,8 @@ const g = await p.evaluate(() => { kok(document.body); const b = document.body; 
   boot.provider = { ad: 'Prototip örneği', surucu: 'ornek', demo: true, yetenek: { ucretliYol: false, feribot: false, trafik: false, routeMatrix: false, calismaSaati: false } };
   const ucGez = (o) => { Object.keys(o).forEach((k) => { if (typeof o[k] === 'string') o[k] = o[k].replace(/^https:\/\/dadagourmet\.com\/dada-route\//, '{{kok}}dada-route/api/').replace(/^https:\/\/dadagourmet\.com\/giris[^"]*$/, '{{kok}}giris/').replace(/^https:\/\/dadagourmet\.com\/kayit$/, '{{kok}}kayit/').replace(/^https:\/\/dadagourmet\.com\/mekanlar$/, '{{kok}}mekanlar/').replace(/^https:\/\/dadagourmet\.com\//, '{{kok}}'); }); };
   ucGez(boot.uclar); boot.auth = false;
+  // Canlı sınır 3 (`config/dadaroute.php`); şarj, yemek, alışveriş, ibadet ve dinlenme durağı buna sığmaz. Google'ın 9 ara durak sınırına çekildi
+  boot.maxAraDurak = 9;
   h.setAttribute('data-boot', JSON.stringify(boot)); h.removeAttribute('data-csrf');
   h.setAttribute('data-login-url', '{{kok}}giris/'); h.setAttribute('data-register-url', '{{kok}}kayit/'); h.setAttribute('data-suggest-url', '{{kok}}mekanlar/');
   // Katman paneli ve il kartları: `rota-katman.js` doldurur, kabı şarj bloğunun yanında

@@ -158,3 +158,9 @@ body:not(.is-auth) .rev-form{display:none}
 .yg-kl-bos{margin:0;font-size:12.5px;color:var(--muted,#6f6f6f)}
 body.gastronomi-kapali .yg-vpin,body.gastronomi-kapali .yg-vcluster,body.gastronomi-kapali .yg-dash{display:none!important}
 .yg-il-kart[hidden]{display:none}
+
+/* Ne Yenir ve Ne Alınır çipi tek tıkla ara durak olur */
+button.yg-il-cip{display:inline-flex;align-items:center;gap:5px;font-family:inherit;cursor:pointer}.yg-il-cip i{font-size:10px}
+.yg-il-cip[aria-pressed="true"]{background:var(--marka);border-color:var(--marka);color:#fff}.yg-il-cip[aria-pressed="true"] i::before{content:"\f00c"}
+.yg-kl-durak{flex:none;padding:6px 10px;border:1px solid var(--marka-cizgi);border-radius:var(--yuvarlak-sm);background:var(--paper);color:var(--marka-koyu);font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.yg-kl-durak[aria-pressed="true"]{background:var(--marka-yikama)}

@@ -1704,6 +1704,7 @@
     geoToast('“'+m.ad+'” durak olarak eklendi','fa-map-pin');
     track('place_added_to_route',{tip:'durak'});
   }
+  window.dgRotaApi={durakYap:mekaniDurakYap,zincir:function(){return noktaZinciri();},duraklar:filled};
   var detailStopEl=document.getElementById('ygDetailStop');
   if(detailStopEl)detailStopEl.addEventListener('click',function(){ if(detailVenue)mekaniDurakYap(detailVenue); });
 

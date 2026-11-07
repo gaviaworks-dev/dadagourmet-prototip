@@ -38,18 +38,23 @@
       yakin.forEach(function (x) { grup[k].addLayer(pin(k, x.n)); });
       adet += yakin.length;
       html += '<div class="yg-kl-grup"><b>' + baslik[k] + ' <span>' + yakin.length + '</span></b>' + (yakin.length ? yakin.map(function (x) {
-        return '<div class="yg-kl-satir"><span class="yg-il-ikon"><i class="fa-solid ' + ikon[k] + '" aria-hidden="true"></i></span><span class="yg-kl-metin"><b>' + kac(x.n.ad) + '</b><small>' + kac(x.n.alt) + ' · yoldan ' + Math.max(1, Math.round(x.d)) + ' km</small></span></div>';
+        return '<div class="yg-kl-satir"><span class="yg-il-ikon"><i class="fa-solid ' + ikon[k] + '" aria-hidden="true"></i></span><span class="yg-kl-metin"><b>' + kac(x.n.ad) + '</b><small>' + kac(x.n.alt) + ' · yoldan ' + Math.max(1, Math.round(x.d)) + ' km</small></span><button type="button" class="yg-kl-durak" data-durak="' + kac(x.n.ad) + '" data-lat="' + x.n.lat + '" data-lng="' + x.n.lng + '" aria-pressed="false">Durak Yap</button></div>';
       }).join('') : '<p class="yg-kl-bos">Bu güzergâhta örnek nokta yok.</p>') + '</div>';
     });
     satirlar.innerHTML = html; liste.hidden = !Object.keys(grup).some(function (k) { return acik[k]; });
-    $('#ygKatmanSayi').textContent = adet;
+    $('#ygKatmanSayi').textContent = adet; durakBoya();
+  };
+  /* Rotadaki durakla eşleşen çip ve düğme basılı görünür */
+  var durakBoya = function () {
+    var api = window.dgRotaApi, adlar = api ? api.duraklar().map(function (d) { return d.ad; }) : [];
+    $$('[data-durak]').forEach(function (b) { var on = adlar.indexOf(b.dataset.durak) >= 0; b.setAttribute('aria-pressed', on ? 'true' : 'false'); if (b.classList.contains('yg-kl-durak')) { b.textContent = on ? 'Durakta' : 'Durak Yap'; } });
   };
 
-  var bolum = function (sinif, ik, ad, l) {
-    return '<div class="yg-il-bolum ' + sinif + '"><div class="yg-il-bolum-bas"><span class="yg-il-ikon"><i class="fa-solid ' + ik + '" aria-hidden="true"></i></span><b>' + ad + '</b></div><div class="yg-il-cipler">' + l.map(function (x) { return '<span class="yg-il-cip">' + kac(x) + '</span>'; }).join('') + '</div></div>';
+  var bolum = function (sinif, ik, ad, l, il, dLat, dLng) {
+    return '<div class="yg-il-bolum ' + sinif + '"><div class="yg-il-bolum-bas"><span class="yg-il-ikon"><i class="fa-solid ' + ik + '" aria-hidden="true"></i></span><b>' + ad + '</b></div><div class="yg-il-cipler">' + l.map(function (x) { return '<button type="button" class="yg-il-cip" data-durak="' + kac(x + ' · ' + il.il) + '" data-lat="' + (il.lat + dLat) + '" data-lng="' + (il.lng + dLng) + '" aria-pressed="false" title="Ara durak olarak ekle"><i class="fa-solid fa-plus" aria-hidden="true"></i> ' + kac(x) + '</button>'; }).join('') + '</div></div>';
   };
   $('#ygIlKart').innerHTML = R.iller.map(function (i) {
-    return '<article class="yg-il-kart" data-il="' + kac(i.il) + '"><header class="yg-il-kart-bas"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><h4>' + kac(i.il) + '</h4></header>' + bolum('yg-il-yenir', 'fa-bowl-food', 'Ne Yenir?', i.neYenir) + bolum('yg-il-alinir', 'fa-basket-shopping', 'Ne Alınır?', i.neAlinir) + '</article>';
+    return '<article class="yg-il-kart" data-il="' + kac(i.il) + '"><header class="yg-il-kart-bas"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><h4>' + kac(i.il) + '</h4></header>' + bolum('yg-il-yenir', 'fa-bowl-food', 'Ne Yenir?', i.neYenir, i, 0.06, -0.1) + bolum('yg-il-alinir', 'fa-basket-shopping', 'Ne Alınır?', i.neAlinir, i, -0.06, 0.1) + '</article>';
   }).join('');
   /* Noktalar örnek olduğu için canlı Open Charge Map atfı yerine örnek kaynağı yazılır */
   var atif = $('.yg-sarj-credit'); if (atif) { atif.textContent = 'Kaynak: prototip örneği. Canlıda Open Charge Map verisi kullanılır.'; }
@@ -66,7 +71,10 @@
   window.addEventListener('dg-rota', function () { setTimeout(hepsi, 0); });
   new MutationObserver(hepsi).observe(ozet, { attributes: true, attributeFilter: ['hidden'] }); hepsi();
 
+  new MutationObserver(durakBoya).observe($('#ygStopList'), { childList: true, subtree: true });
   document.addEventListener('click', function (e) {
+    var d = e.target.closest('[data-durak]');
+    if (d && window.dgRotaApi) { if (d.getAttribute('aria-pressed') !== 'true') { window.dgRotaApi.durakYap({ ad: d.dataset.durak, lat: +d.dataset.lat, lng: +d.dataset.lng }); } durakBoya(); return; }
     var k = e.target.closest('.yg-katman-dugme'); if (!k) { return; }
     var on = k.getAttribute('aria-pressed') !== 'true', ad = k.dataset.katman; k.setAttribute('aria-pressed', on ? 'true' : 'false');
     if (ad === 'gastronomi') { document.body.classList.toggle('gastronomi-kapali', !on); return; }
