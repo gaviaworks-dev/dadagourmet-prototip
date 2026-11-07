@@ -29,3 +29,8 @@ html.altbilgi-akista #pageMain{margin-bottom:0!important}
 .app-btn[aria-disabled=true]{cursor:default;opacity:.6}
 .app-btn[aria-disabled=true]:hover{background:#ffffff24;border-color:#ffffff42;transform:none}
 .app-btn[aria-disabled=true]:hover i,.app-btn[aria-disabled=true]:hover .ab-store,.app-btn[aria-disabled=true]:hover .ab-pre{color:#fff}
+
+/* Ana sayfa hero başlığı ve menü ikonu: ağırlık ve saydamlık canlı Gourmet ile aynı. */
+.gm-hero-h1 .bd { font-family: GilroyBd, Gilroy, sans-serif; font-weight: 700; }
+.gm-hero-h1 .sf { font-family: Gilroy, sans-serif; font-weight: 500; }
+header a i.fa-route, nav a i.fa-route { opacity: 1 !important; }
