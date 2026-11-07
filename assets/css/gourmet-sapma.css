@@ -72,3 +72,17 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 .yg-brand .gourmet-word-mark{display:block;height:26px;width:auto;color:var(--marka)}
 .yg-brand .dg-word{display:block}
 .gastronomi-kapali .yg-vpin,.gastronomi-kapali .yg-vcluster{display:none}
+
+/* İl kartı yerleşimi: Ne Yenir ve Ne Alınır yan yana, iç boşluk sıkı; dar ekranda alt alta. */
+.yg-il-liste{gap:10px}
+.yg-il-kart{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.yg-il-kart-bas{grid-column:1/-1;padding:7px 12px}
+.yg-il-bolum{padding:8px 12px}
+.yg-il-bolum+.yg-il-bolum{border-top:0;border-left:1px solid var(--line)}
+.yg-il-bolum-bas{margin-bottom:5px}
+.yg-il-cipler{gap:4px}
+@media (max-width:767px){
+  .yg-il-kart{grid-template-columns:minmax(0,1fr)}
+  .yg-il-bolum{padding:7px 12px}
+  .yg-il-bolum+.yg-il-bolum{border-left:0;border-top:1px solid var(--line)}
+}
