@@ -70,6 +70,11 @@
   "duzen": "public"
  },
  {
+  "yol": "mekan-bul",
+  "baslik": "Mekân Bul",
+  "duzen": "public"
+ },
+ {
   "yol": "mekan/mikla",
   "baslik": "Mikla",
   "duzen": "public"
