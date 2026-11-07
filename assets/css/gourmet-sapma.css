@@ -196,3 +196,16 @@ button.yg-il-cip{display:inline-flex;align-items:center;gap:5px;font-family:inhe
 .mkl-grid .disc-card h3,.md-similar .disc-card h3{white-space:normal;text-overflow:clip}
 .fct-row .ft{white-space:normal;text-overflow:clip}
 .ev-meta{flex-wrap:wrap}.ev-meta .dw-txt{white-space:normal;text-overflow:clip}
+
+/* Rotayı telefona gönder: aktarım düğmesi kalıbı ve canlı `.yg-gate` penceresi üstüne. Renk ve radius kanon token'ı */
+.yg-telefon-dugme{width:100%;margin-top:8px;font:inherit;font-size:13.5px;text-align:left;cursor:pointer}
+.yg-telefon-dugme .ornek-etiket{flex:none;flex-direction:row;white-space:nowrap}
+.yg-telefon-kart{max-height:calc(100dvh - 44px);overflow-y:auto}
+.yg-gate-card p.yg-telefon-etiket{margin-bottom:10px}
+.yg-gate-card p.yg-telefon-rota{margin-bottom:14px;font-weight:700;color:var(--slate)}
+.yg-gate-card p.yg-telefon-rota:empty{display:none}
+.yg-telefon-bag{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:16px}.yg-telefon-bag[hidden]{display:none}
+.yg-telefon-qr{width:148px;height:148px;padding:10px;border:1px solid var(--line);border-radius:var(--yuvarlak-md);background:var(--paper)}
+.yg-telefon-qr svg{display:block;width:100%;height:100%;fill:var(--slate)}
+.yg-telefon-kisa{font-size:13px;font-weight:700;color:var(--marka-koyu);overflow-wrap:anywhere}
+.yg-telefon-not{font-size:11.5px;line-height:1.35;color:var(--muted,#6f6f6f)}
