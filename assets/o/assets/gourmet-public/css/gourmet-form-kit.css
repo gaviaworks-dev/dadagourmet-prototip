@@ -96,7 +96,7 @@
 }
 .fk-eye:hover { color: var(--ink); background: var(--cream-2); }
 
-/* Telefon ülke kodu seçici (fk-tel-cc-select) — D3 MADDE 1, Beyar onaylı.
+/* Telefon ülke kodu seçici (fk-tel-cc-select) — D3 MADDE 1, patron onaylı.
    .fk-tel (position:relative) + .fk-input{padding-left:60px} ref'in
    public/reference/giris/giris.css'inde tanımlı (bu dosyanın kapsamı
    dışında, DOKUNULMADI); eski dekoratif "+90" span'ının AYNI 1px/top/bottom

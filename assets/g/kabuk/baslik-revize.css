@@ -1,4 +1,4 @@
-/* Başlık revizeleri — revize 20 Eki 2026 (Beyar). Kabuk her sayfaya enjekte eder (`KabukKimligi`).
+/* Başlık revizeleri — revize 20 Eki 2026 (patron). Kabuk her sayfaya enjekte eder (`KabukKimligi`).
 
    Madde 5 · DİL MENÜSÜ GENİŞLİĞİ. Ölçüldü (1440): açılır menü donörden `min-width: 196px` taşıyordu; en uzun satır
    ("DE Deutsch" + onay işareti, iç boşluklarla) bunun çok altında. Menü artık içeriği kadar geniş (`max-content`), kenar

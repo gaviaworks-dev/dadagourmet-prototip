@@ -273,7 +273,7 @@
    🔴 SABİT HEX YAZILMADI. fit.css'te bu üçü sabit hex'ti çünkü orada
      "üç ton karışım değil, türetilmedi" (artık 22–30). Gourmet'te bu
      gerekçe YOK: rampa `.ai`de FİZİKSEL bir beyaz karışımıdır, yani
-     `color-mix` rolün kendisidir ve Beyar'ın kuralına uyar
+     `color-mix` rolün kendisidir ve patronun kuralına uyar
      ("hepsini --marka'dan türet"). Marka değişirse üçü de döner. */
 
   --marka-parlak:color-mix(in srgb, var(--marka) 50%, #fff);
@@ -401,7 +401,7 @@
      tarama boyunca HİÇBİR elemanda basılmıyor (0 kullanım). Gastro'da
      24 elemandı. Yuva yine de v2 değerinde bırakıldı — Gourmet'te ölü
      olması kanonun kararını değiştirmez.
-   Beyar kararı gelene kadar v2 değerinde. KUSURU BİLDİR-DÜZELTME. */
+   patron kararı gelene kadar v2 değerinde. KUSURU BİLDİR-DÜZELTME. */
   --eko-akademi:#006072;     --eko-akademi-rgb:0,96,114;
   --eko-akademi-acik:#2E97AB;
   --eko-akademi-yikama:#e6f1f4;  /* #006072 üstünde 6.26:1 · AA ✓ */

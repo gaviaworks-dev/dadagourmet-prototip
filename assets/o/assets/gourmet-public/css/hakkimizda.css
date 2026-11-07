@@ -1,6 +1,6 @@
 /* Hakkımızda (about.index) — kaynak-transfer: ref hakkimizda-v1.html
    "SAYFA CSS" bloğu (satır 739-935) VERBATIM taşındı; yalnız aşağıdaki
-   noktalarda gerçek-veri düşüşüne uyum için kasıtlı sapma (Beyar raporunda
+   noktalarda gerçek-veri düşüşüne uyum için kasıtlı sapma (patron raporunda
    işaretli — redraw DEĞİL, blok çıkarma):
    - team-sec/.chef-* taşınmadı (ekip fabrike persona verisiydi, drop edildi
      → CSS'e gerek kalmadı).
@@ -76,7 +76,7 @@
 .seo-prose strong{color:var(--slate);font-weight:700}
 .seo-prose a.inline{color:var(--tomato);font-weight:700;text-decoration:underline;text-underline-offset:2px}
 .about-quote{margin:20px 0;padding:18px 22px;border-left:3px solid var(--tomato);background:var(--tomato-tint);border-radius:0 var(--radius-md) var(--radius-md) 0;font-size:15.5px;font-weight:700;color:var(--slate);line-height:1.55}
-/* Hikâye artık blok-içerik (QA 2026-07-15, Beyar kararı) —
+/* Hikâye artık blok-içerik (QA 2026-07-15, patron kararı) —
    resources/views/partials/_body-blocks.blade.php'nin ürettiği .art-quote/
    .art-tip sınıfları (puf-noktasi-detay.css'in --tomato varyantıyla AYNI
    yapı — bu sayfanın paletine uyarlandı, kopya değil aynı desen). */

@@ -13,7 +13,7 @@
        <link href="../kanon/markalar/fit.css">
        <link href="assets/css/fit-shell.css">     ← kabuk, kanondan SONRA
    Yani kanonun çubuk kuralları o sayfalara inmiyordu; çubuk kabuğun
-   "icon-only" kipinde, etiketsiz kalıyordu (Beyar canlı ekranda gördü).
+   "icon-only" kipinde, etiketsiz kalıyordu (patron canlı ekranda gördü).
    Aynı durum Gastro maket sayfaları için de geçerli.
    Bu dosya tek başına yüklenebilir: `bilesenler.css`e bağımlı değil.
 
@@ -100,7 +100,7 @@
 /* =====================================================================
    AKTİF DURUM SÖZLEŞMESİ  ·  BEYAR KARARI 2026-09-04
    ---------------------------------------------------------------------
-   Beyar: *"Hareketler'e tıklayınca seçili oluyor, Programlarım'da
+   patron: *"Hareketler'e tıklayınca seçili oluyor, Programlarım'da
    olmuyor. Kural: geçerli sayfaya göre aria-current; aktif = dolgulu
    ikon + marka rengi + etiket vurgusu; 5 kalemde aynı; orta FAB da
    kendi sayfasında aktif."*
@@ -193,7 +193,7 @@
 :where(.alt-cubuk) .ac-kalem.ac-orta>span:last-child{
   color:var(--murekkep-yumusak, #56514a);
 }
-/* 🔴 ORTA FAB DA KENDİ SAYFASINDA AKTİFTİR — Beyar, 2026-09-04.
+/* 🔴 ORTA FAB DA KENDİ SAYFASINDA AKTİFTİR — patron, 2026-09-04.
    Diğer dört kalemin aktif işareti "gri → marka + açık marka hapı".
    FAB'ın karosu ZATEN marka dolgusunda olduğu için aynı hap onda iş
    görmez: ÖLÇÜLDÜ — `--aksan-yikama` halkası (#e7f5fb) çubuğun kendi

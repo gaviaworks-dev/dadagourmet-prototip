@@ -27,7 +27,7 @@ html:not([data-zil-sayaci="yazildi"]) .head-bell .hb-badge {
   visibility: hidden;
 }
 
-/* 🔴 SIFIRDA DA GİZLİ (revize P3 · kalem 3, Beyar kararı). Betik okunmamış
+/* 🔴 SIFIRDA DA GİZLİ (revize P3 · kalem 3, patron kararı). Betik okunmamış
    sayısı 0 iken bayrağı `sifir` yazar; yukarıdaki kural zaten `yazildi`
    dışındaki her değerde gizliyor, bu kural onu AÇIKÇA söyler — sonraki
    okuyan "sıfır hâli unutulmuş mu" diye aramasın.

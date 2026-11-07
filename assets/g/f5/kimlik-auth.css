@@ -28,7 +28,7 @@
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   YENİ ŞİFRE EKRANI — beş kural canlı işaretlenir (Beyar, 2026-09-16).
+   YENİ ŞİFRE EKRANI — beş kural canlı işaretlenir (patron, 2026-09-16).
 
    Sınıf adı `ok`, Fit/Gourmet ile aynı (`.ys-kural li.ok{color:var(--fit-deep)}
    .ys-kural li.ok i{color:var(--fit)}`); Gastro'da yeşil MARKA değil SEMANTİK
@@ -53,7 +53,7 @@
   margin: var(--bosluk-20) 0 0;
 }
 
-/* Kayıt formunun form düzeyi hata satırları (Beyar, 3 Eki) — kayıt sınırının cümlesi (formun başında)
+/* Kayıt formunun form düzeyi hata satırları (patron, 3 Eki) — kayıt sınırının cümlesi (formun başında)
    ve onay cümlesi (onayların altında). Kanon `.giris-hata.form` yalnız üst pay taşıyor (4px); satır
    alttaki öğeye (Ad etiketi · gönder düğmesi) 0px ile yapışıyordu. Alt pay formun ritmi: başlık → form
    ve onaylar → düğme arası 20px (ölçüldü, 1440 ve 390). */

@@ -35,7 +35,7 @@
 .fct-ulke.more-open > .fct-ulke-sehirler > .fct-more i,
 .fct-konum.more-open > .fct-body > .fct-more i { transform: rotate(180deg); }
 
-/* İl fasetinin arama kutusu — Beyar 2026-08-10, İş B madde 2. Kutu, kahraman
+/* İl fasetinin arama kutusu — patron 2026-08-10, İş B madde 2. Kutu, kahraman
    aramasının `.search-input` kalıbının panel ölçüsüne inen varyantı; renk/çerçeve/
    radius token'dan gelmeye devam eder. */
 .mkl-fct-srch { margin: 2px 0 10px; padding: 0 12px; border-radius: var(--radius-md); }

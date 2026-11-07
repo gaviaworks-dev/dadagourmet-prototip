@@ -91,7 +91,7 @@
 .header.at-top .gourmet-word-mark{color:#fff}
 
 /* ── İSTİSNA · GİRİŞ VE KAYIT: HER ZAMAN RENKLİ ───────────────────────
-   Beyar kuralı 2026-09-04, dört markada geçerli. Emsal deneme/fit-giris.html:
+   patron kuralı 2026-09-04, dört markada geçerli. Emsal deneme/fit-giris.html:
    orada at-top→beyaz kuralı hiç yok, marka rengi saydam header'da da durur.
    Burada kabuk CSS'i ORTAK olduğu için kural silinemez; gövdeye basılan
    dg-auth sınıfıyla geri alınır (yalnız giriş ailesi bu sınıfı taşır). */

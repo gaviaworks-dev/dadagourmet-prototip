@@ -26,13 +26,13 @@
   --kd-murekkep: #3A2E2A;
   --kd-ikincil: #6B5A52;
   --kd-cizgi: #F0E3D6;
-  /* Gölgesiz kart kararı (Beyar 2 Kas): kart/panel gölge token'ları boş katman (virgüllü listelerde geçerli kalsın diye "none" değil).
+  /* Gölgesiz kart kararı (patron 2 Kas): kart/panel gölge token'ları boş katman (virgüllü listelerde geçerli kalsın diye "none" değil).
      Yüzen katmanlar (tarih seçici paneli, profil) --kd-golge-yuzer kullanır. */
   --kd-golge: 0 0 0 0 transparent;
   --kd-golge-yuksek: 0 0 0 0 transparent;
   --kd-golge-yuzer: 0 2px 4px rgba(58, 46, 42, .06), 0 12px 28px -14px rgba(58, 46, 42, .24);
   /* V2 köşe ölçeği (sözleşme): en çok 8px; daire yalnız eşit en-boy ikon/avatar */
-  /* köşe ölçeği = Dada Gastro token'ları (Beyar 1 Kas: "Gastro'daki radius nasılsa öyle"): rozet 6 · chip/etiket 8 (.chip/.tag) · düğme/giriş 12 (.btn) · kart/panel 16 (.card-visual) · büyük blok 24 */
+  /* köşe ölçeği = Dada Gastro token'ları (patron 1 Kas: "Gastro'daki radius nasılsa öyle"): rozet 6 · chip/etiket 8 (.chip/.tag) · düğme/giriş 12 (.btn) · kart/panel 16 (.card-visual) · büyük blok 24 */
   /* Revize 2 Kas R2: köşe yarıçapı TEK DEĞER = Dada Gastro buton köşesi (.btn-login 12px = --radius-md). Eski adlar aynı değere bağlı (geriye uyum); istisna yalnız gerçek daire (--kd-r-daire) ve tam yuvarlak switch. */
   --kd-r: var(--radius-md, 12px); --kd-r-s: var(--kd-r); --kd-r-m: var(--kd-r); --kd-r-l: var(--kd-r); --kd-r-xl: var(--kd-r); --kd-r-tam: var(--kd-r); --kd-r-daire: 50%;
 
@@ -100,7 +100,7 @@ html.kd-ust-gizli .kd-ust__logo { max-width: 140px; margin-right: 0; opacity: 1;
 .kd-ust__menu > a { flex: none; display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; border-radius: var(--kd-r); font-size: 14.5px; font-weight: 700; font-family: var(--kd-font-kalin); line-height: 1; text-decoration: none; color: var(--kd-murekkep); white-space: nowrap; transition: background-color .18s ease, color .18s ease; }
 .kd-ust__menu > .kd-ust__ev { justify-content: center; min-width: 44px; padding: 0; margin-left: auto; }   /* R3: ev ikonu "Tarifler"in hemen solunda, menüyle tek grup (grup ortada) */
 .kd-ust__ev svg { display: block; width: 22px; height: 22px; }
-/* Gastro .nav a birebir (Beyar 2 Kas): hover = aksan yıkaması + aksan rengi; aktif = yalnız aksan rengi + metin altında 2px ince çizgi
+/* Gastro .nav a birebir (patron 2 Kas): hover = aksan yıkaması + aksan rengi; aktif = yalnız aksan rengi + metin altında 2px ince çizgi
    (left/right 12px, bottom 2px, radius-sm). Zemin/3D gölge yok. Ev ikonunda çizgi de yok (yalnız renk). */
 .kd-ust__menu > a { position: relative; transition: color .2s ease, background .2s ease; }
 .kd-ust__menu > a:hover { background: var(--kd-tema-a); color: var(--kd-tema); }
@@ -116,7 +116,7 @@ html.kd-ust-gizli .kd-ust__logo { max-width: 140px; margin-right: 0; opacity: 1;
 .kd-yardim-ac[aria-expanded="true"] { background: var(--kd-tema-a); border-color: color-mix(in srgb, var(--kd-tema) 45%, transparent); }
 .kd-yardim-ac:focus-visible { outline: 3px solid var(--kd-tema); outline-offset: 2px; }
 /* Gastro ana menüsü gizlenince (yalnız Kids sayfaları; DOM'a öğe eklenmez, yalnız transform).
-   R3 (Beyar 2 Kas): üstteki siyah bant (.topbar) HEP görünür; yalnız header.header (z 60) bandın (z 70) altına kayar.
+   R3 (patron 2 Kas): üstteki siyah bant (.topbar) HEP görünür; yalnız header.header (z 60) bandın (z 70) altına kayar.
    --kd-ust-bosluk = görünen Gastro katmanının alt kenarı (üstte header altı, gizliyken bant altı; mobilde bant yok → 0).
    --kd-bar-alt = Kids barının alt kenarı → sayfanın kendi yapışkan barı (Tarifler Yaş barı vb.) top: var(--kd-bar-alt). */
 :root { --kd-bar-h: 61px; --kd-bar-alt: calc(var(--kd-ust-bosluk, 0px) + var(--kd-bar-h)); }
@@ -211,7 +211,7 @@ a.kd-chip:hover, button.kd-chip:hover { background: var(--r-o, var(--kd-cizgi));
 .kd-hero__metin .kd-giris { font-size: clamp(1.02rem, .95rem + .3vw, 1.18rem); color: var(--kd-ikincil); margin: 14px 0 0; max-width: 560px; }
 .kd-hero__eylem { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
 .kd-hero__gorsel { position: relative; isolation: isolate; }
-/* Revize 2 Kas R6 (Beyar onayı): hero görseli zeminden ayrışsın — çerçeve YOK, yalnız ince kontur + yumuşak derin gölge (tek token) */
+/* Revize 2 Kas R6 (patron onayı): hero görseli zeminden ayrışsın — çerçeve YOK, yalnız ince kontur + yumuşak derin gölge (tek token) */
 :root { --kd-golge-hero: 0 0 0 1px rgba(58, 46, 42, .10), 0 18px 36px -22px rgba(58, 46, 42, .55); }
 .kd-hero__gorsel > img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--kd-r); box-shadow: var(--kd-golge-hero); background: var(--r-a, var(--kd-krem-2)); }
 .kd-hero--kucuk .kd-hero__izgara { grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr); }
@@ -706,7 +706,7 @@ article.kd-tarif { cursor: pointer; }
 }
 
 /* =====================================================================
-   SSS — tek-açık akordeon (src/kids/sss.mjs + kids.js sssKur; Beyar 1 Kas)
+   SSS — tek-açık akordeon (src/kids/sss.mjs + kids.js sssKur; patron 1 Kas)
    JS yokken cevaplar açık; .kd-js altında kapalı başlar. Yükseklik: grid 0fr→1fr; reduced-motion'da geçiş yok.
    Liste altı bilgi kutusu ("Sorunuz burada yoksa…") listeyle aynı genişlikte.
    ===================================================================== */
@@ -739,7 +739,7 @@ article.kd-tarif { cursor: pointer; }
 .kd-foto-ikon { overflow: hidden; padding: 0; background: var(--kd-krem-2); }
 .kd-sayfa .kd-foto-ikon > img { width: 100% !important; height: 100% !important; object-fit: cover; display: block; border-radius: inherit; }
 
-/* Yuvarlak görsel halkası (Beyar 1 Kas): site geneli tek token — ince (1,5px), tema rengi; görselin boyutunu değiştirmez (dış gölge halka).
+/* Yuvarlak görsel halkası (patron 1 Kas): site geneli tek token — ince (1,5px), tema rengi; görselin boyutunu değiştirmez (dış gölge halka).
    Mevsim ürün/ay/kahraman daireleri, hub/dönem ürün fotoğrafları (o.urun), Dolap malzeme kartları ve seçilen malzeme çipleri. */
 .kd-sayfa, .kd-yardim, .kd-pt { --kd-halka-renk: color-mix(in srgb, var(--kd-tema) 34%, #fff); --kd-halka: 0 0 0 1.5px var(--kd-halka-renk); }
 .kd-sayfa img.kd-urun-foto, .kd-dolap__cip-foto:not(.kd-dolap__cip-foto--pixar), .kd-dolap-sonuc__bos-foto { box-shadow: var(--kd-halka); }   /* R4: dolap kartı (.kd-mz__foto) şeffaf ikon taşır → halka yok */
@@ -780,13 +780,13 @@ article.kd-tarif { cursor: pointer; }
 .kd-sayfa img.kd-urun-pixar { border-radius: 0 !important; box-shadow: none !important; background: none !important; object-fit: contain !important; }
 /* R9/R11: görsel olarak gizli sayfa başlığı .kd-sayfa'nın dışında (main'in ilk öğesi) — Gastro başlık ailesi (sahte kalın yok) */
 .pg-kids h1.kd-gizli { font-family: var(--kd-baslik); font-weight: 700; line-height: var(--lh-head, 1.12); }
-/* Breadcrumb ↔ header mesafesi = Gastro Tarifler BİREBİR (Beyar 2 Kas). Gastro: .lst-top padding-top 128px / ≤640 74px
+/* Breadcrumb ↔ header mesafesi = Gastro Tarifler BİREBİR (patron 2 Kas). Gastro: .lst-top padding-top 128px / ≤640 74px
    − --header-offset 112px / 62px → 16px / 12px (header'ın 1px alt kenarıyla görünen 15 / 11px). Kids'te ölçü Kids barının
    (.kd-ust, akışta) altından; yalnız breadcrumb'la başlayan bölümün üst boşluğu değişir, breadcrumb altı (18px) aynen kalır. */
 :root { --kd-kirinti-ust: 16px; }
 @media (max-width: 640px) { :root { --kd-kirinti-ust: 12px; } }
 .kd-sayfa section:has(> .wrap > .kd-kirinti:first-child) { padding-top: var(--kd-kirinti-ust); }
-/* KARTLAR = Gastro kart stili, GÖLGESİZ (Beyar 2 Kas). Gastro .r-card: border 1px solid var(--line) #ECECEC · radius var(--radius-lg) 16px;
+/* KARTLAR = Gastro kart stili, GÖLGESİZ (patron 2 Kas). Gastro .r-card: border 1px solid var(--line) #ECECEC · radius var(--radius-lg) 16px;
    hover'da yalnız çerçeve #DCDCDC (Gastro'nun translateY(-6px) kalkması ve gölgesi Kids'te YOK). box-shadow yok — seçili/hedef/odak
    durumları outline ile. Liste araclar/golge-kapisi.mjs KARTLAR ile aynı tutulur. Yüzen katmanlar (tarih seçici, öneri listesi,
    Yardım paneli, mobil filtre sheet'i) ve hero görselleri (R6 --kd-golge-hero) kart değildir. */
@@ -807,7 +807,7 @@ article.kd-tarif { cursor: pointer; }
 :root .kd-sayfa .kd-pl-slot:not([data-dolu]) { border-style: dashed; border-color: var(--kd-cizgi); }
 
 /* =====================================================================
-   4 DİL GÖRÜNÜM TARAMASI (lead, 5 Kas 2026; Beyar: "metni kısaltarak değil, düzeni uyarlayarak") — F1 · evre kartı (hub + Dönemler)
+   4 DİL GÖRÜNÜM TARAMASI (lead, 5 Kas 2026; patron: "metni kısaltarak değil, düzeni uyarlayarak") — F1 · evre kartı (hub + Dönemler)
    Ölçüldü (`scripts/olcum/kids/dil-tarama.cjs`, 1440): 5 sütunlu ızgarada ikonun yanındaki metin kutusu 112px; DE "Schwangerschaft"
    (144px) ve RU "послеродовой" başlıkta kutudan taşıyor, tek satıra kilitli üst etiket (aralık) kartın dışına çıkıyordu (RU 103px).
    TR'de sığıyor ve değişmiyor. Öbür dillerde ≥641px'te ikon başlığın ÜSTÜNE iner (metin kartın tam genişliği) ve aralık satır kırar.

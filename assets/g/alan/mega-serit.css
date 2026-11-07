@@ -7,7 +7,7 @@
    368–373 kurum renkleri (paleti ezer; bitis-parite bulgusu, lead kararı 3 Kas — bu dosya gövdede saglik.css'ten SONRA yüklendiği için
    onsuz Health sayfalarında hero/sekme renkleri eski palete dönüyordu) · 107–108 logo · 212–258 §9 mega · 299–300 · 333–335 · 342–346 · 377–387. Tek ek (son blok) donörün satır içi
    `--r-a` değerlerinin sınıf karşılığıdır (eskiden /alan/alan.css'teydi). Yükleyen: `x-alan.mega-serit` (@once).
-   🔴 TEK SAPMA (Beyar 4 Kas 2026, Kids hattı): mod paleti ve kurum renkleri `[data-renk]` yerine `.sg-mega-serit [data-renk]` ile
+   🔴 TEK SAPMA (patron 4 Kas 2026, Kids hattı): mod paleti ve kurum renkleri `[data-renk]` yerine `.sg-mega-serit [data-renk]` ile
    KAPSAMLI. Genel seçici her Gastro sayfasında (mega menü) kids.css'ten SONRA yüklenip Kids sayfalarındaki `mavi` öğeleri Health
    rengine boyuyordu (ölçüldü: --r-a #E0E3EA, Kids donörü #E4F0FB; scripts/olcum/kids/palet-renk-parite.cjs 71 sapma → 0). Health
    sayfaları paleti kendi saglik.css'inden (head, 10–37 + 368–373 sırasıyla) alır; şeridin çipleri `.sg-mega-serit` içinde kalır.
@@ -73,7 +73,7 @@
 .sg-mega-serit--kids { background: linear-gradient(100deg, #FFF6EE 0%, #F3F8F5 100%); box-shadow: inset 0 0 0 1px #EFE4D8; }
 .sg-mega-serit:hover { box-shadow: inset 0 0 0 1.5px var(--sg-tema); }
 .sg-mega-serit--kids:hover { box-shadow: inset 0 0 0 1.5px #D9783A; }
-.sg-mega-serit__logo { flex: none; width: 143.5px; }   /* başlıktaki Gastro logosunun genişliği; alt kelimeli kilit iki alanda aynı boy (Beyar 7 Kas) */
+.sg-mega-serit__logo { flex: none; width: 143.5px; }   /* başlıktaki Gastro logosunun genişliği; alt kelimeli kilit iki alanda aynı boy (patron 7 Kas) */
 .sg-mega-serit__metin { flex: 1 1 auto; min-width: 0; font-size: 13.5px; line-height: 1.25; }
 .sg-mega-serit__chipler { flex: 1 1 auto; min-width: 0; display: flex; flex-wrap: nowrap; justify-content: center; gap: 6px; }
 .sg-mega-serit--kids .sg-mega-serit__chipler { flex: none; }
@@ -114,7 +114,7 @@
 .sg-fct-saglik__etiket, .sg-dcip { border-radius: var(--sg-r-etiket); }
 
 /* --- saglik.css 342–346: mega şeridi 5. revize: zeminsiz çipler, logo boşluğu --- */
-/* Mega şeridi (Beyar 2 Kas, 5. revize): chip zemini yok, sade metin bağları; logo ile çakışmaz (sola dizili, taşma kesilir) */
+/* Mega şeridi (patron 2 Kas, 5. revize): chip zemini yok, sade metin bağları; logo ile çakışmaz (sola dizili, taşma kesilir) */
 .sg-mega-serit__chipler { justify-content: flex-start; overflow: hidden; gap: 2px; }
 .nav .sg-mega-serit .sg-mega-serit__chip, .nav .sg-mega-serit--kids .sg-mega-serit__chip { background: transparent; color: var(--sg-murekkep); padding: 4px 10px; font-family: var(--sg-font-kalin); font-weight: 700; }
 .nav .sg-mega-serit .sg-mega-serit__chip:hover { background: rgba(255, 255, 255, .7); color: var(--sg-tema-k); }
@@ -122,7 +122,7 @@
 
 /* --- saglik.css 377–387: gölge yok + çerçeve (listede .sg-mega-serit var) --- */
 /* =====================================================================
-   GÖLGE YOK (Beyar 2 Kas): Health kartları, logo karoları, paneller ve sekme çubuğu box-shadow taşımaz; hover'da da gölge,
+   GÖLGE YOK (patron 2 Kas): Health kartları, logo karoları, paneller ve sekme çubuğu box-shadow taşımaz; hover'da da gölge,
    kalkma, büyüme yok. Çerçeve = Gastro kartı (1px var(--line)); köşe kendi değerinde (kart/panel 16 · karo 12).
    Kapı: araclar/golge-kapisi.mjs (hesaplanan box-shadow = none, hover dahil).
    ===================================================================== */

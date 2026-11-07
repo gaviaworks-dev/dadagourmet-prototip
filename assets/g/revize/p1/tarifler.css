@@ -30,7 +30,7 @@
 .lst-side .fct-row .fcnt{margin-inline-start:auto;flex:none;white-space:nowrap}
 .lst-side .cat-fct .cn-thumb{width:var(--bosluk-28);height:var(--bosluk-28)}
 
-/* Kart künye satırı (Beyar 2 Eki, ikinci tur): süre, zorluk ve kişi HER genişlikte TEK satır; yazı kesilmez, kart uzamaz.
+/* Kart künye satırı (patron 2 Eki, ikinci tur): süre, zorluk ve kişi HER genişlikte TEK satır; yazı kesilmez, kart uzamaz.
    Dar kartta (gövde < 300 px: 1440/1280'de üç sütunlu ızgara, 390'da yatay kart) uzun etiket kısasıyla yer değiştirir
    ("Ustalık Gerektirir" → "Ustalık", "4 kişilik" → "4 kişi"; uzun ad ekran okuyucuda kalır), ayraç boşluğu 8 → 4 px,
    simge aralığı 5 → 4 px; 1440/1280'de punto 11,5 px (prototipin aynı satır için 390'daki puntosu; önce 12/12,5).

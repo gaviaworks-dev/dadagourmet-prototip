@@ -1,5 +1,5 @@
 /* =====================================================================
-   MEKÂN KARTI — hiza + rozet uyarlaması (Beyar revizesi, 2026-09-17)
+   MEKÂN KARTI — hiza + rozet uyarlaması (patron revizesi, 2026-09-17)
    Kanon: v7 `mekan-liste-v1.html` (`.disc-*`). Kanon dosyalar VENDOR
    (`gourmet-mekan-liste.css` · `mekan-detay.css` · `mekan-bul.css`) —
    onlara kural eklenmez; bu katman üç yüzeyde de kanon CSS'ten SONRA bağlanır:
@@ -15,7 +15,7 @@
    Ölçüm (v7 @1440): etiket 188/17 · başlık 212/23 · açıklama 244/42 · çizgi 298.
    · Etiket boş gelse de yazılı etiketle AYNI satır yüksekliğini tutar (sıfır genişlikli
      karakter; `min-height:17px` 17,05px'lik gerçek satıra 0,05px kaçırıyordu — ölçüldü).
-   · Başlık TEK SATIR + üç nokta (Beyar kararı 1) — 2 satıra düşen ad hizayı 23px kaydırırdı.
+   · Başlık TEK SATIR + üç nokta (patron kararı 1) — 2 satıra düşen ad hizayı 23px kaydırırdı.
    · Açıklama her zaman 2 satır (20.925px × 2, kanonun kendi satır yüksekliği), boşsa da.
    · Alt satır sarmaz: kanonun `flex-wrap:wrap`ı (`gourmet-mekan-liste.css:92`, v7'de YOK)
      dar kartta istatistiği ikinci satıra atıp çizginin altını uzatıyordu. Konum
@@ -41,13 +41,13 @@
 .disc-fig .disc-new{position:absolute;top:13px;right:13px;z-index:2;display:flex}
 .mkl-grid .disc-new .disc-badge{background:var(--tomato);color:#fff;font-size:11px;font-weight:700;padding:6px 11px;border-radius:var(--radius-sm);letter-spacing:.02em;display:inline-flex;align-items:center;gap:6px}
 
-/* §4 Puansız kart — SOLUK "★ –" (Beyar kararı 2026-09-17). Yıldız da tire de kanonun
+/* §4 Puansız kart — SOLUK "★ –" (patron kararı 2026-09-17). Yıldız da tire de kanonun
    `--muted`ı; kanonun `.r-rate i{color:var(--yellow)}` (0,1,1) kuralını geçmek için
    (0,3,1). Veri yokluğu vurgulanmaz. */
 .disc-meta .disc-stats .r-yok{color:var(--muted);font-weight:500;opacity:.75}
 .disc-meta .disc-stats .r-yok i{color:var(--muted)}
 
-/* §5 KONUM "İlçe / İl" (Beyar düzeltmesi 2026-09-17) — sığmazsa YALNIZ il kesilir.
+/* §5 KONUM "İlçe / İl" (patron düzeltmesi 2026-09-17) — sığmazsa YALNIZ il kesilir.
    Kanon `.disc-meta .disc-loc` (0,2,0) kendisi `overflow:hidden` + ellipsis taşıyor ama
    `.disc-meta span{display:inline-flex}` yüzünden flex kabı; ellipsis flex kabında işlemez,
    metin kör kesilirdi ve kesilen ilçe olurdu. Parçalar blok kutu olur: ilçe `flex:none`

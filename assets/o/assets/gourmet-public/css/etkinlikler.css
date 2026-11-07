@@ -16,7 +16,7 @@
 .ev-filter .chip{flex:none;font-size:13.5px;font-weight:700;color:var(--muted);background:transparent;border:none;border-radius:var(--radius-sm);padding:10px 18px;white-space:nowrap}
 .ev-filter .chip:hover{color:var(--tomato);background:transparent}
 .ev-filter .chip.active{background:var(--tomato-deep);color:#fff;border:none;font-weight:700}
-/* ---- Yatay slider inceliği (Beyar kararı 2026-07-28) — .ev-filter zaten
+/* ---- Yatay slider inceliği (patron kararı 2026-07-28) — .ev-filter zaten
    yatay kaydırıyordu (inline-flex + overflow-x:auto), yalnız snap/smooth-
    scroll/kenar-fade/reduced-motion eksikti; kardeş modüllerdeki (gurme-
    lezzetler/dada-seckisi) AYNI .can-scroll-left/-right çözümü buraya da
@@ -88,7 +88,7 @@
 .ke-cta-split{display:flex;gap:30px;flex-wrap:wrap;margin-top:14px;max-width:620px}
 .ke-cta-split span{font-size:12px;color:#aebcc6;font-weight:500;line-height:1.5;flex:1 1 260px}
 .ke-cta-split b{color:#d5bfda;font-weight:700}
-/* .ke-stats — DÜZELTME 2 (Beyar kararı), etkinlikler-v1.html satır 921-924
+/* .ke-stats — DÜZELTME 2 (patron kararı), etkinlikler-v1.html satır 921-924
    BİREBİR (mekan-liste/_hero.blade.php'nin AYNI kalıbı). Sayılar GERÇEK
    veriden (EtkinlikController::heroStats), uydurma yok. */
 .ke-stats{display:flex;flex-direction:column;gap:16px;padding-left:38px;border-left:1px solid rgba(255,255,255,.18)}

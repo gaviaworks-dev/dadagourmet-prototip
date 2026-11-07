@@ -1,6 +1,6 @@
 /* =====================================================================
    Dada Gastro · Tercihler hattı · F3 — tercih sihirbazı + Hesabım › "Mutfak tercihlerim"
-   Kaynak: Beyar onaylı statik taslak (public/_taslak/tercih/sihirbaz-*.html) ve onun stil dosyası
+   Kaynak: patron onaylı statik taslak (public/_taslak/tercih/sihirbaz-*.html) ve onun stil dosyası
    public/gastro/tercih/tercih.css — "1 · SİHİRBAZ" ve "7 · REVİZE (sihirbaz)" bölümleri AYNEN; ölçek ortak.css'ten
    (--t-* takma adları, .tercih .btn, .tercih [hidden]). Yalnız kanon token'ları; her kural bir .tercih kökü altında.
    Taslaktan farkı (tam yapı): seçimler gerçek checkbox/radio (label.nq-chip / label.pick) — girdi görsel olarak gizli,
@@ -121,7 +121,7 @@
 }
 
 /* =====================================================================
-   7 · REVİZE 5 Kas (Beyar) — sihirbaz tek kart + arama (tercih.css §7, aynen)
+   7 · REVİZE 5 Kas (patron) — sihirbaz tek kart + arama (tercih.css §7, aynen)
    ===================================================================== */
 .tercih-sihirbaz .fc-head + .pan-search{ margin-bottom: var(--bosluk-16); }
 /* donörün arama kutusu odak rengi sayfanın --mode'undan (Dolap: yeşil/domates); sihirbazda "uzak dur" bağlamı → domates */

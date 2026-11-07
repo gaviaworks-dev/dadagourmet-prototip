@@ -28,7 +28,7 @@
   background:#1e1422 url("../img/gourmet-kesfet-hero-g4.webp") center/cover no-repeat;
 }
 /* Hero görseli. Eskiden bu bir <video> idi; iki kaynağı da 404 döndüğü ve
-   `data-ready="0"` yüzünden hiç istek atılmadığı için yuva SÖKÜLDÜ (Beyar
+   `data-ready="0"` yüzünden hiç istek atılmadığı için yuva SÖKÜLDÜ (patron
    kararı 2026-08-12). Kural birebir korundu: video `object-fit:cover` +
    `object-position:center 42%` + `filter:saturate(.8)` taşıyordu, bu div de
    aynılarını taşıyor — kare ekranda AYNI görünür. Filtre kasten burada,
@@ -86,7 +86,7 @@
    disc-status, disc-price-pill, ev-meta ailesi, disc-card-foot, disc-save;
    ev-filter, ev-cal, disc-feature vb. bu sayfada YOK — DİKKAT: yorum
    içinde yıldız + eğik çizgi dizisi YAZILMAZ, comment erken kapanır).
-   .disc-grid burada GRID DEĞİL — Beyar kararı (2026-07-29): "Yaklaşan
+   .disc-grid burada GRID DEĞİL — patron kararı (2026-07-29): "Yaklaşan
    Etkinlikler" tek satır ray olacak, A1/A2/A3'ün AYNI flex-track
    mekaniğine döndü (kart alt satıra düşmez). KRİTİK: `.ev-card`in kendisi
    ve `.ev-card .disc-card-link` HÂLÂ flex — bu bağlam `.disc-cat`'i
@@ -270,7 +270,7 @@
 
 /* ---- 2. MODÜL KARTLARI (beyaz) — fotoğrafsız, yapısal ---- */
 .gm-modules{padding:84px 0}
-/* RV4 A2 — 3 kart 2 sütuna sığmıyordu (Beyar şikâyeti, ikinci satırda tek
+/* RV4 A2 — 3 kart 2 sütuna sığmıyordu (patron şikâyeti, ikinci satırda tek
    kart yetim kalıyordu). Yatay ray'a çevrildi; ray mekaniği A1'in .cat-track
    deseniyle AYNI (overflow-x:auto + scroll-behavior:smooth + gizli
    scrollbar) — yeni desen icat edilmedi. Kart iç kompozisyonu (yatay
@@ -296,7 +296,7 @@
 .gm-mod:hover .gm-mod-cta i{transform:translateX(4px)}
 
 /* ---- 3. ETKİNLİK ŞERİDİ — zamansal içerik ----
-   G1 (2026-07-30) — Beyar bulgusu: zemin çok koyu MOR okunuyordu; --tomato-
+   G1 (2026-07-30) — patron bulgusu: zemin çok koyu MOR okunuyordu; --tomato-
    tint token'ının kendisi (mor fısıltısı zemin) değişmedi. Zemin artık R2
    (yukarıda .gm-sec--light/.gm-sec--tint notu) ile hesaplanan ritim sınıfından
    gelir — tam sette (events dolu) bu section beyaz çıkar, 2bc22199 ile AYNI. */
@@ -315,7 +315,7 @@
    (markup'ı olmayan kuralın CSS'i borç değil, çöptür). */
 /* G1 (2026-07-30) devam — kart içindeki İKİ solid-mor yüzey (rozet +
    birincil buton) 3× tekrarınca zeminle üst üste "fazla mor" izlenimi
-   veriyordu (Beyar bulgusu). Kart component'i (_card.blade.php) hem bu
+   veriyordu (patron bulgusu). Kart component'i (_card.blade.php) hem bu
    teaser'da hem gerçek /etkinlikler listesinde @include edildiği için
    ORADA değiştirilmedi — yalnız BU BÖLÜMÜN kapsamında, seçici
    özgüllüğüyle override edildi (liste sayfası etkilenmez). Rozet zaten
@@ -387,7 +387,7 @@
 
 /* =====================================================================
    MEKÂN KARTI — mekan-liste.css satır 446-529'dan BAYT-ÖZDEŞ taşındı
-   (2026-08-11, Beyar madde C: kart mekân listesindekiyle AYNI olmalı,
+   (2026-08-11, patron madde C: kart mekân listesindekiyle AYNI olmalı,
    yeni tasarım icat edilmedi — bkz. KesfetController::previewVenues()
    docblock). `.mkl-*` sınıfları yalnız `mekan-liste/_card.blade.php`
    partial'ı @include edildiğinde devreye girer; sayfa zaten sahip olduğu
@@ -410,7 +410,7 @@
 .mkl-card .disc-badges{bottom:11px;left:11px;right:11px}
 .mkl-card .disc-badge.soft{border:1px solid rgba(33,30,22,.08);box-shadow:var(--sh-sm);max-width:100%;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* "Doğrulanmış İşletme" — mavi tik ikonu (A2-LISTE m3, Beyar kararı).
+/* "Doğrulanmış İşletme" — mavi tik ikonu (A2-LISTE m3, patron kararı).
    R2 (2026-07-30 lead brifi) — görselin sağ üstünden başlığın SONUNA taşındı
    (Instagram mavi tik deseni: başlık metninin hemen sağında, satır içinde);
    artık görsel üstünde MUTLAK KONUMLANDIRILMIŞ bir rozet değil, `.sef-verify`
@@ -418,7 +418,7 @@
    ikon. Referansta kalıbı yok (eski 5-imza zinciri metin rozetiydi); site
    token'larında "mavi" tanımlı değil çünkü Gourmet paleti mora kayıtlı
    (--tomato). Bu ikon TÜM platformlarda evrensel "doğrulanmış hesap"
-   yakınsamasını taşıdığı için (Beyar'ın kendi ifadesiyle "mavi tik"),
+   yakınsamasını taşıdığı için (patronun kendi ifadesiyle "mavi tik"),
    tokens.css'teki amaca-özel renk kalıbı izlenerek (--green "yalnız sağlık
    bloğu", --yellow "yalnız puan") SAYFA-YEREL, TEK amaçlı bir token eklendi:
    yalnız bu rozet kullanır, kabuğa (gourmet.css) sızmaz. */

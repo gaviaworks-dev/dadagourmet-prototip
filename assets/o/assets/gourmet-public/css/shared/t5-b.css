@@ -55,7 +55,7 @@
 .bs-item .sr-lock       { font-size: 8.5px; color: rgba(233, 226, 214, .42); margin-left: 1px; }
 
 /* ══════════════════════════════════════════════════════════════════
-   ÜZERİNE GELME — kilitli rozetin METNİ. Beyar, 2026-09-16 (ikinci tur):
+   ÜZERİNE GELME — kilitli rozetin METNİ. patron, 2026-09-16 (ikinci tur):
    "Gourmet'te hover'da rozet çok koyu/soluk görünüyor."
 
    ÖLÇÜLDÜ (canlı dadagourmet.com ve dadadiet.com, Chromium 1440, 2026-09-16):
@@ -69,7 +69,7 @@
      kontrastı ~1,3:1 — marka adı OKUNMUYORDU.
 
    Kanon DadaDiet `1a42908` (`paylasilan/marka-serit.css`) ve oradaki gerekçe
-   aynen geçerli: Beyar'ın şartı "marka adıyla görünsün" olduğu için metin ve
+   aynen geçerli: patronun şartı "marka adıyla görünsün" olduğu için metin ve
    ikon #fff alır, kilit ikonu ayırt edilsin diye %72 beyazda kalır.
    Yüzey KİLİTLİ kalır: `cursor:not-allowed` duruştan gelir, hover onu
    değiştirmez; öğeler `<span aria-disabled="true">`, tıklanmaz.
@@ -124,7 +124,7 @@
    istisnasız; kimlik sayfalarının oranı 1.49 → 12.58.
    ⚠ Bu, görevin ölçüt metnindeki "giriş/kayıt her zaman renkli"
    maddesinden SAPMADIR; gerekçe muafiyet değil, yukarıdaki ÖLÇÜM.
-   Beyar aksini derse tek satır silinerek geri alınır.
+   patron aksini derse tek satır silinerek geri alınır.
    Özgüllük donörünkiyle EŞİT (0,4,1) · bu dosya sonra yükleniyor.
    ══════════════════════════════════════════════════════════════════ */
 body.dg-auth .header.at-top .gourmet-word-mark { color: #fff; }

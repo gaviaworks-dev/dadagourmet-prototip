@@ -23,7 +23,7 @@
        Bandın kendisi BİR MEDYA SAHNESİYSE (fotoğraf hero'nun İÇİNDE,
        başlık fotoğrafın üstünde altyazı olarak duruyorsa) sabit
        yükseklik UYGULANMAZ: yükseklik sahnenin ölçüsünden doğar.
-       Beyar kararı, DadaGastro tarif detayı: koyu bant kalktı, kaynağın
+       patron kararı, DadaGastro tarif detayı: koyu bant kalktı, kaynağın
        kendi medya sahnesi hero'ya döndü.
          kanca      `section.rd-top[data-revize="b1-medya"]`
                     (`data-hero-band` YOK — yükseklik kuralı hiçbir
@@ -65,7 +65,7 @@
    590'a çıkıyordu. İki aile aynı yüksekliği paylaşacağı için değer EN
    UZUNUNKİ oldu → 590 (aşağıdaki token şerhinde ölçümüyle).
    SONUÇ (yeniden ölçüldü): liste 544 · detay 590 · yasal 590 · kırpma 0.
-   ⚠ `--banner-h-kurumsal` 544 (=liste) idi; Beyar "YASAL sayfalar DETAY
+   ⚠ `--banner-h-kurumsal` 544 (=liste) idi; patron "YASAL sayfalar DETAY
      ile aynı" dediği için ayrı bir `--banner-h-yasal` doğdu ve detaya bağlandı.
    ⚠ Aile ayrımı DOSYA ADINDAN yapılır (`fit-shell.js`). `data-fit-page`
      kullanılamaz: ölçüldü, dosya adıyla aynı değil (`yasal-v1.html` → "yasal",
@@ -85,14 +85,14 @@
 
 :root{
   --banner-h-liste:544px;      /* ölçüldü · 31 liste sayfası, en uzun içerik 521 */
-  /* 🔴 560 → 590 · ÖLÇÜLDÜ 2026-09-04. Beyar: "YASAL sayfalar DETAY tipiyle
+  /* 🔴 560 → 590 · ÖLÇÜLDÜ 2026-09-04. patron: "YASAL sayfalar DETAY tipiyle
      aynı" + "tip başına sabit yükseklik o tipteki EN UZUN içeriğe göre;
      kısaya göre alıp uzunu sıkıştırmak yasak". Üç yasal sayfanın üçü de
      560'lık `min-height`i AŞIYOR ve 590'a çıkıyor:
          yasal-v1 590 · saglik-bilgilendirme-v1 590 · veri-islem-kaydi-v1 590
          fit-testi-detay-v1 560 (detay ailesinin `.lib-top` taşıyan tek üyesi)
      İki aile aynı yüksekliği paylaşacaksa değer EN UZUNUN ölçüsüdür: 590.
-     Detay sayfaları 30px büyür — Beyar'ın izin verdiği boşluk. */
+     Detay sayfaları 30px büyür — patronun izin verdiği boşluk. */
   --banner-h-detay:590px;
   --banner-h-yasal:var(--banner-h-detay);   /* BEYAR: yasal = detay */
   --banner-stat-gutter:44px;   /* sol kolon ↔ şerit · kardeş marka ölçümü */
@@ -102,7 +102,7 @@
 
 /* ── TİP BAŞINA SABİT YÜKSEKLİK ──────────────────────────────────────
    `min-height` kullanılır, `height` değil: içerik beklenmedik biçimde
-   uzarsa TAŞMAZ, bant büyür. Beyar'ın "taşma/kırpma yok" şartı bu. */
+   uzarsa TAŞMAZ, bant büyür. patronun "taşma/kırpma yok" şartı bu. */
 :where(body[data-fit-hero-kind="liste"]) .lib-top{ min-height:var(--banner-h-liste, 544px); }
 :where(body[data-fit-hero-kind="detay"]) .lib-top{ min-height:var(--banner-h-detay, 560px); }
 :where(body[data-fit-hero-kind="yasal"]) .lib-top{ min-height:var(--banner-h-yasal, 560px); }
@@ -135,7 +135,7 @@
    uygulanıyor ve kabuğun kendi mobil yüksekliğini KÜÇÜLTÜYORDU
    (liste 587 → 544, 43px). Ölçüldü (hero.css ağ düzeyinde iptal edilip):
        @390  liste 587 · detay 726 · yasal 621 (kabuk yasalı liste sayıyor)
-   Beyar'ın "yasal = detay" şartıyla ikisinin ortak değeri EN UZUNUDUR:
+   patronun "yasal = detay" şartıyla ikisinin ortak değeri EN UZUNUDUR:
    726. Hiçbiri uydurulmadı; üçü de kabuğun kendi bildirdiği ölçü. */
 @media (max-width:640px){
   :root{
@@ -218,7 +218,7 @@
 /* =====================================================================
    🔴 RAPTİYE DAR LİSTEYE ÇEKİLDİ — 2026-09-05
    ---------------------------------------------------------------------
-   BULGU (Beyar): `egzersiz-detay-v1.html?slug=…` hero'sunda kırıntı
+   BULGU (patron): `egzersiz-detay-v1.html?slug=…` hero'sunda kırıntı
    (y=128, absolute) ile ÜST ETİKET (y=133.7) ÜST ÜSTE biniyordu.
    Aynı kusur `challenge-v1` ve `fit-arama`da da vardı; kardeş markada
    `g-arama`da bildirildi.
@@ -318,7 +318,7 @@
 /* ── İSTATİSTİK ŞERİDİ · SAĞDA, DİKEY, ALTA HİZALI, AYRAÇLI ──────────
    Ölçüm kardeş markalardan (kanon kaydı, `fit-shell.css` R6 şerhi):
    kolon sağa yaslı · flex COLUMN · kalem arası 16px · sol kolonla arası
-   44px · alt kenarlar Δ0. Dikey ayraç Beyar'ın şartı; referansın kendi
+   44px · alt kenarlar Δ0. Dikey ayraç patronun şartı; referansın kendi
    çizgisi (`1px rgba(255,255,255,.18)`) kanona alındı. */
 :where(body[data-fit-hero-kind]) .wrap > .lib-row > .lib-stats{
   display:flex; flex-direction:column; flex:none;

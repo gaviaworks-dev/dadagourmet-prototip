@@ -111,7 +111,7 @@
 
 .lst-sec{padding:30px 0 74px;background:var(--bg-cream)}
 .lst-layout{display:grid;grid-template-columns:272px minmax(0,1fr);gap:30px;align-items:start}
-/* Sol filtre paneli sticky offset'i — SAYI UYDURULMADI, ÖLÇÜLDÜ (Beyar
+/* Sol filtre paneli sticky offset'i — SAYI UYDURULMADI, ÖLÇÜLDÜ (patron
    2026-08-14). Üste yapışan yığın canlıda Playwright ile ölçüldü:
    `div.topbar` (40px) + `header.header` (73px) = 113px; kaydırıldıktan sonra
    da aynı (1440 ve 1024'te birebir). Mobilde topbar yok, yığın 63px — ama
@@ -179,7 +179,7 @@
 .fct.more-open .fct-more i{transform:rotate(180deg)}
 .fct-row.xtra{display:none}
 .fct.more-open .fct-row.xtra{display:flex}
-/* Hat G10 (Beyar talimatı, 2026-08-14): görselli facet satırı varyantı
+/* Hat G10 (patron talimatı, 2026-08-14): görselli facet satırı varyantı
    (.mkl-fct-pic + .fct-row .sc-ico) KALDIRILDI — sol panelde bütün gruplar
    (mutfak dahil) aynı çıplak .fct-row kalıbını (checkbox + etiket + sayı,
    gap:10px) kullanır, satır yüksekliği artık gruplar arası eşit. Üst
@@ -351,7 +351,7 @@
 
 /* "Yakınımdakileri göster" — B4 madde 2 (2026-07-27, frontend-design skill).
    A2-LISTE turunda ikon-daire + gizli-checkbox mekaniği kuruldu ama koyu
-   hero fotoğrafının üstünde küçük/soluk metin olarak durduğu için Beyar
+   hero fotoğrafının üstünde küçük/soluk metin olarak durduğu için patron
    "yeterince belirgin değil" dedi. Kart artık BEYAZ (yukarıdaki .searchcard)
    olduğu için eski "koyu zemin üstü açık metin" paleti anlamsızlaştı; yeni
    çözüm bu SAYFANIN KENDİ "aktif/vurgulu" diline (.fchip — aynı tomato-tint
@@ -376,7 +376,7 @@
 
 /* Konum kutusu autocomplete (FAZ 8 İş 3) — KAPANIŞ TURU R5 madde 3
    (2026-08-08) GÜNCELLEMESİ: bu sayfanın kendi `.ac-panel`/`.ac-item`
-   kopyası (tür rozeti solda/büyük/mor — Beyar'ın şikayeti) kaldırıldı;
+   kopyası (tür rozeti solda/büyük/mor — patronun şikayeti) kaldırıldı;
    panel+satır CSS'i artık `reference/shared/dada-autocomplete.css`den
    (kanon: Dada Route'un `.yg-ac` bloğu) geliyor — `_hero.blade.php` bu
    dosyayı `<link>` ile yükler. Tür rozetinin markup'ı da (`.ac-item__type`
@@ -503,7 +503,7 @@
    silme; buraya kural EKLEME (v7 parite ölçümünü kaydırır).
    ===================================================================== */
 
-/* Kapaksız kart — Beyar kararı (2026-08-14, hat-g8-yedek): görselsiz kart
+/* Kapaksız kart — patron kararı (2026-08-14, hat-g8-yedek): görselsiz kart
    boş `--bg-cream` kutu KALMAZ, ama mekân FOTOĞRAFI gibi görünen hiçbir şey
    basılmaz (stok/AI görsel yasak). YENİ GÖRSEL DİL İCAT EDİLMEDİ: bu, zaten
    kurulu `pf-avatar` kalıbının (tokens.css — görsel yoksa isim baş harfi,
@@ -521,7 +521,7 @@
    0 kez) → çıplak harf + boş kutu. Artık kabukta (layouts/gourmet.blade.php)
    yükleniyor, yani her yüzeyde. Sınıf adları DEĞİŞMEDİ. */
 
-/* "Doğrulanmış İşletme" — mavi tik ikonu (A2-LISTE m3, Beyar kararı).
+/* "Doğrulanmış İşletme" — mavi tik ikonu (A2-LISTE m3, patron kararı).
    R2 (2026-07-30 lead brifi) — görselin sağ üstünden başlığın SONUNA taşındı
    (Instagram mavi tik deseni: başlık metninin hemen sağında, satır içinde);
    artık görsel üstünde MUTLAK KONUMLANDIRILMIŞ bir rozet değil, `.sef-verify`
@@ -529,7 +529,7 @@
    ikon. Referansta kalıbı yok (eski 5-imza zinciri metin rozetiydi); site
    token'larında "mavi" tanımlı değil çünkü Gourmet paleti mora kayıtlı
    (--tomato). Bu ikon TÜM platformlarda evrensel "doğrulanmış hesap"
-   yakınsamasını taşıdığı için (Beyar'ın kendi ifadesiyle "mavi tik"),
+   yakınsamasını taşıdığı için (patronun kendi ifadesiyle "mavi tik"),
    tokens.css'teki amaca-özel renk kalıbı izlenerek (--green "yalnız sağlık
    bloğu", --yellow "yalnız puan") SAYFA-YEREL, TEK amaçlı bir token eklendi:
    yalnız bu rozet kullanır, kabuğa (gourmet.css) sızmaz.
@@ -589,7 +589,7 @@
    `--tomato` zemin üstünde okunmuyordu. `.mkl-popup a.btn` (0,2,1) Leaflet'in
    kuralını özgüllükle geçer, `color:#fff` ile geri kazanılır. */
 .mkl-popup a.btn{margin-top:8px;width:100%;color:#fff}
-/* Kümeleme rozeti + "yaklaşık konum" şerhi (Beyar 2026-08-11).
+/* Kümeleme rozeti + "yaklaşık konum" şerhi (patron 2026-08-11).
    YENİ GÖRSEL DİL İCAT EDİLMEDİ: rozet, §567'deki `.mkl-vpin .vp` dairesinin
    ta kendisidir — aynı 30px, aynı `--tomato` zemin, aynı beyaz çerçeve, aynı
    `--sh-md` gölge; yalnız içindeki ikon yerine SAYI durur, o yüzden tek fark
@@ -605,7 +605,7 @@
 .mkl-popup.is-cluster{min-width:240px}
 @media (max-width:640px){.mkl-map-wrap{height:460px}}
 
-/* İl faseti — arama kutusu + kaydırmalı liste (Beyar 2026-08-10, İş B madde 2).
+/* İl faseti — arama kutusu + kaydırmalı liste (patron 2026-08-10, İş B madde 2).
    YENİ BİLEŞEN İCAT EDİLMEDİ: kutu, kahraman aramasının .search-input
    kalıbının (§280-286) panel ölçüsüne inen varyantıdır; yalnız yazı boyu,
    iç boşluk ve yükseklik panele uydurulur, renk/çerçeve/radius token'dan

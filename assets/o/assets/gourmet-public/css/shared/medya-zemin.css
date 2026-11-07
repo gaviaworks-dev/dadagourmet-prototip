@@ -1,5 +1,5 @@
 /* =====================================================================
-   MEDYA ZEMİNİ — `/medya/{id}?w=` sürümünün bant seçimi (Beyar revizesi R8, 2026-09-17)
+   MEDYA ZEMİNİ — `/medya/{id}?w=` sürümünün bant seçimi (patron revizesi R8, 2026-09-17)
    Satır içi `background-image` GENİŞ bant (≥1025 px) sürümüdür; daha dar ekranda
    aynı öğenin `--zemin-orta` / `--zemin-dar` değişkeni devreye girer. Değerleri
    `App\Katalog\Servisler\MedyaSurumServisi::zeminStili()` basar; bant genişlikleri

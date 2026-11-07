@@ -354,14 +354,14 @@ a.dugme,a.sayfa-dugme,a.ikon-dugme,a.cip,a.suzgec-dugme{ text-decoration:none; }
 .dugme.birincil{ background:var(--aksan-koyu); color:var(--kagit); }
 .dugme.birincil:hover{ background:var(--aksan-koyu-2); transform:translateY(-2px); }
 
-/* 🔴 İKİNCİL KİP · O2 · Beyar kararı 2026-09-03 — "aksanın tam gücü".
+/* 🔴 İKİNCİL KİP · O2 · patron kararı 2026-09-03 — "aksanın tam gücü".
    ÖNCEKİ HÂLİ: `background:--kagit · color:--murekkep · border:--cizgi`.
    ÖLÇÜLDÜ (38 ekran · her sekme tıklanmış · görünen 88 `.hayalet`):
        yüzey ↔ kap   1.00:1      beyaz kartın üstünde BEYAZ
        kenar ↔ kap   1.18:1      #ECECEC · arayüz sınırı eşiği 3:1
        metin ↔ yüzey 16.64:1
    Yani kutunun kendisi görünmüyordu; ekranda duran tek şey etiketti.
-   Beyar bunu "siyah beyaz, tasarımsız" diye gördü.
+   patron bunu "siyah beyaz, tasarımsız" diye gördü.
 
    🔴 KAYNAK DA BİLDİRMİYOR — kanon kusuru DEĞİL, kaynağın kusuru.
    123 donör dosyası ölçüldü: `.btn-ghost` 616 örnek / 85 ekran ve
@@ -369,7 +369,7 @@ a.dugme,a.sayfa-dugme,a.ikon-dugme,a.cip,a.suzgec-dugme{ text-decoration:none; }
    Kaynağın dolgu taşıyan tek sessiz kipi `.ff-btn` de kâğıttan
    1.05:1 ayrılıyor. Yani ortada taşınacak bir ikincil düğme YOKTU.
    S1 ①'in içtihadı burada da geçerli: "kaynağın ölçülmüş kusuru,
-   kanon düzeltir" — ama değer kaynaktan gelemediği için Beyar seçti.
+   kanon düzeltir" — ama değer kaynaktan gelemediği için patron seçti.
 
    YENİ DEĞER YAZILMADI. Kanondaki nötr çizgilerin hiçbiri eşiği
    geçmiyor (`--cizgi` 1.18 · `--cizgi-vurgu` 1.36 · `--cizgi-vurgu-koyu`
@@ -805,7 +805,7 @@ a.dugme,a.sayfa-dugme,a.ikon-dugme,a.cip,a.suzgec-dugme{ text-decoration:none; }
 .rozet.bekleme{ background:var(--altin-zemin);  color:var(--altin-metin); border-color:var(--altin-cizgi); }
 .rozet.pasif{   background:var(--zemin);        color:var(--murekkep-yumusak); border-color:var(--cizgi); }
 .rozet.durdu{   background:var(--tehlike-yikama); color:var(--tehlike-koyu); border-color:var(--tehlike-cizgi-yumusak); }
-/* 🔴 KENAR BEYAZ — Beyar kararı, 2026-09-02: "KAYNAK kazanır."
+/* 🔴 KENAR BEYAZ — patron kararı, 2026-09-02: "KAYNAK kazanır."
    Ölçüldü: kaynak `1px solid #fff` basıyor, kanon `transparent` yazmıştı.
    Kapak fotoğrafının üstünde duran rozeti beyaz kenar AYIRIYOR; saydam
    kenarda rozet zemine karışıyor. Kanon kaynağa döndü. */
@@ -1019,7 +1019,7 @@ a.dugme,a.sayfa-dugme,a.ikon-dugme,a.cip,a.suzgec-dugme{ text-decoration:none; }
   .sayfa-dugme{ min-width:40px; height:40px; font-size:var(--yazi-13); padding:0 var(--bosluk-10); }
 }
 
-/* 🔴 §8a · GASTRO PUBLIC KULVARININ SAYFALAMASI — Beyar kararı, 2026-09-05.
+/* 🔴 §8a · GASTRO PUBLIC KULVARININ SAYFALAMASI — patron kararı, 2026-09-05.
    Talimat: *"tarifler.html'deki sayfalama (numaralı, başa/sona, altında
    'X kayıttan a–b') kanon bileşeni olarak tek kaynak; listeleyen her
    yüzeyde (profil sekmeleri dahil) aynı."*
@@ -1055,7 +1055,7 @@ a.dugme,a.sayfa-dugme,a.ikon-dugme,a.cip,a.suzgec-dugme{ text-decoration:none; }
       değeri DEĞİŞTİRİLMEDİ; ikiz dosya donörün değerini taşıyor.
    2) aktif hap      donör `--tomato` (beyaz metin 4.45:1)
                      ↔ §8 `--aksan-koyu` (Gastro'da 5.86:1)
-      Bu KAYITLI bir Beyar kararıdır (handoff 2026-09-04 §4 md.14:
+      Bu KAYITLI bir patron kararıdır (handoff 2026-09-04 §4 md.14:
       *"donör kazanır"*). Bu tur onu değiştirmiyor, ÖLÇÜSÜYLE buraya
       yazıyor: WCAG AA eşiği 4.5, donör bir tık ALTINDA.
 
@@ -1074,7 +1074,7 @@ a.dugme,a.sayfa-dugme,a.ikon-dugme,a.cip,a.suzgec-dugme{ text-decoration:none; }
    kaynak `.set-row{padding:17px 2px}`. Kanon 4px merdivenine yuvarlamıştı.
 
    YATAY · 🔴 KANON KARARI (02 §29 md.13) — 2px → 22px.
-   Beyar istedi (2026-09-01), ölçümle doğrulandı. Kaynakta satırın yatay
+   patron istedi (2026-09-01), ölçümle doğrulandı. Kaynakta satırın yatay
    dolgusu 2px'ti; kartın KENDİ başlığı ve ayağı 22px kullanıyor, yani
    aynı kartın içinde iki ayrı sol kenar vardı:
        .pnl-card iç kenarı  291      (@1440, 860px okuma kolonu)
@@ -1223,7 +1223,7 @@ a.ayar-satir:hover .as-ikon{ background:var(--aksan-yikama); color:var(--aksan-k
    Kök: burada `flex-wrap:wrap` yazılıydı ve `nowrap` yalnız ≤900'de
    geliyordu (aşağıdaki medya dalı). Kaynak da öyle yapıyor
    (`fit-shell.css` `.pf-tabbar .fit-tabs{flex-wrap:wrap}` + ≤900 nowrap),
-   yani bu kaynağın kendi kararıydı; Beyar onu DEĞİŞTİRDİ.
+   yani bu kaynağın kendi kararıydı; patron onu DEĞİŞTİRDİ.
    Kip kaynağın KENDİ ortalama kalıbından alındı — uydurulmadı:
        .fit-tabs.is-center{ width:fit-content; max-width:100%;
                             margin-inline:auto; justify-content:center }
@@ -1631,7 +1631,7 @@ a.ayar-satir:hover .as-ikon{ background:var(--aksan-yikama); color:var(--aksan-k
    taşıyan bant onun dışındadır. Sınıfı üretici SAYFA CSS'İNDEN TÜRETİR
    (elle liste yazılmaz — "yeşil listesi elle yazılmıştı" kusurunun dersi). */
 /* 🔴 `:not()` ÖZGÜLLÜĞÜ KENDİ SÖZLEŞMESİNİ EZDİ — ölçüldü, 2026-09-02,
-   Beyar gözle gördü ("zebra desenini düzgün kopyala, burda farklı").
+   patron gözle gördü ("zebra desenini düzgün kopyala, burda farklı").
    `:not(.kendi-zemini)` eklenince bu kuralın özgüllüğü (0,3,1) aşağıdaki
    `.zebra>.bolum.kimlik-bant` kuralının (0,3,0) ÜSTÜNE çıktı ve kimlik
    bandının zeminini beyaza çevirdi:
@@ -1668,7 +1668,7 @@ a.ayar-satir:hover .as-ikon{ background:var(--aksan-yikama); color:var(--aksan-k
 @media (max-width:640px){ .zebra>.bolum.kabuk-alti{ padding-top:var(--kabuk-h-dar); } }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   § ZEBRA ↔ KART · A3 · Beyar kararı 2026-09-03
+   § ZEBRA ↔ KART · A3 · patron kararı 2026-09-03
    ═══════════════════════════════════════════════════════════════════════
    KURAL:  KART TAŞIYAN BANT KÂĞIT OLAMAZ — zemine iner.
 
@@ -1684,7 +1684,7 @@ a.ayar-satir:hover .as-ikon{ background:var(--aksan-yikama); color:var(--aksan-k
        beyaz kart · KÂĞIT bandın üstünde   26   🔴
        beyaz kart · ZEMİN bandın üstünde   10   ✅
 
-   Yani desen ekranın içinde bile tek değil. Beyar ikisini de gördü:
+   Yani desen ekranın içinde bile tek değil. patron ikisini de gördü:
        fit-enerji-defterim#def-aktivite  bant 1 kâğıt · bant 2 zemin —
                                          aynı panoda iki ayrı kart kipi
        fit-hesabim#profil                sekmeden sekmeye değişiyor
@@ -1743,7 +1743,7 @@ a.ayar-satir:hover .as-ikon{ background:var(--aksan-yikama); color:var(--aksan-k
 }
 
 /* ── 🔴 İSTİSNA · SEKME RAYININ ARDINDAKİ PANODA DİKİŞ ÇİZGİSİ YOK ────
-   Beyar kararı, 2026-09-06 (Gastro parti 3 · L3):
+   patron kararı, 2026-09-06 (Gastro parti 3 · L3):
    "g-hesabim#bagli ve tüm g-* sekme altları: divider YOK — sekme rayı
     altındaki çizgi dahil. Zebra çözülmüş, çizgiyi de kaldır."
 
@@ -1775,7 +1775,7 @@ body[data-govde="gastro"] .sekme-ray ~ * .dikis:not(.bant-ustunde){
 }
 
 /* ── 🔴 BANT KENDİ ZEMİNİNİ BOYAMAZ · ÖLÇÜLDÜ 2026-09-04 ──────────────
-   Beyar: "sekme rayının altında tam genişlik beyaz panel var, üst kenarı
+   patron: "sekme rayının altında tam genişlik beyaz panel var, üst kenarı
    gri zeminden ince çizgiyle ayrılıyor; egzersizlerim/programlarim'da
    pano zeminde duruyor, içerik kartlar hâlinde."
 
@@ -1855,7 +1855,7 @@ body[data-govde="gastro"] .sekme-ray ~ * .dikis:not(.bant-ustunde){
            .akordeon-ok     ▾ dönen ok
          .akordeon-govde    cevap kabı (max-height ile açılır)
 
-   🔴 TEK AÇIK KALEM KURALI — Beyar kararı, 2026-09-01. BÜTÜN EKRANLARDA
+   🔴 TEK AÇIK KALEM KURALI — patron kararı, 2026-09-01. BÜTÜN EKRANLARDA
       GEÇERLİ: bir `.akordeon` grubunda aynı anda YALNIZ BİR kalem açık
       olabilir. Yeni bir kalem açılırken aynı gruptaki diğerleri kapanır;
       açık kaleme tekrar basmak onu kapatır (hepsi kapalı geçerli bir hâl).
@@ -2100,13 +2100,13 @@ body[data-govde="gastro"] .sekme-ray ~ * .dikis:not(.bant-ustunde){
    🔴 KANONA GEÇ GİRDİ VE BEDELİ ÖLÇÜLDÜ (2026-09-02, FIT v3 · slot turu).
    Kural kaynakta `destek-v1.html`in KENDİ <style> bloğundaydı, kabuk
    dosyasında değil; üretici sayfa stilini almadığı için sessizce düştü.
-   Sonuç Beyar'ın v2 ile yan yana kıyasında görüldü: panel kartları
+   Sonuç patronun v2 ile yan yana kıyasında görüldü: panel kartları
    860 yerine 1120 basılıyordu.
 
    ⚠ Bu, KOPYALAMA-KURALI'nın "kaynağın kuralı DOSYASINDA yazılıdır"
      maddesinin ikinci kez gerçekleşmesi. Aynı 860px, aynı dosya, aynı
      24 satırlık gerekçe bir tur önce de atlanmıştı ("Çip şeridi 1176px
-     basıldı, Beyar 'tablar dar' dedi"). Kural artık KANONDA — sayfa
+     basıldı, patron 'tablar dar' dedi"). Kural artık KANONDA — sayfa
      stiline geri düşmesin diye.
 
    ── KAYNAĞIN ÖLÇÜMÜ (destek-v1.html, 1440px) ─────────────────────────
@@ -2629,7 +2629,7 @@ body[data-govde="gastro"] .sekme-ray ~ * .dikis:not(.bant-ustunde){
 
 /* ---- üst bant ---- */
 /* ── 27b · KELİME MARKASI — patron dosyasından, vektör ────────────────
-   🔴 KANONA 2026-09-02'DE GİRDİ · Beyar kararı (seçenek A).
+   🔴 KANONA 2026-09-02'DE GİRDİ · patron kararı (seçenek A).
    Kaynak: `Revenge - Docs/DadaMentor-Logos.ai` (PDF-1.6) → pdftocairo -svg
            → yedi path (d·a·d·a·f·i·t) → `kanon/varlik/dadafit-kelime.svg`
 
@@ -2643,7 +2643,7 @@ body[data-govde="gastro"] .sekme-ray ~ * .dikis:not(.bant-ustunde){
    ⚠ İŞARET (kare + şimşek) DOKUNULMADI. Patron dosyasında hiçbir
      karşılığı yok, ama o dosya bir RENK/KELİME sayfası; işaretin
      YOKLUĞU "işaret olmayacak" demek mi belirsiz. HANDOFF'ta açık
-     kalem — karar Beyar'ın, kanon kendi kararıyla işaret SİLMEZ.
+     kalem — karar patronun, kanon kendi kararıyla işaret SİLMEZ.
 
    ── ÖLÇÜ ─────────────────────────────────────────────────────────────
    Vektörün kendi oranı  3.9182 : 1   (tarayıcıda getBBox ile ölçüldü)
@@ -2664,7 +2664,7 @@ body[data-govde="gastro"] .sekme-ray ~ * .dikis:not(.bant-ustunde){
    ⚠ `width:auto` + `height` — oran vektörün, kanon ONU EZMEZ.
 
    🔵 ŞERH · OPTİK EŞİTLİK — İNEN HARF TAŞIYAN MARKALAR
-      (2026-09-03, DadaGastro turunda ölçüldü · Beyar onayı)
+      (2026-09-03, DadaGastro turunda ölçüldü · patron onayı)
 
       K15 "kutu yüksekliği KORUNUR: 24px" derken kıyas KELİME MARKASI ↔
       METİN KUTUSU idi ve markada işaret vardı. Kardeş ürünler arasında
@@ -2693,7 +2693,7 @@ body[data-govde="gastro"] .sekme-ray ~ * .dikis:not(.bant-ustunde){
       kural oraya kopyalandı).
 
    🔵 ŞERH · KELİME MARKASININ RENGİ HEADER DURUMUNA BAĞLIDIR
-      (2026-09-04, DadaDiet turunda yazıldı · Beyar kuralı · DÖRT MARKA)
+      (2026-09-04, DadaDiet turunda yazıldı · patron kuralı · DÖRT MARKA)
 
       SAYDAM header (koyu hero üstünde)   → kelime markası BEYAZ
       SOLID beyaz header (kaydırınca)     → kelime markası MARKA RENGİ
@@ -2729,7 +2729,7 @@ body[data-govde="gastro"] .sekme-ray ~ * .dikis:not(.bant-ustunde){
   flex:0 0 auto;
   /* 🔴 RENK YÜZEYDEN GELİR, SVG'YE SABİTLENMEZ — ölçüldü, 2026-09-02.
      İlk yazımda path'ler `fill="var(--marka)"` taşıyordu ve kelime
-     markası HER yüzeyde marka mavisi basıyordu. Beyar footer'da gördü:
+     markası HER yüzeyde marka mavisi basıyordu. patron footer'da gördü:
          dolgu  rgb(0,147,208)   --marka
          zemin  rgb(0,114,161)   --marka-koyu (dip zemini)
          KONTRAST 1.54:1  ← mavi üstüne mavi, OKUNMUYOR
@@ -2745,13 +2745,13 @@ body[data-govde="gastro"] .sekme-ray ~ * .dikis:not(.bant-ustunde){
 .footer .fit-word-mark{ color:var(--kagit); }
 
 /* ── 27c · DİP BAŞLIKLARINDA ALT ÇİZGİ YOK ────────────────────────────
-   🔴 K16 · Beyar kararı, 2026-09-02: *"footer'daki bu ana başlıkların
+   🔴 K16 · patron kararı, 2026-09-02: *"footer'daki bu ana başlıkların
    altında çizgi olmayacak, gerek yok, kaldır."*
 
    ⚠ BU BİR KUSUR DÜZELTMESİ DEĞİL, KANON KARARIDIR. Kaynak çizgiyi
      bilerek çiziyor ve ölçüldü — İKİ tarafta da aynı:
          .foot-col h5 { border-bottom: 1px solid rgb(236,236,236) }
-     Yani kanon kaynakla AYNIYDI; fark Beyar'ın kararıyla doğdu.
+     Yani kanon kaynakla AYNIYDI; fark patronun kararıyla doğdu.
      KUSURU BİLDİR-DÜZELTME kuralı burada çiğnenmiyor: kural
      "ajan kendi kararıyla düzeltmez" der, bu karar ajanın değil.
    ⚠ `02-bilesenler.md §29`a kanon kararı olarak girer. */
@@ -2798,7 +2798,7 @@ body[data-govde="gastro"] .sekme-ray ~ * .dikis:not(.bant-ustunde){
      kanon  background #fff · border --cizgi
             backdrop-filter saturate(1.5) blur(10px) · gölge var
    Yani görselli bandın üstünde header SOLID BEYAZ duruyordu ve bandın
-   üst şeridini kesiyordu (Beyar gözle yakaladı).
+   üst şeridini kesiyordu (patron gözle yakaladı).
 
    ⚠ İçerik de beyaza döner — marka yazısı, menü, ikon düğmeleri. Renk
    tek tek yazılmaz: hepsi `--kagit`e bağlanır, çünkü koyu bandın üstünde
@@ -3634,7 +3634,7 @@ a[aria-disabled="true"].pasif{ opacity:.45; }
 }
 /* 🔴 KAYNAKTA KUSUR — kaynak `#a7a7a7` yazıyor, `--zemin` üstünde 2.29:1.
    HANDOFF §5.3 o değeri ÖLÇÜMLE elemişti; kanon kendi tokenini kullanır
-   (#6f6f6f · 4.77:1). slot-1 K4 olarak bildirdi, Beyar onayladı. */
+   (#6f6f6f · 4.77:1). slot-1 K4 olarak bildirdi, patron onayladı. */
 .arama-kutu input::placeholder{ color:var(--yer-tutucu); font-weight:var(--agirlik-govde); }
 .arama-satir .dugme{ flex:none; padding:0 var(--bosluk-26); }
 
@@ -3840,7 +3840,7 @@ a[aria-disabled="true"].pasif{ opacity:.45; }
 .son-arama-satir:hover{ color:var(--aksan-koyu); }
 .son-arama-satir:hover .ok{ color:var(--aksan); transform:translateX(3px); }
 
-/* ---- TIBBİ BİLGİLENDİRME ŞERİDİ (Beyar kararı C2 — korunur) ---------- */
+/* ---- TIBBİ BİLGİLENDİRME ŞERİDİ (patron kararı C2 — korunur) ---------- */
 .uyari-serit{ background:var(--aksan-yikama-2); border-top:var(--cizgi-1) solid var(--aksan-cizgi-3); }
 .uyari-serit>.kap{
   display:flex; align-items:flex-start; gap:var(--bosluk-14);
@@ -3942,7 +3942,7 @@ a[aria-disabled="true"].pasif{ opacity:.45; }
       Ayrıca overflow:hidden, içindeki position:sticky öğelerin
       yapışmasını bozar."
 
-   Ölçülen sonuç (Beyar gözle bildirdi, kaydırma sınamasıyla doğrulandı):
+   Ölçülen sonuç (patron gözle bildirdi, kaydırma sınamasıyla doğrulandı):
      FIT    html/body overflow-x:clip   → y `visible` kalır
             .au-visual  369px YAPIŞIYOR
      kanon  html/body overflow-x:hidden → y `auto`ya döner, kök bir
@@ -4242,7 +4242,7 @@ body{ overflow-x:clip; }
 
 /* T3 · Rol segmentinin İKİNCİ kalemi bir BAĞLANTI, seçim değil — antrenör/
    diyetisyen başvurusuna gider. §61 yalnız `button` yazıyordu, bağlantı
-   raydan taşıyordu (Beyar ekran görüntüsünde gördü). */
+   raydan taşıyordu (patron ekran görüntüsünde gördü). */
 .giris-segment .segment-baglanti{
   /* `flex:1`in `0%` tabanı uzun etiketi kabı taşırıyordu; kaynak
      `0` + `min-width:0` yazıyor. */
@@ -4536,7 +4536,7 @@ body{ overflow-x:clip; }
 .pg-etiket{
   display:inline-flex; align-items:center; gap:var(--bosluk-6);
   font-size:var(--yazi-11); font-weight:var(--agirlik-ekstra);
-  letter-spacing:var(--aralik-versal); text-transform:uppercase;  /* Beyar: .08 → .06 */
+  letter-spacing:var(--aralik-versal); text-transform:uppercase;  /* patron: .08 → .06 */
   color:var(--aksan); background:var(--aksan-yikama);
   padding:var(--bosluk-4) var(--bosluk-10); border-radius:var(--yuvarlak-sm);
 }
@@ -5516,7 +5516,7 @@ body{ overflow-x:clip; }
    Ölçüldü (`fit-mesaj.css:206-214`, render doğrulamalı): kutu 11×11 ·
    2px kâğıt kenar · sağ/alt −2 · daire. Geometri kanonda zaten doğruydu,
    eksik olan DURUM AİLESİydi ve rozetin koşulsuz basılması.
-   ⚠ Beyar gözle bildirdi: "FIT'te ikisinde de sağ altta durum noktası
+   ⚠ patron gözle bildirdi: "FIT'te ikisinde de sağ altta durum noktası
    var." Kaynağın iki çipi de `.msj-mono.ok` taşıyor; kanon ikincisine
    `data-onayli="0"` verip rozeti hiç basmıyordu — yani "onaylı değil"i
    "durumu yok" diye çizmişti. Durum hep vardır, rengi değişir. */
@@ -5596,7 +5596,7 @@ body{ overflow-x:clip; }
    Panelin ÜSTÜNDEKİ maket dürüstlük satırı bambaşka bir kalem:
      <div class="hr-note"><i class="fa-solid fa-flask"></i><p>…</p></div>
    yani kaynağın `.hr-note`u = kanonun §16 `.bilgi-notu`su — aksan
-   yıkamalı KUTU, solda deney şişesi ikonu. Beyar gözle bildirdi.
+   yıkamalı KUTU, solda deney şişesi ikonu. patron gözle bildirdi.
    ⚠ İki uyarı iki ayrı şey: biri "bu ekran maket" (üstte, bilgi kutusu),
    öbürü "depolama kapalı" (dibte, kırmızı satır). Kanon ikisini tek ada
    indirmişti — "iki kaynak sınıfı tek ada indi" dersinin YEDİNCİ örneği,
@@ -5830,7 +5830,7 @@ body{ overflow-x:clip; }
    ⚠ Sınıf dikişin ÜSTÜNE değil, aynı elemana verilir: `.dikis` yalnız
    köşe ve binme yazar, dolgu gövdenin kendi kalemidir. */
 /* 🔴 DİKİŞ TAŞIYICISI BOYAMAK ZORUNDA — ölçüldü, 2026-09-03 (B6).
-   Beyar gözle gördü: "fit-bildirimler'de beyaz panelin üst köşesi
+   patron gözle gördü: "fit-bildirimler'de beyaz panelin üst köşesi
    radiussuz". Kutu `--dikis-r` (22px) yuvarlağını ve `-22px` binmesini
    ZATEN taşıyordu; görünmüyordu çünkü SAYDAMDI — yuvarlatılan köşe
    boyanmayan bir kutuda çizilmez, arkadaki katman kare kalır.
@@ -6056,7 +6056,7 @@ body{ overflow-x:clip; }
    listeyi 8 kalemde kırpıp kalanı buraya taşıyor; Diyet'in üç kademesinin
    listeleri 6 · 8 · 0 kalem, yani hiçbiri kırpılmıyor ve "ve 0 özellik
    daha" demek anlamsız olurdu.
-   ⚠ Beyar bu bağlantının EKSİK olduğunu gözle bildirdi (2026-09-02) ve
+   ⚠ patron bu bağlantının EKSİK olduğunu gözle bildirdi (2026-09-02) ve
    haklıydı — ama kökü yapı değil VERİ. Kip yine de kanona yazılır: Diyet'in
    listesi sekiz kalemi geçtiği gün bağlantı kendiliğinden doğar. Kuralı
    yazmamak, o günü sessiz bir eksiğe çevirirdi.
@@ -6075,7 +6075,7 @@ body{ overflow-x:clip; }
    ⚠ VE BU KALEM BİR KARARA BAĞLI: Diyet'in sayılarının düşük olmasının
    sebebi kademelerin AYRIK modellenmesi (her biri tam 14 kalem: 6+8 ·
    8+6 · 0+14); kaynak KÜMÜLATİF (üst kademe alttakinin tamamını içerir).
-   Beyar kademeleri kümülatif yaparsa Pro 14 açık kaleme çıkar, gizli 6
+   patron kademeleri kümülatif yaparsa Pro 14 açık kaleme çıkar, gizli 6
    olur ve satır KENDİLİĞİNDEN doğar. Kural o gün için burada duruyor. */
 .kademe-daha{
   display:inline-flex; align-items:center; gap:var(--bosluk-7);
@@ -6694,7 +6694,7 @@ body{ overflow-x:clip; }
 /* 🔴 İKON GRİ VE 12.5px ÇİZİLİYOR — kaynağın kendi bildirimi 18px/yeşil
    ama `.fy-drop>span` (0,1,1) onu yeniyor ve `.fy-drop-ico` (0,1,0)
    kaybediyor. KANON ÇİZİLENİ BASAR (`.btn-sm` emsali, 02 §29 dışı).
-   Kusur raporda ölçüsüyle bildirildi; düzeltme kararı Beyar'da. */
+   Kusur raporda ölçüsüyle bildirildi; düzeltme kararı patron'da. */
 .birak-ikon{
   width:46px; height:46px; border-radius:var(--yuvarlak-md);
   background:var(--aksan-yikama-2); display:grid; place-items:center;
@@ -6941,7 +6941,7 @@ body{ overflow-x:clip; }
   letter-spacing:var(--aralik-etiket-2); gap:var(--bosluk-6);
 }
 .durum-hapi.kucuk-ikonlu::before{ content:none; }
-/* 🔴 KENARLIK GÖRÜNÜR, ŞEFFAF DEĞİL — Beyar gözle buldu, ölçüm doğruladı.
+/* 🔴 KENARLIK GÖRÜNÜR, ŞEFFAF DEĞİL — patron gözle buldu, ölçüm doğruladı.
    Taban `kucuk-ikonlu` kenarı `transparent` bırakıyordu ve `kapali` durumu
    kendi zeminini getiriyordu; kaynağın `.hs-pill.off`u ikisini de yazıyor:
      FIT    kenar rgb(236,236,236) = --cizgi   zemin rgb(249,249,249) = --zemin
@@ -7379,7 +7379,7 @@ body{ overflow-x:clip; }
    Kaynak `fit-shell.css:3721`. Sınıfı kabuk JS'i çalışma anında basar
    (banttan sonraki ilk opak, yapışkan olmayan blok).
    🔴 GÖLGE YOKTUR. `:3722` `box-shadow:0 -12px 32px …` yazar ama `:3754`
-   aynı seçiciyi tekrar bildirip `box-shadow:none` der (Beyar kararı
+   aynı seçiciyi tekrar bildirip `box-shadow:none` der (patron kararı
    2026-08-24: "dikiş yalnız 22px yuvarlak köşe + binmeyle okunacak").
    Render edilmiş DOM'da ölçülen: `none`. CSS okunup durulsaydı gölge
    basılacaktı — §10 md.3'ün ders kitabı örneği (slot-1 yakaladı). */
@@ -7771,7 +7771,7 @@ body{ overflow-x:clip; }
 
    ⚠ GÖRSEL VARLIĞI YÜKSEKLİĞİ ETKİLEMİYOR — ölçüldü: DURUM'un 6 GÖRSELSİZ
      sayfası, LISTE'nin 20 GÖRSELLİ sayfasıyla BİREBİR aynı kutuda.
-     Beyar'ın "görselli banner'lar tutarlı" kuralı ölçümle DOĞRULANDI;
+     patronun "görselli banner'lar tutarlı" kuralı ölçümle DOĞRULANDI;
      görsel bir yükseklik değişkeni değil.
 
    ⚠ KİMLİK AKIŞI (giris-v1) BU SÖZLEŞMENİN DIŞINDA. `.au-top` bir banner
@@ -7848,7 +7848,7 @@ body:has(.kapak) .kabuk-basi.tepede{
    | sayfa                   | ölçülen        | ailesi          | fark        |
    |-------------------------|----------------|-----------------|-------------|
    | fit-testi-sonuc-v1      | 544 / 587      | DETAY (560/726) | −16 / −139  |
-   | yasal-v1                | 544 / 587      | DETAY (Beyar)   | −16 / −139  |
+   | yasal-v1                | 544 / 587      | DETAY (patron)   | −16 / −139  |
    | antrenor-detay-v1       | 577.78/736.31  | DETAY           | +17.8/+10.3 |
    | profil-v1               | 687.84/876.09  | KAPAK           | başka bileşen|
    | arama-fit-v1 (@390 pb)  | 24px           | 34px            | −10px       |
@@ -7864,7 +7864,7 @@ body:has(.kapak) .kabuk-basi.tepede{
       Ölçülen değer o sabite oturmuyor — kaynağın kendi hedefiyle çelişen,
       ölçülmüş kusur.
 
-   ⚠ `yasal-v1` fiilen bir LİSTE bandı taşıyor. Beyar "yasal detay grubuna
+   ⚠ `yasal-v1` fiilen bir LİSTE bandı taşıyor. patron "yasal detay grubuna
      dahil" dediği için kanon onu DETAY sayar; kaynak sapması burada kayıtlı.
    --------------------------------------------------------------------- */
 
@@ -7948,7 +7948,7 @@ body:has(.kapak) .kabuk-basi.tepede{
 /* ---------------------------------------------------------------------
    67.2 · POZİSYON ROLLERİ — ✅ BEYAR KARARI, 2026-09-02
    ---------------------------------------------------------------------
-   Beyar'ın kuralı: "pozisyon rolü sabit kalır, içerik markaya göre
+   patronun kuralı: "pozisyon rolü sabit kalır, içerik markaya göre
    değişir." Ölçüm YAPIYI doğruladı (5 kalem · FAB 3) ama ROLLERİ
    doğrulamadı — iki marka yalnız TEK pozisyonda anlaşıyordu:
 
@@ -7961,12 +7961,12 @@ body:has(.kapak) .kabuk-basi.tepede{
       5   Ana Site         fa-house       Profil         fa-user        FARKLI
 
    `fa-house` Diyet'te 5., FIT'te 1. pozisyondaydı; ortadaki FAB Diyet'te
-   UZMANA, FIT'te İÇERİK MERKEZİNE gidiyordu. Beyar'ın gördüğü tutarsızlık
+   UZMANA, FIT'te İÇERİK MERKEZİNE gidiyordu. patronun gördüğü tutarsızlık
    buydu ("Diyet'in mobilinde ortada profil ikonu var" — ölçüm o ikonun
    `fa-user-doctor`, yani DİYETİSYEN olduğunu gösterdi).
 
    🔴 ROL TABLOSU ÖLÇÜMLE BELİRLENEMEZ. İki markanın çoğunluğu yok
-      (2 marka, 1 kesişim). Kanon tabloyu UYDURMADI, Beyar'a sordu.
+      (2 marka, 1 kesişim). Kanon tabloyu UYDURMADI, patrona sordu.
 
    ── KANON TABLOSU (onaylandı) ────────────────────────────────────────
    Her pozisyon, DÖRT markanın da SAYFASI OLAN bir role bağlandı — yani
@@ -8018,7 +8018,7 @@ body:has(.kapak) .kabuk-basi.tepede{
                             kabuk ölçümünde okundu).
      poz 5 "Hesabım"     ✅ BEYAR SEÇTİ — "kullanıcının kendi alanı,
                             profil sayfasından daha geniş". Diyet zaten
-                            "Hesabım" diyordu, FIT "Profil"; Beyar
+                            "Hesabım" diyordu, FIT "Profil"; patron
                             Diyet'inkini dördüne birden verdi.
      poz 1 "Keşfet"      ⚠ SEÇİM — hiçbir markada bu kelime ölçülmedi.
                             Rol adı olarak seçildi çünkü iki markanın
@@ -8035,7 +8035,7 @@ body:has(.kapak) .kabuk-basi.tepede{
 
    ⚠ ALAN ÖZGÜLLÜĞÜ MALİYETİ — lead'in şerhi, kayda geçsin: "Hareketler"
      kullanıcıya "Keşfet"ten daha çok şey söyler. Ortak etiket bu
-     özgüllüğü kaybettirir. Beyar bunu bilerek seçti; kazanç markalar
+     özgüllüğü kaybettirir. patron bunu bilerek seçti; kazanç markalar
      arası kabuk kararlılığı, bedel alan özgüllüğü.
 
    ── BU KARARIN İKİ MARKAYA MALİYETİ ──────────────────────────────────
@@ -8064,7 +8064,7 @@ body:has(.kapak) .kabuk-basi.tepede{
       "Programlar" (FAB) ve "Programlarım" ikisi de `fa-solid fa-dumbbell`
       taşıyordu; yan yana iki nav kalemi aynı glifle duruyordu. Yeni
       tabloda FAB uzman rolüne geçtiği için glif de ayrışıyor.
-      ⚠ Beyar "şimdilik dursun" dedi — glif DEĞİŞTİRİLMEDİ, kusur
+      ⚠ patron "şimdilik dursun" dedi — glif DEĞİŞTİRİLMEDİ, kusur
         `02-bilesenler.md`de kayıtlı. Rol tablosu uygulandığında bu kalem
         yeniden bakılır; kanon glifi kendi kararıyla değiştirmez (İKON
         SEÇİMİ KANON KARARI DEĞİL).
@@ -8079,7 +8079,7 @@ body:has(.kapak) .kabuk-basi.tepede{
 
    FIT v3'te kabuk kapsayıcıları ikili ada geçince kural İLK KEZ bir
    tüketiciye kavuştu ve çubuk masaüstünde SAYFANIN TEPESİNE çizildi,
-   header'ı örttü (Beyar'a giden ilk ekranda gözle görüldü).
+   header'ı örttü (patrona giden ilk ekranda gözle görüldü).
 
    Ölçüt kaynağın kendi bildirimi — `fit-shell.css`:
        .bottom-nav{display:none}                       ← taban
@@ -8142,10 +8142,10 @@ body:has(.kapak) .kabuk-basi.tepede{
      121  `#rpModal`    / hareket havuzu seçici   🔴 `--kat-modal`ı (98) AŞIYOR
 
    🔴 `rp-modal` EKRANA ÖZEL KURALIN TA KENDİSİ: bir sayfa kanonun tepe
-      kademesini (98) aşan kendi numarasını icat etmiş. Beyar'ın "ekran
+      kademesini (98) aşan kendi numarasını icat etmiş. patronun "ekran
       başına çözülmeyecek" dediği şey birebir bu. İç içe modal gerçek bir
       ihtiyaçsa kanonda kendi kademesini alır; değilse 97/98'e iner.
-      DÜZELTİLMEDİ — karar Beyar'ın.
+      DÜZELTİLMEDİ — karar patronun.
 
    ⚠ BU BEŞİ TÜKETİCİSİYLE BİRLİKTE BİLDİRİLİR, ÖNCE DEĞİL. Kanon ölü
      token üretmez; `--kat-alt-bar` bu turda bildirildi çünkü §67 ona
@@ -8173,7 +8173,7 @@ body:has(.kapak) .kabuk-basi.tepede{
    ⚠ `01-tokenlar.md` bu çelişkiyi ZATEN kaydetmişti ("`.cookie-banner`
      (95) = `.drawer-overlay` (95)"). Ölçüm onu doğruladı ve ÜÇÜNCÜ bir
      kullanıcı ekledi. Çözüm önerisi: çerez şeridi kendi adını alsın;
-     karar Beyar'ın, kanon kendi başına ayırmadı.
+     karar patronun, kanon kendi başına ayırmadı.
 
    ⚠ `--kat-yuzen-dugme:73` ve `--kat-sohbet-dugme:73` TEK bir gerçek
      düğmeyi (`#msjFab`) iki adla tanımlıyor. Çakışma değil, gereksiz
@@ -8284,7 +8284,7 @@ body:has(.kapak) .kabuk-basi.tepede{
        @390 · DAHA AĞIR — `egzersiz-kutuphane-v1` ve `program-liste-v1`de
        filtre çubuğunun **116px'inin 116'sı**, yani TAMAMI örtülü:
        ilk ziyarette süzgeç hiç erişilemiyor.
-       ⚠ Bu iki fab'ın binmesi değil ama Beyar'ın istif kuralının ruhuna
+       ⚠ Bu iki fab'ın binmesi değil ama patronun istif kuralının ruhuna
          giriyor: geçici bir şerit kalıcı içeriği yutuyor.
 
    D · ✅ ÇEREZ/YÜZEN ÇÖZÜMÜ ÇALIŞIYOR ama İKİ AYRI STRATEJİ
@@ -8297,7 +8297,7 @@ body:has(.kapak) .kabuk-basi.tepede{
 /* ---------------------------------------------------------------------
    68.4 · 🔴 SOHBET AÇIKKEN — GÖRSEL DEĞİL, ODAK SIZDIRIYOR
    ---------------------------------------------------------------------
-   Beyar'ın kuralı: "Sohbet paneli açıkken arkasında başka fab
+   patronun kuralı: "Sohbet paneli açıkken arkasında başka fab
    görünmeyecek."
 
    ✅ GÖRSEL TARAFTA SORUN YOK. Panel açıkken `#msjOrtu` (z94, tam ekran,
@@ -8318,7 +8318,7 @@ body:has(.kapak) .kabuk-basi.tepede{
         22–24  panel DIŞI  zil · "Giriş Yap"        ← görünmüyor
 
       Yani klavye kullanıcısı "sohbetteyim" sanırken Enter'a basıp BAŞKA
-      MARKAYA geçebilir ya da giriş akışını tetikleyebilir. Beyar'ın
+      MARKAYA geçebilir ya da giriş akışını tetikleyebilir. patronun
       tarif ettiği ihlalin ta kendisi — görünürlük değil, ERİŞİLEBİLİRLİK
       düzeyinde.
 
@@ -8570,12 +8570,12 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
    ---------------------------------------------------------------------
    Dördü de AYNI AİLEDEN: kaynağın kuralı VAR, kanonda karşılığı YOK.
    §63d'nin ("durum varyantı taban sanıldı") kardeşi: burada varyant
-   değil ALT KALEM düşmüş. Beyar'ın sözü: "kopyalamaları ada akıllı yap."
+   değil ALT KALEM düşmüş. patronun sözü: "kopyalamaları ada akıllı yap."
    Hepsi GENEL kural — tek ekrana yama değil.
    ===================================================================== */
 
 /* ── 73a · KATEGORİ/SEKME ŞERİDİ ORTALIDIR ────────────────────────────
-   Beyar: "kategoriler merkezi olur". Ölçüldü (hesabim@1440):
+   patron: "kategoriler merkezi olur". Ölçüldü (hesabim@1440):
        v2  .pf-tabs.is-center → justify-content: safe center
        v3  .sekmeler          → justify-content: normal   (sola yaslı)
    Kök: kaynağın `is-center` değiştiricisi haritada yok ve kanonun TABAN
@@ -8585,7 +8585,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 .sekmeler{ justify-content:safe center; }
 
 /* ── 73b · KART AYAĞINDAKİ EYLEM SAĞA YASLANIR ────────────────────────
-   Beyar: "butonlar sağdaysa güncel fitte de sağda olur". Ölçüldü
+   patron: "butonlar sağdaysa güncel fitte de sağda olur". Ölçüldü
    (hesabim@1440 · "Değişiklikleri Kaydet"):
        v2  .pnl-card .pc-foot  display:flex  → düğme sağ kenardan 22px
        v3  .kart.panel>.kart-alt display:block → düğme SOLDA (sol 187px)
@@ -8620,7 +8620,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
      kontrol etmekten muaf tutmuyor. */
 
 /* ── 73c · BANDIN SONUNDAKİ BİLGİ NOTU PERDEYE YAPIŞMAZ ───────────────
-   Beyar: "burdaki infolar genel olarak perdenin sonuyla arasında biraz
+   patron: "burdaki infolar genel olarak perdenin sonuyla arasında biraz
    boşluk olsun". Ölçüldü: bandın son kalemi bilgi notu olduğunda alt
    payı 0 kalıyor ve not doğrudan dip perdesine dayanıyor.
    Değer kaynağın kendi not aralığından (`.hr-note{margin:0 0 16px}`)
@@ -8630,7 +8630,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 .fit-pane>.bilgi-notu:last-child{ margin-bottom:var(--bosluk-24); }
 
 /* ── 73d · AİLE BAŞLIĞININ İKONU MARKA RENGİNDEDİR ────────────────────
-   Beyar: "kopyaladığımız donörde bu section'ların ikonları renkli".
+   patron: "kopyaladığımız donörde bu section'ların ikonları renkli".
    Ölçüldü — kaynak `.badge-head h3 i{color:var(--fit);font-size:14px}`;
    kanonun `.rozet-aile-bas h3` kuralı var, `h3 i` kuralı YOK → ikon
    `h1..h4{color:var(--slate)}` mirasına düşüp mürekkep rengi oluyor.
@@ -8749,7 +8749,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ═══════════════════════════════════════════════════════════════════
-   § EYLEM SATIRI · A1 · Beyar kararı 2026-09-03
+   § EYLEM SATIRI · A1 · patron kararı 2026-09-03
    -------------------------------------------------------------------
    ÖLÇÜLDÜ: kanon AYNI düzeni İKİ KEZ bağlam adıyla yazmış —
        .modal-eylemler{ flex · gap-10 · wrap · margin-bottom-16 }
@@ -8772,7 +8772,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 .kart-eylem{ margin-top:var(--bosluk-18); }
 
 /* ═══════════════════════════════════════════════════════════════════
-   § KART IZGARASI · A2 + A5 · Beyar kararı: tek `.kart-izgara`
+   § KART IZGARASI · A2 + A5 · patron kararı: tek `.kart-izgara`
    -------------------------------------------------------------------
    ÖLÇÜLDÜ: `repeat(3,minmax(0,1fr))` kanonda İKİ KEZ vardı ama ikisi de
    başka rolde (`.kunye.belge` kimlik ızgarası · `.alan-izgara.c3` form
@@ -8823,7 +8823,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 .durum-hapi.kose.sag-ust{ top:var(--bosluk-12); right:var(--bosluk-12); }
 
 /* ═══════════════════════════════════════════════════════════════════
-   § MADDE LİSTESİ · İKİ KOLONLU KİP · Beyar kararı: YÖN B
+   § MADDE LİSTESİ · İKİ KOLONLU KİP · patron kararı: YÖN B
    -------------------------------------------------------------------
    Özellik listesi üç yön ölçüldü: A tek kolon (liste uzun kalıyor) ·
    B iki kolon (mevcut bileşenin varyantı) · C kart yüzeyli ızgara
@@ -8849,7 +8849,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ═══════════════════════════════════════════════════════════════════════
-   § SÖZLEŞME · 2026-09-03 · Beyar kararı
+   § SÖZLEŞME · 2026-09-03 · patron kararı
    ═══════════════════════════════════════════════════════════════════════
    "Bu turdaki kalemler tek aileden — dağınık yazma, tek sözleşme kur."
 
@@ -8874,7 +8874,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S1 · EYLEM SATIRI ─────────────────────────────────────────────────
-   Beyar: "düğmeler kart ayağında, sağa yaslı. Yıkıcı eylem (sil)
+   patron: "düğmeler kart ayağında, sağa yaslı. Yıkıcı eylem (sil)
    ikincil/hayalet, ana eylem birincil. Tek boy, tek kural."
 
    ① TEK BOY. ÖLÇÜLDÜ (13 ekran · görünen 123 `.dugme`): AYNI sınıf,
@@ -8883,7 +8883,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
       ve 123'ün 73'ü 52px'ti. Sebep `.dugme`nin satır yüksekliği
       BİLDİRMEMESİ: gövdeden miras alıyor (`--satir-govde` 1.55 →
       14.5×1.55 = 22.475px), yani düğmenin boyunu İÇİNE KONDUĞU KAP
-      belirliyordu. Beyar bunu "butonlar çok kötü" diye gördü:
+      belirliyordu. patron bunu "butonlar çok kötü" diye gördü:
       planlanan egzersizler 52px ↔ bugünkü egzersizler 45px, aynı sınıf.
       Kaynak da bildirmiyor (`fit-shell.css:242` `.btn`) — kaynağın
       ölçülmüş kusuru, kanon düzeltir.
@@ -8929,7 +8929,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
       temizle" sağda; okuma yönünde son duran kalem ikincil eylemdi.
       Sıra `order` ile kanondan verilir, 13 ekranın hiçbirinde markup'a
       dokunulmaz.
-      KİP SEÇİMİ — Beyar'ın kuralı, kanonun kendi ailesiyle:
+      KİP SEÇİMİ — patronun kuralı, kanonun kendi ailesiyle:
           onaylayan / kaydeden      → `.dugme.birincil`  dolgu aksan
           geri alan / temizleyen    → `.dugme.hayalet`   aksan kenarlı ikincil
           YIKICI (sil)              → `.dugme.hayalet`   ✅ ikincil kip
@@ -8984,7 +8984,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 .kart-alt>:not(.dugme):first-child{ margin-right:auto; }
 .kart-alt>.dugme{ order:1; }
 .kart-alt>.dugme.birincil{ order:2; }
-/* ⑥ YALNIZ-METİN AYAK ORTALI · A4 · Beyar kararı 2026-09-03.
+/* ⑥ YALNIZ-METİN AYAK ORTALI · A4 · patron kararı 2026-09-03.
    Düğme ya da sayfalama taşıyan ayak ③④'te kalır (not solda, grup
    sağda); hiçbirini taşımayan ayak tek başına bir bilgi satırıdır ve
    ortalanır. ③'ün `margin-right:auto`su burada sıfırlanır, yoksa ilk
@@ -8993,20 +8993,20 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
      metin gibi görünen ayakların HEPSİ bir düğme ya da sayfalama
      taşıyor ("Son güncelleme: 2 gün önce" + kaydet · "4 kayıttan 1-4" +
      sayfalama). Lead'in "10 düğmesiz ayak sağa yaslı" tespiti a4
-     ölçümünün yalnız METNİ okumasından geldi; yanlıştı. Kural Beyar'ın
+     ölçümünün yalnız METNİ okumasından geldi; yanlıştı. Kural patronun
      kararıyla duruyor, ilk düğmesiz ayak geldiğinde çalışır. */
 .kart-alt:not(:has(.dugme,.sayfalama,button)){ justify-content:center; text-align:center; }
 .kart-alt:not(:has(.dugme,.sayfalama,button))>:first-child{ margin-right:0; }
 
 
 /* ── S2 · BİLGİ NOTU ───────────────────────────────────────────────────
-   Beyar: "alt komşusuyla bölüm nefesi kadar mesafe, 860 kolonunda tam
+   patron: "alt komşusuyla bölüm nefesi kadar mesafe, 860 kolonunda tam
    genişlik. Bitişik durmayacak."
 
    ① ALT NEFES. §16 üst payı (34px) yazıyor, alt payı YAZMIYOR. Not bir
       tabloyu/kartı anlatıyorsa aralık 0px çıkıyor — ölçüldü:
       challengelarim `#puan` (not → `.kart` 0px) ve `#siralama`,
-      enerji-defterim. Beyar: "burda info var, altındaki komponentle
+      enerji-defterim. patron: "burda info var, altındaki komponentle
       mesafe olacak". Değer `--bolum-nefes-sik` (32px) — S3'ün kart
       aralığı DEĞİL: not bir bileşen değil, bir bölüm başlangıcıdır ve
       §74d'nin blok ritmiyle aynı nefesi alır.
@@ -9018,7 +9018,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
       için doğru; kartın/tablonun ÜSTÜNDE duran not, anlattığı
       bileşenden dar kalınca ekranda kaymış görünüyor.
       ÖLÇÜLDÜ (13 ekran @1440 · görünen 16 not): notların TAMAMI 860px,
-      kardeşleri 1176px (bir ekranda 1112). Beyar: "bu infolar
+      kardeşleri 1176px (bir ekranda 1112). patron: "bu infolar
       yayılacak, genişliği".
       Yeni ölçü YAZILMADI — `max-width` kalkınca not kabın kendi içerik
       genişliğini alıyor, yani kardeşleriyle BİREBİR aynı.
@@ -9028,7 +9028,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 .bilgi-notu:has(+ *){ margin-bottom:var(--bolum-nefes-sik); }
 .modul-govde .kap > .bilgi-notu{ max-width:none; margin-inline:0; }
 
-/* ③ PANO SONU NOTU · A4 · Beyar kararı 2026-09-03.
+/* ③ PANO SONU NOTU · A4 · patron kararı 2026-09-03.
    "Ayraç altı bilgi satırı: ortalı, ayraçla nefes, sayfa sonu boşluğu."
 
    Aynı rolü İKİ ad oynuyor ve dördü de farklıydı — ÖLÇÜLDÜ (13 ekran ·
@@ -9041,13 +9041,13 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
    `main{margin-bottom:585px}` — içerik gövdenin dibinde biter, son not
    ile sayfa ucu arasında kaba göre DÖRT değer.
 
-   Beyar: ayraç nefesi 23 (§16'nın kendi değeri, `--bosluk-20`), altına
+   patron: ayraç nefesi 23 (§16'nın kendi değeri, `--bosluk-20`), altına
    `--bolum-nefes-sik` (32 — S3'ün pano ritmi), ortalı. Yeni ad YOK: kip
    konumdan okunur (pano içinde, kabının son çocuğu, kart soyu yok).
    Kart İÇİ `.alt-not` (hesabim · odemelerim · paketlerim#paketim,
    `.kart-govde` çocuğu) §15'in asıl rolüdür, bu kip ona dokunmaz.
    ⚠ Üçüncü örnek 2026-09-04'te ADRES DEĞİŞTİRDİ: "Yükseltme / Düşürme"
-     sekmesi Beyar kararıyla kalktı (Gastro'da da kaldırılmıştı) ve
+     sekmesi patron kararıyla kalktı (Gastro'da da kaldırılmıştı) ve
      `#odIptalCard` "Mevcut Paketim" panosuna taşındı. Kural değişmedi,
      yalnız örneğin çapası. Gömülü kanon kopyaları bu satırda eski
      yazımı taşıyor (39 dosya, 17'si Diyet — kulvar dışı); fark ŞERHTE,
@@ -9073,7 +9073,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S3 · KART ARALIĞI ─────────────────────────────────────────────────
-   Beyar: "kartlar bitişik olmayacak, tek değer."
+   patron: "kartlar bitişik olmayacak, tek değer."
 
    §74c bunu zaten iddia ediyordu ("aynı sayfada iki farklı kart aralığı
    imkânsız") — ÖLÇÜM ÜÇ AYRI DEĞER BULDU ve kuralın kendisi ikisinin
@@ -9086,7 +9086,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
           .fp-grid       22 + 16 = 38px   hesabim · hareket-profilim
           .fpx-kural     16 + 16 = 32px   challengelarim
           .ol-formcards  16 + 16 = 32px   antrenor-ol
-      Beyar bunu "gün kartları çok ayrık" diye gördü — 32px, aynı
+      patron bunu "gün kartları çok ayrık" diye gördü — 32px, aynı
       panonun öteki kartları 16px. Kabın `gap`i KAZANIR: aralığı yazan
       taraf odur, §74c yalnız AKIŞ yığınlarının yedeğidir.
       ⚠ Özgüllük bilerek `:is()` — `:where()` sıfır verir ve §74c'yi
@@ -9095,7 +9095,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
    ② OKUMA KOLONU BLOKLARI: 0px ile 148px arasında salınıyor. ÖLÇÜLDÜ:
           div.wrap.kap    dolgu 0/0     → bloklar arası    0px  YAPIŞIK
           div.bolum.kap   dolgu 74/74   → bloklar arası  148px  UÇURUM
-      Beyar ikisini de gördü: "alttaki kartlar bitişik" (egzersizlerim ·
+      patron ikisini de gördü: "alttaki kartlar bitişik" (egzersizlerim ·
       antrenorum) ve "böyle çok boşluk olmasın" (ilerlemem ·
       programlarim · hareket-profilim).
       Değer uydurulmadı: `--bolum-nefes-sik` (32px) bu turda ölçülen
@@ -9118,7 +9118,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S4 · ÇİP ŞERİDİ ───────────────────────────────────────────────────
-   Beyar: "tek biçim, aktif durum dahil."
+   patron: "tek biçim, aktif durum dahil."
 
    🔴 BİÇİM ZATEN TEKTİ — ÖLÇÜM BUNU DOĞRULADI, kalem BİÇİMDE DEĞİL
       DURUMDA. §43'ün üç kipi (`.cip` 8/15 · `.cip.suzgec` 9/16 min-h 44
@@ -9168,7 +9168,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
    ÖLÇÜLDÜ (fit-antrenorum @1440 · sekiz sekmeli şerit):
        kap 1176px · içerik 1246px · scrollLeft 0
        ilk sekme x=65, kap x=132  →  aktif sekmenin 67px'i KIRPIK
-   Beyar: "buradaki default tab nasıl başlıyor, yarısı gözükmüyor bile".
+   patron: "buradaki default tab nasıl başlıyor, yarısı gözükmüyor bile".
 
    Aynı kelime kanonda ZATEN iki yerde kullanılıyor
    (`.cipler.ortali.tek-satir` · `.sekme-ray.hesap .sekmeler`) — yani
@@ -9189,7 +9189,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
    Orada örtü kuralı hiçbir şeye tutunmuyor:
        hücre bg=saydam · dolgu=0 · punto=16px (gövdeden miras)
    yani şerit dört hücreye bölünmüş bir künye değil, ÜSTÜNDE yazı olan
-   DÜZ GRİ BİR BANT olarak çiziliyordu. Beyar: "şu component hiç hoş
+   DÜZ GRİ BİR BANT olarak çiziliyordu. patron: "şu component hiç hoş
    değil".
 
    Kural hücrenin ETİKETİNE değil ROLÜNE yazılır: künyenin çocuğu
@@ -9217,7 +9217,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
    (egzersizlerim · Favori sekmesi @1440):
        p.fpx-durum  1122×26px · bg=aksan yıkaması · dolgu 12/15 · metin ""
    Ekranda boş durumun altında İÇİ BOŞ MAVİ BİR HAP duruyordu.
-   Beyar: "altta gereksiz bir mavi pill var, kaldır, içi boş zaten".
+   patron: "altta gereksiz bir mavi pill var, kaldır, içi boş zaten".
 
    Kanon bu kararı ZATEN iki kez vermiş ama ikisi de tek kaleme yazılı
    (`.okuma-notu:empty` · `.ptk-durum:empty`) — yani kural bileşen bileşen
@@ -9231,7 +9231,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S8 · BÖLÜM GİRİŞ METNİ ALTINDAKİ KARTLA HİZALIDIR ─────────────────
-   Beyar: "bu tarz açıklamaları yay, sayfa genişliğinde, altındaki kart
+   patron: "bu tarz açıklamaları yay, sayfa genişliğinde, altındaki kart
    ile hizalı."
 
    ÖLÇÜLDÜ (egzersizlerim · Favori sekmesi @1440), aynı sol kenardan
@@ -9256,7 +9256,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S9 · YAPIŞMA KURALI KART'TA BİTMİYOR ──────────────────────────────
-   Beyar: "sana kartlar böyle yapışık olmayacak dedim."
+   patron: "sana kartlar böyle yapışık olmayacak dedim."
    Haklı — S3 kuralı üç ada yazılmıştı (`.kart` `.fp-card` `.ozet-karti`)
    ve okuma kolonundaki öteki bloklar kapsam DIŞINDA kalmıştı. Kural
    adları saydığı sürece her yeni komşuluk yeni bir kusurdur.
@@ -9268,7 +9268,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
        .tablo-kap + .bos-durum    0px
        .akordeon  + .kart         0px
        .kunye     + .olcer       11px
-   Beyar'ın gördüğü kalem birincisi: uyarı kutusu kartın dibine
+   patronun gördüğü kalem birincisi: uyarı kutusu kartın dibine
    yapışıyordu.
 
    Kural artık ADA değil AİLEYE yazılır: okuma akışında arka arkaya
@@ -9288,7 +9288,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
        .yonlendirme     x290 w860 y1692        ← aradaki boşluk 0px
    §38 yönlendirme ızgarası bir BLOK bileşendir (kartın kardeşi, içeriği
    değil) ama S9'un ailesinde adı yoktu; "Genel iletişim konuları" kutusu
-   formun dibine yapışıyordu (Beyar gözle gördü).
+   formun dibine yapışıyordu (patron gözle gördü).
    Yeni ölçü ÜRETİLMEDİ — ailenin tek değeri `--bosluk-16` aynen geçerli.
    Izgara muafiyetine de eklendi, yoksa `gap` yazan kaplarda çift sayılır. */
 :is(.kart,.fp-card,.ozet-karti,.uyari-kutu,.bilgi-notu,.kunye,.tablo-kap,.bos-durum,.akordeon,.olcer,.yonlendirme)
@@ -9355,7 +9355,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S12 · İÇERİĞİ OLMAYAN BANT BASILMAZ ───────────────────────────────
-   Beyar: "sayfa sonunda gereksiz gri şerit var, içi boş bir bant.
+   patron: "sayfa sonunda gereksiz gri şerit var, içi boş bir bant.
    Böyle bir şey olmayacak."
 
    ÖLÇÜLDÜ — ve şerit bir BÖLÜM DEĞİL, §74a'nın kendi dolgusuydu.
@@ -9392,7 +9392,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S13 · SEKME RAYI İLE PANOSU ARASINDA TEK MESAFE ───────────────────
-   Beyar: "section'un üst etiketi ve üstündeki taba bak, mesafeye."
+   patron: "section'un üst etiketi ve üstündeki taba bak, mesafeye."
 
    ÖLÇÜLDÜ (29 ekran · her sekme tıklanarak · rayın dibi → panonun ilk
    görünür kalemi) — ON DOKUZ farklı değer, iki küme:
@@ -9414,7 +9414,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
    ⚠ Yalnız İLK blok; ardışık bloklar S3'ün 32px'ini kullanmaya devam
      eder, yani panonun içindeki ritim değişmez. */
 .fit-pane > .kap:first-child{ padding-top:var(--bolum-nefes-sik); }
-/* 🔴 İLK YAZIMIN KUSURU — Beyar yakaladı, 2026-09-03: "tab ile altındaki
+/* 🔴 İLK YAZIMIN KUSURU — patron yakaladı, 2026-09-03: "tab ile altındaki
    içerik arasında niye bu kadar boşluk var, standart olacak dedik."
    HAKLI. Kural nefesi EKLİYORDU ama panonun ilk bloğunun İÇİNDEKİ kalem
    çoğu ekranda kendi üst payını zaten taşıyor. Ölçüldü (egzersizlerim
@@ -9425,7 +9425,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
    kendi payı sıfırlanır — kaldırılan bir değer, eklenen yok. */
 .fit-pane > *:first-child > *:first-child{ margin-top:0; }
 
-/* 🔴 KURALIN DIŞINDA KALAN TEK PANO — ölçüldü 2026-09-03, Beyar
+/* 🔴 KURALIN DIŞINDA KALAN TEK PANO — ölçüldü 2026-09-03, patron
    "fit-hareket-profilim#hp-cihaz sekme şeridi ↔ pano boşluğu fazla".
    S13 TUTUYOR: dokuz panonun sekizinde şerit dibi → ilk MÜREKKEP
    54.0px, hepsi aynı. Aykırı olan tek pano:
@@ -9439,7 +9439,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S14 · ARŞİV NESNESİ · SÜZGEÇ SÜZDÜĞÜ ŞEYLE AYNI KUTUDADIR ─────────
-   Beyar: "arşivi redesign et."
+   patron: "arşivi redesign et."
 
    ÖLÇÜLDÜ — iki arşiv AYNI İŞİ İKİ AYRI YAPIYLA yapıyordu:
        #egz-gecmis   .kap > [başlık · çip · çip · KART[tablo · ayak]]
@@ -9468,7 +9468,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
    üstündeki başlıkla ve altındaki tablo başlığıyla aynı hizadan başlar.
    ⚠ Kartın DIŞINDAKİ `.cipler` etkilenmez: orada girinti okuma
      kolonunun kendisidir. */
-/* Beyar'ın seçimi (2026-09-03, iki alternatif ekran görüntüsüyle
+/* patronun seçimi (2026-09-03, iki alternatif ekran görüntüsüyle
    sunuldu): arşiv süzgeci ÇİP değil AÇILIR LİSTE — 9 ekranın kalıbı.
    Kart içindeki süzgeç yüzeyi, hangi kalıp olursa olsun kartın kendi
    girintisini alır; kural ada değil YUVAYA yazılı. */
@@ -9479,7 +9479,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S15 · KART BAŞI İKONU VE SAYFALAMA · İKİSİ DE DEVİR ───────────────
-   Beyar: "kart ikonu: diğer kartlarda merkezde mi solda mı — ölç,
+   patron: "kart ikonu: diğer kartlarda merkezde mi solda mı — ölç,
    tutarlı olsun. Pagination: §8 kuralı, ortalı."
 
    ① İKON KAROSU. ÖLÇÜLDÜ (29 ekran · her sekme tıklanarak · görünen
@@ -9511,7 +9511,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S16 · YÜZEN DÜĞMELER TEK BOYDUR ───────────────────────────────────
-   Beyar: "sağ alt antrenör FAB'ı böyle uzun olmasın; antrenör olmasa
+   patron: "sağ alt antrenör FAB'ı böyle uzun olmasın; antrenör olmasa
    bile yazı koyma, başka bir şey koy; yukarısındaki 'yukarı çık' FAB'ı
    ile eş olsun, bu çok yer kaplıyor."
 
@@ -9525,7 +9525,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
    🔴 KAYNAĞIN GEREKÇESİ BİLİNİYOR VE DEVREDİLİYOR. `.is-bos` kipinin
    kendi şerhi şunu diyor: "randevusu olmayan üye: düğme yuvarlak rozet
    değil, DOĞRUYU SÖYLEYEN bir satırdır. 'Sohbet' yazıp boş panel açmak
-   yalan olurdu." Gerekçe doğru — çözümü Beyar değiştiriyor, doğruluk
+   yalan olurdu." Gerekçe doğru — çözümü patron değiştiriyor, doğruluk
    şartını DEĞİL: cümle SİLİNMİYOR, `.yalniz-okuyucu`ya (§20) geçiyor.
    Ekran okuyucu hâlâ "Henüz antrenörün yok — antrenörlere göz at"
    duyuyor, `aria-label` de aynı cümleyi taşıyor; ekranda kalan, o
@@ -9547,7 +9547,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ═══════════════════════════════════════════════════════════════════════
-   § GÖMÜLÜ TABLO KABI · O1 · Beyar kararı 2026-09-03 · KALIP
+   § GÖMÜLÜ TABLO KABI · O1 · patron kararı 2026-09-03 · KALIP
    ═══════════════════════════════════════════════════════════════════════
    KALIP (Y1 kalıp tablosunun ilk maddesi — agent karar vermez, kalıbı alır):
 
@@ -9642,7 +9642,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S17 · SÜZGEÇ ŞERİDİ BAŞLIĞI İKİ NOKTA İLE BİTER ───────────────────
-   Beyar: "TÜR → TÜR:, TEST → TEST: — tüm ekranlarda tara."
+   patron: "TÜR → TÜR:, TEST → TEST: — tüm ekranlarda tara."
 
    ÖLÇÜLDÜ (13 FIT + 29 Diyet ekranı · her sekme tıklanarak) — şeridin
    başlığı İKİ AYRI SINIFLA yazılıyor ve yalnız birinde iki nokta var:
@@ -9699,7 +9699,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S18 · KART SAYACI HÜCRELERİ AYRIKTIR ──────────────────────────────
-   Beyar: "künye çakışması — 24 antrenmanPzt · Çrş".
+   patron: "künye çakışması — 24 antrenmanPzt · Çrş".
 
    ÖLÇÜLDÜ (13 ekran · her sekme tıklanarak · altı `.kart-sayac`):
        çok hücreli  2   fit-programlarim (#prg-planlanan ×2)
@@ -9725,7 +9725,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S19 · KART BAŞI EYLEM BAĞLANTISI ──────────────────────────────────
-   Beyar: "fit-ilerlemem#ilr-testler 'Sonucun tamamı' bağlantısı çok
+   patron: "fit-ilerlemem#ilr-testler 'Sonucun tamamı' bağlantısı çok
    büyük."
 
    Kalem tek bir bağlantı değil, ÇEVİRİNİN KOPARDIĞI BİR KURAL.
@@ -9756,7 +9756,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
      bir gün kanon adı alırsa kural o ada taşınır.
    ⚠ `.ks-uc` kümesine DOKUNULMADI: o künye ucunun kendi ölçüsü
      tutuyor. `.fp-actbtn`in siyahı (#000 ≠ --murekkep) ölçüldü ama
-     Beyar'ın kaleminde değil — şerhe yazıldı, kural yazılmadı. */
+     patronun kaleminde değil — şerhe yazıldı, kural yazılmadı. */
 .ozet-bas .fp-act{
   flex:none; display:inline-flex; align-items:center; gap:var(--bosluk-6);
   font-size:var(--yazi-13); font-weight:var(--agirlik-kalin);
@@ -9765,7 +9765,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S20 · KART RAYI · TEK SATIR YATAY KAYDIRMA ────────────────────────
-   Beyar: "'Üç challenge tipi' ızgarası tek satır yatay slider olsun;
+   patron: "'Üç challenge tipi' ızgarası tek satır yatay slider olsun;
    dördüncü kart ('Seri ve telafi') altta tam genişlik dursun — o bir
    tip değil, kural."
 
@@ -9774,7 +9774,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
        satır 1  Süreli hedef · Egzersiz serisi · Alışkanlık   381×213
        satır 2  Seri ve telafi                                381×207
    Yani dördüncü kart ızgarada zaten TEK BAŞINA alt satırda, üçte bir
-   genişlikte duruyordu: yapı da Beyar'ın okuduğunu söylüyor.
+   genişlikte duruyordu: yapı da patronun okuduğunu söylüyor.
 
    BİLEŞEN UYDURULMADI — DEVREDİLDİ. Kaynağın kendi slider altyapısı
    var ve ölçülü (fit-shell.css:655-686 · "TÜMÜNÜ GÖR SLIDER"):
@@ -9785,7 +9785,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
        reduce-motion  smooth kapanır
    Değerler kanon tokenlarına çevrildi, hiçbiri yeniden ölçülmedi.
    🔴 KART GENİŞLİĞİ DEĞİŞİR: bugün 381px (3 sütun ızgara), rayda
-      274px — kaynağın kendi ray ölçüsü. Beyar'a bildirildi.
+      274px — kaynağın kendi ray ölçüsü. patrona bildirildi.
    ⚠ Ray KIRPMAZ: S5'in "taşarsa başı kırpılmaz" kuralıyla aynı aile,
      kaydırma çubuğu gizli ama kaydırma açık.
    ⚠ Ok grubu (`.ray-oklar`) İSTEĞE BAĞLI — kaynakta uçta devre dışı
@@ -9807,7 +9807,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
   padding:var(--bosluk-6) 2px var(--bosluk-10);
 }
 .kart-rayi::-webkit-scrollbar{ display:none; }
-/* 🔴 `flex:none` DEĞİL — Beyar kararı, 2026-09-03, gözle yakalandı.
+/* 🔴 `flex:none` DEĞİL — patron kararı, 2026-09-03, gözle yakalandı.
    Kaynağın rayı ÇOK kart taşıyor ve her zaman taşıyor; bizimki ÜÇ kart
    taşıyor ve @1440'ta hiç taşmıyor. Ölçüldü (challengelarim):
        flex:none/274   @1440  3×274 · içerik 1176 = kap · SAĞDA 300px BOŞ
@@ -9832,7 +9832,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S21 · YAN YANA KART · TABAN HİZASI ────────────────────────────────
-   A5'in kararı (Beyar, 2026-09-03): "stretch YAZILSIN, ama #bagli
+   A5'in kararı (patron, 2026-09-03): "stretch YAZILSIN, ama #bagli
    hariç. 240px boş yüzey kabul edilemez. Nasıl ayrılacağını ÖLÇ."
 
    ÖLÇÜLDÜ (13 ekran · her sekme tıklanarak) — `.fp-grid` ÜÇ yerde,
@@ -9864,7 +9864,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
    ölçülebilir bir şey değiştirmiyor — sessiz kural değil, etkisiz kip.
    ⚠ `#bagli`nın 240px'lik boş yüzeyi KAPANMADI, yalnız hizalanmadı.
      Kısa karta içerik eklemek ya da ızgarayı bölmek AYRI KARAR
-     (Beyar, açık). */
+     (patron, açık). */
 .fp-grid{ align-items:stretch; }
 .fit-pane[data-pane="bagli"] .fp-grid{ align-items:start; }
 
@@ -9962,7 +9962,7 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
 
 
 /* ── S24 · KOŞULLU BLOK DA BİR ALANDIR (K2'den devir) ──────────────────
-   Beyar: "K2'ye devreden T.C. Kimlik / Telefon 0px kalemi".
+   patron: "K2'ye devreden T.C. Kimlik / Telefon 0px kalemi".
 
    ÖLÇÜLDÜ (#ftModal, K4 çevirisinden SONRA — adlar artık kanonun):
        .alan("T.C. Kimlik No")  →  .alan-izgara.c2("Telefon")   0.0px  🔴
@@ -9998,13 +9998,13 @@ body:has(.sohbet-panel.acik) .sohbet-dugme{
    Yeni değer üretilmedi: `--odak-kalinlik` + `--aksan`, kanonun kendi
    odak sözleşmesi (§`.tablo-kap.cerceveli:focus-visible` ile aynı).
    ⚠ GÖRSEL kaydırma ipucu (kenarda solma/gölge) EKLENMEDİ: kaynakta da
-     yok, ölçümde de yok — uydurma olurdu. Beyar isterse ayrı kalem. */
+     yok, ölçümde de yok — uydurma olurdu. patron isterse ayrı kalem. */
 .tablo-kap:focus-visible{
   outline:var(--odak-kalinlik) solid var(--aksan); outline-offset:2px;
 }
 
 /* ── S26 · SOHBET PANOSU · TAM EN + WHATSAPP KAYDIRMA KALIBI ───────────
-   Beyar kararı, 2026-09-03. `fit-antrenorum#ant-mesaj` tam sohbet
+   patron kararı, 2026-09-03. `fit-antrenorum#ant-mesaj` tam sohbet
    arayüzünü taşıyor; donör `fit-mesaj.css` ise onu HÂLÂ dar bir sayfa
    sanıyor. Üç kural o varsayımı kanon kabına göre düzeltir.
 
@@ -10147,7 +10147,7 @@ body:has(#antAlt-pane-ant-mesaj:not([hidden])) .msj-ortu{ display:none; }
    BİREBİR AYNI olacak: aynı markup, aynı bileşen, aynı ölçü. Marka
    dosyası değişince yalnız RENK döner.
 
-   🔴 ADMIN AYRI BİR RENK SİSTEMİ KULLANMAZ — Beyar kararı 1
+   🔴 ADMIN AYRI BİR RENK SİSTEMİ KULLANMAZ — patron kararı 1
       (`docs/admin-envanter.md §9`). Kaynağın `--acc` ailesi (#009d4f
       yeşil) kanona GİRMEZ; her aksan `--aksan*` yuvasından, yani
       `--marka`dan türer. FIT'te mavi, Gastro'da #742982, Gourmet'te mor —
@@ -10157,7 +10157,7 @@ body:has(#antAlt-pane-ant-mesaj:not([hidden])) .msj-ortu{ display:none; }
         `--kurumsal-yesil`e bağlayıp "kanonda zaten var" diyordu; yanlış
         okuma. **Ders: değer eşleşmesi anlam eşleşmesi değildir.**
 
-   🔴 `.adm-src` KAYNAK ŞERİDİ BURAYA GİRMEDİ — Beyar kararı 3.
+   🔴 `.adm-src` KAYNAK ŞERİDİ BURAYA GİRMEDİ — patron kararı 3.
       Yayılımı 37/37 (istisnasız her ekran) olmasına rağmen kanona
       alınmadı: o şerit prototipin kendi künyesidir ("örnek veri" uyarısı),
       ürünün bileşeni değil. Envanterin en yüksek yayılımlı kalemlerinden
@@ -10245,7 +10245,7 @@ body:has(#antAlt-pane-ant-mesaj:not([hidden])) .msj-ortu{ display:none; }
 /* Menünün kaydıran gövdesi — üç kategori burada yaşar. */
 .panel-menu-govde{ flex:1; min-height:0; overflow-y:auto; padding:0 var(--bosluk-12) var(--bosluk-12); }
 /* Kategori başlığı — D2'nin ÜÇ ana kategorisi (01 GENEL · 02 OPERASYON ·
-   03 YAPILANDIRMA) ve Beyar'ın eklediği dördüncüsü (MARKA MODÜLLERİ).
+   03 YAPILANDIRMA) ve patronun eklediği dördüncüsü (MARKA MODÜLLERİ).
    🔴 "ANA İÇERİK" DİYE BİR KATEGORİ YOK — kaynağın `fit-admin.js` MENU'sü
       onu icat etmiş, doküman tanımıyor. EKSİ İKİNCİ MADDE: doküman kazanır
       (`docs/admin-envanter.md §6.5`). */
@@ -10623,13 +10623,13 @@ body:has(#antAlt-pane-ant-mesaj:not([hidden])) .msj-ortu{ display:none; }
       olumlu durumlar marka yeşilini kullanıyor … kanon da uydurmuyor."*
       v2'de marka YEŞİLDİ ve olumlu durum onunla çiziliyordu; v3'te FIT
       maviye döndü, yani "olumlu = marka" bağı kaynakta zaten koptu.
-      Beyar kararı 1 admin için bunu netleştiriyor: *"admin ayrı renk
+      patron kararı 1 admin için bunu netleştiriyor: *"admin ayrı renk
       sistemi kullanmaz, marka rengiyle döner."* → olumlu yön AKSANDAN.
 
    ⚠ AÇIK KALEM · BEYAR'A: DadaGastro'nun markası #742982, `--tehlike`
      ise #b3261e — ikisi aynı ton ailesinde. Gastro panelinde "iyi" ile
      "kötü" YAN YANA neredeyse aynı renge düşer. FIT'te (mavi) sorun yok.
-     Kanon burada Beyar'ın verdiği kararı uyguluyor; ayrı bir nötr başarı
+     Kanon burada patronun verdiği kararı uyguluyor; ayrı bir nötr başarı
      yuvası açmak İKİNCİ bir karardır ve sorulmadan alınmadı.
      Kayıt: `docs/admin-kanon-kararlari.md` K-R1.
 
@@ -10674,7 +10674,7 @@ body:has(#antAlt-pane-ant-mesaj:not([hidden])) .msj-ortu{ display:none; }
 
    🔴 DÖRDÜ DE KANONA GELDİ. `docs/admin-envanter.md §9 karar 2` bunları
       *"ADAY'da kalsın, uygulama public site bitince"* diye ertelemişti;
-      Beyar 2026-09-04 gece brifinginde erteleme kaldırdı: *"Envanterde
+      patron 2026-09-04 gece brifinginde erteleme kaldırdı: *"Envanterde
       4'ü hiç basılmıyor — kanona gelecek."* EKSİ İKİNCİ MADDE zaten
       dokümanı kazandırıyordu; bu tur onu uygulamaya çeviriyor.
       Kaynak yayılımı 0 olduğu için bu dördünün ölçüsü DONÖRDEN GELEMEZ;
@@ -10939,7 +10939,7 @@ body:has(#antAlt-pane-ant-mesaj:not([hidden])) .msj-ortu{ display:none; }
    (üç adın çoğunluğu), kalanlar kip olarak yazılır. */
 .satir-eylem{ display:flex; align-items:center; justify-content:flex-end; gap:2px; }
 
-/* 🔴 K-İ3 · ÖZGÜLLÜK YARIŞI KAZANILMAZ, BİTİRİLİR — Beyar, 2026-09-04.
+/* 🔴 K-İ3 · ÖZGÜLLÜK YARIŞI KAZANILMAZ, BİTİRİLİR — patron, 2026-09-04.
    Ölçülen kusur: `.ikon-dugme{display:inline-grid}` (0,1,0) ile kabuğun
    `.hamburger{display:none}` (0,1,0) EŞİT özgüllükte; kanon sonra
    yüklendiği için kanon kazanıyordu ve kabukta sınıfla gizlenen HER ikon
@@ -11682,7 +11682,7 @@ a.kisi-hucre:hover .kisi-ad{ color:var(--aksan-koyu); }
   .acilir-yuzey{ max-height:60vh; }
 }
 
-/* 🔴 K-G3 · SAYDAM HEADER → BEYAZ KELİME MARKASI — Beyar izni, 2026-09-04.
+/* 🔴 K-G3 · SAYDAM HEADER → BEYAZ KELİME MARKASI — patron izni, 2026-09-04.
    §27b sözleşmeyi PROZADA yazıyor ama CSS karşılığı YOKTU; `at-top`
    durumunu hedefleyen tek bir kural bile bulunmuyordu. Sonuç ölçüldü:
    dört markanın da saydam header'ında logo MARKA RENGİNDE basılıyor,

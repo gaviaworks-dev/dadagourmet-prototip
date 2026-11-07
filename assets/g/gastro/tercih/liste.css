@@ -1,7 +1,7 @@
 /* =====================================================================
    Dada Gastro · Tercihler hattı — F4 yüzeyleri (tam yapı, 5 Kas)
    Liste notu · "İçerebilir" rozeti · ana sayfa "Sana özel".
-   Kaynak: onaylı taslağın stil dosyası `tercih.css` §4–6 (Beyar onaylı, 5 Kas) — kurallar
+   Kaynak: onaylı taslağın stil dosyası `tercih.css` §4–6 (patron onaylı, 5 Kas) — kurallar
    aynen taşındı; yalnız gerçek yüzeylerin yerleşim farkları "eklendi:" ile işaretli.
    · Yalnız kanon token'ları; ölçek `ortak.css` (--t-*), her bileşen CSS'inden önce yüklenir.
    · Kapsam: her kural bir .tercih kökü altında.

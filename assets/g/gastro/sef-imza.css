@@ -1,4 +1,4 @@
-/* Editör şef imzası (Beyar, 17 Eki) — `sef_profilleri.dogrulandi`. Ana sayfa şeridi (`.chef-av`), şefler dizini (`.sef-ava`)
+/* Editör şef imzası (patron, 17 Eki) — `sef_profilleri.dogrulandi`. Ana sayfa şeridi (`.chef-av`), şefler dizini (`.sef-ava`)
    ve profil başlığı (`.pf-ava`) aynı işareti taşır.
    eklendi: donörde editör şef işareti yok; parçaları kanondan alındı —
    · halka: avatarın KENDİ kenarlığı marka rengine boyanır (dizin kartının hover hâli `.sef-card:hover .sef-ava` ile aynı
@@ -10,7 +10,7 @@
 .chef-av.sef-imza{overflow:visible}
 .chef-av.sef-imza>img,.chef-av.sef-imza>span:first-child{border-radius:inherit}
 
-/* Köşe rozeti — Instagram tarzı DALGALI mavi doğrulama rozeti (Beyar, 17 Eki vitrin revizesi 2; ilk revizenin düz mavi dairesinin yerine).
+/* Köşe rozeti — Instagram tarzı DALGALI mavi doğrulama rozeti (patron, 17 Eki vitrin revizesi 2; ilk revizenin düz mavi dairesinin yerine).
    Kutu kanonun `.hub-chef-card__verified`i (`tokens-*.css`): 22×22 (`border-box`), sağ-alt −2px, ortalı ızgara — boyut ve ofset
    AYNEN kalır. Daireyi ve 2px konturu kanon zemin/kenarlıkla çiziyordu; şekil artık SVG (`parcalar/topluluk/sef-tik`), bu yüzden
    kutunun zemini ve kenarlığı kalkar, kutu yalnız rengi verir (kanonun SVG kuralı: renk kaptan, `currentColor`).
@@ -25,9 +25,9 @@
 .sef-tik-zemin{stroke:var(--paper);stroke-width:2.1;stroke-linejoin:round;paint-order:stroke}
 .sef-tik-isaret{stroke:var(--paper);stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
 
-/* Unvan — şerit ve dizin kartında (Beyar, 17 Eki üçüncü tur): hap DEĞİL; kutu, zemin ve kenarlık yok. Profil başlığındaki çip
+/* Unvan — şerit ve dizin kartında (patron, 17 Eki üçüncü tur): hap DEĞİL; kutu, zemin ve kenarlık yok. Profil başlığındaki çip
    (`.tbadge.t-dada`) değişmez.
-   · Yazı (Beyar, 17 Eki beşinci tur: inceltildi): sayfanın kendi yazı tipi (`Gilroy`) `--agirlik-govde` 500 — Medium. İstenen SemiBold
+   · Yazı (patron, 17 Eki beşinci tur: inceltildi): sayfanın kendi yazı tipi (`Gilroy`) `--agirlik-govde` 500 — Medium. İstenen SemiBold
      (600) kanonda YOK: ne `@font-face` ne dosya (`/varliklar/fonts/gilroy/`: yalnız Light · Medium · ExtraBold; `GilroyBd` 700 de ExtraBold
      dosyasını gösterir). 600 yazılsa tarayıcı Medium'u sahte kalınlaştırırdı; en yakın gerçek ağırlık 500 (600'e 100, ExtraBold'a 200).
      Harf aralığı `--aralik-vurgu`. Boyut komşu kartın "171 tarif" satırıyla aynı (12.5px, `.chef-card>span`).
@@ -45,7 +45,7 @@
 .sef-card>.sef-unvan{margin-top:9px;height:21px;line-height:21px}
 
 
-/* SON HÂL (Beyar, 17 Eki üçüncü tur: B'nin halkası; B'nin çerçevesi ve etiketi iptal; A'nın zemini dördüncü turda kaldırıldı).
+/* SON HÂL (patron, 17 Eki üçüncü tur: B'nin halkası; B'nin çerçevesi ve etiketi iptal; A'nın zemini dördüncü turda kaldırıldı).
    Halka: açıktan koyuya marka degradesi, 4px. eklendi: kanonun kenarlık ölçeği `--cizgi-3`te (3px) bitiyor; "bir üst değer"
    `--cizgi-3 + --cizgi-1` toplamıyla kurulur. Halka avatarın KENDİ kenarlık kutusunun üstüne bindirilen maskeli bir katmandır
    (`::after`, iç kısmı `mask-composite` ile oyulur): avatarın kutusu, kenarlığı ve görseli yerinde kalır, ölçü değişmez. Katman
@@ -55,7 +55,7 @@
 .pf-ava.sef-imza::after{inset:calc((var(--cizgi-3) + var(--cizgi-1)) * -1)}
 .sef-imza .hub-chef-card__verified{z-index:2}
 
-/* Zemin YOK (Beyar, 17 Eki dördüncü tur): editör şefin kartı öbür şefler gibi sayfa zemininde durur — şeritte kutu yok, dizinde
+/* Zemin YOK (patron, 17 Eki dördüncü tur): editör şefin kartı öbür şefler gibi sayfa zemininde durur — şeritte kutu yok, dizinde
    kanonun beyaz kartı. Üçüncü turun yumuşak marka degradesi ve şerit katmanının gölgesi kaldırıldı; işaret yalnız halka, mühür ve
    unvan yazısıdır. `.sef-editor` sınıfı markup'ta durur ama bu katmanda kartın zeminine, gölgesine ya da kutusuna dokunan kural YOK
    (`EditorSefKartTest` bunu ölçer). */

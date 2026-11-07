@@ -1,6 +1,6 @@
 /* ÜST BAŞLIK — YAZI RENGİ ARKASINDAKİ ZEMİNE GÖRE.
  *
- * 🔴 ÖLÇÜLEN KUSUR (2026-09-14, canlıda Beyar bildirdi). Ders sayfalarında
+ * 🔴 ÖLÇÜLEN KUSUR (2026-09-14, canlıda patron bildirdi). Ders sayfalarında
  * (`/mutfaga-giris/{slug}`) üst başlık GÖRÜNÜYOR ama OKUNMUYOR: logo, menü,
  * arama, zil, avatar hiçbiri seçilmiyor, yalnız "Giriş Yap" düğmesi
  * okunuyordu. Sebep gizlenme değil RENK — gerçek tarayıcıda ölçüldü:
@@ -14,11 +14,11 @@
  * `dm-kabuk.css` `.header.at-top`i "koyu hero üstünde duruyorum" hâli
  * sayıyor: zemin saydam, logo beyaz, menü beyaz, ikonlar beyaz. Bu hâl
  * yalnız ARKADA KOYU BİR HERO VARSA doğru. Revize P2 · kalem 6'da ders
- * sayfasının ekstra hero bandı Beyar kararıyla kaldırıldı (kanon da
+ * sayfasının ekstra hero bandı patron kararıyla kaldırıldı (kanon da
  * basmıyor); bant gidince beyaz yazının arkasındaki koyu zemin de gitti,
  * ama donmuş `at-top` yerinde kaldı.
  *
- * 🔴 İLK SÜRÜM SINIFA GÜVENDİ VE YANLIŞ YERE UYGULANDI (2026-09-15, Beyar
+ * 🔴 İLK SÜRÜM SINIFA GÜVENDİ VE YANLIŞ YERE UYGULANDI (2026-09-15, patron
  * `/ara`da yakaladı). Kural `body:not(.has-dark-hero)` yazıyordu; `/ara` koyu
  * hero taşıyor ama o sınıfı taşımıyor, başlık opak beyaz oldu ve BEYAZ SVG
  * LOGO beyaz zeminde kayboldu (ölçüldü: kontrast 1.00). Aynı kusur ders
@@ -59,7 +59,7 @@ html[data-baslik-zemin="acik"] .header.at-top .brand .logo-color { display: bloc
    (`build/assets/portal-*.css`); ilk sürüm bunu karşılamadığı için logo
    beyaz kaldı. Varsayılanı `.brand-word{color:var(--slate)}`. */
 html[data-baslik-zemin="acik"] .header.at-top .brand .brand-word { color: var(--slate); }
-/* 🔴 Revize 20 Eki · madde 11 (Beyar: "logo bazen siyah varyanta dönüyor"). Ölçüldü (Playwright, 139 adres × tepede/kaydırılmış ×
+/* 🔴 Revize 20 Eki · madde 11 (patron: "logo bazen siyah varyanta dönüyor"). Ölçüldü (Playwright, 139 adres × tepede/kaydırılmış ×
    1440/390): hero'suz açık zeminli ekranlarda — ansiklopedi maddesi ve Mutfağa Giriş dersi (TR/EN/DE) — sayfa TEPEDEYKEN logo
    `rgb(33,30,22)` (slate) basılıyordu; 60 px kaydırınca başlığın düz hâli (`.gastro-word-mark{color:var(--tomato)}`) devreye girip
    domates rengine dönüyordu. Sebep bu satırın eski hâli `svg { color: var(--slate) }`: iki tonlu görsel logonun döneminden kalma;

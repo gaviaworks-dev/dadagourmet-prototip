@@ -418,7 +418,7 @@ input{font:inherit}
 /* hover: yalnız kenar + gölge — translateY KALDIRILDI (üstte beliren kırpık çizgi nedeniydi) */
 .yg-dcard:hover{border-color:var(--tomato)}   /* hover = yalnız border feedback, gölge YOK (düz) */
 /* DADA ÖNERİYOR — SOFT premium (beyaz kart + ince domates sol-aksan + küçük rozet; puf-noktaları ruhu, gradient YOK) */
-.yg-dcard.dada{border-color:rgba(225,72,39,.28)}   /* resting box-shadow KALDIRILDI (Beyar: kart altı durağan gölge gitsin); domates border + sol-aksan kimlik KORUNUR */
+.yg-dcard.dada{border-color:rgba(225,72,39,.28)}   /* resting box-shadow KALDIRILDI (patron: kart altı durağan gölge gitsin); domates border + sol-aksan kimlik KORUNUR */
 .yg-dcard.dada:hover{border-color:var(--tomato)}   /* hover border KORUNUR, gölge YOK */
 .yg-dcard.dada::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;z-index:4;background:linear-gradient(var(--tomato),var(--tomato-dark))}  /* ince domates sol-kenar aksan */
 /* SEÇİLİ (Eklendi) — soft yeşil vurgu + köşe ✓; tik metne BİNMEZ (body sağ-pad). Dada ise sol-aksan korunur → seçili+Dada birlikte okunur */

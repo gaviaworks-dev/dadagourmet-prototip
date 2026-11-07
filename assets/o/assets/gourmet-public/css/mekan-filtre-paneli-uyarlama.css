@@ -19,7 +19,7 @@
 }
 
 /* =====================================================================
-   KONUM GRUBU — Ülke → Şehir → İlçe → Semt (Beyar kararı 2026-09-17, proje GLOBAL)
+   KONUM GRUBU — Ülke → Şehir → İlçe → Semt (patron kararı 2026-09-17, proje GLOBAL)
    Kanon parçalar: ülke menüsü V7'nin `.fb-field > select.fb-select`i (`gourmet.css`), arama
    kutusu kitin `.search-input.mkl-fct-srch`i ve `.fct-empty`i (`gourmet-mekan-liste.css`).
    Burada yalnız panel yerleşimi, soluk satır ve arama süzgeci var.

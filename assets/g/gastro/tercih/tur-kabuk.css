@@ -1,6 +1,6 @@
 /* =====================================================================
    Dada Gastro · Tercihler hattı — TANITIM TURU + "Eğitim sihirbazı" paneli (tam yapı F5, 5 Kas)
-   Kaynak: Beyar onaylı taslak `public/gastro/tercih/tercih.css` §2 (tur), §3 (ipucu ayağı), §4 (not bağı), §7 (pencere/panel
+   Kaynak: patron onaylı taslak `public/gastro/tercih/tercih.css` §2 (tur), §3 (ipucu ayağı), §4 (not bağı), §7 (pencere/panel
    revizesi), §8 (kayıtlar) — değerler AYNEN; yalnız `.tercih-tur-kok` köküne kapsandı (sayfanın ve öbür tercih bileşenlerinin
    — liste.css, uye-sihirbaz.css — aynı adlı sınıflarına sızmaz). Ölçek `ortak.css`ten (önce yüklenir).
    Donör: `/` (#fbOverlay .fb-overlay · #fbModal .fb-modal · .fb-panel · .fb-body · .fb-close; .eyebrow · .see-all · .btn) ·

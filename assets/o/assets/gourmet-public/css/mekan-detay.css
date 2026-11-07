@@ -11,8 +11,8 @@
    Yukarıdaki chrome katmanına DOKUNMA (mega menü KİLİTLİ).
    ===================================================================== */
 
-/* ============ MEKAN DETAY — TARİF-DETAY ANATOMİSİ MİRASI (Beyar revizesi) ============
-   Kolaj/mozaik ve scrollspy İPTAL (Beyar: diğer detay sayfalarından kopuk, parça
+/* ============ MEKAN DETAY — TARİF-DETAY ANATOMİSİ MİRASI (patron revizesi) ============
+   Kolaj/mozaik ve scrollspy İPTAL (patron: diğer detay sayfalarından kopuk, parça
    parça kart gibi). Bu sitenin "detay sayfası dili" tarif-detay'dır — o miras alındı:
    1) rd-gallery: TEK büyük sahne (başlık overlay'li) + altta thumb şeridi (3 + "+8"
       tmore → lightbox) + sağda kc-card künye kolonu (260px) — TD R0/R1 düzeni VERBATIM
@@ -37,7 +37,7 @@
 .rd-stage{grid-column:1;grid-row:1;position:relative;height:440px;border-radius:var(--radius-xl);background-size:cover;background-position:center;overflow:hidden;box-shadow:var(--sh-md);cursor:zoom-in}
 .rd-stage::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,12,0) 42%,rgba(20,18,12,.28) 64%,rgba(15,13,9,.78))}
 /* Kapaksız sahne — kartla (mekan-liste.css `.mkl-bg-fallback`) AYNI çözüm,
-   hero ölçeğinde (Beyar kararı, 2026-08-14, hat-g8-yedek). YENİ GÖRSEL DİL
+   hero ölçeğinde (patron kararı, 2026-08-14, hat-g8-yedek). YENİ GÖRSEL DİL
    İCAT EDİLMEDİ: `pf-avatar` kalıbı (--cream zemin + --tomato-deep baş
    harf) + slug-türevli 3 zemin varyantı. Başlık okunurluğu için `::after`
    koyu gradyanı DOKUNULMADAN üstte kalır (z-index'i yükseltmiyoruz, harf
@@ -157,7 +157,7 @@
 .mn-price{flex:none;font-size:14.5px;font-weight:700;color:var(--tomato);letter-spacing:-.01em}
 .mn-info p{font-size:12.5px;color:var(--muted);font-weight:500;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* ======================= H1 MENU SEKMESI YENIDEN TASARIMI (Beyar 2026-07-27) =======================
+/* ======================= H1 MENU SEKMESI YENIDEN TASARIMI (patron 2026-07-27) =======================
    1) .disc-badge bu sayfada HIC STILLENMEMISTI (canli CSSOM ile dogrulandi -
       background:transparent, padding:0) - alerjen/beslenme/on-plan rozetleri
       duz metin gibi goruunuyordu. Deger kesfet.css/mekan-liste.css/hesap.css
@@ -324,7 +324,7 @@ body:not(.is-auth) .rev-login{display:flex}
 .r-media{position:relative;height:200px;background-size:cover;background-position:center;transition:.5s var(--ease)}
 .r-card:hover .r-media{transform:scale(1.04)}
 .r-media-wrap{overflow:hidden}
-/* H4 (Beyar 2026-07-27): görselsiz kart fallback'i EKSİKTİ — mekan-detay-v1.html
+/* H4 (patron 2026-07-27): görselsiz kart fallback'i EKSİKTİ — mekan-detay-v1.html
    referansi HER kartta gerçek Unsplash görseli gösterdiği icin bu iki kural
    hic PORT EDİLMEMİŞTİ. tarifler/_card.blade.php (r-media--empty/r-media-ph)
    zaten bu markup'i basiyordu ama karsiligi olan CSS yalniz Gastro'nun
@@ -386,7 +386,7 @@ body:not(.is-auth) .rev-login{display:flex}
 .disc-meta .disc-stats{margin-left:auto;display:inline-flex;align-items:center;gap:12px;flex:none}
 .disc-fig .bg{width:100%;height:100%;background-size:cover;background-position:center;transition:.5s var(--ease)}
 .disc-card:hover .disc-fig .bg{transform:scale(1.05)}
-/* Kapaksız "benzer mekân" kartı — kartla/hero ile AYNI çözüm (Beyar kararı,
+/* Kapaksız "benzer mekân" kartı — kartla/hero ile AYNI çözüm (patron kararı,
    2026-08-14, hat-g8-yedek). Bu kuralın ÜSTÜNDEKİ `.disc-fig .bg` hiç
    background-color tanımlamıyordu (mekan-liste.css'teki --bg-cream'in
    aksine) — kapaksız kart section zeminine (--bg-cream) görünmez şekilde
@@ -696,7 +696,7 @@ body:has(.vbanner) .below-header{padding-top:32px}
    Sabit yükseklikli sahne/thumb bu fazlalığı EMMİYOR, ızgara satır aralarına ölü
    boşluk olarak dağıtıyordu.
 
-   M11 DÜZELTMESİ (Beyar 2026-07-27): ilk çözüm fazlalığı HEM sahneye HEM thumb
+   M11 DÜZELTMESİ (patron 2026-07-27): ilk çözüm fazlalığı HEM sahneye HEM thumb
    şeridine yaydırıyordu (`min-height`); şerit 88 → 151px'e çıkıyordu, yani
    referansın kimlik ölçüsü %72 bozulmuştu. Fazlalığı YALNIZ SAHNE emer:
    ızgaranın 2. satırı referans değerine ÇİVİLENİR (`grid-template-rows:1fr 88px`),
@@ -724,14 +724,14 @@ body:has(.vbanner) .below-header{padding-top:32px}
 /* ---- Künye çip şeridi: SARILIR, kırpılmaz (kararlar.md YS-MD1 rev.2) ----
    Referansın .chip-row'u nowrap + overflow-x; 5 sabit demo çiple hiç
    taşmıyordu. Gerçek veride 260px'lik künye kolonunda 3. çip ORTASINDAN
-   kesiliyor ("Rezer..."). 1. tur çözümü sağa soft fade maskesiydi — Beyar
+   kesiliyor ("Rezer..."). 1. tur çözümü sağa soft fade maskesiydi — patron
    RED etti (2026-07-27): fade taşmayı yumuşatıyor ama çip yine YARIM kalıyor,
    kullanıcı "kırık" okuyor. Yama turu kapatıldı, yaklaşım değişti: künyedeki
    şerit SARILIR, hiçbir çip gizlenmez, kaydırma ipucuna gerek kalmaz.
    Kapsam YALNIZ .kc-chips içi — menü sekmesindeki .chip-row'lar referansın
    kaydırmalı davranışını korur.
 
-   H2 EK (Beyar 2026-07-27) — SARILMA yerine MARQUEE: tek satır, sürekli/
+   H2 EK (patron 2026-07-27) — SARILMA yerine MARQUEE: tek satır, sürekli/
    yumuşak akan, sonsuz döngülü şerit; hover'da durur, tıklanabilir kalır.
    Bu, YS-MD1 rev.2'nin BİLİNÇLİ üstü — kırpma vakasını da kapatır (kırpma
    yok, çünkü akış nowrap ama İÇERİK ASLA sabit kesilmiyor, sürekli kayıyor).
@@ -786,7 +786,7 @@ body:has(.vbanner) .below-header{padding-top:32px}
 .kc-meta .kc-fresh{display:inline-flex;align-items:center;gap:6px;color:var(--c-green);font-weight:700}
 
 /* ======================= STICKY AKSİYON BARI (.vd-actbar) =======================
-   Doküman §3 "Kullanıcı Aksiyonları"nın ikincil altı kalemi. Beyar kararı
+   Doküman §3 "Kullanıcı Aksiyonları"nın ikincil altı kalemi. patron kararı
    2026-07-27: sayfa akışındaki kutu-düğme şeridi DEĞİL, tarif detay
    sayfasındaki gibi pencerenin altında sabit duran, başlık bandı geçilince
    beliren yüzen bar.
@@ -855,10 +855,10 @@ body:has(.vbanner) .below-header{padding-top:32px}
   body:has(.vd-actbar.show) .bottom-nav{display:none}
 }
 
-/* R5 madde 4 (Beyar 2026-08-08): "pill çıkıyor ama niye Mentor ve FAB yok
+/* R5 madde 4 (patron 2026-08-08): "pill çıkıyor ama niye Mentor ve FAB yok
    oluyor? Üçü birden duracak." Önceki tur (S6/R1) burada Mentor'u VE
    Dada Route FAB'ını (.yg-fab) bar görünürken KOŞULSUZ gizliyordu —
-   Beyar bunu REDDETTİ, kural yanlıştı: bottom-nav'daki gibi "üç sabit alt
+   patron bunu REDDETTİ, kural yanlıştı: bottom-nav'daki gibi "üç sabit alt
    şerit aynı anda olmaz" ilkesi Mentor/FAB için geçerli değil, ikisi de
    kalıcı köşe öğesi, bottom-nav gibi bir bant değil. Çözüm artık gizleme
    DEĞİL, gerçek çakışma ölçen ORTAK bir yerleşim: reference/shared/
@@ -888,7 +888,7 @@ body:has(.vbanner) .below-header{padding-top:32px}
    kapatılır (.ic-row:first-child kuralı tek başına yetmez). */
 .md-exp{margin-top:32px}
 /* Mekân özellikleri şeridi — künye kartından "Mekân Deneyimi" ALTINA
-   taşındı (Beyar kararı 2026-07-31, _tab-genel.blade.php). .kc-chips'in
+   taşındı (patron kararı 2026-07-31, _tab-genel.blade.php). .kc-chips'in
    çip/marquee dili aynen kullanılır; yalnız künye KARTINA ait kabuk
    (üst kenarlık + kart içi padding) bu bağlamda sıfırlanır — kart
    içinde kaldığı yerde (varsa) etkilenmez, kapsam .md-feats'tir. */
@@ -915,7 +915,7 @@ body:has(.vbanner) .below-header{padding-top:32px}
 .md-share-menu[hidden]{display:none}
 .md-share-menu a,.md-share-menu button{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:var(--radius-sm);font-family:inherit;font-size:13px;font-weight:600;color:var(--slate);background:none;border:none;cursor:pointer;text-align:left;width:100%}
 .md-share-menu a:hover,.md-share-menu button:hover{background:var(--tomato-tint);color:var(--tomato)}
-/* M2 (Beyar 2026-07-27): burada `.md-stage-acts{position:relative}` vardı —
+/* M2 (patron 2026-07-27): burada `.md-stage-acts{position:relative}` vardı —
    .md-share-menu'ye konumlandırma bağlamı vermek için eklenmişti. Ama
    `.md-stage-acts` satır 36'da ZATEN `position:absolute;top:14px;right:14px`
    (referans kuralı) — absolute da konumlandırma bağlamıdır, relative gereksizdi
@@ -930,7 +930,7 @@ body:has(.vbanner) .below-header{padding-top:32px}
 .map-mock{overflow:hidden;background:none;min-height:220px}
 .map-mock::after{display:none}
 .map-mock .leaflet-container{width:100%;height:100%;min-height:220px;border-radius:var(--radius-lg)}
-/* "Konum yaklaşıktır" şerhi (Beyar 2026-08-11) — `.map-tag` referansın KENDİ
+/* "Konum yaklaşıktır" şerhi (patron 2026-08-11) — `.map-tag` referansın KENDİ
    harita-üstü etiket bileşenidir (§205) ve yukarıdaki port notunda anıldığı
    gibi sahte-haritadan gerçek Leaflet'e geçilirken markup'ı düşmüştü; geri
    getirildi. TEK GEREKEN DÜZELTME z-index: bileşen `z-index:2` ile yazılmıştı
@@ -981,7 +981,7 @@ body:has(.vbanner) .below-header{padding-top:32px}
 .remind-box .rb-body p{font-size:13.5px;color:var(--slate-2);font-weight:500;line-height:1.6}
 .remind-box .rb-body p b{color:var(--slate)}
 
-/* ======================= H3 DUZELTMELERI (Beyar 2026-07-27) =======================
+/* ======================= H3 DUZELTMELERI (patron 2026-07-27) =======================
    1) "Kapali" rozeti yesil onay ikonuyla gosteriliyordu (mantik hatasi) -
       referans .md-state/.hr-now/.rdf.state i her zaman "acik" ornegiyle
       calisti, kapali varyanti hic yoktu.

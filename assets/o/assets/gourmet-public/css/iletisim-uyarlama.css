@@ -1,6 +1,6 @@
 /* ══ İLETİŞİM — YEREL ÖRTME KATMANI (donörde yok) ═══════════════════════════════════════
    `iletisim.css` artık donörle BAYT BAYT aynı (tek izinli sapma: hero görselinin url()'i
-   `../img/iletisim/…`, görsel vendor edildi ve localde 200). Beyar kararı 2026-09-15.
+   `../img/iletisim/…`, görsel vendor edildi ve localde 200). patron kararı 2026-09-15.
    Bu dosya ESKİ yerel `iletisim.css`in aynen kopyasıdır (7.696 B, donörden −4.024 B'lık yeniden
    yazım); `iletisim.css`in hemen ARDINDAN yüklenir ve bugünkü kaskadı korur.
    ⚠ Bu kuralları `iletisim.css`e GERİ TAŞIMA: vendor-denetim.mjs onu yeniden sahte vendor sayar.

@@ -1,5 +1,5 @@
 /* ══ HAKKIMIZDA AİLESİ — YEREL ÖRTME KATMANI (donörde yok) ════════════════════════════
-   `hakkimizda.css` artık donörle BAYT BAYT aynı (Beyar kararı 2026-09-15). Eski yerel
+   `hakkimizda.css` artık donörle BAYT BAYT aynı (patron kararı 2026-09-15). Eski yerel
    dosyanın donöre EKLEDİĞİ dört blok aynen buraya taşındı ve `hakkimizda.css`in hemen
    ARDINDAN yüklenir (dört ekran: /hakkimizda · /basin-medya · /sehir-rehberleri · rehber detayı).
    ⚠ Bu kuralları `hakkimizda.css`e GERİ TAŞIMA: vendor-denetim.mjs onu yeniden sahte vendor sayar.

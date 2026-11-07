@@ -34,7 +34,7 @@
    kendisinde: ilk iki satır ÇİVİLENİR (sahne + thumb şeridi), künyenin
    taşan boyu ÜÇÜNCÜ satıra akar ve künye artık `1/4` kaplar. Sonuç:
    sahne ve thumb şeridi üstte bitişik durur, künye kartı doğal boyunda
-   kalır (Beyar "sağdaki bilgi kartı eski sayfayla birebir" dedi).
+   kalır (patron "sağdaki bilgi kartı eski sayfayla birebir" dedi).
 
    ORANTI. Kanon sahne boyları 440 (≥1025) · 380 (≤1024) · 300 (≤640).
    Üçü de ~%24 inceltildi — 400 · 340 · 230 — böylece kırılımlar arası
@@ -116,7 +116,7 @@ body.pg-mekan-detay .below-header:not(.pf-top) + div.pf-tabbar{
 
 /* ───────── EK · REZERVASYON KALKINCA KÜNYENİN BOŞLUK RİTMİ ─────────
 
-   Beyar kararı (2026-09-16): mekân detayında rezervasyon yok. Künyedeki
+   patron kararı (2026-09-16): mekân detayında rezervasyon yok. Künyedeki
    "Rezervasyon Yap" düğmesi ve altındaki not `_kunye.blade.php`ten
    çıkarıldı. Kanonda o ikisi bir çift gibi ölçülmüştü:
      .kc-reserve{margin:16px 16px 0}  +  .kc-reserve-note{margin:10px 16px 16px}
@@ -135,7 +135,7 @@ body.pg-mekan-detay .below-header:not(.pf-top) + div.pf-tabbar{
 
 /* ───── R5 · ÖZET, GALERİ IZGARASININ 1. KOLONUNDA — künyenin bıraktığı boşlukta ─────
 
-   Beyar (2026-09-16): "bu açıklama galeri görsellerin altında olsun, sağdaki sütun ile
+   patron (2026-09-16): "bu açıklama galeri görsellerin altında olsun, sağdaki sütun ile
    hizalı olsun; sağdaki sütunun solda yarattığı boşluğu açıklamayla dolduralım."
 
    R1 kapağı 527 → 400 px'e indirince sahne + thumb şeridi (400 + 14 + 88 = 502) künye
@@ -160,7 +160,7 @@ body.pg-mekan-detay .below-header:not(.pf-top) + div.pf-tabbar{
 
 /* ───── R6 · HATIRLATMA / EDİTÖR NOTU METNİ — Gastro ölçüsüne ─────
 
-   Beyar (2026-09-16): "hatırlatma ve editör notunun yazısı çok kötü, daha okunaklı bir
+   patron (2026-09-16): "hatırlatma ve editör notunun yazısı çok kötü, daha okunaklı bir
    boyut seç — dadagastro.com/tarif/tavuk-curry-hindistan-cevizli-hint-usulu'daki
    hatırlatma yazısından yap."
 
@@ -176,7 +176,7 @@ body.pg-mekan-detay .below-header:not(.pf-top) + div.pf-tabbar{
 .remind-box .rb-html,
 .editor-box .rb-html{font-size:13.5px;line-height:21.6px}
 
-/* ───── R7 · GALERİ ŞERİDİ SABİT 4 SÜTUN (Beyar revizesi 2026-09-17) ─────
+/* ───── R7 · GALERİ ŞERİDİ SABİT 4 SÜTUN (patron revizesi 2026-09-17) ─────
    Kanon `mekan-detay.css:74-75` şeridi `display:flex` + `.rd-thumb{flex:1}` kuruyor:
    kutu genişliği FOTOĞRAF SAYISINA bölünüyor. Canlı TURK FATIH TUTAK (2 fotoğraf) @1440
    iki kutu 445 × 88 px — şerit görünümü. v7 Nalia 4 × 217 px.
@@ -185,7 +185,7 @@ body.pg-mekan-detay .below-header:not(.pf-top) + div.pf-tabbar{
    Kanon dosyaya kural EKLENMEZ (vendor). Aynı özgüllük (0,1,0), sonra yüklendiği için geçer. */
 .rd-thumbs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
 
-/* ───── R8 · YORUM BOŞ HÂLİ — DadaGastro tarif detayı kalıbı (Beyar revizesi 2026-09-17) ─────
+/* ───── R8 · YORUM BOŞ HÂLİ — DadaGastro tarif detayı kalıbı (patron revizesi 2026-09-17) ─────
    Kanon: `DadaGastro/public/varliklar/reference/tarif-detay/tarif-detay.css:1139-1141`.
    Ölçüldü (dadagastro.com, 1440 + 390): kesik 1px #d8d4cc çerçeve · 12px köşe · 20/24 iç
    boşluk · ortalı · 13px `--muted` · giriş kutusuyla arası 12px.
@@ -198,7 +198,7 @@ body.pg-mekan-detay .below-header:not(.pf-top) + div.pf-tabbar{
 .rev-empty[hidden]{display:none}
 .rev-empty{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--paper);border:1px dashed #d8d4cc;border-radius:var(--radius-md);padding:16px 20px;margin-top:12px;font-size:13px;font-weight:500;color:var(--muted);text-align:center}
 
-/* ───── R9 · KAHRAMAN DURUM ÇİPİ KARTLA AYNI (Beyar kararı 2026-09-17) ─────
+/* ───── R9 · KAHRAMAN DURUM ÇİPİ KARTLA AYNI (patron kararı 2026-09-17) ─────
    "N dk sonra kapanıyor" hâli: ikon kartın `st-closing`i gibi sarı (`mekan-detay.css`
    `.disc-status .st-closing i{color:var(--yellow)}`). Kanonun `.rd-rateline .md-state i`
    (0,2,1) kuralını geçmek için aynı öneke durum sınıfı eklendi (0,3,1). */

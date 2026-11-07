@@ -31,7 +31,7 @@
   --cizgi:#ECECEC;             /* kaynak: --line · hairline ayraç */
   /* 🔴 KAYNAĞIN YAKIN-İKİZİ — `--cizgi` (#ececec) DEĞİL, bir birim koyu.
      Ölçer zeminini `--cizgi`ye bağlamak sessiz bir düzeltme olurdu;
-     kaynakta iki ayrı gri var ve kanon çizileni basar. Beyar'a bildirildi:
+     kaynakta iki ayrı gri var ve kanon çizileni basar. patrona bildirildi:
      iki grinin birleştirilmesi bir KARAR, ajanın tercihi değil. */
   --olcer-zemin:#ececeb;       /* .fp-bar · ilerleme çubuğunun zemini (§46) */
   /* 🔴 #dcdcdc → #dddddd (2026-09-02). §5.3 bu tokeni "8 sayfa ham hex,
@@ -75,7 +75,7 @@
   --cizgi-vurgu-koyu:#c9c9c9;
   --cizgi-vurgu:#dddddd;       /* kart hover kenarı + kesikli boş durum kenarı
                                   — kaynakta TOKEN DEĞİLDİ, 8 sayfada ham hex */
-  --kontrol-kapali:#8f8a82;    /* kapalı anahtar rayı — Beyar kararı, 2026-09-01.
+  --kontrol-kapali:#8f8a82;    /* kapalı anahtar rayı — patron kararı, 2026-09-01.
                                   Kaynakta tokensizdi (fit-shell.css `.tgl .tk`).
                                   Beyazla 3.43:1 → WCAG 1.4.11 (3:1) GEÇER.
                                   Kabuk bu değeri ölçerek seçmiş ve #cfcac1'i
@@ -136,7 +136,7 @@
   --metin-pasif-4:#c2c2c2;
   --metin-ucuncul:#c7c7c7;     /* son arama satırının ok işareti (§60) —
                                   kaynakta ham hex, `--metin-pasif` DEĞİL */
-  --yer-tutucu:#6f6f6f;        /* input placeholder — Beyar kararı, 2026-09-01.
+  --yer-tutucu:#6f6f6f;        /* input placeholder — patron kararı, 2026-09-01.
                                   Kabuk form kitinin ölçtüğü değer: --zemin
                                   üstünde 4.77:1 (AA). Kanonun ilk turunda
                                   frekansla alınan #a7a7a7 (6 sayfa) aynı
@@ -262,7 +262,7 @@
                                             yumusak` DEĞİL: ölçüldü, iki ayrı
                                             değer ve ikisi de kullanımda. */
 
-  /* ── A3 · HATA AİLESİ · Beyar kararı 2026-09-03 ──────────────────────
+  /* ── A3 · HATA AİLESİ · patron kararı 2026-09-03 ──────────────────────
      Ölçüldü: kanonda `--uyari` (kehribar) vardı, HATA (kırmızı) ailesi
      yoktu. Kaynak `role="alert"` özetini kendi renkleriyle basıyor
      (`#8c1d18` metin · `#f1e9f3` zemin · `#efc2bd` kenar) ve o özeti
@@ -336,7 +336,7 @@
        çözülen  → marka yuvası       (--aksan-koyu / --aksan-yikama)
      Kalan ikisinin değerleri kaynakta ham hex; uydurulmadı, ölçüldü. */
 
-  /* ✅ §5.1 · A1 ONAYLANDI (Beyar, 2026-09-01) — petrol rampası.
+  /* ✅ §5.1 · A1 ONAYLANDI (patron, 2026-09-01) — petrol rampası.
      "Açık talep" hapı DadaAkademi'nin petrolünü kullanır. Rampanın bu
      ekranın kullandığı İKİ basamağı da kaynakta ölçülü:
        #006072 (`--eko-akademi`, iki markanın :root'unda da tanımlı)
@@ -377,7 +377,7 @@
   /* 🔴 Aynı kaynak satırının KENARI (`odemelerim-v1.html:87`
      `.od-pill.off{background:#f1f1f1;border:1px solid #e2e2e2}`). Zemin
      alınmış, kenar atlanmıştı; §45 onun yerine `transparent` yazıyordu ve
-     hap KENARSIZ çiziliyordu (Beyar gözle yakaladı, 2026-09-02). */
+     hap KENARSIZ çiziliyordu (patron gözle yakaladı, 2026-09-02). */
   --durum-kapali-cizgi:#e2e2e2;                 /* zeminle bir adım koyu */
 
   /* BAŞARI RENGİ YOK. Kaynakta ayrı bir "başarı" tokeni bulunamadı;
@@ -565,7 +565,7 @@
   --olcu:78ch;             /* kaynak: --measure · akan metin satır ölçüsü */
 
 /* ── 6 · BOŞLUK ──────────────────────────────────────────────────────
-   4px TABANLI ÖLÇEK — Beyar kararı, 2026-09-01.
+   4px TABANLI ÖLÇEK — patron kararı, 2026-09-01.
    Kaynakta ölçek YOKTU: 1–180px arasında 60 farklı değer, 6282 bildirimin
    yalnızca %2'si token. Ölçek türetilmedi, KARARLA konuldu.
    Yuvarlama kuralı: en yakın kademe, eşitlikte YUKARI (14→16, 6→8, 10→12).
@@ -623,7 +623,7 @@
 
 /* ── 5b · KESİKLİ KENAR ──────────────────────────────────────────────
    Boş durum kutusunun kenarı. Kaynak `1.5px dashed #ddd` yazıyordu —
-   kalınlık ölçek dışıydı, renk tokensizdi. Beyar kararı (2026-09-01):
+   kalınlık ölçek dışıydı, renk tokensizdi. patron kararı (2026-09-01):
    2px, renk tokenlı. #ddd ile --cizgi-vurgu (#dcdcdc) arasında bir birim
    fark var; yeni değer üretilmedi, var olan token kullanıldı. */
 
@@ -658,7 +658,7 @@
   --kap-yan-dar:16px;        /* @≤640 — zaten kademede */
   --kenar-sekmesi-ust:272px; /* dikey kenar sekmesinin üst konumu.
                                 🔴 SABİT, hesaplanan değil — kaynağın kararı
-                                (`fit-shell.js:4787`, Beyar 2026-08-29):
+                                (`fit-shell.js:4787`, patron 2026-08-29):
                                 önce banner merkezine hizalanıyordu ve sayfa
                                 tipine göre 272/280/323/511 diye AYRIŞIYORDU;
                                 karar "hepsi aynı konumda" oldu ve taban
@@ -750,11 +750,11 @@
      🔴 GÖRSEL İSTEĞE BAĞLI. `--bant-gorsel` boş (`none`) bırakılırsa üç
      gradyan tek başına bandı çizer — ölçüldü, kaynağın 404'ü zaten öyle.
      Kanon dış kaynak GÖMMEZ; görseli canlı blade doldurur.
-     ⚠ ŞERH DÜZELTİLDİ (Beyar · 2026-09-02): bu karar bir zamanlar
+     ⚠ ŞERH DÜZELTİLDİ (patron · 2026-09-02): bu karar bir zamanlar
      "deneme dosyalarının dış kaynak 0 sözü" ile gerekçelendiriliyordu
      ve O SÖZ ÖLÇÜLDÜĞÜNDE TUTULMADIĞI GÖRÜLDÜ — `bildirimler` 6,
      sorgulu `arama` 1 dış istek atıyor (slot-2, ağdan ölçtü).
-     Beyar: "görseller kalsın, sadece şerhi düzelt, gerçeği yazsın."
+     patron: "görseller kalsın, sadece şerhi düzelt, gerçeği yazsın."
      Kararın kendisi (bandın görselini gömmemek) AYAKTA; ama artık
      tutulmayan bir söze değil, kendi gerekçesine dayanıyor: bant
      görseli İÇERİKTİR ve canlı blade'in verisidir, kanonun değil.
@@ -765,7 +765,7 @@
      siyah). `bilesenler.css` sabit renk yazamaz, bu yüzden katmanların
      tamamı marka dosyasından gelir. */
   --bant-perde-aksan:var(--marka-bant-perde-aksan);
-  /* 🔴 AD YÖN DEĞİL ROL SÖYLER (Beyar kararı · 2026-09-02).
+  /* 🔴 AD YÖN DEĞİL ROL SÖYLER (patron kararı · 2026-09-02).
      Yuvalar önce `-yatay` / `-dikey` diye adlandırılmıştı — FIT'in kendi
      katmanlarının YÖNÜNE göre (90deg / 180deg). Ama perdenin yönü MARKAYA
      bağlı: Diyet'in ana perdesi `linear-gradient(180deg,…)`, yani "yatay"

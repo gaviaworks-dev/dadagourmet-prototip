@@ -83,7 +83,7 @@
  tarayıcının sentetik bold'udur. Light/ExtraBold dosyaları klasörde var ama
  eski site CSS'i hiç yüklemez — bu yüzden burada da yalnız Medium yüklenir. */
 
-/* 🔴 KAYITLI YÜZ DÖRDE DÖNDÜ — Beyar kararı, 2026-08-29.
+/* 🔴 KAYITLI YÜZ DÖRDE DÖNDÜ — patron kararı, 2026-08-29.
    Bu blok bir tur önce §A5 gereği İKİ yüze inmişti (Gilroy@500 +
    GilroyBd@700) ve marka lockup'ı 800/300'den 700/500'e geçmişti.
    Karar geri alındı: yüz kümesi DÖRT olur ve lockup eski görünümüne döner.
@@ -128,7 +128,7 @@
   --hero-pb:46px;         /* banner alt nefesi — referans /beslenme ile aynı */
   --hero-gap:10px;        /* banner içi dikey ritim (crumb ↔ h1 ↔ alt metin) */
   --hero-min:0px;         /* banner taban yüksekliği — içerik belirler */
-  /* GERİ ALINDI (Beyar, aynı tur): D2'de 74dvh'ye indirilmişti, ana sayfa
+  /* GERİ ALINDI (patron, aynı tur): D2'de 74dvh'ye indirilmişti, ana sayfa
      herosu bozuldu. Tam-ekran perde ana sayfanın imzası — dokunulmuyor.
      KARARLAR K15 buna göre düzeltildi. */
   --hero-full:100dvh;     /* tam-bleed hero (ana sayfa) — perde yüksekliği */
@@ -145,7 +145,7 @@
      veriyordu. Tek token, akan metin kutularına uygulanır. */
   --measure:78ch;
   /* ---- BANNER AİLE YÜKSEKLİKLERİ (R15 · 5. tur) ----
-     Beyar: "Sayı uydurulmayacak. Referans canlıdan ölçülüp birebir alınacak."
+     patron: "Sayı uydurulmayacak. Referans canlıdan ölçülüp birebir alınacak."
      ÖLÇÜM — dadadiet.com, üç genişlikte, İKİ BAĞIMSIZ LİSTE SAYFASI:
 
        genişlik | /beslenme | /diyetisyenler | /beslenme-rehberi/dengeli-tabak
@@ -155,7 +155,7 @@
          390    |   587     |      587       |   726
 
      İki liste sayfası her genişlikte BİREBİR aynı çıktı — değerler tesadüf
-     değil, tasarım sabiti. Detay ölçüsü tek sayfadan (Beyar'ın gösterdiği
+     değil, tasarım sabiti. Detay ölçüsü tek sayfadan (patronun gösterdiği
      URL); @390'daki 726 px içerik kaynaklı görünüyor, notu KARARLAR K30'da.
 
      4. turun 344/384 değerleri referanstan DAR olduğu için atıldı: 344'ün
@@ -212,12 +212,12 @@
 
   --radius-sm:8px; --radius-md:12px; --radius-lg:16px; --radius-xl:24px; --radius-pill:999px;
   /* R7 (4. tur) — SEÇİLİ ETİKET ÇİPİNİN YARIÇAPI.
-     Beyar: "Seçili tag'lerdeki çiplerdeki radiuslar fazla yuvarlak.
+     patron: "Seçili tag'lerdeki çiplerdeki radiuslar fazla yuvarlak.
      Kartlardaki radius piksellerine kadar o şekilde tutarlı yap."
      Çip `--radius-pill` (999px) kullanıyordu; 32px yüksekliğinde tam hap.
      Değer tek token'a bağlandı ki sayfa bazında literal kalmasın. */
   --radius-chip:var(--radius-md);   /* 12px */
-  /* R7 · Beyar'ın saydığı ölçeğin kalan iki basamağı da token oldu ki
+  /* R7 · patronun saydığı ölçeğin kalan iki basamağı da token oldu ki
      "sayfa bazında literal bırakma" kuralı ölçülebilsin. */
   --radius-ctl:10px;                /* eksen düğmesi / küçük kontrol */
   --radius-badge:6px;               /* sayaç ve fiyat rozeti */ --radius-circle:50%;
@@ -325,7 +325,7 @@ html{scroll-padding-top:112px}   /* sabit header altı anchor offseti (eski 166:
    35 kopyanın hepsi bayt bayt aynıydı, buraya birebir taşındı.
 
    S4 (8. oturum) — ZEMİN --fit'ten --fit-deep'e ÇEKİLDİ.
-   Beyar: "site geneli .btn-fit --fit-deep olsun, AA altında kalmasın."
+   patron: "site geneli .btn-fit --fit-deep olsun, AA altında kalmasın."
    Hesaplanan kontrast (WCAG 2.1, beyaz metinle):
      --fit        #009d4f → 3.54:1   AA ALTI
      --fit-deep   #007a3d → 5.45:1   AA ✓
@@ -365,7 +365,7 @@ html{scroll-padding-top:112px}   /* sabit header altı anchor offseti (eski 166:
 .tb-lang{position:relative;display:flex;align-items:center}
 .tb-lang::before{content:"";width:1px;height:14px;background:rgba(233,226,214,.22);margin-right:4px}
 /* =====================================================================
-   DİL SEÇİCİ — açılır menü  (Beyar kararı, 2026-08-29)
+   DİL SEÇİCİ — açılır menü  (patron kararı, 2026-08-29)
    ---------------------------------------------------------------------
    §W2 · eski karar silinmez. Bir önceki tur kardeş markanın deseninden
    gidiyordu: dadagastro.com üst bandında açılır menü YOK, tek bağlantı
@@ -374,7 +374,7 @@ html{scroll-padding-top:112px}   /* sabit header altı anchor offseti (eski 166:
    html[lang] ve başlık "What should I cook?" ile doğrulandı). Kalem o
    turda deponun kilit dilinde (`.is-soon` + `.sr-lock`) bırakılmıştı,
    çünkü Fit'te çeviri altyapısı yok.
-   Beyar: "dil seçimi kilitli olmamalı, kilit yalnız marka kalemlerinde;
+   patron: "dil seçimi kilitli olmamalı, kilit yalnız marka kalemlerinde;
    menü kutu içinde açılsın". Karar bağlayıcı — menü geri kuruldu,
    KİLİT ROZETİ KALKTI.
    Düğmede GEÇİLECEK dil yazar (Gastro kuralı korundu): site Türkçe →
@@ -519,7 +519,7 @@ html{scroll-padding-top:112px}   /* sabit header altı anchor offseti (eski 166:
  düzeltmeleri ve aktif-sayfa durumunu ekler. */
 /* R8 madde 1 — MİSAFİRDE GİZLİ, GİRİŞTE GÖRÜNÜR.
  Eskiden her iki oturum durumunda da duruyordu (referans dadadiet.com hâlâ
- öyle; ölçüldü, misafirde a.btn-login "Planım" görünür). Beyar misafirde
+ öyle; ölçüldü, misafirde a.btn-login "Planım" görünür). patron misafirde
  gösterilmesini kusur saydı → kapı yalnız girişte açılıyor.
  Gizleme burada: .btn-plan (0,1,0) .btn-login'i (0,1,0) kaynak sırasıyla yener;
  açma aşağıdaki body.is-auth .btn-login.btn-plan (0,3,0) kuralında. */
@@ -817,7 +817,7 @@ html.reduce-motion .row-track{scroll-behavior:auto}
 .ap-store .fs-txt small{font-size:11px;font-weight:600;letter-spacing:.02em;text-transform:uppercase}
 .ap-store .fs-txt b{font-size:15px;font-weight:700;color:rgba(255,255,255,.86)}
 /* ÖLÜ KURALLAR — R11/M4'te `.ap-soon` bloğu footer işaretlemesinden
-   çıkarıldı (Beyar: "footer'da sağ altta 'yakında' diye bir şey
+   çıkarıldı (patron: "footer'da sağ altta 'yakında' diye bir şey
    kalmayacak"). Kurallar BIRAKILDI: uygulama yayımlanana kadar blok geri
    istenirse biçimi hazır dursun. Kabuk sözleşmesi: ölü kural silinmez,
    kütüğe yazılır — kütük tasks/REVIZYON-11.md M4. */
@@ -1061,13 +1061,13 @@ body.is-auth .bn-item.bn-plan{visibility:visible;pointer-events:auto}
  Eski sitedeki sunum: sağ kenarda 90° döndürülmüş sabit turuncu buton (open-feedback-modal).
  Aynı desen, yeni dile çevrildi. */
 /* =====================================================================
-   GÖRÜŞ BİLDİR — ŞERİT + DÜĞME   (Beyar · R11/M19+M20, R11/M21 düzeltme)
+   GÖRÜŞ BİLDİR — ŞERİT + DÜĞME   (patron · R11/M19+M20, R11/M21 düzeltme)
    ---------------------------------------------------------------------
-   Beyar: "Görüş bildir niye büyüdü olum — sağdaki gibi olacak, konumu fena
+   patron: "Görüş bildir niye büyüdü olum — sağdaki gibi olacak, konumu fena
    değil. Bir de şeridi koy."
 
    İLK DENEMEDE HATA BENDE: DadaHaber'in kalın sarı bloğuna bakıp
-   kalınlaştırdım (51×169 · BÜYÜK HARF · 800 ağırlık). Beyar'ın istediği
+   kalınlaştırdım (51×169 · BÜYÜK HARF · 800 ağırlık). patronun istediği
    DadaGastro'nunki. Canlıdan ÖLÇÜLDÜ (dadagastro.com @1440):
 
      .feedback-tab  52×144 · fixed · right 0 · z-index 72
@@ -1162,7 +1162,7 @@ body.is-auth .bn-item.bn-plan{visibility:visible;pointer-events:auto}
 /* Çip görünür yüksekliği kit §5 değeridir (`.df-fchip` 35px) — büyütülmedi.
    WCAG 2.5.5'in 44px dokunma hedefi görünmez `::before` ile açılır.
 
-   🔴 R18 (2026-08-30) — ŞERİT TEK SATIRA İNDİ. Beyar: "bölüm şeridi çift
+   🔴 R18 (2026-08-30) — ŞERİT TEK SATIRA İNDİ. patron: "bölüm şeridi çift
    satıra taşıyor; TEK SATIR olacak, sığmazsa yatay kaydırılabilir."
    ÖLÇÜLDÜ (öncesi, 1440px): `.fb-panel` iç genişliği 372px, beş çipin
    toplam genişliği 452px → şerit iki satıra kırılıyordu.
@@ -1716,7 +1716,7 @@ html.reveal-ready .reveal.in{opacity:1;transform:none}
   display:flex;flex-direction:column;align-items:center;gap:9px;
   transition:color .2s var(--ease);
 }
-/* Beyar: "renk DadaGastro'nun". Emsalde dinlenme hâli marka rengi taşımıyor
+/* patron: "renk DadaGastro'nun". Emsalde dinlenme hâli marka rengi taşımıyor
    (rgba(255,255,255,.7) — koyu hero'nun üstünde nötr); tek renk kararı
    HOVER'da, Gastro orada #fff'e çıkıyor. Fit o tek yerde kendi rengini
    kullanır: `--fit-bright`, koyu hero zemininde ölçülen kontrast 8.17:1. */
@@ -2523,7 +2523,7 @@ textarea:focus-visible,[tabindex]:focus-visible,summary:focus-visible{
   clip:rect(0 0 0 0);white-space:nowrap;border:0}
 
 /* ---- R3 (4. tur) · EKMEK KIRINTISININ ANA SAYFA KALEMİ = YALNIZ İKON ----
-   Beyar: "DadaGastro zaten ana sayfa, ana sayfa logo şeklinde olacak. Kardeş
+   patron: "DadaGastro zaten ana sayfa, ana sayfa logo şeklinde olacak. Kardeş
    markalarda ana sayfa ikonları daha kompakt. Büyük yapma ve DadaGastro'yu
    ayrıca yazma, sadece ikon olacak orada."
    Metin `.sr-only` ile ekran okuyucuya bırakıldı; görünen düğüm yalnız ikon.
@@ -2532,7 +2532,7 @@ textarea:focus-visible,[tabindex]:focus-visible,summary:focus-visible{
    `.rd-crumb`/`.kp-crumb` 9px. Tek kaynağa çekildi.
 
    R12 (5. tur) — DEĞER REFERANSTAN ÖLÇÜLDÜ, 13px → 9px.
-   Beyar: "DadaGastro'nun crumb-home ikonu referansa göre iri; kırıntı
+   patron: "DadaGastro'nun crumb-home ikonu referansa göre iri; kırıntı
    satırının ritmini bozuyor." Ölçüm (dadadiet.com @1440 ve @390):
      ev ikonu font-size 9px · kutu 10.1 × 9 · satır yüksekliğine oran 0.45
      ev ikonu ile chevron ayracı AYNI boyutta (ikisi de 9px)
@@ -2628,7 +2628,7 @@ body[data-brand="fit"] .ol-top{padding-bottom:0}
 /* ============================================================
    R15 (5. tur) · BANNER STANDARDI — SİTE GENELİNDE TEK KURAL
    ------------------------------------------------------------
-   Beyar: iki aile, iki sabit yükseklik; değer DadaDiet'ten ölçülüp
+   patron: iki aile, iki sabit yükseklik; değer DadaDiet'ten ölçülüp
    birebir alınacak; imza banner'ları kalkacak; içerik uzunluğu kutuyu
    BÜYÜTMEYECEK, gerekirse tipografi küçülür.
 
@@ -2708,7 +2708,7 @@ body[data-fit-hero-kind] .ed-top > .wrap > *{margin-top:0;margin-bottom:0}
 /* =====================================================================
    R6 · MADDE 4 — İSTATİSTİK ŞERİDİ SAĞDA DİKEY KOLON  (site geneli)
    ---------------------------------------------------------------------
-   Beyar: "şerit açıklamanın altında yatay duruyor; kardeş markalarda
+   patron: "şerit açıklamanın altında yatay duruyor; kardeş markalarda
    sağda dikey bir kolon."
 
    ÖLÇÜLDÜ (Playwright, 8. oturum, @1440 · üç bağımsız liste sayfası):
@@ -2779,7 +2779,7 @@ body[data-fit-hero-kind] .lib-row > .lib-stats > .lib-stat:empty{display:none}
 /* =====================================================================
    R6 · MADDE 5 — BANNER CTA SATIRI  (`.lib-cta`)
    ---------------------------------------------------------------------
-   Beyar: "İki buton yanlış hiyerarşide ve kötü duruyor."
+   patron: "İki buton yanlış hiyerarşide ve kötü duruyor."
 
    ÖLÇÜLDÜ — ÜÇ KUSUR:
    1) `.lib-cta`nın HİÇ CSS'i yoktu: `display:block`, butonlar inline.
@@ -2972,7 +2972,7 @@ body[data-brand="fit"] .lib-top h1{margin:var(--hero-gap) 0 calc(var(--hero-gap)
  ===================================================================== */
 body[data-fit-hero="1"] .df-top{
   /* D2 — PERDE KISALDI: eskiden 100dvh idi (1440x900'de 900px ölçüldü,
-     içerik yalnız 585px; 315px boş perde). Beyar "yukarı scroll çok fazla"
+     içerik yalnız 585px; 315px boş perde). patron "yukarı scroll çok fazla"
      dedi, tam-ekran perde kararı bilinçli olarak gevşetildi (KARARLAR K15).
      Tam-bleed video kimliği korunuyor, yalnız yükseklik tek ölçek token'ından
      geliyor — sayfada sabit sayı kalmadı. */
@@ -3194,10 +3194,10 @@ html.reduce-motion .reveal{opacity:1 !important;transform:none !important}
   flex:none;margin:0;font-size:13.5px;font-weight:600;color:var(--muted);white-space:nowrap
 }
 .ff-bar .ff-count b{color:var(--slate);font-weight:800;font-variant-numeric:tabular-nums;font-size:15px}
-/* R8 madde 20+28 (Beyar kararı) — sayacın solundaki dikey ayraç KALDIRILDI.
+/* R8 madde 20+28 (patron kararı) — sayacın solundaki dikey ayraç KALDIRILDI.
    Kural kabuktaydı ve YEDİ sayfayı birden etkiliyordu; brief ayracı yalnız
    iki kalemde istiyordu (20 · egzersiz-kutuphane · 28 · fit-testleri).
-   Beyar "7 sayfada da kalksın" dedi — yoksa site iki dil konuşuyordu.
+   patron "7 sayfada da kalksın" dedi — yoksa site iki dil konuşuyordu.
    Aşağıdaki @640 bloğundaki `display:none` karşılığı da bu yüzden kalktı. */
 .ff-bar .ff-sort{flex:none;display:inline-flex;align-items:center;gap:10px}
 .ff-bar .ff-sort .lbl{display:none}
@@ -3666,7 +3666,7 @@ html.reduce-motion .reveal{opacity:1 !important;transform:none !important}
   border-radius:var(--radius-sm);padding:10px 18px;cursor:pointer;
   display:inline-flex;align-items:center;gap:8px;white-space:nowrap;
   transition:.2s var(--ease);
-  /* R15 · Beyar kararı: DOKUNMA HEDEFİ 44px. Ölçülen eski hâl 36px'ti
+  /* R15 · patron kararı: DOKUNMA HEDEFİ 44px. Ölçülen eski hâl 36px'ti
      (13.5px yazı + 10px alt/üst dolgu) ve WCAG 2.5.8'in 24px tabanını
      geçse de kitin kendi 44px hedefinin ALTINDA kalıyordu — beş modül
      sayfasında birden. Dolguyu büyütmek yerine `min-height` verildi:
@@ -3743,7 +3743,7 @@ html.reduce-motion .reveal{opacity:1 !important;transform:none !important}
 
 
 /* =====================================================================
-   BANNER → GÖVDE DİKİŞİ  (Beyar · Revize 1)
+   BANNER → GÖVDE DİKİŞİ  (patron · Revize 1)
    ---------------------------------------------------------------------
    İstek: "Bütün sayfalarda banner'ın altındaki beyaz kısmın sol ve sağ
    üst köşesi yuvarlak olsun." Referans kardeş marka:
@@ -3753,7 +3753,7 @@ html.reduce-motion .reveal{opacity:1 !important;transform:none !important}
        position:relative; z-index:2;
        box-shadow:0 -12px 32px rgba(20,16,10,.18);
 
-   Değerler ORADAN ölçülerek alındı, birebir (Beyar kararı: "birebir").
+   Değerler ORADAN ölçülerek alındı, birebir (patron kararı: "birebir").
    Yarıçap tek yerden döner: --seam-r.
 
    Neden sınıf, neden `.lib-top + section` değil:
@@ -3775,7 +3775,7 @@ html.reduce-motion .reveal{opacity:1 !important;transform:none !important}
    Araya ray/şeffaf blok girdiği sayfalarda (Fit Planım ×9, Enerji Defteri
    ×4, sss, destek, destek-talepleri) `is-onbanner` VERİLMEZ: binme yapılsaydı
    köşe, z-index:40 taşıyan yapışkan rayın ALTINA girer ve hiç görünmezdi.
-   Beyar kararı gereği o sayfalarda yuvarlaklık rayın altındaki panelde
+   patron kararı gereği o sayfalarda yuvarlaklık rayın altındaki panelde
    kalıyor; ray düz. Orada gövde zemini çoğu kez sayfa zemini ile aynı
    (#f9f9f9 üstünde #f9f9f9) — köşe yalnız dolguyla okunmaz, bu yüzden
    1px `--line` üst kenarı yayı çiziyor.
@@ -3803,8 +3803,8 @@ html.reduce-motion .reveal{opacity:1 !important;transform:none !important}
    bileşenler yaşıyor (ör. program-liste `.lib-filters{position:sticky}`),
    kırpma onları öldürürdü. Köşeler zeminin kendisinden kesiliyor. */
 
-/* R12/S1 (Beyar · 2026-08-24) — dikiş gölgesi TÜMÜYLE kalksın.
-   R1 · R3 · R4 kütük kayıtlarında Beyar üç ayrı sayfada "burda gölge olmasın"
+/* R12/S1 (patron · 2026-08-24) — dikiş gölgesi TÜMÜYLE kalksın.
+   R1 · R3 · R4 kütük kayıtlarında patron üç ayrı sayfada "burda gölge olmasın"
    dedi; kaynak aynı `.fit-seam` kuralıydı. Karar: dikiş bundan sonra YALNIZ
    22px yuvarlak köşe + `.is-onbanner` binmesiyle okunacak, gölge bandı yok.
    Bu, R11/M1'de DadaGastro'dan birebir alınan gölgeden BİLİNÇLİ bir sapma
@@ -3821,7 +3821,7 @@ html.reduce-motion .reveal{opacity:1 !important;transform:none !important}
 
 
 /* =====================================================================
-   PARALLAX BAND  (Beyar · Revize 11 · M2)
+   PARALLAX BAND  (patron · Revize 11 · M2)
    ---------------------------------------------------------------------
    İstek: "Gastro ana sayfadaki Mutfak Sırları section'u gibi görselli
    olacak — arkası sabit, scroll edildikçe kaydırılabilir bir şekilde."
@@ -3871,9 +3871,9 @@ html.reduce-motion .reveal{opacity:1 !important;transform:none !important}
 
 
 /* =====================================================================
-   BİLGİ KUTULARINDA METİN KUTUYU DOLDURUR  (Beyar · Revize 11 · M5)
+   BİLGİ KUTULARINDA METİN KUTUYU DOLDURUR  (patron · Revize 11 · M5)
    ---------------------------------------------------------------------
-   Beyar (üç ayrı yerde, aynı cümle): "bu yeşil infoları yayman lazım,
+   patron (üç ayrı yerde, aynı cümle): "bu yeşil infoları yayman lazım,
    kart içerisindeki genişliğe göre — yarım kalmış yatayda."
 
    ÖLÇÜM (anatomi-v1 `.hr-note`, @1440):
@@ -3888,7 +3888,7 @@ html.reduce-motion .reveal{opacity:1 !important;transform:none !important}
    Dahası KARDEŞ MARKA DA AYNISINI YAPIYOR: dadagastro.com bilgi metnini
    1180px kutuda 700px'e sınırlıyor = **%59**, DadaGastro'nun %58'iyle aynı.
 
-   Beyar bunu üç kez tekrarladı; karar onun. Uygulandı, ama kusuru
+   patron bunu üç kez tekrarladı; karar onun. Uygulandı, ama kusuru
    körlemesine bırakmadık: ölçü uzayınca gözün satır başını bulması
    zorlaşır, bunun yerleşik karşılığı SATIR ARASINI AÇMAKTIR
    (uzun ölçü → daha çok interlinye). `line-height` 1.6 → 1.72.
@@ -3906,9 +3906,9 @@ html.reduce-motion .reveal{opacity:1 !important;transform:none !important}
 
 
 /* =====================================================================
-   BANNER SAYAÇLARINDA AYRAÇ  (Beyar · Revize 11 · M8)
+   BANNER SAYAÇLARINDA AYRAÇ  (patron · Revize 11 · M8)
    ---------------------------------------------------------------------
-   Beyar: "Fit'in banner'larındaki bu sayaç kısımlarına divider eklenecek
+   patron: "Fit'in banner'larındaki bu sayaç kısımlarına divider eklenecek
    — buradaki gibi." (referans ekranı: dadagastro.com liste banner'ı)
 
    REFERANS ÖLÇÜLDÜ — dadagastro.com/reference/tarif-liste/tarif-liste.css:
@@ -3947,9 +3947,9 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 
 
 /* =====================================================================
-   MARKA ETİKETİ  (Beyar · Revize 11 · M7)
+   MARKA ETİKETİ  (patron · Revize 11 · M7)
    ---------------------------------------------------------------------
-   Beyar: "Dada kalın, hepsi ortak — yani Gastro kendi renginde. Buradaki
+   patron: "Dada kalın, hepsi ortak — yani Gastro kendi renginde. Buradaki
    kartların üst etiketleri: marka ikonları, yazıları, renkleri kullan.
    Dada kalın, Gastro ince olacak, DadaGastro ayrı olacak vs gibi."
 
@@ -3988,9 +3988,9 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 
 
 /* =====================================================================
-   ANTRENÖR KARTI  (Beyar · Revize 11 · M3)
+   ANTRENÖR KARTI  (patron · Revize 11 · M3)
    ---------------------------------------------------------------------
-   Beyar: "DadaGastro Onaylı antrenörler section'undaki kartları değiştir,
+   patron: "DadaGastro Onaylı antrenörler section'undaki kartları değiştir,
    antrenör kartları olsun — 4'lü. sefler.html'deki kartları
    istiyorum."
 
@@ -4092,9 +4092,9 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 
 
 /* =====================================================================
-   SAYFALAMA  (Beyar · Revize 11 · M6)
+   SAYFALAMA  (patron · Revize 11 · M6)
    ---------------------------------------------------------------------
-   Beyar: "Egzersiz kütüphanesinde pagination kısmı var ya — sonsuz kısım
+   patron: "Egzersiz kütüphanesinde pagination kısmı var ya — sonsuz kısım
    var şimdi, pagination numaraları koyacaksın, Gastro'daki gibi.
    Bir de liste sayfalarında İLK SAYFAYA / SON SAYFAYA ATLA olması lazım,
    DadaHaber'deki gibi. Bir de bu pagination'un altında bir ufak boşluk ve
@@ -4132,7 +4132,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 .pg.arrow i{font-size:12px}
 .pg[disabled]{opacity:.4;pointer-events:none}
 .pg-dots{color:var(--muted);font-weight:700;padding:0 2px;font-size:14px;user-select:none}
-/* "pagination'un altında bir ufak boşluk ve yazı" — Beyar'ın istediği satır */
+/* "pagination'un altında bir ufak boşluk ve yazı" — patronun istediği satır */
 .pagi-note{width:100%;text-align:center;font-size:12.5px;color:var(--muted);font-weight:500;margin-top:6px}
 @media (max-width:640px){
   .pagi{gap:6px;margin-top:32px}
@@ -4141,9 +4141,9 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 
 
 /* =====================================================================
-   PLAN PROFİL BAŞLIĞI  (Beyar · Revize 11 · M17)
+   PLAN PROFİL BAŞLIĞI  (patron · Revize 11 · M17)
    ---------------------------------------------------------------------
-   Beyar: "enerji-defteri'nin profilini DadaGastro'nun aynısı yap —
+   patron: "enerji-defteri'nin profilini DadaGastro'nun aynısı yap —
    burası düz bannerlı; dadagastro.com/sefler/admin, burasının aynısını
    yapacaksın."
 
@@ -4209,7 +4209,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
      blokları gövdeye taşır; gövde opaksa onu hedef sayar ve panel
      kipine hiç dokunmaz. */
 .fp-kimlik-id .fp-uad{color:var(--fit-deep);font-weight:700}
-/* R15 · Beyar: "pill ile aşağısındaki beyaz section arasında boşluk olsun".
+/* R15 · patron: "pill ile aşağısındaki beyaz section arasında boşluk olsun".
    ÖLÇÜLDÜ: sekme şeridi OLAN modül sayfalarında istatistik şeridi ile gövde
    arasında 24px var (şeridin kendi üst dolgusundan geliyor); şerit OLMAYAN
    sayfalarda (mesajlarim · challengelarim) boşluk 0 ve pill beyaz banda
@@ -4245,11 +4245,11 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
    zeminli + beyaz metin. `.fp-badge`in ÖLÇÜSÜ korundu, yalnız rengi
    `--fit-deep` + beyaz oldu (kontrast 5.45:1; `--fit` seçilseydi 3.54:1
    ile WCAG 1.4.3'ü geçemezdi). Yeni renk üretilmedi, ikisi de kit tokeni.
-   Beyar onaylarsa kite "kademe rozeti" satırı olarak girer.
+   patron onaylarsa kite "kademe rozeti" satırı olarak girer.
    ===================================================================== */
 /* R15 · İKİ ROZET, TEK GÖRSEL DİL: `.is-paket` satın alınanı,
    `.is-kademe` kazanılanı gösterir. Ölçüleri ortak, yalnız ikon ve
-   metin farklı — Beyar'ın uyarısı ikisinin KARIŞMAMASI üzerineydi,
+   metin farklı — patronun uyarısı ikisinin KARIŞMAMASI üzerineydi,
    birbirine benzememesi üzerine değil. */
 .fp-kimlik-id h1 .fp-badge.is-paket,
 .fp-kimlik-id h1 .fp-badge.is-kademe{
@@ -4297,9 +4297,9 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 .fp-modul-lead{margin-top:16px;max-width:76ch}
 
 /* =====================================================================
-   R16 · MODÜL GÖVDESİ — ZEBRA ve DİKEY MERKEZ  (Beyar, 2026-08-29)
+   R16 · MODÜL GÖVDESİ — ZEBRA ve DİKEY MERKEZ  (patron, 2026-08-29)
    ---------------------------------------------------------------------
-   Beyar: "Bölümler sırayla beyaz ve gri; her bölümün içeriği kendi
+   patron: "Bölümler sırayla beyaz ve gri; her bölümün içeriği kendi
    bölümünün dikey merkezinde — üst boşluk = alt boşluk."
 
    ÖLÇÜM (1440, oturum açık, sekiz sayfa):
@@ -4321,7 +4321,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 
    2 · ZEBRA — kural `nth-of-type` ile kurulu ve BUGÜN her panelde tek
        bölüm olduğu için hepsi dizinin İLK rengini, yani BEYAZ'ı alıyor
-       (Beyar'ın verdiği sıra: beyaz · gri · beyaz · gri). Böylece sekiz
+       (patronun verdiği sıra: beyaz · gri · beyaz · gri). Böylece sekiz
        sayfanın bugünkü ayrışması da kapandı.
        🔴 AÇIK KALEM: gerçek zebra için panelde BİRDEN FAZLA tam genişlik
        `section` gerekiyor. Bugün bölünecek bloklar `.wrap`ın İÇİNDE
@@ -4349,7 +4349,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
   .pf-stats .cps{flex:1 1 44%;padding:13px 14px}
   /* R15 · İKİ ROZET, TEK GÖRSEL DİL: `.is-paket` satın alınanı,
    `.is-kademe` kazanılanı gösterir. Ölçüleri ortak, yalnız ikon ve
-   metin farklı — Beyar'ın uyarısı ikisinin KARIŞMAMASI üzerineydi,
+   metin farklı — patronun uyarısı ikisinin KARIŞMAMASI üzerineydi,
    birbirine benzememesi üzerine değil. */
 .fp-kimlik-id h1 .fp-badge.is-paket,
 .fp-kimlik-id h1 .fp-badge.is-kademe{font-size:11px;padding:6px 11px}
@@ -4405,9 +4405,9 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 
 
 /* =====================================================================
-   GÖRÜŞ BİLDİR ŞERİDİ — BANNER MERKEZİNE HİZALI  (Beyar · R11/M19)
+   GÖRÜŞ BİLDİR ŞERİDİ — BANNER MERKEZİNE HİZALI  (patron · R11/M19)
    ---------------------------------------------------------------------
-   Beyar: "Görüş Bildir butonu her tarafta yukarı çekilecek, banner'ın
+   patron: "Görüş Bildir butonu her tarafta yukarı çekilecek, banner'ın
    merkezinin hizasında olacak."
 
    Öncesi `top:50%` — VIEWPORT'un ortası. Banner yüksekliği sayfaya göre
@@ -4451,7 +4451,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 /* =====================================================================
    .pf-tabs — OPT-IN ORTALAMA VARYANTI  (R11 · K30)
    ---------------------------------------------------------------------
-   Beyar: "destek-v1 sekme rayı ('Destek' ve 'Taleplerim') sola dayalı,
+   patron: "destek-v1 sekme rayı ('Destek' ve 'Taleplerim') sola dayalı,
    ortalansın. Kanonu diğer ortalanmış sekme raylarından al."
 
    Ölçüm @1440 — `.pf-tabs` kullanan yedi sayfa:
@@ -4475,7 +4475,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
    (destek-v1 · destek-talepleri-v1). Yalnız birini ortalamak R34'teki
    zıplamayı birebir geri getirirdi, o yüzden ikisi de işaretlendi.
    Diğer dört sola dayalı sayfa (hesabim · profil · sss · uyelik) BİLEREK
-   dokunulmadan bırakıldı — ayrı raylar, ayrı karar (kuyruk: Beyar'a soru).
+   dokunulmadan bırakıldı — ayrı raylar, ayrı karar (kuyruk: patrona soru).
 
    Taşma güvenliği: `.pf-tabs` ≤900px'te `flex-wrap:nowrap;overflow-x:auto`
    olur; kaydırılabilir bir rayda düz `center` sol kenarı erişilemez kılar.
@@ -4493,7 +4493,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 /* =====================================================================
    R12 EK TUR · R20 — PLAN PROFİLİNİN BEYAZ ZEMİNİ KALKTI
    ---------------------------------------------------------------------
-   Beyar: "diette arka plan gri ama burda 2 katman var fitte bi profil
+   patron: "diette arka plan gri ama burda 2 katman var fitte bi profil
    tarafında bide tabin ord" — `.fp-profil` (line 3557) beyaz, hemen
    altındaki `.pf-tabbar` gri, gövde tekrar beyaz: üç zemin arka arkaya.
    Kart (`.fp-kimlik`) zaten kendi beyazını + `border:1px solid var(--line)`
@@ -4509,14 +4509,14 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 /* =====================================================================
    R12 EK TUR · R19 — KAPAK 280px → 240px (DadaDiet paritesi)
    ---------------------------------------------------------------------
-   Beyar: "profil birazdaha yaklaşmış ... biraz fazla fark var
+   patron: "profil birazdaha yaklaşmış ... biraz fazla fark var
    güncellemeni istiyorum tam olmamış bence" — avatar/kart kapağa DadaDiet
    `/planim`'deki oranda binsin istedi. Ölçüldü: binme değerleri (kart
    -78px, avatar -70px, line 3579/3584) zaten DadaDiet ile birebir aynı;
    tek fark kapak yüksekliğiydi (DadaGastro 280px — R11/M17'de DadaGastro'nun
    `sefler/admin` kalıbından ölçülmüştü — DadaDiet 240px). Aynı negatif
    margin, 40px daha uzun kapakta avatarı oransal olarak yukarıda bırakıyor.
-   Beyar kararı: kapak 240px'e çekilsin, BİNME DEĞERLERİNE DOKUNULMASIN.
+   patron kararı: kapak 240px'e çekilsin, BİNME DEĞERLERİNE DOKUNULMASIN.
    Bilinçli sapma KARARLAR.md'ye işlendi (K68). Kaynak sırası line 3560'taki
    `height:280px` bildirimini geçersiz kılıyor; o satır SİLİNMEDİ. Yalnız
    masaüstü/tablet tabanı (line 3560); @640 kırılımının kendi değeri
@@ -4531,7 +4531,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 /* =====================================================================
    R12 EK TUR · R22 — KAPAK/AVATAR DEĞİŞTİRME KONTROLLERİ (opt-in)
    ---------------------------------------------------------------------
-   Beyar: "ayarları tıkladığımda kapak ve profil değiştir çıkıyor haberin
+   patron: "ayarları tıkladığımda kapak ve profil değiştir çıkıyor haberin
    olsun öyle olmasını istiyorum" — DadaDiet `/hesabim` kartında kapağın
    sağ üstünde "Kapağı Değiştir" düğmesi + avatarın sağ altında kamera
    rozeti var; `/planim`'de YOK (yalnız ayarlar sayfasına özgü davranış).
@@ -4545,7 +4545,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
    yöntemiyle aynı: rozet görsel 34px kalıyor, gerçek hedef 44×44.
    ===================================================================== */
 .fp-profil.is-editable .fp-kimlik .fp-ava2{position:relative}
-/* R12 EK TUR · R22 düzeltme — Beyar canlıda gördü: "kapakta değişsin bide
+/* R12 EK TUR · R22 düzeltme — patron canlıda gördü: "kapakta değişsin bide
    profil değiştirme butonu bu değil". Referans (dadadiet.com/hesabim,
    docs/screenshots/R12-22-ref-diet-hesabim-kapak-avatar-degistir.png)
    yeniden ölçüldü: düğme SAĞ ÜST köşede, kapağın kenarından belirgin
@@ -4555,7 +4555,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
    DadaDiet'in kendi yeşili yerine DadaGastro'nun --fit-deep'i kullanıldı).
    Konum değerleri (top/right) ilk sürümle birebir aynı kaldı — ölçüldü,
    zaten referansla uyumluydu; yalnız BİÇİM (radius + rozet rengi)
-   düzeltildi. Beyar'ın gördüğü "sol üstte, küçük, biçimsiz" görüntü
+   düzeltildi. patronun gördüğü "sol üstte, küçük, biçimsiz" görüntü
    canlı DOM ölçümünde üretilemedi (taze Playwright bağlamında düğme
    sağ üstte, 138×44 — bkz. rapor); büyük olasılıkla eski sekmenin
    fit-shell.css önbelleğiydi, yine de biçim burada sıkılaştırıldı. */
@@ -4585,7 +4585,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 /* =====================================================================
    R34 · REVİZYON-12 EK TUR 3 — plan sekme rayı KABUKTA ortalandı
    ---------------------------------------------------------------------
-   Beyar: "burdaki tableri merkezi hale getir … ilk açıldıklarında
+   patron: "burdaki tableri merkezi hale getir … ilk açıldıklarında
    merkeziler sonra tıklayınca sola yalı oluyoyorlar."
 
    Ölçüm — 14 plan sayfası, `nav.fit-tabs` (1440px): yalnız
@@ -4594,7 +4594,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
    turda kapsam BİLEREK dar tutulmuştu, kabuğa dokunulmasın diye). Diğer
    13 sayfa `justify-content:normal` ile sola dayalıydı (sol boşluk 5px ·
    sağ boşluk 805px). Sonuç: sayfadan sayfaya geçince ray zıplıyordu —
-   Beyar'ın "tıklayınca sola yaslı oluyor" dediği tam bu.
+   patronun "tıklayınca sola yaslı oluyor" dediği tam bu.
 
    Lead kararı (REVİZYON-12-plan.md, EK TUR 3, K-d): ortalama TEK KAYNAK
    olarak kabuğa taşınır; `fit-planim-gecmis-v1.html`'deki sayfa kuralı
@@ -4620,7 +4620,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
    ortalıyor. `.fp-tabbar` eklenmesi özgüllüğü de bilerek yükseltiyor.
 
    NOT — DadaDiet referansı (R15'te ölçüldü, `.pf-tabs` `justify-content:
-   normal`, sola dayalı) bu rayı SOLA DAYALI kullanıyor. Beyar referanstan
+   normal`, sola dayalı) bu rayı SOLA DAYALI kullanıyor. patron referanstan
    BİLİNÇLİ olarak ayrılıyor: KARARLAR.md K69.
    ===================================================================== */
 .pf-tabbar.fp-tabbar .fit-tabs{justify-content:center}
@@ -4628,7 +4628,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 /* =====================================================================
    R32 · REVİZYON-12 EK TUR 3 — üst çubuk: dil seçici ayracının iki yanı
    ---------------------------------------------------------------------
-   Beyar: "ingilizcedeki ikon setine soldaki divider ile bosluk ver."
+   patron: "ingilizcedeki ikon setine soldaki divider ile bosluk ver."
 
    Ölçüm (1440/1024px) — `.tb-lang::before` ayracı: soldaki kardeş marka
    ikon grubuna (`.brand-switch`) uzaklık `.tb-right{gap:18px}`'ten
@@ -4864,7 +4864,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 .fk-field:last-child{margin-bottom:0}
 
 .fk-label{display:flex;align-items:baseline;gap:7px;font-size:14px;font-weight:700;color:var(--slate);margin-bottom:9px}
-/* F1 · ZORUNLU ALAN YILDIZI — KARARA BAĞLANDI (Beyar, 2026-08-30).
+/* F1 · ZORUNLU ALAN YILDIZI — KARARA BAĞLANDI (patron, 2026-08-30).
    Üç sayfa üç ayrı renk taşıyordu: `#b3261e` (giris) · `--fit-deep`
    (hesabim) · `--fit-ink` (odemelerim). Üçü de kontrastı geçiyordu,
    çoğunluk yoktu — ölçüm karar veremediği için soru olarak duruyordu.
@@ -6348,7 +6348,7 @@ body[data-fit-hero-kind] .wrap > .lib-row > .lib-stats{
 }
 
 /* --- BAŞLIK = KİMLİK ŞERİDİ ------------------------------------------
-   Beyar: "sohbet panelinde konuştuğum kişi gözükmüyor — WhatsApp'taki
+   patron: "sohbet panelinde konuştuğum kişi gözükmüyor — WhatsApp'taki
    gibi olsun." Başlık artık panelin adını değil KİŞİYİ taşıyor:
    monogram + antrenörün adı + randevu satırı. Panelin kendi adı
    `aria-label`da yaşıyor, ekranda yer kaplamıyor.
@@ -7182,7 +7182,7 @@ p.jt, li.jt, dd.jt, blockquote.jt,
  onunla uyarılamaz → sayfa kendi kırmızısını tanımlıyor (aşağıda).
  ===================================================================== */
 
-/* R13 (Beyar): düz koyu .lib-top banner kalktı, yerine kabuğun beyaz
+/* R13 (patron): düz koyu .lib-top banner kalktı, yerine kabuğun beyaz
    .fp-profil kalıbı geldi (aşağıda). Bu kural sayfaya özgüydü (kabuk
    kuralı değil), .lib-top artık DOM'da yok — silindi. Aynı kapak
    görseli .fp-kapak'a taşındı. */
@@ -7234,7 +7234,7 @@ p.jt, li.jt, dd.jt, blockquote.jt,
 /* =====================================================================
  SEKME ŞERİDİ — KİMLİK KARTIYLA HİZALI + KALEMLER ORTALI
  ---------------------------------------------------------------------
- İKİ ŞART BİRDEN (Beyar, 2026-08-29):
+ İKİ ŞART BİRDEN (patron, 2026-08-29):
    a) şerit KUTUSU kimlik kartıyla AYNI SOL KENARDA ve AYNI GENİŞLİKTE
    b) kalemler kutunun içinde ORTALI
 
@@ -7399,7 +7399,7 @@ p.jt, li.jt, dd.jt, blockquote.jt,
 .fy-frame img{width:100%;height:100%;object-fit:cover;display:block;transform-origin:center;transition:transform .12s linear}
 .fy-facts{margin-top:2px}
 /* =====================================================================
- DURUM SATIRI YÜKLEME ALANINA YAPIŞIKTI (Beyar, 2026-08-29)
+ DURUM SATIRI YÜKLEME ALANINA YAPIŞIKTI (patron, 2026-08-29)
  ---------------------------------------------------------------------
  ÖLÇÜM: `.fy-drop`un alt kenarı ile `#fyDurum`un üst kenarı arasında
  **0px** vardı — satır kutuya yapışıyordu. Her iki kipte de aynı
@@ -7417,7 +7417,7 @@ p.jt, li.jt, dd.jt, blockquote.jt,
 .fy-zoom{display:flex;flex-direction:column;gap:8px}
 .fy-range{width:100%;accent-color:var(--fit)}
 /* =====================================================================
- FOTOĞRAF MODALININ AYAĞI — hizasızdı (Beyar, 2026-08-29)
+ FOTOĞRAF MODALININ AYAĞI — hizasızdı (patron, 2026-08-29)
  ---------------------------------------------------------------------
  ÖLÇÜM @1440 (panel 466→974): not 466→974 (kendi satırı), "Vazgeç"
  601→704, "Uygula" 853→974. Yani Vazgeç ne solda ne sağda, HAVADA
@@ -7498,7 +7498,7 @@ p.jt, li.jt, dd.jt, blockquote.jt,
 }
 
 /* =====================================================================
- MODAL KAPATMA DÜĞMESİ — "boş kutu" okunuyordu (Beyar, 2026-08-29)
+ MODAL KAPATMA DÜĞMESİ — "boş kutu" okunuyordu (patron, 2026-08-29)
  ---------------------------------------------------------------------
  ÖLÇÜM: kabuğun `.fb-close`u 44×44 ve `<i class="fa-xmark">` taşıyor,
  yani ikon DOM'da var. Sorun ikonun YOKLUĞU değil, GÖRÜNÜRLÜĞÜ: glif
@@ -7515,7 +7515,7 @@ p.jt, li.jt, dd.jt, blockquote.jt,
 
 
 /* =====================================================================
- DOĞUM TARİHİ TAKVİMİ — .fk-tar   (Beyar, 2026-08-29)
+ DOĞUM TARİHİ TAKVİMİ — .fk-tar   (patron, 2026-08-29)
  ---------------------------------------------------------------------
  Öncesi: düz metin alanı, "gg.aa.yyyy" ipucu, elle yazım. Şimdi alana
  tıklayınca takvim açılıyor; ay ve yıl seçilebiliyor, gün ızgarasından
@@ -7527,7 +7527,7 @@ p.jt, li.jt, dd.jt, blockquote.jt,
  (`--radius-md`), aynı gölge (`--sh-lg`), satır en az 44px
  (WCAG 2.5.5). Yeni renk, yeni ölçü üretilmedi.
 
- YIL SEÇİMİ TEK TIKLA: Beyar'ın şartı "ok ok tıklatma" — yıl bir
+ YIL SEÇİMİ TEK TIKLA: patronun şartı "ok ok tıklatma" — yıl bir
  `<select>`, yani tek tıkla 88 yılın listesi açılıyor. Ay da select;
  aylar arası ince gezinme için iki ok DA duruyor (ikisi bir arada).
 
@@ -7702,7 +7702,7 @@ p.jt, li.jt, dd.jt, blockquote.jt,
 
 /* ÖLÜ KURAL SÖKÜLDÜ — `.card-list` / `.cc-*` ailesi "Kayıtlı Ödeme
    Yöntemlerim" bloğuna aitti; blok `odemelerim-v1.html#kartlar`a TAŞINDI
-   (Beyar, 2026-08-29) ve markup'ı bu sayfada kalmadı (grep `cc-row` → 0).
+   (patron, 2026-08-29) ve markup'ı bu sayfada kalmadı (grep `cc-row` → 0).
    Kurallar oraya birebir gitti; burada kopya bırakmak iki kaynak
    üretirdi. Sürüm geçmişinde duruyor. */
 

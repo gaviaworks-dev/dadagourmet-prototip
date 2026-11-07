@@ -79,7 +79,7 @@
    ekranında yapılmıştı. Kayıt: `docs/parite/T5.2-sapma.md §3`.
    ===================================================================== */
 .con-top .eyebrow{color:var(--tomato-tint)}
-/* 🔴 KOYU HERO'DA GÖVDE METNİ OKUNMUYORDU (Beyar bulgusu, 2026-08-20).
+/* 🔴 KOYU HERO'DA GÖVDE METNİ OKUNMUYORDU (patron bulgusu, 2026-08-20).
    Bu blok breadcrumb'ı, eyebrow'u ve h1'i açık renge çeviriyordu ama
    `.lead`i ATLAMIŞTI; metin global gövde rengine (#56514a) düşüyor ve
    koyu fotoğrafın üstünde kayboluyordu.
@@ -95,7 +95,7 @@
 .con-intro{padding:6px 0 38px}
 .con-intro h1{font-size:38px;letter-spacing:-.03em;margin:14px 0 12px;max-width:640px}
 .con-intro .lead{font-size:16px;color:var(--slate-2);font-weight:500;max-width:640px;line-height:1.65}
-/* 🔴 KOYU HERO'DA GÖVDE METNİ OKUNMUYORDU (Beyar bulgusu, 2026-08-20).
+/* 🔴 KOYU HERO'DA GÖVDE METNİ OKUNMUYORDU (patron bulgusu, 2026-08-20).
    Bu dosya hero'nun breadcrumb/eyebrow/h1'ini açık renge çeviriyordu ama
    `.lead`i ATLAMIŞTI. Üstteki `.con-intro .lead` kuralı açık zeminli alt
    bölüm için doğru; hero'nun İÇİNDEKİ aynı öğe için yanlış.

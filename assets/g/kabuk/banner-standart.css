@@ -1,4 +1,4 @@
-/* BANNER STANDARDI — revize 20 Eki 2026 (Beyar) · madde 10: banner içindeki yazı DİKEYDE ORTALI; breadcrumb'a dokunulmaz.
+/* BANNER STANDARDI — revize 20 Eki 2026 (patron) · madde 10: banner içindeki yazı DİKEYDE ORTALI; breadcrumb'a dokunulmaz.
    Kabuk her sayfaya enjekte eder (`KabukKimligi`).
 
    Ölçüldü (Playwright, 1440 ve 390): sayfa banner'larının hepsi aynı iskelette — `section.below-header > .wrap > nav.rd-crumb +

@@ -161,7 +161,7 @@
    h1'de (0,2,2) vs `.art-hero h1` (0,1,1). Yükleme sırası bozulsa da
    kurallar ayakta kalır.
 
-   ⚠ AÇIK KALEM (LEAD'e bildirildi, Beyar kararı): @390'da donör 128px
+   ⚠ AÇIK KALEM (LEAD'e bildirildi, patron kararı): @390'da donör 128px
    ölçüyor ama KANON `--banner-crumb-ofset:96px` diyor
    (`kanon/hero.css:146`). Gastro'nun `.art-hero` kuralı medya kapısı
    taşımadığı için mobilde 128'de kalmış. Ölçüt donöre bağlı olduğu

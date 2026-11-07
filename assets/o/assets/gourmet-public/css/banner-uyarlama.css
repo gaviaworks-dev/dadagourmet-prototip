@@ -1,4 +1,4 @@
-/* BANNER YERLEŞİM UYARLAMASI — Beyar kararı B (16 Eylül): bannerlı her sayfa Gastro
+/* BANNER YERLEŞİM UYARLAMASI — patron kararı B (16 Eylül): bannerlı her sayfa Gastro
    https://dadagastro.com/puf-noktalari bandının yerleşimini BİREBİR taşır.
 
    KAYNAK — tahmin değil, canlı Gastro sayfasının RENDER EDİLMİŞ kuralları
@@ -32,8 +32,8 @@
 
    ⚠ YAPMA: yazı boyutu/rengi bu dosyanın işi DEĞİL (marka tipografisi sayfanın kanonunda).
    Anasayfa (`body.pg-kesfet`, tam ekran keşif hero'su) bu kuralın DIŞINDA — orada yüklenmez.
-   Kırıntıyı kaldırıp "Gourmet donöründe yoktu" demek YANLIŞ olur: Beyar kararıyla her bannerda
-   var (EKSİ BİRİNCİ MADDE çelişkisini Beyar kapattı). */
+   Kırıntıyı kaldırıp "Gourmet donöründe yoktu" demek YANLIŞ olur: patron kararıyla her bannerda
+   var (EKSİ BİRİNCİ MADDE çelişkisini patron kapattı). */
 
 /* ① bant sütun-flex; içerik grubu alta yaslanır — liste + kurumsal/yasal aile */
 body section.below-header:is(.ke-top,.lst-top,.lg-top,.con-top){display:flex;flex-direction:column}

@@ -1,6 +1,6 @@
 /* =====================================================================
    Dada Gastro · Tercihler hattı — ORTAK ölçek (tam yapı, 5 Kas)
-   Taslak `tercih.css`in ortak bölümü (Beyar onaylı statik taslaklar, tasks/tercihler/PLAN.md §13):
+   Taslak `tercih.css`in ortak bölümü (patron onaylı statik taslaklar, tasks/tercihler/PLAN.md §13):
    · Yalnız kanon token'ları (public/kanon/tokenlar.css + markalar/gourmet.css).
    · Boşluk ölçeği 4/8 tabanlı tek ölçek: --t-* takma adları bu ölçeğin tek kaynağıdır.
    · Kapsam: her kural bir .tercih kökü altında — sayfanın geri kalanına sızmaz.

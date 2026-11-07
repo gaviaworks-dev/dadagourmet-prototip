@@ -9,7 +9,7 @@
    (00-ortak.md §3 madde 2: kalıp yoksa yalnız token'lardan inşa.)
    ============================================================ */
 
-/* Beyar kararı (2026-07-27): "arkası blur, kaliteli". Referans
+/* patron kararı (2026-07-27): "arkası blur, kaliteli". Referans
    .fb-overlay'de backdrop-filter YOK — token setinde de blur değeri
    tanımlı değil (tek kullanım yeri, yeni token açmaya değmez; sabit
    6px kullanıldı). */

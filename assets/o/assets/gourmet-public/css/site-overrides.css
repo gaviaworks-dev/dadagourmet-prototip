@@ -90,7 +90,7 @@ div[style*="border-left:3px solid #b14fc5"] span[style*="color:var(--muted)"] {
 }
 
 /* ÇIKARILDI (8.8, 2026-09-15 gece) — `.rd-gallery.dt-tek-kolon` değiştiricisi ve onu kullanan
-   `components/detay/*` bileşenleri kaldırıldı. Sebep: etkinlik detayı Beyar kararıyla mekân
+   `components/detay/*` bileşenleri kaldırıldı. Sebep: etkinlik detayı patron kararıyla mekân
    detayının kabuğundan ÇIKIP canlı `dadagourmet.com/etkinlikler/sapporo-autumn-fest-2026`
    kabuğuna (`evd-*`) döndü; `mekan-detay.css` o sayfada artık yüklenmiyor, dolayısıyla kanon
    iki kolonlu `.rd-gallery` kuralı da uygulanmıyor. Kural mekân detayında KULLANILMIYORDU

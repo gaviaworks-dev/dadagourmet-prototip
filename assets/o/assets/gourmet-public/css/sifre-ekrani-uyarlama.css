@@ -82,7 +82,7 @@
  * `fit-giris.blade.php:737` — ikisi de satır içi `style="margin-top:22px"`).
  *
  * Kanon `gourmet-ekran.css:580-586` `.giris-basari` bloğunda `.dugme` için hiçbir
- * kural tanımlamıyor; boşluk oradan gelmiyordu. Beyar kararı (2026-09-17): boşluk
+ * kural tanımlamıyor; boşluk oradan gelmiyordu. patron kararı (2026-09-17): boşluk
  * kardeşlerle eşitlensin ama SATIR İÇİ STİLLE DEĞİL, sınıfla. Kural bu yüzden burada.
  *
  * Değer uydurulmadı: kardeşlerdeki 22 px'in kanondaki karşılığı `--bosluk-22`.

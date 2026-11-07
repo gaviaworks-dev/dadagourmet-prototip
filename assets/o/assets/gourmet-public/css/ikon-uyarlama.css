@@ -1,4 +1,4 @@
-/* ikon-uyarlama.css — ikon turu (Beyar 2026-09-16, iş sırası 2: "kategori ikonları,
+/* ikon-uyarlama.css — ikon turu (patron 2026-09-16, iş sırası 2: "kategori ikonları,
    Gastro/Fit kanonuyla aynı") için yerel katman.
 
    NEDEN AYRI DOSYA: `.ai/rules/assets.md` — vendor CSS'e (etkinlikler.css,
@@ -7,7 +7,7 @@
    /etkinlikler · /mekanlar · /etkinlikler/{slug}.
 
    NE YAPILMAMALI: bu kuralları "donörde yok" diye silmek ikonları başıboş bırakır (renk
-   metne düşer, `.fct-head`te genişlik oynar); ikon düğümlerini kaldırmak ise Beyar'ın
+   metne düşer, `.fct-head`te genişlik oynar); ikon düğümlerini kaldırmak ise patronun
    kategori ikonu kararını geri alır. Kapının "İKON FAZLA" satırları bu yüzeylerde
    BİLİNÇLİ sapmadır. */
 

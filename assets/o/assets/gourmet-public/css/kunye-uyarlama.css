@@ -1,5 +1,5 @@
 /* ══ KÜNYE — YEREL ÖRTME KATMANI (donörde yok) ═════════════════════════════════════════
-   `kunye.css` artık donörle BAYT BAYT aynı (Beyar kararı 2026-09-15: "5 vendor dosyası …
+   `kunye.css` artık donörle BAYT BAYT aynı (patron kararı 2026-09-15: "5 vendor dosyası …
    kalanları prototiple bayt bayt aynı yap"). Bu dosya, o dosyanın ESKİ yerel hâlidir —
    aynen, tek satır değiştirilmeden; `kunye.css`in hemen ARDINDAN yüklenir ve eski kaskadı
    korur (kanon ÖNCE, örtme SONRA — `yasal.css` emsali, docs/HANDOFF.md vendor kuralı).

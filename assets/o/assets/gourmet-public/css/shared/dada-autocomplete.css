@@ -2,16 +2,16 @@
  *
  * KAPANIŞ TURU R5 Madde 3 (2026-08-08) — panel+satır CSS'i üç ayrı kopyada
  * yaşıyordu:
- *   - `dada-route.css` `.yg-ac` ailesi (kanon — Beyar'ın onayladığı ekran).
+ *   - `dada-route.css` `.yg-ac` ailesi (kanon — patronun onayladığı ekran).
  *   - `gourmet-mekan-liste/mekan-liste.css` `.ac-panel`/`.ac-item` ailesi —
  *     GÖRSEL OLARAK farklı bir dil konuşuyordu: tür rozeti (`.ac-item__type`)
- *     satırın SOLUNDA, büyük/kalın/mor — Beyar'ın şikayeti tam bu.
+ *     satırın SOLUNDA, büyük/kalın/mor — patronun şikayeti tam bu.
  *   - `resources/css/tokens.css` içinde bu ikinci kopyanın ÜÇÜNCÜ tekrarı
  *     (sitewide token dosyasında, hiçbir canlı markup tarafından tüketilmiyordu
  *     — grep ile doğrulandı, bkz. rapor).
  *
  * Değerler `dada-route.css`nin "autocomplete açılır" bloğundan (kanon,
- * referans ekran Beyar onaylı) BİREBİR taşındı — yeni renk/radius/gölge/punto
+ * referans ekran patron onaylı) BİREBİR taşındı — yeni renk/radius/gölge/punto
  * İCAT EDİLMEDİ. `--sh-pop` yalnız dada-route.css'te tanımlı olduğu için
  * `var(--sh-pop, <literal>)` fallback'iyle verildi — gourmet.css bu token'ı
  * tanımlamıyor, fallback olmadan mekân listesinde gölge tamamen kaybolurdu.
@@ -33,7 +33,7 @@
  * (Dada Route'un JS şablonu zaten öyleydi; mekân listesi hero'su bu turda
  * eklendi) — bu yüzden ayrı bir `display:none` varsayılanına gerek yok.
  *
- * max-height + overflow-y:auto: Beyar madde 3 — "içeride sıkışıp kalmış
+ * max-height + overflow-y:auto: patron madde 3 — "içeride sıkışıp kalmış
  * gibi... liste uzunsa kendi içinde kaysın". Mekân listesinde zaten vardı
  * (sayfa-yerel kopya, H1 2026-08-08 notu); burada KANONA taşındı, Dada
  * Route'a da uygulandı (aynı bileşen aynı davranışı paylaşır). Kısa
