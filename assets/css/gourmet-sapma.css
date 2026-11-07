@@ -184,3 +184,9 @@ button.yg-il-cip{display:inline-flex;align-items:center;gap:5px;font-family:inhe
 /* Route mekân rayı: ad kesilmez, iki satıra iner */
 .yd-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:normal;text-overflow:clip}
 .yd-loc{white-space:normal;text-overflow:clip}
+/* Mekân detayı: künye tam genişlikte kalınca kayan şerit kopyaları yan yana görünüyordu. 1024 ve altında durur, kopyalar gizlenir, sarılır */
+@media(max-width:1024px){
+  .kc-chips .chip-row.kc-marquee{overflow:visible}
+  .kc-marquee-track{flex-wrap:wrap;width:auto;animation:none}
+  .kc-marquee-track>[aria-hidden="true"]{display:none}
+}
