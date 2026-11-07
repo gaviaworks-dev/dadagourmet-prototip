@@ -35,8 +35,8 @@ const detay = await p.evaluate(() => { kok(document.body); const m = document.qu
   $$('.evd-about p').forEach((e, i) => { if (i) e.parentNode.removeChild(e); else e.textContent = ''; });
   $$('.evd-row').forEach((r) => { if (/Organizatör/.test(r.textContent)) r.parentNode.removeChild(r); });
   const kim = $$('.evd-program').find((e) => /Kimler Katılabilir/.test(e.textContent)); kim.parentNode.removeChild(kim);
-  $$('.evd-program .evd-status').forEach((e) => { e.lastChild.nodeValue = ' Takvim bilgisi canlı kayıttan alındı · Detaylı program düzenleyicide'; });
-  $('.evd-side').insertAdjacentHTML('beforeend', '<div class="evd-card ev-yan-eylem"><button class="btn btn-primary" type="button" id="evdRandevu" data-randevu=""><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Randevu Oluştur</button><a class="btn btn-ghost" id="evdBilet" target="_blank" rel="noopener" hidden>Resmî Sayfa <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>');
+  $$('.evd-program .evd-status').forEach((e) => { e.lastChild.nodeValue = ' Takvim bilgisi doğrulandı · Detaylı program henüz açıklanmadı'; });
+  $('.evd-side').insertAdjacentHTML('beforeend', '<div class="evd-card ev-yan-eylem"><button class="btn btn-primary" type="button" id="evdRandevu" data-randevu=""><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Randevu Oluştur</button><a class="btn btn-ghost" id="evdBilet" target="_blank" rel="noopener" hidden>Bilet / Rezervasyon <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></div>');
   $('.disc-grid', $('.evd-others')).innerHTML = ''; $('.disc-grid', $('.evd-others')).id = 'evdDiger';
   $$('.reveal').forEach((e) => e.classList.remove('reveal'));
   return m.innerHTML; });

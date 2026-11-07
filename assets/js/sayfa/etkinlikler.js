@@ -65,6 +65,7 @@
     var rozet = $('.evd-stage .disc-badge'); if (rozet) { rozet.lastChild.nodeValue = ' ' + e.tur; }
     var ciplar = $$('.evd-chip'); ciplar[0].lastChild.nodeValue = ' ' + e.zaman; ciplar[1].lastChild.nodeValue = ' ' + e.yer;
     $('.evd-about p').textContent = e.ozet;
+    var durum = $('.evd-program .evd-status'); if (durum && e.bas) { durum.lastChild.nodeValue = ' ' + e.bas.slice(0, 4) + ' takvim bilgisi doğrulandı · Detaylı program henüz açıklanmadı'; }
     $$('.evd-row').forEach(function (r) { var b = $('b', r).textContent, s = $('span', r); if (b === 'Tür') { s.textContent = e.tur; } if (b === 'Tarih') { s.textContent = e.zaman; } if (b === 'Yer') { s.textContent = e.yer; } });
     var rb = $('#evdRandevu'); rb.dataset.randevu = e.slug; if (gecmis(e)) { rb.parentNode.removeChild(rb); }
     if (e.bilet) { var bl = $('#evdBilet'); bl.href = e.bilet; bl.hidden = false; }
