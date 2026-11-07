@@ -64,7 +64,7 @@
             </div>
         
         
-                    <button class="btn btn-primary kc-reserve" id="openRsv" type="button"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Rezervasyon Yap</button><p class="kc-rez-not">Talebin işletmeye iletilir. <span class="ornek-etiket">prototip örneği</span></p><a class="btn kc-reserve btn-ghost" href="tel:+902122935656"><i class="fa-solid fa-phone" aria-hidden="true"></i> İşletmeyi Ara</a>
+                    <button class="btn btn-primary kc-reserve" id="openRsv" type="button"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Rezervasyon Talebi Gönder</button><p class="kc-rez-not">Talebin mekân sahibine iletilir, onayıyla kesinleşir. <span class="ornek-etiket">prototip örneği</span></p><a class="btn kc-reserve btn-ghost" href="tel:+902122935656"><i class="fa-solid fa-phone" aria-hidden="true"></i> İşletmeyi Ara</a>
         
         
                                 <div class="kc-meta">
@@ -428,7 +428,7 @@
         <div class="fb-panel lk-panel"><div class="fb-head"><div><h3 id="lkTitle">Neredesin?</h3><p id="lkDesc">Dada Gourmet deneyimini konumuna göre kişiselleştirelim.</p></div><button class="fb-close" id="lkClose" type="button" aria-label="Kapat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="fb-body lk-body"><button type="button" class="lk-geo" id="lkGeoBtn"><i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i><span>Konumumu Kullan</span></button><div class="lk-divider"><span>veya listeden seç</span></div><div class="lk-search"><i class="fa-solid fa-magnifying-glass lk-search-ico" aria-hidden="true"></i><input type="text" id="lkSearchInput" class="lk-search-input" aria-label="Ülke ara" placeholder="Ülke ara…" role="combobox" aria-expanded="true" aria-controls="lkList" aria-autocomplete="list" autocomplete="off"></div><div class="lk-list" id="lkList" role="listbox" aria-label="Ülke listesi"><button type="button" id="lkRow-tr" class="lk-row " data-country="tr" data-search="turkiye turkey türkiye" role="option" aria-selected="false"><img class="lk-flag" src="{{kok}}assets/o/assets/gourmet-public/flags/tr.svg" alt="" width="24" height="17"><span class="lk-name">Türkiye</span><i class="fa-solid fa-check lk-check" aria-hidden="true"></i></button></div><div class="lk-empty" id="lkEmpty" hidden=""><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Aradığın ülke bulunamadı. Şu an yalnız Türkiye için hizmet veriyoruz, yeni ülkeler yolda.</div><button type="button" class="lk-skip" id="lkSkip">Şimdi değil</button></div></div>
     </div>
 <div class="rsv-overlay" id="rsvOverlay"></div>
-<div class="rsv-modal" id="rsvModal" role="dialog" aria-modal="true" aria-label="Rezervasyon Yap">
+<div class="rsv-modal" id="rsvModal" role="dialog" aria-modal="true" aria-label="Rezervasyon Talebi">
         <div class="rsv-panel">
             
             <form method="POST" data-prototip-form id="rsvForm" novalidate="">
@@ -442,7 +442,7 @@
                 <div class="rsv-head">
                                         <div class="rsv-av" ></div>
                     <div>
-                        <h3>Rezervasyon Yap</h3>
+                        <h3>Rezervasyon Talebi</h3>
                         <p><i class="fa-solid fa-utensils" aria-hidden="true"></i> Mikla</p>
                     </div>
                     <button class="rsv-close" id="rsvClose" type="button" aria-label="Kapat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
@@ -550,7 +550,7 @@
                             <div class="rsv-sum">Seçilen<b id="rsvSum2">tarih ve saat seç</b></div>
                             <div class="rsv-foot-acts">
                                 <button class="btn btn-ghost rsv-back" id="rsvBack2" type="button"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Geri</button>
-                                <button class="btn btn-primary rsv-confirm" id="rsvConfirm" type="button"><i class="fa-solid fa-check" aria-hidden="true"></i> Rezervasyonu Onayla</button>
+                                <button class="btn btn-primary rsv-confirm" id="rsvConfirm" type="button"><i class="fa-solid fa-check" aria-hidden="true"></i> Talebi Gönder</button>
                             </div>
                         </div>
                     </div>

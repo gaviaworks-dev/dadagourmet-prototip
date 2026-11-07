@@ -23,7 +23,7 @@ Kısaltma: G = dadagastro.com canlı render, O = dadagourmet.com canlı render, 
 | Kayıt | `/kayit` | G `/kayit` | Gastro alan seti; sosyal düğme yok; `hesap_turu` yok | Kanon soru 3 önerisi. Karar bekliyor sayılır |
 | Şifre unuttum | `/sifremi-unuttum` | G `/giris` sifre panosu | Açık pano başlangıç hâli | Gastro'da aynı sayfada pano; Gourmet adresi korundu |
 | Yeni şifre | `/sifre-yenile` | G `/giris` yeni-sifre panosu | Örnek e-posta; beş kural canlı | Token olmadığı için pano doğrudan açık |
-| Hesabım | `/hesabim/ayarlar` | Yerel Gastro `6700538df4`, demo tohum üye render'ı, `/hesabim/ayarlar`. Kabuk, kimlik bandı, sekmeler, Profil, Keşif, Güvenlik bu render'dan | Sekmeler Gastro'nun 8'lisi. "Mutfak tercihlerim" yuvası "Keşif tercihlerim" oldu, Gastro DOM'u korundu, malzeme alanı çıktı. Bildirim, Dil, Bağlı, Veri, Dondurma panelleri P `go-hesabim.html?auth=1` içeriği. Profil'de Uzmanlık alanım yok. Güvenlik'te bağlı olmayan sosyal satırlar yok. Kimlik örnek, tohum kişi temizlendi, kapak görseli Gourmet | K3, K4. Gastro'nun bu beş paneli tarif, menü ve şef verisi taşıyor; sınıf kümesi ortak olduğu için içerik Gourmet donöründen kondu. `#tfaModal` alınmadı. Keşif'in 8 alt grubu (P `go-kesif-tercihlerim`) ayrı ekranda, sonraki tur |
+| Hesabım | `/hesabim/ayarlar` | Yerel Gastro `6700538df4`, demo tohum üye render'ı, `/hesabim/ayarlar`. Kabuk, kimlik bandı, sekmeler, Profil, Keşif, Güvenlik bu render'dan | Sekmeler Gastro'nun 8'lisi. "Mutfak tercihlerim" yuvası "Keşif tercihlerim" oldu, Gastro DOM'u korundu, malzeme alanı çıktı. Bildirim, Dil, Bağlı, Veri, Dondurma panellerinin yapısı P `go-hesabim.html?auth=1`, metni Gourmet bağlamına uyarlandı. Profil'de Uzmanlık alanım yok. Güvenlik'te bağlı olmayan sosyal satırlar yok. Kimlik örnek, tohum kişi temizlendi, kapak görseli Gourmet | K3, K4. Gastro'nun bu beş paneli tarif, menü ve şef verisi taşıyor; sınıf kümesi ortak olduğu için içerik Gourmet donöründen kondu. `#tfaModal` alınmadı. Keşif'in 8 alt grubu (P `go-kesif-tercihlerim`) ayrı ekranda, sonraki tur |
 | Gurme Panelim | `/hesabim/gurme-panelim/` ve 5 alt yol | P `go-mekanlarim.html?auth=1` kabuğu ve `kalem-satiri`; CSS zinciri yerel Gastro Hesabım | 6 sekme bağlantılı; satırlar örnek etiketli; Değerlendirmelerim boş durum; Puan Durumu yalnız yapı | K3, W2.5. Sahte değerlendirme yok. Puan kuralı açık (§8 #6, #13, #18) |
 | Mekânlar | `/mekanlar` | O `/mekanlar`, `?il[]=istanbul`, `?il[]=istanbul&ilce[]=beyoglu` | Grup adları doküman §16 adlarına çekildi; Enerji ve Araç Şarj grubu eklendi; sıfır sonuçlu seçenek gizli; üç sütun; kartta 4 eylem; Leaflet yerine MapLibre | F1-F13, FH.1, FK.10-13, K7, K8. Şarj grubunun canlı sayacı yok; sayı basılmadı, örnek etiketli. Kart mikro ikonları (W1.4) mekân başına veri ister, bu turda yok |
 | Mekân detayı | `/mekan/mikla` | O `/mekan/mikla`, rezervasyon penceresi R | Rezervasyon düğmesi ve penceresi geri geldi; Dada Route bandı geri geldi; Ne Yenir ve Ne Alınır sekmeleri eklendi; kapak 480 px; künye düğmeleri yok; harita MapLibre; takvim örnek | K2, W2.2, W3.3, K7. Metin talep dili (§8 #17). Ne Alınır'da satış yok, "tescilli" sözü yok (§8 #10). Bilgi Hatası Bildir tetiği eklenmedi: A4 kararı açık |
@@ -66,16 +66,13 @@ Sonuç:
 - Sekme şeridi: kanonda yapışkan sekme karşılığı yok. 16 Eylül hâli (yapışkan değil) kaldı.
 - Kapak: kanon `.rd-stage` için konuşuyor; Gastro üç genişlikte 480, `kanon/hero.css` şerhi de aynı değeri yazıyor. Gastro baz alındı: 480 / 480 / 480. Diet'in 560'ı alınmadı.
 
-## Çelişen açık maddeler
+## Karar dili (§8 kararlandı)
 
-Tarafsız metinle geçildi; karar verilmedi.
-
-| § | Ekran | Yapılan |
-|---|---|---|
-| #6, #18 | Gurme Panelim, Puan Durumu | Tutar ve "anında" dili yok |
-| #8 | Dada Route | Yalnız Türkiye örneği |
-| #9 | Dada Route | "Dinlenme alanı" |
-| #10 | Ne Alınır, Route | "Tescilli" sözü yok |
-| #11 | Dada Route | Panel solda |
-| #13 | Gurme Panelim | Ziyaret satırında kural veya puan yok |
-| #17 | Rezervasyon | "Talebin işletmeye iletilir", garanti dili yok |
+| Konu | Ekranda |
+|---|---|
+| Rezervasyon | "Rezervasyon talebi" ve mekân sahibi onayı; garanti dili yok |
+| Puan | "Bekleyen puan", onayda kesinleşir; tutar yazılmaz |
+| Dinlenme, tescil | "Dinlenme alanı"; "güvenli" ve "tescilli" yok |
+| Route paneli | Solda |
+| Slogan | K6 metni onaylı |
+| Keşif tercihleri | Ayrı ekran sonraki tura kaldı |
