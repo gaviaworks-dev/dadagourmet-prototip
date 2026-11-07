@@ -25,7 +25,7 @@ Yöntem `dadadiet-prototip` ile aynıdır.
 | `assets/g/` | Canlı Gastro zinciri; marka rengi Gourmet'e eşlenmiş, `kanon/markalar/gourmet.css` yüklü |
 | `assets/o/` | Canlı Gourmet gövde dosyaları ve görselleri |
 | `assets/css/gourmet-sapma.css` | Gastro kabuğu altında Gourmet gövdesi için yazılı sapmalar |
-| `assets/js/prototip.js` | Form göndermeyi ve yazma isteğini keser; hiçbir veri gitmez |
+| `assets/js/prototip.js` | Form göndermeyi ve yazma isteğini keser; hiçbir veri gitmez. Demo kayıtları (`dgKayit`) ve Dada Puan kuralı (`dgPuan`) burada; kayıtlar yalnız tarayıcıda durur |
 | `admin/` | Panel donör seti; ayrı iş kolu |
 
 ## Donörü yenileme
@@ -39,6 +39,9 @@ Playwright kurulu bir projeyi `PW_KOK=<yol>/package.json` ile gösterin. Yalnız
     node _src/araclar/sayfa-kurumsal.mjs <cekim>/dom
     node _src/araclar/sayfa-gourmet.mjs <cekim>/dom <eski-referans>/sayfa-dom.html
     node _src/araclar/sayfa-rota.mjs <cekim>/dom
+    node _src/araclar/sayfa-mekan-bul.mjs <cekim>/dom
+    node _src/araclar/etkinlik-veri.mjs
+    node _src/araclar/sayfa-etkinlik.mjs <cekim>/dom
     node _src/araclar/gorsel-al.mjs
     node _src/build.mjs
 

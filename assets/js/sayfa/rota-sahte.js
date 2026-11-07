@@ -51,7 +51,7 @@
     var l = R.katman.sarj.map(function (n, i) {
       var u = hataUzak({ lat: n[1], lng: n[0] }), dc = /DC/.test(n[2]);
       var yakin = M.map(function (m) { return { id: m.slug, slug: m.slug, ad: m.name, mesafe_m: Math.round(km(n[1], n[0], m.lat, m.lng) * 1000), url: kok + 'mekan/mikla/' }; }).filter(function (m) { return m.mesafe_m <= 1000; }).sort(function (a, b) { return a.mesafe_m - b.mesafe_m; });
-      return { id: 'ornek-' + i, ad: n[2] + ' (prototip örneği)', tur: dc ? 'DC' : 'AC', kw: dc ? 120 : 22, lat: n[1], lng: n[0], rotadan_km: Math.round(u.d * 10) / 10, sahiplik: null, operator: null, mekanlar: yakin };
+      return { id: 'ornek-' + i, ad: n[2] + ' (prototip örneği)', tur: dc ? 'DC' : 'AC', kw: dc ? 120 : 22, lat: n[1], lng: n[0], rotadan_km: Math.round(u.d * 10) / 10, sahiplik: null, operator: null, veri_saglayici: 'Prototip örneği', lisans: 'örnek veri', mekanlar: yakin };
     }).filter(function (s) { return s.rotadan_km <= 20 && (tur === 'tum' || s.tur === tur) && s.kw >= min; });
     return { istasyonlar: l, veri_hazir: true, toplam: l.length };
   }
