@@ -74,7 +74,7 @@
   }
 
   /* Liste */
-  var bolge = 'tr', kategori = '', aranan = '', sira = 'onerilen', sayfa = 1, SAYFA = 12;
+  var bolge = 'tr', kategori = '', aranan = '', sira = 'onerilen', sayfa = 1, SAYFA = 12, gorunum = 'liste', ay = null;
   var secili = function (n) { return $$('input[name="' + n + '[]"]:checked').map(function (i) { return i.value; }); };
   var tarihUy = function (e, d) {
     if (!d) { return true; }
@@ -99,6 +99,9 @@
       (haric === 'sehir' || !secili('sehir').length || secili('sehir').indexOf(e.sehir) >= 0) && (haric === 'ulke' || !secili('ulke').length || secili('ulke').indexOf(e.ulke) >= 0);
   };
   var dizi = function (l) {
+    /* Canlı sıralama listelerinin çekim anı kopyası. Şimdi Açık ve Rezervasyon Uygunluğu canlıda da süzgeçtir: listede olmayan çıkar */
+    var canli = (V.sira || {})[sira];
+    if (canli) { var yer = {}; canli.forEach(function (s, i) { yer[s] = i; }); return l.filter(function (e) { return e.slug in yer; }).sort(function (a, b) { return yer[a.slug] - yer[b.slug]; }); }
     var tarihSira = function (a, b) { return a.bas < b.bas ? -1 : a.bas > b.bas ? 1 : 0; };
     return l.slice().sort(function (a, b) {
       if (gecmis(a) !== gecmis(b)) { return gecmis(a) ? 1 : -1; }
@@ -132,19 +135,81 @@
     });
     $$('.sheet-body > .fct').forEach(function (k) { var n = $$('input:checked', k).length, d = $('.fct-dot', k); if (d) { d.textContent = n; d.classList.toggle('on', n > 0); } });
   };
+  /* Takvim: canlı `.ev-cal` DOM'u. Ay ızgarası pazartesiden başlar, gün tıklanınca o günün kartları altta açılır */
+  var AY = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
+  var GUN = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
+  var ayStr = function (d) { return gunStr(d).slice(0, 7); };
+  var takvimYaz = function (l) {
+    var k = $('#evTakvim'), a = (ay || bugun.slice(0, 7)).split('-'), yil = +a[0], no = +a[1] - 1;
+    var ilk = new Date(yil, no, 1), son = new Date(yil, no + 1, 0), bas = new Date(yil, no, 1 - (ilk.getDay() + 6) % 7), bit = new Date(yil, no + 1, 0 + (7 - son.getDay()) % 7);
+    var gunler = [], dolu = false;
+    for (var d = new Date(bas); d <= bit; d.setDate(d.getDate() + 1)) {
+      var g = gunStr(d), o = l.filter(function (e) { return e.bas <= g && e.bit >= g; });
+      if (o.length) { dolu = true; }
+      gunler.push({ g: g, gun: d.getDate(), ay: d.getMonth(), yil: d.getFullYear(), haftaGun: d.getDay(), disari: d.getMonth() !== no, o: o });
+    }
+    var ad = function (x) { return String(x.gun).padStart(2, '0') + ' ' + AY[x.ay] + ' ' + x.yil; };
+    k.innerHTML = '<div class="ev-cal"><div class="ev-cal-head"><h3>' + AY[no] + ' ' + yil + '</h3><div class="ev-cal-nav"><a href="#" data-ay="' + ayStr(new Date(yil, no - 1, 1)) + '" aria-label="Önceki ay"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></a><a class="today-link" href="#" data-ay="">Bugün</a><a href="#" data-ay="' + ayStr(new Date(yil, no + 1, 1)) + '" aria-label="Sonraki ay"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a></div></div><div class="ev-cal-grid" id="evCalGrid">' +
+      ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'].map(function (x) { return '<div class="ev-cal-dow">' + x + '</div>'; }).join('') +
+      gunler.map(function (x) { return '<button type="button" class="ev-cal-day' + (x.disari ? ' is-out' : '') + (x.g === bugun ? ' is-today' : '') + (x.o.length ? ' has-events' : '') + '" data-date="' + x.g + '" aria-label="' + ad(x) + (x.o.length ? ', ' + x.o.length + ' etkinlik' : '') + '"><span class="ecd-num">' + x.gun + '</span>' + (x.o.length ? '<span class="ecd-dots">' + x.o.slice(0, 4).map(function () { return '<span class="ecd-dot" aria-hidden="true"></span>'; }).join('') + '</span><span class="ecd-more">' + x.o.length + ' etkinlik</span>' : '') + '</button>'; }).join('') +
+      '</div><div class="ev-cal-daylist" id="evCalDayList" hidden>' +
+      gunler.filter(function (x) { return x.o.length; }).map(function (x) { return '<div data-daypane="' + x.g + '" hidden><h4>' + ad(x) + ', ' + GUN[x.haftaGun] + '</h4><div class="disc-grid">' + x.o.map(kart).join('') + '</div></div>'; }).join('') +
+      '</div>' + (dolu ? '' : '<p class="ev-empty">' + (l.length ? 'Bu ayda gösterilecek etkinlik yok, önceki ve sonraki ay ile gezinebilirsin.' : 'Arama veya filtrelerine uyan etkinlik bulunamadı.') + '</p>') + '</div>';
+  };
+  /* Harita: canlıda Leaflet, burada K7 gereği MapLibre. Veri ve pin görünümü canlı `#evMap`ten, kümeleme yok */
+  var h = null, hHazir = false, pinler = [];
+  var kacis = function (t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
+  var pinYaz = function (l) {
+    if (!hHazir) { return; }
+    pinler.forEach(function (p) { p.remove(); }); pinler = [];
+    var s = new maplibregl.LngLatBounds(), n = 0;
+    l.forEach(function (e) {
+      if (!e.konum) { return; }
+      var el = document.createElement('button'); el.type = 'button'; el.className = 'mkl-vpin ev-pin'; el.setAttribute('aria-label', e.ad);
+      el.innerHTML = '<span class="vp"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></span>';
+      var p = new maplibregl.Popup({ offset: 18, closeButton: false }).setHTML('<div class="mkl-popup"><h4>' + kacis(e.ad) + '</h4><div class="mp-meta"><span>' + kacis(e.zaman.split(' – ')[0]) + '</span><span>' + kacis(e.konum.etiket) + '</span></div><a class="btn btn-sm btn-primary" href="' + kok + 'etkinlik-detay/?e=' + e.slug + '">Detayı incele</a></div>');
+      pinler.push(new maplibregl.Marker({ element: el }).setLngLat([e.konum.lng, e.konum.lat]).setPopup(p).addTo(h));
+      s.extend([e.konum.lng, e.konum.lat]); n++;
+    });
+    $('#evHaritaBos').hidden = !!n;
+    if (n) { h.fitBounds(s, { padding: 40, maxZoom: 12, duration: 300 }); }
+  };
+  var haritaYaz = function (l) {
+    if (h) { h.resize(); pinYaz(l); return; }
+    h = window.dgHarita.kur($('#evMap'), { center: [33.5, 39], zoom: 4.6 });
+    h.on('load', function () { hHazir = true; pinYaz(dizi(V.etkinlikler.filter(function (e) { return uyar(e); }))); });
+  };
   yenile = function (sifir) {
     if (sifir) { sayfa = 1; }
-    var l = dizi(V.etkinlikler.filter(function (e) { return uyar(e); }));
+    var l = dizi(V.etkinlikler.filter(function (e) { return uyar(e); })), liste = gorunum === 'liste';
     sayaclar(); sayfalama(l.length);
     $('#lstSum').innerHTML = '<b>' + l.length + ' etkinlik</b> listeleniyor';
-    $('#evGrid').innerHTML = l.slice((sayfa - 1) * SAYFA, sayfa * SAYFA).map(kart).join('');
-    $('#evBos').hidden = !!l.length;
+    $('#evGrid').innerHTML = liste ? l.slice((sayfa - 1) * SAYFA, sayfa * SAYFA).map(kart).join('') : '';
+    $('#evGrid').hidden = !liste; $('#evBos').hidden = !liste || !!l.length; if (!liste) { $('#pagi').style.display = 'none'; }
+    $('#evTakvim').hidden = gorunum !== 'takvim'; $('#evHarita').hidden = gorunum !== 'harita';
+    if (gorunum === 'takvim') { takvimYaz(l); }
+    if (gorunum === 'harita') { haritaYaz(l); }
+  };
+  var gorunumSec = function (v) {
+    gorunum = v; $$('.vs-btn[data-gorunum]').forEach(function (b) { b.classList.toggle('active', b.dataset.gorunum === v); });
+    var u = new URL(location.href); if (v === 'liste') { u.searchParams.delete('gorunum'); } else { u.searchParams.set('gorunum', v); } history.replaceState(null, '', u);
+    yenile(true);
   };
   $('#evSayTr').textContent = V.etkinlikler.filter(function (e) { return e.tr; }).length;
   $('#evSayDunya').textContent = V.etkinlikler.filter(function (e) { return !e.tr; }).length;
   document.addEventListener('change', function (ev) { if (ev.target.closest('#filterForm')) { yenile(true); } });
   document.addEventListener('click', function (ev) {
     var t = ev.target; if (!t.closest) { return; }
+    var vs = t.closest('.vs-btn[data-gorunum]'); if (vs) { ev.preventDefault(); gorunumSec(vs.dataset.gorunum); return; }
+    var an = t.closest('[data-ay]'); if (an) { ev.preventDefault(); ay = an.dataset.ay || null; yenile(); return; }
+    var gun = t.closest('.ev-cal-day');
+    if (gun) {
+      var dl = $('#evCalDayList'), pano = $('[data-daypane="' + gun.dataset.date + '"]');
+      $$('.ev-cal-day.is-active').forEach(function (x) { x.classList.remove('is-active'); }); gun.classList.add('is-active');
+      $$('[data-daypane]').forEach(function (x) { x.hidden = x !== pano; }); dl.hidden = !pano;
+      if (pano) { dl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+      return;
+    }
     var b = t.closest('.ev-bolge-sekme');
     if (b) { bolge = b.dataset.bolge; kategori = ''; $$('#filterForm input:checked').forEach(function (i) { i.checked = false; }); $$('.ev-bolge-sekme').forEach(function (x) { var on = x === b; x.classList.toggle('aktif', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); }); yenile(true); return; }
     var c = t.closest('.ke-filter .chip'); if (c) { ev.preventDefault(); kategori = c.dataset.kategori || ''; yenile(true); return; }
@@ -159,5 +224,5 @@
   });
   var ara = $('#evArama input[name="q"]'); ara.addEventListener('input', function () { aranan = tr(ara.value.trim()); yenile(true); });
   var q = new URLSearchParams(location.search); if (q.get('bolge') === 'dunya') { var d = $('[data-bolge="dunya"]'); if (d) { d.click(); } }
-  yenile(true);
+  if (/^(takvim|harita)$/.test(q.get('gorunum') || '')) { gorunumSec(q.get('gorunum')); } else { yenile(true); }
 })();

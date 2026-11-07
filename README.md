@@ -42,6 +42,7 @@ Playwright kurulu bir projeyi `PW_KOK=<yol>/package.json` ile gösterin. Yalnız
     node _src/araclar/sayfa-rota.mjs <cekim>/dom
     node _src/araclar/sayfa-mekan-bul.mjs <cekim>/dom
     node _src/araclar/etkinlik-veri.mjs
+    node _src/araclar/etkinlik-gorunum.mjs
     node _src/araclar/sayfa-etkinlik.mjs <cekim>/dom
     node _src/araclar/gorsel-al.mjs
     node _src/build.mjs

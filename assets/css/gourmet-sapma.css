@@ -213,3 +213,9 @@ html:has(.lst-side.open) :is(.yg-fab,.to-top,.feedback-tab,.fb-rail){display:non
   .wiz-foot .wf-actions .btn{flex:1 1 auto;white-space:nowrap}
   .wiz-foot .wf-actions .btn-ghost{flex:0 0 auto}
 }
+/* Etkinlik haritası pini: canlı `.mkl-vpin` görünümü MapLibre düğmesinde; popup metni kanon yazısıyla */
+.ev-pin{padding:0;border:0;background:none;cursor:pointer}
+.maplibregl-popup-content .mkl-popup{min-width:190px}
+.pg-etkinlikler .maplibregl-map{font:inherit}
+/* Canlıda 1fr sütunları 390'da kartı taşırıyor, son sütun kesiliyor; sütun içerikten geniş olamaz */
+.ev-cal-grid{grid-template-columns:repeat(7,minmax(0,1fr))}.ev-cal-day{min-width:0;overflow:hidden}

@@ -1,5 +1,5 @@
 // Etkinlikler: `node sayfa-etkinlik.mjs <cekim>/dom`. Gövde canlı `/etkinlikler` ve bir etkinlik detayı render'ı.
-// Liste ve süzgeç `assets/js/sayfa/etkinlikler.js` ile çalışır; veri `etkinlik-veri.mjs` çıktısı. Takvim ve Harita görünümleri alınmadı: `ekran-kaynaklari.md`.
+// Liste ve süzgeç `assets/js/sayfa/etkinlikler.js` ile çalışır; veri `etkinlik-veri.mjs` çıktısı. Takvim ve Harita aynı betikte; konum ve sıralama verisi `etkinlik-gorunum.mjs`.
 import fs from 'node:fs'; import path from 'node:path'; import { fileURLToPath } from 'node:url';
 import { ac, kapat } from './dom.mjs';
 const SRC = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'); const D = process.argv[2];
@@ -14,18 +14,18 @@ const liste = await p.evaluate(() => { kok(document.body); const m = document.qu
   $('.ke-filter.ev-filter').insertAdjacentHTML('beforebegin', '<div class="ev-bolge" role="tablist" aria-label="Etkinlik bölgesi"><button class="ev-bolge-sekme aktif" type="button" role="tab" aria-selected="true" data-bolge="tr"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Türkiye <span id="evSayTr"></span></button><button class="ev-bolge-sekme" type="button" role="tab" aria-selected="false" data-bolge="dunya"><i class="fa-solid fa-earth-europe" aria-hidden="true"></i> Uluslararası <span id="evSayDunya"></span></button></div>');
   // Kategori çipi: süzgeç değeri bağdan okunur
   $$('.ke-filter .chip').forEach((a) => { const k = /kategori=([a-z0-9-]+)/.exec(a.getAttribute('href') || ''); a.setAttribute('href', '#'); if (k) a.dataset.kategori = k[1]; });
-  // Görünüm: yalnız Liste
-  const seg = $('.vw-seg'); seg.parentNode.removeChild(seg);
-  // Sıralama: prototipte karşılığı olanlar
-  const menu = $('.sort-menu'); menu.innerHTML = '<a href="#" class="active" role="menuitem" data-sira="onerilen"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Önerilen</a><a href="#" role="menuitem" data-sira="tarih"><i class="fa-solid fa-calendar-plus" aria-hidden="true"></i> Tarihe Göre</a>';
+  // Görünüm: Liste, Takvim, Harita canlı `.vw-seg` DOM'u; geçiş sayfa içinde
+  $$('.vw-seg .vs-btn').forEach((a) => { a.dataset.gorunum = /gorunum=(takvim|harita)/.exec(a.getAttribute('href') || '')?.[1] ?? 'liste'; a.setAttribute('href', '#'); });
+  // Sıralama: canlı beş kalem; `sirala` değeri `etkinlik-gorunum.mjs` listesinin anahtarıdır
+  $$('.sort-menu a').forEach((a) => { a.dataset.sira = /sirala=([a-z_]+)/.exec(a.getAttribute('href') || '')?.[1] ?? 'onerilen'; a.setAttribute('href', '#'); });
   // Sıfır sonuçlu seçenek gizli (K8)
   $$('label.fct-row').forEach((l) => { if ($('.fcnt', l)?.textContent.trim() === '0') l.parentNode.removeChild(l); });
   $('.btn-suggest').setAttribute('data-etkinlik-oner', '');
   $('.disc-grid').id = 'evGrid'; $('#evGrid').innerHTML = ''; $('#pagi').innerHTML = '';
   $('#filterForm').setAttribute('data-yerel', ''); $('.ke-hero-search').setAttribute('data-yerel', ''); $('.ke-hero-search').id = 'evArama';
-  $('#evGrid').insertAdjacentHTML('afterend', '<div class="lst-empty" id="evBos" hidden><h3>Bu seçimle etkinlik bulunamadı</h3><p>Filtre azaltmayı dene ya da diğer sekmeye bak.</p></div>');
+  $('#evGrid').insertAdjacentHTML('afterend', '<div id="evTakvim" hidden></div><div id="evHarita" hidden><div class="mkl-map-wrap" id="evMapWrap"><div id="evMap" class="mkl-map"></div></div><p class="ev-empty" id="evHaritaBos" hidden>Bu filtrelerde haritada gösterilecek etkinlik yok.</p><p class="ev-map-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Çevrim içi etkinlikler ve tek bir konumu olmayan kayıtlar (ör. Türkiye geneli yarışmalar) haritada gösterilmez. Haritadaki işaretlerin bir kısmı şehir merkezine yerleştirilmiş yaklaşık konumlardır, etkinliğin tam adresi değildir.</p></div><div class="lst-empty" id="evBos" hidden><h3>Bu seçimle etkinlik bulunamadı</h3><p>Filtre azaltmayı dene ya da diğer sekmeye bak.</p></div>');
   return m.innerHTML; });
-yaz('etkinlikler', { baslik: 'Etkinlikler', aktif: 'etkinlikler', zincir: 'hakkimizda', gourmet: true, css: ['etkinlikler.css', 'banner-uyarlama.css', 'etkinlikler-uyarlama.css', 'gourmet-sapma'], js: ['assets/js/etkinlik-veri.js', 'assets/js/sayfa/etkinlikler.js'], govdeSinif: 'pg-etkinlikler has-dark-hero', donor: 'https://dadagourmet.com/etkinlikler' }, liste + '\n<!--@main-disi-->\n' + randevu);
+yaz('etkinlikler', { baslik: 'Etkinlikler', aktif: 'etkinlikler', zincir: 'hakkimizda', gourmet: true, css: ['etkinlikler.css', 'banner-uyarlama.css', 'etkinlikler-uyarlama.css', 'gourmet-sapma'], js: ['assets/vendor/maplibre/maplibre-gl.js', 'assets/js/etkinlik-veri.js', 'assets/js/harita.js', 'assets/js/sayfa/etkinlikler.js'], govdeSinif: 'pg-etkinlikler has-dark-hero', donor: 'https://dadagourmet.com/etkinlikler' }, liste + '\n<!--@main-disi-->\n' + randevu);
 
 p = await ac(path.join(D, 'o-etkinlik-detay.html'));
 const detay = await p.evaluate(() => { kok(document.body); const m = document.querySelector('main'); m.removeAttribute('style'); const $ = (s, r = m) => r.querySelector(s), $$ = (s, r = m) => [...r.querySelectorAll(s)];
