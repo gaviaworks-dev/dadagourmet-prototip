@@ -25,7 +25,7 @@ export function kabukla(s) {
   const once = m.gourmet ? GOURMET_ONCE : [];
   const harita = (m.js ?? []).some((j) => j.includes('maplibre')) && !(m.css ?? []).some((c) => c.includes('maplibre')) ? ['assets/vendor/maplibre/maplibre-gl.css'] : [];
   const ek = [...harita, ...(m.css ?? [])].map(gourmetCss);
-  const css = [...once.map((c) => K + c), ...z.css.map((c) => `${K}assets/g/${c}`), ...ek.map((c) => K + c), `${K}assets/css/prototip.css`];
+  const css = [...once.map((c) => K + c), ...z.css.map((c) => `${K}assets/g/${c}`), ...ek.map((c) => K + c), `${K}assets/o/assets/gourmet-public/css/konum.css`, `${K}assets/css/prototip.css`];
   const link = css.map((c) => `<link rel="stylesheet" href="${c}">`).join('\n');
   const js = [`<script src="${K}assets/js/prototip.js"></script>`,
     ...z.js.map((j) => `<script${j.modul ? ' type="module"' : ' defer'} src="${K}assets/g/${j.y}"></script>`),
@@ -35,7 +35,7 @@ export function kabukla(s) {
   // `<!--@main-disi-->` sonrası katmanlar <main>'in yığın bağlamından çıkar (canlıda da body altındadır)
   const [icerik, disari = ''] = s.govde.split('<!--@main-disi-->');
   const govde = duzen === 'tam' ? s.govde
-    : `${aktifle(parca('ust'), m.aktif)}\n<main class="page-main" id="pageMain">${icerik}</main>\n${parca('dip')}\n${parca('alt-cubuk')}\n${parca('katman')}\n${disari}`;
+    : `${aktifle(parca('ust'), m.aktif)}\n<main class="page-main" id="pageMain">${icerik}</main>\n${parca('dip')}\n${parca('alt-cubuk')}\n${parca('katman')}\n${parca('konum')}\n${disari}`;
   return `<!doctype html>
 <html lang="tr" data-kok="${K}" data-yol="${s.yol ?? ''}"${uye ? ' data-uye-sayfa="1"' : ''} class="sg-js" data-kabuk-kimlik="yazildi"${z.baslikZemin ? ` data-baslik-zemin="${z.baslikZemin}"` : ''}>
 <head>

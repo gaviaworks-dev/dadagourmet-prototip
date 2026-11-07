@@ -15,7 +15,7 @@ Yöntem `dadadiet-prototip` ile aynıdır.
 
 | Yol | İçerik |
 |---|---|
-| `_src/build.mjs` | Derleyici. `_src/sayfalar/` altını `<yol>/index.html` yapar, yapılmamış ekrana giden bağı `data-yakinda` uyarısına çevirir |
+| `_src/build.mjs` | Derleyici. `_src/sayfalar/` altını `<yol>/index.html` yapar, karşılığı olmayan iç bağı en yakın gerçek ekrana bağlar (`YEDEK` tablosu) |
 | `_src/kabuk/` | `kabuk.mjs` sayfa iskeleti, `zincir.json` donör sayfaların CSS ve JS sırası, `logo.svg` |
 | `_src/parcalar/kabuk/` | Üst bant, başlık, çekmece, altbilgi, alt çubuk, Görüş Bildir, çerez bandı: üretilmiş parçalar, elle düzenlenmez |
 | `_src/sayfalar/` | Ekranlar. `.html` ilk satırı JSON ön bilgi; `.mjs` çok sayfa üretir |

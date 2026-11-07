@@ -68,15 +68,27 @@
     if (f.id === 'formYeniSifre') { e.stopImmediatePropagation(); location.href = kok + 'giris/?yenilendi=1'; return; }
     bildir('Prototip: form gönderilmedi.');
   }, true);
+  /* Konum penceresi: canlı `#lkModal` DOM'u. Seçim bu tarayıcıda kalır, sunucuya gitmez. Tarayıcı izni yalnız düğmeye basınca istenir. */
+  var konumAc = function (ac) { var m = document.getElementById('lkModal'), o = document.getElementById('lkOverlay'); if (!m) { return; } m.classList.toggle('show', ac); m.classList.toggle('open', ac); o.classList.toggle('show', ac); o.classList.toggle('open', ac); m.toggleAttribute('inert', !ac); };
+  var konumOlay = function (e) {
+    var t = e.target; if (!t.closest) { return false; }
+    if (t.closest('[data-location-trigger]')) { e.preventDefault(); konumAc(true); return true; }
+    if (t.closest('#lkClose,#lkSkip') || t.id === 'lkOverlay') { konumAc(false); return true; }
+    var m = document.getElementById('lkModal');
+    if (t.closest('#lkRow-tr')) { konumAc(false); bildir('Türkiye ' + m.dataset.msgSelectedSuffix); return true; }
+    if (t.closest('#lkGeoBtn')) {
+      if (!navigator.geolocation) { bildir(m.dataset.msgGeoUnsupported); return true; }
+      navigator.geolocation.getCurrentPosition(function () { konumAc(false); bildir(m.dataset.msgGeoSuccess); }, function (h) { bildir(h.code === 1 ? m.dataset.msgGeoDenied : h.code === 3 ? m.dataset.msgGeoTimeout : m.dataset.msgGeoGeneric); }, { timeout: 8000 });
+      return true;
+    }
+    return false;
+  };
   document.addEventListener('click', function (e) {
     var cikis = e.target.closest && e.target.closest('[data-cikis]');
     if (cikis) { e.preventDefault(); e.stopImmediatePropagation(); oturumYaz(false); location.href = kok; return; }
     var bag = e.target.closest && e.target.closest('a[href]');
-    if (bag && uye && !depo && bag.origin === location.origin && !bag.hasAttribute('data-yakinda') && bag.getAttribute('href') !== '#') { var u = new URL(bag.href); u.searchParams.set('auth', '1'); bag.href = u.href; }
-    var yakinda = e.target.closest && e.target.closest('[data-yakinda]');
-    if (yakinda) { e.preventDefault(); bildir('Bu ekran sonraki turda: /' + yakinda.getAttribute('data-yakinda')); return; }
-    var konum = e.target.closest && e.target.closest('[data-location-trigger]');
-    if (konum) { e.preventDefault(); bildir('Konum seçimi sonraki turda.'); return; }
+    if (bag && uye && !depo && bag.origin === location.origin && bag.getAttribute('href') !== '#') { var u = new URL(bag.href); u.searchParams.set('auth', '1'); bag.href = u.href; }
+    if (konumOlay(e)) { return; }
     var oner = e.target.closest && e.target.closest('[data-mo-open],#mekanOnerBtn');
     var mo = document.getElementById('moModal'), moO = document.getElementById('moOverlay');
     if (oner && mo) { e.preventDefault(); mo.classList.add('show', 'open'); moO.classList.add('show', 'open'); return; }

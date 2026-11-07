@@ -83,8 +83,28 @@ if (!alan) {
 }
 
 if (!alan) fs.writeFileSync(path.join(SRC, 'sayfa-listesi.json'), JSON.stringify(uretilen.sort((a, b) => a.yol.localeCompare(b.yol, 'tr')), null, 1));
-// Bu turda yapılmamış ekrana giden iç bağlar 404 açmaz; `data-yakinda` ile görünür uyarı verir.
+// Prototipte karşılığı olmayan iç bağ en yakın gerçek ekrana gider; ölü bağ ve "yapılmadı" uyarısı yok. Sıra önemli: ilk var olan aday seçilir.
 const varOlan = new Set([...uretilen.map((u) => u.yol), 'ekranlar']);
+const YEDEK = [
+  [/^mekan\/.+/, ['mekan/mikla']],
+  [/^etkinlikler\/.+/, ['etkinlikler', '']],
+  [/^etkinlikler$/, ['']],
+  [/^mekan-bul$/, ['mekanlar']],
+  [/^hesabim\/rezervasyonlar$/, ['hesabim/gurme-panelim']],
+  [/^hesabim\/etkinlikler$/, ['hesabim/gurme-panelim']],
+  [/^hesabim\/(kaydedilenler|listeler)$/, ['hesabim/gurme-panelim/gurme-favorilerim']],
+  [/^hesabim\/ziyaretler$/, ['hesabim/gurme-panelim/ziyaret-gecmisim']],
+  [/^hesabim\/degerlendirmeler$/, ['hesabim/gurme-panelim/degerlendirmelerim']],
+  [/^hesabim\/rozetlerim$/, ['hesabim/gurme-panelim/puan-durumu']],
+  [/^hesabim\/.+/, ['hesabim/ayarlar']],
+  [/^yasal(\/.+)?$/, ['yasal/kvkk']],
+  [/^(isletme(\/.+)?|sss)$/, ['iletisim']],
+  [/^basin-medya$/, ['hakkimizda']],
+  [/^dada-route\/.+/, ['dada-route']],
+  [/^(gurme-lezzetler|sehir-rehberleri|gourmet-ara)(\/.+)?$/, ['mekanlar']],
+];
+const yedekYol = (y) => { for (const [re, adaylar] of YEDEK) if (re.test(y)) { const a = adaylar.find((x) => varOlan.has(x)); if (a !== undefined) return a; } console.warn('Karşılığı yok, Mekânlar\'a bağlandı: ' + y); return 'mekanlar'; };
+const yolBag = (on, y, ek) => { const h = yedekYol(y); return on + (h ? h + '/' : '') + (/^#/.test(ek) ? ek : ''); };
 // Yazım: görünen metinde her yerde "Mekân". Bağ, sınıf, kimlik ve betik içeriğine dokunmaz.
 const mekan = (t) => t.replace(/(^|[^\p{L}\p{N}_-])([Mm])ekan(?![\p{N}_-])/gu, '$1$2ekân');
 const yazimDuzelt = (h) => h.split(/(<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<!--[\s\S]*?-->)/).map((p, i) => (i % 2 ? p : p
@@ -93,9 +113,9 @@ const yazimDuzelt = (h) => h.split(/(<script[\s\S]*?<\/script>|<style[\s\S]*?<\/
 const uretimDosyalari = [...uretilen.map((u) => u.yol), 'ekranlar'].map((y) => path.join(KOK, y, 'index.html'));
 for (const f of uretimDosyalari) {
   const s = fs.readFileSync(f, 'utf8').replace(/href="((?:\.\.\/)*|\.\/)([a-z0-9][^"#?]*?)\/?((?:[?#][^"]*)?)"/g, (m, on, y, ek) => {
-    if (y.startsWith('assets/') || y === 'dada-route/?durak' || /\.[a-z0-9]+$/i.test(y) || varOlan.has(y)) return m;
-    return `href="#" data-yakinda="${y}"`;
-  });
+    if (y.startsWith('assets/') || y === 'dada-route/?durak' || /^[a-z]+:/.test(y) || /\.[a-z0-9]+$/i.test(y) || varOlan.has(y)) return m;
+    const k = yolBag(on, y, ek); return `href="${k || './'}"`;
+  }).replace(/data-git="((?:\.\.\/)*|\.\/)(?:https:\/\/dadagourmet\.com\/)?([a-z0-9][^"#?]*?)\/?"/g, (m, on, y) => (varOlan.has(y) ? `data-git="${on}${y}/"` : `data-git="${yolBag(on, y, '') || './'}"`));
   fs.writeFileSync(f, yazimDuzelt(s));
 }
 // Mekânlar süzgecinin istemci verisi: tek kaynak _src/veri ve _src/parcalar

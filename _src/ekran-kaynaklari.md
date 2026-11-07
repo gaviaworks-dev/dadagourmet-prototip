@@ -23,7 +23,7 @@ Kısaltma: G = dadagastro.com canlı render, O = dadagourmet.com canlı render, 
 | Kayıt | `/kayit` | G `/kayit` | Gastro alan seti; sosyal düğme yok; `hesap_turu` yok | Kanon soru 3 önerisi. Karar bekliyor sayılır |
 | Şifre unuttum | `/sifremi-unuttum` | G `/giris` sifre panosu | Açık pano başlangıç hâli | Gastro'da aynı sayfada pano; Gourmet adresi korundu |
 | Yeni şifre | `/sifre-yenile` | G `/giris` yeni-sifre panosu | Örnek e-posta; beş kural canlı | Token olmadığı için pano doğrudan açık |
-| Hesabım | `/hesabim/ayarlar` | Yerel Gastro `6700538df4`, demo tohum üye render'ı, `/hesabim/ayarlar`. Kabuk, kimlik bandı, sekmeler, Profil, Keşif, Güvenlik bu render'dan | Sekmeler Gastro'nun 8'lisi. "Mutfak tercihlerim" yuvası "Keşif tercihlerim" oldu, Gastro DOM'u korundu, malzeme alanı çıktı. Bildirim, Dil, Bağlı, Veri, Dondurma panellerinin yapısı P `go-hesabim.html?auth=1`, metni Gourmet bağlamına uyarlandı. Profil'de Uzmanlık alanım yok. Güvenlik'te bağlı olmayan sosyal satırlar yok. Kimlik örnek, tohum kişi temizlendi, kapak görseli Gourmet | K3, K4. Gastro'nun bu beş paneli tarif, menü ve şef verisi taşıyor; sınıf kümesi ortak olduğu için içerik Gourmet donöründen kondu. `#tfaModal` alınmadı. Keşif'in 8 alt grubu (P `go-kesif-tercihlerim`) ayrı ekranda, sonraki tur |
+| Hesabım | `/hesabim/ayarlar` | Yerel Gastro `6700538df4`, demo tohum üye render'ı, `/hesabim/ayarlar`. Kabuk, kimlik bandı, sekmeler, Profil, Keşif, Güvenlik bu render'dan | Sekmeler Gastro'nun 8'lisi. "Mutfak tercihlerim" yuvası "Keşif tercihlerim" oldu, Gastro DOM'u korundu, malzeme alanı çıktı. Bildirim, Dil, Bağlı, Veri, Dondurma panellerinin yapısı P `go-hesabim.html?auth=1`, metni Gourmet bağlamına uyarlandı. Profil'de Uzmanlık alanım yok. Güvenlik'te bağlı olmayan sosyal satırlar yok. Kimlik örnek, tohum kişi temizlendi, kapak görseli Gourmet | K3, K4. Gastro'nun bu beş paneli tarif, menü ve şef verisi taşıyor; sınıf kümesi ortak olduğu için içerik Gourmet donöründen kondu. `#tfaModal` alınmadı. Keşif'in 8 alt grubu (P `go-kesif-tercihlerim`) bu prototipte yok |
 | Gurme Panelim | `/hesabim/gurme-panelim/` ve 5 alt yol | P `go-mekanlarim.html?auth=1` kabuğu ve `kalem-satiri`; CSS zinciri yerel Gastro Hesabım | 6 sekme bağlantılı; satırlar örnek etiketli; Değerlendirmelerim boş durum; Puan Durumu yalnız yapı | K3, W2.5. Sahte değerlendirme yok. Puan kuralı açık (§8 #6, #13, #18) |
 | Mekânlar | `/mekanlar` | O `/mekanlar`, `?il[]=istanbul`, `?il[]=istanbul&ilce[]=beyoglu` | Grup adları doküman §16 adlarına çekildi; Enerji ve Araç Şarj grubu eklendi; sıfır sonuçlu seçenek gizli; üç sütun; kartta 4 eylem; Leaflet yerine MapLibre | F1-F13, FH.1, FK.10-13, K7, K8. Şarj grubunun canlı sayacı yok; sayı basılmadı, örnek etiketli. Kart mikro ikonları (W1.4) mekân başına veri ister, bu turda yok |
 | Mekân detayı | `/mekan/mikla` | O `/mekan/mikla`, rezervasyon penceresi R | Rezervasyon düğmesi ve penceresi geri geldi; Dada Route bandı geri geldi; Ne Yenir ve Ne Alınır sekmeleri eklendi; kapak 480 px; künye düğmeleri yok; harita MapLibre; takvim örnek | K2, W2.2, W3.3, K7. Metin talep dili (§8 #17). Ne Alınır'da satış yok, "tescilli" sözü yok (§8 #10). Bilgi Hatası Bildir tetiği eklenmedi: A4 kararı açık |
@@ -34,6 +34,10 @@ Kısaltma: G = dadagastro.com canlı render, O = dadagourmet.com canlı render, 
 | Hukuki örnek | `/yasal/kvkk` | O gövde, G zinciri | Unvan, Adres, E-posta Gastro değerleri; MERSİS, vergi ve KEP satırları ile taslak bandı yok | K5 güncellemesi: yer tutucu basılmaz |
 | Ekran haritası | `/ekranlar` | Yok, derleyici çıktısı | Yeni | Onay turu için liste |
 
+## Bağlar
+
+Prototipte karşılığı olmayan iç bağ uyarı vermez, en yakın gerçek ekrana gider. Tablo `_src/build.mjs` `YEDEK`: mekân detayı Mikla'ya; `hesabim/*` Gurme Panelim sekmelerine ya da Ayarlar'a; `yasal/*` KVKK örneğine; işletme ve SSS İletişim'e; basın Hakkımızda'ya; Gurme Lezzetler, Şehir Rehberleri ve arama Mekânlar'a. Konum düğmesi canlı `#lkModal` penceresini açar, seçim sunucuya gitmez.
+
 ## Demo oturum
 
 Giriş, kayıt ve şifre ekranları sahte değerlerle dolu gelir; gönderim yapılmaz. Giriş ve kayıt üye durumuna geçirip Hesabım'a yönlendirir, şifre akışı ekranda ilerler, çıkış misafire döner. Durum `localStorage` `dg-oturum`; depo kapalıysa `?auth=1` bağlarda taşınır. Üye sayfası misafire açılırsa girişe yönlenir, girişten sonra aynı sayfaya döner.
@@ -42,7 +46,7 @@ Giriş, kayıt ve şifre ekranları sahte değerlerle dolu gelir; gönderim yap�
 
 Veri `_src/araclar/mekan-veri.mjs` ile canlı `/mekanlar` ve `/mekanlar/harita-verisi` uçlarından, yalnız GET ile alındı. Her seçenek canlı süzgeçten soruldu; sayaç ve harita sayısı 12 grupta birebir tuttu. 203 mekân, 15 il, 41 ilçe, 128 semt. Semt 197 mekânda dolu, 6 mekânda boş; boş olan uydurulmadı. Açık Olma sayaçları çekim anına aittir, statik kopyadır.
 
-Enerji ve Araç Şarj grubu süzmez: kamuya açık uçlarda mekân başına şarj verisi yok. Seçenekler pasif, örnek etiketli. Sıralama menüsü prototipte çalışmaz. Yalnız Mikla'nın detay sayfası var, diğer kartlar "sonraki tur" uyarısı verir.
+Enerji ve Araç Şarj grubu süzmez: kamuya açık uçlarda mekân başına şarj verisi yok. Seçenekler pasif, örnek etiketli. Sıralama menüsü prototipte çalışmaz. Yalnız Mikla'nın detay sayfası var; diğer kartlar Mikla örnek detayına gider.
 
 ## Altbilgi perdesi
 
@@ -79,4 +83,4 @@ Sonuç:
 | Dinlenme, tescil | "Dinlenme alanı"; "güvenli" ve "tescilli" yok |
 | Route paneli | Solda |
 | Slogan | K6 metni onaylı |
-| Keşif tercihleri | Ayrı ekran sonraki tura kaldı |
+| Keşif tercihleri | Ayrı ekran bu prototipte yok |

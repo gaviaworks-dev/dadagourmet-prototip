@@ -99,9 +99,9 @@
 
   function kart(m) {
     var h = (V.kartlar[m.slug] || '').split('{{kok}}').join(kok);
-    var bag = m.slug === 'mikla' ? 'href="' + kok + 'mekan/mikla/"' : 'href="#" data-yakinda="mekan/' + m.slug + '"';
+    var bag = 'href="' + kok + 'mekan/mikla/"';
     var eylem = '<div class="mkl-kart-eylem"><a class="mke-birincil" ' + bag + '>Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="' + m.slug + '" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="' + kok + 'dada-route/?durak=' + m.slug + '" aria-label="Dada Route\'a Ekle" title="Dada Route\'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div>';
-    return h.replace(/<\/article>\s*$/, eylem + '</article>');
+    return h.replace(/<\/article>\s*$/, eylem + '</article>').replace('<article ', '<article data-git="' + kok + 'mekan/mikla/" ');
   }
   function sayfalama(n) {
     var top = Math.max(1, Math.ceil(n / SAYFA)), p = $('#pagi'), s = '';
