@@ -103,7 +103,9 @@ const YEDEK = [
   [/^(isletme(\/.+)?|sss)$/, ['iletisim']],
   [/^basin-medya$/, ['hakkimizda']],
   [/^dada-route\/.+/, ['dada-route']],
-  [/^(gurme-lezzetler|sehir-rehberleri|gourmet-ara)(\/.+)?$/, ['mekanlar']],
+  [/^gurme-lezzetler\/.+/, ['gurme-lezzetler']],
+  [/^sehir-rehberleri\/.+/, ['sehir-rehberleri']],
+  [/^gourmet-ara(\/.+)?$/, ['mekanlar']],
 ];
 const yedekYol = (y) => { for (const [re, adaylar] of YEDEK) if (re.test(y)) { const a = adaylar.find((x) => varOlan.has(x)); if (a !== undefined) return a; } console.warn('Karşılığı yok, Mekânlar\'a bağlandı: ' + y); return 'mekanlar'; };
 const yolBag = (on, y, ek) => { const h = yedekYol(y); return on + (h ? h + '/' : '') + (/^#/.test(ek) ? ek : ''); };
