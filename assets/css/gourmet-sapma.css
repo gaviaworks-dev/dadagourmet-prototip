@@ -219,3 +219,22 @@ html:has(.lst-side.open) :is(.yg-fab,.to-top,.feedback-tab,.fb-rail){display:non
 .pg-etkinlikler .maplibregl-map{font:inherit}
 /* Canlıda 1fr sütunları 390'da kartı taşırıyor, son sütun kesiliyor; sütun içerikten geniş olamaz */
 .ev-cal-grid{grid-template-columns:repeat(7,minmax(0,1fr))}.ev-cal-day{min-width:0;overflow:hidden}
+
+/* Gurme Lezzetler: Gastro kabuğunun kart ve banner kuralları canlı ölçüsünü eziyordu. Değerler canlı `banner-uyarlama.css`, `t5b-a.css`, `t5b-c.css` */
+body:is(.pg-gurme-lezzetler,.pg-gurme-lezzetler-detay) .disc-grid{padding:0}
+body:is(.pg-gurme-lezzetler,.pg-gurme-lezzetler-detay) .disc-card{width:100%;max-width:none;flex:none}
+body:is(.pg-gurme-lezzetler,.pg-gurme-lezzetler-detay) .disc-card :is(h3,p){min-height:0}
+body.pg-gurme-lezzetler .ke-filter{padding-top:6px}
+body.pg-gurme-lezzetler-detay .art-hero{padding-top:128px;padding-bottom:0}
+body.pg-gurme-lezzetler-detay .art-hero>.wrap{padding-top:0}
+body.pg-gurme-lezzetler-detay .art-hero>.wrap>.art-hero-top:not(#_){margin-top:0}
+body.pg-gurme-lezzetler-detay .art-hero-main{margin-top:auto}
+body.pg-gurme-lezzetler-detay .art-hero .art-hero-crumb{padding-top:0;padding-bottom:0;margin-bottom:0;font-size:13px}
+body.pg-gurme-lezzetler-detay .art-hero h1{font-size:clamp(30px,3.5vw,44px)}
+@media(min-width:1025px){body.pg-gurme-lezzetler-detay .art-hero{min-height:560px}}
+@media(max-width:640px){
+  body.pg-gurme-lezzetler section.below-header.ke-top:not(#_){min-height:552px;padding-bottom:48px}
+  body.pg-gurme-lezzetler .ke-head h1{font-size:40px}
+  body.pg-gurme-lezzetler .ke-filter{padding-top:4px}
+  body.pg-gurme-lezzetler-detay .art-col p{text-align:left}
+}

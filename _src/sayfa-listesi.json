@@ -25,6 +25,16 @@
   "duzen": "public"
  },
  {
+  "yol": "gurme-lezzet-detay",
+  "baslik": "Gurme Lezzetler",
+  "duzen": "public"
+ },
+ {
+  "yol": "gurme-lezzetler",
+  "baslik": "Gurme Lezzetler",
+  "duzen": "public"
+ },
+ {
   "yol": "hakkimizda",
   "baslik": "Hakkımızda",
   "duzen": "public"

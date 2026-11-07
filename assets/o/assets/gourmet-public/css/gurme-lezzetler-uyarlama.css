@@ -1,0 +1,93 @@
+/* ══ GURME LEZZETLER — YEREL UYARLAMA KATMANI ══════════════════════════════════════════
+   Beyar revizesi 2026-09-16 (madde 1 ve 3): kategori şeridi sayfadan "çıkık, ayrık bir
+   kutu" gibi duruyordu; liste zemini düz BEYAZ olacak, şerit ile içerik arasında basamak
+   ya da renk farkı kalmayacak. Aynısı detay ekranı için.
+
+   ⚠ Bu kuralları `gurme-lezzetler.css`e TAŞIMA: o dosya kanon/vendor katmanıdır
+     (`.ai/rules/assets.md` — kanon dosyaya kural eklemek sahte vendor'dır).
+     Emsal katmanlar: `etkinlik-detay-uyarlama.css`, `kunye-uyarlama.css`.
+   ⚠ Yükleme sırası: kanon ÖNCE, bu dosya SONRA — her iki blade'in `sayfa_css` yuvasında
+     `gurme-lezzetler.css`ten hemen sonra bağlanır.
+
+   ÖLÇÜLDÜ (önce, @1440, computed style — `scripts/olcum/gl-revize.mjs once`):
+     liste  .ke-filter-wrap rgb(255,255,255) · .ke-sec rgb(249,249,249) · body rgb(249,249,249)
+     detay  .ke-detail-view rgb(255,255,255) · .art-body rgb(249,249,249) · .art-related aynı
+   Yani basamağı üreten şey `--bg-cream` (#f9f9f9) ile `--bg-white` (#fff) farkıydı; şeridin
+   22px yuvarlatılmış üst köşesi ve üst gölgesi kabuk kanonudur
+   (`gourmet.css` `.below-header:not(.pf-top)+section`) — bütün liste ekranlarında var,
+   DOKUNULMADI. Kaldırmak bu sayfayı kardeş listelerden ayırırdı.
+   ══════════════════════════════════════════════════════════════════════════════════════ */
+
+/* ——— 1) LİSTE: tek parça beyaz zemin ——————————————————————————————————————————————— */
+/* `.ke-sec` kanonda `var(--bg-cream)`; şeritle arasındaki tek fark buydu. `.page-main`ın
+   kendi zemini 390'da alt gezinme payı (padding-bottom:94px) kadar görünüyor — o da beyaza
+   çekildi, yoksa sayfanın dibinde gri bir şerit kalıyordu. Her ikisi de gövde sınıfıyla
+   sınırlı: ortak kabuk dosyasına dokunulmuyor. */
+body.pg-gurme-lezzetler,
+body.pg-gurme-lezzetler .page-main,
+body.pg-gurme-lezzetler .ke-sec{background:var(--bg-white)}
+
+/* Boşluk ritmi: renk basamağı kalkınca şerit ile başlık arasındaki 60px'lik boşluk
+   (4 + 22 + 34) tek bir yüzeyde ölçüsüz duruyordu. Şeridin üstü/altı eşitlendi (22/22) ve
+   bölüm başlığından önceki nefes 22 → 40'a çıkarıldı: 22 iç boşluk · 40 bölüm arası, yani
+   şeridin kendi çevresi ile bir sonraki bloğun arası ~1:1,8 oranında. */
+body.pg-gurme-lezzetler .ke-filter-wrap{padding:22px 0}
+body.pg-gurme-lezzetler .ke-filter-bar{margin-bottom:0}
+body.pg-gurme-lezzetler .ke-sec{padding-top:40px}
+
+@media (max-width:640px){
+  body.pg-gurme-lezzetler .ke-filter-wrap{padding:16px 0}
+  body.pg-gurme-lezzetler .ke-sec{padding-top:28px}
+  /* 390'da kategori rayı kendi SATIRINI alsın. Kanon `.ke-filter-bar .ke-filter{flex:1 1 0%}`
+     masaüstü için doğru (çip şeridi daralır, sıralama toggle'ı aynı satırda sağda kalır —
+     kanon dosyanın kendi şerhi bunu ölçmüş), ama dar ekranda aynı kural rayı 107px'e
+     eziyordu: 358px'lik barın 237'sini sabit genişlikli `.disc-tabs` alıyor, çip şeridine
+     107px kalıyor ve TEK çip görünüyordu. Ölçüldü @390 (önce ve sonra AYNI, yani kusur
+     ikonlardan gelmiyor): `.ke-filter` g=107,3 · `.disc-tabs` g=236,7. İkonlu çip 56,6 →
+     77px olduğu için pencere daha da daraldı. `flex-basis:100%` ile ray tam satır alır,
+     toggle alt satıra sarar; `.ke-filter-bar` zaten `flex-wrap:wrap`. */
+  body.pg-gurme-lezzetler .ke-filter-bar{gap:12px}
+  body.pg-gurme-lezzetler .ke-filter-bar .ke-filter{flex:1 1 100%}
+}
+
+/* Sıralama sekmesi kabı (`.disc-tabs`) kanonda `var(--paper)` = #fff; beyaz zeminde
+   sınırından başka işareti kalmıyordu. Çip şeridiyle aynı dili konuşsun diye hafif
+   kırık beyaza alındı — yeni renk icat edilmedi, kanonun kendi `--bg-cream` token'ı. */
+body.pg-gurme-lezzetler .ke-filter-bar .disc-tabs{background:var(--bg-cream)}
+
+/* ——— 2) DETAY: gövde ve ilgili bölümü aynı beyazda ————————————————————————————————— */
+/* `.ke-detail-view` beyaz, `.art-body`/`.art-related` #f9f9f9 idi: gövde paneli 22px
+   yuvarlatıldığı için köşelerde beyaz zemin sızıyor, panel sayfadan ayrık görünüyordu. */
+body.pg-gurme-lezzetler-detay,
+body.pg-gurme-lezzetler-detay .page-main,
+body.pg-gurme-lezzetler-detay .art-body,
+body.pg-gurme-lezzetler-detay .art-related{background:var(--bg-white)}
+
+/* Etiket çipleri ve ray okları kanonda `var(--paper)` (#fff) zeminliydi; beyaz gövdede
+   yalnız 1px sınırla duruyorlardı. Liste şeridindeki `.disc-tabs` ile aynı çözüm. */
+body.pg-gurme-lezzetler-detay .ptr .row-track .chip,
+body.pg-gurme-lezzetler-detay .ptr .row-nav button{background:var(--bg-cream)}
+
+/* ——— 3) KABUK GÖLGESİNİN ALTA SIZMASI ————————————————————————————————————————————— */
+/* Kabuk, hero'dan sonraki ilk paneli 22px yuvarlatıp `0 -12px 32px rgba(20,16,10,.18)`
+   ile kaldırıyor. Gölge YUKARI kaydırılmış ama bulanıklığı (32px) panelin ALT kenarından
+   da ~20px taşıyor; zemin #f9f9f9 iken fark edilmiyordu, beyazda şeridin altına gri bir
+   dikiş çiziyor — yani Beyar'ın "basamak ya da renk farkı kalmasın" dediği şeyin ta kendisi.
+   İZOLE ÖLÇÜM (@1440, x=60, çalışma anında `box-shadow:none`):
+     gölge VAR  y627..645 = 247,249,251,252,254,254,255
+     gölge YOK  y627..645 = 255,255,255,255,255,255,255   → kaynak kesin.
+   Çözüm gölgeyi SİLMEK değil, yayılımını negatife çekmek: `-12px` ile alt taşma biter,
+   üstteki kaldırma ölçülebilir biçimde AYNI kalır (hero üzerinde y495..525 = 29/30, dört
+   adayda da değişmedi — koyu bant üstünde gölgenin görsel katkısı zaten ~0).
+   Kanon değeri silinmedi, yalnız dördüncü uzunluğu eklendi.
+
+   ÖZGÜLLÜK TUZAĞI: kaynak kural `gourmet.css`te iki ayrı biçimde duruyor ve ikisi de
+   sade `.ke-filter-wrap` / `.art-body` seçicisini YENER — ilk denemede gövde sınıfıyla
+   yazılan kural uygulanmadı (hesaplanan değer `0px -12px 32px 0px` kaldı). Bu yüzden
+   aşağıda kaynak seçicinin KENDİ şekli gövde sınıfıyla önekleniyor:
+     liste → `.below-header:not(.pf-top)+div:has(>section:first-child)>section:first-child`
+     detay → `.below-header:not(.pf-top)+article`
+   Kaynak seçici `gourmet.css`te değişirse burası da güncellenmeli (kanon dosyaya kural
+   EKLEMEK çözüm değildir — sahte vendor olur). */
+body.pg-gurme-lezzetler .below-header:not(.pf-top)+div:has(>section:first-child)>section:first-child,
+body.pg-gurme-lezzetler-detay .below-header:not(.pf-top)+article{box-shadow:0 -12px 32px -12px #14100a2e}
