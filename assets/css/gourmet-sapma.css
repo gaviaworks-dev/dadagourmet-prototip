@@ -213,13 +213,6 @@ button.yg-il-cip{display:inline-flex;align-items:center;gap:5px;font-family:inhe
 /* Süzgeç sayfası açıkken yüzen düğmeler sayfanın kapat ve uygula düğmesinin üstüne biniyordu */
 html:has(.lst-side.open) :is(.yg-fab,.to-top,.feedback-tab,.fb-rail){display:none}
 
-/* Yasal menü: 32 kalem dar ekranda metni bir ekran aşağı itiyordu; kanon şerit kalıbıyla tek satır kayar */
-@media(max-width:1024px){
-  .lg-side .lg-menu{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-block:5px}
-  .lg-side .lg-menu::-webkit-scrollbar{display:none}
-  .lg-side .lg-menu a{flex:none;white-space:nowrap}
-}
-
 /* Mekân Bul: dar ekranda "Sonuçları Gör" iki satıra sıkışıyordu; Geri kendi boyunda, birincil düğme kalanı alır */
 @media(max-width:640px){
   .wiz-foot .wf-actions .btn{flex:1 1 auto;white-space:nowrap}

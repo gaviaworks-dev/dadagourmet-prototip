@@ -52,3 +52,12 @@ header a i.fa-route, nav a i.fa-route { opacity: 1 !important; }
 .to-top{position:fixed;right:22px;bottom:calc(92px + var(--bc-lift,0px));z-index:55;width:54px;height:54px;border-radius:var(--radius-lg);background:#fff;color:var(--tomato-deep);border:1px solid var(--line);cursor:pointer;font-size:16px;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 8px 20px #211e1629;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .25s var(--ease),transform .25s var(--ease),visibility .25s,background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}.to-top.show{opacity:1;visibility:visible;transform:none}.to-top:hover{background:var(--tomato-deep);color:#fff;border-color:var(--tomato-deep);transform:translateY(-2px)}.to-top:focus-visible{outline:3px solid var(--tomato-tint);outline-offset:2px}
 @media(max-width:640px){.to-top{right:16px;bottom:calc(148px + env(safe-area-inset-bottom,0px) + var(--bc-lift,0px));width:48px;height:48px}}
 @media(prefers-reduced-motion:reduce){.to-top{transition:opacity .15s linear}.to-top:hover{transform:none}}
+
+/* Yasal menü: 32 kalem dar ekranda metni bir ekran aşağı itiyordu; kanon şerit kalıbıyla tek satır kayar */
+@media(max-width:1024px){
+  .lg-side .lg-menu{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-block:5px}
+  .lg-side .lg-menu::-webkit-scrollbar{display:none}
+  .lg-side .lg-menu a{flex:none;white-space:nowrap}
+}
+/* Üye zinciri bildirim kuralını da yüklemiyor: gizli bildirim altbilginin altında görünüyordu. `gourmet.css`ten aynen */
+.ke-toast{position:fixed;left:50%;bottom:calc(28px + var(--bc-lift, 0px));transform:translate(-50%) translateY(20px);background:var(--slate,#211e16);color:#fff;font-size:13.5px;font-weight:600;padding:13px 20px;border-radius:var(--radius-md);box-shadow:var(--sh-lg);display:flex;align-items:center;gap:10px;opacity:0;visibility:hidden;transition:.3s var(--ease);z-index:120}.ke-toast.show{opacity:1;visibility:visible;transform:translate(-50%) translateY(0)}.ke-toast.show.soft{opacity:.85}.ke-toast i{color:var(--green,#3BB77E)}
