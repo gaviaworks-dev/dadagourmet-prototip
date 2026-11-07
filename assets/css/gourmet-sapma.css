@@ -209,3 +209,6 @@ button.yg-il-cip{display:inline-flex;align-items:center;gap:5px;font-family:inhe
 .yg-telefon-qr svg{display:block;width:100%;height:100%;fill:var(--slate)}
 .yg-telefon-kisa{font-size:13px;font-weight:700;color:var(--marka-koyu);overflow-wrap:anywhere}
 .yg-telefon-not{font-size:11.5px;line-height:1.35;color:var(--muted,#6f6f6f)}
+
+/* Süzgeç sayfası açıkken yüzen düğmeler sayfanın kapat ve uygula düğmesinin üstüne biniyordu */
+html:has(.lst-side.open) :is(.yg-fab,.to-top,.feedback-tab,.fb-rail){display:none}
