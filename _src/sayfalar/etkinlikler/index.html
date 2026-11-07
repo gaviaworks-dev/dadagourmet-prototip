@@ -1,0 +1,655 @@
+<!--{"yol":"etkinlikler","baslik":"Etkinlikler","aktif":"etkinlikler","zincir":"hakkimizda","gourmet":true,"css":["etkinlikler.css","banner-uyarlama.css","etkinlikler-uyarlama.css","gourmet-sapma"],"js":["assets/js/etkinlik-veri.js","assets/js/sayfa/etkinlikler.js"],"govdeSinif":"pg-etkinlikler has-dark-hero","donor":"https://dadagourmet.com/etkinlikler"}-->
+
+                        <section class="ke-top below-header px-band" data-px-band="1"><div class="px-clip" style="--px-x: 50%; --px-y: 50%; background-color: rgb(30, 20, 34); --px-r: 0px; --px-shift: 0.0px;"><div class="px-media" style="background-image: url(&quot;{{kok}}assets/o/assets/gourmet-public/img/banner-g3-pilot.webp&quot;);"></div></div>
+    <div class="ke-hero-media" aria-hidden="true" style="background-image: none; background-color: transparent;"></div>
+    <div class="wrap">
+        <nav class="rd-crumb" aria-label="Sayfa yolu"><a href="{{kok}}"><i class="fa-solid fa-house" aria-hidden="true"></i></a><i class="fa-solid fa-chevron-right" aria-hidden="true"></i><b>Etkinlikler</b></nav>
+        <div class="ke-hero">
+            <div class="ke-head">
+                <span class="eyebrow"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Lezzet Takvimi</span>
+                <h1>Gastronomi Etkinliklerini <span class="accent">Keşfet</span></h1>
+                <p class="lead">Tadım etkinliklerinden gastronomi festivallerine, şef buluşmalarından mutfak atölyelerine kadar şehirdeki güncel deneyimleri keşfedin.</p>
+                <form method="GET" class="searchcard ke-hero-search" data-prototip-form="" data-yerel="" id="evArama">
+                    <div class="search-row">
+                        <label class="search-input"><span class="sr-only">Etkinlik, şehir veya mekân ara</span><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input type="text" name="q" value="" placeholder="Etkinlik, şehir veya mekân ara"></label>
+                        <button class="btn btn-primary" type="submit">Ara</button>
+                    </div>
+                </form>
+                <div class="ke-cta">
+                    <button class="btn btn-suggest" type="button" data-etkinlik-oner=""><i class="fa-solid fa-calendar-plus" aria-hidden="true"></i> Etkinlik Öner</button>
+                </div>
+                <div class="ke-cta-split"><span><b>Etkinlik Öner</b> — bildiğin bir gastronomi etkinliğini öner; editör onayıyla takvime eklenir.</span></div>
+            </div>
+            <div class="ke-stats">
+                <div class="st"><b>50</b><span>yaklaşan etkinlik</span></div>
+                <div class="st"><b>40</b><span>şehir</span></div>
+                <div class="st"><b>8</b><span>ücretsiz etkinlik</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="ev-sec">
+    <div class="wrap">
+        <div class="ev-bolge" role="tablist" aria-label="Etkinlik bölgesi"><button class="ev-bolge-sekme aktif" type="button" role="tab" aria-selected="true" data-bolge="tr"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Türkiye <span id="evSayTr"></span></button><button class="ev-bolge-sekme" type="button" role="tab" aria-selected="false" data-bolge="dunya"><i class="fa-solid fa-earth-europe" aria-hidden="true"></i> Uluslararası <span id="evSayDunya"></span></button></div><div class="ke-filter ev-filter can-scroll-right" role="tablist" aria-label="Etkinlik kategorisi">
+            <a class="chip  active " href="#"><i class="fa-solid fa-layer-group" aria-hidden="true"></i>Tümü</a>
+                            <a class="chip " href="#" data-kategori="gastronomi-festivalleri"><i class="fa-solid fa-champagne-glasses" aria-hidden="true"></i>Gastronomi Festivalleri</a>
+                            <a class="chip " href="#" data-kategori="tadim-etkinlikleri"><i class="fa-solid fa-wine-glass" aria-hidden="true"></i>Tadım Etkinlikleri</a>
+                            <a class="chip " href="#" data-kategori="mutfak-atolyeleri"><i class="fa-solid fa-kitchen-set" aria-hidden="true"></i>Mutfak Atölyeleri</a>
+                            <a class="chip " href="#" data-kategori="sef-bulusmalari"><i class="fa-solid fa-user-tie" aria-hidden="true"></i>Şef Buluşmaları ve Söyleşiler</a>
+                            <a class="chip " href="#" data-kategori="ozel-menu"><i class="fa-solid fa-utensils" aria-hidden="true"></i>Özel Menü ve Gastronomi Geceleri</a>
+                            <a class="chip " href="#" data-kategori="popup-konuk-sef-etkinlikleri"><i class="fa-solid fa-store" aria-hidden="true"></i>Pop-up ve Konuk Şef Etkinlikleri</a>
+                            <a class="chip " href="#" data-kategori="uretim-hasat-bag-deneyimleri"><i class="fa-solid fa-wheat-awn" aria-hidden="true"></i>Üretim, Hasat ve Bağ Deneyimleri</a>
+                            <a class="chip " href="#" data-kategori="gastronomi-egitimleri"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>Gastronomi Eğitimleri</a>
+                            <a class="chip " href="#" data-kategori="gastronomi-profesyonel-etkinlikler"><i class="fa-solid fa-trophy" aria-hidden="true"></i>Yarışmalar ve Profesyonel Etkinlikler</a>
+                            <a class="chip " href="#" data-kategori="cocuk-aile-etkinlikleri"><i class="fa-solid fa-children" aria-hidden="true"></i>Çocuk ve Aile Etkinlikleri</a>
+                    </div>
+        <div class="lst-layout">
+            <form method="GET" id="filterForm" data-prototip-form="" data-yerel="">
+                                
+                                                <aside class="lst-side" id="lstSide" data-bc-clear="" aria-label="Filtreler" style="--bc-lift: 0px;">
+                    <div class="sheet-head">
+                        <h3><i class="fa-solid fa-sliders" aria-hidden="true"></i> Filtrele</h3>
+                        <div class="sh-right">
+                            <a class="fil-clear" href="{{kok}}etkinlikler/">Temizle</a>
+                            <button class="sheet-close" id="sheetClose" type="button" aria-label="Filtre panelini kapat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                    <div class="sheet-body">
+                        <div class="fil-top">
+                            <h3><i class="fa-solid fa-sliders" aria-hidden="true"></i> Filtreler</h3>
+                            <a class="fil-clear" href="{{kok}}etkinlikler/">Tümünü Temizle</a>
+                        </div>
+                        
+                        <div class="fct open" data-group="tarih">
+                            <button class="fct-head" type="button"><i class="fa-solid fa-calendar-days fct-head-ico" aria-hidden="true"></i> Tarih <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+                            <div class="fct-body">
+                                                                    <label class="fct-row"><input type="radio" name="tarih" value="bugun" data-count="1"><span class="cbx"></span><span class="ft" title="Bugün">Bugün</span><span class="fcnt">1</span></label>
+                                                                    
+                                                                    <label class="fct-row"><input type="radio" name="tarih" value="bu-hafta" data-count="2"><span class="cbx"></span><span class="ft" title="Bu hafta">Bu hafta</span><span class="fcnt">2</span></label>
+                                                                    <label class="fct-row"><input type="radio" name="tarih" value="bu-hafta-sonu" data-count="1"><span class="cbx"></span><span class="ft" title="Bu hafta sonu">Bu hafta sonu</span><span class="fcnt">1</span></label>
+                                                                    <label class="fct-row"><input type="radio" name="tarih" value="gelecek-hafta" data-count="3"><span class="cbx"></span><span class="ft" title="Gelecek hafta">Gelecek hafta</span><span class="fcnt">3</span></label>
+                                                                    <label class="fct-row"><input type="radio" name="tarih" value="bu-ay" data-count="8"><span class="cbx"></span><span class="ft" title="Bu ay">Bu ay</span><span class="fcnt">8</span></label>
+                                                                    <label class="fct-row"><input type="radio" name="tarih" value="gecmis" data-count="76"><span class="cbx"></span><span class="ft" title="Geçmiş etkinlikler">Geçmiş etkinlikler</span><span class="fcnt">76</span></label>
+                                                            </div>
+                        </div>
+                        
+                        <div class="fct fct-konum open" data-group="konum">
+                            <button class="fct-head" type="button"><i class="fa-solid fa-location-dot fct-head-ico" aria-hidden="true"></i> Konum <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+                            <div class="fct-body">
+                                
+                                <label class="search-input mkl-fct-srch" data-konum-ara="">
+                                    <span class="sr-only">Ülke veya şehir ara</span>
+                                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                                    <input type="search" placeholder="Ülke veya şehir ara" autocomplete="off">
+                                </label>
+                                <div class="fct-scroll" data-konum-liste="">
+                                                                                                                    <div class="fct-ulke open" data-ulke="Türkiye" data-konum-acik="1">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Türkiye" data-count="36"><span class="cbx"></span><span class="ft" title="Türkiye">Türkiye</span><span class="fcnt">36</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="true" aria-controls="konumUlke0" aria-label="Türkiye şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke0">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="İstanbul" data-count="11"><span class="cbx"></span><span class="ft" title="İstanbul"> İstanbul</span><span class="fcnt">11</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="İzmir" data-count="7"><span class="cbx"></span><span class="ft" title="İzmir"> İzmir</span><span class="fcnt">7</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Antalya" data-count="4"><span class="cbx"></span><span class="ft" title="Antalya"> Antalya</span><span class="fcnt">4</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Ankara" data-count="2"><span class="cbx"></span><span class="ft" title="Ankara"> Ankara</span><span class="fcnt">2</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Muğla" data-count="2"><span class="cbx"></span><span class="ft" title="Muğla"> Muğla</span><span class="fcnt">2</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Balıkesir" data-count="1"><span class="cbx"></span><span class="ft" title="Balıkesir"> Balıkesir</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Bolu" data-count="1"><span class="cbx"></span><span class="ft" title="Bolu"> Bolu</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Çanakkale" data-count="1"><span class="cbx"></span><span class="ft" title="Çanakkale"> Çanakkale</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir xtra"><input type="checkbox" name="sehir[]" value="Çorum" data-count="1"><span class="cbx"></span><span class="ft" title="Çorum"> Çorum</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir xtra"><input type="checkbox" name="sehir[]" value="Edirne" data-count="1"><span class="cbx"></span><span class="ft" title="Edirne"> Edirne</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir xtra"><input type="checkbox" name="sehir[]" value="Gaziantep" data-count="1"><span class="cbx"></span><span class="ft" title="Gaziantep"> Gaziantep</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir xtra"><input type="checkbox" name="sehir[]" value="Karabük" data-count="1"><span class="cbx"></span><span class="ft" title="Karabük"> Karabük</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir xtra"><input type="checkbox" name="sehir[]" value="Konya" data-count="1"><span class="cbx"></span><span class="ft" title="Konya"> Konya</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir xtra"><input type="checkbox" name="sehir[]" value="Malatya" data-count="1"><span class="cbx"></span><span class="ft" title="Malatya"> Malatya</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir xtra"><input type="checkbox" name="sehir[]" value="Nevşehir" data-count="1"><span class="cbx"></span><span class="ft" title="Nevşehir"> Nevşehir</span><span class="fcnt">1</span></label>
+                                                                                                                                                    <button class="fct-more" type="button" data-more="7 şehir daha" data-less="Daha az göster">7 şehir daha <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke" data-ulke="Almanya" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Almanya" data-count="12"><span class="cbx"></span><span class="ft" title="Almanya">Almanya</span><span class="fcnt">12</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke1" aria-label="Almanya şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke1">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Köln" data-count="2"><span class="cbx"></span><span class="ft" title="Köln"> Köln</span><span class="fcnt">2</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Münih" data-count="2"><span class="cbx"></span><span class="ft" title="Münih"> Münih</span><span class="fcnt">2</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Bad Dürkheim" data-count="1"><span class="cbx"></span><span class="ft" title="Bad Dürkheim"> Bad Dürkheim</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Berlin" data-count="1"><span class="cbx"></span><span class="ft" title="Berlin"> Berlin</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Bonn" data-count="1"><span class="cbx"></span><span class="ft" title="Bonn"> Bonn</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Düsseldorf" data-count="1"><span class="cbx"></span><span class="ft" title="Düsseldorf"> Düsseldorf</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Nürnberg" data-count="1"><span class="cbx"></span><span class="ft" title="Nürnberg"> Nürnberg</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Stuttgart" data-count="1"><span class="cbx"></span><span class="ft" title="Stuttgart"> Stuttgart</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir xtra"><input type="checkbox" name="sehir[]" value="Weimar" data-count="1"><span class="cbx"></span><span class="ft" title="Weimar"> Weimar</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir xtra"><input type="checkbox" name="sehir[]" value="Wiesbaden" data-count="1"><span class="cbx"></span><span class="ft" title="Wiesbaden"> Wiesbaden</span><span class="fcnt">1</span></label>
+                                                                                                                                                    <button class="fct-more" type="button" data-more="2 şehir daha" data-less="Daha az göster">2 şehir daha <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke" data-ulke="İtalya" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="İtalya" data-count="11"><span class="cbx"></span><span class="ft" title="İtalya">İtalya</span><span class="fcnt">11</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke2" aria-label="İtalya şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke2">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Torino" data-count="2"><span class="cbx"></span><span class="ft" title="Torino"> Torino</span><span class="fcnt">2</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Verona" data-count="2"><span class="cbx"></span><span class="ft" title="Verona"> Verona</span><span class="fcnt">2</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Alba" data-count="1"><span class="cbx"></span><span class="ft" title="Alba"> Alba</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Camogli" data-count="1"><span class="cbx"></span><span class="ft" title="Camogli"> Camogli</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Cremona" data-count="1"><span class="cbx"></span><span class="ft" title="Cremona"> Cremona</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Marino" data-count="1"><span class="cbx"></span><span class="ft" title="Marino"> Marino</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Merano" data-count="1"><span class="cbx"></span><span class="ft" title="Merano"> Merano</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Perugia" data-count="1"><span class="cbx"></span><span class="ft" title="Perugia"> Perugia</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir xtra"><input type="checkbox" name="sehir[]" value="San Vito Lo Capo" data-count="1"><span class="cbx"></span><span class="ft" title="San Vito Lo Capo"> San Vito Lo Capo</span><span class="fcnt">1</span></label>
+                                                                                                                                                    <button class="fct-more" type="button" data-more="1 şehir daha" data-less="Daha az göster">1 şehir daha <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke" data-ulke="ABD" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="ABD" data-count="9"><span class="cbx"></span><span class="ft" title="ABD">ABD</span><span class="fcnt">9</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke3" aria-label="ABD şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke3">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Chicago" data-count="2"><span class="cbx"></span><span class="ft" title="Chicago"> Chicago</span><span class="fcnt">2</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Albuquerque" data-count="1"><span class="cbx"></span><span class="ft" title="Albuquerque"> Albuquerque</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Aspen" data-count="1"><span class="cbx"></span><span class="ft" title="Aspen"> Aspen</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Cincinnati" data-count="1"><span class="cbx"></span><span class="ft" title="Cincinnati"> Cincinnati</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Fort Worth" data-count="1"><span class="cbx"></span><span class="ft" title="Fort Worth"> Fort Worth</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Miami Beach" data-count="1"><span class="cbx"></span><span class="ft" title="Miami Beach"> Miami Beach</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="New York" data-count="1"><span class="cbx"></span><span class="ft" title="New York"> New York</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Telluride" data-count="1"><span class="cbx"></span><span class="ft" title="Telluride"> Telluride</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke" data-ulke="Fransa" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Fransa" data-count="8"><span class="cbx"></span><span class="ft" title="Fransa">Fransa</span><span class="fcnt">8</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke4" aria-label="Fransa şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke4">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Paris" data-count="3"><span class="cbx"></span><span class="ft" title="Paris"> Paris</span><span class="fcnt">3</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Lyon" data-count="2"><span class="cbx"></span><span class="ft" title="Lyon"> Lyon</span><span class="fcnt">2</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Bordeaux" data-count="1"><span class="cbx"></span><span class="ft" title="Bordeaux"> Bordeaux</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Lille" data-count="1"><span class="cbx"></span><span class="ft" title="Lille"> Lille</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Menton" data-count="1"><span class="cbx"></span><span class="ft" title="Menton"> Menton</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke" data-ulke="İspanya" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="İspanya" data-count="8"><span class="cbx"></span><span class="ft" title="İspanya">İspanya</span><span class="fcnt">8</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke5" aria-label="İspanya şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke5">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Madrid" data-count="2"><span class="cbx"></span><span class="ft" title="Madrid"> Madrid</span><span class="fcnt">2</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Buñol" data-count="1"><span class="cbx"></span><span class="ft" title="Buñol"> Buñol</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Haro" data-count="1"><span class="cbx"></span><span class="ft" title="Haro"> Haro</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Jerez de la Frontera" data-count="1"><span class="cbx"></span><span class="ft" title="Jerez de la Frontera"> Jerez de la Frontera</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="San Sebastián" data-count="1"><span class="cbx"></span><span class="ft" title="San Sebastián"> San Sebastián</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Sueca" data-count="1"><span class="cbx"></span><span class="ft" title="Sueca"> Sueca</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Trujillo" data-count="1"><span class="cbx"></span><span class="ft" title="Trujillo"> Trujillo</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Japonya" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Japonya" data-count="5"><span class="cbx"></span><span class="ft" title="Japonya">Japonya</span><span class="fcnt">5</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke6" aria-label="Japonya şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke6">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Tokyo" data-count="2"><span class="cbx"></span><span class="ft" title="Tokyo"> Tokyo</span><span class="fcnt">2</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Kōshū" data-count="1"><span class="cbx"></span><span class="ft" title="Kōshū"> Kōshū</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Ōdate" data-count="1"><span class="cbx"></span><span class="ft" title="Ōdate"> Ōdate</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Sapporo" data-count="1"><span class="cbx"></span><span class="ft" title="Sapporo"> Sapporo</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Kanada" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Kanada" data-count="5"><span class="cbx"></span><span class="ft" title="Kanada">Kanada</span><span class="fcnt">5</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke7" aria-label="Kanada şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke7">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Calgary" data-count="1"><span class="cbx"></span><span class="ft" title="Calgary"> Calgary</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Edmonton" data-count="1"><span class="cbx"></span><span class="ft" title="Edmonton"> Edmonton</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Kitchener" data-count="1"><span class="cbx"></span><span class="ft" title="Kitchener"> Kitchener</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Toronto" data-count="1"><span class="cbx"></span><span class="ft" title="Toronto"> Toronto</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Yellowknife" data-count="1"><span class="cbx"></span><span class="ft" title="Yellowknife"> Yellowknife</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="İsviçre" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="İsviçre" data-count="3"><span class="cbx"></span><span class="ft" title="İsviçre">İsviçre</span><span class="fcnt">3</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke8" aria-label="İsviçre şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke8">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Bern" data-count="1"><span class="cbx"></span><span class="ft" title="Bern"> Bern</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Neuchâtel" data-count="1"><span class="cbx"></span><span class="ft" title="Neuchâtel"> Neuchâtel</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Zürih" data-count="1"><span class="cbx"></span><span class="ft" title="Zürih"> Zürih</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Brezilya" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Brezilya" data-count="2"><span class="cbx"></span><span class="ft" title="Brezilya">Brezilya</span><span class="fcnt">2</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke9" aria-label="Brezilya şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke9">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Blumenau" data-count="1"><span class="cbx"></span><span class="ft" title="Blumenau"> Blumenau</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Caxias do Sul" data-count="1"><span class="cbx"></span><span class="ft" title="Caxias do Sul"> Caxias do Sul</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Ermenistan" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Ermenistan" data-count="2"><span class="cbx"></span><span class="ft" title="Ermenistan">Ermenistan</span><span class="fcnt">2</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke10" aria-label="Ermenistan şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke10">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Areni" data-count="1"><span class="cbx"></span><span class="ft" title="Areni"> Areni</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Erivan" data-count="1"><span class="cbx"></span><span class="ft" title="Erivan"> Erivan</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="İngiltere" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="İngiltere" data-count="2"><span class="cbx"></span><span class="ft" title="İngiltere">İngiltere</span><span class="fcnt">2</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke11" aria-label="İngiltere şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke11">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Birmingham" data-count="1"><span class="cbx"></span><span class="ft" title="Birmingham"> Birmingham</span><span class="fcnt">1</span></label>
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Londra" data-count="1"><span class="cbx"></span><span class="ft" title="Londra"> Londra</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Macaristan" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Macaristan" data-count="2"><span class="cbx"></span><span class="ft" title="Macaristan">Macaristan</span><span class="fcnt">2</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke12" aria-label="Macaristan şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke12">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Budapeşte" data-count="2"><span class="cbx"></span><span class="ft" title="Budapeşte"> Budapeşte</span><span class="fcnt">2</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Arjantin" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Arjantin" data-count="1"><span class="cbx"></span><span class="ft" title="Arjantin">Arjantin</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke13" aria-label="Arjantin şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke13">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Mendoza" data-count="1"><span class="cbx"></span><span class="ft" title="Mendoza"> Mendoza</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Avusturya" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Avusturya" data-count="1"><span class="cbx"></span><span class="ft" title="Avusturya">Avusturya</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke14" aria-label="Avusturya şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke14">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Viyana" data-count="1"><span class="cbx"></span><span class="ft" title="Viyana"> Viyana</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Belçika" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Belçika" data-count="1"><span class="cbx"></span><span class="ft" title="Belçika">Belçika</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke15" aria-label="Belçika şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke15">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Brüksel" data-count="1"><span class="cbx"></span><span class="ft" title="Brüksel"> Brüksel</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Birleşik Arap Emirlikleri" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Birleşik Arap Emirlikleri" data-count="1"><span class="cbx"></span><span class="ft" title="Birleşik Arap Emirlikleri">Birleşik Arap Emirlikleri</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke16" aria-label="Birleşik Arap Emirlikleri şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke16">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Dubai" data-count="1"><span class="cbx"></span><span class="ft" title="Dubai"> Dubai</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Danimarka" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Danimarka" data-count="1"><span class="cbx"></span><span class="ft" title="Danimarka">Danimarka</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke17" aria-label="Danimarka şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke17">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Kopenhag" data-count="1"><span class="cbx"></span><span class="ft" title="Kopenhag"> Kopenhag</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Finlandiya" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Finlandiya" data-count="1"><span class="cbx"></span><span class="ft" title="Finlandiya">Finlandiya</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke18" aria-label="Finlandiya şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke18">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Helsinki" data-count="1"><span class="cbx"></span><span class="ft" title="Helsinki"> Helsinki</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Galler (Birleşik Krallık)" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Galler (Birleşik Krallık)" data-count="1"><span class="cbx"></span><span class="ft" title="Galler (Birleşik Krallık)">Galler (Birleşik Krallık)</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke19" aria-label="Galler (Birleşik Krallık) şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke19">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Abergavenny" data-count="1"><span class="cbx"></span><span class="ft" title="Abergavenny"> Abergavenny</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Hindistan" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Hindistan" data-count="1"><span class="cbx"></span><span class="ft" title="Hindistan">Hindistan</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke20" aria-label="Hindistan şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke20">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Haydarabad" data-count="1"><span class="cbx"></span><span class="ft" title="Haydarabad"> Haydarabad</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Hollanda" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Hollanda" data-count="1"><span class="cbx"></span><span class="ft" title="Hollanda">Hollanda</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke21" aria-label="Hollanda şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke21">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Amsterdam" data-count="1"><span class="cbx"></span><span class="ft" title="Amsterdam"> Amsterdam</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Hong Kong" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Hong Kong" data-count="1"><span class="cbx"></span><span class="ft" title="Hong Kong">Hong Kong</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke22" aria-label="Hong Kong şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke22">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Hong Kong" data-count="1"><span class="cbx"></span><span class="ft" title="Hong Kong"> Hong Kong</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="İrlanda" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="İrlanda" data-count="1"><span class="cbx"></span><span class="ft" title="İrlanda">İrlanda</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke23" aria-label="İrlanda şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke23">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Galway" data-count="1"><span class="cbx"></span><span class="ft" title="Galway"> Galway</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Katar" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Katar" data-count="1"><span class="cbx"></span><span class="ft" title="Katar">Katar</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke24" aria-label="Katar şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke24">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Lusail" data-count="1"><span class="cbx"></span><span class="ft" title="Lusail"> Lusail</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="KKTC" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="KKTC" data-count="1"><span class="cbx"></span><span class="ft" title="KKTC">KKTC</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke25" aria-label="KKTC şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke25">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Güzelyurt" data-count="1"><span class="cbx"></span><span class="ft" title="Güzelyurt"> Güzelyurt</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Makao" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Makao" data-count="1"><span class="cbx"></span><span class="ft" title="Makao">Makao</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke26" aria-label="Makao şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke26">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Makao" data-count="1"><span class="cbx"></span><span class="ft" title="Makao"> Makao</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Malezya" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Malezya" data-count="1"><span class="cbx"></span><span class="ft" title="Malezya">Malezya</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke27" aria-label="Malezya şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke27">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Kuala Lumpur" data-count="1"><span class="cbx"></span><span class="ft" title="Kuala Lumpur"> Kuala Lumpur</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Meksika" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Meksika" data-count="1"><span class="cbx"></span><span class="ft" title="Meksika">Meksika</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke28" aria-label="Meksika şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke28">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Mexico City" data-count="1"><span class="cbx"></span><span class="ft" title="Mexico City"> Mexico City</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Moldova" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Moldova" data-count="1"><span class="cbx"></span><span class="ft" title="Moldova">Moldova</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke29" aria-label="Moldova şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke29">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Kişinev" data-count="1"><span class="cbx"></span><span class="ft" title="Kişinev"> Kişinev</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Norveç" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Norveç" data-count="1"><span class="cbx"></span><span class="ft" title="Norveç">Norveç</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke30" aria-label="Norveç şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke30">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Stavanger" data-count="1"><span class="cbx"></span><span class="ft" title="Stavanger"> Stavanger</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Portekiz" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Portekiz" data-count="1"><span class="cbx"></span><span class="ft" title="Portekiz">Portekiz</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke31" aria-label="Portekiz şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke31">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Porto" data-count="1"><span class="cbx"></span><span class="ft" title="Porto"> Porto</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Slovenya" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Slovenya" data-count="1"><span class="cbx"></span><span class="ft" title="Slovenya">Slovenya</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke32" aria-label="Slovenya şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke32">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Izola" data-count="1"><span class="cbx"></span><span class="ft" title="Izola"> Izola</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                                                                    <div class="fct-ulke xtra" data-ulke="Şili" data-konum-acik="0">
+                                            <div class="fct-row fct-ulke-satiri">
+                                                                                                    <label class="fct-ulke-sec"><input type="checkbox" name="ulke[]" value="Şili" data-count="1"><span class="cbx"></span><span class="ft" title="Şili">Şili</span><span class="fcnt">1</span></label>
+                                                                                                <button class="fct-ulke-ac" type="button" aria-expanded="false" aria-controls="konumUlke33" aria-label="Şili şehirlerini aç/kapat"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                            </div>
+                                            <div class="fct-ulke-sehirler" id="konumUlke33">
+                                                                                                    
+                                                    <label class="fct-row fct-sehir"><input type="checkbox" name="sehir[]" value="Rengo" data-count="1"><span class="cbx"></span><span class="ft" title="Rengo"> Rengo</span><span class="fcnt">1</span></label>
+                                                                                                                                            </div>
+                                        </div>
+                                                                        
+                                    <p class="fct-empty" data-konum-bos="" aria-live="polite" hidden="">Eşleşen ülke veya şehir yok.</p>
+                                </div>
+                                                                    <button class="fct-more fct-more-ulke" type="button" data-more="28 ülke daha" data-less="Daha az göster">28 ülke daha <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+                                                            </div>
+                        </div>
+                        
+                        <div class="fct open" data-group="tur">
+                            <button class="fct-head" type="button"><i class="fa-solid fa-tags fct-head-ico" aria-hidden="true"></i> Etkinlik Türü <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+                            <div class="fct-body">
+                                                                    <label class="fct-row"><input type="checkbox" name="tur[]" value="Festival" data-count="71"><span class="cbx"></span><span class="ft" title="Festival">Festival</span><span class="fcnt">71</span></label>
+                                                                    <label class="fct-row"><input type="checkbox" name="tur[]" value="Fuar" data-count="8"><span class="cbx"></span><span class="ft" title="Fuar">Fuar</span><span class="fcnt">8</span></label>
+                                                                    <label class="fct-row"><input type="checkbox" name="tur[]" value="Tadım" data-count="25"><span class="cbx"></span><span class="ft" title="Tadım">Tadım</span><span class="fcnt">25</span></label>
+                                                                    
+                                                                    <label class="fct-row"><input type="checkbox" name="tur[]" value="Şef Buluşması" data-count="3"><span class="cbx"></span><span class="ft" title="Şef Buluşması">Şef Buluşması</span><span class="fcnt">3</span></label>
+                                                                    
+                                                                    
+                                                                    
+                                                                    <label class="fct-row"><input type="checkbox" name="tur[]" value="Üretim ve Hasat Deneyimi" data-count="15"><span class="cbx"></span><span class="ft" title="Üretim ve Hasat Deneyimi">Üretim ve Hasat Deneyimi</span><span class="fcnt">15</span></label>
+                                                                    
+                                                                    <label class="fct-row"><input type="checkbox" name="tur[]" value="Yarışma" data-count="4"><span class="cbx"></span><span class="ft" title="Yarışma">Yarışma</span><span class="fcnt">4</span></label>
+                                                            </div>
+                        </div>
+                        <div class="fct open" data-group="profil">
+                            <button class="fct-head" type="button"><i class="fa-solid fa-user-group fct-head-ico" aria-hidden="true"></i> Katılımcı Profili <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+                            <div class="fct-body">
+                                                                    <label class="fct-row"><input type="checkbox" name="profil[]" value="Herkese Açık" data-count="94"><span class="cbx"></span><span class="ft" title="Herkese Açık">Herkese Açık</span><span class="fcnt">94</span></label>
+                                                                    
+                                                                    <label class="fct-row"><input type="checkbox" name="profil[]" value="Çocuk" data-count="6"><span class="cbx"></span><span class="ft" title="Çocuk">Çocuk</span><span class="fcnt">6</span></label>
+                                                                    <label class="fct-row"><input type="checkbox" name="profil[]" value="Aile" data-count="45"><span class="cbx"></span><span class="ft" title="Aile">Aile</span><span class="fcnt">45</span></label>
+                                                                    <label class="fct-row"><input type="checkbox" name="profil[]" value="Çiftler" data-count="16"><span class="cbx"></span><span class="ft" title="Çiftler">Çiftler</span><span class="fcnt">16</span></label>
+                                                                    <label class="fct-row"><input type="checkbox" name="profil[]" value="Arkadaş Grupları" data-count="40"><span class="cbx"></span><span class="ft" title="Arkadaş Grupları">Arkadaş Grupları</span><span class="fcnt">40</span></label>
+                                                                    <label class="fct-row"><input type="checkbox" name="profil[]" value="Kurumsal / Ekip" data-count="14"><span class="cbx"></span><span class="ft" title="Kurumsal / Ekip">Kurumsal / Ekip</span><span class="fcnt">14</span></label>
+                                                                    <label class="fct-row"><input type="checkbox" name="profil[]" value="Gastronomi Profesyonelleri" data-count="51"><span class="cbx"></span><span class="ft" title="Gastronomi Profesyonelleri">Gastronomi Profesyonelleri</span><span class="fcnt">51</span></label>
+                                                            </div>
+                        </div>
+                        <div class="fct open" data-group="ucret">
+                            <button class="fct-head" type="button"><i class="fa-solid fa-ticket fct-head-ico" aria-hidden="true"></i> Ücret <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+                            <div class="fct-body">
+                                                                    <label class="fct-row"><input type="checkbox" name="ucret[]" value="ucretsiz" data-count="36"><span class="cbx"></span><span class="ft" title="Ücretsiz">Ücretsiz</span><span class="fcnt">36</span></label>
+                                                                    
+                                                                    
+                                                                    
+                                                                    
+                                                            </div>
+                        </div>
+                        <div class="fct open" data-group="diger">
+                            <button class="fct-head" type="button"><i class="fa-solid fa-sliders fct-head-ico" aria-hidden="true"></i> Diğer Filtreler <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+                            <div class="fct-body">
+                                                                    
+                                    <label class="fct-row"><input type="checkbox" name="diger[]" value="kontenjan" data-count="2"><span class="cbx"></span><span class="ft" title="Kontenjanı bulunan">Kontenjanı bulunan</span><span class="fcnt">2</span></label>
+                                                                    
+                                    
+                                                                    
+                                    
+                                                                    
+                                    <label class="fct-row"><input type="checkbox" name="diger[]" value="acik-hava" data-count="53"><span class="cbx"></span><span class="ft" title="Açık hava">Açık hava</span><span class="fcnt">53</span></label>
+                                                                    
+                                    
+                                                                    
+                                    <label class="fct-row"><input type="checkbox" name="diger[]" value="vegan" data-count="1"><span class="cbx"></span><span class="ft" title="Vegan seçenekli">Vegan seçenekli</span><span class="fcnt">1</span></label>
+                                                                    
+                                    <label class="fct-row"><input type="checkbox" name="diger[]" value="cocuk-dostu" data-count="27"><span class="cbx"></span><span class="ft" title="Çocuk dostu">Çocuk dostu</span><span class="fcnt">27</span></label>
+                                                                    
+                                    <label class="fct-row"><input type="checkbox" name="diger[]" value="dada-onerdigi" data-count="7"><span class="cbx"></span><span class="ft" title="Dada'nın önerdiği">Dada'nın önerdiği</span><span class="fcnt">7</span></label>
+                                                                    
+                                    
+                                                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sheet-foot">
+                        <button class="btn btn-primary" id="sheetApply" type="submit">126 Etkinliği Göster</button>
+                    </div>
+                </aside>
+                <div class="sheet-overlay" id="sheetOverlay"></div>
+            </form>
+            <div class="lst-main">
+                <div class="lst-bar">
+                    <p class="lst-sum" id="lstSum"><b>126 etkinlik</b> listeleniyor</p>
+                    <div class="lst-bar-tools">
+                        
+                        
+                        
+                        <div class="sort-dd" id="sortDd">
+                            <button class="sort-btn" id="sortBtn" type="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa-solid fa-arrow-down-wide-short" aria-hidden="true"></i><span class="sb-lbl">Sıralama:</span> <span id="sortCur">Önerilen</span> <i class="fa-solid fa-chevron-down sb-car" aria-hidden="true"></i>
+                            </button>
+                            <div class="sort-menu" role="menu"><a href="#" class="active" role="menuitem" data-sira="onerilen"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Önerilen</a><a href="#" role="menuitem" data-sira="tarih"><i class="fa-solid fa-calendar-plus" aria-hidden="true"></i> Tarihe Göre</a></div>
+                        </div>
+                        <button class="btn-filter" type="button" id="btnFilter"><i class="fa-solid fa-sliders" aria-hidden="true"></i> Filtrele</button>
+                    </div>
+                </div>
+                
+                                    
+                    <div class="disc-grid" id="evGrid"></div><div class="lst-empty" id="evBos" hidden=""><h3>Bu seçimle etkinlik bulunamadı</h3><p>Filtre azaltmayı dene ya da diğer sekmeye bak.</p></div>
+                                            
+                        <nav class="pagi" id="pagi" aria-label="Sayfalama"></nav>
+                                                </div>
+        </div>
+    </div>
+</section>
+
+
+    
+<!--@main-disi-->
+<div class="fb-overlay" id="evRandevuOverlay"></div><div class="fb-modal" id="evRandevu" role="dialog" aria-modal="true" aria-labelledby="evRandevuBaslik" inert=""><div class="fb-panel"><div class="fb-head"><div><h3 id="evRandevuBaslik">Randevu Oluştur</h3><p id="evRandevuAd"></p></div><button class="fb-close" id="evRandevuKapat" type="button" aria-label="Kapat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="fb-body"><form id="evRandevuForm" data-yerel=""><div class="mo-row"><div class="mo-field"><label for="evGun">Gün</label><input type="date" id="evGun" name="gun" required=""></div><div class="mo-field"><label for="evKisi">Kişi sayısı</label><input type="number" id="evKisi" name="kisi" min="1" max="20" value="2" required=""></div></div><div class="mo-field"><label for="evNot">Not <span class="opt">(opsiyonel)</span></label><textarea id="evNot" name="not" placeholder="Erişim ihtiyacı, alerjen ya da düzenleyiciye iletmek istediğin bir not"></textarea></div><p class="ev-randevu-not">Kaydın Rezervasyonlarım sekmesine işlenir. Katılım koşullarını düzenleyici belirler. <span class="ornek-etiket">prototip örneği</span></p><div class="mo-foot"><button class="mo-submit" type="submit"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Randevu Oluştur</button><button class="mo-cancel" type="button" id="evRandevuVazgec">Vazgeç</button></div></form></div></div></div>

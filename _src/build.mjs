@@ -87,7 +87,6 @@ if (!alan) fs.writeFileSync(path.join(SRC, 'sayfa-listesi.json'), JSON.stringify
 const varOlan = new Set([...uretilen.map((u) => u.yol), 'ekranlar']);
 const YEDEK = [
   [/^mekan\/.+/, ['mekan/mikla']],
-  [/^etkinlikler\/.+/, ['etkinlikler', '']],
   [/^etkinlikler$/, ['']],
   [/^mekan-bul$/, ['mekanlar']],
   [/^hesabim\/rezervasyonlar$/, ['hesabim/gurme-panelim']],
@@ -114,11 +113,13 @@ const uretimDosyalari = [...uretilen.map((u) => u.yol), 'ekranlar'].map((y) => p
 for (const f of uretimDosyalari) {
   const s = fs.readFileSync(f, 'utf8').replace(/href="((?:\.\.\/)*|\.\/)([a-z0-9][^"#?]*?)\/?((?:[?#][^"]*)?)"/g, (m, on, y, ek) => {
     if (y.startsWith('assets/') || y === 'dada-route/?durak' || /^[a-z]+:/.test(y) || /\.[a-z0-9]+$/i.test(y) || varOlan.has(y)) return m;
+    const ev = /^etkinlikler\/([a-z0-9-]+)$/.exec(y); if (ev) return `href="${on}etkinlik-detay/?e=${ev[1]}"`;
     const k = yolBag(on, y, ek); return `href="${k || './'}"`;
   }).replace(/data-git="((?:\.\.\/)*|\.\/)(?:https:\/\/dadagourmet\.com\/)?([a-z0-9][^"#?]*?)\/?"/g, (m, on, y) => (varOlan.has(y) ? `data-git="${on}${y}/"` : `data-git="${yolBag(on, y, '') || './'}"`));
   fs.writeFileSync(f, yazimDuzelt(s));
 }
 // Mekânlar süzgecinin istemci verisi: tek kaynak _src/veri ve _src/parcalar
 if (veri['mekan-filtre']) { const kartlar = JSON.parse(oku(path.join(SRC, 'parcalar/mekan-kartlar.json'))); const { mekanlar, secenek, alinma } = veri['mekan-filtre']; fs.writeFileSync(path.join(KOK, 'assets/js/mekan-liste-veri.js'), 'window.DG_LISTE=' + JSON.stringify({ alinma, mekanlar, secenek, kartlar }) + ';\n'); }
+if (veri.etkinlik) fs.writeFileSync(path.join(KOK, 'assets/js/etkinlik-veri.js'), 'window.DG_ETKINLIK=' + JSON.stringify({ ...veri.etkinlik, kartlar: JSON.parse(oku(path.join(SRC, 'parcalar/etkinlik-kartlar.json'))) }) + ';\n');
 console.log(uretilen.length + ' sayfa üretildi');
 if (hatalar.length) { console.error('HATALAR:\n' + hatalar.join('\n')); process.exitCode = 1; }

@@ -2,7 +2,7 @@
 import fs from 'node:fs'; import path from 'node:path'; import { fileURLToPath } from 'node:url';
 const KOK = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..'); const UA = 'DadaGourmetKanonBot/1.0';
 const yuru = (d, c = []) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); e.isDirectory() ? yuru(p, c) : c.push(p); } return c; };
-const dosyalar = [...yuru(path.join(KOK, '_src/sayfalar')), ...yuru(path.join(KOK, '_src/parcalar'))].filter((f) => /\.(html|json)$/.test(f));
+const dosyalar = [...yuru(path.join(KOK, '_src/sayfalar')), ...yuru(path.join(KOK, '_src/parcalar')), ...yuru(path.join(KOK, '_src/veri'))].filter((f) => /\.(html|json)$/.test(f));
 const RE = /https:\/\/dadagourmet\.com\/((?:assets\/gourmet-public\/[^"'()\s\\]+?\.(?:avif|webp|jpe?g|png|svg))|(?:medya\/\d+)(?:\?w=\d+)?)/g;
 const uzanti = { 'image/webp': 'webp', 'image/avif': 'avif', 'image/jpeg': 'jpg', 'image/png': 'png', 'image/svg+xml': 'svg' };
 // Kök göreli adresler ve --zemin-* değişkenleri: url() değişkeni stil dosyasına göre çözüldüğü için kalkar

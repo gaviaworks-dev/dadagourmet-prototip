@@ -1,0 +1,80 @@
+/* ══════════════════════════════════════════════════════════════════════
+   etkinlik-detay-uyarlama.css — YEREL KATMAN (donörde yok)
+
+   `etkinlik-detay.css` vendor'dır (prototip donörüyle bayt bayt aynı,
+   `.ai/rules/assets.md`) — ona kural EKLENMEZ. Bu dosya ondan SONRA
+   yüklenir (`site/etkinlikler/show.blade.php`, `sayfa_css` yuvası).
+
+   TEK REVİZE — Beyar kararı (2026-09-15 gece): etkinlik detayı canlı
+   `dadagourmet.com/etkinlikler/sapporo-autumn-fest-2026` ile birebir,
+   TEK farkla: "köşeleri yuvarlatılmış BEYAZ PANEL olmayacak".
+
+   ÖLÇÜLDÜ (canlı sapporo, Chromium computed style, beyaz/≈beyaz zemin +
+   border-radius > 0, `main` + aksiyon barı; 1440 · 390):
+     1. section#evdBody.evd-sec            rgb(249,249,249) r 22px 22px 0 0
+        1440×663 · 390×1409 — kabuğun `.below-header:not(.pf-top)+section`
+        kuralı (gourmet.css): hero'nun altından -22px kalkan gövde paneli
+     2. .evd-main > .evd-program (1.)       #fff r 16px  772×174 · 358×241
+     3. .evd-main > .evd-program (2.)       #fff r 16px  772×108 · 358×108
+     4. aside.evd-side > .evd-card          #fff r 16px  360×613 · 358×613
+   Beyaz + radius taşıyan DÜĞMELER (`.btn-light`, `.see-all`, `.btn-ghost`,
+   kalp `.disc-save`) panel değil — dokunulmadı.
+
+   NE YAPILDI: 2–4'te panel görünümü kalkar (zemin, kenarlık, gölge yok,
+   radius 0); yatay iç boşluk sıfırlanır ki içerik gövde metniyle aynı
+   hizada aksın, dikey ritim korunur. 1'de yalnız üst köşe radius'u 0 —
+   #f9f9f9 sayfanın gövde zeminidir, panel değil.
+
+   Kapının bu sayfadaki izinli TEK farkı bu kalemlerdir (geometri / zemin).
+   Bu kuralları "canlıyla aynı olsun" diye silmek YANLIŞ OLUR — Beyar'ın
+   açık revizesini geri almak demektir.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* REVİZE 2 — Beyar, 2026-09-16: "kapak şeridi gri, altındaki 'Etkinlik hakkında'
+   beyaz; arada çıkıntı ve renk farkı var — bu fark OLMAYACAK, sayfa tek düz beyaz
+   zeminde dursun."
+
+   ÖLÇÜLDÜ ÖNCE (basılan piksel, `scripts/olcum/ed-piksel.mjs`, x=40 @1440 — katman
+   hesabı değil piksel, `.ai/rules/olcum.md`): sayfanın HİÇBİR bölümünde zemin RENGİ
+   farkı yok — `.evd-top`, `.evd-bridge-sec`, `.evd-others` üçü de saydam, altlarındaki
+   `body`/`.page-main` zemini `--bg` = rgb(249,249,249); `.evd-sec` de aynı 249.
+   Gri şeridi üreten şey ZEMİN DEĞİL GÖLGE: kabuk kuralı (`gourmet.css`)
+   `.below-header:not(.pf-top)+section{margin-top:-22px;border-radius:22px 22px 0 0;
+   box-shadow:0 -12px 32px #14100a2e}` gölgeyi YUKARI atıyor ve kapağın altındaki
+   şeridi boyuyor:
+     y=593 rgb(249,249,249) → y=637 rgb(219,218,217) → y=638 rgb(249,249,249)
+   yani 44px boyunca 30 kademe kararma, ardından TEK PİKSELDE sıçrama. Beyar'ın
+   gördüğü "gri üst şerit + beyaz alt bölüm + arada çıkıntı" tam olarak budur.
+   Aynı gölge kutunun ALT kenarından da taşıyor ve CTA bandının çevresini boyuyor:
+   y=1274 rgb(239,239,239) → y=1295 rgb(249,249,249). @390 aynı: y=467 rgb(228,227,227)
+   → y=468 rgb(249,249,249), ve y=1846 rgb(242,242,242).
+
+   NE YAPILDI: gölge kaldırıldı (radius zaten REVİZE 1'de 0'lanmıştı). Geriye kalan
+   `margin-top:-22px` GÖRÜNMEZ ve KALIYOR — ölçüldü: `.evd-top`un son 22px'i boş
+   (`.fb-kvkk` margin-bottom 16px + `.evd-top` padding-bottom 6px), yani üst üste binen
+   içerik yok; -22px tam o boşluğu yiyor. Kaldırmak sayfaya 22px kukla boşluk EKLERDİ.
+   Boşluk ritmi bu yüzden değişmedi (kapak alt kenarı → "Etkinlik hakkında" arası
+   ölçümü öncesi/sonrası aynı).
+
+   GERİ KOYMA: `box-shadow`u "kanonla aynı olsun" diye geri yazmak YANLIŞ OLUR —
+   Beyar'ın 2026-09-16 revizesini geri almak demektir; gri şerit ANINDA geri gelir.
+   Zemini `#fff`e çekmek de YANLIŞ OLUR: 249 bu projenin site geneli `--bg` tonudur,
+   bu sayfayı tek başına beyaza çekmek onu diğer her ekrandan ayırırdı — ve ölçüm
+   gösterdi ki Beyar'ın "beyaz" dediği bölüm zaten bu 249'du, kusur gölgedeydi.
+
+   `.evd-stage`in KENDİ gölgesine (`0 6px 22px rgba(33,30,22,.09)`, `etkinlik-detay.css`)
+   DOKUNULMADI — o kapak kartının kendi yüksekliği, şeridin zemini değil. */
+body.pg-etkinlik-detay .below-header.evd-top + .evd-sec {
+    border-radius: 0;
+    box-shadow: none;
+}
+
+body.pg-etkinlik-detay .evd-program,
+body.pg-etkinlik-detay .evd-card {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding-left: 0;
+    padding-right: 0;
+}

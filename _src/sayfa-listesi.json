@@ -10,6 +10,16 @@
   "duzen": "tam"
  },
  {
+  "yol": "etkinlik-detay",
+  "baslik": "Etkinlik",
+  "duzen": "public"
+ },
+ {
+  "yol": "etkinlikler",
+  "baslik": "Etkinlikler",
+  "duzen": "public"
+ },
+ {
   "yol": "giris",
   "baslik": "Giriş Yap",
   "duzen": "public"
