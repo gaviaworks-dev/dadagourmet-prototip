@@ -22,12 +22,14 @@
     }
     var top = 0; for (var j = 1; j < p.length; j++) { top += km(p[j - 1][1], p[j - 1][0], p[j][1], p[j][0]); }
     hat = p; var metre = Math.round(top * 1.08 * 1000);
-    return { rotalar: [{ geometry: { coordinates: p }, distance: metre, duration: Math.round(metre / 1000 / 85 * 3600), tahmini: false }], token: 'prototip', saglayici: { ad: 'Prototip örneği' } };
+    window.dispatchEvent(new Event('dg-rota'));
+    return { rotalar: [{ geometry: { coordinates: p }, distance: metre, duration: Math.round(metre / 1000 / 85 * 3600), tahmini: false }], token: 'prototip-' + Date.now(), saglayici: { ad: 'Prototip örneği' } };
   }
   function hataUzak(m) {
     var en = 1e9, sira = 0; for (var i = 0; i < hat.length - 1; i++) { var a = hat[i], b = hat[i + 1]; for (var t = 0; t <= 6; t++) { var u = t / 6, d = km(m.lat, m.lng, a[1] + (b[1] - a[1]) * u, a[0] + (b[0] - a[0]) * u); if (d < en) { en = d; sira = i + u; } } }
     return { d: en, sira: sira };
   }
+  window.dgRotaUzak = function (lat, lng) { return hat.length ? hataUzak({ lat: lat, lng: lng }).d : 1e9; };
   var detay = {}; V.mekanlar.forEach(function (m) { detay[m.slug] = m; });
   var ilAd = {}; (V.secenek.il || []).forEach(function (o) { ilAd[o.deger] = o.ad; });
   function mekanlar(q) {
@@ -43,8 +45,15 @@
     var ust = l.filter(function (m) { return m.sapmaKm <= 1; }).length;
     return { mekanlar: l.slice(0, 60), sayac: { yolUstu: ust, yolaYakin: l.length - ust, toplam: l.length }, kirpildi: l.length > 60 };
   }
-  function sarj() {
-    return { istasyonlar: R.katman.sarj.map(function (n, i) { var u = hataUzak({ lat: n[1], lng: n[0] }); return { id: 'ornek-' + i, ad: n[2] + ' (prototip örneği)', tur: /DC/.test(n[2]) ? 'DC' : 'AC', kw: /DC/.test(n[2]) ? 120 : 22, lat: n[1], lng: n[0], rotadan_km: Math.round(u.d * 10) / 10, sahiplik: null, operator: null, mekanlar: [] }; }), veri_hazir: true, toplam: R.katman.sarj.length };
+  /* Şarj: yalnız rotaya 20 km içindeki örnek noktalar; eşleşen mekân gerçek konumdan, 1 km yürüme mesafesi (§8 #10) */
+  function sarj(q) {
+    var tur = q.get('tur') || 'tum', min = +q.get('min_kw') || 0;
+    var l = R.katman.sarj.map(function (n, i) {
+      var u = hataUzak({ lat: n[1], lng: n[0] }), dc = /DC/.test(n[2]);
+      var yakin = M.map(function (m) { return { id: m.slug, slug: m.slug, ad: m.name, mesafe_m: Math.round(km(n[1], n[0], m.lat, m.lng) * 1000), url: kok + 'mekan/mikla/' }; }).filter(function (m) { return m.mesafe_m <= 1000; }).sort(function (a, b) { return a.mesafe_m - b.mesafe_m; });
+      return { id: 'ornek-' + i, ad: n[2] + ' (prototip örneği)', tur: dc ? 'DC' : 'AC', kw: dc ? 120 : 22, lat: n[1], lng: n[0], rotadan_km: Math.round(u.d * 10) / 10, sahiplik: null, operator: null, mekanlar: yakin };
+    }).filter(function (s) { return s.rotadan_km <= 20 && (tur === 'tum' || s.tur === tur) && s.kw >= min; });
+    return { istasyonlar: l, veri_hazir: true, toplam: l.length };
   }
   var yanit = function (v) { return Promise.resolve(new Response(JSON.stringify(v), { status: 200, headers: { 'Content-Type': 'application/json' } })); };
   var once = window.fetch;
@@ -56,7 +65,7 @@
     if (uc === 'en-yakin') { var la = +q.get('lat'), ln = +q.get('lng'), s = YERLER.slice().sort(function (x, y) { return km(la, ln, x.lat, x.lng) - km(la, ln, y.lat, y.lng); })[0]; return yanit({ yer: s, uzaklikKm: Math.round(km(la, ln, s.lat, s.lng)) }); }
     if (uc === 'rota') { return yanit(rotaKur(JSON.parse(ayar.body).duraklar)); }
     if (uc === 'mekanlar' && yontem === 'GET') { return yanit(mekanlar(q)); }
-    if (uc === 'sarj') { return yanit(sarj()); }
+    if (uc === 'sarj') { return yanit(sarj(q)); }
     if (uc === 'guzergahlarim' && yontem === 'GET') { return yanit({ guzergahlar: [] }); }
     return yanit({ ok: true, prototip: true });
   };

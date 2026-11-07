@@ -149,3 +149,12 @@ body:not(.is-auth) .rev-form{display:none}
 .mo-puan{margin:0 0 14px;font-size:12.5px;color:var(--muted,#6f6f6f)}.mo-puan i{color:var(--marka,#742982)}
 .kimlik-puan{margin:6px 0 0;font-size:13.5px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}.kimlik-puan i{color:var(--marka,#742982)}
 .puan-bolum{padding:6px 16px 12px}.puan-bolum h3{margin:12px 0 6px;font-size:16px}
+
+/* Dada Route katman listesi: seçili katmanın güzergâhtaki noktaları */
+.yg-katman-liste-kap{margin:0 0 20px}.yg-katman-liste-kap[hidden]{display:none}
+.yg-kl-grup{margin-top:10px}.yg-kl-grup>b{display:block;margin-bottom:6px;font-size:13px;color:var(--slate)}.yg-kl-grup>b span{color:var(--marka)}
+.yg-kl-satir{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:var(--yuvarlak-md);background:var(--paper)}.yg-kl-satir+.yg-kl-satir{margin-top:6px}
+.yg-kl-metin{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.yg-kl-metin b{font-size:13px;font-weight:700}.yg-kl-metin small{font-size:11.5px;color:var(--muted,#6f6f6f);line-height:1.3}
+.yg-kl-bos{margin:0;font-size:12.5px;color:var(--muted,#6f6f6f)}
+body.gastronomi-kapali .yg-vpin,body.gastronomi-kapali .yg-vcluster,body.gastronomi-kapali .yg-dash{display:none!important}
+.yg-il-kart[hidden]{display:none}
