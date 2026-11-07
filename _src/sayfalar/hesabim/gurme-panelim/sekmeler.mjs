@@ -28,6 +28,6 @@ export default function () {
   return SEKME.map(([yol, ikon, ad, ust, baslik, alt]) => {
     const nav = `<nav class="sekmeler ortali" role="tablist" aria-label="Gurme Panelim bölümleri">${SEKME.map(([y, i, a]) => `<a class="sekme${y === yol ? ' aktif' : ''}" href="{{kok}}hesabim/gurme-panelim/${y === 'rezervasyonlarim' ? '' : y + '/'}"${y === yol ? ' aria-current="page"' : ''}><i class="fa-solid ${i}" aria-hidden="true"></i> ${a}</a>`).join('')}</nav>`;
     const govde = `<div class="zebra">${bantAvatar}<div class="pf-tabbar sekme-ray"><div class="wrap kap">${nav}</div></div><div class="modul-govde"><div class="fit-pane aktif"><div class="bolum kap">${bas(ust, baslik, alt, et)}<div class="kart"><div class="fp-list">${ICERIK[yol]}</div></div></div></div></div></div>`;
-    return { yol: 'hesabim/gurme-panelim' + (yol === 'rezervasyonlarim' ? '' : '/' + yol), meta: { baslik: `${ad} · Gurme Panelim`, duzen: 'uye', zincir: 'hesabim', css: ['gourmet-sapma'], donor: 'https://gaviaworks-dev.github.io/DadaMentor/Gourmet/go-mekanlarim.html?auth=1' }, govde };
+    return { yol: 'hesabim/gurme-panelim' + (yol === 'rezervasyonlarim' ? '' : '/' + yol), meta: { baslik: `${ad} · Gurme Panelim`, duzen: 'uye', zincir: 'hesabim', css: ['gourmet-sapma'], js: ['assets/js/sayfa/panel.js'], donor: 'https://gaviaworks-dev.github.io/DadaMentor/Gourmet/go-mekanlarim.html?auth=1' }, govde };
   });
 }

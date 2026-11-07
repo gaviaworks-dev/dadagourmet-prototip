@@ -43,6 +43,18 @@
   };
   window.addEventListener('load', perdeAyarla); window.addEventListener('resize', perdeAyarla); document.addEventListener('DOMContentLoaded', perdeAyarla);
   window.prototipBildir = bildir;
+  /* Demo kayıtları: rezervasyon, favori, değerlendirme gibi işlemler yalnız bu tarayıcıda durur, hiçbir yere gitmez. Gurme Panelim buradan okur. */
+  var KAYIT = 'dg-kayit', bellek = {};
+  var hepsi = function () { try { return JSON.parse(localStorage.getItem(KAYIT)) || {}; } catch (e) { return bellek; } };
+  var sakla = function (v) { bellek = v; try { localStorage.setItem(KAYIT, JSON.stringify(v)); } catch (e) { /* depo kapalı: sayfa içinde kalır */ } };
+  window.dgKayit = {
+    oku: function (tur) { return hepsi()[tur] || []; },
+    ekle: function (tur, k) { var v = hepsi(); (v[tur] = v[tur] || []).unshift(k); sakla(v); return k; },
+    sil: function (tur, id) { var v = hepsi(); v[tur] = (v[tur] || []).filter(function (k) { return k.id !== id; }); sakla(v); },
+    var: function (tur, id) { return (hepsi()[tur] || []).some(function (k) { return k.id === id; }); }
+  };
+  /* Giriş isteyen eylem: misafiri girişe götürür, sonra aynı sayfaya döner */
+  window.dgUye = function () { if (uye) { return true; } location.href = kok + 'giris/?donus=' + encodeURIComponent((document.documentElement.dataset.yol || '') + '/'); return false; };
   document.addEventListener('DOMContentLoaded', function () {
     if (uye) { document.body.classList.add('is-auth'); document.body.setAttribute('data-roles', 'kullanici'); }
   });

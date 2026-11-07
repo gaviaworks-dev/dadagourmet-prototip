@@ -18,6 +18,9 @@
 .ny-fig{height:110px;display:grid;place-items:center;background:var(--marka-yikama,#ede4ef);color:var(--marka,#742982);font-size:28px}
 .ny-govde{padding:12px 14px}.ny-govde h4{margin:0 0 4px;font-size:15px}.ny-govde p{margin:0 0 10px;font-size:13px;color:var(--muted,#6f6f6f)}
 .ny-eylem{width:100%}
+.ny-bolum{margin:32px 0}.ny-bas h3{margin:0;font-size:20px;display:flex;align-items:center;gap:9px}.ny-bas h3 i{color:var(--marka,#742982);font-size:16px}
+.ny-kaynak{display:block;font-size:12px;color:var(--muted,#6f6f6f)}
+.ny-eylem[aria-pressed="true"]{border-color:var(--marka,#742982);color:var(--marka,#742982)}
 /* Mekânlar: FH.1 üç sütun */
 .lst-layout.mkl-uc-kolon{display:grid;grid-template-columns:280px minmax(0,1fr) 380px;gap:24px;align-items:start}
 .mkl-harita-kolon{position:sticky;top:96px}.mkl-harita{height:calc(100vh - 150px);min-height:420px;border-radius:14px;overflow:hidden;background:#efedf2}
