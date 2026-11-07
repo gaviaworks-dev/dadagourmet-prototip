@@ -38,13 +38,13 @@
         <button class="btn-login" data-git="{{kok}}giris/"><i class="fa-solid fa-user"></i> Giriş Yap</button>
         <div class="acct-item acct-wrap">
           <button class="acct-btn" aria-label="Hesabım" aria-haspopup="true">
-            <span class="acct-ava">Ö</span>
+            <span class="acct-ava">{{uye.harf}}</span>
             <i class="fa-solid fa-chevron-down acct-caret"></i>
           </button>
           <div class="acct-menu" data-revize="d3">
                         <div class="acct-id">
-                          <span class="acct-ava">Ö</span>
-                          <span class="acct-id-txt"><b>Örnek Üye</b><small>@ornekuye</small></span>
+                          <span class="acct-ava">{{uye.harf}}</span>
+                          <span class="acct-id-txt"><b>{{uye.ad}}</b><small>@{{uye.kullanici}}</small></span>
                         </div>
                         
                         
@@ -79,7 +79,7 @@
   <div class="drawer-foot">
     <button class="btn btn-primary drawer-login" style="width:100%" data-git="{{kok}}giris/"><i class="fa-solid fa-user"></i> Giriş Yap</button>
     <div class="drawer-acct">
-      <span class="da-ava">S</span>
+      <span class="da-ava">{{uye.harf}}</span>
       <div class="da-info">
         <b></b>
         <div class="da-links">

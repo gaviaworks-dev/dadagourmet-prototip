@@ -26,6 +26,9 @@ function dosyalar(d, cikti = []) {
 }
 
 const { kabukla } = await import(pathToFileURL(path.join(SRC, 'kabuk', 'kabuk.mjs')).href + '?t=' + Date.now());
+// Örnek üye tek kaynaktan: `{{uye.ad}}` gibi yer tutucular _src/kabuk/ornek-uye.json değerleriyle dolar
+const ornekUye = JSON.parse(oku(path.join(SRC, 'kabuk', 'ornek-uye.json')));
+const uyeYaz = (h) => h.replace(/\{\{uye\.(\w+)\}\}/g, (m, k) => { if (!(k in ornekUye)) throw new Error('Örnek üye alanı yok: ' + k); return ornekUye[k]; });
 
 function parcalariAc(html, derinlik = 0) {
   if (derinlik > 6) return html;
@@ -64,12 +67,12 @@ for (const s of sayfalar) {
   gorulen.set(s.yol, s.kaynak);
   const derinlik = s.yol ? s.yol.split('/').length : 0;
   const kok = '../'.repeat(derinlik) || './';
-  const html = parcalariAc(kabukla(s, { veri })).replaceAll('{{kok}}', kok);
+  const html = uyeYaz(parcalariAc(kabukla(s, { veri }))).replaceAll('{{kok}}', kok);
   const hedef = path.join(KOK, s.yol, 'index.html');
   fs.mkdirSync(path.dirname(hedef), { recursive: true });
   fs.writeFileSync(hedef, html);
   // GitHub Pages her eksik yolda kök 404.html'i sunar: bağlantılar mutlak kökle yazılır
-  if (s.yol === '404') fs.writeFileSync(path.join(KOK, '404.html'), parcalariAc(kabukla(s, { veri })).replaceAll('{{kok}}', '/dadagourmet-prototip/'));
+  if (s.yol === '404') fs.writeFileSync(path.join(KOK, '404.html'), uyeYaz(parcalariAc(kabukla(s, { veri }))).replaceAll('{{kok}}', '/dadagourmet-prototip/'));
   uretilen.push({ yol: s.yol, baslik: s.meta?.baslik ?? '', duzen: s.meta?.duzen ?? 'public' });
 }
 // Ekran haritası: onay turu için tüm sayfaların gezilebilir listesi
@@ -79,7 +82,7 @@ if (!alan) {
   const govde = `<section class="ekran-haritasi"><div class="wrap kap"><h1>Ekran haritası</h1><p>Prototipteki ${liste.length} ekran. Yayın kararı verilmedi; arama motorlarına kapalıdır.</p>${gruplar.map(([ad, f]) => { const l = liste.filter(f); return `<h2>${ad} <small>${l.length}</small></h2><ul>${l.map((u) => `<li><a href="{{kok}}${u.yol ? u.yol + '/' : ''}"><b>${u.baslik || 'Ana sayfa'}</b> <small>/${u.yol}</small></a></li>`).join('')}</ul>`; }).join('')}</div></section>`;
   const s = { yol: 'ekranlar', meta: { baslik: 'Ekran haritası', zincir: 'yasal' }, govde };
   fs.mkdirSync(path.join(KOK, 'ekranlar'), { recursive: true });
-  fs.writeFileSync(path.join(KOK, 'ekranlar/index.html'), parcalariAc(kabukla(s, { veri })).replaceAll('{{kok}}', '../'));
+  fs.writeFileSync(path.join(KOK, 'ekranlar/index.html'), uyeYaz(parcalariAc(kabukla(s, { veri }))).replaceAll('{{kok}}', '../'));
 }
 
 if (!alan) fs.writeFileSync(path.join(SRC, 'sayfa-listesi.json'), JSON.stringify(uretilen.sort((a, b) => a.yol.localeCompare(b.yol, 'tr')), null, 1));

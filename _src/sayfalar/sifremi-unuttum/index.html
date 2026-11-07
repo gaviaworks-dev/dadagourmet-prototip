@@ -70,7 +70,7 @@
                                 
                                                                 <div class="alan" id="giEmailField">
                                     <label class="alan-etiket" for="giEmail">E-posta <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
-                                    <input class="alan-girdi" id="giEmail" name="eposta" type="email" autocomplete="username" placeholder="ornek@eposta.com" value="ornek@eposta.com" required="" aria-describedby="giEmailErr">
+                                    <input class="alan-girdi" id="giEmail" name="eposta" type="email" autocomplete="username" placeholder="{{uye.eposta}}" value="{{uye.eposta}}" required="" aria-describedby="giEmailErr">
                                     <span class="giris-hata" id="giEmailErr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Geçerli bir e-posta adresi gir.</span>
                                 </div>
                                                                 <div class="alan">
@@ -102,7 +102,7 @@
                                                                                                 <input type="hidden" name="_form" value="sifre">
                                 <div class="alan">
                                     <label class="alan-etiket" for="sfEmail">Kayıtlı e-posta adresin <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
-                                    <input class="alan-girdi" id="sfEmail" name="eposta" type="email" autocomplete="email" placeholder="ornek@eposta.com" value="ornek@eposta.com" required="" aria-describedby="sfEmailErr">
+                                    <input class="alan-girdi" id="sfEmail" name="eposta" type="email" autocomplete="email" placeholder="{{uye.eposta}}" value="{{uye.eposta}}" required="" aria-describedby="sfEmailErr">
                                                                         <span class="giris-hata" id="sfEmailErr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Geçerli bir e-posta adresi gir.</span>
                                 </div>
                                 <button class="dugme birincil giris-gonder" type="submit"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Sıfırlama Bağlantısı Gönder</button>

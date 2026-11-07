@@ -42,8 +42,8 @@ const k = await p.evaluate(({ go, logo }) => {
   const kalem = (i, a, y) => `<a href="${K}${y}"><i class="fa-solid ${i}" aria-hidden="true"></i> <span>${a}</span></a>`;
   const dv = '<div class="acct-div"></div>';
   const menu = $('.acct-menu', h);
-  $('.acct-id b', menu).textContent = 'Örnek Üye'; $('.acct-id small', menu).textContent = '@ornekuye';
-  $$('.acct-ava', h).forEach((e) => (e.textContent = 'Ö'));
+  $('.acct-id b', menu).textContent = '{{uye.ad}}'; $('.acct-id small', menu).textContent = '@{{uye.kullanici}}';
+  $$('.acct-ava,.da-ava').forEach((e) => (e.textContent = '{{uye.harf}}'));
   // Okunmamış sayı tohumdan gelir; bildirim kutusu prototipte yok. Canlıda rozet yalnız okunmamış varken basılır, zil Bildirim Tercihleri sekmesine gider
   $$('.hb-badge', h).forEach((e) => e.parentNode.removeChild(e)); $$('a[href*="hesabim/bildirimler"]').forEach((a) => a.setAttribute('href', K + 'hesabim/ayarlar/#bildirim'));
   [...menu.children].filter((e) => !e.classList.contains('acct-id')).forEach((e) => e.remove());

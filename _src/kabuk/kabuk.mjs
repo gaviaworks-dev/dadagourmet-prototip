@@ -43,6 +43,7 @@ export function kabukla(s) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${kacis(m.baslik ?? 'Dada Gourmet')} · Dada Gourmet</title>
 <meta name="robots" content="noindex, nofollow">
+<meta name="dg-ornek-uye" content="{{uye.ad}}|{{uye.kullanici}}">
 <!-- donör: ${kacis(m.donor ?? 'https://dadagastro.com')} · canlı Gastro release 20261107-mentor-6700538df4 -->
 <link rel="icon" href="${K}assets/img/favicon.ico">
 ${link}

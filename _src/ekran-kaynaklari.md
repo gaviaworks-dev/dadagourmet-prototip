@@ -80,6 +80,10 @@ Konsept kartları, konsept şeridi ve süzgeç seçeneklerinde 0 sonuçlu kalem 
 
 Prototipte karşılığı olmayan iç bağ uyarı vermez, en yakın gerçek ekrana gider. Tablo `_src/build.mjs` `YEDEK`: mekân detayı Mikla'ya; `hesabim/*` Gurme Panelim sekmelerine ya da Ayarlar'a; `yasal/*` KVKK örneğine; işletme ve SSS İletişim'e; basın Hakkımızda'ya; Gurme Lezzetler, Şehir Rehberleri ve arama Mekânlar'a. Konum düğmesi canlı `#lkModal` penceresini açar, seçim sunucuya gitmez.
 
+## Örnek üye
+
+Ad, kullanıcı adı, e-posta, avatar harfi, üyelik başlangıcı ve paket tek yerden gelir: `_src/kabuk/ornek-uye.json`. Sayfada `{{uye.alan}}` yazılır, derleyici doldurur; `prototip.js` aynı değeri `dg-ornek-uye` etiketinden okur. Kimlik kartı Hesabım ve Gurme Panelim'de aynıdır: Gastro sırası, ad ve paket rozeti, `@kullanıcı`, giriş cümlesi, üyelik ve rozet. Kapak ve avatar düzenleme yalnız Hesabım'da, canlı modül bantlarında da yoktur.
+
 ## Demo oturum
 
 Giriş, kayıt ve şifre ekranları sahte değerlerle dolu gelir; gönderim yapılmaz. Giriş ve kayıt üye durumuna geçirip Hesabım'a yönlendirir, şifre akışı ekranda ilerler, çıkış misafire döner. Durum `localStorage` `dg-oturum`; depo kapalıysa `?auth=1` bağlarda taşınır. Üye sayfası misafire açılırsa girişe yönlenir, girişten sonra aynı sayfaya döner.

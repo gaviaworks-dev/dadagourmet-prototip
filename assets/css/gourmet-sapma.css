@@ -144,7 +144,7 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 .rev-form.sent .rf-puan,.rev-form.sent .rf-kriterler{display:none}
 body:not(.is-auth) .rev-form{display:none}
 .mo-puan{margin:0 0 14px;font-size:12.5px;color:var(--muted,#6f6f6f)}.mo-puan i{color:var(--marka,#742982)}
-.kimlik-puan{margin:6px 0 0;font-size:13.5px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}.kimlik-puan i{color:var(--marka,#742982)}
+.kimlik-puan{margin:6px 0 0;font-size:13.5px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}@media (max-width:640px){.kimlik-puan{justify-content:center}}.kimlik-puan i{color:var(--marka,#742982)}
 .puan-bolum{padding:6px 16px 12px}.puan-bolum h3{margin:12px 0 6px;font-size:16px}
 
 /* Dada Route katman listesi: seçili katmanın güzergâhtaki noktaları */

@@ -9,7 +9,9 @@
   if (authParam) { oturumYaz(true); }
   var uye = oturumOku() || authParam;
   var kimlik = document.createElement('meta'); kimlik.name = 'dada-kimlik';
-  kimlik.content = JSON.stringify(uye ? { auth: true, roles: ['kullanici'], ad: 'Örnek Üye', kullaniciAdi: 'ornekuye' } : { auth: false });
+  /* Örnek üye değerleri derleyiciden gelir: _src/kabuk/ornek-uye.json */
+  var ornek = (document.querySelector('meta[name="dg-ornek-uye"]') || { content: '|' }).content.split('|');
+  kimlik.content = JSON.stringify(uye ? { auth: true, roles: ['kullanici'], ad: ornek[0], kullaniciAdi: ornek[1] } : { auth: false });
   document.head.appendChild(kimlik);
   if (document.documentElement.dataset.uyeSayfa && !uye) { location.replace(kok + 'giris/?donus=' + encodeURIComponent(document.documentElement.dataset.yol + '/')); }
   /* Canlıda giriş ve kayıt ekranı üyeye açılmaz, Hesabım'a yönlenir */

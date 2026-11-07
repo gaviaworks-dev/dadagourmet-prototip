@@ -30,7 +30,7 @@ const varyant = async (aktif, baslik, sekme) => {
   await p.setContent(`<main>${giris}</main>`);
   return p.evaluate(({ aktif, baslik, sekme, sifre }) => { const m = document.querySelector('main');
     const doldur = (id, v) => { const e = m.querySelector('#' + id); if (e) e.setAttribute('value', v); };
-    doldur('giEmail', 'ornek@eposta.com'); doldur('giPass', sifre); doldur('kaAd', 'Örnek'); doldur('kaSoyad', 'Üye'); doldur('kaEmail', 'ornek@eposta.com'); doldur('kaPass', sifre); doldur('sfEmail', 'ornek@eposta.com'); doldur('ysYeni', sifre); doldur('ysTekrar', sifre);
+    doldur('giEmail', '{{uye.eposta}}'); doldur('giPass', sifre); doldur('kaAd', 'Örnek'); doldur('kaSoyad', 'Üye'); doldur('kaEmail', '{{uye.eposta}}'); doldur('kaPass', sifre); doldur('sfEmail', '{{uye.eposta}}'); doldur('ysYeni', sifre); doldur('ysTekrar', sifre);
     m.querySelectorAll('#cbUyelik,#cbKvkk').forEach((c) => c.setAttribute('checked', ''));
     m.querySelectorAll('[data-pane] .giris-bas').forEach((b) => { if (!b.querySelector('.ornek-etiket')) b.insertAdjacentHTML('beforeend', '<span class="ornek-etiket">prototip örneği</span>'); });
     m.querySelectorAll('[data-pane]').forEach((e) => { e.hidden = e.dataset.pane !== aktif; });
@@ -39,7 +39,7 @@ const varyant = async (aktif, baslik, sekme) => {
     const g = m.querySelector('#auTabGiris'), k = m.querySelector('#auTabKayit');
     g.setAttribute('href', '{{kok}}giris/'); k.setAttribute('href', '{{kok}}kayit/');
     g.classList.toggle('aktif', sekme === 'giris'); k.classList.toggle('aktif', sekme === 'kayit'); g.setAttribute('aria-selected', sekme === 'giris'); k.setAttribute('aria-selected', sekme === 'kayit');
-    if (aktif === 'yeni-sifre') { m.querySelector('#formYeniSifre')?.removeAttribute('hidden'); const b = m.querySelector('#auYsHesap'); if (b) b.textContent = 'ornek@eposta.com'; m.querySelectorAll('[data-pane="yeni-sifre"] [hidden]').forEach((e) => { if (e.id !== 'formYeniSifre' && e.querySelector?.('input,button')) e.removeAttribute('hidden'); }); }
+    if (aktif === 'yeni-sifre') { m.querySelector('#formYeniSifre')?.removeAttribute('hidden'); const b = m.querySelector('#auYsHesap'); if (b) b.textContent = '{{uye.eposta}}'; m.querySelectorAll('[data-pane="yeni-sifre"] [hidden]').forEach((e) => { if (e.id !== 'formYeniSifre' && e.querySelector?.('input,button')) e.removeAttribute('hidden'); }); }
     return m.innerHTML; }, { aktif, baslik, sekme, sifre: DEMO_SIFRE });
 };
 // Hazır demo: sahte değerler, gerçek hesap yok. Gönderim `assets/js/prototip.js` içinde kesilir.

@@ -14,15 +14,16 @@
       <button type="button" class="kapak-duzenle" data-photo-edit="kapak" title="JPG veya PNG, en az 1176×240 px, en çok 5 MB. Şerit olarak kırpılır."><i class="fa-solid fa-camera" aria-hidden="true"></i> Kapağı Değiştir</button>
     </div>
     <div class="kimlik">
-            <span class="kimlik-avatar harf">Ö<button type="button" class="kimlik-avatar-duzenle" data-photo-edit="avatar" aria-label="Profil fotoğrafını değiştir" title="JPG veya PNG, en az 400×400 px, en çok 5 MB. Kare kırpılır."><i class="fa-solid fa-camera" aria-hidden="true"></i></button></span>
+            <span class="kimlik-avatar harf">{{uye.harf}}<button type="button" class="kimlik-avatar-duzenle" data-photo-edit="avatar" aria-label="Profil fotoğrafını değiştir" title="JPG veya PNG, en az 400×400 px, en çok 5 MB. Kare kırpılır."><i class="fa-solid fa-camera" aria-hidden="true"></i></button></span>
             <div class="kimlik-govde">
         
-        <h1>Örnek Üye           </h1><span class="ornek-etiket">prototip örneği</span>
-        <span class="kimlik-kullanici"><span class="fp-uad">@ornekuye</span></span>
+        <h1>{{uye.ad}} <span class="rozet dolu" data-paket=""><i class="fa-solid fa-crown" aria-hidden="true"></i> {{uye.paket}}</span></h1>
+        <span class="kimlik-kullanici"><span class="fp-uad">@{{uye.kullanici}}</span></span>
         <p class="kimlik-giris">Profilin, keşif ve bildirim tercihlerin, güvenliğin burada; hesabını dondurma ve silme de. Paketin Paketlerim'de, faturaların Ödemelerim'de.</p>
         
         <div class="kimlik-meta">
-          <span><i class="fa-solid fa-calendar-days"></i> Üyelik başlangıcı: Kasım 2026</span>          <span data-rozet-sayi=""><i class="fa-solid fa-award" aria-hidden="true"></i> Rozet 0</span>
+          <span><i class="fa-solid fa-calendar-days"></i> Üyelik başlangıcı: {{uye.uyelik}}</span>          <span data-rozet-sayi=""><i class="fa-solid fa-award" aria-hidden="true"></i> Rozet 0</span>
+          <span class="ornek-etiket">prototip örneği</span>
         </div>
       </div>
     </div>
@@ -65,26 +66,26 @@
           <div class="alan-izgara c2">
             <div class="alan">
               <label class="alan-etiket" for="hsAd">Ad <span class="zorunlu">*</span></label>
-              <input class="alan-girdi" id="hsAd" name="ad" type="text" autocomplete="given-name" value="Örnek" required="">
+              <input class="alan-girdi" id="hsAd" name="ad" type="text" autocomplete="given-name" value="{{uye.isim}}" required="">
             </div>
             <div class="alan">
               <label class="alan-etiket" for="hsSoyad">Soyad <span class="zorunlu">*</span></label>
-              <input class="alan-girdi" id="hsSoyad" name="soyad" type="text" autocomplete="family-name" value="Üye" required="">
+              <input class="alan-girdi" id="hsSoyad" name="soyad" type="text" autocomplete="family-name" value="{{uye.soyad}}" required="">
             </div>
           </div>
           
           <div class="alan-izgara c2">
             <div class="alan">
               <label class="alan-etiket" for="hsHandle">Kullanıcı adı <span class="zorunlu">*</span></label>
-              <input class="alan-girdi" id="hsHandle" name="kullanici-adi" type="text" autocomplete="username" value="ornekuye" required="" aria-describedby="hsHandleHelp">
-              <span class="alan-yardim" id="hsHandleHelp"><i class="fa-solid fa-link" aria-hidden="true"></i> <span>Herkese açık profilinin adresi: <b>/uye/ornekuye</b> — <a href="#">profilim başkalarına nasıl görünüyor?</a></span></span>
+              <input class="alan-girdi" id="hsHandle" name="kullanici-adi" type="text" autocomplete="username" value="{{uye.kullanici}}" required="" aria-describedby="hsHandleHelp">
+              <span class="alan-yardim" id="hsHandleHelp"><i class="fa-solid fa-link" aria-hidden="true"></i> <span>Herkese açık profilinin adresi: <b>/uye/{{uye.kullanici}}</b> — <a href="#">profilim başkalarına nasıl görünüyor?</a></span></span>
             </div>
             <div class="alan">
               <label class="alan-etiket" id="hsEmailEtiket">E-posta <span class="zorunlu">*</span></label>
               
               
-              <div class="alan-girdi eposta-ayrik" id="hsEmail" role="textbox" aria-readonly="true" aria-labelledby="hsEmailEtiket" aria-describedby="hsEmailHelp"><span class="eposta-ayrik-kullanici">ornekuye</span><span class="eposta-ayrik-alan"><span class="eposta-ayrik-at">@</span>eposta.com</span></div>
-              <input type="hidden" name="eposta" value="ornek@eposta.com">
+              <div class="alan-girdi eposta-ayrik" id="hsEmail" role="textbox" aria-readonly="true" aria-labelledby="hsEmailEtiket" aria-describedby="hsEmailHelp"><span class="eposta-ayrik-kullanici">{{uye.epostaAd}}</span><span class="eposta-ayrik-alan"><span class="eposta-ayrik-at">@</span>{{uye.epostaAlan}}</span></div>
+              <input type="hidden" name="eposta" value="{{uye.eposta}}">
               <span class="alan-yardim" id="hsEmailHelp"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Giriş adresin. E-posta değişikliği henüz açık değil; doğrulama akışı bağlanana kadar bu alan salt okunur.</span>
             </div>
           </div>
@@ -716,7 +717,7 @@
           <div class="ayar-liste">
             <div class="ayar-satir">
               <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-envelope"></i></span>
-              <div class="as-metin"><b>E-posta ile giriş</b><span>ornekuye@eposta.com — birincil giriş yöntemin.</span></div>
+              <div class="as-metin"><b>E-posta ile giriş</b><span>{{uye.eposta}} — birincil giriş yöntemin.</span></div>
               <span class="as-acik"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Aktif</span>
             </div>
             
@@ -1475,7 +1476,7 @@
               <span class="vz-adim"><i class="fa-regular fa-circle" aria-hidden="true"></i> Dosya oluşturuluyor</span>
               <span class="vz-adim"><i class="fa-regular fa-circle" aria-hidden="true"></i> Bağlantı e-postana gönderiliyor</span>
             </div>
-            <p class="durum-satir" id="vzIndirNot" role="status"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> <span>Paketin hazırlanması birkaç dakika sürebilir; hazır olunca <b>demo@eposta.com</b> adresine indirme bağlantısı gönderilir. Bağlantı 48 saat geçerlidir.</span></p>
+            <p class="durum-satir" id="vzIndirNot" role="status"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> <span>Paketin hazırlanması birkaç dakika sürebilir; hazır olunca <b>{{uye.eposta}}</b> adresine indirme bağlantısı gönderilir. Bağlantı 48 saat geçerlidir.</span></p>
           </div>
           <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-pen"></i></span>
             <span class="ks-metin"><b>Kaydı düzelt</b><small>Yanlış girdiğin ziyaret ya da değerlendirme kaydını düzeltebilirsin</small></span>

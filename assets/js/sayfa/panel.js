@@ -15,8 +15,8 @@
   if (yazicilar[sekme]) { ekle(yazicilar[sekme]()); }
   /* Puan: Topluluk Katkılarım'daki iki örnek satırın tutarı artı bu tarayıcıdaki kayıtlar */
   var kesin = 50, bekleyen = 50 + K.oku('puan').reduce(function (t, k) { return t + k.tutar; }, 0);
-  var bant = document.querySelector('.kimlik-giris');
-  if (bant) { bant.insertAdjacentHTML('afterend', '<p class="kimlik-puan"><i class="fa-solid fa-award" aria-hidden="true"></i> <b>' + kesin + '</b> kesinleşen · <b>' + bekleyen + '</b> bekleyen puan <span class="ornek-etiket">prototip örneği</span></p>'); }
+  var bant = document.querySelector('.kimlik-meta');
+  if (bant) { bant.insertAdjacentHTML('afterend', '<p class="kimlik-puan"><i class="fa-solid fa-award" aria-hidden="true"></i> <b>' + kesin + '</b> kesinleşen · <b>' + bekleyen + '</b> bekleyen puan</p>'); }
   var yaz = function (s, v) { var e = document.querySelector(s); if (e) { e.textContent = v; } };
   yaz('[data-puan="kesin"]', kesin); yaz('[data-puan="bekleyen"]', bekleyen);
   var defter = document.getElementById('puanDefter');
