@@ -12,6 +12,8 @@
   kimlik.content = JSON.stringify(uye ? { auth: true, roles: ['kullanici'], ad: 'Örnek Üye', kullaniciAdi: 'ornekuye' } : { auth: false });
   document.head.appendChild(kimlik);
   if (document.documentElement.dataset.uyeSayfa && !uye) { location.replace(kok + 'giris/?donus=' + encodeURIComponent(document.documentElement.dataset.yol + '/')); }
+  /* Canlıda giriş ve kayıt ekranı üyeye açılmaz, Hesabım'a yönlenir */
+  if (uye && /^(giris|kayit)$/.test(document.documentElement.dataset.yol || '')) { location.replace(kok + 'hesabim/ayarlar/'); }
   var uyeOl = function () {
     var kaydedildi = oturumYaz(true), d = adres.get('donus') || '';
     var hedef = /^[a-z0-9/-]+$/.test(d) ? d : 'hesabim/ayarlar/';
@@ -73,6 +75,8 @@
   window.dgUye = function () { if (uye) { return true; } location.href = kok + 'giris/?donus=' + encodeURIComponent((document.documentElement.dataset.yol || '') + '/'); return false; };
   document.addEventListener('DOMContentLoaded', function () {
     if (uye) { document.body.classList.add('is-auth'); document.body.setAttribute('data-roles', 'kullanici'); }
+    /* Canlıda alt çubuk Profil üyede Hesabım'a gider */
+    if (uye) { [].forEach.call(document.querySelectorAll('.bn-item[href$="giris/"]'), function (a) { a.setAttribute('href', kok + 'hesabim/ayarlar/'); }); }
   });
   window.addEventListener('load', function () {
     ['ysYeni', 'ysTekrar'].forEach(function (id) { var a = document.getElementById(id); if (a && a.value) { a.dispatchEvent(new Event('input', { bubbles: true })); } });
