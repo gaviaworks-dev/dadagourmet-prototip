@@ -118,3 +118,8 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 #evBos[hidden]{display:none}#evBos{text-align:center;padding:48px 16px}
 .ev-filter .chip i{margin-right:8px}
 #evGrid .disc-card,#evdDiger .disc-card{width:100%;max-width:none;flex:none}
+
+/* Mekân kartı nitelik ikonları (W1.4): kanon rengi, kart metni üstüne binmez */
+.kart-nitelik{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;padding:0 var(--kart-kenar,0)}
+.kart-nitelik .kn{width:26px;height:26px;display:grid;place-items:center;border-radius:var(--yuvarlak-sm,8px);background:var(--marka-yikama,#ede4ef);color:var(--marka,#742982);font-size:12px}
+.mkl-grid .disc-card{width:auto;max-width:none;flex:none}

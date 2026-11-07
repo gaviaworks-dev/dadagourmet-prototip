@@ -109,9 +109,14 @@ const mekan = (t) => t.replace(/(^|[^\p{L}\p{N}_-])([Mm])ekan(?![\p{N}_-])/gu, '
 const yazimDuzelt = (h) => h.split(/(<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<!--[\s\S]*?-->)/).map((p, i) => (i % 2 ? p : p
   .replace(/>([^<]+)</g, (m, t) => `>${mekan(t)}<`)
   .replace(/\b(placeholder|aria-label|title|alt|data-lg-title|data-lg-desc|data-def-desc|data-def-title|data-sosyal-onay-uyari|data-alan)="([^"]*)"/g, (m, a, v) => `${a}="${mekan(v)}"`))).join('');
+// Mekân kartı: nitelik mikro ikonları (W1.4). Yalnız canlı veride kaydı olan nitelik görünür; kayıt yoksa ikon yok. Veride "çocuk alanı" yok, en yakın kayıt bebek sandalyesi kendi adıyla yazılır
+const NITELIK = [['ulasim', 'vale', 'fa-square-parking', 'Vale'], ['ulasim', 'otopark', 'fa-square-parking', 'Otopark'], ['beslenme', 'glutensiz', 'fa-wheat-awn-circle-exclamation', 'Glütensiz seçenek'], ['hizmet', 'evcil-hayvan-dostu', 'fa-paw', 'Evcil hayvan kabul edilir'], ['hizmet', 'bebek-sandalyesi', 'fa-baby', 'Bebek sandalyesi']];
+const mekanBySlug = Object.fromEntries((veri['mekan-filtre']?.mekanlar ?? []).map((m) => [m.slug, m]));
+const nitelikIkon = (m) => { const l = NITELIK.filter(([g, d]) => m?.f?.[g]?.includes(d)); const tekil = l.filter(([, d], i) => !(d === 'otopark' && l.some(([, x]) => x === 'vale'))); return tekil.length ? `<div class="kart-nitelik">${tekil.map(([, , i, a]) => `<span class="kn" title="${a}" aria-label="${a}"><i class="fa-solid ${i}" aria-hidden="true"></i></span>`).join('')}</div>` : ''; };
+const kartZengin = (k, m) => k.replace('<div class="disc-meta">', nitelikIkon(m) + '<div class="disc-meta">');
 const uretimDosyalari = [...uretilen.map((u) => u.yol), 'ekranlar'].map((y) => path.join(KOK, y, 'index.html'));
 for (const f of uretimDosyalari) {
-  const s = fs.readFileSync(f, 'utf8').replace(/href="((?:\.\.\/)*|\.\/)([a-z0-9][^"#?]*?)\/?((?:[?#][^"]*)?)"/g, (m, on, y, ek) => {
+  const s = fs.readFileSync(f, 'utf8').replace(/<article class="disc-card[^"]*"[^>]*data-git="[^"]*mekan\/([a-z0-9-]+)\/"[\s\S]*?<\/article>/g, (k, slug) => kartZengin(k, mekanBySlug[slug])).replace(/href="((?:\.\.\/)*|\.\/)([a-z0-9][^"#?]*?)\/?((?:[?#][^"]*)?)"/g, (m, on, y, ek) => {
     if (y.startsWith('assets/') || y === 'dada-route/?durak' || /^[a-z]+:/.test(y) || /\.[a-z0-9]+$/i.test(y) || varOlan.has(y)) return m;
     const ev = /^etkinlikler\/([a-z0-9-]+)$/.exec(y); if (ev) return `href="${on}etkinlik-detay/?e=${ev[1]}"`;
     const k = yolBag(on, y, ek); return `href="${k || './'}"`;
@@ -119,7 +124,7 @@ for (const f of uretimDosyalari) {
   fs.writeFileSync(f, yazimDuzelt(s));
 }
 // Mekânlar süzgecinin istemci verisi: tek kaynak _src/veri ve _src/parcalar
-if (veri['mekan-filtre']) { const kartlar = JSON.parse(oku(path.join(SRC, 'parcalar/mekan-kartlar.json'))); const { mekanlar, secenek, alinma } = veri['mekan-filtre']; fs.writeFileSync(path.join(KOK, 'assets/js/mekan-liste-veri.js'), 'window.DG_LISTE=' + JSON.stringify({ alinma, mekanlar, secenek, kartlar }) + ';\n'); }
+if (veri['mekan-filtre']) { const kartlar = JSON.parse(oku(path.join(SRC, 'parcalar/mekan-kartlar.json'))); const { mekanlar, secenek, alinma } = veri['mekan-filtre']; for (const slug of Object.keys(kartlar)) kartlar[slug] = kartZengin(kartlar[slug], mekanBySlug[slug]); fs.writeFileSync(path.join(KOK, 'assets/js/mekan-liste-veri.js'), 'window.DG_LISTE=' + JSON.stringify({ alinma, mekanlar, secenek, kartlar }) + ';\n'); }
 if (veri.etkinlik) fs.writeFileSync(path.join(KOK, 'assets/js/etkinlik-veri.js'), 'window.DG_ETKINLIK=' + JSON.stringify({ ...veri.etkinlik, kartlar: JSON.parse(oku(path.join(SRC, 'parcalar/etkinlik-kartlar.json'))) }) + ';\n');
 console.log(uretilen.length + ' sayfa üretildi');
 if (hatalar.length) { console.error('HATALAR:\n' + hatalar.join('\n')); process.exitCode = 1; }
