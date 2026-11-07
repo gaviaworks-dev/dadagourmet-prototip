@@ -30,12 +30,41 @@ Kısaltma: G = dadagastro.com canlı render, O = dadagourmet.com canlı render, 
 | Mekân Bul | `/mekan-bul` | O `/mekan-bul` adım 1 render'ı; sonuç ekranı POST ile açıldığı için `resources/views/site/mekan-bul/sonuclar.blade.php`, `_sonuc-karti.blade.php` sınıf kümesi | 5 adım yerine 3; amaç listesi Hızlı esnaf, Şef masası, Pazar kahvaltısı, Yol üstü; konum süzgeç, bütçe ₺-₺₺₺₺, 5 nitelik; yüzde kalır; Haritadan Seç yok | Beyar talimatı K9'un önüne geçer. Oran `mekan-bul.js`: yalnız cevaplanan kriterler paydada, ağırlık canlı servisle aynı (amaç 40, bütçe 20, nitelik 15). Yol üstü: İstanbul–İzmir örnek güzergâhına 10 km. Esnaf, ₺, ₺₺, çocuk alanı verisi yok: boş sonuç ve öneri |
 | Etkinlikler | `/etkinlikler` | O `/etkinlikler`, veri 126 kayıt (`etkinlik-veri.mjs`, yalnız GET) | Türkiye ve Uluslararası sekmesi, açılış Türkiye; önerilen sırada yaklaşan festival ve hasat önde; kart dibinde Randevu Oluştur; Takvim ve Harita görünümü yok; sıralama iki kalem; sıfır sonuçlu seçenek gizli | W1.3a, W1.3b, W3.4c. Takvim ve Harita bu turun kapsamı değil, ölü düğme bırakılmadı. Randevu yalnız bu tarayıcıda kalır, Rezervasyonlarım'a işlenir |
 | Etkinlik detayı | `/etkinlik-detay/?e=<slug>` | O `/etkinlikler/mff-orta-dogu-gida-fuari-2026` | Tek kalıp; başlık, tarih, yer, özet, görsel adresteki etkinlikten dolar; görüntülenme, organizatör, katılımcı satırı yok; yan sütunda Randevu Oluştur | 126 ayrı sayfa çekilmedi; veride olmayan alan basılmaz |
-| Dada Route | `/dada-route` | O `/dada-route` ham HTML, `dada-route.js`, `dada-route.css`, Leaflet | Canlı betik değişmeden çalışır; sunucu uçlarını `rota-sahte.js` statik karşılar. Üstüne katmanlar, il kartları, örnek etiketleri eklendi. Katmanlar süzer: yalnız çizili rotaya 15 km içindeki noktalar pin ve liste olur, şarjda 20 km; Gastronomi kapanınca mekân pinleri ve alt liste gizlenir. Şarj noktasına 1 km içindeki mekân gerçek konumdan hesaplanır; nokta adları örnek. Ne Yenir, Ne Alınır çipi ve katman listesindeki Durak Yap tek tıkla ara durak ekler, canlı `mekaniDurakYap` yolunu kullanır; bunun için derleyici `dada-route.js`'e tek satırlık `window.dgRotaApi` açımı ekler. Ara durak sınırı 3'ten 9'a çekildi (canlı `config/dadaroute.php` 3). Navigasyona Aktar Google, Apple ve Yandex için duraklar ve seçilen mekânlardan koordinatlı gerçek adres üretir; Google 9, mobil tarayıcıda 3 ara durak, aşılırsa etap; Apple ve Yandex sınırı notla yazılır (`mobil-arastirma.md` §4.1). Hızlı filtre radius'u `--yuvarlak-cip` | Beyar: altyapı kullanılacak. MapLibre geçişi K7 ile Faz 4'te. Panel solda. "Güvenli", "tescilli" yok |
+| Dada Route | `/dada-route` | O `/dada-route` ham HTML, `dada-route.js`, `dada-route.css`, Leaflet | Canlı betik değişmeden çalışır; sunucu uçlarını `rota-sahte.js` statik karşılar. Üstüne katmanlar, il kartları, örnek etiketleri eklendi. Katmanlar süzer: yalnız çizili rotaya 15 km içindeki noktalar pin ve liste olur, şarjda 20 km; Gastronomi kapanınca mekân pinleri ve alt liste gizlenir. Şarj noktasına 1 km içindeki mekân gerçek konumdan hesaplanır; nokta adları örnek. Ne Yenir, Ne Alınır çipi ve katman listesindeki Durak Yap tek tıkla ara durak ekler, canlı `mekaniDurakYap` yolunu kullanır; bunun için derleyici `dada-route.js`'e tek satırlık `window.dgRotaApi` açımı ekler. Ara durak sınırı 3'ten 9'a çekildi (canlı `config/dadaroute.php` 3). Rotayı telefona gönder örnek akışı aktarım düğmelerinin yanındadır. Navigasyona Aktar Google, Apple ve Yandex için duraklar ve seçilen mekânlardan koordinatlı gerçek adres üretir; Google 9, mobil tarayıcıda 3 ara durak, aşılırsa etap; Apple ve Yandex sınırı notla yazılır (`mobil-arastirma.md` §4.1). Hızlı filtre radius'u `--yuvarlak-cip` | Beyar: altyapı kullanılacak. MapLibre geçişi K7 ile Faz 4'te. Panel solda. "Güvenli", "tescilli" yok |
 | Hakkımızda | `/hakkimizda` | O gövde, G zinciri | "81 il" yerine 15; "esnaf lokantası" cümlesi "mekân" oldu | Sabit sayı kuralı; K6 |
 | Künye | `/kunye` | G `/kunye` | Unvan, Adres, E-posta Gastro değerleri; marka adı Gourmet | K5 güncellemesi: Gastro'da nasılsa öyle |
 | İletişim | `/iletisim` | G `/iletisim` | Marka ve bağlam metni Gourmet; destek adresi yerine şirket e-postası; sosyal bağ yok | Canlı Gourmet sayfası eksik (MB 0.20). Gourmet destek adresi ölçülmedi |
 | Hukuki örnek | `/yasal/kvkk` | O gövde, G zinciri | Unvan, Adres, E-posta Gastro değerleri; MERSİS, vergi ve KEP satırları ile taslak bandı yok | K5 güncellemesi: yer tutucu basılmaz |
 | Ekran haritası | `/ekranlar` | Yok, derleyici çıktısı | Yeni | Onay turu için liste |
+
+## Responsive turu
+
+Kırılma noktaları `dadadiet-prototip` ile aynı: 640, 860, 1024. Kanon dosyaları değişmedi; düzeltmeler `assets/css/gourmet-sapma.css`, `prototip.css` üstünde. Şeritler kanon kalıbıyla kayar (`overflow-x:auto`, tek satır, gizli çubuk).
+
+- Dada Route: 860 ve altında panel alttan açılan sayfa, canlı `Haritayı Gör / Listeyi Gör` yapısı; yarım hâlde son öğeye erişim payı eklendi. 1024 ve üstünde panel solda.
+- Mekân detayı: 1024 ve altında özellik çipleri kaymaz, kopyalar gizlenir, sarılır.
+- Mekânlar: 641-900 arasında iki sütun; kart adı, süzgeç satırı, etkinlik konumu kesilmez.
+- Üye sayfaları: `gourmet.css` yüklenmediği için Route düğmesi ve başa dön kuralları `prototip.css`'e aynen alındı; seçili sekme açılışta görünür alana gelir.
+- Süzgeç sayfası açıkken yüzen düğmeler gizlenir.
+
+## Rotayı telefona gönder
+
+Donörü yok; yazılı sapma. Düğme Navigasyona Aktar kalıbında, pencere canlı `.yg-gate`. Örnek QR veri taşımaz ve okutulamaz; kısa bağ ayrılmış `.example` alan adında, metin olarak durur. Gerçek gönderim, numara, bağ, ağ isteği yok. Görünür `prototip örneği` etiketi taşır.
+
+## Mobil uygulamaya taşınabilir parçalar
+
+Native uygulama ayrı iştir, bu turda yapılmadı. Taşınırken ilk bakılacak parçalar:
+
+| Parça | Dosya | Taşınan |
+|---|---|---|
+| Telefona gönder metni | `assets/js/rota-telefon-veri.js` | Adım metinleri, örnek kısa bağ |
+| Telefona gönder akışı | `assets/js/sayfa/rota-telefon.js` | `rotaOzeti`, `goster`, `qrMatris`, `qrSvg`; gerçek QR gelince son ikisi değişir |
+| Telefona gönder kabuğu | `_src/parcalar/rota-telefon.html` | Pencere iskeleti |
+| Rota örnek verisi | `assets/js/rota-veri.js` | Güzergâh, katman noktaları, il kartları |
+| Navigasyon bağları | `assets/js/sayfa/rota-katman.js` | `googleBag`, `appleBag`, `yandexBag`, `etaplar`: durak listesinden adres üretir |
+| Mekân ve etkinlik verisi | `assets/js/mekan-veri.js`, `mekan-liste-veri.js`, `etkinlik-veri.js` | Liste ve süzgeç verisi |
+| Dada Puan kuralı | `assets/js/prototip.js` `dgPuan` | Puan değerleri |
+| Renk ve radius | `assets/g/kanon/tokenlar.css`, `kanon/markalar/gourmet.css` | Kanon token'ları |
 
 ## Puansız kart
 

@@ -26,6 +26,7 @@ Yöntem `dadadiet-prototip` ile aynıdır.
 | `assets/o/` | Canlı Gourmet gövde dosyaları ve görselleri |
 | `assets/css/gourmet-sapma.css` | Gastro kabuğu altında Gourmet gövdesi için yazılı sapmalar |
 | `assets/js/prototip.js` | Form göndermeyi ve yazma isteğini keser; hiçbir veri gitmez. Demo kayıtları (`dgKayit`) ve Dada Puan kuralı (`dgPuan`) burada; kayıtlar yalnız tarayıcıda durur |
+| `assets/js/rota-telefon-veri.js`, `assets/js/sayfa/rota-telefon.js`, `_src/parcalar/rota-telefon.html` | Rotayı telefona gönder örnek akışı; gerçek gönderim yok |
 | `admin/` | Panel donör seti; ayrı iş kolu |
 
 ## Donörü yenileme
