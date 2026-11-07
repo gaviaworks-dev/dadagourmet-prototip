@@ -28,7 +28,11 @@ const giris = await p.evaluate(({ pano, kayitPane }) => {
 }, { pano, kayitPane });
 const varyant = async (aktif, baslik, sekme) => {
   await p.setContent(`<main>${giris}</main>`);
-  return p.evaluate(({ aktif, baslik, sekme }) => { const m = document.querySelector('main');
+  return p.evaluate(({ aktif, baslik, sekme, sifre }) => { const m = document.querySelector('main');
+    const doldur = (id, v) => { const e = m.querySelector('#' + id); if (e) e.setAttribute('value', v); };
+    doldur('giEmail', 'ornek@eposta.com'); doldur('giPass', sifre); doldur('kaAd', 'Örnek'); doldur('kaSoyad', 'Üye'); doldur('kaEmail', 'ornek@eposta.com'); doldur('kaPass', sifre); doldur('sfEmail', 'ornek@eposta.com'); doldur('ysYeni', sifre); doldur('ysTekrar', sifre);
+    m.querySelectorAll('#cbUyelik,#cbKvkk').forEach((c) => c.setAttribute('checked', ''));
+    m.querySelectorAll('[data-pane] .giris-bas').forEach((b) => { if (!b.querySelector('.ornek-etiket')) b.insertAdjacentHTML('beforeend', '<span class="ornek-etiket">prototip örneği</span>'); });
     m.querySelectorAll('[data-pane]').forEach((e) => { e.hidden = e.dataset.pane !== aktif; });
     if (aktif !== 'kayit') m.querySelector('#auPaneKayit').remove(); else ['giris', 'sifre', 'yeni-sifre'].forEach((a) => m.querySelector(`[data-pane="${a}"]`)?.remove());
     m.querySelector('#auCrumb').textContent = baslik;
@@ -36,8 +40,10 @@ const varyant = async (aktif, baslik, sekme) => {
     g.setAttribute('href', '{{kok}}giris/'); k.setAttribute('href', '{{kok}}kayit/');
     g.classList.toggle('aktif', sekme === 'giris'); k.classList.toggle('aktif', sekme === 'kayit'); g.setAttribute('aria-selected', sekme === 'giris'); k.setAttribute('aria-selected', sekme === 'kayit');
     if (aktif === 'yeni-sifre') { m.querySelector('#formYeniSifre')?.removeAttribute('hidden'); const b = m.querySelector('#auYsHesap'); if (b) b.textContent = 'ornek@eposta.com'; m.querySelectorAll('[data-pane="yeni-sifre"] [hidden]').forEach((e) => { if (e.id !== 'formYeniSifre' && e.querySelector?.('input,button')) e.removeAttribute('hidden'); }); }
-    return m.innerHTML; }, { aktif, baslik, sekme });
+    return m.innerHTML; }, { aktif, baslik, sekme, sifre: DEMO_SIFRE });
 };
+// Hazır demo: sahte değerler, gerçek hesap yok. Gönderim `assets/js/prototip.js` içinde kesilir.
+const DEMO_SIFRE = 'Ornek-1234!';
 const kimlik = { zincir: 'giris', duzen: 'public', govdeSinif: 'dg-auth', js: ['assets/js/sayfa/giris.js'] };
 yaz('giris/index', { ...kimlik, baslik: 'Giriş Yap', donor: 'https://dadagastro.com/giris' }, await varyant('giris', 'Giriş Yap', 'giris'));
 yaz('kayit/index', { ...kimlik, baslik: 'Kayıt Ol', donor: 'https://dadagastro.com/kayit' }, await varyant('kayit', 'Kayıt Ol', 'kayit'));

@@ -34,6 +34,10 @@ Kısaltma: G = dadagastro.com canlı render, O = dadagourmet.com canlı render, 
 | Hukuki örnek | `/yasal/kvkk` | O gövde, G zinciri | Unvan, Adres, E-posta Gastro değerleri; MERSİS, vergi ve KEP satırları ile taslak bandı yok | K5 güncellemesi: yer tutucu basılmaz |
 | Ekran haritası | `/ekranlar` | Yok, derleyici çıktısı | Yeni | Onay turu için liste |
 
+## Demo oturum
+
+Giriş, kayıt ve şifre ekranları sahte değerlerle dolu gelir; gönderim yapılmaz. Giriş ve kayıt üye durumuna geçirip Hesabım'a yönlendirir, şifre akışı ekranda ilerler, çıkış misafire döner. Durum `localStorage` `dg-oturum`; depo kapalıysa `?auth=1` bağlarda taşınır. Üye sayfası misafire açılırsa girişe yönlenir, girişten sonra aynı sayfaya döner.
+
 ## Mekânlar süzgeci
 
 Veri `_src/araclar/mekan-veri.mjs` ile canlı `/mekanlar` ve `/mekanlar/harita-verisi` uçlarından, yalnız GET ile alındı. Her seçenek canlı süzgeçten soruldu; sayaç ve harita sayısı 12 grupta birebir tuttu. 203 mekân, 15 il, 41 ilçe, 128 semt. Semt 197 mekânda dolu, 6 mekânda boş; boş olan uydurulmadı. Açık Olma sayaçları çekim anına aittir, statik kopyadır.

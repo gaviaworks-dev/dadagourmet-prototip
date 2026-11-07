@@ -31,25 +31,24 @@ export function kabukla(s) {
     ...z.js.map((j) => `<script${j.modul ? ' type="module"' : ' defer'} src="${K}assets/g/${j.y}"></script>`),
     ...(m.js ?? []).map((j) => `<script defer src="${K}${j}"></script>`)].join('\n');
   const uye = duzen === 'uye';
-  const sinif = [z.govdeSinif, m.govdeSinif, uye ? 'is-auth' : ''].filter(Boolean).join(' ');
+  const sinif = [z.govdeSinif, m.govdeSinif].filter(Boolean).join(' ');
   // `<!--@main-disi-->` sonrası katmanlar <main>'in yığın bağlamından çıkar (canlıda da body altındadır)
   const [icerik, disari = ''] = s.govde.split('<!--@main-disi-->');
   const govde = duzen === 'tam' ? s.govde
     : `${aktifle(parca('ust'), m.aktif)}\n<main class="page-main" id="pageMain">${icerik}</main>\n${parca('dip')}\n${parca('alt-cubuk')}\n${parca('katman')}\n${disari}`;
   return `<!doctype html>
-<html lang="tr" data-kok="${K}" class="sg-js" data-kabuk-kimlik="yazildi"${z.baslikZemin ? ` data-baslik-zemin="${z.baslikZemin}"` : ''}>
+<html lang="tr" data-kok="${K}" data-yol="${s.yol ?? ''}"${uye ? ' data-uye-sayfa="1"' : ''} class="sg-js" data-kabuk-kimlik="yazildi"${z.baslikZemin ? ` data-baslik-zemin="${z.baslikZemin}"` : ''}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${kacis(m.baslik ?? 'Dada Gourmet')} · Dada Gourmet</title>
 <meta name="robots" content="noindex, nofollow">
-${uye ? `<meta name="dada-kimlik" content='{"auth":true,"roles":["kullanici"]}'>` : ''}
 <!-- donör: ${kacis(m.donor ?? 'https://dadagastro.com')} · canlı Gastro release 20261107-mentor-6700538df4 -->
 <link rel="icon" href="${K}assets/img/favicon.ico">
 ${link}
 ${js}
 </head>
-<body data-brand="gourmet"${z.heroTur ? ` data-fit-hero-kind="${z.heroTur}"` : ''} class="${sinif}"${uye ? ' data-oturum="1"' : ''}>
+<body data-brand="gourmet"${z.heroTur ? ` data-fit-hero-kind="${z.heroTur}"` : ''} class="${sinif}">
 ${govde}
 </body>
 </html>

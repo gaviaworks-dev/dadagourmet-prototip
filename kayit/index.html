@@ -1,11 +1,10 @@
 <!doctype html>
-<html lang="tr" data-kok="../" class="sg-js" data-kabuk-kimlik="yazildi" data-baslik-zemin="koyu">
+<html lang="tr" data-kok="../" data-yol="kayit" class="sg-js" data-kabuk-kimlik="yazildi" data-baslik-zemin="koyu">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kayıt Ol · Dada Gourmet</title>
 <meta name="robots" content="noindex, nofollow">
-
 <!-- donör: https://dadagastro.com/kayit · canlı Gastro release 20261107-mentor-6700538df4 -->
 <link rel="icon" href="../assets/img/favicon.ico">
 <link rel="stylesheet" href="../assets/g/kabuk/kabuk-kimlik.css">
@@ -212,7 +211,7 @@
                             <div class="giris-bas">
                                 <h1>Aramıza katıl</h1>
                                 <p>1 dakikada Dada Gourmet hesabını oluştur — beğendiğin yerleri kaydetmeye hemen başla.</p>
-                            </div>
+                            <span class="ornek-etiket">prototip örneği</span></div>
 
                             
 
@@ -237,25 +236,25 @@
                                 <div class="alan-izgara c2">
                                     <div class="alan">
                                         <label class="alan-etiket" for="kaAd">Ad <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
-                                        <input class="alan-girdi" id="kaAd" name="ad" type="text" autocomplete="given-name" placeholder="Adın" value="" required="" aria-describedby="kaAdErr">
+                                        <input class="alan-girdi" id="kaAd" name="ad" type="text" autocomplete="given-name" placeholder="Adın" value="Örnek" required="" aria-describedby="kaAdErr">
                                         <span class="giris-hata" id="kaAdErr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Adınızı girin.</span>
                                     </div>
                                     <div class="alan">
                                         <label class="alan-etiket" for="kaSoyad">Soyad <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
-                                        <input class="alan-girdi" id="kaSoyad" name="soyad" type="text" autocomplete="family-name" placeholder="Soyadın" value="" required="" aria-describedby="kaSoyadErr">
+                                        <input class="alan-girdi" id="kaSoyad" name="soyad" type="text" autocomplete="family-name" placeholder="Soyadın" value="Üye" required="" aria-describedby="kaSoyadErr">
                                         <span class="giris-hata" id="kaSoyadErr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Soyadınızı girin.</span>
                                     </div>
                                 </div>
                                 <div class="alan">
                                     <label class="alan-etiket" for="kaEmail">E-posta <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
-                                    <input class="alan-girdi" id="kaEmail" name="eposta" type="email" autocomplete="email" placeholder="ornek@eposta.com" value="" required="" aria-describedby="kaEmailErr">
+                                    <input class="alan-girdi" id="kaEmail" name="eposta" type="email" autocomplete="email" placeholder="ornek@eposta.com" value="ornek@eposta.com" required="" aria-describedby="kaEmailErr">
                                     <span class="giris-hata" id="kaEmailErr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Geçerli bir e-posta adresi girin.</span>
                                 </div>
                                 
                                                                 <div class="alan">
                                     <label class="alan-etiket" for="kaPass">Şifre <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
                                     <div class="alan-sifre">
-                                        <input class="alan-girdi" id="kaPass" name="sifre" type="password" autocomplete="new-password" placeholder="En az 8 karakter" required="" aria-describedby="kaPassHelp kaPassErr">
+                                        <input class="alan-girdi" id="kaPass" name="sifre" type="password" autocomplete="new-password" placeholder="En az 8 karakter" required="" aria-describedby="kaPassHelp kaPassErr" value="Ornek-1234!">
                                         <button class="alan-goz" type="button" data-eye="kaPass" aria-label="Şifreyi göster" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
                                     </div>
                                     <span class="alan-yardim" id="kaPassHelp"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> En az 8 karakter; büyük/küçük harf, rakam ve özel karakter içermeli.</span>
@@ -265,11 +264,11 @@
 
                                 <div class="onay-satirlari dar">
                                     <label class="onay-kutusu" for="cbUyelik">
-                                        <input type="checkbox" id="cbUyelik" name="sozlesme" value="1" required="">
+                                        <input type="checkbox" id="cbUyelik" name="sozlesme" value="1" required="" checked="">
                                         <span><a href="#" data-yakinda="yasal/uyelik" target="_blank">Üyelik Sözleşmesi</a>'ni okudum, kabul ediyorum. <b class="zorunlu" aria-hidden="true">*</b><span class="yalniz-okuyucu">(zorunlu)</span></span>
                                     </label>
                                     <label class="onay-kutusu" for="cbKvkk">
-                                        <input type="checkbox" id="cbKvkk" name="aydinlatma" value="1" required="">
+                                        <input type="checkbox" id="cbKvkk" name="aydinlatma" value="1" required="" checked="">
                                         <span><a href="#" data-yakinda="yasal/aydinlatma" target="_blank">Aydınlatma Metni</a>'ni ve <a href="../yasal/kvkk/" target="_blank">KVKK Metni</a>'ni okudum, onaylıyorum. <b class="zorunlu" aria-hidden="true">*</b><span class="yalniz-okuyucu">(zorunlu)</span></span>
                                     </label>
                                     

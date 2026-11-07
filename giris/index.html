@@ -1,11 +1,10 @@
 <!doctype html>
-<html lang="tr" data-kok="../" class="sg-js" data-kabuk-kimlik="yazildi" data-baslik-zemin="koyu">
+<html lang="tr" data-kok="../" data-yol="giris" class="sg-js" data-kabuk-kimlik="yazildi" data-baslik-zemin="koyu">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Giriş Yap · Dada Gourmet</title>
 <meta name="robots" content="noindex, nofollow">
-
 <!-- donör: https://dadagastro.com/giris · canlı Gastro release 20261107-mentor-6700538df4 -->
 <link rel="icon" href="../assets/img/favicon.ico">
 <link rel="stylesheet" href="../assets/g/kabuk/kabuk-kimlik.css">
@@ -212,7 +211,7 @@
                             <div class="giris-bas">
                                 <h1>Tekrar hoş geldin</h1>
                                 <p>Kaldığın yerden devam et — listelerin ve rezervasyonların seni bekliyor.</p>
-                            </div>
+                            <span class="ornek-etiket">prototip örneği</span></div>
 
                                                                                     
                             <div class="giris-serit reddedildi" id="loginErr" role="alert">
@@ -242,13 +241,13 @@
                                 
                                                                 <div class="alan" id="giEmailField">
                                     <label class="alan-etiket" for="giEmail">E-posta <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
-                                    <input class="alan-girdi" id="giEmail" name="eposta" type="email" autocomplete="username" placeholder="ornek@eposta.com" value="" required="" aria-describedby="giEmailErr">
+                                    <input class="alan-girdi" id="giEmail" name="eposta" type="email" autocomplete="username" placeholder="ornek@eposta.com" value="ornek@eposta.com" required="" aria-describedby="giEmailErr">
                                     <span class="giris-hata" id="giEmailErr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Geçerli bir e-posta adresi gir.</span>
                                 </div>
                                                                 <div class="alan">
                                     <label class="alan-etiket" for="giPass">Şifre <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
                                     <div class="alan-sifre">
-                                        <input class="alan-girdi" id="giPass" name="sifre" type="password" autocomplete="current-password" placeholder="Şifren" required="" aria-describedby="giPassErr">
+                                        <input class="alan-girdi" id="giPass" name="sifre" type="password" autocomplete="current-password" placeholder="Şifren" required="" aria-describedby="giPassErr" value="Ornek-1234!">
                                         <button class="alan-goz" type="button" data-eye="giPass" aria-label="Şifreyi göster" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
                                     </div>
                                     <span class="giris-hata" id="giPassErr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Şifreni gir.</span>
@@ -268,13 +267,13 @@
                             <div class="giris-bas">
                                 <h1 id="auSifreTitle">Şifreni mi unuttun?</h1>
                                 <p>Sorun değil. E-posta adresini yaz, sıfırlama bağlantısını gönderelim.</p>
-                            </div>
+                            <span class="ornek-etiket">prototip örneği</span></div>
 
                             <form method="POST" id="formSifre" data-prototip-form="">
                                                                                                 <input type="hidden" name="_form" value="sifre">
                                 <div class="alan">
                                     <label class="alan-etiket" for="sfEmail">Kayıtlı e-posta adresin <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
-                                    <input class="alan-girdi" id="sfEmail" name="eposta" type="email" autocomplete="email" placeholder="ornek@eposta.com" value="" required="" aria-describedby="sfEmailErr">
+                                    <input class="alan-girdi" id="sfEmail" name="eposta" type="email" autocomplete="email" placeholder="ornek@eposta.com" value="ornek@eposta.com" required="" aria-describedby="sfEmailErr">
                                                                         <span class="giris-hata" id="sfEmailErr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Geçerli bir e-posta adresi gir.</span>
                                 </div>
                                 <button class="dugme birincil giris-gonder" type="submit"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Sıfırlama Bağlantısı Gönder</button>
@@ -294,7 +293,7 @@
                             <div class="giris-bas">
                                 <h1 id="auYeniSifreTitle">Yeni şifreni belirle</h1>
                                 <p>Bağlantı <b id="auYsHesap">hesabın</b> hesabı için açıldı. Yeni şifreni iki kez yaz.</p>
-                            </div>
+                            <span class="ornek-etiket">prototip örneği</span></div>
 
                             
                             
@@ -305,7 +304,7 @@
                                                                 <div class="alan">
                                     <label class="alan-etiket" for="ysYeni">Yeni şifren <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
                                     <div class="alan-sifre">
-                                        <input class="alan-girdi" id="ysYeni" name="sifre" type="password" autocomplete="new-password" placeholder="En az 8 karakter" required="" aria-describedby="ysKurallar ysYeniErr">
+                                        <input class="alan-girdi" id="ysYeni" name="sifre" type="password" autocomplete="new-password" placeholder="En az 8 karakter" required="" aria-describedby="ysKurallar ysYeniErr" value="Ornek-1234!">
                                         <button class="alan-goz" type="button" data-eye="ysYeni" aria-label="Şifreyi göster" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
                                     </div>
                                     <span class="giris-hata" id="ysYeniErr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Şifren beş kuralın hepsini karşılamalı.</span>
@@ -320,7 +319,7 @@
                                 <div class="alan">
                                     <label class="alan-etiket" for="ysTekrar">Yeni şifren (tekrar) <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
                                     <div class="alan-sifre">
-                                        <input class="alan-girdi" id="ysTekrar" name="sifre_tekrar" type="password" autocomplete="new-password" placeholder="Tekrar yaz" required="" aria-describedby="ysTekrarErr">
+                                        <input class="alan-girdi" id="ysTekrar" name="sifre_tekrar" type="password" autocomplete="new-password" placeholder="Tekrar yaz" required="" aria-describedby="ysTekrarErr" value="Ornek-1234!">
                                         <button class="alan-goz" type="button" data-eye="ysTekrar" aria-label="Şifreyi göster" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
                                     </div>
                                     <span class="giris-hata" id="ysTekrarErr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> İki şifre birbirini tutmuyor.</span>
