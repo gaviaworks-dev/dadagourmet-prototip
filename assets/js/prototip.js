@@ -134,7 +134,8 @@
     if (mo && (e.target === moO || (e.target.closest && e.target.closest('#moModal .fb-close,#moCancel')))) { mo.classList.remove('show', 'open'); moO.classList.remove('show', 'open'); mo.setAttribute('inert', ''); return; }
     if (kapiOlay(e)) { return; }
     var git = e.target.closest && e.target.closest('[data-git]');
-    if (git) { location.href = git.getAttribute('data-git'); }
+    /* Kart içindeki düğme ve bağ kendi işini yapar; kart tıklaması onu ezmez */
+    if (git && !e.target.closest('a,button')) { location.href = git.getAttribute('data-git'); }
   }, true);
   /* Sekme şeridi kaydırılabilir: seçili sekme açılışta görünür alana gelir. Sayfa kaymaz, yalnız şerit */
   window.addEventListener('load', function () {

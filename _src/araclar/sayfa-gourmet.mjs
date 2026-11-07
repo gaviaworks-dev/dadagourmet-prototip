@@ -59,14 +59,15 @@ yaz('mekanlar/index', { baslik: 'Mekânlar', aktif: 'mekanlar', zincir: 'hakkimi
   const satir = enerji.querySelector('label.fct-row'); const gov = enerji.querySelector('.fct-body'); const kalip = satir.cloneNode(true); gov.innerHTML = '<p class="fct-not"><span class="ornek-etiket">prototip örneği</span> Mekân başına şarj verisi henüz yok; bu grup süzmez.</p>';
   ['Elektrikli Araç Şarj Noktası Var', 'Yakınında Şarj İstasyonu', 'AC Şarj', 'DC Hızlı Şarj', 'Şarj Sırasında Yemek Yeme İmkânı'].forEach((a, i) => { const r = kalip.cloneNode(true); r.querySelector('.ft').textContent = a; r.querySelector('.fcnt')?.remove(); const inp = r.querySelector('input'); inp.name = 'sarj-ornek'; inp.value = 'ornek-' + i; inp.checked = false; inp.disabled = true; gov.appendChild(r); });
   const ulasim = gruplar.find((g) => /Ulaşım/.test(g.querySelector('.fct-head').textContent)); ulasim.before(enerji);
-  // Kart: FK.10-13 eylemleri ve üç sütun için harita alanı
+  // Kart: FK.10-13 eylemleri
   $$('article.mkl-card').forEach((k) => { const slug = (k.getAttribute('data-git') || '').replace(/.*mekan\//, '').replace(/\/$/, ''); k.dataset.slug = slug;
     k.insertAdjacentHTML('beforeend', `<div class="mkl-kart-eylem"><a class="mke-birincil" href="{{kok}}mekan/${slug}/">Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="${slug}" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="{{kok}}dada-route/?durak=${slug}" aria-label="Dada Route'a Ekle" title="Dada Route'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div>`); });
   const sehir = m.querySelector('.mkl-fct-location .fct-sub'); sehir.dataset.konum = 'sehir';
   sehir.insertAdjacentHTML('afterend', ilceGrup.replace('class="fct fct-sub', 'hidden data-konum="ilce" class="fct fct-sub') + semtGrup.replace('class="fct fct-sub', 'hidden data-konum="semt" class="fct fct-sub'));
   m.querySelector('.lst-bar').insertAdjacentHTML('afterend', '<div class="mkl-secili" id="mklSecili" hidden></div>');
-  const lay = m.querySelector('.lst-layout'); lay.classList.add('mkl-uc-kolon');
-  lay.insertAdjacentHTML('beforeend', '<aside class="mkl-harita-kolon" aria-label="Harita"><div id="mklMapKolon" class="mkl-harita" data-harita="liste"></div><p class="mkl-harita-not"><span class="ornek-etiket">prototip örneği</span> MapLibre; konumlar canlı mekân verisinden, statik kopya.</p></aside>');
+  // Canlı düzen: sol süzgeç ve üç sütunlu ızgara; harita görünüm düğmesiyle açılır. Hero görseli canlı ekran görüntüsündeki görsel
+  m.querySelector('#mklGrid').insertAdjacentHTML('beforebegin', '<div class="mkl-map-wrap" id="mklMapWrap" hidden><div id="mklMapKolon" class="mkl-map" data-harita="liste"></div></div><p class="mkl-harita-not" id="mklHaritaNot" hidden><span class="ornek-etiket">prototip örneği</span> MapLibre; konumlar canlı mekân verisinden, statik kopya.</p>');
+  m.querySelector('.px-media').style.backgroundImage = m.querySelector('.px-media').style.backgroundImage.replace('gurme-lezzetler', 'gourmet-mekan-bul');
   return m.innerHTML; }, { ilceGrup, semtGrup }));
 
 // --- Mekân detayı: Mikla (canlı) + K2 parçaları (eski referans DOM'u) ---

@@ -21,13 +21,10 @@
 .ny-bolum{margin:32px 0}.ny-bas h3{margin:0;font-size:20px;display:flex;align-items:center;gap:9px}.ny-bas h3 i{color:var(--marka,#742982);font-size:16px}
 .ny-kaynak{display:block;font-size:12px;color:var(--muted,#6f6f6f)}
 .ny-eylem[aria-pressed="true"]{border-color:var(--marka,#742982);color:var(--marka,#742982)}
-/* Mekânlar: FH.1 üç sütun */
-.lst-layout.mkl-uc-kolon{display:grid;grid-template-columns:280px minmax(0,1fr) 380px;gap:24px;align-items:start}
-.mkl-harita-kolon{position:sticky;top:96px}.mkl-harita{height:calc(100vh - 150px);min-height:420px;border-radius:14px;overflow:hidden;background:#efedf2}
+/* Mekânlar: canlı düzen. Gastro zinciri satır yüksekliğini büyütüyordu; ölçüler canlıyla aynı */
+.pg-mekanlar .search-input input,.pg-mekanlar .sort-btn,.pg-mekanlar .btn-filter{line-height:normal}
+@media(max-width:640px){.pg-mekanlar .ke-head h1{font-size:40px;line-height:1.12}}
 .mkl-harita-not{margin:8px 0 0;font-size:12px;color:var(--muted,#6f6f6f)}
-.mkl-uc-kolon .mkl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-@media(max-width:1280px){.lst-layout.mkl-uc-kolon{grid-template-columns:280px minmax(0,1fr)}.mkl-harita-kolon{grid-column:1/-1;position:static}.mkl-harita{height:340px;min-height:0}}
-@media(max-width:900px){.lst-layout.mkl-uc-kolon{grid-template-columns:minmax(0,1fr)}.mkl-uc-kolon .mkl-grid{grid-template-columns:minmax(0,1fr)}}
 .mkl-kart-eylem{display:flex;align-items:center;gap:6px;padding:10px 14px 14px;margin-top:auto}
 .mke-birincil{flex:1;text-align:center;padding:8px 10px;border-radius:10px;background:var(--marka,#742982);color:#fff;font-weight:700;font-size:13px}
 .mke-ikon{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--marka-cizgi,#e3d4e6);background:#fff;color:var(--marka,#742982);cursor:pointer}
@@ -190,8 +187,6 @@ button.yg-il-cip{display:inline-flex;align-items:center;gap:5px;font-family:inhe
   .kc-marquee-track{flex-wrap:wrap;width:auto;animation:none}
   .kc-marquee-track>[aria-hidden="true"]{display:none}
 }
-/* Mekânlar: filtre sayfaya indiğinde tablette iki sütun kalır; 640 altında tek sütun */
-@media(min-width:641px) and (max-width:900px){.mkl-uc-kolon .mkl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* Kart adı, süzgeç satırı ve etkinlik konumu kesilmez: alt satıra iner */
 .mkl-grid .disc-card h3,.md-similar .disc-card h3{white-space:normal;text-overflow:clip}
 .fct-row .ft{white-space:normal;text-overflow:clip}
