@@ -11,7 +11,7 @@ Kısaltma: G = dadagastro.com canlı render, O = dadagourmet.com canlı render, 
 | Ekran | Yol | Donör | Sapma | Gerekçe |
 |---|---|---|---|---|
 | Kabuk: üst bant | tüm sayfalar | G `/giris` | Sol tarafta 203 mekân; sosyal blok yok; dil TR ve EN; Akademi ve Store yok | Mekân sayısı canlıdan. Gourmet'te doğrulanmış sosyal hesap yok. K17. Beyar kuralı |
-| Kabuk: başlık | tüm sayfalar | G `/giris` | Mega menü yerine O'nun 5 kalemi; konum düğmesi eklendi; hesap menüsü Gourmet kalemleri ve Gurme Panelim | Menü içeriği markaya özel (kanon §5.1). K3 |
+| Kabuk: başlık | tüm sayfalar | G `/giris` | Mega menü yerine O'nun 5 kalemi; konum düğmesi eklendi; hesap menüsü Gourmet kalemleri ve Gurme Panelim; İşletmelerim yok, canlıda yalnız işletme yetkisi olana görünür ve örnek üye `kullanici`; zil rozeti yok | Menü içeriği markaya özel (kanon §5.1). K3 |
 | Kabuk: çekmece | tüm sayfalar | G `/giris` | Kalemler Gourmet; "DadaGastro'ya Dön" yok; dil TR ve EN | Kanon soru 11 önerisi; K17 |
 | Kabuk: altbilgi | tüm sayfalar | G `/giris` | Sütunlar, kurumsal ve yasal şerit O'dan; sosyal blok yok; mağaza düğmeleri pasif; telif satırında şirket unvanı | Kanon: sütun içerikleri Gourmet'e özel. Uygulama yayında değil. K5 |
 | Kabuk: alt çubuk | tüm sayfalar | O `/` | 5 kalem Gourmet | Web için karar kanon soru 10'da açık; bugünkü hâl korundu |
