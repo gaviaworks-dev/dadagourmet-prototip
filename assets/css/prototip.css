@@ -34,3 +34,14 @@ html.altbilgi-akista #pageMain{margin-bottom:0!important}
 .gm-hero-h1 .bd { font-family: GilroyBd, Gilroy, sans-serif; font-weight: 700; }
 .gm-hero-h1 .sf { font-family: Gilroy, sans-serif; font-weight: 500; }
 header a i.fa-route, nav a i.fa-route { opacity: 1 !important; }
+
+/* Footer: zemin marka rengi, yazı ve ikonlar beyaz; saydamlık değerleri canlı Diet ile aynı. */
+.footer.orange { color: rgba(255,255,255,.88); }
+.footer.orange .foot-tag, .footer.orange .foot-app-lead { color: rgba(255,255,255,.82); }
+.footer.orange .foot-col a, .footer.orange .foot-corp a, .footer.orange .foot-linkbtn { color: rgba(255,255,255,.92); }
+.footer.orange .foot-legal a, .footer.orange .foot-bottom, .footer.orange .foot-bottom a, .footer.orange .foot-sign { color: rgba(255,255,255,.84); }
+.footer.orange .app-btn .ab-pre { color: rgba(255,255,255,.78); }
+.footer.orange a:hover, .footer.orange .foot-linkbtn:hover { color: #fff; }
+.footer.orange .foot-col .foot-linkbtn { font-size: 14px; font-weight: 500; }
+.footer.orange .foot-corp a, .footer.orange .foot-corp .foot-linkbtn { font-size: 13px; font-weight: 600; }
+.footer.orange .foot-app-lead { font-size: 13.5px; }
