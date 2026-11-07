@@ -10,7 +10,7 @@ const css = ['gurme-lezzetler.css', 'gurme-lezzetler-uyarlama.css'];
 let p = await ac(path.join(D, 'o-lezzet.html'));
 const { liste, kalip } = await p.evaluate(() => { kok(document.body); const m = document.querySelector('main'); m.removeAttribute('style'); const $ = (s, r = m) => r.querySelector(s), $$ = (s, r = m) => [...r.querySelectorAll(s)];
   $$('script').forEach((s) => s.parentNode.removeChild(s));
-  // Çekimde kapak öğesi Etkinlikler görseliyle döndü; canlının ham HTML'inde ve ekranında Gurme Lezzetler görseli var
+  // Canlı her istekte üç kapak görselinden birini verir; prototip bu sayfanın kendi görselinde sabit
   $('.px-media').style.backgroundImage = 'url("https://dadagourmet.com/assets/gourmet-public/img/gurme-lezzetler/banner-g3-pilot.webp")';
   // Kart: canlı DOM kalıp olur; alanlar yer tutucuya döner
   const k = $('.disc-card.ke-stop').cloneNode(true); k.setAttribute('data-slug', '%slug%');

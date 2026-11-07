@@ -225,6 +225,8 @@ body:is(.pg-gurme-lezzetler,.pg-gurme-lezzetler-detay) .disc-grid{padding:0}
 body:is(.pg-gurme-lezzetler,.pg-gurme-lezzetler-detay) .disc-card{width:100%;max-width:none;flex:none}
 body:is(.pg-gurme-lezzetler,.pg-gurme-lezzetler-detay) .disc-card :is(h3,p){min-height:0}
 body.pg-gurme-lezzetler .ke-filter{padding-top:6px}
+/* Canlı listede kapak kaydırılmaz (`--px-shift` 0); kabuk betiği görseli ortalayıp kırpımı değiştiriyordu */
+body.pg-gurme-lezzetler .px-media{background-position:50% 50%}
 body.pg-gurme-lezzetler-detay .art-hero{padding-top:128px;padding-bottom:0}
 body.pg-gurme-lezzetler-detay .art-hero>.wrap{padding-top:0}
 body.pg-gurme-lezzetler-detay .art-hero>.wrap>.art-hero-top:not(#_){margin-top:0}
