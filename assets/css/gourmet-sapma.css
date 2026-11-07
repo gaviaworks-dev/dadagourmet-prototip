@@ -215,7 +215,7 @@ html:has(.lst-side.open) :is(.yg-fab,.to-top,.feedback-tab,.fb-rail){display:non
 
 /* Yasal menü: 32 kalem dar ekranda metni bir ekran aşağı itiyordu; kanon şerit kalıbıyla tek satır kayar */
 @media(max-width:1024px){
-  .lg-menu{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-block:5px}
-  .lg-menu::-webkit-scrollbar{display:none}
-  .lg-menu a{flex:none;white-space:nowrap}
+  .lg-side .lg-menu{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-block:5px}
+  .lg-side .lg-menu::-webkit-scrollbar{display:none}
+  .lg-side .lg-menu a{flex:none;white-space:nowrap}
 }
