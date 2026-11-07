@@ -18,7 +18,7 @@ Kısaltma: G = dadagastro.com canlı render, O = dadagourmet.com canlı render, 
 | Çerez bandı | tüm sayfalar | G `/giris` | Yok | |
 | Görüş Bildir | tüm sayfalar | G `/giris` | İlgili alan ve konu seçenekleri O'dan | Kanon §5.4: Gourmet listesi kalır |
 | Mekân Öner penceresi | tüm sayfalar | O `/` | Yok | Altbilgi ve Mekânlar çağırıyor |
-| Ana sayfa | `/` | O `/`, kabuk G | Slogan ve konsept açıklaması değişti (K6); 0 mekânlı konsept gizli (K8); konsept sırası yerel ve tarihi önce; etkinlik kartları Türkiye önce | W1.2, W1.3a. Vitrin eşit ağırlığı içerik olmadan kurulamaz: Esnaf 0, üretici modeli yok |
+| Ana sayfa | `/` | O `/`, kabuk G | Slogan ve konsept açıklaması değişti (K6); 0 mekânlı konsept gizli (K8); konsept sırası yerel ve tarihi önce; etkinlik kartları Türkiye önce Vitrin bölümü eklendi: Lüks Restoranlar, Tarihi Esnaf Durakları, Yerel Üreticiler, sütun başına iki kart | W1.2, W1.3a. Beyar talimatı K6'nın önüne geçer, slogan aynen kalır. Lüks canlı kayıt; Esnaf ve üretici verisi canlıda yok: kart `prototip örneği` etiketli, görsel canlı konsept görselleri |
 | Giriş | `/giris` | G `/giris` | Pano metni O'dan; sosyal düğme yok; pano görseli O `about-dining` | K4 notu: bağlı olmayan sağlayıcı gösterilmez. Canlı Gourmet'teki düğmeler `aria-disabled` |
 | Kayıt | `/kayit` | G `/kayit` | Gastro alan seti; sosyal düğme yok; `hesap_turu` yok | Kanon soru 3 önerisi. Karar bekliyor sayılır |
 | Şifre unuttum | `/sifremi-unuttum` | G `/giris` sifre panosu | Açık pano başlangıç hâli | Gastro'da aynı sayfada pano; Gourmet adresi korundu |

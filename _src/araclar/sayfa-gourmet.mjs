@@ -9,8 +9,16 @@ const dom = (f) => path.join(D, f + '.html');
 // --- Ana sayfa ---
 let p = await ac(dom('o-etkinlikler'));
 const trKart = await p.evaluate(() => { kok(document.body); return [...document.querySelectorAll('article.ev-card')].filter((k) => /Türkiye/.test(k.textContent)).slice(0, 4).map((k) => k.outerHTML); });
+// Vitrin (W1.2, Beyar talimatı K6'nın önüne geçer): lüks, tarihi esnaf, yerel üretici eşit ağırlıkta. Lüks canlı kayıt; Esnaf ve üretici verisi canlıda yok, kart örnek etiketli, görsel Beyar'ın konsept görselleri
+const mf = JSON.parse(fs.readFileSync(path.join(SRC, 'veri/mekan-filtre.json'), 'utf8')), mk = JSON.parse(fs.readFileSync(path.join(SRC, 'parcalar/mekan-kartlar.json'), 'utf8'));
+const ilAd = Object.fromEntries(mf.secenek.il.map((o) => [o.deger, o.ad]));
+const luks = mf.mekanlar.filter((m) => m.f.konsept?.includes('luks') && m.f.fiyat?.includes('4') && /url\('/.test(mk[m.slug] ?? '')).slice(0, 2).map((m) => ({ ad: m.ad, alt: `${m.ilce} / ${ilAd[m.f.il[0]]}`, gorsel: /url\('([^']+)'/.exec(mk[m.slug])[1], bag: `{{kok}}mekan/${m.slug}/` }));
+const O = '{{kok}}assets/o/assets/gourmet-public/medya/';
+const vitrinKart = (k) => `<a class="vt-kart" href="${k.bag}"><span class="vt-gorsel" style="background-image:url('${k.gorsel}')"></span><span class="vt-metin"><b>${k.ad}</b><small>${k.alt}</small>${k.ornek ? '<span class="ornek-etiket">prototip örneği</span>' : ''}</span></a>`;
+const vitrinSutun = (ikon, ad, alt, bag, bagAd, kartlar) => `<div class="vt-sutun"><div class="vt-bas"><span class="vt-ikon"><i class="fa-solid ${ikon}" aria-hidden="true"></i></span><div><h3>${ad}</h3><p>${alt}</p></div></div><div class="vt-liste">${kartlar.map(vitrinKart).join('')}</div><a class="see-all" href="${bag}">${bagAd} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div>`;
+const vitrin = `<section class="gm-vitrin gm-sec--light"><div class="wrap"><div class="gm-ev-head"><span class="eyebrow">Vitrin</span></div><h2 class="vt-baslik">Şef masasından esnaf durağına, üreticiye</h2><div class="vt-izgara">${vitrinSutun('fa-gem', 'Lüks Restoranlar', 'Şef masaları ve manzaralı sofralar', '{{kok}}mekanlar/?konsept=luks', 'Tümünü Gör', luks)}${vitrinSutun('fa-store', 'Tarihi Esnaf Durakları', 'Ustadan çırağa geçen lezzetler', '{{kok}}mekan-bul/?amac=esnaf', 'Esnaf Ara', [{ ad: 'Örnek esnaf lokantası', alt: 'Şehir ve semt burada görünür', gorsel: O + 'konsept-geleneksel.webp', bag: '{{kok}}mekan-bul/?amac=esnaf', ornek: 1 }, { ad: 'Örnek tarihi durak', alt: 'Şehir ve semt burada görünür', gorsel: O + 'konsept-tarihi.webp', bag: '{{kok}}mekan-bul/?amac=esnaf', ornek: 1 }])}${vitrinSutun('fa-basket-shopping', 'Yerel Üreticiler', 'Paketli yerel ürünler ve kooperatifler', '{{kok}}dada-route/', 'Rotada Gör', [{ ad: 'Örnek yerel üretici', alt: 'Ürün ve bölge burada görünür', gorsel: O + '9741.webp', bag: '{{kok}}dada-route/', ornek: 1 }, { ad: 'Örnek kooperatif', alt: 'Ürün ve bölge burada görünür', gorsel: O + 'konsept-doga-icinde.webp', bag: '{{kok}}dada-route/', ornek: 1 }])}</div></div></section>`;
 p = await ac(dom('o-home'));
-yaz('index', { yol: '', baslik: 'Lezzetin rotasını keşfet', zincir: 'hakkimizda', gourmet: true, css: ['anasayfa.css', 'gourmet-sapma'], js: ['assets/js/sayfa/ana.js'], govdeSinif: 'pg-anasayfa', donor: 'https://dadagourmet.com/ (gövde) + https://dadagastro.com/ (kabuk)' }, await p.evaluate(({ trKart }) => { kok(document.body); const m = document.querySelector('main');
+yaz('index', { yol: '', baslik: 'Lezzetin rotasını keşfet', zincir: 'hakkimizda', gourmet: true, css: ['anasayfa.css', 'gourmet-sapma'], js: ['assets/js/sayfa/ana.js'], govdeSinif: 'pg-anasayfa', donor: 'https://dadagourmet.com/ (gövde) + https://dadagastro.com/ (kabuk)' }, await p.evaluate(({ trKart, vitrin }) => { kok(document.body); const m = document.querySelector('main');
   // K6: "saklı esnaf" sözü içerik eşiği dolana kadar kalkar
   metin(m, /Saklı esnaf lokantalarından lezzet rotalarına — Türkiye'nin lezzet haritası, sana göre\./, 'Şef masalarından yerel lezzet noktalarına, şehir şehir rotalara: Türkiye\'nin lezzet haritası sana göre.');
   metin(m, /manzaralı sofradan saklı esnaf lokantasına\./, 'manzaralı sofradan yerel lezzet noktasına.');
@@ -25,7 +33,8 @@ yaz('index', { yol: '', baslik: 'Lezzetin rotasını keşfet', zincir: 'hakkimiz
   m.querySelectorAll('.gm-facet').forEach((a) => { if (/Esnaf/.test(a.textContent)) a.parentNode.removeChild(a); else if (/Kahvaltı/.test(a.textContent)) a.setAttribute('href', '{{kok}}mekanlar/?vesile=kahvalti'); else if (/Kebap/.test(a.textContent)) a.setAttribute('href', '{{kok}}mekanlar/?mutfak=kebap-ocakbasi'); else if (/Deniz/.test(a.textContent)) a.setAttribute('href', '{{kok}}mekanlar/?mutfak=deniz-urunleri'); });
   // W1.3a: vitrinde önce Türkiye'deki etkinlikler
   if (trKart.length) m.querySelector('#evTrack').innerHTML = trKart.join('');
-  return m.innerHTML; }, { trKart }));
+  m.querySelector('.catstrip').insertAdjacentHTML('afterend', vitrin);
+  return m.innerHTML; }, { trKart, vitrin }));
 
 // --- Mekânlar ---
 // Ülke → Şehir → İlçe → Semt: İlçe ve Semt grupları canlıda seçimle gelir; aynı DOM statik olarak bir örnek şehir için alınır
