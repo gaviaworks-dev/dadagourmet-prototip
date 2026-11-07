@@ -46,6 +46,8 @@ Kırılma noktaları `dadadiet-prototip` ile aynı: 640, 860, 1024. Kanon dosyal
 - Mekânlar: 641-900 arasında iki sütun; kart adı, süzgeç satırı, etkinlik konumu kesilmez.
 - Üye sayfaları: `gourmet.css` yüklenmediği için Route düğmesi ve başa dön kuralları `prototip.css`'e aynen alındı; seçili sekme açılışta görünür alana gelir.
 - Süzgeç sayfası açıkken yüzen düğmeler gizlenir.
+- Yasal menü 1024 ve altında tek satır kayan şerit; seçili kalem açılışta görünür. Kural `prototip.css`'te, çünkü kurumsal zincir `gourmet-sapma.css` yüklemiyor.
+- Mekân Bul düğmeleri 640 ve altında tek satır. Ekran haritası başlığı sabit başlığın altında kalmaz.
 
 ## Rotayı telefona gönder
 
