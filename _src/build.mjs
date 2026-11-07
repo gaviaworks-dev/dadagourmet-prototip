@@ -113,7 +113,9 @@ const yazimDuzelt = (h) => h.split(/(<script[\s\S]*?<\/script>|<style[\s\S]*?<\/
 const NITELIK = [['ulasim', 'vale', 'fa-square-parking', 'Vale'], ['ulasim', 'otopark', 'fa-square-parking', 'Otopark'], ['beslenme', 'glutensiz', 'fa-wheat-awn-circle-exclamation', 'Glütensiz seçenek'], ['hizmet', 'evcil-hayvan-dostu', 'fa-paw', 'Evcil hayvan kabul edilir'], ['hizmet', 'bebek-sandalyesi', 'fa-baby', 'Bebek sandalyesi']];
 const mekanBySlug = Object.fromEntries((veri['mekan-filtre']?.mekanlar ?? []).map((m) => [m.slug, m]));
 const nitelikIkon = (m) => { const l = NITELIK.filter(([g, d]) => m?.f?.[g]?.includes(d)); const tekil = l.filter(([, d], i) => !(d === 'otopark' && l.some(([, x]) => x === 'vale'))); return tekil.length ? `<div class="kart-nitelik">${tekil.map(([, , i, a]) => `<span class="kn" title="${a}" aria-label="${a}"><i class="fa-solid ${i}" aria-hidden="true"></i></span>`).join('')}</div>` : ''; };
-const kartZengin = (k, m) => k.replace('<div class="disc-meta">', nitelikIkon(m) + '<div class="disc-meta">');
+// Puanı olmayan kartta yıldız ve tire görünmez (AK-30 kuralı kartın tamamına)
+const puansizSil = (h) => h.replace(/<span class="r-rate r-yok"[^>]*>\s*<i[^>]*><\/i>\s*<span aria-hidden="true">–<\/span>\s*<\/span>/g, '');
+const kartZengin = (k, m) => puansizSil(k).replace('<div class="disc-meta">', nitelikIkon(m) + '<div class="disc-meta">');
 const uretimDosyalari = [...uretilen.map((u) => u.yol), 'ekranlar'].map((y) => path.join(KOK, y, 'index.html'));
 for (const f of uretimDosyalari) {
   const s = fs.readFileSync(f, 'utf8').replace(/<article class="disc-card[^"]*"[^>]*data-git="[^"]*mekan\/([a-z0-9-]+)\/"[\s\S]*?<\/article>/g, (k, slug) => kartZengin(k, mekanBySlug[slug])).replace(/href="((?:\.\.\/)*|\.\/)([a-z0-9][^"#?]*?)\/?((?:[?#][^"]*)?)"/g, (m, on, y, ek) => {
@@ -121,7 +123,7 @@ for (const f of uretimDosyalari) {
     const ev = /^etkinlikler\/([a-z0-9-]+)$/.exec(y); if (ev) return `href="${on}etkinlik-detay/?e=${ev[1]}"`;
     const k = yolBag(on, y, ek); return `href="${k || './'}"`;
   }).replace(/data-git="((?:\.\.\/)*|\.\/)(?:https:\/\/dadagourmet\.com\/)?([a-z0-9][^"#?]*?)\/?"/g, (m, on, y) => (varOlan.has(y) ? `data-git="${on}${y}/"` : `data-git="${yolBag(on, y, '') || './'}"`));
-  fs.writeFileSync(f, yazimDuzelt(s));
+  fs.writeFileSync(f, yazimDuzelt(puansizSil(s)));
 }
 // Mekânlar süzgecinin istemci verisi: tek kaynak _src/veri ve _src/parcalar
 if (veri['mekan-filtre']) { const kartlar = JSON.parse(oku(path.join(SRC, 'parcalar/mekan-kartlar.json'))); const { mekanlar, secenek, alinma } = veri['mekan-filtre']; for (const slug of Object.keys(kartlar)) kartlar[slug] = kartZengin(kartlar[slug], mekanBySlug[slug]); fs.writeFileSync(path.join(KOK, 'assets/js/mekan-liste-veri.js'), 'window.DG_LISTE=' + JSON.stringify({ alinma, mekanlar, secenek, kartlar }) + ';\n'); }

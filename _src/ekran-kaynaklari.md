@@ -37,6 +37,10 @@ Kısaltma: G = dadagastro.com canlı render, O = dadagourmet.com canlı render, 
 | Hukuki örnek | `/yasal/kvkk` | O gövde, G zinciri | Unvan, Adres, E-posta Gastro değerleri; MERSİS, vergi ve KEP satırları ile taslak bandı yok | K5 güncellemesi: yer tutucu basılmaz |
 | Ekran haritası | `/ekranlar` | Yok, derleyici çıktısı | Yeni | Onay turu için liste |
 
+## Puansız kart
+
+Canlıda 203 mekânın değerlendirmesi yok. Kartta `★ –` basılmaz; derleyici `r-rate r-yok` parçasını siler, görüntülenme sayısı kalır. Puan gelen kartta `r-rate` olduğu gibi durur.
+
 ## Sıfır sonuç
 
 Konsept kartları, konsept şeridi ve süzgeç seçeneklerinde 0 sonuçlu kalem gizlidir (W1.1, K8). Derleyici `/`, `/mekanlar`, `/etkinlikler` için denetler, kalırsa hata verir. Mekân Bul bilerek ayrıdır: Beyar talimatıyla veri olmayan seçenek görünür, boş sonuç ve öneri verir.
