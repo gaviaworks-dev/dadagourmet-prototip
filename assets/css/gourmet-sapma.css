@@ -54,3 +54,7 @@
 .mkl-oneri{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:12px 0}
 label.fct-row.xtra{display:none}.fct.more-open label.fct-row.xtra:not([hidden]){display:flex}
 .pg-gap{padding:0 4px;color:var(--muted,#6f6f6f)}
+/* Ana sayfa hero: Gastro `.ke-top` kuralı canlı Gourmet tam ekranını eziyordu. Canlı ölçü: 100svh + 22 px bant payı, içerik ortada */
+body.pg-anasayfa .ke-top{min-height:calc(100svh + 22px);padding-bottom:22px;display:flex;flex-direction:row;justify-content:flex-start;align-items:center}
+@media(max-width:640px){body.pg-anasayfa .ke-top{align-items:flex-start}}
+body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
