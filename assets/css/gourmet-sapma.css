@@ -212,3 +212,10 @@ button.yg-il-cip{display:inline-flex;align-items:center;gap:5px;font-family:inhe
 
 /* Süzgeç sayfası açıkken yüzen düğmeler sayfanın kapat ve uygula düğmesinin üstüne biniyordu */
 html:has(.lst-side.open) :is(.yg-fab,.to-top,.feedback-tab,.fb-rail){display:none}
+
+/* Yasal menü: 32 kalem dar ekranda metni bir ekran aşağı itiyordu; kanon şerit kalıbıyla tek satır kayar */
+@media(max-width:1024px){
+  .lg-menu{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-block:5px}
+  .lg-menu::-webkit-scrollbar{display:none}
+  .lg-menu a{flex:none;white-space:nowrap}
+}

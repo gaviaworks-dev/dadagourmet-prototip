@@ -138,8 +138,8 @@
   }, true);
   /* Sekme şeridi kaydırılabilir: seçili sekme açılışta görünür alana gelir. Sayfa kaymaz, yalnız şerit */
   window.addEventListener('load', function () {
-    [].forEach.call(document.querySelectorAll('.sekmeler'), function (s) {
-      var a = s.querySelector('.aktif'); if (!a || s.scrollWidth <= s.clientWidth) { return; }
+    [].forEach.call(document.querySelectorAll('.sekmeler,.lg-menu'), function (s) {
+      var a = s.querySelector('.aktif,.active'); if (!a || s.scrollWidth <= s.clientWidth) { return; }
       s.scrollLeft = a.offsetLeft - s.offsetLeft - (s.clientWidth - a.offsetWidth) / 2;
     });
   });
