@@ -238,3 +238,14 @@ body.pg-gurme-lezzetler-detay .art-hero h1{font-size:clamp(30px,3.5vw,44px)}
   body.pg-gurme-lezzetler .ke-filter{padding-top:4px}
   body.pg-gurme-lezzetler-detay .art-col p{text-align:left}
 }
+
+/* Şehir Rehberleri: kabuk zinciri `pg-hakkimizda` sınıfını taşır; fotoğraf ve banner ortalaması canlıda yok. Değerler canlı `hakkimizda-uyarlama.css`, `banner-uyarlama.css` */
+body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .lst-top{background-image:linear-gradient(90deg,rgba(28,25,18,.93),rgba(33,30,22,.72))}
+body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) section.below-header.lst-top:not(#_):not(#_){padding-bottom:48px}
+body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) section.below-header:not(#_)>.wrap>nav+.lst-hero:last-child{margin-bottom:0;padding-top:10px;padding-bottom:42px}
+body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .page-main p{text-wrap:wrap}
+@media(max-width:1024px){body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) section.below-header:not(#_)>.wrap>nav+.lst-hero:last-child{padding-bottom:32px}}
+@media(max-width:640px){
+  body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) section.below-header:not(#_)>.wrap>nav+.lst-hero:last-child{padding-top:2px;padding-bottom:26px}
+  body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) :is(.lst-hero .lead p,.seo-prose p){text-align:start}
+}

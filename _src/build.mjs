@@ -125,6 +125,7 @@ for (const f of uretimDosyalari) {
     if (y.startsWith('assets/') || y === 'dada-route/?durak' || /^[a-z]+:/.test(y) || /\.[a-z0-9]+$/i.test(y) || varOlan.has(y)) return m;
     const ev = /^etkinlikler\/([a-z0-9-]+)$/.exec(y); if (ev) return `href="${on}etkinlik-detay/?e=${ev[1]}"`;
     const lz = /^gurme-lezzetler\/([a-z0-9-]+)$/.exec(y); if (lz) return `href="${on}gurme-lezzet-detay/?l=${lz[1]}"`;
+    const sr = /^sehir-rehberleri\/([a-z0-9-]+)$/.exec(y); if (sr) return `href="${on}sehir-rehberi-detay/?s=${sr[1]}"`;
     const k = yolBag(on, y, ek); return `href="${k || './'}"`;
   }).replace(/data-git="((?:\.\.\/)*|\.\/)(?:https:\/\/dadagourmet\.com\/)?([a-z0-9][^"#?]*?)\/?"/g, (m, on, y) => (varOlan.has(y) ? `data-git="${on}${y}/"` : `data-git="${yolBag(on, y, '') || './'}"`));
   fs.writeFileSync(f, yazimDuzelt(puansizSil(s)));

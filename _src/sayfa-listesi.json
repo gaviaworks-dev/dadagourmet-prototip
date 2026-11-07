@@ -105,6 +105,16 @@
   "duzen": "public"
  },
  {
+  "yol": "sehir-rehberi-detay",
+  "baslik": "İstanbul · Şehir Rehberi",
+  "duzen": "public"
+ },
+ {
+  "yol": "sehir-rehberleri",
+  "baslik": "Şehir Rehberleri",
+  "duzen": "public"
+ },
+ {
   "yol": "sifre-yenile",
   "baslik": "Yeni Şifre",
   "duzen": "public"
