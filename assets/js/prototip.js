@@ -53,6 +53,11 @@
     sil: function (tur, id) { var v = hepsi(); v[tur] = (v[tur] || []).filter(function (k) { return k.id !== id; }); sakla(v); },
     var: function (tur, id) { return (hepsi()[tur] || []).some(function (k) { return k.id === id; }); }
   };
+  /* Dada Puan: şartname değerleri. Gönderimde bekler, onayda kesinleşir (§8 #6, #18) */
+  window.dgPuan = {
+    KURAL: { yorum: 15, oneri: 50, puanlama: 2, rezervasyon: 25 },
+    ekle: function (id, ad, tutar) { window.dgKayit.ekle('puan', { id: id, ad: ad, tutar: tutar }); }
+  };
   /* Giriş isteyen eylem: misafiri girişe götürür, sonra aynı sayfaya döner */
   window.dgUye = function () { if (uye) { return true; } location.href = kok + 'giris/?donus=' + encodeURIComponent((document.documentElement.dataset.yol || '') + '/'); return false; };
   document.addEventListener('DOMContentLoaded', function () {
@@ -78,6 +83,16 @@
       return;
     }
     if (f.id === 'formYeniSifre') { e.stopImmediatePropagation(); location.href = kok + 'giris/?yenilendi=1'; return; }
+    if (f.id === 'moForm') {
+      e.stopImmediatePropagation();
+      if (!uye) { window.dgUye(); return; }
+      var ad = f.elements.name.value.trim() || 'Mekân önerisi', id = 'oneri-' + Date.now();
+      window.dgKayit.ekle('oneri', { id: id, ad: ad, yer: f.elements.location.value.trim() });
+      window.dgPuan.ekle(id, ad + ' önerisi', window.dgPuan.KURAL.oneri);
+      f.reset(); document.getElementById('moClose').click();
+      bildir('Önerin Topluluk Katkılarım\'a işlendi. +' + window.dgPuan.KURAL.oneri + ' bekleyen puan.');
+      return;
+    }
     bildir('Prototip: form gönderilmedi.');
   }, true);
   /* Konum penceresi: canlı `#lkModal` DOM'u. Seçim bu tarayıcıda kalır, sunucuya gitmez. Tarayıcı izni yalnız düğmeye basınca istenir. */
@@ -95,6 +110,18 @@
     }
     return false;
   };
+  /* Giriş kapısı: canlı `#lgGate` penceresi. Üyede eylem kendi betiğine düşer */
+  var kapiAc = function (on, t) {
+    var g = document.getElementById('lgGate'), o = document.getElementById('lgOverlay'); if (!g) { return; }
+    [g, o].forEach(function (x) { x.classList.toggle('show', on); x.classList.toggle('open', on); });
+    if (on) { document.getElementById('lgGateTitle').textContent = t.dataset.lgTitle || g.dataset.defTitle; document.getElementById('lgGateDesc').textContent = t.dataset.lgDesc || g.dataset.defDesc; }
+  };
+  var kapiOlay = function (e) {
+    var t = e.target; if (!t.closest) { return false; }
+    if (t.closest('[data-lg-close]') || t.id === 'lgOverlay') { kapiAc(false); return true; }
+    var k = t.closest('[data-lg-gate]'); if (k && !uye) { e.preventDefault(); e.stopImmediatePropagation(); kapiAc(true, k); return true; }
+    return false;
+  };
   document.addEventListener('click', function (e) {
     var cikis = e.target.closest && e.target.closest('[data-cikis]');
     if (cikis) { e.preventDefault(); e.stopImmediatePropagation(); oturumYaz(false); location.href = kok; return; }
@@ -103,8 +130,9 @@
     if (konumOlay(e)) { return; }
     var oner = e.target.closest && e.target.closest('[data-mo-open],#mekanOnerBtn');
     var mo = document.getElementById('moModal'), moO = document.getElementById('moOverlay');
-    if (oner && mo) { e.preventDefault(); mo.classList.add('show', 'open'); moO.classList.add('show', 'open'); return; }
-    if (mo && (e.target === moO || (e.target.closest && e.target.closest('#moModal .fb-close')))) { mo.classList.remove('show', 'open'); moO.classList.remove('show', 'open'); return; }
+    if (oner && mo) { e.preventDefault(); mo.classList.add('show', 'open'); moO.classList.add('show', 'open'); mo.removeAttribute('inert'); if (!mo.querySelector('.mo-puan')) { mo.querySelector('.mo-foot').insertAdjacentHTML('beforebegin', '<p class="mo-puan"><i class="fa-solid fa-award" aria-hidden="true"></i> Editör onayında +' + window.dgPuan.KURAL.oneri + ' Dada Puan kesinleşir. Onaya kadar bekleyen puan olarak görünür.</p>'); } return; }
+    if (mo && (e.target === moO || (e.target.closest && e.target.closest('#moModal .fb-close,#moCancel')))) { mo.classList.remove('show', 'open'); moO.classList.remove('show', 'open'); mo.setAttribute('inert', ''); return; }
+    if (kapiOlay(e)) { return; }
     var git = e.target.closest && e.target.closest('[data-git]');
     if (git) { location.href = git.getAttribute('data-git'); }
   }, true);

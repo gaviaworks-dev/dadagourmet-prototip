@@ -140,3 +140,12 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 /* Rezervasyon penceresi: boş hata kutusu ve üst görsel */
 #rsvClientError[hidden]{display:none}
 .rsv-av{background:url("../o/medya/252-400.webp") center/cover no-repeat}
+
+/* Değerlendirme üç kriter ve Dada Puan */
+.rf-kriterler{display:grid;gap:6px;margin-bottom:12px}.rf-kriter{display:flex;align-items:center;gap:12px}.rf-kriter>span:first-child{width:76px;font-size:13.5px;font-weight:700}
+.rf-puan{margin:10px 0 0;font-size:13px;color:var(--slate)}.rf-puan i{color:var(--marka,#742982)}
+.rev-form.sent .rf-puan,.rev-form.sent .rf-kriterler{display:none}
+body:not(.is-auth) .rev-form{display:none}
+.mo-puan{margin:0 0 14px;font-size:12.5px;color:var(--muted,#6f6f6f)}.mo-puan i{color:var(--marka,#742982)}
+.kimlik-puan{margin:6px 0 0;font-size:13.5px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}.kimlik-puan i{color:var(--marka,#742982)}
+.puan-bolum{padding:6px 16px 12px}.puan-bolum h3{margin:12px 0 6px;font-size:16px}

@@ -1,5 +1,5 @@
 // Gurme Panelim (K3): Hesabım'dan ayrı alan, şartnamedeki 6 sekme (W2.5). Kabuk ve satır DOM'u donör go-mekanlarim render'ı.
-// Puan Durumu yapısal: puan önce bekleyen görünür, onayda kesinleşir (§8 kararı); tutar yazılmaz.
+// Puan Durumu: şartname değerleri; puan önce bekleyen görünür, onayda kesinleşir (§8 kararı). Tutar örnekleri etiketli.
 import fs from 'node:fs'; import path from 'node:path'; import { fileURLToPath } from 'node:url';
 const SRC = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const s = JSON.parse(fs.readFileSync(path.join(SRC, 'parcalar/gurme-panel-iskelet.json'), 'utf8'));
@@ -11,7 +11,7 @@ const SEKME = [
   ['ziyaret-gecmisim', 'fa-circle-check', 'Ziyaret Geçmişim', 'Ziyaret', 'Ziyaret geçmişin', 'İşaretlediğin ziyaretler tarih sırasıyla.'],
   ['degerlendirmelerim', 'fa-star', 'Değerlendirmelerim', 'Değerlendirme', 'Değerlendirmelerin', 'Yazdığın değerlendirmeler ve durumları.'],
   ['topluluk-katkilarim', 'fa-location-dot', 'Topluluk Katkılarım', 'Katkı', 'Mekân ve etkinlik önerilerin', 'Önerilerin ve inceleme durumları.'],
-  ['puan-durumu', 'fa-award', 'Puan Durumu', 'Puan', 'Puan durumun', 'Bekleyen puanın onaydan sonra kesinleşir.'],
+  ['puan-durumu', 'fa-award', 'Puan Durumu', 'Puan', 'Dada Puan durumun', 'Bekleyen puanın onaydan sonra kesinleşir.'],
 ];
 const satir = (ikon, ad, alt, rozet) => `<div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid ${ikon}" aria-hidden="true"></i></span><span class="ks-metin"><b>${ad}</b><small>${alt}</small></span><span class="ks-uc"><span class="rozet pasif">${rozet}</span></span></div>`;
 const bos = (ikon, b, m) => `<div class="bos-durum"><span class="bos-ikon"><i class="fa-regular ${ikon}" aria-hidden="true"></i></span><h4>${b}</h4><p>${m}</p></div>`;
@@ -20,8 +20,8 @@ const ICERIK = {
   'gurme-favorilerim': satir('fa-utensils', 'Mikla', 'Mekân · Beyoğlu, İstanbul', 'Mekân') + satir('fa-bowl-food', 'Örnek imza tabak', 'Tabak · Mikla', 'Tabak'),
   'ziyaret-gecmisim': satir('fa-circle-check', 'Mikla', 'Beyoğlu, İstanbul · Örnek tarih', 'Ziyaret edildi'),
   'degerlendirmelerim': bos('fa-star', 'Henüz değerlendirmen yok', 'Ziyaret ettiğin bir mekânı değerlendirdiğinde burada görünür.'),
-  'topluluk-katkilarim': satir('fa-location-dot', 'Örnek mekân önerisi', 'Mekân önerisi', 'İnceleniyor') + satir('fa-calendar-days', 'Örnek etkinlik önerisi', 'Etkinlik önerisi', 'Yayında'),
-  'puan-durumu': `<div class="puan-yapi"><div class="sayac"><i class="fa-solid fa-award" aria-hidden="true"></i><div><span>Toplam puan</span><b>—</b></div></div><div class="sayac"><i class="fa-solid fa-medal" aria-hidden="true"></i><div><span>Rütbe</span><b>—</b></div></div><div class="sayac"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><div><span>Bekleyen puan</span><b>—</b></div></div></div>${bos('fa-hourglass', 'Puan hareketin yok', 'Değerlendirme ve öneri gibi katkıların önce bekleyen puan olarak görünür, onaydan sonra kesinleşir.')}`,
+  'topluluk-katkilarim': satir('fa-location-dot', 'Örnek mekân önerisi', 'Mekân önerisi', 'İnceleniyor · +50 bekleyen') + satir('fa-calendar-days', 'Örnek etkinlik önerisi', 'Etkinlik önerisi', 'Yayında · +50 kesinleşti'),
+  'puan-durumu': `<div class="puan-yapi"><div class="sayac"><i class="fa-solid fa-award" aria-hidden="true"></i><div><span>Kesinleşen puan</span><b data-puan="kesin">—</b></div></div><div class="sayac"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i><div><span>Bekleyen puan</span><b data-puan="bekleyen">—</b></div></div><div class="sayac"><i class="fa-solid fa-medal" aria-hidden="true"></i><div><span>Rütbe</span><b>—</b></div></div></div><div class="puan-bolum"><h3>Puan nasıl kazanılır?</h3>${satir('fa-comment-dots', 'Yorum veya fotoğraf', 'Moderasyon onayında kesinleşir', '+15')}${satir('fa-location-dot', 'Mekân veya etkinlik önerisi', 'Editör onayında kesinleşir', '+50')}${satir('fa-star', 'Puanlama', 'Moderasyon onayında kesinleşir', '+2')}${satir('fa-calendar-check', 'Gerçekleşen rezervasyon', 'Mekân sahibi onayı ve ziyaretten sonra kesinleşir', '+25')}</div><div class="puan-bolum"><h3>Puan hareketleri</h3><div id="puanDefter">${satir('fa-calendar-days', 'Örnek etkinlik önerisi', 'Editör onayladı', '+50 kesinleşti')}${satir('fa-location-dot', 'Örnek mekân önerisi', 'İnceleniyor', '+50 bekliyor')}</div></div>`,
 };
 const bas = (a, b, c, ek) => `<div class="bolum-bas"><div><span class="ust-etiket">${a}</span><h2>${b}</h2><p class="giris-metni">${c}</p></div><div class="bolum-araclar">${ek}</div></div>`;
 export default function () {
