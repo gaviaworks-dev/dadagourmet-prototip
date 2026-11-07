@@ -13,5 +13,7 @@
     dugmeler.forEach(function (b) { b.addEventListener('click', function () { goster(b); }); });
     var hash = location.hash.replace('#', ''); var ilk = dugmeler.filter(function (b) { return b.dataset.tab === hash; })[0] || dugmeler.filter(function (b) { return b.classList.contains('aktif'); })[0] || dugmeler[0];
     goster(ilk);
+    /* Aynı sayfadaki zil ve menü bağı yalnız hash değiştirir, sayfa yenilenmez */
+    window.addEventListener('hashchange', function () { var b = dugmeler.filter(function (x) { return x.dataset.tab === location.hash.replace('#', ''); })[0]; if (b) { goster(b); } });
   });
 })();
