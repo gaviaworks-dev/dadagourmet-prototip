@@ -164,3 +164,11 @@ button.yg-il-cip{display:inline-flex;align-items:center;gap:5px;font-family:inhe
 .yg-il-cip[aria-pressed="true"]{background:var(--marka);border-color:var(--marka);color:#fff}.yg-il-cip[aria-pressed="true"] i::before{content:"\f00c"}
 .yg-kl-durak{flex:none;padding:6px 10px;border:1px solid var(--marka-cizgi);border-radius:var(--yuvarlak-sm);background:var(--paper);color:var(--marka-koyu);font:inherit;font-size:12px;font-weight:700;cursor:pointer}
 .yg-kl-durak[aria-pressed="true"]{background:var(--marka-yikama)}
+
+/* Navigasyona aktarım */
+.yg-aktar{margin:20px 0}.yg-aktar[hidden]{display:none}.yg-aktar-sayi{font-size:12px;font-weight:700;color:var(--muted,#6f6f6f)}
+.yg-aktar-liste{display:grid;gap:8px}
+.yg-aktar-bag{display:flex;align-items:center;gap:10px;min-height:44px;padding:9px 12px;border:1px solid var(--line);border-radius:var(--yuvarlak-md);background:var(--paper);color:var(--slate);font-size:13.5px;text-decoration:none}
+.yg-aktar-bag:hover{border-color:var(--marka);color:var(--marka-koyu)}.yg-aktar-bag>i:first-child{flex:0 0 18px;text-align:center;color:var(--marka)}
+.yg-aktar-bag span{flex:1;min-width:0;display:flex;flex-direction:column}.yg-aktar-bag b{font-weight:700}.yg-aktar-bag small{font-size:11.5px;color:var(--muted,#6f6f6f)}.yg-aktar-ok{font-size:11px;color:var(--muted,#6f6f6f)}
+.yg-aktar-not{margin:8px 0 0;font-size:12px;line-height:1.4;color:var(--muted,#6f6f6f)}.yg-aktar-not:empty{display:none}

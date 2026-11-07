@@ -67,11 +67,33 @@
     R.iller.forEach(function (i) { var k = $('.yg-il-kart[data-il="' + i.il + '"]'), on = !ozet.hidden && uzak(i) <= IL_KM; k.hidden = !on; if (on) { gor++; } });
     iller.hidden = !gor;
   };
-  var hepsi = function () { ilEsle(); yenile(); };
+  /* Navigasyona aktarım. Sınırlar `mobil-arastirma.md` §4.1: Google 9 ara durak, mobil tarayıcıda 3; Apple iOS 18.4 ve macOS 15.4 sonrası çok durak;
+     Yandex web `rtext` çok durak taşır, uygulamada yalnız kalkış ve varış belgeli. Sınır aşılırsa rota etaplara bölünür. */
+  var mobil = function () { return window.matchMedia('(max-width: 767px), (pointer: coarse)').matches; };
+  var kor = function (n) { return (+n.lat).toFixed(5) + ',' + (+n.lng).toFixed(5); };
+  var etaplar = function (z, sinir) { var l = [], i = 0; while (i < z.length - 1) { var son = Math.min(i + sinir + 1, z.length - 1); l.push(z.slice(i, son + 1)); i = son; } return l; };
+  var googleBag = function (z) { var a = z.slice(1, -1); return 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(kor(z[0])) + '&destination=' + encodeURIComponent(kor(z[z.length - 1])) + (a.length ? '&waypoints=' + encodeURIComponent(a.map(kor).join('|')) : '') + '&travelmode=driving'; };
+  var appleBag = function (z) { return 'https://maps.apple.com/directions?source=' + encodeURIComponent(kor(z[0])) + '&destination=' + encodeURIComponent(kor(z[z.length - 1])) + z.slice(1, -1).map(function (n) { return '&waypoint=' + encodeURIComponent(kor(n)); }).join('') + '&mode=driving'; };
+  var yandexBag = function (z) { return 'https://yandex.com.tr/maps/?rtext=' + z.map(kor).join('~') + '&rtt=auto'; };
+  var kisa = function (n) { return String(n.ad).split(',')[0]; };
+  var aktarDugme = function (ikon, ad, l, bag) {
+    return l.map(function (z, i) { var etap = l.length > 1 ? ' · Etap ' + (i + 1) + '/' + l.length : ''; return '<a class="yg-aktar-bag" href="' + kac(bag(z)) + '" target="_blank" rel="noopener noreferrer"><i class="' + ikon + '" aria-hidden="true"></i><span><b>' + ad + etap + '</b>' + (l.length > 1 ? '<small>' + kac(kisa(z[0]) + ' → ' + kisa(z[z.length - 1])) + '</small>' : '') + '</span><i class="fa-solid fa-arrow-up-right-from-square yg-aktar-ok" aria-hidden="true"></i></a>'; }).join('');
+  };
+  var aktar = function () {
+    var api = window.dgRotaApi, z = api ? api.zincir() : [], kap = $('#ygAktar'); kap.hidden = z.length < 2 || ozet.hidden; if (kap.hidden) { return; }
+    var ara = z.length - 2, gSinir = mobil() ? 3 : 9, gl = etaplar(z, gSinir), not = [];
+    $('#ygAktarSayi').textContent = z.length + ' nokta · ' + ara + ' ara durak';
+    $('#ygAktarListe').innerHTML = aktarDugme('fa-brands fa-google', 'Google Maps', gl, googleBag) + aktarDugme('fa-brands fa-apple', 'Apple Maps', [z], appleBag) + aktarDugme('fa-brands fa-yandex', 'Yandex', [z], yandexBag);
+    if (gl.length > 1) { not.push('Google ' + (mobil() ? 'mobil tarayıcıda 3' : '9') + ' ara durak alır; rota ' + gl.length + ' etaba bölündü.'); }
+    if (ara) { not.push('Apple Maps çok durağı iOS 18.4 ve macOS 15.4 sonrasında açar.'); not.push('Yandex uygulaması yalnız kalkış ve varışı alabilir.'); }
+    $('#ygAktarNot').textContent = not.join(' ');
+  };
+  var hepsi = function () { ilEsle(); yenile(); aktar(); };
   window.addEventListener('dg-rota', function () { setTimeout(hepsi, 0); });
   new MutationObserver(hepsi).observe(ozet, { attributes: true, attributeFilter: ['hidden'] }); hepsi();
 
-  new MutationObserver(durakBoya).observe($('#ygStopList'), { childList: true, subtree: true });
+  new MutationObserver(function () { durakBoya(); aktar(); }).observe($('#ygStopList'), { childList: true, subtree: true });
+  var plan = $('#ygPlanList'); if (plan) { new MutationObserver(aktar).observe(plan, { childList: true, subtree: true }); }
   document.addEventListener('click', function (e) {
     var d = e.target.closest('[data-durak]');
     if (d && window.dgRotaApi) { if (d.getAttribute('aria-pressed') !== 'true') { window.dgRotaApi.durakYap({ ad: d.dataset.durak, lat: +d.dataset.lat, lng: +d.dataset.lng }); } durakBoya(); return; }
