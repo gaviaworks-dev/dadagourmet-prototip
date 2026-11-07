@@ -1,0 +1,574 @@
+<!--{"yol":"mekan/mikla","baslik":"Mikla","aktif":"mekanlar","zincir":"hakkimizda","gourmet":true,"css":["mekan-detay.css","shared/scroll-affordance.css","mekan-detay-uyarlama.css","mekan-karti-uyarlama.css","gourmet-sapma"],"js":["assets/vendor/maplibre/maplibre-gl.js","assets/js/harita.js","assets/o/assets/gourmet-public/js/shared/scroll-affordance.js","assets/js/sayfa/rez-takvim.js","assets/o/assets/gourmet-public/js/mekan-detay.js"],"govdeSinif":"pg-mekan-detay","donor":"https://dadagourmet.com/mekan/mikla + Backend Projects/dadagourmet/docs/referans-mekan-detay/sayfa-dom.html (K2)"}-->
+
+                        
+    <section class="below-header md-top">
+        <div class="wrap">
+            
+            <nav class="rd-crumb" aria-label="Sayfa yolu">
+                <a href="{{kok}}" aria-label="Ana sayfa"><i class="fa-solid fa-house" aria-hidden="true"></i></a>
+                <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                <a href="{{kok}}mekanlar/">Mekânlar</a>
+                <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                <b>Mikla</b>
+            </nav>
+
+            <div class="rd-gallery">
+    
+    <div class="rd-stage " id="mdStage" style="background-image:url('{{kok}}assets/o/medya/252-1600.webp')" data-cover-fallback="0">
+                <div class="md-stage-acts">
+                            
+                <button type="button" aria-label="Mekânı kaydet" data-lg-gate="" data-lg-title="Kaydetmek için giriş yap" data-lg-desc="Bu mekânı defterine kaydetmek ve beğendiklerini biriktirmek için Dada Gourmet hesabına giriş yap."><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button>
+                        <button id="mdShare" type="button" aria-label="Paylaş"><i class="fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i></button>
+            <div class="md-share-menu" id="mdShareMenu" hidden="">
+                <a href="https://wa.me/?text=Mikla+%E2%80%94+https%3A%2F%2Fdadagourmet.com%2Fmekan%2Fmikla" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp'ta Paylaş</a>
+                <button type="button" id="mdShareCopy" data-share-url="https://dadagourmet.com/mekan/mikla"><i class="fa-solid fa-link" aria-hidden="true"></i> Bağlantıyı Kopyala</button>
+            </div>
+        </div>
+                    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 2 fotoğraf</span></div>
+                <div class="rd-stage-info">
+            <div class="rd-badges">
+                                    <span class="tbadge t-user"><i class="fa-solid fa-utensils" aria-hidden="true"></i> Anadolu Mutfağı</span>
+                                                            </div>
+            <h1>Mikla</h1>
+            <div class="rd-rateline">
+                
+                                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 18 görüntülenme</span>
+                
+                                    <span class="md-state is-closed"><i class="fa-solid fa-circle-minus" aria-hidden="true"></i> Kapandı</span>
+                            </div>
+        </div>
+    </div>
+
+    <aside class="kunye-col" aria-label="Mekân künyesi">
+    <div class="kc-card">
+                    <div class="rdf"><i class="fa-solid fa-store" aria-hidden="true"></i><div><span>Konsept</span><b>Şef Restoranı</b></div></div>
+                            <div class="rdf"><i class="fa-solid fa-utensils" aria-hidden="true"></i><div><span>Mutfak</span><b>Anadolu Mutfağı</b></div></div>
+                
+                    <div class="rdf"><i class="fa-solid fa-turkish-lira-sign" aria-hidden="true"></i><div><span>Fiyat Aralığı</span><b>₺₺₺₺</b></div></div>
+                            <div class="rdf"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><div><span>Semt</span><b>Beyoğlu</b><small>İstanbul</small></div></div>
+                            <div class="rdf state  is-closed "><i class="fa-solid fa-clock" aria-hidden="true"></i><div><span>Şu An</span><b class="">Kapalı</b></div></div>
+        
+                    <div class="kc-chips">
+                <span class="kcl">Mekân Özellikleri</span>
+                
+                <div class="chip-row kc-marquee drag-scroll" role="group" aria-label="Mekân özellikleri">
+                    <div class="kc-marquee-track" style="--kc-marquee-duration:10s">
+                                                    <span class="chip"><i class="fa-solid fa-check" aria-hidden="true"></i>Rezervasyon</span>
+                                                    <span class="chip"><i class="fa-solid fa-check" aria-hidden="true"></i>Teras</span>
+                                                    <span class="chip"><i class="fa-solid fa-check" aria-hidden="true"></i>Vejetaryen</span>
+                                                                            <span class="chip" aria-hidden="true"><i class="fa-solid fa-check" aria-hidden="true"></i>Rezervasyon</span>
+                                                    <span class="chip" aria-hidden="true"><i class="fa-solid fa-check" aria-hidden="true"></i>Teras</span>
+                                                    <span class="chip" aria-hidden="true"><i class="fa-solid fa-check" aria-hidden="true"></i>Vejetaryen</span>
+                                            </div>
+                </div>
+            </div>
+        
+        
+                    <button class="btn btn-primary kc-reserve" id="openRsv" type="button"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Rezervasyon Yap</button><p class="kc-rez-not">Talebin işletmeye iletilir. <span class="ornek-etiket">prototip örneği</span></p><a class="btn kc-reserve btn-ghost" href="tel:+902122935656"><i class="fa-solid fa-phone" aria-hidden="true"></i> İşletmeyi Ara</a>
+        
+        
+                                <div class="kc-meta">
+                                    <span class="kc-fresh"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Bilgiler yakın zamanda doğrulandı</span>
+                                <span>Son güncelleme: 16 Eyl 2026</span>
+            </div>
+        
+        
+    </div>
+</aside>
+
+    
+            <div class="rd-thumbs" id="mdThumbs">
+            
+                            <div class="rd-thumb  active " aria-label="Mikla restoranından gece İstanbul manzarası" data-img="{{kok}}assets/o/medya/252-1600.webp" style="background-image:url('{{kok}}assets/o/medya/252-400.webp')"></div>
+                            <div class="rd-thumb " aria-label="Mikla restoranında hazırlanan tadım tabağı" data-img="{{kok}}assets/o/medya/253-1600.webp" style="background-image:url('{{kok}}assets/o/medya/253-400.webp')"></div>
+                                </div>
+    
+    
+    <div class="rd-head">
+                    <p class="rd-sub">The Marmara Pera’nın üst katındaki Mikla, Anadolu malzemelerini çağdaş tabaklarda sunan manzaralı bir İstanbul restoranı.</p>
+            </div>
+</div>
+
+            
+        </div>
+    </section>
+
+    <div class="pf-tabbar">
+        <div class="wrap">
+            <nav class="pf-tabs" id="mdTabs" aria-label="Mekân bölümleri">
+                <button class="dt  active " type="button" data-pane="genel"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Genel Bakış</button><button class="dt" type="button" data-pane="neyenir" aria-selected="false">Ne Yenir?</button><button class="dt" type="button" data-pane="nealinir" aria-selected="false">Ne Alınır?</button>
+                <button class="dt " type="button" data-pane="menu"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Menü</button>
+                <button class="dt " type="button" data-pane="yorumlar"><i class="fa-solid fa-comments" aria-hidden="true"></i> Yorumlar <span class="cnt">0</span></button>
+                <button class="dt " type="button" data-pane="adres"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Adres &amp; Saatler</button>
+                                    <button class="dt " type="button" data-pane="tarifler"><i class="fa-solid fa-bowl-food" aria-hidden="true"></i> Tarifler</button>
+                            </nav>
+        </div>
+    </div>
+
+    <section class="md-sec">
+        <div class="wrap">
+            <div class="md-layout">
+
+                <div class="md-main">
+                    <div class="md-pane  active " id="pane-genel">
+    <div class="rd-sec-head">
+        <div>
+            <span class="eyebrow"><i class="fa-solid fa-store" aria-hidden="true"></i> Mekân Hakkında</span>
+            <h2>Genel Bakış</h2>
+        </div>
+    </div>
+
+            <div class="md-about"><p>2005 yılında açılan Mikla, The Marmara Pera’nın üst katlarında İstanbul manzarasına karşı hizmet verir. Restoran, 2012’den bu yana “Yeni Anadolu Mutfağı” yaklaşımıyla yerel ürünleri ve üreticileri öne çıkarır.</p><p>Konuklar üç aşamalı à la carte ya da tadım menüsü arasında seçim yapabilir. Resmî site menünün günlük tedarike göre değiştiğini belirtir; güncel seçenekler rezervasyon sırasında doğrulanmalıdır.</p></div>
+    
+            <div class="note-duo">
+                                        <div class="editor-box">
+                    <span class="eb-ico"><i class="fa-solid fa-pen-nib" aria-hidden="true"></i></span>
+                    <div class="eb-body">
+                        <h4>Editör Notu <span class="eb-tag">Kaynak araştırması</span></h4>
+                        <div class="rb-html">Mikla’nın Yeni Anadolu Mutfağı yaklaşımı ile Pera üzerindeki konumu birlikte değerlendirmeye değer. Bu not yerinde ziyaret değil, kaynak araştırmasıdır.</div>
+                                            </div>
+                </div>
+                    </div>
+    
+            <div class="md-exp">
+            <div class="menu-cat-head">
+                <h3><i class="fa-solid fa-compass" aria-hidden="true"></i> Mekân Deneyimi</h3>
+                <span class="menu-cat-note">Gitmeden önce bilmekte fayda var</span>
+            </div>
+            <div class="ic-rows exp-rows">
+                                    <div class="ic-row">
+                        <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+                        <span><b>Atmosfer</b>Pera üzerinde şehir manzaralı restoran</span>
+                    </div>
+                                    <div class="ic-row">
+                        <i class="fa-solid fa-bell-concierge" aria-hidden="true"></i>
+                        <span><b>Servis Biçimi</b>À la carte ve tadım menüsü</span>
+                    </div>
+                                    <div class="ic-row">
+                        <i class="fa-solid fa-chair" aria-hidden="true"></i>
+                        <span><b>Oturma Alanı</b>Restoran ve çatı terası</span>
+                    </div>
+                            </div>
+        </div>
+    
+    
+            <div class="md-feats">
+            <div class="menu-cat-head">
+                <h3><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Mekân Ne İçin Uygun</h3>
+                <span class="menu-cat-note">Bu mekân hangi buluşmaya yakışır</span>
+            </div>
+            <div class="kc-chips">
+                <div class="chip-row drag-scroll" role="group" aria-label="Mekân ne için uygun">
+                                            <span class="chip"><i class="fa-solid fa-utensils" aria-hidden="true"></i>Akşam Yemeği</span>
+                                    </div>
+            </div>
+        </div>
+    
+            <div class="md-feats">
+            <div class="menu-cat-head">
+                <h3><i class="fa-solid fa-sliders" aria-hidden="true"></i> Mekân Özellikleri</h3>
+                <span class="menu-cat-note">Bu mekânda neler var</span>
+            </div>
+            <div class="kc-chips">
+                <div class="chip-row drag-scroll" role="group" aria-label="Mekân özellikleri">
+                                            <span class="chip"><i class="fa-solid fa-check" aria-hidden="true"></i>Rezervasyon</span>
+                                            <span class="chip"><i class="fa-solid fa-check" aria-hidden="true"></i>Teras</span>
+                                            <span class="chip"><i class="fa-solid fa-check" aria-hidden="true"></i>Vejetaryen</span>
+                                    </div>
+            </div>
+        </div>
+    </div><div class="md-pane" id="pane-neyenir"><section class="ny-bolum"><div class="ny-bas"><h3>Ne Yenir?</h3><span class="ornek-etiket">prototip örneği</span></div><p class="ny-alt">Bu mekânda denenmesi önerilen en fazla üç tabak.</p><div class="ny-izgara"><article class="ny-kart"><span class="ny-fig" aria-hidden="true"><i class="fa-solid fa-utensils"></i></span><div class="ny-govde"><h4>Örnek imza tabak</h4><p>İşletme veya editör girince burada görünür.</p><button class="btn btn-ghost ny-eylem" type="button" data-lg-gate=""><i class="fa-regular fa-heart" aria-hidden="true"></i> Favorilere Ekle</button></div></article><article class="ny-kart"><span class="ny-fig" aria-hidden="true"><i class="fa-solid fa-utensils"></i></span><div class="ny-govde"><h4>Örnek yöresel tabak</h4><p>Kısa tabak açıklaması bu alana gelir.</p><button class="btn btn-ghost ny-eylem" type="button" data-lg-gate=""><i class="fa-regular fa-heart" aria-hidden="true"></i> Favorilere Ekle</button></div></article><article class="ny-kart"><span class="ny-fig" aria-hidden="true"><i class="fa-solid fa-utensils"></i></span><div class="ny-govde"><h4>Örnek mevsim tabağı</h4><p>Kısa tabak açıklaması bu alana gelir.</p><button class="btn btn-ghost ny-eylem" type="button" data-lg-gate=""><i class="fa-regular fa-heart" aria-hidden="true"></i> Favorilere Ekle</button></div></article></div></section></div><div class="md-pane" id="pane-nealinir"><section class="ny-bolum"><div class="ny-bas"><h3>Ne Alınır?</h3><span class="ornek-etiket">prototip örneği</span></div><p class="ny-alt">Bölgeden paketli yerel ürünler. Bu sürümde bilgi ve yönlendirme var, satış yok.</p><div class="ny-izgara"><article class="ny-kart"><span class="ny-fig" aria-hidden="true"><i class="fa-solid fa-jar"></i></span><div class="ny-govde"><h4>Örnek paketli ürün</h4><p>Üretici veya kooperatif adı burada görünür.</p><button class="btn btn-ghost ny-eylem" type="button" data-lg-gate=""><i class="fa-solid fa-route" aria-hidden="true"></i> Rotama Ekle</button></div></article><article class="ny-kart"><span class="ny-fig" aria-hidden="true"><i class="fa-solid fa-jar"></i></span><div class="ny-govde"><h4>Örnek yerel ürün</h4><p>Kaynak ve doğrulama tarihi burada görünür.</p><button class="btn btn-ghost ny-eylem" type="button" data-lg-gate=""><i class="fa-solid fa-route" aria-hidden="true"></i> Rotama Ekle</button></div></article></div></section></div>
+                    <div class="md-pane " id="pane-menu">
+    <div class="menu-fulllist">
+        <div class="rd-sec-head">
+            <div>
+                <span class="eyebrow"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Mevsimin Listesi</span>
+                <h2>Tam Menü</h2>
+            </div>
+        </div>
+
+                    <div class="dish-note" style="margin-top:0"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> <span>Bu mekânın menüsü henüz girilmedi.</span></div>
+        
+        
+        <div class="menu-alert">
+            <span class="ma-ico"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></span>
+            <div class="ma-body">
+                <h3>Alerjen Bilgilendirmesi</h3>
+                                    <p>Bu mekân henüz alerjen bilgisi paylaşmadı — hassasiyetin varsa siparişten önce mutlaka sor.</p>
+                            </div>
+        </div>
+
+            </div>
+</div>
+                    <div class="md-pane " id="pane-yorumlar">
+    <div class="rd-sec-head">
+        <div>
+            <span class="eyebrow"><i class="fa-solid fa-comments" aria-hidden="true"></i> Topluluk Ne Diyor</span>
+            <h2>Yorumlar (0)</h2>
+        </div>
+    </div>
+
+    
+            <div class="rev-login" id="revLogin">
+            <span class="rl-ico"><i class="fa-solid fa-lock" aria-hidden="true"></i></span>
+            <div class="rl-body">
+                <b>Yorum yapmak için giriş yap</b>
+                <p>Bu mekânı değerlendirmek, puanlamak ve yorumlara katılmak için Dada Gourmet hesabına giriş yapman gerekiyor. Yorumları okumak serbest.</p>
+                <div class="rl-acts">
+                    <a class="btn btn-primary" href="{{kok}}giris/?donus=%2Fmekan%2Fmikla%3Ftab%3Dyorumlar"><i class="fa-solid fa-user" aria-hidden="true"></i> Giriş Yap</a>
+                    <a class="btn btn-ghost" href="{{kok}}kayit/">Üye Ol</a>
+                </div>
+            </div>
+        </div>
+    
+            
+        <div class="rev-empty-first">
+            <i class="fa-solid fa-comment-dots" aria-hidden="true"></i>
+            <p>Bu mekân için henüz onaylanmış bir yorum yok. İlk yazan sen ol.</p>
+        </div>
+    </div>
+                    <div class="md-pane " id="pane-adres">
+    <div class="rd-sec-head">
+        <div>
+            <span class="eyebrow"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Adres &amp; Çalışma Düzeni</span>
+            <h2>Adres &amp; Saatler</h2>
+        </div>
+                    <span class="hr-now  is-closed " style="margin-bottom:0"><i class="fa-solid  fa-circle-xmark " aria-hidden="true"></i> Kapalı</span>
+            </div>
+    <div class="ap-grid">
+                                <div class="ap-col" id="sube-2">
+                
+                <div class="menu-cat-head">
+                    <h3><i class="fa-solid fa-clock" aria-hidden="true"></i> Çalışma Saatleri</h3>
+                                    </div>
+                                    <div class="hours-table" style="margin-top:18px">
+                                                    <div class="hr-row ">
+                                <span class="hr-day">Pazartesi</span>
+                                <span class="hr-time">18:00 – 00:00</span>
+                            </div>
+                                                    <div class="hr-row ">
+                                <span class="hr-day">Salı</span>
+                                <span class="hr-time">18:00 – 00:00</span>
+                            </div>
+                                                    <div class="hr-row ">
+                                <span class="hr-day">Çarşamba</span>
+                                <span class="hr-time">18:00 – 00:00</span>
+                            </div>
+                                                    <div class="hr-row ">
+                                <span class="hr-day">Perşembe</span>
+                                <span class="hr-time">18:00 – 00:00</span>
+                            </div>
+                                                    <div class="hr-row ">
+                                <span class="hr-day">Cuma</span>
+                                <span class="hr-time">18:00 – 00:00</span>
+                            </div>
+                                                    <div class="hr-row  today ">
+                                <span class="hr-day">Cumartesi</span>
+                                <span class="hr-time">18:00 – 00:00</span>
+                            </div>
+                                            </div>
+                            </div>
+            </div>
+</div>
+                                            <div class="md-pane " id="pane-tarifler">
+    <div class="rd-sec-head">
+        <div>
+            <span class="eyebrow"><i class="fa-solid fa-fire-burner" aria-hidden="true"></i> Evde Dene</span>
+            <h2>Bu Mutfaktan Tarifler</h2>
+        </div>
+        <div class="md-tools">
+                        <a class="see-all" href="https://dadagastro.com/tarifler?mutfak=turk-mutfagi" rel="noopener">Tamamını Gör <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+    </div>
+    <div class="row-track drag-scroll" id="mdRecTrack">
+                    <a class="chip" href="https://dadagastro.com/tarifler?mutfak=turk-mutfagi" rel="noopener"><i class="fa-solid fa-utensils" aria-hidden="true"></i> Anadolu Mutfağı tarifleri · DadaGastro</a>
+            </div>
+</div>
+                                    </div>
+
+                <aside class="md-side" id="bilgi">
+                    <div class="info-card">
+            
+        <div class="map-mock" id="mdMapSide" data-lat="41.0310866" data-lng="28.9740165" data-name="Mikla" role="img" aria-label="Harita"></div>
+        <div class="ic-body">
+        <div class="ic-rows">
+                            <div class="ic-row"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span><b>Adres</b>The Marmara Pera, Meşrutiyet Caddesi No:15 · 34430</span></div>
+                                        <div class="ic-row"><i class="fa-solid fa-phone" aria-hidden="true"></i><span><b>Telefon</b><a href="tel:+902122935656">+90 (212) 293 5656</a></span></div>
+                    </div>
+                    <div class="ic-cta">
+                                    <a class="btn btn-primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&amp;destination=41.0310866,28.9740165"><i class="fa-solid fa-diamond-turn-right" aria-hidden="true"></i> Yol Tarifi</a>
+                                                    <a class="btn btn-ghost" href="tel:+902122935656"><i class="fa-solid fa-phone" aria-hidden="true"></i> Ara</a>
+                            </div>
+            </div>
+</div>
+                </aside>
+
+            </div>
+        </div>
+    </section><section class="md-rota-bant"><div class="wrap"><div class="md-rota-kutu"><span class="md-rota-ikon"><i class="fa-solid fa-route" aria-hidden="true"></i></span><div class="md-rota-metin"><b>Bu mekân yol üstünde mi?</b><span>Nereden nereye gittiğini yaz, güzergâhın boyunca uğrayabileceğin mekânları haritada gör.</span></div><a class="btn btn-primary" href="{{kok}}dada-route/?durak=mikla">Güzergâhını Planla <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div></section>
+
+    
+
+    
+            <section class="md-similar">
+    <div class="wrap">
+        <div class="sec-head">
+            <div>
+                <span class="eyebrow"><i class="fa-solid fa-compass" aria-hidden="true"></i> Keşfe Devam</span>
+                <h2>Benzer mekânlar</h2>
+                <p class="lead">Bu mutfağı seviyorsan bu adresler de defterine girsin.</p>
+            </div>
+            <div class="sec-tools">
+                <a class="see-all" href="{{kok}}mekanlar/">Tüm Mekânlar <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+        </div>
+        <div class="disc-grid drag-scroll">
+                            <article class="disc-card is-closed" data-git="{{kok}}https://dadagourmet.com/mekan/aila-restaurant/">
+    <div class="disc-fig">
+                    
+            <div class="bg" style="background-image:url('{{kok}}assets/o/medya/1044-400.webp')" role="img" aria-label="Aila Restaurant mekânına ait fotoğraf 1"></div>
+                <div class="disc-status"><span class="mt st-closed"><i class="fa-solid fa-circle-minus" aria-hidden="true"></i> Kapandı</span></div>
+    <div class="disc-badges"><span class="mt disc-price-pill"><b>₺₺₺</b><span>₺</span></span></div>
+    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 3</span></div>
+    </div>
+    <span class="disc-cat">Otel Restoranı</span>
+    <h3>Aila Restaurant</h3>
+    <p>Fairmont Quasar İstanbul’daki Aila, Anadolu mutfağını çağdaş tekniklerle yorumluyor.</p>
+    <div class="disc-meta">
+    <span class="disc-loc" title="Şişli / İstanbul"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span class="disc-ilce">Şişli</span><span class="disc-il">&nbsp;/ İstanbul</span></span>
+        <span class="disc-stats">
+                    <span class="r-rate r-yok" role="img" aria-label="Henüz değerlendirme yok" title="Henüz değerlendirme yok"><i class="fa-solid fa-star" aria-hidden="true"></i> <span aria-hidden="true">–</span></span>
+                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 9</span>
+    </span>
+</div>
+</article>
+                            <article class="disc-card" data-git="{{kok}}https://dadagourmet.com/mekan/herise-istanbul/">
+    <div class="disc-fig">
+                    
+            <div class="bg" style="background-image:url('{{kok}}assets/o/medya/1006-400.webp')" role="img" aria-label="Herise İstanbul mekânına ait fotoğraf 1"></div>
+                <div class="disc-status"><span class="mt st-open"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Açık</span></div>
+    <div class="disc-badges"><span class="mt disc-price-pill"><b>₺₺₺</b><span>₺</span></span></div>
+    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 3</span></div>
+    </div>
+    <span class="disc-cat">Fine Dining</span>
+    <h3>Herise İstanbul</h3>
+    <p>Reşitpaşa’daki Herise, Anadolu yemeklerini tek bir tadım menüsü etrafında yeniden yorumluyor.</p>
+    <div class="disc-meta">
+    <span class="disc-loc" title="Sarıyer / İstanbul"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span class="disc-ilce">Sarıyer</span><span class="disc-il">&nbsp;/ İstanbul</span></span>
+        <span class="disc-stats">
+                    <span class="r-rate r-yok" role="img" aria-label="Henüz değerlendirme yok" title="Henüz değerlendirme yok"><i class="fa-solid fa-star" aria-hidden="true"></i> <span aria-hidden="true">–</span></span>
+                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 8</span>
+    </span>
+</div>
+</article>
+                            <article class="disc-card" data-git="{{kok}}https://dadagourmet.com/mekan/karnas-vineyards-bodrum/">
+    <div class="disc-fig">
+                    
+            <div class="bg" style="background-image:url('{{kok}}assets/o/medya/868-400.webp')" role="img" aria-label="Karnas Vineyards mekânına ait fotoğraf 1"></div>
+                <div class="disc-status"><span class="mt st-open"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Açık</span></div>
+    <div class="disc-badges"><span class="mt disc-price-pill"><b>₺₺₺₺</b><span></span></span></div>
+    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 4</span></div>
+    </div>
+    <span class="disc-cat">Fine Dining</span>
+    <h3>Karnas Vineyards</h3>
+    <p>Bodrum’un Karaova Vadisi’ndeki Karnas, şef Aslı Mutlu’nun yerel ürünlerle hazırladığı menüyü bağ manzaralı sofralarda sunuyor.</p>
+    <div class="disc-meta">
+    <span class="disc-loc" title="Bodrum / Muğla"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span class="disc-ilce">Bodrum</span><span class="disc-il">&nbsp;/ Muğla</span></span>
+        <span class="disc-stats">
+                    <span class="r-rate r-yok" role="img" aria-label="Henüz değerlendirme yok" title="Henüz değerlendirme yok"><i class="fa-solid fa-star" aria-hidden="true"></i> <span aria-hidden="true">–</span></span>
+                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 11</span>
+    </span>
+</div>
+</article>
+                    </div>
+    </div>
+</section>
+        
+<!--@main-disi-->
+
+<div class="vd-actbar" id="vdActbar" role="toolbar" aria-label="Mekân aksiyonları" data-bc-bar="" data-bc-clear="" data-scroll-fade="" data-sf-wired="1" style="--bc-lift: 0px;">
+    <div class="vd-actbar__name">
+                    
+            <span class="vd-actbar__thumb" style="background-image:url('{{kok}}assets/o/medya/252-400.webp')"></span>
+                <b>Mikla</b>
+    </div>
+
+            <button class="vd-actbar__act" type="button" data-lg-gate="" data-lg-title="Ziyaret işaretlemek için giriş yap" data-lg-desc="Ziyaret ettiğin mekânları işaretlemek için Dada Gourmet hesabına giriş yapman gerekiyor.">
+            <i class="fa-regular fa-circle-check" aria-hidden="true"></i>
+            Ziyaret Ettim
+        </button>
+
+        <button class="vd-actbar__act" type="button" id="mdListBtn" aria-haspopup="true" aria-expanded="false" data-lg-gate="" data-lg-title="Listeye eklemek için giriş yap" data-lg-desc="Mekânları kişisel listelerine eklemek için Dada Gourmet hesabına giriş yapman gerekiyor.">
+            <i class="fa-solid fa-list-ul" aria-hidden="true"></i> Listeye Ekle
+        </button>
+    
+    <button class="vd-actbar__act" type="button" data-pane-link="yorumlar">
+        <i class="fa-solid fa-star" aria-hidden="true"></i> Değerlendir
+    </button>
+
+    
+    <button class="vd-actbar__act" type="button" data-pane-link="yorumlar">
+        <i class="fa-solid fa-camera" aria-hidden="true"></i> Fotoğraf Ekle
+    </button>
+
+    <a class="vd-actbar__act" target="_blank" rel="noopener" href="https://wa.me/?text=Mikla+%E2%80%94+https%3A%2F%2Fdadagourmet.com%2Fmekan%2Fmikla">
+        <i class="fa-solid fa-share-nodes" aria-hidden="true"></i> Arkadaşımla Paylaş
+    </a>
+</div>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Görsel önizleme">
+    <span class="lb-cap" id="lbCap"></span>
+    <img class="lb-img" id="lbImg" alt="Mekân görseli">
+    <button class="lb-close" id="lbClose" type="button" aria-label="Kapat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+    <button class="lb-prev" id="lbPrev" type="button" aria-label="Önceki görsel"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+    <button class="lb-next" id="lbNext" type="button" aria-label="Sonraki görsel"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+    <span class="lb-count" id="lbCount"></span>
+</div>
+<div class="fb-overlay lk-overlay" id="lkOverlay"></div>
+<div class="fb-modal lk-modal" id="lkModal" role="dialog" aria-modal="true" aria-labelledby="lkTitle" aria-describedby="lkDesc" inert="" data-msg-geo-success="Konumun algılandı. Şu an yalnızca Türkiye'deki mekânları gösteriyoruz." data-msg-geo-denied="Konum izni reddedildi. Dilediğin zaman listeden seçebilirsin." data-msg-geo-timeout="Konum alınamadı (zaman aşımı). Tekrar dene." data-msg-geo-generic="Konumun şu an alınamadı. Lütfen tekrar dene." data-msg-geo-unsupported="Bu tarayıcı konum paylaşımını desteklemiyor." data-msg-selected-suffix="seçildi." data-set-url="https://dadagourmet.com/konum/sec" data-dismiss-url="https://dadagourmet.com/konum/atla">
+        <div class="fb-panel lk-panel"><div class="fb-head"><div><h3 id="lkTitle">Neredesin?</h3><p id="lkDesc">Dada Gourmet deneyimini konumuna göre kişiselleştirelim.</p></div><button class="fb-close" id="lkClose" type="button" aria-label="Kapat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="fb-body lk-body"><button type="button" class="lk-geo" id="lkGeoBtn"><i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i><span>Konumumu Kullan</span></button><div class="lk-divider"><span>veya listeden seç</span></div><div class="lk-search"><i class="fa-solid fa-magnifying-glass lk-search-ico" aria-hidden="true"></i><input type="text" id="lkSearchInput" class="lk-search-input" aria-label="Ülke ara" placeholder="Ülke ara…" role="combobox" aria-expanded="true" aria-controls="lkList" aria-autocomplete="list" autocomplete="off"></div><div class="lk-list" id="lkList" role="listbox" aria-label="Ülke listesi"><button type="button" id="lkRow-tr" class="lk-row " data-country="tr" data-search="turkiye turkey türkiye" role="option" aria-selected="false"><img class="lk-flag" src="{{kok}}assets/o/assets/gourmet-public/flags/tr.svg" alt="" width="24" height="17"><span class="lk-name">Türkiye</span><i class="fa-solid fa-check lk-check" aria-hidden="true"></i></button></div><div class="lk-empty" id="lkEmpty" hidden=""><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Aradığın ülke bulunamadı. Şu an yalnız Türkiye için hizmet veriyoruz, yeni ülkeler yolda.</div><button type="button" class="lk-skip" id="lkSkip">Şimdi değil</button></div></div>
+    </div>
+<div class="rsv-overlay" id="rsvOverlay"></div>
+<div class="rsv-modal" id="rsvModal" role="dialog" aria-modal="true" aria-label="Rezervasyon Yap">
+        <div class="rsv-panel">
+            
+            <form method="POST" data-prototip-form id="rsvForm" novalidate="">
+                                <input type="hidden" name="party_size" id="rsvPartySizeInput" value="2" style="">
+                <input type="hidden" name="children_count" id="rsvChildrenInput" value="0" style="">
+                <input type="hidden" name="table_preference" id="rsvPrefInput" value="farketmez" style="">
+                <input type="hidden" name="occasion" id="rsvOccInput" value="standart" style="">
+                <input type="hidden" name="reserved_on" id="rsvDateInput" value="" style="">
+                <input type="hidden" name="reserved_at" id="rsvSlotInput" value="" style="">
+
+                <div class="rsv-head">
+                                        <div class="rsv-av" ></div>
+                    <div>
+                        <h3>Rezervasyon Yap</h3>
+                        <p><i class="fa-solid fa-utensils" aria-hidden="true"></i> Mikla</p>
+                    </div>
+                    <button class="rsv-close" id="rsvClose" type="button" aria-label="Kapat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+                </div>
+
+                
+                                    <p class="dish-note" style="margin:0 26px 12px"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Rezervasyon koşulları işletmeye göre değişir.</p>
+                
+                
+                <p class="dish-note" id="rsvClientError" style="margin:0 26px 12px" hidden=""><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> <span id="rsvClientErrorText"></span></p>
+
+                <div class="rsv-prog" id="rsvProg">
+                    <div class="pstep cur" data-step="1"><span class="pdot">1</span><span class="plbl">Kişi</span></div>
+                    <span class="pline" data-line="1"></span>
+                    <div class="pstep" data-step="2"><span class="pdot">2</span><span class="plbl">Tarih &amp; Saat</span></div>
+                    <span class="pline" data-line="2"></span>
+                    <div class="pstep" data-step="3"><span class="pdot">3</span><span class="plbl">Onay</span></div>
+                </div>
+
+                <div class="rsv-body">
+                    
+                    <div class="rsv-step active" data-pane="1">
+                                                    <div class="rsv-block">
+                                <div class="rsv-lbl"><i class="fa-solid fa-id-card" aria-hidden="true"></i> İletişim bilgilerin</div>
+                                <div class="fk-row" style="display:grid;gap:10px;grid-template-columns:1fr 1fr">
+                                    <input type="text" name="guest_name" class="fk-input" placeholder="Adın Soyadın" required="" style="">
+                                    <input type="tel" name="guest_phone" class="fk-input" placeholder="Telefon" required="" style="">
+                                </div>
+                                <input type="email" name="guest_email" class="fk-input" placeholder="E-posta" required="" style="margin-top: 10px; width: 100%;">
+                            </div>
+                                                <div class="rsv-block">
+                            <div class="rsv-lbl"><i class="fa-solid fa-user-group" aria-hidden="true"></i> Kaç kişilik masa?</div>
+                            <div class="rsv-count" id="rsvPeople">
+                                <div class="rsv-stepper" data-people-step="">
+                                    <button type="button" data-d="-1" aria-label="Azalt" id="rsvPplMinus">−</button>
+                                    <span class="val"><b id="rsvPplVal">2</b><small>kişi</small></span>
+                                    <button type="button" data-d="1" aria-label="Artır" id="rsvPplPlus">+</button>
+                                </div>
+                                <div class="rsv-quick" id="rsvQuick" role="group" aria-label="Hızlı kişi seçimi">
+                                    <button class="rsv-qp" type="button" data-people="1">1</button>
+                                    <button class="rsv-qp sel" type="button" data-people="2">2</button>
+                                    <button class="rsv-qp" type="button" data-people="3">3</button>
+                                    <button class="rsv-qp" type="button" data-people="4">4</button>
+                                    <button class="rsv-qp" type="button" data-people="6">6</button>
+                                    <button class="rsv-qp grp" type="button" data-people="8"><i class="fa-solid fa-people-group" aria-hidden="true"></i> 8+ grup</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rsv-block">
+                            <div class="rsv-lbl"><i class="fa-solid fa-child-reaching" aria-hidden="true"></i> Çocuk sayısı <span class="muted" style="font-weight:500;font-size:11.5px;margin-left:4px">(opsiyonel)</span></div>
+                            <div class="rsv-stepper" data-people-step="">
+                                <button type="button" data-d="-1" aria-label="Azalt" id="rsvChildMinus">−</button>
+                                <span class="val"><b id="rsvChildVal">0</b><small>çocuk</small></span>
+                                <button type="button" data-d="1" aria-label="Artır" id="rsvChildPlus">+</button>
+                            </div>
+                        </div>
+                        
+                                                    <div class="rsv-block">
+                                <div class="rsv-lbl"><i class="fa-solid fa-chair" aria-hidden="true"></i> Masa tercihi <span class="muted" style="font-weight:500;font-size:11.5px;margin-left:4px">(opsiyonel)</span></div>
+                                <div class="rsv-pref" id="rsvPref" role="group" aria-label="Masa tercihi">
+                                                                            <button class="rsv-prefp  sel " type="button" data-pref="farketmez"><i class="fa-solid fa-shuffle" aria-hidden="true"></i> Farketmez</button>
+                                                                            <button class="rsv-prefp " type="button" data-pref="bahce"><i class="fa-solid fa-tree" aria-hidden="true"></i> Bahçe</button>
+                                                                            <button class="rsv-prefp " type="button" data-pref="teras"><i class="fa-solid fa-umbrella-beach" aria-hidden="true"></i> Teras</button>
+                                                                            <button class="rsv-prefp " type="button" data-pref="pencere_kenari"><i class="fa-solid fa-window-maximize" aria-hidden="true"></i> Pencere Kenarı</button>
+                                                                            <button class="rsv-prefp " type="button" data-pref="sakin_kose"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i> Sakin Köşe</button>
+                                                                            <button class="rsv-prefp " type="button" data-pref="grup_masasi"><i class="fa-solid fa-people-group" aria-hidden="true"></i> Grup Masası</button>
+                                                                    </div>
+                            </div>
+                                                <div class="rsv-block">
+                            <div class="rsv-lbl"><i class="fa-solid fa-champagne-glasses" aria-hidden="true"></i> Özel bir durum mu? <span class="muted" style="font-weight:500;font-size:11.5px;margin-left:4px">(opsiyonel)</span></div>
+                            <div class="rsv-occ" id="rsvOcc">
+                                                                    <label><input type="radio" name="occ" data-occ="standart" checked="" style=""><span class="rd"></span><span class="si"><i class="fa-solid fa-utensils" aria-hidden="true"></i> Standart</span></label>
+                                                                    <label><input type="radio" name="occ" data-occ="dogum_gunu" style=""><span class="rd"></span><span class="si"><i class="fa-solid fa-cake-candles" aria-hidden="true"></i> Doğum Günü</span></label>
+                                                                    <label><input type="radio" name="occ" data-occ="yildonumu" style=""><span class="rd"></span><span class="si"><i class="fa-solid fa-heart" aria-hidden="true"></i> Yıldönümü</span></label>
+                                                                    <label><input type="radio" name="occ" data-occ="is_yemegi" style=""><span class="rd"></span><span class="si"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> İş Yemeği</span></label>
+                                                            </div>
+                        </div>
+                        <div class="rsv-foot">
+                            <div class="rsv-sum">Masa<b id="rsvSum1">2 kişi · Standart</b></div>
+                            <div class="rsv-foot-acts">
+                                <button class="btn btn-primary rsv-next" id="rsvNext1" type="button">Devam <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="rsv-step" data-pane="2">
+                        <div class="rsv-block">
+                            <div class="rsv-lbl"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Tarih seç</div>
+                            <div class="rsv-days" id="rsvDays">
+                                
+                            </div>
+                        </div>
+                        <div class="rsv-block">
+                            <div class="rsv-lbl"><i class="fa-solid fa-clock" aria-hidden="true"></i> Saat seç</div>
+                            <div class="rsv-slots" id="rsvSlots">
+                                
+                            </div>
+                        </div>
+                        <div class="rsv-block rsv-note-field">
+                            <div class="rsv-lbl"><i class="fa-solid fa-pen" aria-hidden="true"></i> Özel istek / not <span class="muted" style="font-weight:500;font-size:11.5px;margin-left:4px">(opsiyonel)</span></div>
+                            <textarea name="note" id="rsvNote" placeholder="Çocuk sandalyesi, alerji, doğum günü pastası, tekerlekli sandalye erişimi vb. bir isteğin varsa yaz — mekâna iletilir." style=""></textarea>
+                        </div>
+                        <div class="rsv-foot">
+                            <div class="rsv-sum">Seçilen<b id="rsvSum2">tarih ve saat seç</b></div>
+                            <div class="rsv-foot-acts">
+                                <button class="btn btn-ghost rsv-back" id="rsvBack2" type="button"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Geri</button>
+                                <button class="btn btn-primary rsv-confirm" id="rsvConfirm" type="button"><i class="fa-solid fa-check" aria-hidden="true"></i> Rezervasyonu Onayla</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="rsv-step" data-pane="3">
+                        <div class="rsv-success">
+                            <span class="ok"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+                            <h4>Rezervasyon talebin alındı</h4>
+                            <div class="rsv-recap" id="rsvRecap"></div>
+                            <p id="rsvSuccessText"></p>
+                            <div class="rsv-foot-acts" style="justify-content:center">
+                                <button class="btn btn-ghost" id="rsvDone" type="button"><i class="fa-solid fa-check" aria-hidden="true"></i> Tamam</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<script type="application/json" id="mdCalendarData">{}</script>

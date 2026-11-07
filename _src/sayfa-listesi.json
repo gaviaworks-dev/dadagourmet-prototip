@@ -1,0 +1,97 @@
+[
+ {
+  "yol": "",
+  "baslik": "Lezzetin rotasını keşfet",
+  "duzen": "public"
+ },
+ {
+  "yol": "dada-route",
+  "baslik": "Dada Route",
+  "duzen": "tam"
+ },
+ {
+  "yol": "giris",
+  "baslik": "Giriş Yap",
+  "duzen": "public"
+ },
+ {
+  "yol": "hakkimizda",
+  "baslik": "Hakkımızda",
+  "duzen": "public"
+ },
+ {
+  "yol": "hesabim/ayarlar",
+  "baslik": "Hesap Ayarları",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/gurme-panelim",
+  "baslik": "Rezervasyonlarım · Gurme Panelim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/gurme-panelim/degerlendirmelerim",
+  "baslik": "Değerlendirmelerim · Gurme Panelim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/gurme-panelim/gurme-favorilerim",
+  "baslik": "Gurme Favorilerim · Gurme Panelim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/gurme-panelim/puan-durumu",
+  "baslik": "Puan Durumu · Gurme Panelim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/gurme-panelim/topluluk-katkilarim",
+  "baslik": "Topluluk Katkılarım · Gurme Panelim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/gurme-panelim/ziyaret-gecmisim",
+  "baslik": "Ziyaret Geçmişim · Gurme Panelim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "iletisim",
+  "baslik": "İletişim",
+  "duzen": "public"
+ },
+ {
+  "yol": "kayit",
+  "baslik": "Kayıt Ol",
+  "duzen": "public"
+ },
+ {
+  "yol": "kunye",
+  "baslik": "Künye",
+  "duzen": "public"
+ },
+ {
+  "yol": "mekan/mikla",
+  "baslik": "Mikla",
+  "duzen": "public"
+ },
+ {
+  "yol": "mekanlar",
+  "baslik": "Mekânlar",
+  "duzen": "public"
+ },
+ {
+  "yol": "sifre-yenile",
+  "baslik": "Yeni Şifre",
+  "duzen": "public"
+ },
+ {
+  "yol": "sifremi-unuttum",
+  "baslik": "Şifremi Unuttum",
+  "duzen": "public"
+ },
+ {
+  "yol": "yasal/kvkk",
+  "baslik": "KVKK Aydınlatma Metni",
+  "duzen": "public"
+ }
+]

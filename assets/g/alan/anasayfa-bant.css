@@ -1,0 +1,37 @@
+/* =====================================================================
+   donör: https://gaviaworks-dev.github.io/DadaMentor/Gastro/ — anasayfa "Tarif bul — elindekiyle" bandı (`.findbar-sec > .wrap > .findbar`)
+   GASTRO ANA SAYFASI ALAN BANTLARI (Beyar 5 Kas 2026, karar 9) — Health ve Kids ayrı iki band, "Tarif bul" bandının kalınlığında ve
+   stilinde. Bandın kendisi Gastro kanonunun `.findbar`ı (portal CSS: koyu perde + kapak, sol kırmızı çizgi, 26/30 iç boşluk, ≤1024 ve
+   ≤640 kırılımları) — burada YALNIZ farklar:
+     · zemin: perde aynı (`linear-gradient(90deg,#1c1912e6,#211e16a8)`), kapak alanın kendi görseli (Health: donör ana sayfa bandının
+       tabağı · Kids: eski Kids bandının görseli);
+     · band bağ değil (donörde tüm band tıklanır): imleç ve hover'da kalkma yok; bağlar çipler ve Keşfet;
+     · çipler bağ: donörün `.fb-chips .chip { pointer-events:none }` süs kuralı burada geri açılır, hover donörün koyu zemin tonuyla;
+     · ardışık iki `findbar-sec` (Tarif bul + Kids): ikincinin üst boşluğu yok (88px'lik çift boşluk olmasın);
+     · "En yeni tarifler" bölümünün `.wrap`ı içindeki Health bandı (`alan-bant--ic`): `findbar-sec`in dikey boşluğu kendi üstünde.
+   Yükleyen: `x-alan.anasayfa-bant` (@once).
+   ===================================================================== */
+.alan-bant { cursor: auto; }
+.alan-bant:hover { transform: none; }
+.alan-bant--saglik { background-image: linear-gradient(90deg, #1c1912e6, #211e16a8), url(../alan/health/sahne/babagannus-tahinli-patlican-mezesi.webp); }
+.alan-bant--kids { background-image: linear-gradient(90deg, #1c1912e6, #211e16a8), url(../varlik/kids/gorsel/bant-kids.webp); }
+.alan-bant .fb-text { min-width: 0; }
+/* Logo (Beyar 7 Kas): ikon kutusunun yerinde, koyu perdede dişi (negatif) kilit: yazı ve alt kelime beyaz, kutu yok. Oran ve yerleşim `x-alan.logo`nun
+   kendisi; alt kelimenin yollarındaki renk (`fill` özniteliği) burada ezilir, mega menüdeki renkli kilit etkilenmez. */
+.alan-bant__logo { flex: none; display: block; width: 150px; height: auto; color: #fff; }
+.alan-bant__logo path { fill: currentColor; }
+.alan-bant .fb-chips .chip { pointer-events: auto; text-decoration: none; }
+.alan-bant .fb-chips .chip:hover, .alan-bant .fb-chips .chip:focus-visible { background: #ffffff3d; border-color: #ffffffa3; color: #fff; }
+.alan-bant .fb-chips .chip:focus-visible, .alan-bant .btn:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+/* ≥1025 (donör kırılımının üstü): çipler sığdığı sürece tek satır, band donörün 102px'lik kalınlığında kalır. Uzun dilde (RU, DE) metin 150px'in altına
+   sıkışmaz, çipler ikinci satıra iner (Beyar 7 Kas: taşma yok). ≤1024'te donörün kendi kuralı geçerli (çipler alt satırda, tam genişlik, kırılabilir). */
+@media (min-width: 1025px) {
+  .alan-bant .fb-text { flex: 1 1 150px; min-width: 150px; }
+  .alan-bant .fb-chips { flex: 0 1 auto; flex-wrap: wrap; justify-content: flex-end; }
+  .alan-bant .fb-chips .chip { padding-inline: 12px; white-space: nowrap; }
+}
+.findbar-sec + .alan-bant-sec, .findbar-sec + link + .alan-bant-sec { padding-top: 0; }   /* araya bileşenin @once <link>'i girer */
+.alan-bant--ic { margin-block: 44px; }
+@media (max-width: 640px) {
+  .alan-bant--ic { margin-block: 28px; }
+}

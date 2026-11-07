@@ -1,0 +1,7 @@
+tasks/
+.DS_Store
+node_modules/
+.env
+.env.*
+admin/
+_src/araclar/donor-uye.mjs

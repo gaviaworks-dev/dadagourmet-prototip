@@ -1,0 +1,120 @@
+/* =====================================================================
+   Dada Gastro · Tercihler hattı — F4 yüzeyleri (tam yapı, 5 Kas)
+   Liste notu · "İçerebilir" rozeti · ana sayfa "Sana özel".
+   Kaynak: onaylı taslağın stil dosyası `tercih.css` §4–6 (Beyar onaylı, 5 Kas) — kurallar
+   aynen taşındı; yalnız gerçek yüzeylerin yerleşim farkları "eklendi:" ile işaretli.
+   · Yalnız kanon token'ları; ölçek `ortak.css` (--t-*), her bileşen CSS'inden önce yüklenir.
+   · Kapsam: her kural bir .tercih kökü altında.
+   ===================================================================== */
+
+/* =====================================================================
+   4 · LİSTE NOTU — .tbt-meta kalıbı (eklendi)
+   ===================================================================== */
+.tercih-not{ display: flex; flex-direction: column; gap: var(--t-satir); margin-top: var(--bosluk-16); }
+.tercih-not-satir{
+  display: flex; align-items: baseline; gap: var(--t-satir);
+  margin: 0;
+  font-size: var(--yazi-13); font-weight: var(--agirlik-govde); color: var(--metin-ikincil);
+  line-height: var(--satir-genis);
+}
+.tercih-not-satir > i{ flex: none; font-size: var(--yazi-13); color: var(--aksan); }
+.tercih-not--uyari > i{ color: var(--uyari); }
+.tercih-not--kapali > i{ color: var(--metin-ikincil); }
+/* metin + ayraç + bağ tek akışta: dar ekranda bağ metnin devamında kırılır, satır sonunda ayraç asılı kalmaz */
+.tercih-not-metin{ flex: 1 1 auto; min-width: 0; }
+.tercih-not-vurgu{ color: var(--murekkep); font-weight: var(--agirlik-orta); }
+.tercih-not-ayrac{ color: var(--metin-ucuncul); }
+/* dar ekranda bağ metnin devamında kırılabilir; ayraç satır sonunda asılı kalmasın */
+@media (max-width:640px){ .tercih-not-ayrac{ display: none; } }
+.tercih-not-bag{
+  padding: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; font-weight: var(--agirlik-kalin);
+  color: var(--aksan-koyu);
+  text-decoration: underline; text-underline-offset: var(--bosluk-4);
+}
+.tercih-not-bag:hover{ color: var(--aksan); }
+.tercih-not-bag:focus-visible{ outline: var(--odak-kalinlik) solid var(--odak-renk); outline-offset: var(--odak-ofset); }
+
+/* =====================================================================
+   5 · ANA SAYFA "SANA ÖZEL" — donör .sec · .sec-head · .grid-4 · .proband
+   ===================================================================== */
+.tercih-sana-ozel.sec{ padding: calc(var(--bosluk-36) * 2) 0; }
+.tercih-sana-ozel .see-all{ gap: var(--t-satir); }
+.tercih-sana-ozel .grid-4,
+.tercih-sana-ozel .proband{ margin-top: var(--t-blok); }
+.tercih-sana-ozel .grid-4{ gap: var(--t-blok); }
+.tercih-sana-ozel .proband{ gap: var(--t-blok); padding: var(--t-blok) var(--bosluk-32); }
+@media (min-width:1025px){ .tercih-sana-ozel .pb-chips{ flex: none; } }
+/* bölüm başlığı ve şeridin yerleşim boşlukları ölçeğe (donör 34/14/10 · 11/18 · 6/2/10 · 9 · 8/15) */
+.tercih-sana-ozel .sec-head{ margin-bottom: var(--bosluk-32); }
+.tercih-sana-ozel .sec-head .eyebrow{ margin-bottom: var(--t-oge); }
+.tercih-sana-ozel .sec-head .lead{ margin-top: var(--t-satir); }
+.tercih-sana-ozel .row-track{ padding: var(--bosluk-8) var(--bosluk-4) var(--t-oge); }
+.tercih-sana-ozel .pb-text b{ gap: var(--t-satir); }
+.tercih-sana-ozel .chip{ padding: var(--bosluk-8) var(--bosluk-16); }
+@media (min-width:641px){ .tercih-sana-ozel .see-all{ padding: var(--t-oge) var(--bosluk-16); } }
+@media (max-width:640px){
+  .tercih-sana-ozel.sec{ padding: var(--bosluk-44) 0; }
+  .tercih-sana-ozel .proband{ gap: var(--bosluk-16); padding: var(--bosluk-20); }
+  .tercih-sana-ozel .sec-head{ column-gap: var(--t-oge); }
+  .tercih-sana-ozel .see-all{ margin-top: var(--t-oge); }
+  .tercih-sana-ozel .row-track{ padding: var(--bosluk-8) var(--bosluk-4); }
+  .tercih-sana-ozel .chip{ padding: var(--bosluk-8) var(--t-oge); }
+}
+
+/* =====================================================================
+   6 · "İÇEREBİLİR" ROZETİ (K1, 5 Kas) — eklendi
+   Kalıp: Dolap sonuç kartı .r-match (görselin sol altında rozet). Kart
+   geometrisi değişmez; satırdaki kart başlıkları hizalı kalır.
+   Renk: kanon uyarı tonu (yeni renk yok).
+   ===================================================================== */
+.tercih-icerebilir{
+  position: absolute; left: var(--t-oge); bottom: var(--t-oge); z-index: 2;
+  display: inline-flex; align-items: center; gap: var(--bosluk-4);
+  max-width: calc(100% - var(--bosluk-24));
+  padding: var(--bosluk-4) var(--bosluk-8);
+  font-size: var(--yazi-12); font-weight: var(--agirlik-kalin); line-height: var(--satir-tek);
+  white-space: nowrap;
+  color: var(--uyari); background: var(--uyari-yikama);
+  border: var(--cizgi-1) solid var(--uyari-cizgi); border-radius: var(--yuvarlak-sm);
+  box-shadow: var(--golge-sm);
+}
+.tercih-icerebilir > i{ flex: none; font-size: var(--yazi-10); }
+/* 390 · /tarifler yatay liste kartı: görsel ~135px — rozet görselin altında tam genişlik şerit olur,
+   iki alerjen ("Süt, Gluten") de tek satırda kalır */
+@media (max-width:640px){
+  .lst-grid .tercih-icerebilir{
+    left: 0; right: 0; bottom: 0; max-width: none;
+    padding: var(--bosluk-4) var(--bosluk-8);
+    font-size: var(--yazi-10);
+    border-width: var(--cizgi-1) 0 0; border-radius: 0; box-shadow: none;
+  }
+}
+
+/* =====================================================================
+
+/* =====================================================================
+   eklendi: rozetin gerçek kartlardaki yerleşimi (tam yapı, ölçüldü 5 Kas — F4 tarayıcı kapısı
+   "rozet çakışmasız"; taslak tek kart türünü gösteriyordu). Kural: rozet hiçbir zaman kartın
+   kendi rozetlerini örtmez; köşe yalnız çakışma olan kartta değişir.
+   ===================================================================== */
+/* Dizin · 1440: beslenme rozeti sütunu (.r-diet, sol üstten aşağı) 4 rozette görselin dibine iner →
+   o kartta "İçerebilir" sağ alta geçer (dizin kartının .m-types kabı boş). */
+@media (min-width:641px){
+  .lst-grid .r-media:has(.r-diet > :nth-child(4)) .tercih-icerebilir{ left: auto; right: var(--t-oge); }
+}
+/* Dizin · 390: şerit beslenme sütununun SAĞINDAN başlar (sütun sol 9px + rozet 24px); uzun metin
+   iki satıra kırılır, şerit yukarı büyür — sütunla kesişmez, metin kesilmez. */
+@media (max-width:640px){
+  .lst-grid .r-media:has(.r-diet > *) .tercih-icerebilir{ left: var(--bosluk-40); white-space: normal; }
+}
+/* Ne Pişirsem sihirbaz kartı: sol altta "%N uygun" (.r-match), sağ altta süre (.m-types) —
+   rozet sol üste (kartta sol üst boş; kaydet düğmesi sağ üstte). */
+.res-grid .tercih-icerebilir{ top: var(--t-oge); bottom: auto; }
+/* 390: sihirbaz kartının görseli dar (~140px) — sol üst kaydet düğmesine, iki alt köşe "%N uygun"/süreye
+   değer; rozet kaydet düğmesinin satırının ALTINA iner (düğme 11 + 38px; 12px nefes). */
+@media (max-width:640px){
+  .res-grid .tercih-icerebilir{ top: calc(var(--bosluk-48) + var(--bosluk-12)); }
+  /* Havuz kartı (.rp-fig): sağ altta süre (.rp-types), üst boş → rozet sol üste. */
+  .rp-fig .tercih-icerebilir{ top: var(--t-oge); bottom: auto; }
+}

@@ -1,0 +1,162 @@
+/* DadaGourmet public kanonuna ait Laravel entegrasyon katmanı.
+   Burada YALNIZ markup'ımızın donörden bilinçli olarak ayrıldığı yerlerin bedeli durur.
+   Kanonun zaten verdiği hiçbir şey burada tekrarlanmaz; ölçülmeden kural eklenmez.
+   Denetim 2026-09-12: 13 kuraldan 10'u sökülmüş (ölü, kanonda var ya da donörden sapma). */
+
+/* Donörde bu iki footer kalemi gerçek ekranlara giden `<a href>` (marka-is-birligi.html ·
+   sponsorlar.html) ve `cursor:pointer` taşıyor. Bizde o ekranlar henüz yok; bileşen
+   `aria-disabled` bir çapa basıyor ve site.js tıklamayı yutuyor. `pointer` bırakılırsa
+   tıklanabilir görünüp hiçbir şey yapmayan bir yüzey olur. ÖLÇÜLDÜ: 2 düğüm, kural
+   sökülünce `default` → `pointer`. */
+[data-future-link] {
+    cursor: default;
+}
+
+/* Donörde `?auth=1` iken `.acct-ava`ya `background:var(--tomato); color:#fff` SATIR İÇİ olarak
+   maket-auth.js yazıyor (ölçüldü: `style` özniteliği dolu, eşleşen tek CSS kuralı
+   gourmet.css `.acct-ava{background:var(--cream)}`). O betiği bilerek bağlamıyoruz —
+   gerçek auth'u bozuyor — bu yüzden aynı sonucu CSS'le veriyoruz.
+   ⚠ YALNIZ `.acct-ava`: donörün `.da-ava`sında satır içi stil YOK, krem kalıyor. Kural
+   eskiden ikisini birden boyuyordu; `.da-ava` yarısı donörden sapmaydı, söküldü. */
+.acct-ava {
+    background: var(--tomato);
+    color: #fff;
+}
+
+/* Donörde `.feedback-tab` bir `<a>`; bizde modal açtığı için `<button>` (doğru semantik).
+   Kanon `<a>` varsaydığından tarayıcının düğme varsayılanını sıfırlamıyor. ÖLÇÜLDÜ: kural
+   sökülünce `0px/none/Gilroy/pointer` → `2px outset/Arial/default`, yani görünür bozulma.
+
+   `line-height` ve `text-align` aynı bedelin kalan iki kalemi. Kanon `.feedback-tab`
+   satır yüksekliği TANIMLAMIYOR; `<a>` gövdeden `line-height:1.55`i miras alır, `<button>`
+   ise tarayıcının `font` kısayolu yüzünden `normal`da kalır. Sekme 90° döndüğü için o
+   satır yüksekliği ekranda ŞERİDİN KALINLIĞIdır: ÖLÇÜLDÜ 2026-09-15 @1440 — donör
+   lh 20.15px → w 52.1px, bizimki lh normal (~16px) → w 48px; 13px × 1.55 = 20.15px,
+   yani kural donörün hesabını birebir geri veriyor. `text-align` de düğme varsayılanı
+   (`center`); donörün `<a>`si `start`. */
+.feedback-tab {
+    border: 0;
+    font-family: inherit;
+    cursor: pointer;
+    line-height: 1.55;
+    text-align: start;
+}
+
+/* Honeypot kuralı BURAYA taşındı çünkü tek tanımı `iletisim.css`teydi ve o dosya yalnız
+   /iletisim'de yükleniyor. `.hp-field` taşıyan üç markup'ın ikisi (geri bildirim ve mekân
+   önerisi modalleri) `layouts/site.blade.php`te, yani site kabuğu olan HER sayfada basılıyor.
+   ÖLÇÜLDÜ (1440×900, modal açık, ÖNCE): /, /mekanlar, /etkinlikler → #gbWebsite 149×19 px,
+   kapsayıcı 472×24.8 px, `position:static`, "Website" etiketi ÇIPLAK görünüyor; yalnız
+   /iletisim'de 1×1 px + `position:absolute`. Donörün anasayfasında `.hp-field` sayısı 0 —
+   honeypot donörde YOK, bizim gerçek spam önlemimiz; kalır ama görünmez.
+   Kural iletisim.css satır 4'ten BAYT BAYT kopyalandı (tek satır biçimi bilerek korundu ki
+   iki tanım `diff`lenebilsin); iletisim.css'ten silinmedi — orası bu kulvarın dışında. */
+.hp-field{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important}
+
+/* ── WCAG 4.5:1 kontrast düzeltmeleri ────────────────────────────────────────────────────
+   İkisi de donörün KENDİ paleti, yani kanon CSS'in kusuru. Kanona dokunulmuyor; düzeltme
+   burada, en son yüklenen katmanda duruyor. Seçilen token her iki kalemde de `--slate-2`
+   (#56514a): kanonun nötr metin merdiveni `--muted` → `--slate-2` → `--ink` (#211E16) ve
+   arada başka token YOK, yani 4.5:1'i geçen EN YAKIN kanon token'ı budur. */
+
+/* `dada-route.css:752` `.yg-save-lbl{color:var(--muted)}` diyor, ama AYNI dosya `--muted`i
+   `#7E7E7E`ye gölgeliyor (site geneli değeri `#717171`). ÖLÇÜLDÜ (/dada-route/yeni, iki
+   etiket — "Güzergâh adı" ve "Açıklama"): rgb(126,126,126) / rgb(251,250,247) = 3.89:1.
+   Bu yüzden düzeltme `var(--muted)` OLAMAZ — o token bu sayfada tam da kırmızı veren değere
+   çözülüyor. `--slate-2` bu sayfada gölgelenmiyor (dada-route.css onu da #56514a tanımlıyor):
+   #56514a / #FBFAF7 = 7.53:1.
+
+   ⚠ KURAL ŞU AN ETKİSİZ — SÖKME, BEKLİYOR. `/dada-route/yeni` bu dosyayı hiç yüklemiyor:
+   ekran `layouts/site.blade.php`i değil kendi tam ekran kabuğunu kullanıyor
+   (`site/dada-route/kabuk.blade.php`; gerekçe `site/dada-route/form.blade.php` başlığında) ve
+   `site-overrides.css` yalnız site kabuğunun sonunda basılıyor. ÖLÇÜLDÜ (giriş yapılmış oturum,
+   1440×900, `document.styleSheets` dökümü): listede site-overrides.css YOK; iki etiket de kural
+   yazıldıktan SONRA hâlâ rgb(126,126,126) / rgb(249,249,249) = 3.86:1.
+   Kalem kapanmadı; kapanması için kabuk.blade.php'ye link gerekiyor, o dosya bu kulvarın
+   dışında ve karar lead'e bırakıldı. Link eklendiği an bu kural olduğu gibi çalışır. */
+.yg-save-lbl {
+    color: var(--slate-2);
+}
+
+/* `site/mekanlar/show.blade.php`teki Dada Route bandı donörden birebir SATIR İÇİ stillerle
+   geldi; `color:var(--muted)` satır içi olduğu için stylesheet'ten yalnız `!important` ile
+   ezilebilir. ÖLÇÜLDÜ (/mekan/ciya-sofrasi): rgb(113,113,113) / rgb(247,241,230) = 4.34:1.
+   Burada `--muted` zaten site geneli #717171 — yani token'ın kendisi bu krem zeminde eşiği
+   geçmiyor; bir üst basamak gerekiyor: #56514a / #F7F1E6 = 6.99:1.
+   Seçici bandın kendi satır içi imzasına bağlı (blade bu kulvarın dışında, sınıf eklenemez),
+   böylece kural sitedeki başka hiçbir `var(--muted)` span'ına bulaşmıyor. */
+div[style*="border-left:3px solid #b14fc5"] span[style*="color:var(--muted)"] {
+    color: var(--slate-2) !important;
+}
+
+/* ÇIKARILDI (8.8, 2026-09-15 gece) — `.rd-gallery.dt-tek-kolon` değiştiricisi ve onu kullanan
+   `components/detay/*` bileşenleri kaldırıldı. Sebep: etkinlik detayı Beyar kararıyla mekân
+   detayının kabuğundan ÇIKIP canlı `dadagourmet.com/etkinlikler/sapporo-autumn-fest-2026`
+   kabuğuna (`evd-*`) döndü; `mekan-detay.css` o sayfada artık yüklenmiyor, dolayısıyla kanon
+   iki kolonlu `.rd-gallery` kuralı da uygulanmıyor. Kural mekân detayında KULLANILMIYORDU
+   (tek tüketicisi etkinlik detayıydı — `grep dt-tek-kolon` 2026-09-15). Etkinlik detayı bir
+   gün mekân kabuğuna dönerse bu blok `.ai/rules/detay.md`deki ölçümüyle geri gelir. */
+
+/* Mekân detayı rezervasyon modali (REVİZE 8.8, kulvar D) — 390px'te alt çubuk taşıyor.
+   Kanon `mekan-detay.css`: `.rsv-foot{display:flex;justify-content:space-between}` +
+   `.rsv-foot-acts{flex:none}`; 2. adımda "Geri" + "Rezervasyonu Onayla" iki düğmesi özetin
+   yanına sığmıyor, onay düğmesi panelin sağından kırpılıyordu (ölçüldü 390: düğme metni
+   "Rezervasyonu Or…" diye kesik). Kanon dosyaya dokunulmaz (assets.md); dar ekranda
+   çubuk iki satıra kırılır, düğmeler tam genişliği paylaşır. */
+@media (max-width: 520px) {
+    .rsv-foot { flex-wrap: wrap; }
+    .rsv-foot-acts { flex: 1 1 100%; }
+    .rsv-foot-acts .btn { flex: 1 1 0; justify-content: center; }
+}
+
+/* Etkinlik kartındaki ücret etiketi tür rozetinin üstüne biniyordu (kulvar etkinlik-filtre,
+   2026-09-16). MEKANİZMA: `.m-types` `position:absolute;bottom:13px;right:13px` ve hiçbir
+   genişlik sınırı taşımıyor (anasayfa.css:69 · etkinlikler.css:163 · etkinlik-detay.css:120,
+   üçü de aynı bildirim). Uzun `ucret_etiketi` shrink-to-fit'i kartın tam genişliğine çıkarıyor,
+   metin 2-4 satıra sarıyor ve `bottom` sabit olduğu için kutu YUKARI büyüyerek `.disc-badges`
+   (`bottom:13px;left:13px`) içindeki tür rozetiyle kesişiyor.
+   ÖLÇÜLDÜ (scripts/olcum/ef-cekim.mjs, getBoundingClientRect kesişimi, /etkinlikler):
+   @1440 29 kartın 7'si, @390 4'ü rozetle çakışıyordu. En uzunu "3 günlük katılım kaydı
+   (Zone A tadım alanına …)" — 4 satır, 65px.
+   ÇÖZÜM tek satıra kilitlemek + iki kutuya AYRIK pay vermek: rozet %42-15px, etiket
+   %58-15px. Toplam kart genişliğinin 30px altında kalıyor, yani 13+13px kenar boşluklarıyla
+   birlikte iki kutu ARASINDA en az 4px kalıyor ve kesişim matematiksel olarak imkânsız
+   (ilk denemede 52%+46% verilmişti; toplam %98 > %100-26px olduğu için @1440 iki kart hâlâ
+   çakışıyordu — ölçüldü, düzeltildi). Kesilen metin KAYBOLMASIN diye tam hâli blade'de
+   `title` niteliğinde.
+   NEDEN BURADA: aynı kartı (`site/etkinlikler/_kart.blade.php`) dört ekran basıyor — liste,
+   takvim görünümü, anasayfa şeridi ve etkinlik DETAYININ "Takvimdeki diğer etkinlikler"
+   şeridi. Sonuncusunun CSS'i (`etkinlik-detay*.css`) başka bir kulvarın kapalı alanı;
+   `site-overrides.css` kabuğun sonunda HER sayfada yüklendiği için dördü tek kuralla kapanıyor.
+   KAPSAM `.ev-card`: aynı `.m-types`/`.disc-price-pill` bildirimlerini mekân listesi ve
+   mekân detayı da kullanıyor (gourmet-mekan-liste.css:82,91 · mekan-detay.css:372,373).
+   O ekranlar başka kulvarların alanı ve orada ölçülmüş bir çakışma YOK, bu yüzden kural
+   etkinlik kartına kapsamlandı.
+   Kanon dosyalara kural EKLENMEDİ (`.ai/rules/assets.md`). */
+.ev-card .disc-fig .m-types {
+    max-width: calc(100% - 26px);
+    justify-content: flex-end;
+}
+.ev-card .disc-fig .disc-price-pill {
+    min-width: 0;
+    max-width: calc(58% - 15px);
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ev-card .disc-fig .disc-badges {
+    max-width: calc(42% - 15px);
+}
+/* Rozet de kesilebilmeli: en uzun tür etiketleri "Özel Menü ve Tema Gecesi" /
+   "Üretim ve Hasat Deneyimi". `text-overflow` düz metin düğümünü flex kabında kesemediği
+   için kutu `block`a çevrildi; kanonun `gap:6px`i markup'taki boşluk + bu `margin-right`
+   ile karşılanıyor (ölçüldü: ikon-metin arası 6px'te kalıyor). */
+.ev-card .disc-fig .disc-badge {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+.ev-card .disc-fig .disc-badge i { margin-right: 2px; }

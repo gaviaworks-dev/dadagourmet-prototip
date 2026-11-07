@@ -1,0 +1,90 @@
+/* /iletisim — Revize 5 · madde 46. Donörün markup'ı (`fk-*`) korunur; aralık
+   ve ölçüler kanonun form bileşeninin değerlerine çekilir. Sayfa kanonun
+   jeton ve bileşen dosyalarını donörün `<head>`inden yükler (madde 46b/d/e);
+   jeton yedekleri (`var(--x, …)`) o yüklemeden önce yazılmış kurallarda kaldı. */
+
+/* a · Başlık geniş ekranda tek satır; açıklama kalktı, beyaz panelle arasında
+   kanonun bölüm boşluğu. Dar ekranda başlık doğal olarak kırılır. */
+@media (min-width: 1024px) {
+  .pg-iletisim .con-intro h1 { max-width: none; white-space: nowrap; }
+}
+.pg-iletisim .con-intro { padding-bottom: 64px; }
+@media (max-width: 640px) { .pg-iletisim .con-intro { padding-bottom: 56px; } }
+.pg-iletisim .con-intro h1 { margin-bottom: 0; }
+
+/* c · Form aralıkları: kanon `.alan` (alan → alan 22px), `.alan-etiket`
+   (etiket → alan 9px), `.alan-hata`/`.alan-yardim` (8px). Izgara satırları
+   arasında ek boşluk yok: her alan kendi alt boşluğunu taşır, satırlar eşit. */
+.pg-iletisim .fk-form .fk-grid { gap: 0 16px; margin: 0; }
+.pg-iletisim .fk-form .fk-field { margin: 0 0 var(--bosluk-22, 22px); }
+.pg-iletisim .fk-form .fk-label { margin-bottom: var(--bosluk-9, 9px); }
+.pg-iletisim .fk-form .fk-err,
+.pg-iletisim .fk-form .fk-help,
+.pg-iletisim .fk-form .fk-count { margin-top: var(--bosluk-8, 8px); }
+/* Portalın `.fk-field`i ızgara ve 8px satır boşluğu taşıyor (tokens paketi):
+   kanon payları onun ÜSTÜNE ekleniyordu — ölçüldü, etiket → alan 17px,
+   alan → hata 16px. Boşluğu yalnız kanonun payları verir. */
+/* `align-content:start`: aynı satırdaki alan hata satırı aldığında komşu alanın
+   ızgarası gerilip girdisini uzatıyordu (ölçüldü: e-posta 51 → 63px). */
+.pg-iletisim .fk-form .fk-field { row-gap: 0; align-content: start; }
+
+/* f · KVKK onayı: kanonun `.onay-satirlari .onay-kutusu` kipi (bilesenler.css
+   4262–4287) — zemin ve çerçeve yok, 19px kutu üste yaslı, 12.5px tek satır,
+   yasal bağlar kalın, altı çizili, 5px dokunma payı. Değerler kanonun
+   jetonlarından (sayfa `kanon/tokenlar.css`i yükler). */
+.pg-iletisim .ol-consents { display: flex; flex-direction: column; gap: var(--bosluk-13); margin: var(--bosluk-18) 0 var(--bosluk-20); }
+.pg-iletisim .ol-consents .fk-field { margin: 0; }
+.pg-iletisim .ol-consents .fk-agree {
+  display: flex; align-items: flex-start; gap: var(--bosluk-9); min-height: 44px;
+  padding: var(--bosluk-4) 0; border: 0; border-radius: 0; background: none;
+  font-size: var(--yazi-12-5); font-weight: var(--agirlik-govde); line-height: var(--satir-orta); color: var(--murekkep);
+  text-align: left; text-align-last: auto;
+}
+.pg-iletisim .ol-consents .fk-agree input { flex: none; width: 19px; height: 19px; margin: 1px 0 0; accent-color: var(--aksan); }
+.pg-iletisim .ol-consents .fk-agree a {
+  padding: var(--bosluk-5) 0; font-weight: var(--agirlik-kalin); color: var(--aksan-koyu);
+  text-decoration: underline; text-underline-offset: 2px;
+}
+
+/* g · Koruma notu: kanonun `.guvenlik-notu`su (bilesenler.css T5) — 12px gri
+   metin, 13px aksan ikon, üstünde ince çizgi. */
+.pg-iletisim .captcha-note {
+  display: flex; align-items: center; gap: var(--bosluk-9);
+  padding: var(--bosluk-16) 0 0; margin: var(--bosluk-18) 0 var(--bosluk-16);
+  border: 0; border-top: var(--cizgi-1) solid var(--cizgi); background: none;
+  font-size: var(--yazi-12); font-weight: var(--agirlik-govde); line-height: var(--satir-govde); color: var(--metin-ikincil);
+}
+.pg-iletisim .captcha-note i { font-size: var(--yazi-13); color: var(--aksan); }
+
+/* h · Sayfa içi başarı ekranı — ortak başarı bildiriminin görsel dili
+   (`.fb-success`), formun üstünde ve formla arasında boşlukla. */
+.pg-iletisim .iletisim-basari { margin-bottom: var(--bosluk-24, 24px); }
+.pg-iletisim .iletisim-basari .fb-success { padding: 8px 0 0; text-align: center; }
+/* Sayfa içi başarı ekranı pencerenin jetonlarını taşımaz (kabuk jetonları
+   `.fb-modal` kapsamında tanımlı): aynı değerler buraya bağlanır, ikon
+   pencerede nasılsa burada da öyle görünür. */
+.pg-iletisim .iletisim-basari {
+  --fit-tint: color-mix(in srgb, #742982 12.1%, #fff); --fit-deep: color-mix(in srgb, #742982 84.6%, #000);
+  --radius-circle: 50%; --muted: #717171; --slate: #211E16;
+}
+
+/* d · Ülke kodlu telefon: kutu, katman ve liste kanonun §52 kuralları
+   (`kanon/bilesenler.css`, sayfa onu donörün `<head>`inden yükler). Tek
+   uyarlama: girdi bu sayfanın `fk-input`u (kanonun `alan-girdi`si 45px,
+   bu sayfanın alanları 51px) — kanonun `.alan-telefon .alan-girdi` sol
+   dolgusu buraya, düğme de girdinin yüksekliğine taşınır. */
+.pg-iletisim .alan-telefon .fk-input { padding-left: 104px; }
+.pg-iletisim .alan-telefon .alan-ulke { height: 100%; }
+/* Portalın düğme/girdi kuralı gövdenin satır yüksekliğini (1.55) veriyor;
+   donörde (g-cozum-merkezi) bu iki öğe `normal` hesaplanıyor — ölçüldü:
+   arama satırı +4,7px, katman +4,7px sapıyordu. */
+.pg-iletisim .alan-telefon .alan-ulke,
+.pg-iletisim .alan-telefon .alan-ulke-arama input { line-height: normal; }
+
+/* e · Konu seçici (`GastroCokluSecim` max:1). Kanonun `.cip::before`
+   dokunma örtüsü (44px, konumlu) çipin `×` düğmesinin ÜSTÜNE biniyordu:
+   ölçüldü — düğmenin ortasında `elementFromPoint` çipin kendisini
+   döndürüyor, gerçek fare tıklaması seçimi kaldırmıyordu. Düğme örtünün
+   üstüne alınır; kutusu değişmez. */
+.pg-iletisim .gastro-secim button { position: relative; z-index: 1; }
+

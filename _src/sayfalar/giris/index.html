@@ -1,0 +1,172 @@
+<!--{"yol":"giris","zincir":"giris","duzen":"public","govdeSinif":"dg-auth","js":["assets/js/sayfa/giris.js"],"baslik":"Giriş Yap","donor":"https://dadagastro.com/giris"}-->
+
+        
+        
+        <section class="giris-hero">
+            <div class="wrap kap">
+                <nav class="kirinti" aria-label="Sayfa yolu">
+                    <a href="{{kok}}" class="kirinti-ev"><i class="fa-solid fa-house" aria-hidden="true"></i><span class="yalniz-okuyucu">Dada Gourmet ana sayfa</span></a>
+                    <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                    <b id="auCrumb" aria-current="page">Giriş Yap</b>
+                </nav>
+
+                <div class="giris-duzen">
+                    <aside class="giris-pano" aria-labelledby="auVisualTitle" data-pano="gourmet">
+    <span class="ust-etiket"><i class="fa-solid fa-utensils" aria-hidden="true"></i> Dada Gourmet Üyeliği</span>
+    <h2 id="auVisualTitle">Gideceğin yer <span class="vurgu">sana göre</span> seçilsin</h2>
+    <p class="giris-metni">Beğendiğin mekânları kaydet, kendi listelerini kur, rezervasyonlarını tek yerden takip et. Dada Gourmet hesabı ücretsiz.</p>
+    <div class="giris-avantaj">
+        <span><i class="fa-solid fa-check" aria-hidden="true"></i> Kaydedilen mekânlar tek yerde</span>
+        <span><i class="fa-solid fa-check" aria-hidden="true"></i> Kendi listelerini kur ve paylaş</span>
+        <span><i class="fa-solid fa-check" aria-hidden="true"></i> Rezervasyonlarını takip et</span>
+        <span><i class="fa-solid fa-check" aria-hidden="true"></i> Gideceğin rotayı planla</span>
+    </div>
+    
+    <div class="giris-sayilar">
+        <div><b>47</b><span>gastronomi etkinliği</span></div>
+        <div><b>19</b><span>mekân konsepti</span></div>
+        <div><b>5</b><span>üye</span></div>
+    </div>
+</aside>
+
+                    <div class="giris-kart">
+                        <div class="sekmeler" role="tablist" aria-label="Üyelik sekmeleri" id="auTabs">
+                            <a class="sekme aktif" id="auTabGiris" role="tab" aria-selected="true" aria-controls="auPaneGiris" href="{{kok}}giris/" rel="nofollow"><i class="fa-solid fa-user" aria-hidden="true"></i> Giriş Yap</a>
+                            <a class="sekme" id="auTabKayit" role="tab" aria-selected="false" aria-controls="auPaneKayit" href="{{kok}}kayit/"><i class="fa-solid fa-user-plus" aria-hidden="true"></i> Kayıt Ol</a>
+                        </div>
+
+                        
+                        <div id="auPaneGiris" data-pane="giris" role="tabpanel" aria-labelledby="auTabGiris">
+                            <div class="giris-bas">
+                                <h1>Tekrar hoş geldin</h1>
+                                <p>Kaldığın yerden devam et — listelerin ve rezervasyonların seni bekliyor.</p>
+                            </div>
+
+                                                                                    
+                            <div class="giris-serit reddedildi" id="loginErr" role="alert">
+                                <span class="serit-ikon"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i></span>
+                                <div class="serit-govde">
+                                    <h4>Giriş yapılamadı</h4>
+                                    <p></p>
+                                </div>
+                            </div>
+
+                            
+                            
+                            
+                            
+                            
+                                                        
+                            
+                            
+                            
+                            <form method="POST" id="formGiris" data-prototip-form="">
+                                                                                                <input type="hidden" name="return" value="">
+                                <input type="hidden" name="_form" value="giris">
+
+                                
+                                                                <input type="hidden" name="hedef" id="giHedef" value="kullanici">
+
+                                
+                                                                <div class="alan" id="giEmailField">
+                                    <label class="alan-etiket" for="giEmail">E-posta <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
+                                    <input class="alan-girdi" id="giEmail" name="eposta" type="email" autocomplete="username" placeholder="ornek@eposta.com" value="" required="" aria-describedby="giEmailErr">
+                                    <span class="giris-hata" id="giEmailErr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Geçerli bir e-posta adresi gir.</span>
+                                </div>
+                                                                <div class="alan">
+                                    <label class="alan-etiket" for="giPass">Şifre <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
+                                    <div class="alan-sifre">
+                                        <input class="alan-girdi" id="giPass" name="sifre" type="password" autocomplete="current-password" placeholder="Şifren" required="" aria-describedby="giPassErr">
+                                        <button class="alan-goz" type="button" data-eye="giPass" aria-label="Şifreyi göster" aria-pressed="false"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
+                                    </div>
+                                    <span class="giris-hata" id="giPassErr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Şifreni gir.</span>
+                                </div>
+                                <div class="giris-satir">
+                                    <label class="onay-kutusu" for="giRemember"><input type="checkbox" id="giRemember" name="beni_hatirla" value="1"> <span>Beni hatırla</span></label>
+                                    <button class="giris-unuttum" type="button" data-goto="sifre">Şifremi unuttum</button>
+                                </div>
+                                <button class="dugme birincil giris-gonder" type="submit"><i class="fa-solid fa-arrow-right-to-bracket" aria-hidden="true"></i> Giriş Yap</button>
+                            </form>
+                            <p class="giris-alt">Hesabın yok mu? <a href="{{kok}}kayit/">Hemen Kayıt Ol</a></p>
+                        </div>
+
+                        
+                        <div id="auPaneSifre" data-pane="sifre" role="group" aria-labelledby="auSifreTitle" hidden="">
+                            <button class="giris-geri" type="button" data-goto="giris"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Girişe dön</button>
+                            <div class="giris-bas">
+                                <h1 id="auSifreTitle">Şifreni mi unuttun?</h1>
+                                <p>Sorun değil. E-posta adresini yaz, sıfırlama bağlantısını gönderelim.</p>
+                            </div>
+
+                            <form method="POST" id="formSifre" data-prototip-form="">
+                                                                                                <input type="hidden" name="_form" value="sifre">
+                                <div class="alan">
+                                    <label class="alan-etiket" for="sfEmail">Kayıtlı e-posta adresin <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
+                                    <input class="alan-girdi" id="sfEmail" name="eposta" type="email" autocomplete="email" placeholder="ornek@eposta.com" value="" required="" aria-describedby="sfEmailErr">
+                                                                        <span class="giris-hata" id="sfEmailErr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Geçerli bir e-posta adresi gir.</span>
+                                </div>
+                                <button class="dugme birincil giris-gonder" type="submit"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Sıfırlama Bağlantısı Gönder</button>
+                                
+                                <div class="guvenlik-notu"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Bu form istismara karşı hız sınırlamasıyla korunur.</div>
+                            </form>
+
+                            
+                            <div class="giris-basari" id="sifreOk" hidden="">
+                                <span class="basari-tik"><i class="fa-solid fa-envelope-circle-check" aria-hidden="true"></i></span>
+                                <h4></h4>
+                            </div>
+                        </div>
+
+                        
+                        <div id="auPaneYeniSifre" data-pane="yeni-sifre" role="group" aria-labelledby="auYeniSifreTitle" hidden="">
+                            <div class="giris-bas">
+                                <h1 id="auYeniSifreTitle">Yeni şifreni belirle</h1>
+                                <p>Bağlantı <b id="auYsHesap">hesabın</b> hesabı için açıldı. Yeni şifreni iki kez yaz.</p>
+                            </div>
+
+                            
+                            
+                            <form method="POST" id="formYeniSifre" hidden="" data-prototip-form="">
+                                                                                                <input type="hidden" name="_form" value="yeni-sifre">
+                                <input type="hidden" name="kod" value="">
+                                <input type="hidden" name="eposta" value="">
+                                                                <div class="alan">
+                                    <label class="alan-etiket" for="ysYeni">Yeni şifren <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
+                                    <div class="alan-sifre">
+                                        <input class="alan-girdi" id="ysYeni" name="sifre" type="password" autocomplete="new-password" placeholder="En az 8 karakter" required="" aria-describedby="ysKurallar ysYeniErr">
+                                        <button class="alan-goz" type="button" data-eye="ysYeni" aria-label="Şifreyi göster" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
+                                    </div>
+                                    <span class="giris-hata" id="ysYeniErr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> Şifren beş kuralın hepsini karşılamalı.</span>
+                                </div>
+                                <ul class="sifre-kural" id="ysKurallar">
+                                    <li data-kural="uzunluk"><i class="fa-solid fa-circle" aria-hidden="true"></i> En az 8 karakter</li>
+                                    <li data-kural="buyuk"><i class="fa-solid fa-circle" aria-hidden="true"></i> Bir büyük harf</li>
+                                    <li data-kural="kucuk"><i class="fa-solid fa-circle" aria-hidden="true"></i> Bir küçük harf</li>
+                                    <li data-kural="rakam"><i class="fa-solid fa-circle" aria-hidden="true"></i> Bir rakam</li>
+                                    <li data-kural="ozel"><i class="fa-solid fa-circle" aria-hidden="true"></i> Bir özel karakter (!, @, #, $ vb.)</li>
+                                </ul>
+                                <div class="alan">
+                                    <label class="alan-etiket" for="ysTekrar">Yeni şifren (tekrar) <span class="zorunlu" aria-hidden="true">*</span><span class="yalniz-okuyucu">(zorunlu)</span></label>
+                                    <div class="alan-sifre">
+                                        <input class="alan-girdi" id="ysTekrar" name="sifre_tekrar" type="password" autocomplete="new-password" placeholder="Tekrar yaz" required="" aria-describedby="ysTekrarErr">
+                                        <button class="alan-goz" type="button" data-eye="ysTekrar" aria-label="Şifreyi göster" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
+                                    </div>
+                                    <span class="giris-hata" id="ysTekrarErr"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> İki şifre birbirini tutmuyor.</span>
+                                </div>
+                                <button class="dugme birincil giris-gonder" type="submit" id="ysGonder" disabled=""><i class="fa-solid fa-key" aria-hidden="true"></i> Şifremi Güncelle</button>
+                                <div class="guvenlik-notu"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Bağlantı 30 dakika geçerlidir ve yalnız bir kez kullanılabilir.</div>
+                            </form>
+
+                            <div class="giris-basari" id="ysOk" hidden="">
+                                <span class="basari-tik"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></span>
+                                <h4></h4>
+                                <button class="dugme birincil" type="button" data-goto="giris"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Girişe Dön</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+    

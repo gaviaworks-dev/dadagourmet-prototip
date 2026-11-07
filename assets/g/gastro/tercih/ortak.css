@@ -1,0 +1,22 @@
+/* =====================================================================
+   Dada Gastro · Tercihler hattı — ORTAK ölçek (tam yapı, 5 Kas)
+   Taslak `tercih.css`in ortak bölümü (Beyar onaylı statik taslaklar, tasks/tercihler/PLAN.md §13):
+   · Yalnız kanon token'ları (public/kanon/tokenlar.css + markalar/gourmet.css).
+   · Boşluk ölçeği 4/8 tabanlı tek ölçek: --t-* takma adları bu ölçeğin tek kaynağıdır.
+   · Kapsam: her kural bir .tercih kökü altında — sayfanın geri kalanına sızmaz.
+   Bileşen dosyaları: uye-sihirbaz.css (F3) · liste.css (F4) · tur-kabuk.css (F5).
+   ===================================================================== */
+.tercih{
+  --t-kart-ic: var(--bosluk-24);   /* kart iç boşluğu */
+  --t-blok:    var(--bosluk-24);   /* kart içi blok arası */
+  --t-oge:     var(--bosluk-12);   /* öğe arası (ızgara, düğme grubu) */
+  --t-satir:   var(--bosluk-8);    /* satır/çip arası */
+  --t-ince:    var(--bosluk-4);    /* başlık-alt satır */
+}
+@media (max-width:640px){
+  .tercih{ --t-kart-ic: var(--bosluk-16); --t-blok: var(--bosluk-20); }
+}
+/* Ortak düğme ölçüsü (portal .btn: 14/26 → 12/24; yükseklik 44+) */
+.tercih .btn{ padding: var(--bosluk-12) var(--bosluk-24); gap: var(--bosluk-8); }
+/* donör bileşenleri display:flex/grid yazar → [hidden] UA kuralını ezer; .tercih kökü altında gizli gizlidir */
+.tercih [hidden]{ display: none !important; }

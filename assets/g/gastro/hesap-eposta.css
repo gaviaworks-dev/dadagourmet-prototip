@@ -1,0 +1,20 @@
+/* Revize 6 · madde 66 (Beyar isteği) — /hesabim/ayarlar e-posta alanı "kullanıcı @ alan.adı" diye okunur.
+   Kutu kanonun `.alan-girdi`si (kenar, yuvarlaklık, min 44px, kâğıt zemin, 14px yan dolgu); "@" ayrı kutu
+   ya da gri blok değil, alanın kendi metin renginde düz metindir. Yalnız kanon tokenları. */
+
+/* Kutu içeriğe göre dağılır: alan adı kendi genişliğinde, kullanıcı kısmı kalanı alır. Sığmazsa kırpmak
+   yerine alan adı "@" ile birlikte ikinci satıra iner (flex-wrap); bu yüzden yükseklik sabit değil, dikey
+   dolgu kanonun `.kart.panel .alan-girdi{padding:0 14px}` kuralını (0,3,0) aynı seçici ağırlığıyla ezer. */
+.kart.panel .eposta-ayrik{
+  display:flex; flex-wrap:wrap; align-items:center; align-content:center; column-gap:var(--bosluk-6);
+  height:auto; padding-top:var(--bosluk-10); padding-bottom:var(--bosluk-10);
+  line-height:var(--satir-orta); cursor:default;
+}
+/* Kullanıcı kısmı tek başına da satıra sığmazsa taşmak yerine kendi içinde kırılır. */
+.eposta-ayrik-kullanici{ min-width:0; overflow-wrap:anywhere; }
+/* "@alan.adı" bölünmez: kırılma yalnız "@" noktasında olur. */
+.eposta-ayrik-alan{ white-space:nowrap; }
+/* "@" iki parçayı görünür biçimde ayırır: iki yanında 6px nefes (solda kutunun `column-gap`i, sağda kendi payı).
+   `column-gap` yalnız AYNI satırdaki öğeler arasında uygulanır; alan adı alt satıra inince "@" satır başına
+   girintisiz oturur. Kopyalanan metin yine boşluksuz "kullanıcı@alan.adı"dır. */
+.eposta-ayrik-at{ margin-right:var(--bosluk-6); }

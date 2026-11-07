@@ -1,0 +1,168 @@
+<span class="fb-rail" aria-hidden="true"></span>
+<a class="feedback-tab" href="#" id="fbTab" aria-label="Görüş Bildir — öneri ve şikayet">
+    <i class="fa-solid fa-comment-dots" aria-hidden="true"></i> Görüş Bildir
+</a>
+<div class="fb-overlay" id="fbOverlay"></div>
+<div class="fb-modal" id="fbModal" role="dialog" aria-modal="true" aria-label="Görüş Bildir">
+  <div class="fb-panel">
+    <div class="fb-head"><span class="lg-ico" aria-hidden="true"><i class="fa-solid fa-comment-dots"></i></span>
+      <div>
+        <h3>Görüş Bildir</h3>
+        <p>Önerin, şikayetin veya sorun — hepsine kulak veriyoruz.</p>
+      </div>
+      <button class="fb-close" id="fbClose" type="button" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="fb-body">
+      <form id="fbForm" data-gorus-bagli="1" novalidate="">
+        
+        <div class="fb-topics" role="group" aria-label="Konu seç">
+          <button class="fb-topic active" type="button" data-topic="oneri"><i class="fa-solid fa-lightbulb"></i> Önerim var</button>
+          <button class="fb-topic" type="button" data-topic="soru"><i class="fa-solid fa-circle-question"></i> Bir sorum var</button>
+          <button class="fb-topic" type="button" data-topic="sorun"><i class="fa-solid fa-bug"></i> Teknik sorun</button>
+          <button class="fb-topic" type="button" data-topic="ihlal"><i class="fa-solid fa-shield-halved"></i> İhlal bildirimi</button>
+          <button class="fb-topic" type="button" data-topic="puan"><i class="fa-solid fa-face-smile"></i> Puan ver</button>
+        </div>
+
+        <div class="fb-fields active" data-for="oneri">
+          <div class="fb-chiprow" role="group" aria-label="İlgili alan">
+                        
+                        
+                        <button class="chip active" type="button" data-alan="Mekanlar">Mekanlar</button>
+                        <button class="chip" type="button" data-alan="Etkinlikler">Etkinlikler</button>
+                        <button class="chip" type="button" data-alan="Gurme Lezzetler">Gurme Lezzetler</button>
+                        <button class="chip" type="button" data-alan="Dada Route">Dada Route</button>
+                        <button class="chip" type="button" data-alan="Diğer">Diğer</button>
+                    </div>
+          <div class="fb-field"><textarea required="" placeholder="Önerini anlat *" aria-label="Önerini anlat *"></textarea></div>
+          <div class="fb-field"><input type="email" placeholder="E-posta adresin (opsiyonel)" aria-label="E-posta adresin (opsiyonel)"></div>
+        </div>
+
+        <div class="fb-fields" data-for="soru">
+          <div class="fb-field">
+            <select class="fb-select" required="" disabled="" aria-label="Sorunun konusu">
+              <option value="" selected="" disabled="">Sorunun konusu *</option>
+              <option>Üyelik &amp; Hesap</option>
+              <option>Rezervasyon</option>
+              <option>Mekân bilgisi</option>
+              <option>İşletme başvurusu</option>
+              <option>Diğer</option>
+            </select>
+          </div>
+          <div class="fb-field"><textarea required="" placeholder="Sorunu yaz *" disabled="" aria-label="Sorunu yaz *"></textarea></div>
+          <div class="fb-field"><input type="email" required="" placeholder="E-posta adresin (cevap için) *" disabled="" aria-label="E-posta adresin (cevap için) *"></div>
+        </div>
+
+        <div class="fb-fields" data-for="sorun">
+          <div class="fb-field">
+            <select class="fb-select" required="" disabled="" aria-label="Sorunu nerede yaşadın?"><option value="" selected="" disabled="">Sorunu nerede yaşadın? *</option><option>Anasayfa</option><option>Mekân sayfası</option><option>Mekân listesi / arama</option><option>Mekân Bul</option><option>Dada Route</option><option>Üyelik &amp; Giriş</option></select>
+          </div>
+          <div class="fb-field"><textarea required="" placeholder="Sorunu kısaca anlat — ne yaptın, ne oldu? *" disabled="" aria-label="Sorunu kısaca anlat — ne yaptın, ne oldu? *"></textarea></div>
+          <button class="fb-shot" type="button" disabled="" data-gorus-ek-bagli="1"><i class="fa-solid fa-image"></i> Ekran görüntüsü ekle <small>(opsiyonel)</small></button><input type="file" hidden="" accept=".jpg,.jpeg,.png,.webp,.heic,.heif,image/jpeg,image/png,image/webp,image/heic,image/heif" data-gorus-ek="" data-gorsel-hazirla="" data-azami-bayt="5242880" aria-label="Ekran görüntüsü seç" disabled=""><div class="fb-ek" hidden=""><img alt="Eklenen ekran görüntüsü"><span class="fb-ek-ad"></span><button type="button" class="fb-ek-kaldir" aria-label="Ekran görüntüsünü kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Kaldır</button></div><p class="fb-ek-hata" role="alert" hidden=""></p>
+          <div class="fb-field"><input type="email" placeholder="E-posta adresin (opsiyonel)" disabled="" aria-label="E-posta adresin (opsiyonel)"></div>
+        </div>
+
+        <div class="fb-fields" data-for="ihlal">
+          <div class="fb-field"><input type="url" required="" placeholder="İhlal içeren sayfanın linki *" disabled="" aria-label="İhlal içeren sayfanın linki *"></div>
+          <div class="fb-field">
+            <select class="fb-select" required="" disabled="" aria-label="İhlal türü">
+              <option value="" selected="" disabled="">İhlal türü *</option>
+              <option>Telif hakkı</option>
+              <option>Uygunsuz içerik</option>
+              <option>Spam / yanıltıcı içerik</option>
+              <option>Diğer</option>
+            </select>
+          </div>
+          <div class="fb-field"><textarea required="" placeholder="Açıklama *" disabled="" aria-label="Açıklama *"></textarea></div>
+          <div class="fb-field"><input type="email" required="" placeholder="E-posta adresin *" disabled="" aria-label="E-posta adresin *"></div>
+        </div>
+
+        <div class="fb-fields" data-for="puan">
+          <p class="fb-q">Dada Gourmet deneyimini nasıl puanlarsın?</p>
+          <div class="fb-emoji" role="group" aria-label="Puan">
+            <button type="button" data-val="1" aria-label="Çok kötü" disabled="">😡</button>
+            <button type="button" data-val="2" aria-label="Kötü" disabled="">🙁</button>
+            <button type="button" data-val="3" aria-label="İdare eder" disabled="">😐</button>
+            <button type="button" data-val="4" aria-label="İyi" disabled="">🙂</button>
+            <button type="button" data-val="5" aria-label="Harika" disabled="">😍</button>
+          </div>
+          <div class="fb-field"><textarea placeholder="Eklemek istediğin bir şey var mı? (opsiyonel)" disabled="" aria-label="Eklemek istediğin bir şey var mı? (opsiyonel)"></textarea></div>
+          <div class="fb-field"><input type="email" placeholder="E-posta adresin (opsiyonel)" disabled="" aria-label="E-posta adresin (opsiyonel)"></div>
+        </div>
+
+        <label class="fb-kvkk">
+          <input type="checkbox" required="">
+          <span><a href="{{kok}}yasal/kvkk/">Aydınlatma Metni</a>'ni ve <a href="{{kok}}yasal/kvkk/">KVKK Metni</a>'ni okudum, onaylıyorum.</span>
+        </label>
+        <button class="btn btn-primary fb-send" type="submit"><i class="fa-solid fa-paper-plane"></i> Gönder</button>
+      </form>
+      
+      <div class="fb-success" id="fbBasari" hidden="">
+        <span class="ok"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+        <h4>Görüşün bize ulaştı</h4>
+        <p>Yazdıkların kaydedildi. Ekibimiz okuyacak; bir e-posta adresi bıraktıysan gerektiğinde oradan döneriz.</p>
+        <button class="btn btn-ghost fb-again" type="button" id="fbAgain">Forma dön</button>
+      </div>
+    </div>
+  </div>
+</div>
+<button class="to-top" id="toTop" type="button" aria-label="Başa dön" data-bc-bar="" data-bc-clear="" style="--bc-lift: 0px;"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button>
+<div class="cookie-banner" id="cookieBanner" data-revize="d1" data-bc-bar="" role="dialog" aria-label="Çerez onayı" aria-live="polite">
+    <div class="cookie-inner">
+        <div class="cookie-text">
+            <span class="cookie-ico"><i class="fa-solid fa-cookie-bite" aria-hidden="true"></i></span>
+            <p>Gerekli çerezler her zaman çalışır: oturum ve güvenlik, senin tercihlerin (ör. konum seçimin) ve içeriğin kaç kez görüntülendiğini sayan birinci taraf ölçüm. Siteyi nasıl kullandığını anlamak için Google Analytics çerezlerini yalnız sen kabul edersen çalıştırırız; “Reddet” dersen yüklenmez. Reklam ya da siteler arası takip çerezi kullanmıyoruz. <a href="{{kok}}yasal/cerez/">Çerez Politikası</a> · <a href="{{kok}}yasal/aydinlatma/">KVKK Aydınlatma Metni</a></p>
+        </div>
+        <div class="cookie-actions">
+            <button type="button" class="btn-cookie-reject" id="cookieReject">Reddet</button>
+            <button type="button" class="btn-cookie-accept" id="cookieAccept">Tümünü Kabul Et</button>
+        </div>
+    </div>
+</div>
+<div class="lg-overlay" id="lgOverlay"></div>
+<div class="lg-gate" id="lgGate" role="dialog" aria-modal="true" aria-labelledby="lgGateTitle" data-def-title="Bu işlem için giriş yap" data-def-desc="Kaydetmek, yorum yapmak ve takip etmek için Dada Gourmet hesabına giriş yapman gerekiyor." data-bound="1">
+        <div class="lg-panel">
+            <button class="lg-close" id="lgClose" type="button" aria-label="Kapat" data-lg-close=""><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+            <span class="lg-ico"><i class="fa-solid fa-lock" aria-hidden="true"></i></span>
+            <h4 id="lgGateTitle" data-lg-title="">Bu işlem için giriş yap</h4>
+            <p id="lgGateDesc" data-lg-desc="">Kaydetmek, yorum yapmak ve takip etmek için Dada Gourmet hesabına giriş yapman gerekiyor.</p>
+            <div class="lg-acts">
+                <a class="btn btn-primary" data-lg-login="" href="{{kok}}giris/" rel="nofollow"><i class="fa-solid fa-user" aria-hidden="true"></i> Giriş Yap</a>
+                <a class="btn btn-ghost" data-lg-register="" href="{{kok}}kayit/">Üye Ol</a>
+            </div>
+        </div>
+    </div>
+<a class="yg-fab" href="{{kok}}dada-route/" aria-label="Dada Route" data-bc-clear="" style="--bc-lift: 0px;"><i class="fa-solid fa-route" aria-hidden="true"></i><span class="yg-fab-tx">Dada Route</span></a>
+<div class="fb-overlay" id="moOverlay"></div>
+<div class="fb-modal" id="moModal" role="dialog" aria-modal="true" aria-labelledby="moTitle" inert="">
+        <div class="fb-panel"><div class="fb-head"><div><h3 id="moTitle">Mekân Öner</h3><p>Sevdiğin bir lezzet durağını rehbere öner — editör onayıyla yayınlanır.</p></div><button class="fb-close" id="moClose" type="button" aria-label="Kapat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="fb-body"><form id="moForm" method="POST" enctype="multipart/form-data" data-prototip-form="">
+                                <div class="hp-field" aria-hidden="true"><label for="moWebsite">Website</label><input id="moWebsite" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+                <div class="mo-field">
+                    <label for="moName">Mekan adı</label>
+                    <input type="text" name="name" id="moName" value="" placeholder="Örn. Çınaraltı Esnaf Lokantası" required="">                                    </div>
+                <div class="mo-row">
+                    <div class="mo-field">
+                        <label for="moCity">Şehir / konum</label>
+                        <input type="text" name="location" id="moCity" value="" placeholder="Örn. İstanbul, Kadıköy" required="">                                            </div>
+                    <div class="mo-field">
+                        <label for="moType">Mekan tipi <span class="opt">(opsiyonel)</span></label>
+                        <input type="text" name="venue_type" id="moType" value="" placeholder="Örn. Esnaf lokantası">                                            </div>
+                </div>
+                <div class="mo-field">
+                    <label for="moWhy">Neden öneriyorsun?</label>
+                    <textarea name="reason" id="moWhy" placeholder="Bu mekânı özel kılan ne? En sevdiğin lezzet, ambiyans ya da bir anı…" required=""></textarea>                                    </div>
+                <div class="mo-field">
+                    <label>Görsel <span class="opt">(opsiyonel)</span></label>
+                    <label class="mo-up" id="moUp" for="moFile">
+                        <i class="fa-solid fa-camera" aria-hidden="true"></i>
+                        <span><b id="moUpLabel" data-default="Fotoğraf ekle">Fotoğraf ekle</b><span>Mekânın bir karesi önerini güçlendirir</span></span>
+                    </label>
+                    <input type="file" name="media" id="moFile" accept="image/*" hidden="">                    
+                                                        </div>
+                <div class="mo-foot">
+                    <button class="mo-submit" type="submit"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Gönder</button>
+                    <button class="mo-cancel" type="button" id="moCancel">Vazgeç</button>
+                </div>
+            </form>
+</div></div>
+    </div>
+<div class="ke-toast" id="keToast" role="status"><i class="fa-solid fa-circle-check"></i><span id="keToastMsg"></span></div>

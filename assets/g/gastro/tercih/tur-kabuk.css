@@ -1,0 +1,198 @@
+/* =====================================================================
+   Dada Gastro · Tercihler hattı — TANITIM TURU + "Eğitim sihirbazı" paneli (tam yapı F5, 5 Kas)
+   Kaynak: Beyar onaylı taslak `public/gastro/tercih/tercih.css` §2 (tur), §3 (ipucu ayağı), §4 (not bağı), §7 (pencere/panel
+   revizesi), §8 (kayıtlar) — değerler AYNEN; yalnız `.tercih-tur-kok` köküne kapsandı (sayfanın ve öbür tercih bileşenlerinin
+   — liste.css, uye-sihirbaz.css — aynı adlı sınıflarına sızmaz). Ölçek `ortak.css`ten (önce yüklenir).
+   Donör: `/` (#fbOverlay .fb-overlay · #fbModal .fb-modal · .fb-panel · .fb-body · .fb-close; .eyebrow · .see-all · .btn) ·
+   `/hesabim/cozum-merkezi` (.kart.ipucu · .ipucu-bas · .ipucu-metin).
+   ===================================================================== */
+
+/* ---------- 2 · TANITIM TURU — donör .fb-modal.show · .fb-panel ---------- */
+.tercih-tur-kok .tercih-tur{ padding: var(--bosluk-20); }
+.tercih-tur-kok .tercih-tur-gorsel{
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background-color: var(--zemin-2);
+  background-size: cover; background-position: center;
+  overflow: hidden;
+}
+.tercih-tur-kok .tercih-tur-gorsel .fb-close{ position: absolute; top: var(--t-oge); right: var(--t-oge); }
+.tercih-tur-kok .tercih-tur .fb-body{ padding: var(--t-kart-ic); }
+.tercih-tur-kok .tercih-tur .fb-body h3{
+  margin-top: var(--t-satir);
+  font-size: var(--yazi-22); line-height: var(--satir-baslik-2, var(--satir-baslik));
+}
+.tercih-tur-kok .tercih-tur .fb-body p{
+  margin-top: var(--t-satir);
+  font-size: var(--yazi-15); line-height: var(--satir-genis);
+  color: var(--metin-ikincil); font-weight: var(--agirlik-govde);
+}
+.tercih-tur-kok .tercih-tur .see-all{ margin-top: var(--bosluk-16); gap: var(--t-satir); }
+@media (min-width:641px){ .tercih-tur-kok .tercih-tur .see-all{ padding: var(--bosluk-8) var(--bosluk-16); } }
+.tercih-tur-kok .tercih-tur .fb-body .tercih-tur-not{
+  display: flex; align-items: center; gap: var(--t-satir);
+  margin-top: var(--bosluk-16); font-size: var(--yazi-13);
+}
+.tercih-tur-kok .tercih-tur .fb-body .tercih-tur-not i{ flex: none; color: var(--aksan); }
+.tercih-tur-kok .tercih-tur .fb-body .tercih-tur-not span{ flex: 1 1 auto; min-width: 0; }
+.tercih-tur-kok .tercih-tur-ayak{
+  display: flex; align-items: center; justify-content: space-between; gap: var(--bosluk-16);
+  margin-top: var(--t-blok); padding-top: var(--bosluk-20);
+  border-top: var(--cizgi-1) solid var(--cizgi);
+}
+.tercih-tur-kok .tercih-tur-eylem{ display: flex; gap: var(--t-satir); }
+/* DE/RU: Geri görünürken üç düğme + noktalar tek satıra sığmıyordu (tarayıcı kapısı ölçtü: 1440'ta "Weiter" pencere dışında) →
+   satır sarar, eylemler sağda kalır */
+@media (min-width:641px){
+  .tercih-tur-kok .tercih-tur-ayak{ flex-wrap: wrap; row-gap: var(--bosluk-12); }
+  .tercih-tur-kok .tercih-tur-ayak .tercih-tur-eylem{ margin-left: auto; }
+}
+/* eklendi: slayt noktaları (kanonda slayt göstergesi yok) — tıklanır */
+.tercih-tur-kok .tercih-noktalar{ display: flex; align-items: center; gap: var(--t-satir); }
+.tercih-tur-kok .tercih-nokta{
+  width: var(--bosluk-8); height: var(--bosluk-8);
+  padding: 0; border: 0; cursor: pointer;
+  border-radius: var(--yuvarlak-hap); background: var(--cizgi-vurgu);
+  transition: width var(--sure) var(--yumusama), background var(--sure) var(--yumusama);
+}
+.tercih-tur-kok .tercih-nokta.aktif{ width: var(--bosluk-24); background: var(--aksan); }
+.tercih-tur-kok .tercih-nokta:focus-visible{ outline: var(--odak-kalinlik) solid var(--odak-renk); outline-offset: var(--odak-ofset); }
+/* eklendi: alt sayfa göstergesi (tur revizesi 5 Kas) — eyebrow satırının sağında, slayt noktalarının küçük kardeşi + "1/2" */
+.tercih-tur-kok .tercih-tur-ust{ display: flex; align-items: center; justify-content: space-between; gap: var(--t-oge); flex-wrap: wrap; row-gap: var(--bosluk-4); }
+.tercih-tur-kok .tercih-alt-sayfa{ display: inline-flex; align-items: center; gap: var(--bosluk-6, var(--bosluk-4)); padding-inline: var(--bosluk-4); } /* iç boşluk: noktaların dokunma alanı kutuda kalır */
+.tercih-tur-kok .tercih-alt-sayfa[hidden]{ display: none; }
+.tercih-tur-kok .tercih-alt-sayac{ font-size: var(--yazi-12); font-weight: var(--agirlik-kalin); color: var(--metin-ikincil); font-variant-numeric: tabular-nums; }
+.tercih-tur-kok .tercih-alt-sayfa .tercih-alt-sayac{ margin-right: var(--bosluk-4); }
+.tercih-tur-kok .tercih-alt-nokta{
+  width: var(--bosluk-6, var(--bosluk-4)); height: var(--bosluk-6, var(--bosluk-4));
+  padding: 0; border: 0; cursor: pointer;
+  border-radius: var(--yuvarlak-hap); background: var(--cizgi-vurgu);
+  transition: width var(--sure) var(--yumusama), background var(--sure) var(--yumusama);
+}
+.tercih-tur-kok .tercih-alt-nokta.aktif{ width: var(--bosluk-16); background: var(--aksan-koyu); }
+.tercih-tur-kok .tercih-alt-nokta:focus-visible{ outline: var(--odak-kalinlik) solid var(--odak-renk); outline-offset: var(--odak-ofset); }
+/* dokunma hedefi: görünen nokta küçük, basılan alan 24px (WCAG 2.5.8) */
+.tercih-tur-kok .tercih-alt-nokta{ position: relative; }
+.tercih-tur-kok .tercih-alt-nokta::after{ content: ""; position: absolute; inset: calc(var(--bosluk-8) * -1) calc(var(--bosluk-4) * -1); }
+.tercih-tur-kok .tercih-tur-panel .tercih-alt-sayac::before{ content: "· "; }
+.tercih-tur-kok .tercih-tur-panel .tercih-alt-sayac[hidden]{ display: none; }
+.tercih-tur-kok .tercih-tur-panel .tercih-alt-sayac{ margin-left: 0; }
+@keyframes tercihTurBelir{ from{ opacity: 0; transform: translateY(var(--bosluk-8)); } to{ opacity: 1; transform: none; } }
+.tercih-tur-kok .tercih-tur-gecis{ animation: tercihTurBelir var(--sure) var(--yumusama); }
+@media (max-width:640px){
+  .tercih-tur-kok .tercih-tur{ padding: var(--bosluk-16); }
+  .tercih-tur-kok .tercih-tur .fb-body h3{ font-size: var(--yazi-20); }
+  .tercih-tur-kok .tercih-tur-ayak{ flex-direction: column; align-items: stretch; gap: var(--bosluk-16); }
+  .tercih-tur-kok .tercih-noktalar{ justify-content: center; }
+  /* üç düğme tek satır: Geri yalnız ok, Atla ve İleri eşit pay */
+  .tercih-tur-kok .tercih-tur-eylem{ flex-direction: row; }
+  .tercih-tur-kok .tercih-tur-eylem .btn{ width: auto; flex: 1 1 0; }
+  .tercih-tur-kok .tercih-tur-eylem [data-tur-geri]{ flex: none; }
+  .tercih-tur-kok .tercih-tur-eylem .tercih-tur-etiket{ display: none; }
+  /* pencere kısa ekranda taşmasın: gövde içte kayar */
+  .tercih-tur-kok .tercih-tur .fb-panel{ max-height: calc(100dvh - var(--bosluk-32)); overflow-y: auto; }
+}
+
+/* son slayt notunun bağı (taslak §4 .tercih-not-bag) */
+.tercih-tur-kok .tercih-not-bag{
+  padding: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; font-weight: var(--agirlik-kalin);
+  color: var(--aksan-koyu);
+  text-decoration: underline; text-underline-offset: var(--bosluk-4);
+}
+.tercih-tur-kok .tercih-not-bag:hover{ color: var(--aksan); }
+.tercih-tur-kok .tercih-not-bag:focus-visible{ outline: var(--odak-kalinlik) solid var(--odak-renk); outline-offset: var(--odak-ofset); }
+
+/* ---------- medya: modülün gerçek sayfa kaydı — 1440 yatay 16:9 tam dolu; 390 dikey kayıt ortada, telefon oranında ---------- */
+.tercih-tur-kok .tercih-tur-video{ display: block; width: 100%; height: 100%; object-fit: cover; background: var(--zemin-2); }
+.tercih-tur-kok .tercih-tur-gorsel .tercih-tur-oynat{ top: auto; right: auto; left: var(--t-oge); bottom: var(--t-oge); width: var(--bosluk-32); height: var(--bosluk-32); font-size: var(--yazi-12); }
+.tercih-tur-kok .tercih-tur-duragan .tercih-tur-oynat, .tercih-tur-kok .tercih-tur-duragan .tercih-tur-panel-oynat-ikon{ display: none; }
+@media (max-width:640px){
+  .tercih-tur-kok .tercih-tur-gorsel{
+    aspect-ratio: auto; height: clamp(calc(var(--bosluk-64) * 3), 36dvh, calc(var(--bosluk-64) * 5));
+    display: flex; justify-content: center; align-items: center; padding: var(--bosluk-12) 0; /* grid'in auto satırında %100 yükseklik çözülmüyordu (taslakta ölçüldü) */
+  }
+  .tercih-tur-kok .tercih-tur-gorsel .tercih-tur-video{ width: auto; height: 100%; aspect-ratio: 300 / 534; border-radius: var(--yuvarlak-md); box-shadow: var(--golge-md); }
+  .tercih-tur-kok .tercih-tur-gorsel.tercih-tur-duragan{ padding: 0; }
+  .tercih-tur-kok .tercih-tur-gorsel.tercih-tur-duragan .tercih-tur-video{ width: 100%; aspect-ratio: auto; border-radius: 0; box-shadow: none; }
+}
+
+/* ---------- yüzen "Eğitim sihirbazı" paneli: 1440 sağ alt kart (üstte medya) · 390 alt şerit (solda dikey kayıt) ----------
+   🔴 taslakta ölçüldü (5 Kas): .kart/.kart.ipucu/.ipucu-bas/.ipucu-metin `kanon/bilesenler.css`te ve o dosya modül sayfalarında
+   YÜKLÜ DEĞİL → panel saydam çıkıyordu. Değerler kanonun aynısı, yalnız panele kapsamlı (dosyayı sayfaya eklemek kabuğu ezer). */
+.tercih-tur-kok .tercih-tur-panel{
+  background: var(--kagit); border: var(--cizgi-1) solid var(--cizgi); border-radius: var(--yuvarlak-lg);
+  font-family: var(--yazi-yuzu); color: var(--murekkep);
+}
+.tercih-tur-kok .kart.ipucu.tercih-tur-panel{
+  position: fixed; z-index: calc(var(--kat-alt-bar) - 1);
+  right: var(--bosluk-24);
+  /* çerez bandı görünürken bandın üstüne oturur (`--tercih-tur-alt-engel`: bandın dipten kapladığı yükseklik, tur-kabuk.js ölçer) */
+  bottom: max(var(--bosluk-24), calc(var(--tercih-tur-alt-engel, 0px) + var(--bosluk-8)));
+  width: calc(var(--bosluk-64) * 5);
+  margin: 0; padding: 0; overflow: hidden;
+  box-shadow: var(--golge-lg);
+  text-align: left;
+  animation: tercihTurBelir var(--sure) var(--yumusama);
+}
+.tercih-tur-kok .tercih-tur-panel-medya{
+  position: relative; display: block; width: 100%; aspect-ratio: 16 / 9;
+  margin: 0; padding: 0; border: 0; cursor: pointer; background: var(--zemin-2);
+}
+.tercih-tur-kok .tercih-tur-panel-medya:disabled{ cursor: default; }
+.tercih-tur-kok .tercih-tur-panel-medya:focus-visible{ outline: var(--odak-kalinlik) solid var(--odak-renk); outline-offset: calc(var(--odak-kalinlik) * -1); }
+.tercih-tur-kok .tercih-tur-panel-oynat-ikon{
+  position: absolute; left: var(--bosluk-8); bottom: var(--bosluk-8);
+  width: var(--bosluk-28); height: var(--bosluk-28); border-radius: var(--yuvarlak-daire);
+  display: grid; place-items: center; font-size: var(--yazi-11);
+  background: var(--kagit); color: var(--murekkep); box-shadow: var(--golge-sm);
+}
+.tercih-tur-kok .tercih-tur-panel-ic{ padding: var(--bosluk-16) var(--bosluk-20) var(--bosluk-20); }
+.tercih-tur-kok .tercih-tur-panel-bas{ display: flex; align-items: center; justify-content: space-between; gap: var(--t-oge); margin-bottom: var(--t-satir); }
+.tercih-tur-kok .tercih-tur-panel .ipucu-bas{
+  display: flex; align-items: center; gap: var(--t-satir); margin: 0;
+  font-size: var(--yazi-15); font-weight: var(--agirlik-kalin);
+}
+.tercih-tur-kok .tercih-tur-panel .ipucu-bas i{ color: var(--aksan-koyu); font-size: var(--yazi-14); }
+.tercih-tur-kok .tercih-tur-panel .ipucu-metin{
+  margin: 0 0 var(--bosluk-12);
+  font-size: var(--yazi-13); color: var(--metin-ikincil); font-weight: var(--agirlik-govde); line-height: var(--satir-genis);
+}
+.tercih-tur-kok .tercih-ipucu-sayac{ margin-left: var(--bosluk-4); font-size: var(--yazi-12); font-weight: var(--agirlik-kalin); color: var(--metin-ikincil); }
+.tercih-tur-kok .tercih-tur-panel .fb-close{ width: var(--bosluk-32); height: var(--bosluk-32); font-size: var(--yazi-14); }
+.tercih-tur-kok .tercih-tur-panel-baslik{ color: var(--murekkep); font-weight: var(--agirlik-kalin); }
+.tercih-tur-kok .tercih-ipucu-ayak{ display: flex; align-items: center; justify-content: space-between; gap: var(--t-oge); flex-wrap: wrap; row-gap: var(--bosluk-12); }
+.tercih-tur-kok .tercih-ipucu-eylem{ display: flex; gap: var(--t-satir); }
+.tercih-tur-kok .tercih-tur-panel-yer{ min-width: 0; font-size: var(--yazi-13); }
+.tercih-tur-kok .tercih-tur-panel-yer .see-all{ margin: 0; gap: var(--t-satir); white-space: nowrap; }
+.tercih-tur-kok .tercih-tur-panel-burada{ display: inline-flex; align-items: center; gap: var(--bosluk-4); color: var(--metin-ikincil); font-weight: var(--agirlik-orta); }
+.tercih-tur-kok .tercih-tur-panel-burada i{ color: var(--aksan); }
+.tercih-tur-kok .tercih-tur-panel .btn{ padding: var(--bosluk-8) var(--bosluk-16); font-size: var(--yazi-13); white-space: nowrap; }
+.tercih-tur-kok .tercih-tur-panel [data-panel-geri]{ padding-left: var(--bosluk-12); padding-right: var(--bosluk-12); }
+.tercih-tur-kok .tercih-tur-panel .tercih-tur-etiket{ display: none; }
+@media (max-width:640px){
+  /* alt şerit: alt çubuğun (bottom-nav, kat 90) hemen üstünde; solda dikey kayıt küçük resmi, sağda iki satır + eylem */
+  .tercih-tur-kok .kart.ipucu.tercih-tur-panel{
+    left: var(--bosluk-16); right: var(--bosluk-16); width: auto;
+    bottom: max(calc(var(--bosluk-14) + env(safe-area-inset-bottom, 0px) + var(--tercih-alt-cubuk, var(--bosluk-64)) + var(--bosluk-8)),
+      calc(var(--tercih-tur-alt-engel, 0px) + var(--bosluk-8)));
+    display: grid; grid-template-columns: var(--bosluk-64) minmax(0, 1fr); align-items: stretch;
+  }
+  .tercih-tur-kok .tercih-tur-panel-medya{ aspect-ratio: 9 / 16; height: auto; }
+  .tercih-tur-kok .tercih-tur-panel-ic{
+    padding: var(--bosluk-8) var(--bosluk-8) var(--bosluk-8) var(--bosluk-12);
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "bas kapat" "yer yer" "eylem eylem";
+    align-content: space-between; column-gap: var(--t-satir); row-gap: var(--bosluk-4);
+  }
+  .tercih-tur-kok .tercih-tur-panel-bas{ display: contents; }
+  .tercih-tur-kok .tercih-tur-panel .ipucu-bas{ grid-area: bas; font-size: var(--yazi-12); }
+  .tercih-tur-kok .tercih-tur-panel .ipucu-bas > i{ display: none; }
+  .tercih-tur-kok .tercih-tur-panel .ipucu-metin{ display: none; }
+  .tercih-tur-kok .tercih-tur-panel .tercih-ipucu-ayak{ display: contents; }
+  .tercih-tur-kok .tercih-tur-panel-yer{ grid-area: yer; overflow: hidden; text-overflow: ellipsis; }
+  .tercih-tur-kok .tercih-tur-panel .tercih-ipucu-eylem{ grid-area: eylem; display: flex; justify-content: flex-end; align-items: center; gap: var(--t-satir); }
+  .tercih-tur-kok .tercih-tur-panel .fb-close{ grid-area: kapat; }
+  .tercih-tur-kok .tercih-tur-panel-oynat-ikon{ left: var(--bosluk-4); bottom: var(--bosluk-4); width: var(--bosluk-24); height: var(--bosluk-24); font-size: var(--yazi-10); }
+  /* şerit sayfa sonunu örtmesin */
+  html.tercih-tur-panel-acik body{ padding-bottom: calc(var(--bosluk-74) * 2); }
+}

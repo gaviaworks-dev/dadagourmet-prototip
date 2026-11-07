@@ -1,0 +1,32 @@
+/* Prototip katmanı: yalnız görünür etiketler. Renkler kanon token'larından. */
+.pb-etiket{display:inline-block;padding:1px 8px;border-radius:999px;background:#fff4d6;color:#7a5400;font-weight:700;font-size:.85em;white-space:nowrap}
+.ornek-etiket{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:999px;background:var(--marka-yikama,#ede4ef);color:var(--marka-koyu,#62236e);font-size:12px;font-weight:700;line-height:1.5}
+.ekran-haritasi{padding:48px 0}.ekran-haritasi ul{list-style:none;padding:0;columns:2}.ekran-haritasi li{padding:4px 0;break-inside:avoid}.ekran-haritasi small{color:#6f6f6f;font-weight:400}
+@media(max-width:700px){.ekran-haritasi ul{columns:1}}
+.nav-item a .fa-route{font-size:inherit;margin-right:2px}
+/* Gastro üye zinciri `portal` dosyasını yüklemiyor; logo boyu orada. Gourmet kelime logosu için aynı değerler */
+.header .brand .gastro-word-mark{display:block;height:29px;width:auto;flex:0 0 auto}
+.drawer-brand .gastro-word-mark{display:block;height:22.9px;width:auto}
+.foot-lockup .gastro-word-mark{display:block;height:33.8px;width:auto;color:#fff}
+html[data-baslik-zemin="acik"] .header .gourmet-word-mark{color:var(--marka,#742982)}
+.giris-pano[data-pano="gourmet"]{background-image:linear-gradient(180deg,rgba(29,19,33,.3) 0%,rgba(29,19,33,.58) 55%,rgba(20,13,23,.88) 100%),url('../o/assets/gourmet-public/img/about-dining.avif');background-size:cover;background-position:center}
+/* Gastro altbilgi-perde.css ile aynı kural; üye zinciri o dosyayı yüklemiyor */
+html.altbilgi-akista .footer.orange{position:static}
+html.altbilgi-akista #pageMain{margin-bottom:0!important}
+/* Altbilgideki düğme bağları Gourmet'ten; Gastro zincirinde kuralı yok, bağ görünümü verilir */
+.foot-linkbtn{display:block;background:none;border:0;padding:0;margin:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.foot-col .foot-linkbtn{width:100%;margin-bottom:var(--foot-link-gap,12px)}
+.foot-corp .foot-linkbtn,.foot-legal .foot-linkbtn{display:inline;width:auto}
+/* Üye zinciri `portal` yüklemiyor: mağaza düğmesi kuralları oradan aynen */
+.foot-app-btns{display:flex;flex-wrap:wrap;gap:11px}
+.foot-app-btns .app-btn{width:170px}
+.app-btn{display:inline-flex;align-items:center;gap:11px;padding:10px 16px;border-radius:var(--radius-md);background:#ffffff24;border:1px solid rgba(255,255,255,.26);color:#fff;transition:.2s var(--ease)}
+.app-btn i{font-size:23px;color:#fff;flex:none}
+.app-btn .ab-tx{display:flex;flex-direction:column;line-height:1.12;text-align:left}
+.app-btn .ab-pre{font-size:10.5px;font-weight:500;letter-spacing:.04em;color:#ffe7df}
+.app-btn .ab-store{font-size:14.5px;font-weight:700;letter-spacing:-.01em;color:#fff}
+.app-btn:hover{background:#fff;border-color:#fff;transform:translateY(-3px)}
+.app-btn:hover i,.app-btn:hover .ab-store,.app-btn:hover .ab-pre{color:var(--tomato)}
+.app-btn[aria-disabled=true]{cursor:default;opacity:.6}
+.app-btn[aria-disabled=true]:hover{background:#ffffff24;border-color:#ffffff42;transform:none}
+.app-btn[aria-disabled=true]:hover i,.app-btn[aria-disabled=true]:hover .ab-store,.app-btn[aria-disabled=true]:hover .ab-pre{color:#fff}

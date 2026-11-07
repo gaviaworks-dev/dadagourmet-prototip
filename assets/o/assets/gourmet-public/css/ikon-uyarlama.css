@@ -1,0 +1,27 @@
+/* ikon-uyarlama.css — ikon turu (Beyar 2026-09-16, iş sırası 2: "kategori ikonları,
+   Gastro/Fit kanonuyla aynı") için yerel katman.
+
+   NEDEN AYRI DOSYA: `.ai/rules/assets.md` — vendor CSS'e (etkinlikler.css,
+   gourmet-mekan-liste.css, etkinlik-detay.css) kural eklemek sahte vendor'dur. Bu dosya
+   yalnız ikonu EKLENEN yüzeylerin sayfalarından, o sayfanın vendor CSS'inden SONRA bağlanır:
+   /etkinlikler · /mekanlar · /etkinlikler/{slug}.
+
+   NE YAPILMAMALI: bu kuralları "donörde yok" diye silmek ikonları başıboş bırakır (renk
+   metne düşer, `.fct-head`te genişlik oynar); ikon düğümlerini kaldırmak ise Beyar'ın
+   kategori ikonu kararını geri alır. Kapının "İKON FAZLA" satırları bu yüzeylerde
+   BİLİNÇLİ sapmadır. */
+
+/* §1 — filtre başlığı ikonu. dadagastro.com `reference/tarif-liste/tarif-liste.css:74`
+   BİREBİR (Gastro'nun tarif filtre başlıkları). */
+.fct-head .fct-head-ico{flex:none;width:19px;text-align:center;font-size:13px;color:var(--tomato)}
+
+/* §2 — /etkinlikler kategori şeridi çip ikonu. Değerler kardeş ekranın vendor CSS'inden:
+   gurme-lezzetler.css:238 `.ke-filter .chip i`. Etkinlik şeridinin aktif çipi dolu
+   (`etkinlikler.css:18` tomato-deep zemin) — ikon zeminle aynı renkte kaybolmasın diye
+   beyaz; Gastro `puf-noktalari.css` `.pufc.active i{color:#fff}` emsali. */
+.ev-filter .chip i{font-size:11px;margin-right:5px;color:var(--tomato)}
+.ev-filter .chip.active i{color:#fff}
+
+/* §3 — etkinlik detayı "Kimler Katılabilir?" çipleri. Lezzet detayının etiket çipi
+   (gurme-lezzetler.css:361/442) değerleri. */
+.evd-tag-row .chip i{font-size:11px;margin-right:4px;color:var(--tomato)}

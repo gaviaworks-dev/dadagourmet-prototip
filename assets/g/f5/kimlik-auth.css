@@ -1,0 +1,63 @@
+/* F8 — donörde `.giris-alt` içindeki "Hemen Kayıt Ol" / "Giriş Yap" bir
+   <button>; burada gerçek bir sayfa geçişi olduğu için (iki ayrı rota,
+   `/giris` ↔ `/kayit`) JS'siz çalışan <a> kullanılıyor — kanonun
+   `.giris-alt button` kuralı yalnız `button` seçicisine bağlı, `<a>`ya
+   uygulanmadığı için link inline kalıp donörden 23px kısa ölçülüyordu.
+   Kural birebir buradan alındı (bilesenler.css, `.giris-alt button`),
+   yalnız seçici `.giris-alt a` oldu. Kanon dosyası değiştirilmedi. */
+.giris-alt a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: inherit;
+  font-size: var(--yazi-13-5);
+  font-weight: var(--agirlik-kalin);
+  color: var(--aksan);
+  background: none;
+  border: none;
+  text-decoration: none;
+}
+
+/* eklendi: F8 — sayfadaki Vite build paketi `.alan-girdi`ye
+   line-height:21.7px dayatıyor (kanonda böyle bir kural yok); donör `line-height: normal`
+   basıyor (45px alan yüksekliği, ölçüldü — tahmin değil). Kapsam yalnız kimlik kartının
+   iki paneliyle sınırlı, formun dışına ya da başka sayfalara sızmıyor. */
+#auPaneGiris .alan-girdi,
+#auPaneKayit .alan-girdi {
+  line-height: normal;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   YENİ ŞİFRE EKRANI — beş kural canlı işaretlenir (Beyar, 2026-09-16).
+
+   Sınıf adı `ok`, Fit/Gourmet ile aynı (`.ys-kural li.ok{color:var(--fit-deep)}
+   .ys-kural li.ok i{color:var(--fit)}`); Gastro'da yeşil MARKA değil SEMANTİK
+   olduğu için `--green`/`--green-deep` yuvalarına bağlanıyor
+   (`markalar/gourmet.css`: `--saglik-yesil` #3BB77E · `--kurumsal-yesil-koyu`
+   #2c9963).
+
+   🔴 KANON DEĞİŞTİRİLMEDİ. Kural `bilesenler.css`e (`.sifre-kural`, 4318)
+   yazılmadı; o dosya kanon ve birebir kopya. Bu dosya `/giris`te
+   `bilesenler.css`ten SONRA yükleniyor, yani kaskadda kazanır.
+   ───────────────────────────────────────────────────────────────────────── */
+.sifre-kural li.ok { color: var(--green-deep); }
+.sifre-kural li.ok i { color: var(--green); }
+
+/* Doğrulamanın iki durumu da aynı kimlik kartı ve kanon nefesini kullanır. */
+.giris-kart > #auPaneDogrula { flex: 1; }
+#auPaneDogrula .dogrula-eylemler { justify-content: center; align-items: center; }
+#auPaneDogrula .dogrula-eylemler form { margin: 0; }
+#auPaneDogrula .dogrula-cikis {
+  display: flex;
+  justify-content: center;
+  margin: var(--bosluk-20) 0 0;
+}
+
+/* Kayıt formunun form düzeyi hata satırları (Beyar, 3 Eki) — kayıt sınırının cümlesi (formun başında)
+   ve onay cümlesi (onayların altında). Kanon `.giris-hata.form` yalnız üst pay taşıyor (4px); satır
+   alttaki öğeye (Ad etiketi · gönder düğmesi) 0px ile yapışıyordu. Alt pay formun ritmi: başlık → form
+   ve onaylar → düğme arası 20px (ölçüldü, 1440 ve 390). */
+#formKayit .giris-hata.form.acik{ margin-bottom:var(--bosluk-20); }
+/* Doğrulama kutusu (IP tavanı): yardım satırı · kutu · hata satırı alanın kendi düzeninde, düğmeden önce. */
+#formKayit .kayit-captcha{ margin-bottom:var(--bosluk-20); }
+#formKayit .kayit-captcha .cf-turnstile{ margin-top:var(--bosluk-8); }

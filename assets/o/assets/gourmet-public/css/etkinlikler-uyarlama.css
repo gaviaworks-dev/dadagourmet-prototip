@@ -1,0 +1,120 @@
+/* etkinlikler-uyarlama.css — /etkinlikler LİSTE ekranının yerel katmanı.
+   Emsal: etkinlik-detay-uyarlama.css · gurme-lezzetler-uyarlama.css.
+
+   NEDEN AYRI DOSYA: `.ai/rules/assets.md` — vendor edilen kanon dosya (etkinlikler.css)
+   donörle bayt bayt aynı kalmalı; seçici eklemek "sahte vendor"dur ve sessizce kaynak
+   sırasını/özgüllüğü bozar. Bu dosya `index.blade.php`nin `sayfa_css` yığınında
+   etkinlikler.css'ten SONRA yüklenir, YALNIZ bu rotada bağlıdır — bu yüzden seçicilere
+   ayrıca gövde sınıfı öneki verilmedi; kural başka bir sayfaya ulaşamaz.
+
+   İÇERİK İKİ BÖLÜM:
+   §1 kanon kitin bu sayfada TANIMSIZ kalan bildirimleri (gourmet-mekan-liste.css'ten
+      birebir değerlerle) — yeni sınıf icat etmemek için ad ve davranış kanondan.
+   §2 konum ağacının kendi yapısı (ülke bloğu, şehir listesi, kapsanan şehir, arama).
+   Karar tablosu ve kaynakları: docs/arastirma-konum-filtresi.md
+*/
+
+/* ═══ §1 — KANON KİT (gourmet-mekan-liste.css:172-176, 652-657) ═══
+   Bu sınıflar kanonun kendi filtre kitinin parçası ama `etkinlikler.css` onları
+   TAŞIMIYOR (mekân listesinde tanımlılar, etkinlik listesinde değil). Değerler
+   kaynak dosyadaki hâlleriyle kopyalandı; değiştirilmedi. */
+.fct-more {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--tomato);
+    cursor: pointer;
+    padding: 7px 0 0 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+.fct-more i { font-size: 10px; transition: transform .25s var(--ease); }
+.fct-ulke.more-open > .fct-ulke-sehirler > .fct-more i,
+.fct-konum.more-open > .fct-body > .fct-more i { transform: rotate(180deg); }
+
+/* İl fasetinin arama kutusu — Beyar 2026-08-10, İş B madde 2. Kutu, kahraman
+   aramasının `.search-input` kalıbının panel ölçüsüne inen varyantı; renk/çerçeve/
+   radius token'dan gelmeye devam eder. */
+.mkl-fct-srch { margin: 2px 0 10px; padding: 0 12px; border-radius: var(--radius-md); }
+.mkl-fct-srch i { font-size: 12px; }
+.mkl-fct-srch input { font-size: 13.5px; padding: 9px 0; }
+.fct-scroll { max-height: 260px; overflow-y: auto; overscroll-behavior: contain; }
+.fct-empty { font-size: 12.5px; color: var(--muted); padding: 4px 0 0 30px; margin: 0; }
+
+/* ═══ §2 — KONUM AĞACI ═══ */
+
+/* Ülke bloğu: başlık satırı (checkbox + ad + sayı) + aç/kapa düğmesi + şehir listesi. */
+.fct-ulke + .fct-ulke { border-top: 1px solid var(--line); }
+.fct-ulke-satiri { gap: 0; }
+.fct-ulke-sec { display: flex; align-items: center; gap: 10px; flex: 1 1 auto; min-width: 0; }
+.fct-ulke-satiri .ft { font-weight: 700; color: var(--slate); }
+/* Ülkesi olmayan kayıtların bloğu tıklanamaz (blade şerhindeki gerekçe). */
+.fct-ulke-pasif { cursor: default; }
+.fct-ulke-pasif .ft { color: var(--muted); }
+
+/* Aç/kapa düğmesi checkbox'tan AYRI bir hedef: dokunma alanı 32px, yoksa 390'da
+   ülkeyi seçmek isteyen parmak listeyi açar. */
+.fct-ulke-ac {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    min-height: 32px;
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 11px;
+    cursor: pointer;
+}
+.fct-ulke-ac:hover { color: var(--tomato); }
+.fct-ulke-ac i { transition: transform .25s var(--ease); }
+.fct-ulke.open .fct-ulke-ac i { transform: rotate(180deg); }
+
+.fct-ulke-sehirler { display: none; margin: 0 0 6px 9px; padding: 2px 0 0 15px; border-left: 1px solid var(--line); }
+.fct-ulke.open .fct-ulke-sehirler { display: block; }
+.fct-sehir { font-size: 13.5px; padding: 5px 0; }
+
+/* Şehir olmayan takma konum ("Türkiye geneli") — şehirlerin ARDINDAN, ayraçla.
+   Alfabetik şehir listesine karıştırılmaz (docs/arastirma-konum-filtresi.md K10). */
+.fct-sehir-genel { margin-top: 5px; padding-top: 9px; border-top: 1px dashed var(--line); }
+.fct-sehir-genel .ft i { color: var(--muted); font-size: 11px; }
+
+/* Ülkesi seçili olduğu için KAPSANAN şehir: işaretli ama `disabled` — kutusu dolu
+   görünür, tıklanmaz. Tek çıkış yolu ülkeyi bırakmaktır ve bu bilinçli: aksi hâlde
+   "ülke seçili ama içinden bir şehir çıkarılmış" diye adreste ifade edilemeyen bir
+   üçüncü durum doğardı. */
+.fct-row input:disabled ~ .cbx { opacity: .55; }
+.fct-row input:disabled ~ .ft,
+.fct-row input:disabled ~ .fcnt { opacity: .62; }
+.fct-row:has(input:disabled) { cursor: default; }
+.fct-row:has(input:disabled):hover { color: var(--slate-2); }
+.fct-row:has(input:disabled):hover .cbx { border-color: var(--tomato); }
+
+/* "Daha fazla göster" kesmesi — kanon `.fct.more-open .fct-row.xtra` deseninin
+   iki kademeli hâli: ülke listesi grubun kendisine, şehir listesi ülke bloğuna bağlı. */
+.fct-ulke.xtra { display: none; }
+.fct-ulke .fct-row.xtra { display: none; }
+.fct-more-ulke { padding-left: 0; }
+
+/* Arama süzgeci. Eşleşen satır `xtra` olsa da görünür; eşleşmeyen `konum-gizli` alır.
+   🔴 ÖZGÜLLÜK: "aç" kurallarının HEPSİ `:not(.konum-gizli)` taşımak ZORUNDA. İlk yazımda
+   yalnız `.arama` kurallarında vardı; `.fct-konum.more-open .fct-ulke.xtra` (0,3,0)
+   `.fct-ulke.konum-gizli`yi (0,2,0) eziyordu ve "daha fazla göster" açıkken arama HİÇ
+   süzmüyordu — ölçüldü 2026-09-16 (arama "sap" yazılıyken 30 ülkenin 30'u görünür kaldı,
+   konsol temiz, hata yok). `.ai/rules/css.md`'nin özgüllük tuzağının aynısı. */
+.fct-konum.more-open .fct-ulke.xtra:not(.konum-gizli) { display: block; }
+.fct-ulke.more-open .fct-row.xtra:not(.konum-gizli) { display: flex; }
+.fct-konum.arama .fct-ulke.xtra:not(.konum-gizli) { display: block; }
+.fct-ulke.arama .fct-row.xtra:not(.konum-gizli) { display: flex; }
+.fct-ulke.konum-gizli,
+.fct-row.konum-gizli { display: none; }
+
+/* 390'da sheet içinde liste kutusu biraz daha uzun nefes alsın. */
+@media (max-width: 1024px) {
+    .fct-scroll { max-height: 46vh; }
+}

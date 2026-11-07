@@ -1,0 +1,72 @@
+/* BANNER YERLEŞİM UYARLAMASI — Beyar kararı B (16 Eylül): bannerlı her sayfa Gastro
+   https://dadagastro.com/puf-noktalari bandının yerleşimini BİREBİR taşır.
+
+   KAYNAK — tahmin değil, canlı Gastro sayfasının RENDER EDİLMİŞ kuralları
+   (`scripts/olcum/_bh_gastro_kural.mjs`, salt okunur GET):
+     varliklar/reference/shared/dm-hero.css  "AJAN-B · B3 · LİSTE + YASAL BANNER"
+       body[data-fit-hero-kind=liste|yasal] .below-header{display:flex;flex-direction:column}
+       … > .wrap{flex:1 1 auto;display:flex;flex-direction:column;min-width:0;width:100%}
+       … > .wrap > [class*=crumb]:first-child + *{margin-top:auto}
+       … > .wrap > *:first-child:not([class*=crumb]){margin-top:auto}
+       … > .wrap > [class*=crumb]{padding-top:0;padding-bottom:0;font-size:13px}
+       body[data-fit-hero-kind=liste] [data-hero-band]{min-height:552px}   (genişlikten bağımsız)
+     tokens.css  .lst-top{padding-bottom:var(--sp-7)=48px} · .rd-crumb{margin-bottom:var(--sp-3)=12px}
+     puf-noktalari.css  .lst-hero{padding:10px 0 42px} · ≤1024 padding-bottom:32px ·
+       ≤640 .lst-hero{padding:2px 0 26px} .lst-stats{gap:10px} .lst-stats .st{flex:1}
+   Ölçülen sonuç @1440: kırıntı bandın üstünden 128px · başlık bloğu ve sayaç sütunu bandın
+   altından 90px (48 + 42), ikisi AYNI alt hizada · aralarında 1px rgba(255,255,255,.18) çizgi.
+   @390: kırıntı 74px · sayaç şeridi alttan 74px (48 + 26) · bant 552px.
+
+   NEDEN BU DOSYA: kanon CSS'ler (gourmet-mekan-liste · etkinlikler · gurme-lezzetler ·
+   mekan-bul · hakkimizda · gourmet-yasal · iletisim) VENDOR'dır, kural eklenmez
+   (`.ai/rules/assets.md`). Gourmet'te `body[data-fit-hero-kind]` kancası YOK; kapsam bandın
+   kendi sınıflarıyla kurulur. Yükleme kapsamı yalnız bannerlı sayfalar (`.ai/rules/css.md` —
+   küresel uyarlama dosyası kapıda kural sayısını devirir).
+
+   ÖZGÜLLÜK BİLİNÇLİ: seçiciler `body section.below-header:is(…)` ile başlar (0,2,2).
+   Ezilmesi gerekenler `body:not(.pg-kesfet) .ke-top{min-height:340px}` (0,2,1),
+   `.ke-hero`/`.ke-stats` medya kuralları (0,1,0), `.rd-crumb{padding:18px 0 14px}` (0,1,0) ve
+   `section.ke-top.px-band:has(.ke-head)` (t5b-a, aynı 552/48 değeri). Özgüllük yüksek olduğu
+   için dosya `sayfa_css` (head) yuvasında durabilir — gövde sonuna itmek ilk boyamada bandı
+   zıplatırdı.
+
+   ⚠ YAPMA: yazı boyutu/rengi bu dosyanın işi DEĞİL (marka tipografisi sayfanın kanonunda).
+   Anasayfa (`body.pg-kesfet`, tam ekran keşif hero'su) bu kuralın DIŞINDA — orada yüklenmez.
+   Kırıntıyı kaldırıp "Gourmet donöründe yoktu" demek YANLIŞ olur: Beyar kararıyla her bannerda
+   var (EKSİ BİRİNCİ MADDE çelişkisini Beyar kapattı). */
+
+/* ① bant sütun-flex; içerik grubu alta yaslanır — liste + kurumsal/yasal aile */
+body section.below-header:is(.ke-top,.lst-top,.lg-top,.con-top){display:flex;flex-direction:column}
+body section.below-header:is(.ke-top,.lst-top,.lg-top,.con-top)>.wrap{flex:1 1 auto;display:flex;flex-direction:column;min-width:0;width:100%}
+/* kırıntıdan SONRAKİ ilk öğe boşluğu yutar; kırıntısız bantta ilk öğe yutar */
+body section.below-header:is(.ke-top,.lst-top,.lg-top,.con-top)>.wrap>:is(.rd-crumb:first-child+*,:first-child:not(.rd-crumb)){margin-top:auto}
+
+/* ② kırıntı: dikey dolgu 0 — ofset YALNIZ bandın padding-top'undan (128 / ≤640 74) */
+body section.below-header:is(.ke-top,.lst-top,.lg-top,.con-top)>.wrap>.rd-crumb{padding-top:0;padding-bottom:0;margin-bottom:12px;font-size:13px}
+
+/* ③ liste bandı yüksekliği + alt dolgu (genişlikten bağımsız, Gastro `[data-hero-band]`).
+   `min-height` — `height` DEĞİL: içerik uzarsa (/mekanlar arama + CTA) bant büyür, taşmaz. */
+body section.below-header:is(.ke-top,.lst-top){min-height:552px;padding-bottom:48px}
+/* İletişim Gastro'da da LİSTE ailesinde (`data-fit-hero-kind="liste"`, ölçüldü): 552 bant, alt
+   dolgu 0 — `.con-intro` bandın dibine oturur. Künye/yasal YASAL ailesinde: min-height YOK,
+   bant içeriği kadar (Gastro /kunye 307,8px = Gourmet /kunye 307,8px, ölçüldü). */
+body section.below-header.con-top{min-height:552px}
+
+/* ④ başlık bloğu | sayaç sütunu ızgarasının dolgusu */
+body section.below-header:is(.ke-top,.lst-top)>.wrap>:is(.ke-hero,.lst-hero){padding:10px 0 42px}
+@media (max-width:1024px){
+  body section.below-header:is(.ke-top,.lst-top)>.wrap>:is(.ke-hero,.lst-hero){padding-bottom:32px}
+}
+@media (max-width:640px){
+  body section.below-header:is(.ke-top,.lst-top)>.wrap>:is(.ke-hero,.lst-hero){padding:2px 0 26px}
+  body section.below-header:is(.ke-top,.lst-top) :is(.ke-stats,.lst-stats){gap:10px}
+  body section.below-header:is(.ke-top,.lst-top) :is(.ke-stats,.lst-stats) .st{flex:1 1 0%}
+}
+
+/* ⑤ koyu bantta kırıntı rengi — değerler kanonun KENDİ `.ke-top .rd-crumb` satırları
+   (etkinlikler.css / gurme-lezzetler.css, birebir). gourmet-mekan-liste.css ve mekan-bul.css
+   bu satırları taşımıyor; kırıntı oralara bu turda eklendiği için renk buradan gelir. */
+body section.below-header.ke-top .rd-crumb,body section.below-header.ke-top .rd-crumb a{color:#cdbfd4}
+body section.below-header.ke-top .rd-crumb a:hover{color:#ba94c0}
+body section.below-header.ke-top .rd-crumb i{color:rgba(255,255,255,.4)}
+body section.below-header.ke-top .rd-crumb b{color:#fff}

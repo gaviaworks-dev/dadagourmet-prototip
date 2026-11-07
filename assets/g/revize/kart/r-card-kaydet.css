@@ -1,0 +1,9 @@
+/* ORTAK TARİF KARTI · kaydet (kalp) düğmesi başlığı örtmez (Beyar 5 Kas 2026).
+   Kart (`.r-card`) yatay dizildiğinde — telefonda (≤640) ve masaüstü "liste" görünümünde (`.lst-grid.is-list`) — kaydet düğmesi
+   (`.r-save`, 32px, sağ üst köşe) başlığın ilk satırının üstüne biniyordu: /tarifler ve kategori sayfasında 30 kartın 30'u, dört
+   dilde; Health mod listesinde 12/12. Başlık düğmeye yer bırakır (32px düğme + 2px nefes). Izgara (dikey kart) görünümünde düğme
+   görselin üstündedir, başlığa dokunmaz; kural orada uygulanmaz. Yükleyenler: Gastro tarif listeleri (`/tarifler` ve seçkileri,
+   kategori — `.lst-grid` taşıyan iki kabuk) ve Health kabuğu. Ölçülüp örtme BULUNMAYANLAR (yüklemez): ana sayfa bölümleri, şef
+   profili, Mutfak Defterim (`dk-kart`); arama sonuç kartında kaydet düğmesi yok. Kapı: tests/Feature/Kabuk/kart-kaydet-tarayici.cjs. */
+.lst-grid.is-list .r-card .r-body > h4 { padding-right: 34px; }
+@media (max-width: 640px) { .lst-grid .r-card .r-body > h4 { padding-right: 34px; } }

@@ -1,0 +1,182 @@
+/* =====================================================================
+   Dada Gastro · Tercihler hattı · F3 — tercih sihirbazı + Hesabım › "Mutfak tercihlerim"
+   Kaynak: Beyar onaylı statik taslak (public/_taslak/tercih/sihirbaz-*.html) ve onun stil dosyası
+   public/gastro/tercih/tercih.css — "1 · SİHİRBAZ" ve "7 · REVİZE (sihirbaz)" bölümleri AYNEN; ölçek ortak.css'ten
+   (--t-* takma adları, .tercih .btn, .tercih [hidden]). Yalnız kanon token'ları; her kural bir .tercih kökü altında.
+   Taslaktan farkı (tam yapı): seçimler gerçek checkbox/radio (label.nq-chip / label.pick) — girdi görsel olarak gizli,
+   seçili görünüm JS'siz de gelsin diye donörün .sel kuralının :has(:checked) eşi; "Atla" ve "Devam" form düğmesi.
+   ===================================================================== */
+
+/* ---------- Kabuk: Ne Pişirsem Blade'inin satır içi stilleri (satır içi stil yasak; değerler donörün kendisi) ---------- */
+.tercih-kabuk-marka{ color: var(--marka) !important; }
+.tercih-kabuk-tam{ width: 100% !important; }
+
+/* ---------- Bant: Gastro px-band kalıbı (/tarifler · /bugun-ne-pisirsem ile aynı değerler; görsel yerel tarif görseli) ---------- */
+.tercih-sihirbaz-bant{
+  background-image: linear-gradient(90deg, rgba(28, 25, 18, 0.93), rgba(33, 30, 22, 0.72)), url("../../varliklar/media/1154/thumb.webp");
+}
+/* JS kapalıyken yedek değerler; /kabuk/px-kaydirma.js çalışma anında satır içine yazar (donmuş sayı taşınmaz) */
+.tercih-sihirbaz-bant > .px-clip{ --px-x: 50%; --px-y: 50%; --px-r: 0px; --px-shift: 0px; }
+.tercih-sihirbaz-bant .px-media{ background-image: url("../../varliklar/media/1154/thumb.webp"); }
+.tercih-sihirbaz-bant .px-veil{ background-image: linear-gradient(90deg, rgba(28, 25, 18, 0.93), rgba(33, 30, 22, 0.72)); }
+
+/* =====================================================================
+   1 · SİHİRBAZ — donör /bugun-ne-pisirsem .wiz-solo (tercih.css §1, aynen)
+   ===================================================================== */
+.tercih-sihirbaz .stepper{ padding: var(--bosluk-20) var(--t-kart-ic); gap: var(--bosluk-12); }
+.tercih-sihirbaz .stp{ gap: var(--bosluk-12); }
+.tercih-sihirbaz .stp-lbl small{ margin-top: var(--t-ince); }
+.tercih-sihirbaz .form-card{ padding: var(--t-kart-ic); }
+.tercih-sihirbaz .fc-head{
+  gap: var(--bosluk-16);
+  margin-bottom: var(--t-blok);
+  padding-bottom: var(--bosluk-20);
+}
+.tercih-sihirbaz .fc-head h2{ gap: var(--t-oge); }
+.tercih-sihirbaz .fc-head p{ margin-top: var(--t-ince); }
+.tercih-sihirbaz .fc-step{ padding: var(--bosluk-8) var(--t-oge); }
+
+/* eklendi: adım sayacı + Atla */
+.tercih-fc-sag{ flex: none; display: flex; align-items: center; gap: var(--t-oge); }
+/* tam yapı: "Atla" bir form düğmesi (kaydetmeden ilerler) — taslağın bağıyla aynı kutu: UA düğme biçimi sıfırlanır */
+.tercih-atla{
+  display: inline-flex; align-items: center; gap: var(--t-ince);
+  margin: 0; padding: var(--bosluk-8) 0;
+  border: 0; background: none; cursor: pointer;
+  font: inherit; font-size: var(--yazi-13); font-weight: var(--agirlik-kalin); line-height: inherit;
+  color: var(--aksan-koyu); text-decoration: none; white-space: nowrap;
+}
+.tercih-atla i{ font-size: var(--yazi-10); }
+.tercih-atla:hover{ text-decoration: underline; text-underline-offset: var(--bosluk-4); }
+.tercih-atla:focus-visible{ outline: var(--odak-kalinlik) solid var(--odak-renk); outline-offset: var(--odak-ofset); }
+
+/* seçim kartları */
+/* sütunlar minmax(0,1fr): 1fr = minmax(auto,1fr) içerik genişliğinin altına inmez ve dar ekranda kabı aşar (ölçüldü: 390'da 15px) */
+.tercih-sihirbaz .pick-grid{ gap: var(--t-oge); grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.tercih-sihirbaz .pick, .tercih-sihirbaz .pick .pk-txt{ min-width: 0; }
+.tercih-sihirbaz .pick{ gap: var(--t-oge); padding: var(--bosluk-20) var(--bosluk-16); }
+.tercih-sihirbaz .pick .pk-check{ top: var(--t-oge); right: var(--t-oge); }
+.tercih-sihirbaz .pick .pk-txt small{ margin-top: var(--t-ince); }
+.tercih-sihirbaz .pick-note{ margin-top: var(--bosluk-16); gap: var(--t-satir); }
+/* eklendi: 5 seçenekli tek satır (seviye, süre) — 3+2 yarım satır olmasın */
+.tercih-sihirbaz .pick-grid.tercih-c5{ grid-template-columns: repeat(5, minmax(0, 1fr)); }
+/* eklendi: mutfak bayrağı (donör /tarifler img.chip-flag) */
+.tercih-bayrak{ display: block; width: var(--bosluk-28); height: auto; border-radius: var(--yuvarlak-rozet); }
+
+/* çipler (donör /dolapta-ne-var .nope-quick) */
+.tercih-sihirbaz .nope-quick{ margin: 0; padding: var(--bosluk-16) var(--bosluk-20); }
+.tercih-sihirbaz .nq-head{ gap: var(--t-oge); margin-bottom: var(--t-oge); }
+.tercih-sihirbaz .nq-row{ gap: var(--t-satir); }
+.tercih-sihirbaz .nq-chip{ gap: var(--t-satir); padding: var(--bosluk-8) var(--bosluk-16); }
+
+/* sevmedikleri (donör .ex-desc · .pan-search · .ds-group · .pan-chip) */
+.tercih-sihirbaz .ex-desc{ gap: var(--t-oge); margin: var(--t-blok) 0 var(--t-oge); }
+.tercih-sihirbaz .pan-search{ max-width: none; }
+.tercih-sihirbaz .pan-search > i{ left: var(--bosluk-16); }
+.tercih-sihirbaz .pan-search input{ padding: var(--bosluk-16) var(--bosluk-16) var(--bosluk-16) var(--bosluk-44); }
+.tercih-sihirbaz .ds-group{ gap: var(--t-satir); margin-top: var(--t-oge); }
+.tercih-sihirbaz .pan-chip{ gap: var(--t-satir); padding: var(--bosluk-8) var(--bosluk-8) var(--bosluk-8) var(--t-oge); }
+.tercih-sihirbaz .ex-more{ gap: var(--t-satir); margin: var(--t-oge) 0 0; padding: var(--bosluk-12) var(--bosluk-16); }
+
+/* alt eylem satırı */
+.tercih-sihirbaz .wiz-foot{ gap: var(--bosluk-16); margin-top: var(--t-blok); }
+.tercih-sihirbaz .wiz-foot .wf-actions{ gap: var(--t-oge); }
+
+@media (max-width:1024px){
+  .tercih-sihirbaz .pick-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .tercih-sihirbaz .pick-grid.tercih-c5{ grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+@media (max-width:640px){
+  /* adım şeridi: yalnız daireler (başlık kartın üstünde yazıyor) */
+  .tercih-sihirbaz .stepper{ gap: var(--t-satir); padding: var(--bosluk-16); }
+  .tercih-sihirbaz .stp-lbl{ display: none; }
+  .tercih-sihirbaz .stp-num{ width: var(--bosluk-32); height: var(--bosluk-32); }
+  .tercih-sihirbaz .stp-line{ min-width: var(--bosluk-8); }
+  /* başlık: sayaç + Atla üst satırda, soru altta */
+  .tercih-sihirbaz .fc-head{ flex-direction: column-reverse; align-items: stretch; gap: var(--t-oge); padding-bottom: var(--bosluk-16); }
+  .tercih-fc-sag{ justify-content: space-between; }
+  .tercih-sihirbaz .fc-head h2{ font-size: var(--yazi-18); }
+  /* yatay seçim kartı: ikon solda, metin yanında */
+  .tercih-sihirbaz .pick-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tercih-sihirbaz .pick-grid.tercih-c5{ grid-template-columns: minmax(0, 1fr); }
+  .tercih-sihirbaz .tercih-c5 .pick,
+  .tercih-sihirbaz .tercih-pick-yatay .pick{
+    flex-direction: row; text-align: left;
+    padding: var(--t-oge) var(--bosluk-40) var(--t-oge) var(--t-oge);
+  }
+  .tercih-sihirbaz .pick .pk-check{ top: 50%; right: var(--t-oge); margin-top: calc(var(--bosluk-12) * -1); }
+  .tercih-sihirbaz .tercih-pick-yatay .pk-ico{ width: var(--bosluk-40); height: var(--bosluk-40); }
+  /* iki sütunlu yatay kartta (mutfak) seçim işareti bayrağın sağ alt köşesine biner: sağdaki 40px işaret payı metne kalır */
+  .tercih-sihirbaz .tercih-pick-yatay .pick{ padding-right: var(--t-oge); }
+  .tercih-sihirbaz .tercih-pick-yatay .pick .pk-check{
+    top: auto; right: auto; margin-top: 0;
+    left: calc(var(--t-oge) + var(--bosluk-24)); bottom: calc(50% - var(--bosluk-24));
+    box-shadow: 0 0 0 var(--cizgi-2) var(--kagit);
+  }
+  .tercih-sihirbaz .nope-quick{ padding: var(--bosluk-16); }
+  /* alt satır: not üstte, iki düğme tam genişlikte */
+  .tercih-sihirbaz .wiz-foot{ flex-direction: column; align-items: stretch; gap: var(--t-oge); }
+  .tercih-sihirbaz .wiz-foot .wf-actions{ margin-left: 0; }
+  .tercih-sihirbaz .wiz-foot .wf-actions .btn{ flex: 1 1 0; }
+}
+
+/* =====================================================================
+   7 · REVİZE 5 Kas (Beyar) — sihirbaz tek kart + arama (tercih.css §7, aynen)
+   ===================================================================== */
+.tercih-sihirbaz .fc-head + .pan-search{ margin-bottom: var(--bosluk-16); }
+/* donörün arama kutusu odak rengi sayfanın --mode'undan (Dolap: yeşil/domates); sihirbazda "uzak dur" bağlamı → domates */
+.tercih-sihirbaz{ --mode: var(--tomato); --mode-deep: var(--tomato-dark); }
+.tercih-sihirbaz .tercih-ara-sonuc{ margin-top: var(--t-oge); }
+.tercih-sihirbaz .tercih-bulunamadi{ margin-top: var(--t-oge); }
+.tercih-sihirbaz .tercih-bulunamadi b{ color: var(--murekkep); }
+.tercih-sihirbaz .wstep .fc-head h2:focus{ outline: none; }
+.tercih-sihirbaz .wstep .fc-head h2:focus-visible{ outline: var(--odak-kalinlik) solid var(--odak-renk); outline-offset: var(--odak-ofset); }
+.tercih-sihirbaz .form-card{ overflow: hidden; } /* yükseklik geçişinde içerik taşmasın */
+
+/* =====================================================================
+   TAM YAPI (F3) — gerçek girdiler, hata satırı, "Hepsini atla"
+   ===================================================================== */
+/* Seçim girdisi: görünmez ama odaklanır ve gönderilir; kutuyu label (.nq-chip/.pick) verir, girdi kutuya katılmaz. */
+.tercih .tercih-girdi{
+  position: absolute; width: 1px; height: 1px; margin: 0; padding: 0; border: 0;
+  opacity: 0; overflow: hidden; clip-path: inset(50%); pointer-events: none;
+}
+.tercih .nq-chip:has(> .tercih-girdi:focus-visible),
+.tercih .pick:has(> .tercih-girdi:focus-visible){ outline: var(--odak-kalinlik) solid var(--odak-renk); outline-offset: var(--odak-ofset); }
+/* Seçili görünüm JS'siz de: donörün .sel kurallarının birebir eşi (tarif-bulucu.css .nq-chip.sel · bugun-ne-pisirsem.css .pick.sel) */
+.tercih-sihirbaz .nq-chip:has(> .tercih-girdi:checked){ background: var(--tomato); border-color: var(--tomato); color: #fff; }
+.tercih-sihirbaz .nq-chip:has(> .tercih-girdi:checked) i{ color: #fff; }
+.tercih-sihirbaz .pick:has(> .tercih-girdi:checked){ border-color: var(--tomato); background: var(--tomato-tint); }
+.tercih-sihirbaz .pick:has(> .tercih-girdi:checked) .pk-ico{ background: var(--tomato); color: #fff; }
+.tercih-sihirbaz .pick:has(> .tercih-girdi:checked) .pk-check{ background: var(--tomato); border-color: var(--tomato); opacity: 1; transform: scale(1); }
+/* JS'siz malzeme aramasının varsayılan gönder düğmesi: görünmez, yer kaplamaz (Enter'ı karşılar) */
+.tercih-gizli-gonder{
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+/* seçili sevmediğin "×"i form düğmesi (JS'siz çıkarır); donörün .pan-chip .x kutusu */
+.tercih-sihirbaz .pan-chip .x{ padding: 0; font-family: inherit; }
+/* kayıt hatası: .pick-note kalıbı, metin mürekkep rengi */
+.tercih-sihirbaz .tercih-hata{ color: var(--tomato-dark); font-weight: var(--agirlik-kalin); }
+.tercih-sihirbaz .tercih-hata i{ color: var(--tomato); }
+/* gönderim sürerken düğme */
+.tercih-sihirbaz [data-adim-devam][aria-busy="true"]{ opacity: .7; cursor: progress; }
+/* eklendi: "Hepsini atla" — kartın altında, .pick-note satırı */
+/* blok satır: dar ekranda ikon metnin başında kalır, satır ortalı kırılır (flex'te ikon tek başına satıra düşüyordu, ölçüldü 390) */
+.tercih-sihirbaz .tercih-hepsini-atla{ display: block; margin-top: var(--bosluk-16); text-align: center; }
+.tercih-sihirbaz .tercih-hepsini-atla > i{ margin-right: var(--t-satir); }
+.tercih-sihirbaz .tercih-hepsini-atla .tercih-atla{ padding: 0; }
+
+/* =====================================================================
+   Hesabım › "Mutfak tercihlerim" — g-hesabim'in kendi kalıbı (.kart.panel · .ayar-liste/.ayar-satir · details · .anahtar ·
+   .alan-secim); yalnız yerleşim boşlukları ölçekten.
+   ===================================================================== */
+.tercih-hesabim .ayar-liste + .ayar-liste,
+.tercih-hesabim details + details,
+.tercih-hesabim .ayar-liste + details,
+.tercih-hesabim details + .ayar-liste{ margin-top: var(--t-satir); }
+.tercih-hesabim .tercih-hesabim-alanlar{ margin-top: var(--t-blok); }
+.tercih-hesabim .tercih-hesabim-ozet{ white-space: nowrap; }
+.tercih-hesabim .tercih-hesabim-hata{ margin-top: var(--t-oge); }
+.tercih-hesabim .tercih-hesabim-bag{ display: inline-flex; align-items: center; gap: var(--t-ince); }
+.tercih-hesabim .tercih-bayrak{ width: var(--bosluk-20); }

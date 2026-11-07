@@ -1,0 +1,205 @@
+/* ══════════════════════════════════════════════════════════════════════
+   mekan-detay-uyarlama.css — YEREL KATMAN (donörde yok)
+
+   `mekan-detay.css` vendor'dır (eski repo donörüyle bayt bayt aynı,
+   `.ai/rules/assets.md`) — ona kural EKLENMEZ. Bu dosya ondan SONRA
+   yüklenir (`site/mekanlar/show.blade.php`, `sayfa_css` yuvası).
+
+   BEYAR REVİZELERİ (2026-09-16). Mekân detayının kanonu eski canlı
+   projedir (`yerel ortam`) ve sayfanın
+   geri kalanı onunla birebirdir; burada YALNIZ iki görsel revize var:
+
+     R1. "Ana görsel dikeyde daha kompakt ve ince olsun. Masaüstü ve
+         mobilde orantılı dursun."
+     R2. "Açıklamanın altındaki sekme çubuğu tam genişlikte ayrık bir şerit
+         olmasın. Sayfa içeriğine gömülü, içerik genişliğinde dursun.
+         Üstte ve altta diğer bölümlerle orantılı boşluk olsun."
+
+   (Üçüncü revize — Dada Route bandının kaldırılması — markup kararıdır,
+   `show.blade.php`te. Dördüncüsü — rezervasyonun kaldırılması — `_kunye`de.)
+   ══════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────────── R1 · ANA GÖRSEL DAHA KOMPAKT ─────────────────────
+
+   ÖLÇÜLDÜ (1440, test-mekan-29, bu revizeden önce): `.rd-stage` 902×527.
+   Yükseklik sahnenin KENDİ kuralından gelmiyor: kanon ≥1025'te
+   `.rd-stage{height:auto;min-height:440px}` + `.rd-gallery{grid-template-rows:1fr 88px}`
+   yazıyor ve `.kunye-col` iki satırı birden kaplıyor (`grid-row:1/3`).
+   Yani sahnenin boyu KÜNYE KARTININ içeriği kadar oluyordu
+   (künye 629 − 14 boşluk − 88 thumb = 527).
+
+   Bu yüzden sahneye yalnız `height` yazmak yetmez: satır hâlâ künyeyi
+   takip eder ve sahnenin altında ölü boşluk açılır. Çözüm ızgaranın
+   kendisinde: ilk iki satır ÇİVİLENİR (sahne + thumb şeridi), künyenin
+   taşan boyu ÜÇÜNCÜ satıra akar ve künye artık `1/4` kaplar. Sonuç:
+   sahne ve thumb şeridi üstte bitişik durur, künye kartı doğal boyunda
+   kalır (Beyar "sağdaki bilgi kartı eski sayfayla birebir" dedi).
+
+   ORANTI. Kanon sahne boyları 440 (≥1025) · 380 (≤1024) · 300 (≤640).
+   Üçü de ~%24 inceltildi — 400 · 340 · 230 — böylece kırılımlar arası
+   oran korunur ve mobil, masaüstünden orantısız kalınlaşmaz. */
+
+@media (min-width:1025px){
+  .rd-gallery{grid-template-rows:400px 88px auto}
+  .rd-stage{height:400px;min-height:0}
+  .kunye-col{grid-row:1/4}
+}
+
+@media (max-width:1024px){
+  .rd-stage{height:340px}
+}
+
+@media (max-width:640px){
+  .rd-stage{height:230px}
+}
+
+
+/* ───────── R2 · SEKME ÇUBUĞU: ŞERİT DEĞİL, İÇERİĞE GÖMÜLÜ ─────────
+
+   ÖLÇÜLDÜ (1440, önce): `.pf-tabbar` 1440 px tam genişlikte, `x:0`,
+   `background:rgba(255,255,255,.93)` + `backdrop-filter` + alt çizgi,
+   `position:sticky; top:112px`, `margin-top:-22px` — yani üstteki bölümün
+   üzerine binen, sayfa boyunca yapışan ayrı bir ŞERİT.
+
+   Revizeden sonra: zemin, bulanıklık, alt çizgi ve yapışkanlık kalkar;
+   kutu akışa döner. Genişlik zaten `.wrap` ile sınırlı (içerik 1176 px,
+   galeriyle aynı sol kenar x=132) — bant kalktığı an ray içerik
+   genişliğinde görünür, ek bir genişlik kuralı gerekmez.
+
+   BOŞLUK. Altındaki `.md-sec{padding:34px 0 64px}` sabit; üstüne onunla
+   orantılı 28 px kondu (34'e yakın, üst bölümün kendi alt boşluğuyla
+   toplandığı için birebir eşitlenmedi). `z-index` düşürülmez: ray artık
+   hiçbir şeyin üstüne binmiyor, ama `.md-side`in sticky künyesiyle
+   çakışmasın diye kanon değeri korunur. */
+
+.pf-tabbar{
+  position:static;
+  /* Yarı saydam + bulanık bant zemini kalkıyor, ama SAYDAM bırakılamaz: kutu
+     `.md-top` (beyaz) ile `.md-sec` (beyaz) ARASINDA duruyor ve arkasında gri
+     `body` (rgb 249,249,249) var — ölçüldü, saydam bırakılınca 56 px'lik gri bir
+     şerit açılıyordu. Düz beyaz, iki komşusuyla aynı. */
+  background:var(--bg-white);
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  border-bottom:0;
+}
+
+/* Çubuğun "çıkık kutu" görüntüsü KENDİ kuralından değil KABUKTAN geliyordu —
+   ölçüldü (computed): `margin-top:-22px`, `border-radius:22px 22px 0 0`,
+   `box-shadow:0 -12px 32px #14100a2e`. Kaynak `gourmet.css`teki
+       .below-header:not(.pf-top)+div:not(:has(>section:first-child))
+   kuralı; `.pf-tabbar` bir `div` ve `.below-header`ın hemen kardeşi olduğu için
+   ona düşüyor. Kural sayfanın gövdesini gri `body` (rgb 249,249,249) üstünde
+   yuvarlak beyaz bir panel gibi başlatmak için var.
+
+   Düz `.pf-tabbar{margin-top:0}` bunu EZMEZ: kabuk seçicisinin özgüllüğü (0,3,2),
+   düz sınıfınki (0,1,0). Bu yüzden eşleşen ve ONDAN YÜKSEK bir seçici yazıldı
+   (0,4,2) ve yalnız BU SAYFAYA kapsamlandı (`body.pg-mekan-detay`) — kural ortak,
+   başka sayfaların paneli bozulmasın.
+
+   Sonuç: `.md-top` (beyaz) ile `.md-sec` (beyaz) arasında basamak, gölge ve
+   yuvarlatma kalmıyor; çubuk kesintisiz beyaz yüzeye gömülü duruyor. */
+body.pg-mekan-detay .below-header:not(.pf-top) + div.pf-tabbar{
+  margin-top:0;
+  border-radius:0;
+  box-shadow:none;
+  /* `.rd-head`in alt boşluğu 22; altındaki `.md-sec`in üst boşluğu 34.
+     12 eklenince ray üstte de altta da 34 px boşlukla duruyor — simetrik. */
+  padding:12px 0 0;
+}
+
+@media (max-width:640px){
+  body.pg-mekan-detay .below-header:not(.pf-top) + div.pf-tabbar{padding:10px 0 0}
+}
+
+
+/* ───────── EK · REZERVASYON KALKINCA KÜNYENİN BOŞLUK RİTMİ ─────────
+
+   Beyar kararı (2026-09-16): mekân detayında rezervasyon yok. Künyedeki
+   "Rezervasyon Yap" düğmesi ve altındaki not `_kunye.blade.php`ten
+   çıkarıldı. Kanonda o ikisi bir çift gibi ölçülmüştü:
+     .kc-reserve{margin:16px 16px 0}  +  .kc-reserve-note{margin:10px 16px 16px}
+   Yani kartın alt boşluğunu NOT taşıyordu. Not gidince geriye kalan tek
+   düğme ("İşletmeyi Ara") ile onu izleyen `.kc-meta`/`.kc-lead` bitişirdi.
+   Alt boşluk düğmeye devredilir; not zaten basılmadığı için çift boşluk
+   riski yok. ≤1024'te kanon `.kc-reserve{margin:15px 15px 0}` yazıyor,
+   orada da aynı devir uygulanır. */
+
+.kc-card .kc-reserve{margin-bottom:16px}
+
+@media (max-width:1024px){
+  .kc-card .kc-reserve{margin-bottom:15px}
+}
+
+
+/* ───── R5 · ÖZET, GALERİ IZGARASININ 1. KOLONUNDA — künyenin bıraktığı boşlukta ─────
+
+   Beyar (2026-09-16): "bu açıklama galeri görsellerin altında olsun, sağdaki sütun ile
+   hizalı olsun; sağdaki sütunun solda yarattığı boşluğu açıklamayla dolduralım."
+
+   R1 kapağı 527 → 400 px'e indirince sahne + thumb şeridi (400 + 14 + 88 = 502) künye
+   kartından (ölçüldü: 645) kısa kaldı ve ızgaranın 1. kolonunda ~143 px ölü boşluk
+   açılmıştı. `.rd-head` markup'ı `_gallery.blade.php`te ızgaranın İÇİNE alındı; burada
+   yalnız yerleşiyor.
+
+   ≥1025: satır 3 (sahne 1, thumb 2, özet 3). Künye `1/4` kapladığı için taşan boyu
+   zaten 3. satıra akıyordu — özet tam o boşluğa oturuyor, genişliği sahneyle aynı
+   (902 px) ve sağ kenarı künye kolonunun sol kenarıyla hizalı.
+   ≤1024: ızgara tek kolon ve künye 3. satırda; özet 4. satıra düşer, yani dar ekranda
+   donördeki sırası korunur (sahne → thumb → künye → özet). */
+
+@media (min-width:1025px){
+  .rd-gallery .rd-head{grid-column:1;grid-row:3;align-self:start;padding-top:4px;padding-bottom:0}
+}
+
+@media (max-width:1024px){
+  .rd-gallery .rd-head{grid-column:1;grid-row:4}
+}
+
+
+/* ───── R6 · HATIRLATMA / EDİTÖR NOTU METNİ — Gastro ölçüsüne ─────
+
+   Beyar (2026-09-16): "hatırlatma ve editör notunun yazısı çok kötü, daha okunaklı bir
+   boyut seç — dadagastro.com/tarif/tavuk-curry-hindistan-cevizli-hint-usulu'daki
+   hatırlatma yazısından yap."
+
+   ÖLÇÜLDÜ (computed, 1440, iki sayfa yan yana): kutunun kendisi, başlığı, ikonu, zemini
+   ve iç boşluğu ZATEN birebir aynıydı (pad 16/18, gap 16, h4 15.5px/17.36px 700).
+   Ayrışan tek şey GÖVDE METNİ:
+       Gastro `.rb-html`  13.5px / 21.6px
+       bizde  `.rb-html`  16px   / 24.8px
+   Yani metin ~%18 büyük ve satır arası gevşekti; kutu 186 px yerine 259 px oluyordu.
+   Gövde Gastro'nun ölçüsüne çekildi; başlığa, ikona, renge, zemine DOKUNULMADI —
+   onlar zaten eşitti. Ölçüm aracı: `scripts/olcum/cikti/hatirlatma-ab.mjs`. */
+
+.remind-box .rb-html,
+.editor-box .rb-html{font-size:13.5px;line-height:21.6px}
+
+/* ───── R7 · GALERİ ŞERİDİ SABİT 4 SÜTUN (Beyar revizesi 2026-09-17) ─────
+   Kanon `mekan-detay.css:74-75` şeridi `display:flex` + `.rd-thumb{flex:1}` kuruyor:
+   kutu genişliği FOTOĞRAF SAYISINA bölünüyor. Canlı TURK FATIH TUTAK (2 fotoğraf) @1440
+   iki kutu 445 × 88 px — şerit görünümü. v7 Nalia 4 × 217 px.
+   Izgara 4 eşit sütun; az fotoğrafta kalan sütunlar BOŞ kalır, kutu uzamaz. Yükseklik
+   kanonda (88 / ≤640'ta 64 px), gap kanonda (12 / 9 px) — dokunulmadı.
+   Kanon dosyaya kural EKLENMEZ (vendor). Aynı özgüllük (0,1,0), sonra yüklendiği için geçer. */
+.rd-thumbs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+
+/* ───── R8 · YORUM BOŞ HÂLİ — DadaGastro tarif detayı kalıbı (Beyar revizesi 2026-09-17) ─────
+   Kanon: `DadaGastro/public/varliklar/reference/tarif-detay/tarif-detay.css:1139-1141`.
+   Ölçüldü (dadagastro.com, 1440 + 390): kesik 1px #d8d4cc çerçeve · 12px köşe · 20/24 iç
+   boşluk · ortalı · 13px `--muted` · giriş kutusuyla arası 12px.
+   Değerler Gourmet'in kendi kopyasından (`gurme-lezzetler.css:436-438`, `:444`) — o dosya
+   bu sayfada yüklenmediği için `mekan-detay.css`te `.rev-empty` hiç stil almıyordu.
+   `.rev-empty` (filtre sonucu boş, `#revEmpty`) de aynı dilden stil alır. */
+.rev-empty-first{display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;background:var(--paper);border:1px dashed #d8d4cc;border-radius:var(--radius-md);padding:20px 24px;margin-top:12px}
+.rev-empty-first i{font-size:15px;color:var(--muted)}
+.rev-empty-first p{margin:0;font-size:13px;font-weight:500;color:var(--muted)}
+.rev-empty[hidden]{display:none}
+.rev-empty{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--paper);border:1px dashed #d8d4cc;border-radius:var(--radius-md);padding:16px 20px;margin-top:12px;font-size:13px;font-weight:500;color:var(--muted);text-align:center}
+
+/* ───── R9 · KAHRAMAN DURUM ÇİPİ KARTLA AYNI (Beyar kararı 2026-09-17) ─────
+   "N dk sonra kapanıyor" hâli: ikon kartın `st-closing`i gibi sarı (`mekan-detay.css`
+   `.disc-status .st-closing i{color:var(--yellow)}`). Kanonun `.rd-rateline .md-state i`
+   (0,2,1) kuralını geçmek için aynı öneke durum sınıfı eklendi (0,3,1). */
+.rd-rateline .md-state.is-closing i{color:var(--yellow)}

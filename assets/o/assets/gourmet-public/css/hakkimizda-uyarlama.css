@@ -1,0 +1,28 @@
+/* ══ HAKKIMIZDA AİLESİ — YEREL ÖRTME KATMANI (donörde yok) ════════════════════════════
+   `hakkimizda.css` artık donörle BAYT BAYT aynı (Beyar kararı 2026-09-15). Eski yerel
+   dosyanın donöre EKLEDİĞİ dört blok aynen buraya taşındı ve `hakkimizda.css`in hemen
+   ARDINDAN yüklenir (dört ekran: /hakkimizda · /basin-medya · /sehir-rehberleri · rehber detayı).
+   ⚠ Bu kuralları `hakkimizda.css`e GERİ TAŞIMA: vendor-denetim.mjs onu yeniden sahte vendor sayar.
+   ⚠ İlk blok 511feba'nın sızıntı düzeltmesidir: fotoğrafı ÇIPLAK `.lst-top`a bağlamak onu
+     şehir rehberlerine sızdırır — `.pg-hakkimizda` öneki KALACAK.
+   ══════════════════════════════════════════════════════════════════════════════════════ */
+/* --- YEREL SAPMA (donörde yok) — hero/statband FOTOĞRAFI KAPSAYICIYA BAĞLI ---
+   Foto çıplak `.lst-top`/`.statband`e bağlıyken bu dosyayı yükleyen DÖRT ekranın
+   üçüne sızıyordu. Ölçüldü: fotoğrafı yalnız `/hakkimizda` istiyor —
+   `/basin-medya` zaten `basin-medya.css:18,22`de karşı-değerle bastırıyordu
+   (hesaplanan zemin: yalnız gradient), şehir rehberlerinin DONÖRÜNDE de hero düz
+   gradient (donör DOM'unda `.lst-top` içinde `.px-media`/`.px-clip` sayısı 0).
+   Kapsayıcı tahmin edilmedi: her blade'in `@section('body_class')` değeri okundu
+   (pg-hakkimizda · pg-basin-medya · pg-gourmet-sehir-rehberleri · -rehberi).
+   Emsal aynı dizinde: `sss.css`teki `.pg-sss .lst-top`. --- */
+.pg-hakkimizda .lst-top{background-image:linear-gradient(90deg,rgba(28,25,18,.93),rgba(33,30,22,.72)),url('../img/about-restaurant.avif')}
+.below-header.lst-top{padding-bottom:48px}
+
+/* Eski yerel dosya donörün `.lst-hero .lead p` kuralını bu listeyle GENİŞLETİYORDU. */
+.lst-hero .lead p,.seo-prose p,.val-card p,.bridge-card p{text-align:justify;-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}
+
+/* CMS güvenli HTML allowlist'i alıntıyı semantik blockquote olarak saklar. */
+.seo-prose>blockquote{margin:20px 0;padding:8px 0 8px 22px;border-left:3px solid var(--tomato);font-size:19px;line-height:1.5;color:var(--slate);font-weight:700;letter-spacing:-.01em}
+
+/* Yerel sapma — gerekçe yukarıdaki `.pg-hakkimizda .lst-top` bloğunda. */
+.pg-hakkimizda .statband{background-image:linear-gradient(90deg,rgba(28,25,18,.92),rgba(33,30,22,.82)),url('../img/about-dining.avif')}

@@ -1,0 +1,21 @@
+/* Yalnız mevcut hesap görseli modalına ait durum kuralları. */
+#fotoModal [hidden] { display: none !important; }
+#fotoModal[aria-busy="true"] .fy-pick { pointer-events: none; opacity: .6; }
+#fotoModal button:disabled { cursor: wait; }
+#fotoModal #fyUygula:disabled { cursor: not-allowed; }
+/* Sabit kare/şerit; yalnız fotoğraf hareket eder. Kaynakta olmayan alan gösterilmez. */
+#fotoModal .fy-frame {
+  width: min(260px, 100%); max-width: none; border: 0; border-radius: 50%;
+  height: auto; min-height: 0; max-height: none; aspect-ratio: 1 / 1; touch-action: none; cursor: grab;
+}
+#fotoModal .fy-frame.kapak { width: 100%; aspect-ratio: 1176 / 240; border-radius: var(--radius-lg); }
+#fotoModal .fy-frame:active { cursor: grabbing; }
+#fotoModal .fy-frame:focus-visible { outline: 2px solid var(--fit); outline-offset: 3px; }
+#fotoModal .fy-frame img {
+  position: absolute; left: 0; top: 0; max-width: none; max-height: none;
+  object-fit: fill; transform-origin: top left; transition: none; user-select: none;
+  pointer-events: none;
+}
+#fotoModal .fy-stage > .fy-pick { align-self: center; margin-top: 0; }
+/* Sayfa kapağının dekoratif perdesi kırpma önizlemesini karartamaz. */
+#fotoModal .fy-frame.kapak::after { content: none; }

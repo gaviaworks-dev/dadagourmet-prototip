@@ -1,0 +1,62 @@
+/* =====================================================================
+   MEKÂN KARTI — hiza + rozet uyarlaması (Beyar revizesi, 2026-09-17)
+   Kanon: v7 `mekan-liste-v1.html` (`.disc-*`). Kanon dosyalar VENDOR
+   (`gourmet-mekan-liste.css` · `mekan-detay.css` · `mekan-bul.css`) —
+   onlara kural eklenmez; bu katman üç yüzeyde de kanon CSS'ten SONRA bağlanır:
+   `/mekanlar` · mekân detayı "Benzer mekânlar" · Mekân Bul sonuçları.
+
+   Seçiciler iki kapsayıcıyla öneklenir (`.mkl-grid` `/mekanlar` + Mekân Bul,
+   `.md-similar` detay): `mekan-detay.css`in `.md-similar .disc-card h3{min-height:2 satır}`
+   kuralı (0,2,1) özgüllükte; sade `.disc-card h3` (0,1,1) onu EZEMEZ ve başlık 2 satır
+   yer tutmaya devam ederdi (`.ai/rules/css.md` özgüllük tuzağı).
+   ===================================================================== */
+
+/* §1 HİZA — üst etiket · başlık · açıklama · çizgi her kartta aynı y'de.
+   Ölçüm (v7 @1440): etiket 188/17 · başlık 212/23 · açıklama 244/42 · çizgi 298.
+   · Etiket boş gelse de yazılı etiketle AYNI satır yüksekliğini tutar (sıfır genişlikli
+     karakter; `min-height:17px` 17,05px'lik gerçek satıra 0,05px kaçırıyordu — ölçüldü).
+   · Başlık TEK SATIR + üç nokta (Beyar kararı 1) — 2 satıra düşen ad hizayı 23px kaydırırdı.
+   · Açıklama her zaman 2 satır (20.925px × 2, kanonun kendi satır yüksekliği), boşsa da.
+   · Alt satır sarmaz: kanonun `flex-wrap:wrap`ı (`gourmet-mekan-liste.css:92`, v7'de YOK)
+     dar kartta istatistiği ikinci satıra atıp çizginin altını uzatıyordu. Konum
+     `min-width:0` + üç noktayla kısalır (kanon kuralı). */
+.mkl-grid .disc-card .disc-cat,
+.md-similar .disc-card .disc-cat{vertical-align:top;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mkl-grid .disc-card .disc-cat:empty::before,
+.md-similar .disc-card .disc-cat:empty::before{content:"\200b"}
+.mkl-grid .disc-card h3,
+.md-similar .disc-card h3{display:block;-webkit-line-clamp:unset;min-height:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mkl-grid .disc-card p,
+.md-similar .disc-card p{min-height:calc(20.925px * 2)}
+.mkl-grid .disc-meta,
+.md-similar .disc-meta{flex-wrap:nowrap}
+
+/* §2 DURUM ROZETİ — `st-closing` v7'de ikon rengini sarıya çeker; kanon zaten taşıyor.
+   Burada ek kural YOK, bilerek. */
+
+/* §3 "YENİ" — sağ üst. Sol üst durum rozeti, sol alt fiyat, sağ alt foto sayacı
+   (v7 konumları); sağ üst dört yüzeyde de boş. Rozetin kendisi kanonun `.disc-badge`i
+   (`gourmet-mekan-liste.css:282`, `mekan-detay.css`); `mekan-bul.css` o kuralı
+   taşımadığı için aynı değerler aşağıda Mekân Bul kapsamında tekrarlanır. */
+.disc-fig .disc-new{position:absolute;top:13px;right:13px;z-index:2;display:flex}
+.mkl-grid .disc-new .disc-badge{background:var(--tomato);color:#fff;font-size:11px;font-weight:700;padding:6px 11px;border-radius:var(--radius-sm);letter-spacing:.02em;display:inline-flex;align-items:center;gap:6px}
+
+/* §4 Puansız kart — SOLUK "★ –" (Beyar kararı 2026-09-17). Yıldız da tire de kanonun
+   `--muted`ı; kanonun `.r-rate i{color:var(--yellow)}` (0,1,1) kuralını geçmek için
+   (0,3,1). Veri yokluğu vurgulanmaz. */
+.disc-meta .disc-stats .r-yok{color:var(--muted);font-weight:500;opacity:.75}
+.disc-meta .disc-stats .r-yok i{color:var(--muted)}
+
+/* §5 KONUM "İlçe / İl" (Beyar düzeltmesi 2026-09-17) — sığmazsa YALNIZ il kesilir.
+   Kanon `.disc-meta .disc-loc` (0,2,0) kendisi `overflow:hidden` + ellipsis taşıyor ama
+   `.disc-meta span{display:inline-flex}` yüzünden flex kabı; ellipsis flex kabında işlemez,
+   metin kör kesilirdi ve kesilen ilçe olurdu. Parçalar blok kutu olur: ilçe `flex:none`
+   (kesilmez), il `min-width:0` + ellipsis (daralan tek parça). İkon aralığı kanonun
+   6px `gap`i, ilçe ile il arasına gap girmesin diye ikonun sağ boşluğuna taşındı.
+   Puan/görüntülenme kanonun `.disc-stats{margin-left:auto;flex:none}` ile sağda sabit.
+   Kuralı sade `.disc-loc`a yazmak YANLIŞ OLUR: dört kanon CSS'teki (0,2,0) aynı seçici
+   kaynak sırasına göre kazanır ve gap geri gelir. */
+.disc-meta .disc-loc{gap:0}
+.disc-meta .disc-loc i{margin-right:6px;flex:none}
+.disc-meta .disc-loc .disc-ilce{display:block;flex:none;white-space:nowrap}
+.disc-meta .disc-loc .disc-il{display:block;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

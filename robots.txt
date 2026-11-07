@@ -1,0 +1,4 @@
+# DadaGourmet — statik arayüz prototipi. Arama motorlarına kapalıdır.
+# Sayfaların head'inde ayrıca <meta name="robots" content="noindex, nofollow"> vardır.
+User-agent: *
+Disallow: /

@@ -1,0 +1,64 @@
+/* ══ KÜNYE — YEREL ÖRTME KATMANI (donörde yok) ═════════════════════════════════════════
+   `kunye.css` artık donörle BAYT BAYT aynı (Beyar kararı 2026-09-15: "5 vendor dosyası …
+   kalanları prototiple bayt bayt aynı yap"). Bu dosya, o dosyanın ESKİ yerel hâlidir —
+   aynen, tek satır değiştirilmeden; `kunye.css`in hemen ARDINDAN yüklenir ve eski kaskadı
+   korur (kanon ÖNCE, örtme SONRA — `yasal.css` emsali, docs/HANDOFF.md vendor kuralı).
+   ⚠ Bu kuralları `kunye.css`e GERİ TAŞIMA: vendor-denetim.mjs onu yeniden sahte vendor sayar.
+   ⚠ Bu dosyayı "kanonda zaten var" diye SİLME: önce `_stil.mjs` ile /kunye önce/sonra ölç.
+   ══════════════════════════════════════════════════════════════════════════════════════ */
+.rd-crumb{display:flex;align-items:center;flex-wrap:wrap;gap:9px;padding:18px 0 14px;font-size:13px;font-weight:500;color:var(--muted)}
+.rd-crumb a{color:var(--muted);transition:.18s}
+.rd-crumb a:hover{color:var(--tomato)}
+.rd-crumb i{font-size:9px;color:#c7c7c7}
+.rd-crumb b{color:var(--slate);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:360px}
+
+.lg-top{position:relative;padding-top:128px;background:#211e16;background-size:cover;background-position:center}
+.lg-top .wrap{position:relative}
+.lg-top .rd-crumb,.lg-top .rd-crumb a{color:#c9c3b8}
+.lg-top .rd-crumb a:hover{color:#AC7FB4}
+.lg-top .rd-crumb i{color:rgba(255,255,255,.4)}
+.lg-top .rd-crumb b{color:#fff}
+.lg-top .eyebrow{color:var(--tomato-tint)}
+.lg-top h1{color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.25)}
+.lg-top .lg-update{color:#cdd8e0}
+.lg-head{padding:6px 0 30px}
+.lg-head h1{font-size:34px;letter-spacing:-.03em;margin:14px 0 10px}
+.lg-update{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);font-weight:500}
+.lg-update i{color:var(--tomato);font-size:12px}
+
+.lg-sec{padding:38px 0 74px;background:var(--bg-cream)}
+.lg-layout{display:grid;grid-template-columns:272px minmax(0,1fr);gap:30px;align-items:start}
+.lg-side{position:sticky;top:130px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-lg);padding:8px;max-height:calc(100vh - 154px);overflow-y:auto;scrollbar-width:thin}
+.lg-side h3{display:flex;align-items:center;gap:9px;font-size:14px;padding:14px 14px 10px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.lg-side h3 i{color:var(--tomato);font-size:13px}
+.lg-menu{display:flex;flex-direction:column;gap:2px}
+.lg-menu a{display:flex;align-items:center;gap:11px;font-size:13.5px;font-weight:500;color:var(--slate-2);padding:11px 13px;border-radius:var(--radius-md);transition:.18s var(--ease);line-height:1.3}
+.lg-menu a i{width:17px;text-align:center;color:var(--muted);font-size:13px;flex:none;transition:.18s}
+.lg-menu a:hover{background:var(--tomato-tint);color:var(--tomato)}
+.lg-menu a:hover i{color:var(--tomato)}
+.lg-menu a.active{background:var(--tomato);color:#fff;font-weight:700}
+.lg-menu a.active i{color:#fff}
+.lg-main{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--sh-sm);padding:38px 42px}
+
+.kunye-grid{display:grid;grid-template-columns:1fr;gap:30px;align-items:start;margin-bottom:34px}
+.kunye-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--sh-sm);overflow:hidden}
+.kunye-note{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:var(--muted);font-weight:500;line-height:1.55;padding:16px 24px;background:var(--bg);text-align:justify;overflow-wrap:break-word}
+.kunye-note i{color:var(--tomato);margin-top:2px}
+.kunye-note a{color:var(--tomato);font-weight:700;text-decoration:underline;text-underline-offset:2px}
+.kunye-note-body,.kunye-note-body p{margin:0;min-width:0}
+
+@media (max-width:1024px){
+  .lg-layout{grid-template-columns:1fr}
+  .lg-side{position:static;max-height:none;overflow:visible}
+  .lg-menu{flex-direction:row;flex-wrap:wrap;gap:7px;padding:4px 6px 8px}
+  .lg-menu a{border:1px solid var(--line);background:var(--bg);padding:9px 13px;border-radius:var(--radius-sm);font-size:12.5px}
+  .lg-menu a.active{border-color:var(--tomato);background:var(--tomato)}
+  .lg-main{padding:28px 26px}
+}
+
+@media (max-width:640px){
+  .lg-top{padding-top:74px}
+  .lg-head h1{font-size:25px}
+  .lg-sec{padding:22px 0 50px}
+  .lg-main{padding:22px 18px}
+}

@@ -1,0 +1,49 @@
+/* Gastro kabuğu altında Gourmet gövdesi için sapmalar. Her satırın gerekçesi _src/ekran-kaynaklari.md'de. */
+/* K2 ölçümü: kanon kapak boyu Gastro tarif detayında 1440, 1024 ve 390'da 480 px */
+.rd-stage{height:480px}
+@media(min-width:1025px){.rd-gallery{grid-template-rows:480px 88px auto}}
+/* Gastro `.m-types` kuralı kart içindir; sahnedeki sayaç köşede kalır */
+.rd-stage .m-types{position:absolute;inset:auto 16px 16px auto;width:auto;height:auto;background:none;z-index:2}
+/* K2: rezervasyon notu ve Dada Route bandı; renkler kanon yuvası, satır içi #b14fc5 yerine */
+.kc-rez-not{margin:8px 16px 12px;font-size:13px;color:var(--muted,#6f6f6f);text-align:center}
+.kc-reserve+.kc-rez-not+.kc-reserve{margin-top:0}
+.md-rota-bant{padding:18px 0}
+.md-rota-kutu{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:var(--marka-yikama,#ede4ef);border:1px solid var(--marka-cizgi,#e3d4e6);border-left:3px solid var(--marka,#742982);border-radius:14px;padding:18px 22px}
+.md-rota-ikon{width:46px;height:46px;flex:0 0 46px;display:grid;place-items:center;border-radius:50%;background:#fff;color:var(--marka,#742982);font-size:18px}
+.md-rota-metin{flex:1;min-width:200px}.md-rota-metin b{display:block;font-size:16px}.md-rota-metin span{font-size:13.5px;color:var(--muted,#6f6f6f)}
+/* Ne Yenir, Ne Alınır */
+.ny-bas{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.ny-alt{color:var(--muted,#6f6f6f);margin:6px 0 16px}
+.ny-izgara{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.ny-kart{display:flex;flex-direction:column;border:1px solid var(--marka-cizgi,#e3d4e6);border-radius:14px;overflow:hidden;background:#fff}
+.ny-fig{height:110px;display:grid;place-items:center;background:var(--marka-yikama,#ede4ef);color:var(--marka,#742982);font-size:28px}
+.ny-govde{padding:12px 14px}.ny-govde h4{margin:0 0 4px;font-size:15px}.ny-govde p{margin:0 0 10px;font-size:13px;color:var(--muted,#6f6f6f)}
+.ny-eylem{width:100%}
+/* Mekânlar: FH.1 üç sütun */
+.lst-layout.mkl-uc-kolon{display:grid;grid-template-columns:280px minmax(0,1fr) 380px;gap:24px;align-items:start}
+.mkl-harita-kolon{position:sticky;top:96px}.mkl-harita{height:calc(100vh - 150px);min-height:420px;border-radius:14px;overflow:hidden;background:#efedf2}
+.mkl-harita-not{margin:8px 0 0;font-size:12px;color:var(--muted,#6f6f6f)}
+.mkl-uc-kolon .mkl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:1280px){.lst-layout.mkl-uc-kolon{grid-template-columns:280px minmax(0,1fr)}.mkl-harita-kolon{grid-column:1/-1;position:static}.mkl-harita{height:340px;min-height:0}}
+@media(max-width:900px){.lst-layout.mkl-uc-kolon{grid-template-columns:minmax(0,1fr)}.mkl-uc-kolon .mkl-grid{grid-template-columns:minmax(0,1fr)}}
+.mkl-kart-eylem{display:flex;align-items:center;gap:6px;padding:10px 14px 14px;margin-top:auto}
+.mke-birincil{flex:1;text-align:center;padding:8px 10px;border-radius:10px;background:var(--marka,#742982);color:#fff;font-weight:700;font-size:13px}
+.mke-ikon{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--marka-cizgi,#e3d4e6);background:#fff;color:var(--marka,#742982);cursor:pointer}
+.fct-not{font-size:12px;color:var(--muted,#6f6f6f);margin:0 0 8px}
+.dg-pin{width:14px;height:14px;padding:0;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);cursor:pointer}
+.dg-pin.kare{border-radius:4px}.dg-pin.vurgulu{width:22px;height:22px;z-index:3}
+/* Gurme Panelim, Puan Durumu yapısı */
+.puan-yapi{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;padding:16px}
+/* Dada Route katman paneli */
+.rota-harita{position:absolute;inset:0}
+.yg-katman{margin:18px 0}.yg-katman-liste{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.yg-katman-dugme{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:10px;border:1px solid var(--line,#e3e0e6);background:#fff;font-size:13px;font-weight:600;cursor:pointer;text-align:left}
+.yg-katman-dugme[aria-pressed="true"]{border-color:#742982;background:#ede4ef;color:#62236e}
+.yg-il-liste{display:grid;gap:8px;margin-top:12px}.yg-il-kart{padding:10px 12px;border-radius:10px;background:#f6f3f7;font-size:13px}.yg-il-kart p{margin:3px 0 0}.yg-il-kart span{font-weight:700}
+.yg-aktarim{margin-top:14px}.yg-aktarim-sira{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}.yg-aktarim-sira a{padding:7px 11px;border-radius:9px;border:1px solid var(--line,#e3e0e6);font-size:12.5px;font-weight:700;color:#62236e}
+.yg-brand .gourmet-word-mark{display:block;height:26px;width:auto;color:#742982}.yg-brand .dg-word{display:block}
+.mke-birincil{white-space:nowrap;font-size:12.5px;padding:9px 6px}
+/* Gourmet katmanları Gastro başlığının altında kalıyordu: rezervasyon ve ışık kutusu başlığın üstüne alınır */
+.rsv-overlay{z-index:1400}.rsv-modal{z-index:1401}.lightbox{z-index:1402}
+/* Hesabım kapağı: Gastro tohum görseli yerine canlı Gourmet görseli */
+.kimlik-bant .kapak{background:#1d1321 url("../o/assets/gourmet-public/img/about-dining.avif") center/cover no-repeat}
+.kimlik-bant .kimlik-avatar:not(:empty){display:grid;place-items:center;background:var(--marka,#742982);color:#fff;font-size:34px;font-weight:700}

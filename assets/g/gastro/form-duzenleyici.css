@@ -1,0 +1,43 @@
+/* Yalnız DadaGastro; mevcut kanon düğme/alan tokenları. */
+.gastro-secici{min-width:0}
+.gastro-secimler{display:flex;flex-direction:row;flex-wrap:wrap;gap:var(--bosluk-8);margin-top:var(--bosluk-8)}
+.gastro-secim.cip{position:relative;display:inline-flex;flex:0 0 auto;align-items:center;max-width:100%;height:var(--bosluk-40);box-sizing:border-box;gap:var(--bosluk-8);padding:0 var(--bosluk-12);border-radius:var(--yuvarlak-md);font-size:var(--yazi-14);font-weight:var(--agirlik-orta);line-height:var(--satir-orta);background:var(--zemin);color:var(--murekkep);transition:background var(--sure) var(--yumusama)}
+.gastro-secim>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.gastro-secim.ana{background:var(--aksan-yikama);border-color:var(--cizgi)}
+.gastro-secim.ana::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:var(--cizgi-3);height:auto;transform:none;background:var(--aksan);border-start-start-radius:var(--yuvarlak-md);border-end-start-radius:var(--yuvarlak-md)}
+.gastro-secim[tabindex]{touch-action:none;cursor:grab}
+.gastro-secim.surukleniyor{opacity:.55;cursor:grabbing}
+.gastro-secim.gastro-bosluk{background:var(--aksan-yikama);border:var(--cizgi-1) dashed var(--aksan);pointer-events:none}
+.gastro-bosluk>*{visibility:hidden}
+.gastro-secim .gastro-tutamac{opacity:0;transition:opacity var(--sure) var(--yumusama);font-size:var(--yazi-11)}
+.gastro-secim:hover .gastro-tutamac,.gastro-secim:focus-within .gastro-tutamac{opacity:1}
+@media(hover:none),(pointer:coarse){.gastro-secim .gastro-tutamac{opacity:1}}
+.gastro-secim button{position:relative;z-index:1;flex:none;border:0;border-radius:var(--yuvarlak-sm);background:transparent;color:var(--metin-ikincil);font-family:inherit;font-size:var(--yazi-18);font-weight:var(--agirlik-govde);line-height:1;cursor:pointer;padding:0;width:var(--bosluk-24);height:var(--bosluk-32)}
+.gastro-secim button:hover{background:var(--aksan-yikama);color:var(--aksan-koyu)}
+.gastro-ana{margin-inline-start:auto;font-size:var(--yazi-12);font-weight:var(--agirlik-govde);color:var(--metin-ikincil);background:none}
+.gastro-secim-etiket{display:flex;align-items:center;flex-wrap:wrap;gap:var(--bosluk-4)}
+.gastro-secim-sayac{margin-inline-start:auto;font-size:var(--yazi-11);font-weight:var(--agirlik-govde);color:var(--metin-ikincil)}
+.gastro-secici .acilir-yuzey{width:100%;max-height:40vh;box-sizing:border-box}
+.gastro-secici .alan-yardim{display:block;margin-top:var(--bosluk-8);color:var(--metin-ikincil)}
+.gastro-secici [role=option]{display:flex;align-items:center;gap:var(--bosluk-8)}
+.gastro-secici [role=option]:disabled{color:var(--metin-ikincil);background:var(--zemin);opacity:.65;cursor:default}
+.gastro-secici [role=option] i{width:var(--bosluk-16);flex:none}
+/* Aynı lg-gate / lg-panel kanon bileşeni; yalnız bu eylemin düzeni. */
+body.gastro-emek-acik{overflow:hidden}
+dialog.gastro-emek.lg-gate{width:100%;height:100%;max-width:none;max-height:none;margin:0;border:0;background:transparent;padding:var(--bosluk-20);box-sizing:border-box;color:var(--murekkep)}
+dialog.gastro-emek:not([open]){display:none}
+.gastro-emek::backdrop{background:var(--perde)}
+/* Revize 7 · madde 87: kutu ve başlık giriş kapısının değerleri — genişlik `.lg-panel`in min(382px,100%)'ü,
+   başlık `.lg-gate h4`ün 19px'i ve kalın ağırlığı (önce 480px · 20px/600 idi). */
+.gastro-emek .lg-panel{width:min(382px,100%);max-height:calc(100dvh - var(--bosluk-20) * 2);overflow:auto;box-sizing:border-box}
+.gastro-emek h4{font-size:19px}
+.gastro-emek #gastroEmekAciklama{max-width:none;color:var(--metin-ikincil)}
+.gastro-emek .gastro-emek-eylemler{display:grid;gap:var(--bosluk-12)}
+.gastro-emek .gastro-emek-eylemler>.btn{width:100%;justify-content:center}
+.gastro-emek .lg-acts .btn{white-space:normal;justify-content:center;padding-inline:var(--bosluk-12)}
+.gastro-emek .gastro-cik{color:var(--hata);background:transparent;border:var(--cizgi-1) solid transparent;font-weight:var(--agirlik-orta)}
+.gastro-emek .gastro-cik:hover{background:var(--hata-yikama);transform:none}
+.gastro-emek p.gastro-emek-hata{color:var(--hata);margin-block:var(--bosluk-12)}
+
+.gastro-emek .btn-ghost{border-width:var(--cizgi-1)}
+.gastro-emek .btn:focus:not(:focus-visible){outline:none;box-shadow:none}

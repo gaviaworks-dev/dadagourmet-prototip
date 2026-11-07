@@ -1,0 +1,51 @@
+/* =====================================================================
+   MEKÂN FİLTRE PANELİ — mobil sheet yükseklik tavanı (P5–P16, 2026-09-17)
+   Kanon `gourmet-mekan-liste.css:237` VENDOR (kural eklenmez): @≤1024 `#lstSide`
+   `position:fixed; bottom:var(--bc-lift,0px); max-height:82vh`.
+
+   FARK: `bottom-clearance.js` açık sheet'i alt aksiyon barının üstüne kaldırıyor
+   (ölçüldü 390×844: `--bc-lift` 208px). 82vh (692px) + 208px > 844px → sheet'in
+   BAŞLIĞI (Filtrele · Temizle · kapat) ekranın 56px ÜSTÜNE taşıyordu (y=-56).
+   Eski 2 gruplu panel 437px'ti, taşmıyordu; 12 grup tavana dayanınca ortaya çıktı.
+
+   ÇÖZÜM: tavan, kaldırma payı düşülmüş görünür yüksekliği aşamaz. Gövde zaten
+   `.sheet-body` içinde kayar. `--bc-lift`i 0'a zorlamak ya da `data-bc-clear`i
+   sökmek YANLIŞ OLUR — sheet'in dip düğmesi ("N Mekânı Göster") alt barın
+   altında kalır (`bottom-clearance-uyarlama.js` ⚠ notu).
+   Yalnız `/mekanlar` listesinde, kanon CSS'ten SONRA bağlanır.
+   ===================================================================== */
+@media (max-width:1024px){
+  #lstSide.lst-side{max-height:min(82vh, calc(100dvh - var(--bc-lift, 0px) - 12px))}
+}
+
+/* =====================================================================
+   KONUM GRUBU — Ülke → Şehir → İlçe → Semt (Beyar kararı 2026-09-17, proje GLOBAL)
+   Kanon parçalar: ülke menüsü V7'nin `.fb-field > select.fb-select`i (`gourmet.css`), arama
+   kutusu kitin `.search-input.mkl-fct-srch`i ve `.fct-empty`i (`gourmet-mekan-liste.css`).
+   Burada yalnız panel yerleşimi, soluk satır ve arama süzgeci var.
+   ===================================================================== */
+
+/* Ülke menüsü panel ölçüsünde: `.fb-select` modal alanı ölçüsünde (14px, 13px iç boşluk). */
+.mkl-fct-location .mkl-ulke-sec{margin:2px 0 8px}
+.mkl-fct-location .mkl-ulke-sec .fb-select{font-size:13.5px;padding:10px 36px 10px 12px}
+
+/* Mekânı olmayan konum satırı SOLUK — tıklanabilir, sayaç 0. İşaretlenince kanonun
+   `.fct-row input:checked ~ .ft` (0,3,1) kuralı rengi geri verir; hover rengi de kanondan. */
+.fct-sub .fct-row.soluk .ft,
+.fct-sub .fct-row.soluk .fcnt{color:var(--muted)}
+.fct-sub .fct-row.soluk .cbx{opacity:.6}
+
+/* Grup içi arama. Durum ÖZNİTELİKTE (`.ai/rules/js.md`). 🔴 ÖZGÜLLÜK (`.ai/rules/css.md`):
+   kanon `.fct.more-open .fct-row.xtra{display:flex}` (0,3,0) gizleme kuralını ezer; bu yüzden
+   gizleme (0,4,0) ve bu dosya kanondan SONRA yüklenir. Aşağıdaki "aramada xtra'yı göster" kuralı da
+   (0,5,0) gizlemeyi ezerdi — ölçüldü 2026-09-17: "sarı" araması 33 ilçe gösterdi — bu yüzden
+   `:not([data-konum-gizli])` taşır. Aramada eşleşen `xtra` satır da görünür,
+   "Tümünü gör" düğmesi saklanır. */
+.mkl-fct-location .fct-sub[data-konum-arama] .fct-row.xtra:not([data-konum-gizli]){display:flex}
+.mkl-fct-location .fct-sub .fct-row[data-konum-gizli]{display:none}
+.mkl-fct-location .fct-sub[data-konum-arama] .fct-more{display:none}
+
+/* Alt grup rozeti: kanon `.fct.has-active .fct-dot` (0,3,0) TORUN seçicisi — üst Konum grubu aktifken
+   seçimsiz Şehir/İlçe/Semt başlığında da "0" rozeti açıyordu (ölçüldü 2026-09-17, `?il[]=istanbul`
+   → "İlçe 0"). Yalnız kendi seçimi olan alt grup rozet basar. */
+.mkl-fct-location .fct-sub:not(.has-active) .fct-head .fct-dot{display:none}

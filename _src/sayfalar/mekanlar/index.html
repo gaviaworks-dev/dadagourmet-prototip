@@ -1,0 +1,1605 @@
+<!--{"yol":"mekanlar","baslik":"Mekânlar","aktif":"mekanlar","zincir":"hakkimizda","gourmet":true,"css":["gourmet-mekan-liste.css","banner-uyarlama.css","ikon-uyarlama.css","mekan-karti-uyarlama.css","mekan-filtre-paneli-uyarlama.css","gourmet-sapma"],"js":["assets/vendor/maplibre/maplibre-gl.js","assets/js/mekan-veri.js","assets/js/harita.js","assets/js/sayfa/mekanlar.js"],"govdeSinif":"pg-mekanlar","donor":"https://dadagourmet.com/mekanlar + filtre dokümanı §16-18"}-->
+
+                        
+
+<section class="ke-top below-header px-band" data-px-band="1"><div class="px-clip" style="--px-x: 50%; --px-y: 50%; background-color: rgb(30, 20, 34); --px-r: 0px; --px-shift: -142.3px;"><div class="px-media" style="background-image: url(&quot;{{kok}}assets/o/assets/gourmet-public/img/gurme-lezzetler/banner-g3-pilot.webp&quot;);"></div></div>
+    <div class="ke-hero-media" aria-hidden="true" style="background-image: none; background-color: transparent;"></div>
+    <div class="wrap">
+        
+        <nav class="rd-crumb" aria-label="Sayfa yolu"><a href="{{kok}}"><i class="fa-solid fa-house" aria-hidden="true"></i></a><i class="fa-solid fa-chevron-right" aria-hidden="true"></i><b>Mekânlar</b></nav>
+        <div class="ke-hero">
+            <div class="ke-head">
+                <span class="eyebrow"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Dada Gourmet · Mekanlar</span>
+                <h1><span class="accent">Mekânları</span> Keşfet</h1>
+                <p class="lead">Restoran, kafe, kahvaltı mekânı ve daha fazlasını konumuna ve tercihlerine göre incele.</p>
+
+                <form method="GET" class="searchcard mkl-hero-search" id="mklHeroSearch" data-prototip-form="">
+                    <div class="search-row">
+                        <label class="search-input">
+                            <span class="sr-only">Mekân veya lezzet ara</span>
+                            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                            <input type="text" name="q" id="mklHeroQ" value="" placeholder="Mekân veya lezzet ara" autocomplete="off">
+                        </label>
+                        <label class="search-input">
+                            <span class="sr-only">Şehir, ilçe veya semt seç</span>
+                            <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+                            <input type="text" name="konum" id="mklHeroKonum" value="" placeholder="Şehir, ilçe veya semt seç" autocomplete="off">
+                        </label>
+                        <button class="btn btn-primary" type="submit"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Ara</button>
+                        
+                        <label class="mkl-hero-near">
+                            <input type="checkbox" id="mklNearMe">
+                            <span class="mkl-near-ico"><i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i></span>
+                            <span>Yakınımdakileri göster</span>
+                        </label>
+                    </div>
+                    <input type="hidden" name="lat" id="mklLatInput" value="">
+                    <input type="hidden" name="lng" id="mklLngInput" value="">
+                    
+                                    </form>
+
+                <div class="ke-cta">
+                    <button class="btn btn-suggest" type="button" id="mekanOnerBtn"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Mekan Öner</button>
+                    <a class="btn btn-biz" href="{{kok}}isletme/basvurular/yeni/"><i class="fa-solid fa-store" aria-hidden="true"></i> İşletme Ekle</a>
+                </div>
+                <div class="ke-cta-split">
+                    <span><b>Mekan Öner</b> — sevdiğin bir yeri rehbere öner; editör onayıyla yayınlanır.</span>
+                    <span><b>İşletme Ekle</b> — kendi işletmenin sahibi misin? Sayfanı sen oluştur.</span>
+                </div>
+            </div>
+            
+            <div class="ke-stats">
+                <div class="st"><b>203</b><span>yayındaki mekân</span></div>
+                <div class="st"><b>15</b><span>şehir</span></div>
+                <div class="st"><b>0</b><span>değerlendirme</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="paneMekan">
+    <section class="lst-sec">
+        <div class="wrap">
+            
+            <div class="subcat-strip mkl-type-strip" aria-label="Mekân Türleri">
+                <div class="subcat-head">
+                    <h2>Mekân konseptine göre keşfet</h2>
+                    <span class="sc-note">Seçim soldaki filtrelerle birlikte çalışır</span>
+                </div>
+                <div class="subcat-wrap cs-more" id="typeStripWrap" data-fade-track="typeStripTrack">
+                    <div class="subcat-track" id="typeStripTrack" role="group" aria-label="Mekân türü rayı">
+                        <a class="subcat active" href="{{kok}}mekanlar/" aria-current="true">
+                            <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-border-all" aria-hidden="true"></i></span>
+                            <span><b>Tümü</b><span>203 mekân</span></span>
+                        </a>
+                                                    <a class="subcat" href="{{kok}}mekanlar/?konsept=butik-restoran">
+                                <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-gem" aria-hidden="true"></i></span>
+                                <span><b>Butik</b><span>16 mekân</span></span>
+                            </a>
+                                                    <a class="subcat" href="{{kok}}mekanlar/?konsept=tarihi">
+                                <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-utensils" aria-hidden="true"></i></span>
+                                <span><b>Tarihi</b><span>16 mekân</span></span>
+                            </a>
+                                                    <a class="subcat" href="{{kok}}mekanlar/?konsept=modern">
+                                <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-utensils" aria-hidden="true"></i></span>
+                                <span><b>Modern</b><span>50 mekân</span></span>
+                            </a>
+                                                    <a class="subcat" href="{{kok}}mekanlar/?konsept=geleneksel">
+                                <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-utensils" aria-hidden="true"></i></span>
+                                <span><b>Geleneksel</b><span>17 mekân</span></span>
+                            </a>
+                                                    
+                                                    <a class="subcat" href="{{kok}}mekanlar/?konsept=luks">
+                                <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-utensils" aria-hidden="true"></i></span>
+                                <span><b>Lüks</b><span>104 mekân</span></span>
+                            </a>
+                                                    <a class="subcat" href="{{kok}}mekanlar/?konsept=doga-icinde">
+                                <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-utensils" aria-hidden="true"></i></span>
+                                <span><b>Doğa İçinde</b><span>9 mekân</span></span>
+                            </a>
+                                                    <a class="subcat" href="{{kok}}mekanlar/?konsept=bahceli-restoran">
+                                <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-tree" aria-hidden="true"></i></span>
+                                <span><b>Bahçeli</b><span>20 mekân</span></span>
+                            </a>
+                                                    <a class="subcat" href="{{kok}}mekanlar/?konsept=terasli">
+                                <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-utensils" aria-hidden="true"></i></span>
+                                <span><b>Teraslı</b><span>50 mekân</span></span>
+                            </a>
+                                                    <a class="subcat" href="{{kok}}mekanlar/?konsept=manzarali">
+                                <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-utensils" aria-hidden="true"></i></span>
+                                <span><b>Manzaralı</b><span>84 mekân</span></span>
+                            </a>
+                                                    <a class="subcat" href="{{kok}}mekanlar/?konsept=deniz-kenari">
+                                <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-utensils" aria-hidden="true"></i></span>
+                                <span><b>Deniz Kenarı</b><span>32 mekân</span></span>
+                            </a>
+                                                    
+                                                    <a class="subcat" href="{{kok}}mekanlar/?konsept=dag-yayla">
+                                <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-utensils" aria-hidden="true"></i></span>
+                                <span><b>Dağ / Yayla</b><span>1 mekân</span></span>
+                            </a>
+                                                    
+                                                    <a class="subcat" href="{{kok}}mekanlar/?konsept=tas-konak">
+                                <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-utensils" aria-hidden="true"></i></span>
+                                <span><b>Taş Konak</b><span>9 mekân</span></span>
+                            </a>
+                                                    
+                                                    <a class="subcat" href="{{kok}}mekanlar/?konsept=sanat-ve-kultur">
+                                <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-utensils" aria-hidden="true"></i></span>
+                                <span><b>Sanat ve Kültür</b><span>2 mekân</span></span>
+                            </a>
+                                                    <a class="subcat" href="{{kok}}mekanlar/?konsept=yoresel-lezzet-noktasi">
+                                <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></span>
+                                <span><b>Yerel Lezzet Noktası</b><span>5 mekân</span></span>
+                            </a>
+                                                    <a class="subcat" href="{{kok}}mekanlar/?konsept=sef-restorani">
+                                <span class="sc-ico mkl-type-ico"><i class="fa-solid fa-star" aria-hidden="true"></i></span>
+                                <span><b>Şef Restoranı</b><span>51 mekân</span></span>
+                            </a>
+                                            </div>
+                </div>
+            </div>
+
+            
+            <div class="dist-bar" id="mklDistBar">
+                <span class="db-lbl"><i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i> Yakınımdaki mekanlar · <b id="mklDistVal">25 km</b></span>
+                <div class="dist-wrap">
+                    <div class="dist-track"><div class="dist-fill" id="mklDistFill" style="width: 48.9796%;"></div></div>
+                    <input type="range" min="1" max="50" value="25" step="1" id="mklDist" aria-label="Mesafe (km)">
+                </div>
+                <span class="dist-ends">en fazla 50 km</span>
+                                    <span class="dist-hint muted">Konumunu paylaşınca mesafeye göre süzülür</span>
+                            </div>
+
+            <div class="lst-layout mkl-uc-kolon">
+                <form method="GET" id="filterForm" data-prototip-form="">
+                    
+                                                                                
+                    <aside class="lst-side" id="lstSide" data-bc-clear="" aria-label="Filtreler" style="--bc-lift: 0px;">
+                        <div class="sheet-head">
+                            <h3><i class="fa-solid fa-sliders" aria-hidden="true"></i> Filtrele</h3>
+                            <div class="sh-right">
+                                <a class="fil-clear" href="{{kok}}mekanlar/">Temizle</a>
+                                <button class="sheet-close" id="sheetClose" type="button" aria-label="Filtre panelini kapat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <div class="sheet-body">
+                            <div class="fil-top">
+                                <h3><i class="fa-solid fa-sliders" aria-hidden="true"></i> Filtreler</h3>
+                                <a class="fil-clear" href="{{kok}}mekanlar/">Tümünü Temizle</a>
+                            </div>
+
+                            
+                                                                                                
+                                    <div class="fct mkl-fct-location open" data-group="Konum">
+                                        <button class="fct-head" type="button"><i class="fa-solid fa-location-dot fct-head-ico" aria-hidden="true"></i> Konum <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+                                        <div class="fct-body">
+                                            <div class="fb-field mkl-ulke-sec">
+                                                <label class="sr-only" for="mklUlke">Ülke</label>
+                                                <select class="fb-select" id="mklUlke" data-ulke-sec="">
+                                                                                                            <option value="TR" selected="">Türkiye (203)</option>
+                                                                                                            <option value="UM">ABD Küçük Harici Adaları</option>
+                                                                                                            <option value="VI">ABD Virjin Adaları</option>
+                                                                                                            <option value="AF">Afganistan</option>
+                                                                                                            <option value="AX">Åland Adaları</option>
+                                                                                                            <option value="DE">Almanya</option>
+                                                                                                            <option value="US">Amerika Birleşik Devletleri</option>
+                                                                                                            <option value="AS">Amerikan Samoası</option>
+                                                                                                            <option value="AD">Andorra</option>
+                                                                                                            <option value="AO">Angola</option>
+                                                                                                            <option value="AI">Anguilla</option>
+                                                                                                            <option value="AQ">Antarktika</option>
+                                                                                                            <option value="AG">Antigua ve Barbuda</option>
+                                                                                                            <option value="AR">Arjantin</option>
+                                                                                                            <option value="AL">Arnavutluk</option>
+                                                                                                            <option value="AW">Aruba</option>
+                                                                                                            <option value="AU">Avustralya</option>
+                                                                                                            <option value="AT">Avusturya</option>
+                                                                                                            <option value="AZ">Azerbaycan</option>
+                                                                                                            <option value="BS">Bahamalar</option>
+                                                                                                            <option value="BH">Bahreyn</option>
+                                                                                                            <option value="BD">Bangladeş</option>
+                                                                                                            <option value="BB">Barbados</option>
+                                                                                                            <option value="EH">Batı Sahra</option>
+                                                                                                            <option value="BY">Belarus</option>
+                                                                                                            <option value="BE">Belçika</option>
+                                                                                                            <option value="BZ">Belize</option>
+                                                                                                            <option value="BJ">Benin</option>
+                                                                                                            <option value="BM">Bermuda</option>
+                                                                                                            <option value="AE">Birleşik Arap Emirlikleri</option>
+                                                                                                            <option value="GB">Birleşik Krallık</option>
+                                                                                                            <option value="BO">Bolivya</option>
+                                                                                                            <option value="BA">Bosna-Hersek</option>
+                                                                                                            <option value="BW">Botsvana</option>
+                                                                                                            <option value="BV">Bouvet Adası</option>
+                                                                                                            <option value="BR">Brezilya</option>
+                                                                                                            <option value="IO">Britanya Hint Okyanusu Toprakları</option>
+                                                                                                            <option value="VG">Britanya Virjin Adaları</option>
+                                                                                                            <option value="BN">Brunei</option>
+                                                                                                            <option value="BG">Bulgaristan</option>
+                                                                                                            <option value="BF">Burkina Faso</option>
+                                                                                                            <option value="BI">Burundi</option>
+                                                                                                            <option value="BT">Butan</option>
+                                                                                                            <option value="CV">Cabo Verde</option>
+                                                                                                            <option value="KY">Cayman Adaları</option>
+                                                                                                            <option value="GI">Cebelitarık</option>
+                                                                                                            <option value="DZ">Cezayir</option>
+                                                                                                            <option value="CX">Christmas Adası</option>
+                                                                                                            <option value="DJ">Cibuti</option>
+                                                                                                            <option value="CC">Cocos (Keeling) Adaları</option>
+                                                                                                            <option value="CK">Cook Adaları</option>
+                                                                                                            <option value="CI">Côte d’Ivoire</option>
+                                                                                                            <option value="CW">Curaçao</option>
+                                                                                                            <option value="TD">Çad</option>
+                                                                                                            <option value="CZ">Çekya</option>
+                                                                                                            <option value="CN">Çin</option>
+                                                                                                            <option value="HK">Çin Hong Kong ÖİB</option>
+                                                                                                            <option value="MO">Çin Makao ÖİB</option>
+                                                                                                            <option value="DK">Danimarka</option>
+                                                                                                            <option value="DO">Dominik Cumhuriyeti</option>
+                                                                                                            <option value="DM">Dominika</option>
+                                                                                                            <option value="EC">Ekvador</option>
+                                                                                                            <option value="GQ">Ekvator Ginesi</option>
+                                                                                                            <option value="SV">El Salvador</option>
+                                                                                                            <option value="ID">Endonezya</option>
+                                                                                                            <option value="ER">Eritre</option>
+                                                                                                            <option value="AM">Ermenistan</option>
+                                                                                                            <option value="EE">Estonya</option>
+                                                                                                            <option value="SZ">Esvatini</option>
+                                                                                                            <option value="ET">Etiyopya</option>
+                                                                                                            <option value="FK">Falkland Adaları</option>
+                                                                                                            <option value="FO">Faroe Adaları</option>
+                                                                                                            <option value="MA">Fas</option>
+                                                                                                            <option value="FJ">Fiji</option>
+                                                                                                            <option value="PH">Filipinler</option>
+                                                                                                            <option value="PS">Filistin Bölgeleri</option>
+                                                                                                            <option value="FI">Finlandiya</option>
+                                                                                                            <option value="FR">Fransa</option>
+                                                                                                            <option value="GF">Fransız Guyanası</option>
+                                                                                                            <option value="TF">Fransız Güney Toprakları</option>
+                                                                                                            <option value="PF">Fransız Polinezyası</option>
+                                                                                                            <option value="GA">Gabon</option>
+                                                                                                            <option value="GM">Gambiya</option>
+                                                                                                            <option value="GH">Gana</option>
+                                                                                                            <option value="GN">Gine</option>
+                                                                                                            <option value="GW">Gine-Bissau</option>
+                                                                                                            <option value="GD">Grenada</option>
+                                                                                                            <option value="GL">Grönland</option>
+                                                                                                            <option value="GP">Guadeloupe</option>
+                                                                                                            <option value="GU">Guam</option>
+                                                                                                            <option value="GT">Guatemala</option>
+                                                                                                            <option value="GG">Guernsey</option>
+                                                                                                            <option value="GY">Guyana</option>
+                                                                                                            <option value="ZA">Güney Afrika</option>
+                                                                                                            <option value="GS">Güney Georgia ve Güney Sandwich Adaları</option>
+                                                                                                            <option value="KR">Güney Kore</option>
+                                                                                                            <option value="SS">Güney Sudan</option>
+                                                                                                            <option value="GE">Gürcistan</option>
+                                                                                                            <option value="HT">Haiti</option>
+                                                                                                            <option value="HM">Heard Adası ve McDonald Adaları</option>
+                                                                                                            <option value="HR">Hırvatistan</option>
+                                                                                                            <option value="IN">Hindistan</option>
+                                                                                                            <option value="NL">Hollanda</option>
+                                                                                                            <option value="HN">Honduras</option>
+                                                                                                            <option value="IQ">Irak</option>
+                                                                                                            <option value="IR">İran</option>
+                                                                                                            <option value="IE">İrlanda</option>
+                                                                                                            <option value="ES">İspanya</option>
+                                                                                                            <option value="IL">İsrail</option>
+                                                                                                            <option value="SE">İsveç</option>
+                                                                                                            <option value="CH">İsviçre</option>
+                                                                                                            <option value="IT">İtalya</option>
+                                                                                                            <option value="IS">İzlanda</option>
+                                                                                                            <option value="JM">Jamaika</option>
+                                                                                                            <option value="JP">Japonya</option>
+                                                                                                            <option value="JE">Jersey</option>
+                                                                                                            <option value="KH">Kamboçya</option>
+                                                                                                            <option value="CM">Kamerun</option>
+                                                                                                            <option value="CA">Kanada</option>
+                                                                                                            <option value="ME">Karadağ</option>
+                                                                                                            <option value="BQ">Karayip Hollandası</option>
+                                                                                                            <option value="QA">Katar</option>
+                                                                                                            <option value="KZ">Kazakistan</option>
+                                                                                                            <option value="KE">Kenya</option>
+                                                                                                            <option value="CY">Kıbrıs</option>
+                                                                                                            <option value="KG">Kırgızistan</option>
+                                                                                                            <option value="KI">Kiribati</option>
+                                                                                                            <option value="CO">Kolombiya</option>
+                                                                                                            <option value="KM">Komorlar</option>
+                                                                                                            <option value="CG">Kongo - Brazavil</option>
+                                                                                                            <option value="CD">Kongo - Kinşasa</option>
+                                                                                                            <option value="CR">Kosta Rika</option>
+                                                                                                            <option value="KW">Kuveyt</option>
+                                                                                                            <option value="KP">Kuzey Kore</option>
+                                                                                                            <option value="MK">Kuzey Makedonya</option>
+                                                                                                            <option value="MP">Kuzey Mariana Adaları</option>
+                                                                                                            <option value="CU">Küba</option>
+                                                                                                            <option value="LA">Laos</option>
+                                                                                                            <option value="LS">Lesotho</option>
+                                                                                                            <option value="LV">Letonya</option>
+                                                                                                            <option value="LR">Liberya</option>
+                                                                                                            <option value="LY">Libya</option>
+                                                                                                            <option value="LI">Liechtenstein</option>
+                                                                                                            <option value="LT">Litvanya</option>
+                                                                                                            <option value="LB">Lübnan</option>
+                                                                                                            <option value="LU">Lüksemburg</option>
+                                                                                                            <option value="HU">Macaristan</option>
+                                                                                                            <option value="MG">Madagaskar</option>
+                                                                                                            <option value="MW">Malavi</option>
+                                                                                                            <option value="MV">Maldivler</option>
+                                                                                                            <option value="MY">Malezya</option>
+                                                                                                            <option value="ML">Mali</option>
+                                                                                                            <option value="MT">Malta</option>
+                                                                                                            <option value="IM">Man Adası</option>
+                                                                                                            <option value="MH">Marshall Adaları</option>
+                                                                                                            <option value="MQ">Martinik</option>
+                                                                                                            <option value="MU">Mauritius</option>
+                                                                                                            <option value="YT">Mayotte</option>
+                                                                                                            <option value="MX">Meksika</option>
+                                                                                                            <option value="EG">Mısır</option>
+                                                                                                            <option value="FM">Mikronezya</option>
+                                                                                                            <option value="MN">Moğolistan</option>
+                                                                                                            <option value="MD">Moldova</option>
+                                                                                                            <option value="MC">Monako</option>
+                                                                                                            <option value="MS">Montserrat</option>
+                                                                                                            <option value="MR">Moritanya</option>
+                                                                                                            <option value="MZ">Mozambik</option>
+                                                                                                            <option value="MM">Myanmar (Burma)</option>
+                                                                                                            <option value="NA">Namibya</option>
+                                                                                                            <option value="NR">Nauru</option>
+                                                                                                            <option value="NP">Nepal</option>
+                                                                                                            <option value="NE">Nijer</option>
+                                                                                                            <option value="NG">Nijerya</option>
+                                                                                                            <option value="NI">Nikaragua</option>
+                                                                                                            <option value="NU">Niue</option>
+                                                                                                            <option value="NF">Norfolk Adası</option>
+                                                                                                            <option value="NO">Norveç</option>
+                                                                                                            <option value="CF">Orta Afrika Cumhuriyeti</option>
+                                                                                                            <option value="UZ">Özbekistan</option>
+                                                                                                            <option value="PK">Pakistan</option>
+                                                                                                            <option value="PW">Palau</option>
+                                                                                                            <option value="PA">Panama</option>
+                                                                                                            <option value="PG">Papua Yeni Gine</option>
+                                                                                                            <option value="PY">Paraguay</option>
+                                                                                                            <option value="PE">Peru</option>
+                                                                                                            <option value="PN">Pitcairn Adaları</option>
+                                                                                                            <option value="PL">Polonya</option>
+                                                                                                            <option value="PT">Portekiz</option>
+                                                                                                            <option value="PR">Porto Riko</option>
+                                                                                                            <option value="RE">Reunion</option>
+                                                                                                            <option value="RO">Romanya</option>
+                                                                                                            <option value="RW">Ruanda</option>
+                                                                                                            <option value="RU">Rusya</option>
+                                                                                                            <option value="BL">Saint Barthelemy</option>
+                                                                                                            <option value="SH">Saint Helena</option>
+                                                                                                            <option value="KN">Saint Kitts ve Nevis</option>
+                                                                                                            <option value="LC">Saint Lucia</option>
+                                                                                                            <option value="MF">Saint Martin</option>
+                                                                                                            <option value="PM">Saint Pierre ve Miquelon</option>
+                                                                                                            <option value="VC">Saint Vincent ve Grenadinler</option>
+                                                                                                            <option value="WS">Samoa</option>
+                                                                                                            <option value="SM">San Marino</option>
+                                                                                                            <option value="ST">Sao Tome ve Principe</option>
+                                                                                                            <option value="SN">Senegal</option>
+                                                                                                            <option value="SC">Seyşeller</option>
+                                                                                                            <option value="RS">Sırbistan</option>
+                                                                                                            <option value="SL">Sierra Leone</option>
+                                                                                                            <option value="SG">Singapur</option>
+                                                                                                            <option value="SX">Sint Maarten</option>
+                                                                                                            <option value="SK">Slovakya</option>
+                                                                                                            <option value="SI">Slovenya</option>
+                                                                                                            <option value="SB">Solomon Adaları</option>
+                                                                                                            <option value="SO">Somali</option>
+                                                                                                            <option value="LK">Sri Lanka</option>
+                                                                                                            <option value="SD">Sudan</option>
+                                                                                                            <option value="SR">Surinam</option>
+                                                                                                            <option value="SY">Suriye</option>
+                                                                                                            <option value="SA">Suudi Arabistan</option>
+                                                                                                            <option value="SJ">Svalbard ve Jan Mayen</option>
+                                                                                                            <option value="CL">Şili</option>
+                                                                                                            <option value="TJ">Tacikistan</option>
+                                                                                                            <option value="TZ">Tanzanya</option>
+                                                                                                            <option value="TH">Tayland</option>
+                                                                                                            <option value="TW">Tayvan</option>
+                                                                                                            <option value="TL">Timor-Leste</option>
+                                                                                                            <option value="TG">Togo</option>
+                                                                                                            <option value="TK">Tokelau</option>
+                                                                                                            <option value="TO">Tonga</option>
+                                                                                                            <option value="TT">Trinidad ve Tobago</option>
+                                                                                                            <option value="TN">Tunus</option>
+                                                                                                            <option value="TC">Turks ve Caicos Adaları</option>
+                                                                                                            <option value="TV">Tuvalu</option>
+                                                                                                            <option value="TM">Türkmenistan</option>
+                                                                                                            <option value="UG">Uganda</option>
+                                                                                                            <option value="UA">Ukrayna</option>
+                                                                                                            <option value="OM">Umman</option>
+                                                                                                            <option value="UY">Uruguay</option>
+                                                                                                            <option value="JO">Ürdün</option>
+                                                                                                            <option value="VU">Vanuatu</option>
+                                                                                                            <option value="VA">Vatikan</option>
+                                                                                                            <option value="VE">Venezuela</option>
+                                                                                                            <option value="VN">Vietnam</option>
+                                                                                                            <option value="WF">Wallis ve Futuna</option>
+                                                                                                            <option value="YE">Yemen</option>
+                                                                                                            <option value="NC">Yeni Kaledonya</option>
+                                                                                                            <option value="NZ">Yeni Zelanda</option>
+                                                                                                            <option value="GR">Yunanistan</option>
+                                                                                                            <option value="ZM">Zambiya</option>
+                                                                                                            <option value="ZW">Zimbabve</option>
+                                                                                                    </select>
+                                            </div>
+                                            <label class="fct-row">
+                                                <input type="checkbox" id="mklNearMeFct">
+                                                <span class="cbx"></span>
+                                                <span class="ft">Yakınımdakileri göster</span>
+                                            </label>
+                                                                                            <div class="fct fct-sub open" data-group="Şehir" data-konum="sehir">
+    <button class="fct-head" type="button">Şehir <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+    <div class="fct-body">
+                    <label class="search-input mkl-fct-srch" data-konum-ara="">
+                <span class="sr-only">Şehir ara</span>
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <input type="search" placeholder="Şehir ara" autocomplete="off">
+            </label>
+                            <label class="fct-row">
+                <input type="checkbox" name="il[]" value="istanbul" data-count="88">
+                <span class="cbx"></span>
+                <span class="ft">İstanbul</span>
+                <span class="fcnt">88</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="il[]" value="mugla" data-count="34">
+                <span class="cbx"></span>
+                <span class="ft">Muğla</span>
+                <span class="fcnt">34</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="il[]" value="antalya" data-count="25">
+                <span class="cbx"></span>
+                <span class="ft">Antalya</span>
+                <span class="fcnt">25</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="il[]" value="izmir" data-count="22">
+                <span class="cbx"></span>
+                <span class="ft">İzmir</span>
+                <span class="fcnt">22</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="il[]" value="nevsehir" data-count="16">
+                <span class="cbx"></span>
+                <span class="ft">Nevşehir</span>
+                <span class="fcnt">16</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="il[]" value="ankara" data-count="8">
+                <span class="cbx"></span>
+                <span class="ft">Ankara</span>
+                <span class="fcnt">8</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="il[]" value="bursa" data-count="2">
+                <span class="cbx"></span>
+                <span class="ft">Bursa</span>
+                <span class="fcnt">2</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="il[]" value="aydin" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Aydın</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="il[]" value="balikesir" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Balıkesir</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="il[]" value="eskisehir" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Eskişehir</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="il[]" value="gaziantep" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Gaziantep</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="il[]" value="hatay" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Hatay</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="il[]" value="konya" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Konya</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="il[]" value="mardin" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Mardin</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="il[]" value="trabzon" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Trabzon</span>
+                <span class="fcnt">1</span>
+            </label>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                            <p class="fct-empty" data-konum-bos="" aria-live="polite" hidden="">Eşleşen konum yok.</p>
+                            <button class="fct-more" type="button" data-more="Tümünü gör" data-less="Daha az göster">Tümünü gör <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+            </div>
+</div><div hidden="" data-konum="ilce" class="fct fct-sub open" data-group="İlçe">
+    <button class="fct-head" type="button">İlçe <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+    <div class="fct-body">
+                    <label class="search-input mkl-fct-srch" data-konum-ara="">
+                <span class="sr-only">İlçe ara</span>
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <input type="search" placeholder="İlçe ara" autocomplete="off">
+            </label>
+                            <label class="fct-row">
+                <input type="checkbox" name="ilce[]" value="istanbul.fatih" data-count="32">
+                <span class="cbx"></span>
+                <span class="ft">Fatih</span>
+                <span class="fcnt">32</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="ilce[]" value="istanbul.beyoglu" data-count="18">
+                <span class="cbx"></span>
+                <span class="ft">Beyoğlu</span>
+                <span class="fcnt">18</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="ilce[]" value="istanbul.besiktas" data-count="16">
+                <span class="cbx"></span>
+                <span class="ft">Beşiktaş</span>
+                <span class="fcnt">16</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="ilce[]" value="istanbul.sariyer" data-count="6">
+                <span class="cbx"></span>
+                <span class="ft">Sarıyer</span>
+                <span class="fcnt">6</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="ilce[]" value="istanbul.sisli" data-count="6">
+                <span class="cbx"></span>
+                <span class="ft">Şişli</span>
+                <span class="fcnt">6</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="ilce[]" value="istanbul.kadikoy" data-count="3">
+                <span class="cbx"></span>
+                <span class="ft">Kadıköy</span>
+                <span class="fcnt">3</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="ilce[]" value="istanbul.uskudar" data-count="3">
+                <span class="cbx"></span>
+                <span class="ft">Üsküdar</span>
+                <span class="fcnt">3</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="ilce[]" value="istanbul.atasehir" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Ataşehir</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="ilce[]" value="istanbul.bakirkoy" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Bakırköy</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="ilce[]" value="istanbul.beykoz" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Beykoz</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="ilce[]" value="istanbul.maltepe" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Maltepe</span>
+                <span class="fcnt">1</span>
+            </label>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                            <p class="fct-empty" data-konum-bos="" aria-live="polite" hidden="">Eşleşen konum yok.</p>
+                            <button class="fct-more" type="button" data-more="Tümünü gör" data-less="Daha az göster">Tümünü gör <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+            </div>
+</div><div hidden="" data-konum="semt" class="fct fct-sub open" data-group="Semt">
+    <button class="fct-head" type="button">Semt <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+    <div class="fct-body">
+                                    <p class="fct-not">Bu ilçede semt kaydı henüz yok.</p></div>
+</div>
+                                                                                    </div>
+                                    </div>
+                                                                                                                                <div class="fct open" data-group="Kategori">
+    <button class="fct-head" type="button"><i class="fa-solid fa-store fct-head-ico" aria-hidden="true"></i> Mekân Kategorisi <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+    <div class="fct-body">
+                            <label class="fct-row">
+                <input type="checkbox" name="kategori[]" value="restoran" data-count="92">
+                <span class="cbx"></span>
+                <span class="ft">Restoran</span>
+                <span class="fcnt">92</span>
+            </label>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="kategori[]" value="fine-dining-restorani" data-count="61">
+                <span class="cbx"></span>
+                <span class="ft">Fine Dining</span>
+                <span class="fcnt">61</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="kategori[]" value="otel-restorani" data-count="48">
+                <span class="cbx"></span>
+                <span class="ft">Otel Restoranı</span>
+                <span class="fcnt">48</span>
+            </label>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="kategori[]" value="tematik-restoran" data-count="2">
+                <span class="cbx"></span>
+                <span class="ft">Tematik Restoran</span>
+                <span class="fcnt">2</span>
+            </label>
+                    
+                                    <button class="fct-more" type="button" data-more="16 kategori daha" data-less="Daha az göster">16 kategori daha <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+            </div>
+</div>
+                                                                                                                                <div class="fct open" data-group="Konsept">
+    <button class="fct-head" type="button"><i class="fa-solid fa-layer-group fct-head-ico" aria-hidden="true"></i> Mekân Konsepti <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+    <div class="fct-body">
+                            <label class="fct-row">
+                <input type="checkbox" name="konsept[]" value="butik-restoran" data-count="16">
+                <span class="cbx"></span>
+                <span class="ft">Butik</span>
+                <span class="fcnt">16</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="konsept[]" value="tarihi" data-count="16">
+                <span class="cbx"></span>
+                <span class="ft">Tarihi</span>
+                <span class="fcnt">16</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="konsept[]" value="modern" data-count="50">
+                <span class="cbx"></span>
+                <span class="ft">Modern</span>
+                <span class="fcnt">50</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="konsept[]" value="geleneksel" data-count="17">
+                <span class="cbx"></span>
+                <span class="ft">Geleneksel</span>
+                <span class="fcnt">17</span>
+            </label>
+                    
+                    <label class="fct-row">
+                <input type="checkbox" name="konsept[]" value="luks" data-count="104">
+                <span class="cbx"></span>
+                <span class="ft">Lüks</span>
+                <span class="fcnt">104</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="konsept[]" value="doga-icinde" data-count="9">
+                <span class="cbx"></span>
+                <span class="ft">Doğa İçinde</span>
+                <span class="fcnt">9</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="konsept[]" value="bahceli-restoran" data-count="20">
+                <span class="cbx"></span>
+                <span class="ft">Bahçeli</span>
+                <span class="fcnt">20</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="konsept[]" value="terasli" data-count="50">
+                <span class="cbx"></span>
+                <span class="ft">Teraslı</span>
+                <span class="fcnt">50</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="konsept[]" value="manzarali" data-count="84">
+                <span class="cbx"></span>
+                <span class="ft">Manzaralı</span>
+                <span class="fcnt">84</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="konsept[]" value="deniz-kenari" data-count="32">
+                <span class="cbx"></span>
+                <span class="ft">Deniz Kenarı</span>
+                <span class="fcnt">32</span>
+            </label>
+                    
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="konsept[]" value="dag-yayla" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Dağ / Yayla</span>
+                <span class="fcnt">1</span>
+            </label>
+                    
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="konsept[]" value="tas-konak" data-count="9">
+                <span class="cbx"></span>
+                <span class="ft">Taş Konak</span>
+                <span class="fcnt">9</span>
+            </label>
+                    
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="konsept[]" value="sanat-ve-kultur" data-count="2">
+                <span class="cbx"></span>
+                <span class="ft">Sanat ve Kültür</span>
+                <span class="fcnt">2</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="konsept[]" value="yoresel-lezzet-noktasi" data-count="5">
+                <span class="cbx"></span>
+                <span class="ft">Yerel Lezzet Noktası</span>
+                <span class="fcnt">5</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="konsept[]" value="sef-restorani" data-count="51">
+                <span class="cbx"></span>
+                <span class="ft">Şef Restoranı</span>
+                <span class="fcnt">51</span>
+            </label>
+                                    <button class="fct-more" type="button" data-more="13 konsept daha" data-less="Daha az göster">13 konsept daha <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+            </div>
+</div>
+                                                                                                                                <div class="fct open" data-group="Mutfak">
+    <button class="fct-head" type="button"><i class="fa-solid fa-utensils fct-head-ico" aria-hidden="true"></i> Mutfak Türü <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+    <div class="fct-body">
+                            <label class="fct-row">
+                <input type="checkbox" name="mutfak[]" value="turk-mutfagi" data-count="111">
+                <span class="cbx"></span>
+                <span class="ft">Türk Mutfağı</span>
+                <span class="fcnt">111</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="mutfak[]" value="ege-mutfagi" data-count="24">
+                <span class="cbx"></span>
+                <span class="ft">Ege Mutfağı</span>
+                <span class="fcnt">24</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="mutfak[]" value="akdeniz-mutfagi" data-count="66">
+                <span class="cbx"></span>
+                <span class="ft">Akdeniz Mutfağı</span>
+                <span class="fcnt">66</span>
+            </label>
+                    
+                    <label class="fct-row">
+                <input type="checkbox" name="mutfak[]" value="guneydogu-mutfagi" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Güneydoğu Mutfağı</span>
+                <span class="fcnt">1</span>
+            </label>
+                    
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="mutfak[]" value="ic-anadolu-mutfagi" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">İç Anadolu Mutfağı</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="mutfak[]" value="kebap-ocakbasi" data-count="8">
+                <span class="cbx"></span>
+                <span class="ft">Kebap / Ocakbaşı</span>
+                <span class="fcnt">8</span>
+            </label>
+                    
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="mutfak[]" value="deniz-urunleri" data-count="71">
+                <span class="cbx"></span>
+                <span class="ft">Deniz Ürünleri</span>
+                <span class="fcnt">71</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="mutfak[]" value="italyan-mutfagi" data-count="16">
+                <span class="cbx"></span>
+                <span class="ft">İtalyan Mutfağı</span>
+                <span class="fcnt">16</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="mutfak[]" value="fransiz-mutfagi" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Fransız Mutfağı</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="mutfak[]" value="japon-mutfagi" data-count="8">
+                <span class="cbx"></span>
+                <span class="ft">Japon Mutfağı</span>
+                <span class="fcnt">8</span>
+            </label>
+                    
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="mutfak[]" value="hint-mutfagi" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Hint Mutfağı</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="mutfak[]" value="meksika-mutfagi" data-count="3">
+                <span class="cbx"></span>
+                <span class="ft">Meksika Mutfağı</span>
+                <span class="fcnt">3</span>
+            </label>
+                    
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="mutfak[]" value="anadolu-mutfagi" data-count="18">
+                <span class="cbx"></span>
+                <span class="ft">Anadolu Mutfağı</span>
+                <span class="fcnt">18</span>
+            </label>
+                                    <button class="fct-more" type="button" data-more="12 mutfak daha" data-less="Daha az göster">12 mutfak daha <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+            </div>
+</div>
+                                                                                                                                <div class="fct open" data-group="Kullanım Amacı">
+    <button class="fct-head" type="button"><i class="fa-solid fa-people-group fct-head-ico" aria-hidden="true"></i> Deneyim ve Kullanım Amacı <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+    <div class="fct-body">
+                            
+                    
+                    <label class="fct-row">
+                <input type="checkbox" name="vesile[]" value="romantik-bulusma" data-count="35">
+                <span class="cbx"></span>
+                <span class="ft">Romantik Buluşma</span>
+                <span class="fcnt">35</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="vesile[]" value="is-yemegi" data-count="13">
+                <span class="cbx"></span>
+                <span class="ft">İş Yemeği</span>
+                <span class="fcnt">13</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="vesile[]" value="arkadas-bulusmasi" data-count="5">
+                <span class="cbx"></span>
+                <span class="ft">Arkadaş Buluşması</span>
+                <span class="fcnt">5</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="vesile[]" value="grup-yemekleri" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Grup Yemekleri</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="vesile[]" value="ozel-gunler" data-count="109">
+                <span class="cbx"></span>
+                <span class="ft">Özel Günler</span>
+                <span class="fcnt">109</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="vesile[]" value="dogum-gunu" data-count="3">
+                <span class="cbx"></span>
+                <span class="ft">Doğum Günü / Yıldönümü</span>
+                <span class="fcnt">3</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="vesile[]" value="kahvalti" data-count="3">
+                <span class="cbx"></span>
+                <span class="ft">Kahvaltı</span>
+                <span class="fcnt">3</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="vesile[]" value="hizli-yemek" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Hızlı Yemek</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="vesile[]" value="uzun-sohbet" data-count="5">
+                <span class="cbx"></span>
+                <span class="ft">Uzun Sohbet</span>
+                <span class="fcnt">5</span>
+            </label>
+                    
+                    
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="vesile[]" value="turistik-kesif" data-count="12">
+                <span class="cbx"></span>
+                <span class="ft">Turistik Keşif</span>
+                <span class="fcnt">12</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="vesile[]" value="gece-yemekleri" data-count="2">
+                <span class="cbx"></span>
+                <span class="ft">Gece Yemekleri</span>
+                <span class="fcnt">2</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="vesile[]" value="aile-yemegi" data-count="2">
+                <span class="cbx"></span>
+                <span class="ft">Aile Yemeği</span>
+                <span class="fcnt">2</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="vesile[]" value="aksam-yemegi" data-count="193">
+                <span class="cbx"></span>
+                <span class="ft">Akşam Yemeği</span>
+                <span class="fcnt">193</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="vesile[]" value="evlilik-teklifi" data-count="2">
+                <span class="cbx"></span>
+                <span class="ft">Evlilik Teklifi</span>
+                <span class="fcnt">2</span>
+            </label>
+                                    <button class="fct-more" type="button" data-more="12 amaç daha" data-less="Daha az göster">12 amaç daha <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+            </div>
+</div>
+                                                                                                                                <div class="fct open" data-group="Fiyat">
+    <button class="fct-head" type="button"><i class="fa-solid fa-turkish-lira-sign fct-head-ico" aria-hidden="true"></i> Fiyat Aralığı <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+    <div class="fct-body">
+                            
+                    
+                    <label class="fct-row">
+                <input type="checkbox" name="fiyat[]" value="3" data-count="98">
+                <span class="cbx"></span>
+                <span class="ft">Üst Orta <span class="muted">(₺₺₺)</span></span>
+                <span class="fcnt">98</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="fiyat[]" value="4" data-count="105">
+                <span class="cbx"></span>
+                <span class="ft">Lüks <span class="muted">(₺₺₺₺)</span></span>
+                <span class="fcnt">105</span>
+            </label>
+                            </div>
+</div>
+                                                                                                                                <div class="fct open" data-group="Puan">
+    <button class="fct-head" type="button"><i class="fa-solid fa-star fct-head-ico" aria-hidden="true"></i> Puan ve Değerlendirme <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+    <div class="fct-body">
+                            
+                    
+                    
+                    <label class="fct-row">
+                <input type="checkbox" name="puan[]" value="yok" data-count="203">
+                <span class="cbx"></span>
+                <span class="ft">Henüz değerlendirilmemiş</span>
+                <span class="fcnt">203</span>
+            </label>
+                            </div>
+</div>
+                                                                                                                                <div class="fct open" data-group="Hizmetler">
+    <button class="fct-head" type="button"><i class="fa-solid fa-bell-concierge fct-head-ico" aria-hidden="true"></i> Hizmet ve Özellikler <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+    <div class="fct-body">
+                            <label class="fct-row">
+                <input type="checkbox" name="hizmet[]" value="rezervasyon-aliyor" data-count="161">
+                <span class="cbx"></span>
+                <span class="ft">Rezervasyon</span>
+                <span class="fcnt">161</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="hizmet[]" value="online-rezervasyon" data-count="20">
+                <span class="cbx"></span>
+                <span class="ft">Online Rezervasyon</span>
+                <span class="fcnt">20</span>
+            </label>
+                    
+                    
+                    <label class="fct-row">
+                <input type="checkbox" name="hizmet[]" value="acik-alan" data-count="73">
+                <span class="cbx"></span>
+                <span class="ft">Açık Alan</span>
+                <span class="fcnt">73</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="hizmet[]" value="bahce" data-count="9">
+                <span class="cbx"></span>
+                <span class="ft">Bahçe</span>
+                <span class="fcnt">9</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="hizmet[]" value="teras" data-count="47">
+                <span class="cbx"></span>
+                <span class="ft">Teras</span>
+                <span class="fcnt">47</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="hizmet[]" value="wifi" data-count="55">
+                <span class="cbx"></span>
+                <span class="ft">Wi-Fi</span>
+                <span class="fcnt">55</span>
+            </label>
+                    
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="hizmet[]" value="bebek-sandalyesi" data-count="36">
+                <span class="cbx"></span>
+                <span class="ft">Çocuk Sandalyesi</span>
+                <span class="fcnt">36</span>
+            </label>
+                    
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="hizmet[]" value="evcil-hayvan-dostu" data-count="9">
+                <span class="cbx"></span>
+                <span class="ft">Evcil Hayvan Dostu</span>
+                <span class="fcnt">9</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="hizmet[]" value="canli-muzik" data-count="17">
+                <span class="cbx"></span>
+                <span class="ft">Canlı Müzik</span>
+                <span class="fcnt">17</span>
+            </label>
+                    
+                    
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="hizmet[]" value="kredi-karti" data-count="59">
+                <span class="cbx"></span>
+                <span class="ft">Kredi Kartı Geçerli</span>
+                <span class="fcnt">59</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="hizmet[]" value="ozel-gun" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Özel Günlere Uygun</span>
+                <span class="fcnt">1</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="hizmet[]" value="grup-rezervasyonu" data-count="1">
+                <span class="cbx"></span>
+                <span class="ft">Grup Rezervasyonuna Uygun</span>
+                <span class="fcnt">1</span>
+            </label>
+                                    <button class="fct-more" type="button" data-more="12 hizmet daha" data-less="Daha az göster">12 hizmet daha <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+            </div>
+</div>
+                                                                                                                                <div class="fct open" data-group="Beslenme">
+    <button class="fct-head" type="button"><i class="fa-solid fa-leaf fct-head-ico" aria-hidden="true"></i> Beslenme Tercihleri <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+    <div class="fct-body">
+                            <label class="fct-row">
+                <input type="checkbox" name="beslenme[]" value="vegan" data-count="39">
+                <span class="cbx"></span>
+                <span class="ft">Vegan</span>
+                <span class="fcnt">39</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="beslenme[]" value="vejetaryen" data-count="55">
+                <span class="cbx"></span>
+                <span class="ft">Vejetaryen</span>
+                <span class="fcnt">55</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="beslenme[]" value="glutensiz" data-count="12">
+                <span class="cbx"></span>
+                <span class="ft">Glutensiz Seçenek</span>
+                <span class="fcnt">12</span>
+            </label>
+                    
+                    
+                    
+                    
+                                    <button class="fct-more" type="button" data-more="1 seçenek daha" data-less="Daha az göster">1 seçenek daha <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+            </div>
+</div>
+                                                                                                                                <div class="fct open" data-group="Beslenme">
+    <button class="fct-head" type="button"><i class="fa-solid fa-charging-station fct-head-ico" aria-hidden="true"></i> Enerji ve Araç Şarj <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+    <div class="fct-body"><p class="fct-not"><span class="ornek-etiket">prototip örneği</span> Mekân sayacı bu grupta henüz yok.</p><label class="fct-row">
+                <input type="checkbox" name="sarj[]" value="ornek-0" data-count="39">
+                <span class="cbx"></span>
+                <span class="ft">Elektrikli Araç Şarj Noktası Var</span>
+                
+            </label><label class="fct-row">
+                <input type="checkbox" name="sarj[]" value="ornek-1" data-count="39">
+                <span class="cbx"></span>
+                <span class="ft">Yakınında Şarj İstasyonu</span>
+                
+            </label><label class="fct-row">
+                <input type="checkbox" name="sarj[]" value="ornek-2" data-count="39">
+                <span class="cbx"></span>
+                <span class="ft">AC Şarj</span>
+                
+            </label><label class="fct-row">
+                <input type="checkbox" name="sarj[]" value="ornek-3" data-count="39">
+                <span class="cbx"></span>
+                <span class="ft">DC Hızlı Şarj</span>
+                
+            </label><label class="fct-row">
+                <input type="checkbox" name="sarj[]" value="ornek-4" data-count="39">
+                <span class="cbx"></span>
+                <span class="ft">Şarj Sırasında Yemek Yeme İmkânı</span>
+                
+            </label></div>
+</div><div class="fct open" data-group="Ulaşım">
+    <button class="fct-head" type="button"><i class="fa-solid fa-wheelchair fct-head-ico" aria-hidden="true"></i> Ulaşım ve Erişilebilirlik <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+    <div class="fct-body">
+                            <label class="fct-row">
+                <input type="checkbox" name="ulasim[]" value="otopark" data-count="38">
+                <span class="cbx"></span>
+                <span class="ft">Otopark</span>
+                <span class="fcnt">38</span>
+            </label>
+                    
+                    <label class="fct-row">
+                <input type="checkbox" name="ulasim[]" value="vale" data-count="15">
+                <span class="cbx"></span>
+                <span class="ft">Vale</span>
+                <span class="fcnt">15</span>
+            </label>
+                    
+                    
+                    <label class="fct-row">
+                <input type="checkbox" name="ulasim[]" value="engelli-erisimi" data-count="7">
+                <span class="cbx"></span>
+                <span class="ft">Engelli Erişimi</span>
+                <span class="fcnt">7</span>
+            </label>
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="ulasim[]" value="tekerlekli-sandalye-erisimi" data-count="41">
+                <span class="cbx"></span>
+                <span class="ft">Tekerlekli Sandalye Erişimi</span>
+                <span class="fcnt">41</span>
+            </label>
+                    
+                    
+                    
+                                    <button class="fct-more" type="button" data-more="4 seçenek daha" data-less="Daha az göster">4 seçenek daha <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+            </div>
+</div>
+                                                                                                                                <div class="fct open" data-group="Açık Olma">
+    <button class="fct-head" type="button"><i class="fa-solid fa-door-open fct-head-ico" aria-hidden="true"></i> Açık Olma Durumu <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+    <div class="fct-body">
+                            <label class="fct-row">
+                <input type="checkbox" name="acik[]" value="simdi" data-count="133">
+                <span class="cbx"></span>
+                <span class="ft">Şimdi açık</span>
+                <span class="fcnt">133</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="acik[]" value="bugun" data-count="202">
+                <span class="cbx"></span>
+                <span class="ft">Bugün açık</span>
+                <span class="fcnt">202</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="acik[]" value="gece" data-count="126">
+                <span class="cbx"></span>
+                <span class="ft">Gece açık</span>
+                <span class="fcnt">126</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="acik[]" value="sabah" data-count="15">
+                <span class="cbx"></span>
+                <span class="ft">Sabah erken açık</span>
+                <span class="fcnt">15</span>
+            </label>
+                    <label class="fct-row">
+                <input type="checkbox" name="acik[]" value="hafta-sonu" data-count="202">
+                <span class="cbx"></span>
+                <span class="ft">Hafta sonu açık</span>
+                <span class="fcnt">202</span>
+            </label>
+                    
+                    <label class="fct-row xtra">
+                <input type="checkbox" name="acik[]" value="rezervasyon" data-count="161">
+                <span class="cbx"></span>
+                <span class="ft">Rezervasyon alıyor</span>
+                <span class="fcnt">161</span>
+            </label>
+                                    <button class="fct-more" type="button" data-more="1 seçenek daha" data-less="Daha az göster">1 seçenek daha <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+            </div>
+</div>
+                                                                                                                                <div class="fct open" data-group="Seçkiler">
+    <button class="fct-head" type="button"><i class="fa-solid fa-award fct-head-ico" aria-hidden="true"></i> Dada Seçkileri <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
+    <div class="fct-body">
+                            
+                    <label class="fct-row">
+                <input type="checkbox" name="seckiler[]" value="rota" data-count="203">
+                <span class="cbx"></span>
+                <span class="ft">Dada Route Durağı</span>
+                <span class="fcnt">203</span>
+            </label>
+                    
+                            </div>
+</div>
+                                                                                    </div>
+                        <div class="sheet-foot">
+                            <button class="btn btn-primary" id="sheetApply" type="submit">203 Mekânı Göster</button>
+                        </div>
+                    </aside>
+                    <div class="sheet-overlay" id="sheetOverlay"></div>
+
+                </form>
+
+                <div class="lst-main">
+                    <div class="lst-bar">
+                        <p class="lst-sum" id="lstSum"><b>203 mekân</b> listeleniyor</p>
+                        <div class="lst-tools">
+                            <button class="btn-filter" id="btnFilter" type="button"><i class="fa-solid fa-sliders" aria-hidden="true"></i> Filtrele <span class="fb-count" id="filCount" hidden="">0</span></button>
+                            
+                            <div class="vw-seg" id="mklViewSeg" role="group" aria-label="Görünüm">
+                                <button type="button" class="vs-btn  is-on " data-view="liste" aria-label="Liste görünümü" aria-pressed="true"><i class="fa-solid fa-table-cells-large" aria-hidden="true"></i></button>
+                                <button type="button" class="vs-btn " data-view="harita" aria-label="Harita görünümü" aria-pressed="false"><i class="fa-solid fa-map" aria-hidden="true"></i></button>
+                            </div>
+                            <div class="sort-dd" id="sortDd">
+                                <button class="sort-btn" id="sortBtn" type="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa-solid fa-arrow-down-wide-short" aria-hidden="true"></i><span class="sb-lbl">Sıralama:</span> <span id="sortCur">Önerilen</span> <i class="fa-solid fa-chevron-down sb-car" aria-hidden="true"></i>
+                                </button>
+                                <div class="sort-menu" role="menu">
+                                                                            <a href="{{kok}}mekanlar/?sirala=onerilen" class="active" role="menuitem"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Önerilen</a>
+                                                                            <a href="{{kok}}mekanlar/?sirala=en_yuksek_puan" class="" role="menuitem"><i class="fa-solid fa-star" aria-hidden="true"></i> En Yüksek Puan</a>
+                                                                            <a href="{{kok}}mekanlar/?sirala=en_yakin" class="" role="menuitem"><i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i> En Yakın</a>
+                                                                            <a href="{{kok}}mekanlar/?sirala=en_yeni" class="" role="menuitem"><i class="fa-solid fa-calendar-plus" aria-hidden="true"></i> En Yeni</a>
+                                                                            <a href="{{kok}}mekanlar/?sirala=en_cok_yorumlanan" class="" role="menuitem"><i class="fa-solid fa-comments" aria-hidden="true"></i> En Çok Yorumlanan</a>
+                                                                            <a href="{{kok}}mekanlar/?sirala=fiyat_artan" class="" role="menuitem"><i class="fa-solid fa-arrow-up-short-wide" aria-hidden="true"></i> Fiyat: Düşükten Yükseğe</a>
+                                                                            <a href="{{kok}}mekanlar/?sirala=simdi_acik" class="" role="menuitem"><i class="fa-solid fa-clock" aria-hidden="true"></i> Şimdi Açık</a>
+                                                                            <a href="{{kok}}mekanlar/?sirala=rezervasyon_uygun" class="" role="menuitem"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Rezervasyon Uygunluğu</a>
+                                                                    </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                                                                    <div class="mkl-grid" id="mklGrid">
+                            
+                                                                                            <article class="disc-card mkl-card is-closed" data-git="{{kok}}https://dadagourmet.com/mekan/levan-urla/" data-slug="levan-urla">
+    <div class="disc-fig">
+                    
+            <div class="bg" style="background-image:url('{{kok}}assets/o/medya/1086-400.webp')" role="img" aria-label="Levan mekânına ait fotoğraf 1"></div>
+                <div class="disc-status"><span class="mt st-closed"><i class="fa-solid fa-circle-minus" aria-hidden="true"></i> Kapandı</span></div>
+    <div class="disc-badges"><span class="mt disc-price-pill"><b>₺₺₺</b><span>₺</span></span></div>
+    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 3</span></div>
+    </div>
+    <span class="disc-cat">Restoran</span>
+    <h3>Levan</h3>
+    <p>Urla bağlarının yanındaki Levan, mevsimlik Ege ürünlerini şef yorumuyla sofraya taşıyor.</p>
+    <div class="disc-meta">
+    <span class="disc-loc" title="Urla / İzmir"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span class="disc-ilce">Urla</span><span class="disc-il">&nbsp;/ İzmir</span></span>
+        <span class="disc-stats">
+                    <span class="r-rate r-yok" role="img" aria-label="Henüz değerlendirme yok" title="Henüz değerlendirme yok"><i class="fa-solid fa-star" aria-hidden="true"></i> <span aria-hidden="true">–</span></span>
+                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 21</span>
+    </span>
+</div>
+<div class="mkl-kart-eylem"><a class="mke-birincil" href="{{kok}}mekan/levan-urla/">Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="levan-urla" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="{{kok}}dada-route/?durak=levan-urla" aria-label="Dada Route'a Ekle" title="Dada Route'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div></article>
+                                                                                            <article class="disc-card mkl-card is-closed" data-git="{{kok}}https://dadagourmet.com/mekan/narimor-urla/" data-slug="narimor-urla">
+    <div class="disc-fig">
+                    
+            <div class="bg" style="background-image:url('{{kok}}assets/o/medya/1083-400.webp')" role="img" aria-label="Narımor Urla mekânına ait fotoğraf 1"></div>
+                <div class="disc-status"><span class="mt st-closed"><i class="fa-solid fa-circle-minus" aria-hidden="true"></i> Kapandı</span></div>
+    <div class="disc-badges"><span class="mt disc-price-pill"><b>₺₺₺₺</b><span></span></span></div>
+    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 3</span></div>
+    </div>
+    <span class="disc-cat">Fine Dining</span>
+    <h3>Narımor Urla</h3>
+    <p>Narımor Urla, Şef Atilla Heilbronn’un küçük ölçekli tadım deneyimini Urla’da sunuyor.</p>
+    <div class="disc-meta">
+    <span class="disc-loc" title="Urla / İzmir"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span class="disc-ilce">Urla</span><span class="disc-il">&nbsp;/ İzmir</span></span>
+        <span class="disc-stats">
+                    <span class="r-rate r-yok" role="img" aria-label="Henüz değerlendirme yok" title="Henüz değerlendirme yok"><i class="fa-solid fa-star" aria-hidden="true"></i> <span aria-hidden="true">–</span></span>
+                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 15</span>
+    </span>
+</div>
+<div class="mkl-kart-eylem"><a class="mke-birincil" href="{{kok}}mekan/narimor-urla/">Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="narimor-urla" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="{{kok}}dada-route/?durak=narimor-urla" aria-label="Dada Route'a Ekle" title="Dada Route'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div></article>
+                                                                                            <article class="disc-card mkl-card" data-git="{{kok}}https://dadagourmet.com/mekan/the-townhouse-suadiye/" data-slug="the-townhouse-suadiye">
+    <div class="disc-fig">
+                    
+            <div class="bg" style="background-image:url('{{kok}}assets/o/medya/1080-400.webp')" role="img" aria-label="The Townhouse mekânına ait fotoğraf 1"></div>
+                <div class="disc-status"><span class="mt st-open"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Açık</span></div>
+    <div class="disc-badges"><span class="mt disc-price-pill"><b>₺₺₺</b><span>₺</span></span></div>
+    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 3</span></div>
+    </div>
+    <span class="disc-cat">Restoran</span>
+    <h3>The Townhouse</h3>
+    <p>Suadiye’deki The Townhouse, modern mutfağı ve yüksek ilgi gören akşam servisiyle öne çıkıyor.</p>
+    <div class="disc-meta">
+    <span class="disc-loc" title="Kadıköy / İstanbul"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span class="disc-ilce">Kadıköy</span><span class="disc-il">&nbsp;/ İstanbul</span></span>
+        <span class="disc-stats">
+                    <span class="r-rate r-yok" role="img" aria-label="Henüz değerlendirme yok" title="Henüz değerlendirme yok"><i class="fa-solid fa-star" aria-hidden="true"></i> <span aria-hidden="true">–</span></span>
+                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 10</span>
+    </span>
+</div>
+<div class="mkl-kart-eylem"><a class="mke-birincil" href="{{kok}}mekan/the-townhouse-suadiye/">Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="the-townhouse-suadiye" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="{{kok}}dada-route/?durak=the-townhouse-suadiye" aria-label="Dada Route'a Ekle" title="Dada Route'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div></article>
+                                                                                            <article class="disc-card mkl-card" data-git="{{kok}}https://dadagourmet.com/mekan/monteverdi-ristorante/" data-slug="monteverdi-ristorante">
+    <div class="disc-fig">
+                    
+            <div class="bg" style="background-image:url('{{kok}}assets/o/medya/1077-400.webp')" role="img" aria-label="Monteverdi Ristorante mekânına ait fotoğraf 1"></div>
+                <div class="disc-status"><span class="mt st-closing"><i class="fa-solid fa-clock" aria-hidden="true"></i> 45 dk sonra kapanıyor</span></div>
+    <div class="disc-badges"><span class="mt disc-price-pill"><b>₺₺₺</b><span>₺</span></span></div>
+    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 3</span></div>
+    </div>
+    <span class="disc-cat">Otel Restoranı</span>
+    <h3>Monteverdi Ristorante</h3>
+    <p>Conrad İstanbul’daki Monteverdi, İtalyan yemeklerini öğle ve akşam servislerinde sunuyor.</p>
+    <div class="disc-meta">
+    <span class="disc-loc" title="Beşiktaş / İstanbul"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span class="disc-ilce">Beşiktaş</span><span class="disc-il">&nbsp;/ İstanbul</span></span>
+        <span class="disc-stats">
+                    <span class="r-rate r-yok" role="img" aria-label="Henüz değerlendirme yok" title="Henüz değerlendirme yok"><i class="fa-solid fa-star" aria-hidden="true"></i> <span aria-hidden="true">–</span></span>
+                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 8</span>
+    </span>
+</div>
+<div class="mkl-kart-eylem"><a class="mke-birincil" href="{{kok}}mekan/monteverdi-ristorante/">Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="monteverdi-ristorante" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="{{kok}}dada-route/?durak=monteverdi-ristorante" aria-label="Dada Route'a Ekle" title="Dada Route'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div></article>
+                                                                                            <article class="disc-card mkl-card" data-git="{{kok}}https://dadagourmet.com/mekan/maromi-istanbul/" data-slug="maromi-istanbul">
+    <div class="disc-fig">
+                    
+            <div class="bg" style="background-image:url('{{kok}}assets/o/medya/1074-400.webp')" role="img" aria-label="Maromi İstanbul mekânına ait fotoğraf 1"></div>
+                <div class="disc-status"><span class="mt st-open"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Açık</span></div>
+    <div class="disc-badges"><span class="mt disc-price-pill"><b>₺₺₺</b><span>₺</span></span></div>
+    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 3</span></div>
+    </div>
+    <span class="disc-cat">Otel Restoranı</span>
+    <h3>Maromi İstanbul</h3>
+    <p>Divan İstanbul’daki Maromi, Japon mutfağını otel restoranı ortamında sunuyor.</p>
+    <div class="disc-meta">
+    <span class="disc-loc" title="Şişli / İstanbul"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span class="disc-ilce">Şişli</span><span class="disc-il">&nbsp;/ İstanbul</span></span>
+        <span class="disc-stats">
+                    <span class="r-rate r-yok" role="img" aria-label="Henüz değerlendirme yok" title="Henüz değerlendirme yok"><i class="fa-solid fa-star" aria-hidden="true"></i> <span aria-hidden="true">–</span></span>
+                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 9</span>
+    </span>
+</div>
+<div class="mkl-kart-eylem"><a class="mke-birincil" href="{{kok}}mekan/maromi-istanbul/">Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="maromi-istanbul" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="{{kok}}dada-route/?durak=maromi-istanbul" aria-label="Dada Route'a Ekle" title="Dada Route'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div></article>
+                                                                                            <article class="disc-card mkl-card" data-git="{{kok}}https://dadagourmet.com/mekan/bebek-balikci/" data-slug="bebek-balikci">
+    <div class="disc-fig">
+                    
+            <div class="bg" style="background-image:url('{{kok}}assets/o/medya/1071-400.webp')" role="img" aria-label="Bebek Balıkçı mekânına ait fotoğraf 1"></div>
+                <div class="disc-status"><span class="mt st-open"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Açık</span></div>
+    <div class="disc-badges"><span class="mt disc-price-pill"><b>₺₺₺</b><span>₺</span></span></div>
+    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 3</span></div>
+    </div>
+    <span class="disc-cat">Restoran</span>
+    <h3>Bebek Balıkçı</h3>
+    <p>Bebek kıyısındaki Bebek Balıkçı, balık ve deniz ürünlerini Boğaz manzarasıyla sunuyor.</p>
+    <div class="disc-meta">
+    <span class="disc-loc" title="Beşiktaş / İstanbul"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span class="disc-ilce">Beşiktaş</span><span class="disc-il">&nbsp;/ İstanbul</span></span>
+        <span class="disc-stats">
+                    <span class="r-rate r-yok" role="img" aria-label="Henüz değerlendirme yok" title="Henüz değerlendirme yok"><i class="fa-solid fa-star" aria-hidden="true"></i> <span aria-hidden="true">–</span></span>
+                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 10</span>
+    </span>
+</div>
+<div class="mkl-kart-eylem"><a class="mke-birincil" href="{{kok}}mekan/bebek-balikci/">Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="bebek-balikci" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="{{kok}}dada-route/?durak=bebek-balikci" aria-label="Dada Route'a Ekle" title="Dada Route'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div></article>
+                                                                                            <article class="disc-card mkl-card is-closed" data-git="{{kok}}https://dadagourmet.com/mekan/aida-vino-e-cucina/" data-slug="aida-vino-e-cucina">
+    <div class="disc-fig">
+                    
+            <div class="bg" style="background-image:url('{{kok}}assets/o/medya/1068-400.webp')" role="img" aria-label="Aida Vino E Cucina mekânına ait fotoğraf 1"></div>
+                <div class="disc-status"><span class="mt st-closed"><i class="fa-solid fa-circle-minus" aria-hidden="true"></i> Kapandı</span></div>
+    <div class="disc-badges"><span class="mt disc-price-pill"><b>₺₺₺</b><span>₺</span></span></div>
+    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 3</span></div>
+    </div>
+    <span class="disc-cat">Restoran</span>
+    <h3>Aida Vino E Cucina</h3>
+    <p>Moda’daki Aida Vino E Cucina, İtalyan yemeklerini şef dokunuşuyla sunan küçük ölçekli bir restoran.</p>
+    <div class="disc-meta">
+    <span class="disc-loc" title="Kadıköy / İstanbul"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span class="disc-ilce">Kadıköy</span><span class="disc-il">&nbsp;/ İstanbul</span></span>
+        <span class="disc-stats">
+                    <span class="r-rate r-yok" role="img" aria-label="Henüz değerlendirme yok" title="Henüz değerlendirme yok"><i class="fa-solid fa-star" aria-hidden="true"></i> <span aria-hidden="true">–</span></span>
+                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 11</span>
+    </span>
+</div>
+<div class="mkl-kart-eylem"><a class="mke-birincil" href="{{kok}}mekan/aida-vino-e-cucina/">Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="aida-vino-e-cucina" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="{{kok}}dada-route/?durak=aida-vino-e-cucina" aria-label="Dada Route'a Ekle" title="Dada Route'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div></article>
+                                                                                            <article class="disc-card mkl-card is-closed" data-git="{{kok}}https://dadagourmet.com/mekan/16-roof-swissotel/" data-slug="16-roof-swissotel">
+    <div class="disc-fig">
+                    
+            <div class="bg" style="background-image:url('{{kok}}assets/o/medya/1065-400.webp')" role="img" aria-label="16 Roof Bar &amp; Restaurant mekânına ait fotoğraf 1"></div>
+                <div class="disc-status"><span class="mt st-closed"><i class="fa-solid fa-circle-minus" aria-hidden="true"></i> Kapandı</span></div>
+    <div class="disc-badges"><span class="mt disc-price-pill"><b>₺₺₺</b><span>₺</span></span></div>
+    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 3</span></div>
+    </div>
+    <span class="disc-cat">Otel Restoranı</span>
+    <h3>16 Roof Bar &amp; Restaurant</h3>
+    <p>Swissôtel’in 16 Roof restoranı, Boğaz manzarasına karşı akşam yemeği sunuyor.</p>
+    <div class="disc-meta">
+    <span class="disc-loc" title="Beşiktaş / İstanbul"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span class="disc-ilce">Beşiktaş</span><span class="disc-il">&nbsp;/ İstanbul</span></span>
+        <span class="disc-stats">
+                    <span class="r-rate r-yok" role="img" aria-label="Henüz değerlendirme yok" title="Henüz değerlendirme yok"><i class="fa-solid fa-star" aria-hidden="true"></i> <span aria-hidden="true">–</span></span>
+                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 14</span>
+    </span>
+</div>
+<div class="mkl-kart-eylem"><a class="mke-birincil" href="{{kok}}mekan/16-roof-swissotel/">Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="16-roof-swissotel" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="{{kok}}dada-route/?durak=16-roof-swissotel" aria-label="Dada Route'a Ekle" title="Dada Route'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div></article>
+                                                                                            <article class="disc-card mkl-card" data-git="{{kok}}https://dadagourmet.com/mekan/lacivert-restaurant/" data-slug="lacivert-restaurant">
+    <div class="disc-fig">
+                    
+            <div class="bg" style="background-image:url('{{kok}}assets/o/medya/1062-400.webp')" role="img" aria-label="Lacivert Restaurant mekânına ait fotoğraf 1"></div>
+                <div class="disc-status"><span class="mt st-open"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Açık</span></div>
+    <div class="disc-badges"><span class="mt disc-price-pill"><b>₺₺₺</b><span>₺</span></span></div>
+    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 3</span></div>
+    </div>
+    <span class="disc-cat">Restoran</span>
+    <h3>Lacivert Restaurant</h3>
+    <p>Anadolu Hisarı kıyısındaki Lacivert, Boğaz manzarası eşliğinde üst segment yemek deneyimi sunuyor.</p>
+    <div class="disc-meta">
+    <span class="disc-loc" title="Beykoz / İstanbul"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span class="disc-ilce">Beykoz</span><span class="disc-il">&nbsp;/ İstanbul</span></span>
+        <span class="disc-stats">
+                    <span class="r-rate r-yok" role="img" aria-label="Henüz değerlendirme yok" title="Henüz değerlendirme yok"><i class="fa-solid fa-star" aria-hidden="true"></i> <span aria-hidden="true">–</span></span>
+                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 9</span>
+    </span>
+</div>
+<div class="mkl-kart-eylem"><a class="mke-birincil" href="{{kok}}mekan/lacivert-restaurant/">Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="lacivert-restaurant" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="{{kok}}dada-route/?durak=lacivert-restaurant" aria-label="Dada Route'a Ekle" title="Dada Route'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div></article>
+                                                                                            <article class="disc-card mkl-card" data-git="{{kok}}https://dadagourmet.com/mekan/360-istanbul/" data-slug="360-istanbul">
+    <div class="disc-fig">
+                    
+            <div class="bg" style="background-image:url('{{kok}}assets/o/medya/1059-400.webp')" role="img" aria-label="360 İstanbul mekânına ait fotoğraf 1"></div>
+                <div class="disc-status"><span class="mt st-open"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Açık</span></div>
+    <div class="disc-badges"><span class="mt disc-price-pill"><b>₺₺₺</b><span>₺</span></span></div>
+    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 3</span></div>
+    </div>
+    <span class="disc-cat">Restoran</span>
+    <h3>360 İstanbul</h3>
+    <p>İstiklal Caddesi üzerindeki 360 İstanbul, panoramik manzaralı terasında akşam yemeği sunuyor.</p>
+    <div class="disc-meta">
+    <span class="disc-loc" title="Beyoğlu / İstanbul"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span class="disc-ilce">Beyoğlu</span><span class="disc-il">&nbsp;/ İstanbul</span></span>
+        <span class="disc-stats">
+                    <span class="r-rate r-yok" role="img" aria-label="Henüz değerlendirme yok" title="Henüz değerlendirme yok"><i class="fa-solid fa-star" aria-hidden="true"></i> <span aria-hidden="true">–</span></span>
+                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 11</span>
+    </span>
+</div>
+<div class="mkl-kart-eylem"><a class="mke-birincil" href="{{kok}}mekan/360-istanbul/">Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="360-istanbul" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="{{kok}}dada-route/?durak=360-istanbul" aria-label="Dada Route'a Ekle" title="Dada Route'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div></article>
+                                                                                            <article class="disc-card mkl-card" data-git="{{kok}}https://dadagourmet.com/mekan/giritli-restoran/" data-slug="giritli-restoran">
+    <div class="disc-fig">
+                    
+            <div class="bg" style="background-image:url('{{kok}}assets/o/medya/1056-400.webp')" role="img" aria-label="Giritli Restoran mekânına ait fotoğraf 1"></div>
+                <div class="disc-status"><span class="mt st-open"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Açık</span></div>
+    <div class="disc-badges"><span class="mt disc-price-pill"><b>₺₺₺</b><span>₺</span></span></div>
+    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 3</span></div>
+    </div>
+    <span class="disc-cat">Restoran</span>
+    <h3>Giritli Restoran</h3>
+    <p>Cankurtaran’daki Giritli, Ege mezelerini ve deniz ürünlerini tarihi yarımadada sunuyor.</p>
+    <div class="disc-meta">
+    <span class="disc-loc" title="Fatih / İstanbul"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span class="disc-ilce">Fatih</span><span class="disc-il">&nbsp;/ İstanbul</span></span>
+        <span class="disc-stats">
+                    <span class="r-rate r-yok" role="img" aria-label="Henüz değerlendirme yok" title="Henüz değerlendirme yok"><i class="fa-solid fa-star" aria-hidden="true"></i> <span aria-hidden="true">–</span></span>
+                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 14</span>
+    </span>
+</div>
+<div class="mkl-kart-eylem"><a class="mke-birincil" href="{{kok}}mekan/giritli-restoran/">Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="giritli-restoran" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="{{kok}}dada-route/?durak=giritli-restoran" aria-label="Dada Route'a Ekle" title="Dada Route'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div></article>
+                                                                                            <article class="disc-card mkl-card" data-git="{{kok}}https://dadagourmet.com/mekan/rumelihisari-iskele/" data-slug="rumelihisari-iskele">
+    <div class="disc-fig">
+                    
+            <div class="bg" style="background-image:url('{{kok}}assets/o/medya/1053-400.webp')" role="img" aria-label="Rumeli Hisarı İskele Restaurant mekânına ait fotoğraf 1"></div>
+                <div class="disc-status"><span class="mt st-open"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Açık</span></div>
+    <div class="disc-badges"><span class="mt disc-price-pill"><b>₺₺₺</b><span>₺</span></span></div>
+    <div class="m-types"><span class="mt"><i class="fa-solid fa-images" aria-hidden="true"></i> 3</span></div>
+    </div>
+    <span class="disc-cat">Restoran</span>
+    <h3>Rumeli Hisarı İskele Restaurant</h3>
+    <p>Boğaz kıyısındaki Rumeli Hisarı İskele, balık ve deniz ürünleri için uzun soluklu bir İstanbul adresi.</p>
+    <div class="disc-meta">
+    <span class="disc-loc" title="Sarıyer / İstanbul"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span class="disc-ilce">Sarıyer</span><span class="disc-il">&nbsp;/ İstanbul</span></span>
+        <span class="disc-stats">
+                    <span class="r-rate r-yok" role="img" aria-label="Henüz değerlendirme yok" title="Henüz değerlendirme yok"><i class="fa-solid fa-star" aria-hidden="true"></i> <span aria-hidden="true">–</span></span>
+                <span class="r-views"><i class="fa-solid fa-eye" aria-hidden="true"></i> 10</span>
+    </span>
+</div>
+<div class="mkl-kart-eylem"><a class="mke-birincil" href="{{kok}}mekan/rumelihisari-iskele/">Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="rumelihisari-iskele" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="{{kok}}dada-route/?durak=rumelihisari-iskele" aria-label="Dada Route'a Ekle" title="Dada Route'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div></article>
+                                                    </div>
+
+                        
+                                                                                                                                        
+                            <nav class="pagi" id="pagi" aria-label="Sayfalama">
+                                                                    <button class="pg arrow" type="button" aria-label="Önceki sayfa" disabled=""><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+                                                                                                                                                                                <button class="pg active" type="button" aria-current="page">1</button>
+                                                                                                                                                                                    <a class="pg" href="{{kok}}mekanlar/?sayfa=2">2</a>
+                                                                                                                                                                                    <a class="pg" href="{{kok}}mekanlar/?sayfa=3">3</a>
+                                                                                                                                                <span class="pg-dots">…</span>
+                                                                                                                <a class="pg" href="{{kok}}mekanlar/?sayfa=17">17</a>
+                                                                                                                                        <a class="pg arrow" href="{{kok}}mekanlar/?sayfa=2" aria-label="Sonraki sayfa"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
+                                                                <span class="pagi-note" id="pagiNote">203 mekân · sayfa 1 / 17</span>
+                            </nav>
+                                                                                        
+                    <div class="lst-empty" id="lstEmpty" role="status">
+                        <span class="le-ico"><i class="fa-solid fa-store-slash" aria-hidden="true"></i></span>
+                                                    <h3>Henüz mekân eklenmedi</h3>
+                            <p>Bu kapsamda henüz yayında bir mekân yok — yakında burada olacak.</p>
+                            <a class="btn btn-primary" href="{{kok}}mekanlar/"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Filtreleri Temizle</a>
+                                            </div>
+                </div>
+            <aside class="mkl-harita-kolon" aria-label="Harita"><div id="mklMapKolon" class="mkl-harita" data-harita="liste"></div><p class="mkl-harita-not"><span class="ornek-etiket">prototip örneği</span> MapLibre; konumlar canlı mekân verisinden, statik kopya.</p></aside></div>
+        </div>
+    </section>
+</div>
+    

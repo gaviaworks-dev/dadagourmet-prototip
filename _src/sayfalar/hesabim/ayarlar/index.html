@@ -1,0 +1,1663 @@
+<!--{"yol":"hesabim/ayarlar","baslik":"Hesap Ayarları","duzen":"uye","zincir":"hesabim","css":["gourmet-sapma"],"js":["assets/js/sayfa/sekmeler.js"],"donor":"yerel Gastro 6700538df4 /hesabim/ayarlar (demo tohum); Bildirim, Dil, Bağlı, Veri, Dondurma: go-hesabim.html?auth=1"}-->
+
+<div class="zebra">
+<section class="bolum kimlik-bant is-editable kabuk-alti" data-hero-band="">
+  <div class="wrap kap">
+    <nav class="kirinti pf-crumb" aria-label="Sayfa yolu">
+      <a href="{{kok}}" class="crumb-home"><i class="fa-solid fa-house" aria-hidden="true"></i><span class="sr-only">Dada Gourmet ana sayfa</span></a>
+      <i class="fa-solid fa-chevron-right"></i>
+      <span class="cur">Hesap Ayarları</span>
+    </nav>
+        <div class="kapak px-band" data-fit-px="" data-kayitli-kapak=""><div class="px-clip" aria-hidden="true" style="--px-r: 24px; --px-shift: -126.9px;"><div class="px-media" style="background-image:url('{{kok}}assets/o/assets/gourmet-public/img/about-dining.avif')"></div></div>
+      <span class="kapak-muhur"><i class="fa-solid fa-gear"></i> Hesabım · kişisel alanın</span>
+      
+      <button type="button" class="kapak-duzenle" data-photo-edit="kapak" title="JPG veya PNG, en az 1176×240 px, en çok 5 MB. Şerit olarak kırpılır."><i class="fa-solid fa-camera" aria-hidden="true"></i> Kapağı Değiştir</button>
+    </div>
+    <div class="kimlik">
+            <span class="kimlik-avatar harf">Ö<button type="button" class="kimlik-avatar-duzenle" data-photo-edit="avatar" aria-label="Profil fotoğrafını değiştir" title="JPG veya PNG, en az 400×400 px, en çok 5 MB. Kare kırpılır."><i class="fa-solid fa-camera" aria-hidden="true"></i></button></span>
+            <div class="kimlik-govde">
+        
+        <h1>Örnek Üye           </h1><span class="ornek-etiket">prototip örneği</span>
+        <span class="kimlik-kullanici"><span class="fp-uad">@ornekuye</span></span>
+        <p class="kimlik-giris">Profilin, keşif ve bildirim tercihlerin, güvenliğin burada; hesabını dondurma ve silme de. Paketin Paketlerim'de, faturaların Ödemelerim'de.</p>
+        
+        <div class="kimlik-meta">
+          <span><i class="fa-solid fa-calendar-days"></i> Üyelik başlangıcı: Kasım 2026</span>          <span data-rozet-sayi=""><i class="fa-solid fa-award" aria-hidden="true"></i> Rozet 0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="pf-tabbar sekme-ray">
+  <div class="wrap kap">
+    <nav class="sekmeler ortali" role="tablist" data-fit-tabs="hs" aria-label="Hesap ayarları bölümleri">
+      <button class="sekme aktif" type="button" role="tab" id="hs-tab-profil" data-tab="profil" aria-controls="hs-pane-profil" aria-selected="true" tabindex="0"><i class="fa-solid fa-id-card" aria-hidden="true"></i> Profil</button>
+      
+      <button class="sekme" type="button" role="tab" id="hs-tab-tercihler" data-tab="tercihler" aria-controls="hs-pane-tercihler" aria-selected="false" tabindex="-1"><i class="fa-solid fa-utensils" aria-hidden="true"></i> Keşif tercihlerim</button>
+      <button class="sekme" type="button" role="tab" id="hs-tab-bildirim" data-tab="bildirim" aria-controls="hs-pane-bildirim" aria-selected="false" tabindex="-1"><i class="fa-solid fa-bell" aria-hidden="true"></i> Bildirim Tercihleri</button>
+      <button class="sekme" type="button" role="tab" id="hs-tab-guvenlik" data-tab="guvenlik" aria-controls="hs-pane-guvenlik" aria-selected="false" tabindex="-1"><i class="fa-solid fa-lock" aria-hidden="true"></i> Güvenlik</button>
+      <button class="sekme" type="button" role="tab" id="hs-tab-dil" data-tab="dil" aria-controls="hs-pane-dil" aria-selected="false" tabindex="-1"><i class="fa-solid fa-globe" aria-hidden="true"></i> Dil ve Bölge</button>
+      <button class="sekme" type="button" role="tab" id="hs-tab-bagli" data-tab="bagli" aria-controls="hs-pane-bagli" aria-selected="false" tabindex="-1"><i class="fa-solid fa-plug-circle-check" aria-hidden="true"></i> Bağlı Uygulamalar</button>
+      <button class="sekme" type="button" role="tab" id="hs-tab-veri" data-tab="veri" aria-controls="hs-pane-veri" aria-selected="false" tabindex="-1"><i class="fa-solid fa-database" aria-hidden="true"></i> Veri ve Hesap Yönetimi</button>
+      <button class="sekme" type="button" role="tab" id="hs-tab-dondur" data-tab="dondur" aria-controls="hs-pane-dondur" aria-selected="false" tabindex="-1"><i class="fa-solid fa-circle-pause" aria-hidden="true"></i> Hesabı Dondurma / Silme</button>
+    </nav>
+  </div>
+</div>
+<div class="modul-govde">
+
+<div class="fit-pane" data-pane="profil" id="hs-pane-profil" role="tabpanel" aria-labelledby="hs-tab-profil" tabindex="0">
+<section class="hs-sec" id="profil" role="tabpanel" tabindex="0" aria-labelledby="tab-profil">
+        <form class="kart panel" data-savecard="profil">
+          <div class="kart-bas">
+            <div>
+              <h2 id="profilH" class="kart-baslik"><i class="fa-solid fa-id-card"></i> Profil Bilgilerim</h2>
+
+              <p>Adın ve fotoğrafın yorumlarında ve herkese açık profilinde görünür.</p>
+            </div>
+          </div>
+          <div class="kart-govde">
+
+          
+          <p class="alan-yardim" id="fotoDurum" role="status" style="margin-bottom:22px"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> <span>          Fotoğrafını kartın üstündeki <i class="fa-solid fa-camera" aria-hidden="true"></i> düğmelerinden değiştirebilirsin — JPG veya PNG, en çok 5 MB. Profil fotoğrafı en az 400×400 px (kare kırpılır), kapak en az 1176×240 px (şerit kırpılır).</span></p>
+
+          <div class="alan-izgara c2">
+            <div class="alan">
+              <label class="alan-etiket" for="hsAd">Ad <span class="zorunlu">*</span></label>
+              <input class="alan-girdi" id="hsAd" name="ad" type="text" autocomplete="given-name" value="Örnek" required="">
+            </div>
+            <div class="alan">
+              <label class="alan-etiket" for="hsSoyad">Soyad <span class="zorunlu">*</span></label>
+              <input class="alan-girdi" id="hsSoyad" name="soyad" type="text" autocomplete="family-name" value="Üye" required="">
+            </div>
+          </div>
+          
+          <div class="alan-izgara c2">
+            <div class="alan">
+              <label class="alan-etiket" for="hsHandle">Kullanıcı adı <span class="zorunlu">*</span></label>
+              <input class="alan-girdi" id="hsHandle" name="kullanici-adi" type="text" autocomplete="username" value="ornekuye" required="" aria-describedby="hsHandleHelp">
+              <span class="alan-yardim" id="hsHandleHelp"><i class="fa-solid fa-link" aria-hidden="true"></i> <span>Herkese açık profilinin adresi: <b>/uye/ornekuye</b> — <a href="#">profilim başkalarına nasıl görünüyor?</a></span></span>
+            </div>
+            <div class="alan">
+              <label class="alan-etiket" id="hsEmailEtiket">E-posta <span class="zorunlu">*</span></label>
+              
+              
+              <div class="alan-girdi eposta-ayrik" id="hsEmail" role="textbox" aria-readonly="true" aria-labelledby="hsEmailEtiket" aria-describedby="hsEmailHelp"><span class="eposta-ayrik-kullanici">ornekuye</span><span class="eposta-ayrik-alan"><span class="eposta-ayrik-at">@</span>eposta.com</span></div>
+              <input type="hidden" name="eposta" value="ornek@eposta.com">
+              <span class="alan-yardim" id="hsEmailHelp"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Giriş adresin. E-posta değişikliği henüz açık değil; doğrulama akışı bağlanana kadar bu alan salt okunur.</span>
+            </div>
+          </div>
+          <div class="alan-izgara c2">
+            <div class="alan">
+              <label class="alan-etiket" for="hsDogum">Doğum tarihi <span class="istege-bagli">(opsiyonel)</span></label>
+              
+              <div class="alan-tarih" data-tar-kok="">
+                
+                <input class="alan-girdi" id="hsDogum" name="dogum" type="text" inputmode="numeric" placeholder="gg.aa.yyyy" value="" autocomplete="bday" disabled="" aria-disabled="true" aria-describedby="hsDogumHelp hsDogumHata">
+                <button class="alan-tarih-dugme" type="button" id="hsDogumAc" aria-haspopup="dialog" aria-expanded="false" aria-controls="hsDogumPop" disabled="" aria-disabled="true" aria-label="Takvimi aç"><i class="fa-solid fa-calendar" aria-hidden="true"></i></button>
+                <div class="alan-tarih-katman" id="hsDogumPop" role="dialog" aria-label="Doğum tarihi seç" hidden="">
+                  <div class="alan-tarih-bas">
+                    <button class="alan-tarih-ok" type="button" data-ay="-1" aria-label="Önceki ay"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+                    <label class="sr-only" for="hsDogumAy">Ay</label>
+                    <select class="alan-secim alan-tarih-secim" id="hsDogumAy"><option value="0">Ocak</option><option value="1">Şubat</option><option value="2">Mart</option><option value="3">Nisan</option><option value="4">Mayıs</option><option value="5">Haziran</option><option value="6">Temmuz</option><option value="7">Ağustos</option><option value="8">Eylül</option><option value="9">Ekim</option><option value="10">Kasım</option><option value="11">Aralık</option></select>
+                    <label class="sr-only" for="hsDogumYil">Yıl</label>
+                    <select class="alan-secim alan-tarih-secim yil" id="hsDogumYil"><option value="2013">2013</option><option value="2012">2012</option><option value="2011">2011</option><option value="2010">2010</option><option value="2009">2009</option><option value="2008">2008</option><option value="2007">2007</option><option value="2006">2006</option><option value="2005">2005</option><option value="2004">2004</option><option value="2003">2003</option><option value="2002">2002</option><option value="2001">2001</option><option value="2000">2000</option><option value="1999">1999</option><option value="1998">1998</option><option value="1997">1997</option><option value="1996">1996</option><option value="1995">1995</option><option value="1994">1994</option><option value="1993">1993</option><option value="1992">1992</option><option value="1991">1991</option><option value="1990">1990</option><option value="1989">1989</option><option value="1988">1988</option><option value="1987">1987</option><option value="1986">1986</option><option value="1985">1985</option><option value="1984">1984</option><option value="1983">1983</option><option value="1982">1982</option><option value="1981">1981</option><option value="1980">1980</option><option value="1979">1979</option><option value="1978">1978</option><option value="1977">1977</option><option value="1976">1976</option><option value="1975">1975</option><option value="1974">1974</option><option value="1973">1973</option><option value="1972">1972</option><option value="1971">1971</option><option value="1970">1970</option><option value="1969">1969</option><option value="1968">1968</option><option value="1967">1967</option><option value="1966">1966</option><option value="1965">1965</option><option value="1964">1964</option><option value="1963">1963</option><option value="1962">1962</option><option value="1961">1961</option><option value="1960">1960</option><option value="1959">1959</option><option value="1958">1958</option><option value="1957">1957</option><option value="1956">1956</option><option value="1955">1955</option><option value="1954">1954</option><option value="1953">1953</option><option value="1952">1952</option><option value="1951">1951</option><option value="1950">1950</option><option value="1949">1949</option><option value="1948">1948</option><option value="1947">1947</option><option value="1946">1946</option><option value="1945">1945</option><option value="1944">1944</option><option value="1943">1943</option><option value="1942">1942</option><option value="1941">1941</option><option value="1940">1940</option><option value="1939">1939</option><option value="1938">1938</option><option value="1937">1937</option><option value="1936">1936</option><option value="1935">1935</option><option value="1934">1934</option><option value="1933">1933</option><option value="1932">1932</option><option value="1931">1931</option><option value="1930">1930</option><option value="1929">1929</option><option value="1928">1928</option><option value="1927">1927</option><option value="1926">1926</option></select>
+                    <button class="alan-tarih-ok" type="button" data-ay="1" aria-label="Sonraki ay"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+                  </div>
+                  <div class="alan-tarih-gunler" aria-hidden="true"><span>Pt</span><span>Sa</span><span>Ça</span><span>Pe</span><span>Cu</span><span>Ct</span><span>Pa</span></div>
+                  <div class="alan-tarih-izgara" id="hsDogumGrid" role="grid" aria-label="Gün seç"></div>
+                  <div class="alan-tarih-ayak">
+                    <p id="hsDogumSinir">13 yaşından küçük ya da 1926 öncesi bir tarih seçilemez. Seçilebilen en yeni tarih: 07.11.2013.</p>
+                    <button class="alan-tarih-temizle" type="button" id="hsDogumTemizle">Temizle</button>
+                  </div>
+                </div>
+              </div>
+              <p class="fk-hata" id="hsDogumHata" role="alert"><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i> <span></span></p>
+              <span class="alan-yardim" id="hsDogumHelp"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Doğum tarihi henüz saklanmıyor; alan bağlanana kadar kapalı.</span>
+            </div>
+            
+          </div>
+          <div class="alan">
+            <label class="alan-etiket" for="hsBio">Hakkımda <span class="istege-bagli">(opsiyonel)</span> <span class="alan-sayac" id="bioCount" aria-live="polite">0 / 160</span></label>
+            <textarea class="alan-metin" id="hsBio" name="hakkimda" maxlength="160"></textarea>
+          </div>
+
+          </div>
+          <div class="kart-alt">
+            <span class="not">Son güncelleme: 30 dakika önce</span>
+            <span class="kaydedildi" role="status"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Kaydedildi</span>
+            <button class="dugme birincil" type="submit"><i class="fa-solid fa-floppy-disk"></i> Değişiklikleri Kaydet</button>
+          </div>
+        </form>
+
+        
+        <form class="kart panel" data-savecard="gorunurluk" hidden="">
+          <div class="kart-bas">
+            <div>
+              <h2 class="kart-baslik"><i class="fa-solid fa-eye"></i> Profil Görünürlüğü</h2>
+              <p>Profilinin ve keşif geçmişinin kimlere göründüğünü buradan seç. Mekân ve liste verinin dışa aktarımı, saklanması ve silinmesi <a href="{{kok}}hesabim/ayarlar/#veri" style="color:var(--fit-deep);font-weight:700">Veri ve Hesap Yönetimi</a> sekmesinde yönetilir.</p>
+            </div>
+          </div>
+          <div class="kart-govde">
+          <div class="ayar-liste">
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-id-badge"></i></span>
+              <div class="as-metin"><b>Profilim herkese açık</b><span>Kapatırsan profilini yalnız takip ettiğin ve seni takip edenler görür.</span></div>
+              <label class="anahtar" for="vsProfil"><input type="checkbox" id="vsProfil" checked=""><span class="anahtar-ray"></span><span class="sr-only">Profilim herkese açık</span></label>
+            </div>
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-chart-line"></i></span>
+              <div class="as-metin"><b>Keşif geçmişimi kimler görebilir?</b><span>Ziyaret ettiğin mekânlar, yazdığın yorumlar ve listelerin.</span></div>
+              <label class="sr-only" for="vsGecmis">Keşif geçmişimi kimler görebilir?</label>
+              <select class="alan-secim" id="vsGecmis">
+                <option>Herkes</option>
+                <option selected="">Takipçilerim</option>
+                <option>Sadece ben</option>
+              </select>
+            </div>
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-medal"></i></span>
+              <div class="as-metin"><b>Rozetlerim ve topluluk puanım profilimde görünsün</b><span>Kapatırsan rozetleri yalnız sen görürsün; <a href="{{kok}}hesabim/rozetlerim/" style="color:var(--fit-deep);font-weight:700">Rozetlerim</a> sayfası etkilenmez.</span></div>
+              <label class="anahtar" for="vsRozet"><input type="checkbox" id="vsRozet" checked=""><span class="anahtar-ray"></span><span class="sr-only">Rozetlerim ve topluluk puanım profilimde görünsün</span></label>
+            </div>
+
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-ranking-star"></i></span>
+              <div class="as-metin"><b>Topluluk sıralamalarında adım görünsün</b><span>Kapatırsan sıralamada "anonim üye" olarak yer alırsın. Sıralamayı <a href="{{kok}}hesabim/rozetlerim/#liderlik" style="color:var(--fit-deep);font-weight:700">Rozetlerim › Liderlik</a> sekmesinde görürsün.</span></div>
+              <label class="anahtar" for="vsSira"><input type="checkbox" id="vsSira" checked=""><span class="anahtar-ray"></span><span class="sr-only">Topluluk sıralamalarında adım görünsün</span></label>
+            </div>
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></span>
+              <div class="as-metin"><b>Arama motorlarında görün</b><span>Kapalıyken herkese açık profilin ve paylaştığın listelerin arama motorlarına dizinlenmez.</span></div>
+              <label class="anahtar" for="vsSeo"><input type="checkbox" id="vsSeo"><span class="anahtar-ray"></span><span class="sr-only">Arama motorlarında görün</span></label>
+            </div>
+          </div>
+          </div>
+          <div class="kart-alt">
+            <span class="not"><a href="{{kok}}hesabim/ayarlar/#veri">KVKK kapsamında verilerimi indir</a></span>
+            <span class="kaydedildi" role="status"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Kaydedildi</span>
+            <button class="dugme birincil" type="submit"><i class="fa-solid fa-floppy-disk"></i> Tercihleri Kaydet</button>
+          </div>
+        </form>
+      </section>
+</div>
+<div class="fit-pane" data-pane="tercihler" id="hs-pane-tercihler" role="tabpanel" aria-labelledby="hs-tab-tercihler" tabindex="-1" hidden="">
+
+
+<section class="hs-sec tercih tercih-hesabim" id="tercihler" tabindex="0" aria-labelledby="tercihlerH">
+        <form class="kart panel" method="post" data-tercih-hesabim="" data-metinler="{&quot;kayit&quot;:&quot;Kaydedemedik. Bağlantını kontrol edip tekrar dene.&quot;,&quot;oturum&quot;:&quot;Oturumun kapanmış. Sayfayı yenileyip tekrar giriş yap.&quot;}" novalidate="" data-prototip-form="">
+                    <div class="kart-bas">
+            <div>
+              <h2 id="tercihlerH" class="kart-baslik"><i class="fa-solid fa-utensils"></i> Keşif tercihlerim</h2>
+              <p>Mekân listelerini bu tercihlere göre sıralarız; alerjenlerini uymayan mekânları sona alırız.</p>
+            </div>
+          </div>
+          <div class="kart-govde">
+          <div class="ayar-liste">
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-arrow-down-wide-short"></i></span>
+              <div class="as-metin"><b>Tercihine göre sıralama</b><span>Açıkken mekân listeleri, arama ve Mekân Bul sonuçları tercihlerine göre sıralanır.</span></div>
+              <label class="anahtar" for="tcKisisel"><input type="checkbox" id="tcKisisel" name="kisisel_siralama" value="1" checked=""><span class="anahtar-ray"></span><span class="sr-only">Tercihine göre sıralama</span></label>
+            </div>
+          </div>
+
+                    <label class="fb-kvkk tercih-riza">
+  <input type="checkbox" name="ozel_veri_rizasi" value="1" data-ozel-veri-rizasi="">
+  <span>Beslenme tercihlerimin ve alerjilerimin, mekânları bana göre süzmek ve sıralamak amacıyla işlenmesine açık rıza veriyorum. Onay vermezsem bu iki alan kaydedilmez. <a href="{{kok}}yasal/kvkk/">KVKK Metni</a> · <a href="{{kok}}yasal/aydinlatma/">Aydınlatma Metni</a></span>
+</label>
+          <details class="tercih-hesabim-alanlar" data-tercih-grup="">
+            <summary class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-leaf"></i></span>
+              <div class="as-metin"><b>Beslenme şeklin</b><span data-ozet="" data-sablon="{n} seçili" data-bos="Seçim yok">Seçim yok</span></div>
+            </summary>
+            <div class="ayar-liste">
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-seedling"></i></span>
+                <div class="as-metin"><b>Vegan</b></div>
+                <label class="anahtar" for="tcDiyet-vegan"><input type="checkbox" id="tcDiyet-vegan" name="diyet[]" value="vegan"><span class="anahtar-ray"></span><span class="sr-only">Vegan</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-leaf"></i></span>
+                <div class="as-metin"><b>Vejetaryen</b></div>
+                <label class="anahtar" for="tcDiyet-vejetaryen"><input type="checkbox" id="tcDiyet-vejetaryen" name="diyet[]" value="vejetaryen"><span class="anahtar-ray"></span><span class="sr-only">Vejetaryen</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-fish"></i></span>
+                <div class="as-metin"><b>Pesketaryen</b></div>
+                <label class="anahtar" for="tcDiyet-pesketaryen"><input type="checkbox" id="tcDiyet-pesketaryen" name="diyet[]" value="pesketaryen"><span class="anahtar-ray"></span><span class="sr-only">Pesketaryen</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-cheese"></i></span>
+                <div class="as-metin"><b>Ketojenik</b></div>
+                <label class="anahtar" for="tcDiyet-ketojenik"><input type="checkbox" id="tcDiyet-ketojenik" name="diyet[]" value="ketojenik"><span class="anahtar-ray"></span><span class="sr-only">Ketojenik</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-bowl-food"></i></span>
+                <div class="as-metin"><b>Düşük karbonhidratlı</b></div>
+                <label class="anahtar" for="tcDiyet-dusuk-karbonhidratli"><input type="checkbox" id="tcDiyet-dusuk-karbonhidratli" name="diyet[]" value="dusuk-karbonhidratli"><span class="anahtar-ray"></span><span class="sr-only">Düşük karbonhidratlı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-utensils"></i></span>
+                <div class="as-metin"><b>Kısıtlamam yok</b></div>
+                <label class="anahtar" for="tcDiyet-kisitlamam-yok"><input type="checkbox" id="tcDiyet-kisitlamam-yok" name="diyet[]" value="kisitlamam-yok" data-tek=""><span class="anahtar-ray"></span><span class="sr-only">Kısıtlamam yok</span></label>
+              </div>
+                          </div>
+          </details>
+          
+          <details data-tercih-grup="">
+            <summary class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-triangle-exclamation"></i></span>
+              <div class="as-metin"><b>Alerjenlerin</b><span data-ozet="" data-sablon="{n} seçili" data-bos="Seçim yok">Seçim yok</span></div>
+            </summary>
+            <div class="ayar-liste">
+                          </div>
+          </details>
+
+          
+
+          <details data-tercih-grup="">
+            <summary class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-earth-europe"></i></span>
+              <div class="as-metin"><b>Mutfaklar</b><span data-ozet="" data-sablon="{n} seçili" data-bos="Seçim yok">Seçim yok</span></div>
+            </summary>
+            <div class="ayar-liste">
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/tr.svg" alt=""></span>
+                <div class="as-metin"><b>Türk</b></div>
+                <label class="anahtar" for="tcMutfak-turk-mutfagi"><input type="checkbox" id="tcMutfak-turk-mutfagi" name="mutfak[]" value="turk-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Türk Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/it.svg" alt=""></span>
+                <div class="as-metin"><b>İtalyan</b></div>
+                <label class="anahtar" for="tcMutfak-italyan-mutfagi"><input type="checkbox" id="tcMutfak-italyan-mutfagi" name="mutfak[]" value="italyan-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">İtalyan Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/fr.svg" alt=""></span>
+                <div class="as-metin"><b>Fransız</b></div>
+                <label class="anahtar" for="tcMutfak-fransiz-mutfagi"><input type="checkbox" id="tcMutfak-fransiz-mutfagi" name="mutfak[]" value="fransiz-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Fransız Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/es.svg" alt=""></span>
+                <div class="as-metin"><b>İspanyol</b></div>
+                <label class="anahtar" for="tcMutfak-ispanyol-mutfagi"><input type="checkbox" id="tcMutfak-ispanyol-mutfagi" name="mutfak[]" value="ispanyol-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">İspanyol Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/gr.svg" alt=""></span>
+                <div class="as-metin"><b>Yunan</b></div>
+                <label class="anahtar" for="tcMutfak-yunan-mutfagi"><input type="checkbox" id="tcMutfak-yunan-mutfagi" name="mutfak[]" value="yunan-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Yunan Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/lb.svg" alt=""></span>
+                <div class="as-metin"><b>Lübnan</b></div>
+                <label class="anahtar" for="tcMutfak-lubnan-mutfagi"><input type="checkbox" id="tcMutfak-lubnan-mutfagi" name="mutfak[]" value="lubnan-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Lübnan Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/in.svg" alt=""></span>
+                <div class="as-metin"><b>Hint</b></div>
+                <label class="anahtar" for="tcMutfak-hint-mutfagi"><input type="checkbox" id="tcMutfak-hint-mutfagi" name="mutfak[]" value="hint-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Hint Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/cn.svg" alt=""></span>
+                <div class="as-metin"><b>Çin</b></div>
+                <label class="anahtar" for="tcMutfak-cin-mutfagi"><input type="checkbox" id="tcMutfak-cin-mutfagi" name="mutfak[]" value="cin-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Çin Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/jp.svg" alt=""></span>
+                <div class="as-metin"><b>Japon</b></div>
+                <label class="anahtar" for="tcMutfak-japon-mutfagi"><input type="checkbox" id="tcMutfak-japon-mutfagi" name="mutfak[]" value="japon-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Japon Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/kr.svg" alt=""></span>
+                <div class="as-metin"><b>Kore</b></div>
+                <label class="anahtar" for="tcMutfak-kore-mutfagi"><input type="checkbox" id="tcMutfak-kore-mutfagi" name="mutfak[]" value="kore-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Kore Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/mx.svg" alt=""></span>
+                <div class="as-metin"><b>Meksika</b></div>
+                <label class="anahtar" for="tcMutfak-meksika-mutfagi"><input type="checkbox" id="tcMutfak-meksika-mutfagi" name="mutfak[]" value="meksika-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Meksika Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/us.svg" alt=""></span>
+                <div class="as-metin"><b>Amerikan</b></div>
+                <label class="anahtar" for="tcMutfak-amerikan-mutfagi"><input type="checkbox" id="tcMutfak-amerikan-mutfagi" name="mutfak[]" value="amerikan-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Amerikan Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/pt.svg" alt=""></span>
+                <div class="as-metin"><b>Portekiz</b></div>
+                <label class="anahtar" for="tcMutfak-portekiz-mutfagi"><input type="checkbox" id="tcMutfak-portekiz-mutfagi" name="mutfak[]" value="portekiz-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Portekiz Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/de.svg" alt=""></span>
+                <div class="as-metin"><b>Alman</b></div>
+                <label class="anahtar" for="tcMutfak-alman-mutfagi"><input type="checkbox" id="tcMutfak-alman-mutfagi" name="mutfak[]" value="alman-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Alman Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/at.svg" alt=""></span>
+                <div class="as-metin"><b>Avusturya</b></div>
+                <label class="anahtar" for="tcMutfak-avusturya-mutfagi"><input type="checkbox" id="tcMutfak-avusturya-mutfagi" name="mutfak[]" value="avusturya-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Avusturya Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/gb.svg" alt=""></span>
+                <div class="as-metin"><b>İngiliz</b></div>
+                <label class="anahtar" for="tcMutfak-ingiliz-mutfagi"><input type="checkbox" id="tcMutfak-ingiliz-mutfagi" name="mutfak[]" value="ingiliz-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">İngiliz Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/ie.svg" alt=""></span>
+                <div class="as-metin"><b>İrlanda</b></div>
+                <label class="anahtar" for="tcMutfak-irlanda-mutfagi"><input type="checkbox" id="tcMutfak-irlanda-mutfagi" name="mutfak[]" value="irlanda-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">İrlanda Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-earth-europe"></i></span>
+                <div class="as-metin"><b>Balkan</b></div>
+                <label class="anahtar" for="tcMutfak-balkan-mutfagi"><input type="checkbox" id="tcMutfak-balkan-mutfagi" name="mutfak[]" value="balkan-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Balkan Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/ru.svg" alt=""></span>
+                <div class="as-metin"><b>Rus</b></div>
+                <label class="anahtar" for="tcMutfak-rus-mutfagi"><input type="checkbox" id="tcMutfak-rus-mutfagi" name="mutfak[]" value="rus-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Rus Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/ua.svg" alt=""></span>
+                <div class="as-metin"><b>Ukrayna</b></div>
+                <label class="anahtar" for="tcMutfak-ukrayna-mutfagi"><input type="checkbox" id="tcMutfak-ukrayna-mutfagi" name="mutfak[]" value="ukrayna-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Ukrayna Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/ge.svg" alt=""></span>
+                <div class="as-metin"><b>Gürcü</b></div>
+                <label class="anahtar" for="tcMutfak-gurcu-mutfagi"><input type="checkbox" id="tcMutfak-gurcu-mutfagi" name="mutfak[]" value="gurcu-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Gürcü Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/az.svg" alt=""></span>
+                <div class="as-metin"><b>Azerbaycan</b></div>
+                <label class="anahtar" for="tcMutfak-azerbaycan-mutfagi"><input type="checkbox" id="tcMutfak-azerbaycan-mutfagi" name="mutfak[]" value="azerbaycan-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Azerbaycan Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/am.svg" alt=""></span>
+                <div class="as-metin"><b>Ermeni</b></div>
+                <label class="anahtar" for="tcMutfak-ermeni-mutfagi"><input type="checkbox" id="tcMutfak-ermeni-mutfagi" name="mutfak[]" value="ermeni-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Ermeni Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/kz.svg" alt=""></span>
+                <div class="as-metin"><b>Kazak</b></div>
+                <label class="anahtar" for="tcMutfak-kazak-mutfagi"><input type="checkbox" id="tcMutfak-kazak-mutfagi" name="mutfak[]" value="kazak-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Kazak Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/uz.svg" alt=""></span>
+                <div class="as-metin"><b>Özbek</b></div>
+                <label class="anahtar" for="tcMutfak-ozbek-mutfagi"><input type="checkbox" id="tcMutfak-ozbek-mutfagi" name="mutfak[]" value="ozbek-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Özbek Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/ir.svg" alt=""></span>
+                <div class="as-metin"><b>İran</b></div>
+                <label class="anahtar" for="tcMutfak-iran-mutfagi"><input type="checkbox" id="tcMutfak-iran-mutfagi" name="mutfak[]" value="iran-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">İran Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/iq.svg" alt=""></span>
+                <div class="as-metin"><b>Irak</b></div>
+                <label class="anahtar" for="tcMutfak-irak-mutfagi"><input type="checkbox" id="tcMutfak-irak-mutfagi" name="mutfak[]" value="irak-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Irak Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/sy.svg" alt=""></span>
+                <div class="as-metin"><b>Suriye</b></div>
+                <label class="anahtar" for="tcMutfak-suriye-mutfagi"><input type="checkbox" id="tcMutfak-suriye-mutfagi" name="mutfak[]" value="suriye-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Suriye Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/jo.svg" alt=""></span>
+                <div class="as-metin"><b>Ürdün</b></div>
+                <label class="anahtar" for="tcMutfak-urdun-mutfagi"><input type="checkbox" id="tcMutfak-urdun-mutfagi" name="mutfak[]" value="urdun-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Ürdün Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/sa.svg" alt=""></span>
+                <div class="as-metin"><b>Suudi Arabistan</b></div>
+                <label class="anahtar" for="tcMutfak-suudi-arabistan-mutfagi"><input type="checkbox" id="tcMutfak-suudi-arabistan-mutfagi" name="mutfak[]" value="suudi-arabistan-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Suudi Arabistan Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/eg.svg" alt=""></span>
+                <div class="as-metin"><b>Mısır</b></div>
+                <label class="anahtar" for="tcMutfak-misir-mutfagi"><input type="checkbox" id="tcMutfak-misir-mutfagi" name="mutfak[]" value="misir-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Mısır Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/ma.svg" alt=""></span>
+                <div class="as-metin"><b>Fas</b></div>
+                <label class="anahtar" for="tcMutfak-fas-mutfagi"><input type="checkbox" id="tcMutfak-fas-mutfagi" name="mutfak[]" value="fas-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Fas Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/tn.svg" alt=""></span>
+                <div class="as-metin"><b>Tunus</b></div>
+                <label class="anahtar" for="tcMutfak-tunus-mutfagi"><input type="checkbox" id="tcMutfak-tunus-mutfagi" name="mutfak[]" value="tunus-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Tunus Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/et.svg" alt=""></span>
+                <div class="as-metin"><b>Etiyopya</b></div>
+                <label class="anahtar" for="tcMutfak-etiyopya-mutfagi"><input type="checkbox" id="tcMutfak-etiyopya-mutfagi" name="mutfak[]" value="etiyopya-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Etiyopya Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/za.svg" alt=""></span>
+                <div class="as-metin"><b>Güney Afrika</b></div>
+                <label class="anahtar" for="tcMutfak-guney-afrika-mutfagi"><input type="checkbox" id="tcMutfak-guney-afrika-mutfagi" name="mutfak[]" value="guney-afrika-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Güney Afrika Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/pk.svg" alt=""></span>
+                <div class="as-metin"><b>Pakistan</b></div>
+                <label class="anahtar" for="tcMutfak-pakistan-mutfagi"><input type="checkbox" id="tcMutfak-pakistan-mutfagi" name="mutfak[]" value="pakistan-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Pakistan Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/th.svg" alt=""></span>
+                <div class="as-metin"><b>Tayland</b></div>
+                <label class="anahtar" for="tcMutfak-tayland-mutfagi"><input type="checkbox" id="tcMutfak-tayland-mutfagi" name="mutfak[]" value="tayland-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Tayland Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/vn.svg" alt=""></span>
+                <div class="as-metin"><b>Vietnam</b></div>
+                <label class="anahtar" for="tcMutfak-vietnam-mutfagi"><input type="checkbox" id="tcMutfak-vietnam-mutfagi" name="mutfak[]" value="vietnam-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Vietnam Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/my.svg" alt=""></span>
+                <div class="as-metin"><b>Malezya</b></div>
+                <label class="anahtar" for="tcMutfak-malezya-mutfagi"><input type="checkbox" id="tcMutfak-malezya-mutfagi" name="mutfak[]" value="malezya-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Malezya Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/id.svg" alt=""></span>
+                <div class="as-metin"><b>Endonezya</b></div>
+                <label class="anahtar" for="tcMutfak-endonezya-mutfagi"><input type="checkbox" id="tcMutfak-endonezya-mutfagi" name="mutfak[]" value="endonezya-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Endonezya Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/ph.svg" alt=""></span>
+                <div class="as-metin"><b>Filipin</b></div>
+                <label class="anahtar" for="tcMutfak-filipin-mutfagi"><input type="checkbox" id="tcMutfak-filipin-mutfagi" name="mutfak[]" value="filipin-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Filipin Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/ca.svg" alt=""></span>
+                <div class="as-metin"><b>Kanada</b></div>
+                <label class="anahtar" for="tcMutfak-kanada-mutfagi"><input type="checkbox" id="tcMutfak-kanada-mutfagi" name="mutfak[]" value="kanada-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Kanada Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/br.svg" alt=""></span>
+                <div class="as-metin"><b>Brezilya</b></div>
+                <label class="anahtar" for="tcMutfak-brezilya-mutfagi"><input type="checkbox" id="tcMutfak-brezilya-mutfagi" name="mutfak[]" value="brezilya-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Brezilya Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/ar.svg" alt=""></span>
+                <div class="as-metin"><b>Arjantin</b></div>
+                <label class="anahtar" for="tcMutfak-arjantin-mutfagi"><input type="checkbox" id="tcMutfak-arjantin-mutfagi" name="mutfak[]" value="arjantin-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Arjantin Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/pe.svg" alt=""></span>
+                <div class="as-metin"><b>Peru</b></div>
+                <label class="anahtar" for="tcMutfak-peru-mutfagi"><input type="checkbox" id="tcMutfak-peru-mutfagi" name="mutfak[]" value="peru-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Peru Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/co.svg" alt=""></span>
+                <div class="as-metin"><b>Kolombiya</b></div>
+                <label class="anahtar" for="tcMutfak-kolombiya-mutfagi"><input type="checkbox" id="tcMutfak-kolombiya-mutfagi" name="mutfak[]" value="kolombiya-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Kolombiya Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/cu.svg" alt=""></span>
+                <div class="as-metin"><b>Küba</b></div>
+                <label class="anahtar" for="tcMutfak-kuba-mutfagi"><input type="checkbox" id="tcMutfak-kuba-mutfagi" name="mutfak[]" value="kuba-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Küba Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/jm.svg" alt=""></span>
+                <div class="as-metin"><b>Jamaika</b></div>
+                <label class="anahtar" for="tcMutfak-jamaika-mutfagi"><input type="checkbox" id="tcMutfak-jamaika-mutfagi" name="mutfak[]" value="jamaika-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Jamaika Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/au.svg" alt=""></span>
+                <div class="as-metin"><b>Avustralya</b></div>
+                <label class="anahtar" for="tcMutfak-avustralya-mutfagi"><input type="checkbox" id="tcMutfak-avustralya-mutfagi" name="mutfak[]" value="avustralya-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Avustralya Mutfağı</span></label>
+              </div>
+                            <div class="ayar-satir">
+                <span class="as-ikon" aria-hidden="true"><img class="tercih-bayrak" src="{{kok}}assets/g/varliklar/flags/nz.svg" alt=""></span>
+                <div class="as-metin"><b>Yeni Zelanda</b></div>
+                <label class="anahtar" for="tcMutfak-yeni-zelanda-mutfagi"><input type="checkbox" id="tcMutfak-yeni-zelanda-mutfagi" name="mutfak[]" value="yeni-zelanda-mutfagi"><span class="anahtar-ray"></span><span class="sr-only">Yeni Zelanda Mutfağı</span></label>
+              </div>
+                          </div>
+          </details>
+
+          <div class="alan-izgara c2 tercih-hesabim-alanlar">
+            <div class="alan">
+              <label class="alan-etiket" for="tcSeviye">Seviye</label>
+              <select class="alan-secim" id="tcSeviye" name="seviye">
+                <option value="" selected="">Belirtmedim</option>
+                                <option value="cok_kolay">Çok kolay</option>
+                                <option value="kolay">Kolay</option>
+                                <option value="orta">Orta</option>
+                                <option value="zor">Zor</option>
+                                <option value="ustalik">Ustalık</option>
+                              </select>
+            </div>
+            <div class="alan">
+              <label class="alan-etiket" for="tcSure">Süre</label>
+              <select class="alan-secim" id="tcSure" name="sure_ust_dk">
+                                <option value="15">15 dk'ya kadar</option>
+                                <option value="30">30 dk'ya kadar</option>
+                                <option value="45">45 dk'ya kadar</option>
+                                <option value="60">60 dk'ya kadar</option>
+                                <option value="" selected="">Fark etmez</option>
+                              </select>
+            </div>
+          </div>
+          </div>
+          <p class="uyari-kutu tercih-hesabim-hata" role="alert" data-hata="" hidden=""><span data-hata-metin=""></span></p>
+          <div class="kart-alt">
+            <span class="not">Alerjen seçimin bu hesapta saklanır. </span>
+            <span class="kaydedildi" role="status"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Kaydedildi</span>
+            <button class="dugme birincil" type="submit"><i class="fa-solid fa-floppy-disk"></i> Tercihleri kaydet</button>
+          </div>
+        </form>
+</section>
+</div>
+
+<div class="fit-pane" data-pane="bildirim" id="hs-pane-bildirim" role="tabpanel" aria-labelledby="hs-tab-bildirim" tabindex="-1" hidden="">
+<section class="hs-sec" id="bildirim" role="tabpanel" tabindex="0" aria-labelledby="tab-bildirim">
+        <form class="kart panel" data-savecard="bildirim">
+          <div class="kart-bas">
+            <div>
+              <h2 id="bildirimH" class="kart-baslik"><i class="fa-regular fa-bell"></i> Bildirim Tercihlerim</h2>
+              <p>Hangi bildirimi hangi kanaldan alacağını seç. Rezervasyon hatırlatmaları randevu saatine göre gönderilir.</p>
+            </div>
+          </div>
+          <div class="kart-govde">
+
+          <div class="kanal-matris">
+            <div class="ntf-row kanal-satir bas"><span>Bildirim</span><span>E-posta</span><span>Push</span></div>
+
+            <div class="ntf-row">
+              <div class="kanal-metin"><b>Rezervasyon hatırlatması</b><span>Rezervasyonunun vaktinden 30 dakika önce.</span></div>
+              <span class="kanal-hucre"><label class="anahtar" for="nAntrMail"><input type="checkbox" id="nAntrMail"><span class="anahtar-ray"></span><span class="sr-only">Rezervasyon hatırlatması — e-posta</span></label></span>
+              <span class="kanal-hucre"><label class="anahtar" for="nAntrPush"><input type="checkbox" id="nAntrPush" checked=""><span class="anahtar-ray"></span><span class="sr-only">Rezervasyon hatırlatması — push</span></label></span>
+            </div>
+            <div class="ntf-row">
+              <div class="kanal-metin"><b>Rota günü ve haftalık plan</b><span>Rotandaki durak günü geldiğinde ve haftalık plan kurulduğunda.</span></div>
+              <span class="kanal-hucre"><label class="anahtar" for="nProgMail"><input type="checkbox" id="nProgMail" checked=""><span class="anahtar-ray"></span><span class="sr-only">Rota günü ve haftalık plan — e-posta</span></label></span>
+              <span class="kanal-hucre"><label class="anahtar" for="nProgPush"><input type="checkbox" id="nProgPush" checked=""><span class="anahtar-ray"></span><span class="sr-only">Rota günü ve haftalık plan — push</span></label></span>
+            </div>
+            <div class="ntf-row">
+
+              <div class="kanal-metin"><b>Keşif görevi durumu</b><span>Katıldığın keşif görevinde kalan gün, serin ve telafi hakkın.</span></div>
+              <span class="kanal-hucre"><label class="anahtar" for="nChMail"><input type="checkbox" id="nChMail"><span class="anahtar-ray"></span><span class="sr-only">Keşif görevi durumu — e-posta</span></label></span>
+              <span class="kanal-hucre"><label class="anahtar" for="nChPush"><input type="checkbox" id="nChPush" checked=""><span class="anahtar-ray"></span><span class="sr-only">Keşif görevi durumu — push</span></label></span>
+            </div>
+            <div class="ntf-row">
+              <div class="kanal-metin"><b>Rehber mesajı ve randevu</b><span>Rehberinden mesaj geldiğinde, randevu onaylandığında ya da yaklaştığında.</span></div>
+              <span class="kanal-hucre"><label class="anahtar" for="nCoachMail"><input type="checkbox" id="nCoachMail" checked=""><span class="anahtar-ray"></span><span class="sr-only">Rehber mesajı ve randevu — e-posta</span></label></span>
+              <span class="kanal-hucre"><label class="anahtar" for="nCoachPush"><input type="checkbox" id="nCoachPush" checked=""><span class="anahtar-ray"></span><span class="sr-only">Rehber mesajı ve randevu — push</span></label></span>
+            </div>
+            <div class="ntf-row">
+              <div class="kanal-metin"><b>Haftalık keşif özeti</b><span>Pazar akşamı: keşif günü, ziyaret, değerlendirme, rota ve mutfak çeşitliliği özeti.</span></div>
+              <span class="kanal-hucre"><label class="anahtar" for="nOzetMail"><input type="checkbox" id="nOzetMail" checked=""><span class="anahtar-ray"></span><span class="sr-only">Haftalık keşif özeti — e-posta</span></label></span>
+              <span class="kanal-hucre"><label class="anahtar" for="nOzetPush"><input type="checkbox" id="nOzetPush"><span class="anahtar-ray"></span><span class="sr-only">Haftalık keşif özeti — push</span></label></span>
+            </div>
+            <div class="ntf-row">
+              <div class="kanal-metin"><b>Yeni mekân, rota ve editör dosyası</b><span>Keşif tercihlerine uyan yeni mekân, rota ya da editör dosyası eklendiğinde.</span></div>
+              <span class="kanal-hucre"><label class="anahtar" for="nYeniMail"><input type="checkbox" id="nYeniMail"><span class="anahtar-ray"></span><span class="sr-only">Yeni mekân, rota ve editör dosyası — e-posta</span></label></span>
+              <span class="kanal-hucre"><label class="anahtar" for="nYeniPush"><input type="checkbox" id="nYeniPush" checked=""><span class="anahtar-ray"></span><span class="sr-only">Yeni mekân, rota ve editör dosyası — push</span></label></span>
+            </div>
+            <div class="ntf-row">
+              <div class="kanal-metin"><b>Kampanya ve Dada Gourmet Pro fırsatları</b><span>Paket indirimleri ve özel dönem seçkileri.</span></div>
+              <span class="kanal-hucre"><label class="anahtar" for="nProMail"><input type="checkbox" id="nProMail"><span class="anahtar-ray"></span><span class="sr-only">Kampanya ve Dada Gourmet Pro fırsatları — e-posta</span></label></span>
+              <span class="kanal-hucre"><label class="anahtar" for="nProPush"><input type="checkbox" id="nProPush"><span class="anahtar-ray"></span><span class="sr-only">Kampanya ve Dada Gourmet Pro fırsatları — push</span></label></span>
+            </div>
+          </div>
+
+          
+          <div class="ayar-liste">
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
+              <div class="as-metin"><b>Güvenlik uyarıları</b><span>Yeni cihazdan giriş, şifre değişikliği işlemleri her zaman e-posta ile bildirilir. Bu bildirim kapatılamaz.</span></div>
+              <span class="as-acik"><i class="fa-solid fa-lock" aria-hidden="true"></i> Her zaman açık</span>
+            </div>
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-regular fa-clock"></i></span>
+              <div class="as-metin"><b>Hatırlatma saati</b><span>Günlük keşif hatırlatmasının varsayılan saati.</span></div>
+              <label class="sr-only" for="ntfSaat">Hatırlatma saati</label>
+              <input class="alan-girdi" id="ntfSaat" type="time" value="18:30">
+            </div>
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-moon"></i></span>
+              <div class="as-metin"><b>Sessiz saatler</b><span>Bu aralıkta push bildirimi gönderilmez; e-posta etkilenmez.</span></div>
+              <label class="sr-only" for="ntfSessiz">Sessiz saatler</label>
+              <select class="alan-secim" id="ntfSessiz">
+                <option selected="">22:00 – 07:00</option>
+                <option>23:00 – 08:00</option>
+                <option>00:00 – 06:00</option>
+                <option>Kapalı</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="alt-not"><i class="fa-regular fa-bell" aria-hidden="true"></i> <span>Gelen bildirimlerini görmek için <a href="#">bildirim akışına git</a>. Rezervasyon hatırlatmalarının hangi günlere düştüğü <a href="#">Etkinlik Takvimim</a> sekmesinden gelir.</span></div>
+
+          </div>
+          <div class="kart-alt">
+            <span class="not">Bu tercihler yalnız Dada Gourmet bildirimlerini kapsar.</span>
+            <span class="kaydedildi" role="status"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Kaydedildi</span>
+            <button class="dugme birincil" type="submit"><i class="fa-solid fa-floppy-disk"></i> Tercihleri Kaydet</button>
+          </div>
+        </form>
+      
+      <div class="fp-card okuma-kolonu">
+      <div class="ozet-bas"><h3><i class="fa-regular fa-bell"></i> Bildirim kategorileri</h3>
+        <a class="fp-act" href="#">Kanal ayarları <i class="fa-solid fa-arrow-right"></i></a></div>
+      <p>Her kategori ayrı kapatılabilir; sıklığı da kanal ayarlarından belirlersin.</p>
+      <div class="fp-toggle">
+        <span class="txt"><b>Rezervasyon hatırlatması</b><small>Planladığın günlerde, seçtiğin saatte</small></span>
+        <span class="fp-sw-lbl">Açık</span><button class="fp-sw" data-izin-key="bild-rezervasyon" role="switch" aria-checked="true" aria-label="Rezervasyon hatırlatması"></button>
+      </div>
+      <div class="fp-toggle">
+        <span class="txt"><b>Rota günü ve keşif görevi</b><small>Gün başında tek bildirim</small></span>
+        <span class="fp-sw-lbl">Açık</span><button class="fp-sw" data-izin-key="bild-rota-gorev" role="switch" aria-checked="true" aria-label="Program günü bildirimi"></button>
+      </div>
+      <div class="fp-toggle">
+        <span class="txt"><b>Randevu hatırlatması</b><small>Görüşmeden 24 saat ve 1 saat önce</small></span>
+        <span class="fp-sw-lbl">Açık</span><button class="fp-sw" data-izin-key="bild-randevu" role="switch" aria-checked="true" aria-label="Randevu hatırlatması"></button>
+      </div>
+      <div class="fp-toggle">
+        <span class="txt"><b>Ödeme ve belge yenileme</b><small>Yalnız işlem gerektiğinde</small></span>
+        <span class="fp-sw-lbl">Açık</span><button class="fp-sw" data-izin-key="bild-odeme" role="switch" aria-checked="true" aria-label="Ödeme ve belge bildirimi"></button>
+      </div>
+    </div>
+      </section>
+</div>
+
+<div class="fit-pane" data-pane="guvenlik" id="hs-pane-guvenlik" role="tabpanel" aria-labelledby="hs-tab-guvenlik" tabindex="-1" hidden="">
+<section class="hs-sec" id="guvenlik" role="tabpanel" tabindex="0" aria-labelledby="tab-guvenlik">
+        <form class="kart panel" data-savecard="guvenlik-sifre">
+          <div class="kart-bas">
+            <div>
+              <h2 id="guvenlikH" class="kart-baslik"><i class="fa-solid fa-lock"></i> Güvenlik</h2>
+              <p>Şifreni değiştir, açık oturumlarını gör.</p>
+            </div>
+          </div>
+          <div class="kart-govde">
+          
+                    <div class="alan">
+            <label class="alan-etiket" for="pwCur">Mevcut şifren <span class="zorunlu">*</span></label>
+            <div class="alan-sifre">
+              <input class="alan-girdi" id="pwCur" name="pwCur" type="password" autocomplete="current-password" placeholder="••••••••" required="">
+              <button class="alan-goz" type="button" data-eye="pwCur" aria-label="Mevcut şifreyi göster" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
+            </div>
+          </div>
+                    <div class="alan-izgara c2">
+            <div class="alan">
+              <label class="alan-etiket" for="pwNew">Yeni şifre <span class="zorunlu">*</span></label>
+              <div class="alan-sifre">
+                <input class="alan-girdi" id="pwNew" name="pwNew" type="password" autocomplete="new-password" placeholder="En az 8 karakter" required="" aria-describedby="pwHelp">
+                <button class="alan-goz" type="button" data-eye="pwNew" aria-label="Yeni şifreyi göster" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="alan">
+              <label class="alan-etiket" for="pwNew2">Yeni şifre (tekrar) <span class="zorunlu">*</span></label>
+              <div class="alan-sifre">
+                <input class="alan-girdi" id="pwNew2" name="pwNew2" type="password" autocomplete="new-password" placeholder="Tekrar yaz" required="">
+                <button class="alan-goz" type="button" data-eye="pwNew2" aria-label="Yeni şifreyi tekrar alanını göster" aria-pressed="false"><i class="fa-solid fa-eye"></i></button>
+              </div>
+            </div>
+          </div>
+          <span class="alan-yardim" id="pwHelp"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> En az 8 karakter; büyük harf, küçük harf, rakam ve özel karakter (!, @, #, $ vb.) içermeli. Başka sitede kullandığın şifreyi tekrar etme.</span>
+          </div>
+          <div class="kart-alt">
+            <span class="not">Son şifre değişikliği: 4 ay önce</span>
+            <span class="kaydedildi" role="status"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Kaydedildi</span>
+            <button class="dugme birincil" type="submit"><i class="fa-solid fa-key"></i> Şifreyi Güncelle</button>
+          </div>
+        </form>
+
+        
+        <form class="kart panel" data-savecard="2fa">
+          <div class="kart-bas">
+            <div>
+              <h2 class="kart-baslik"><i class="fa-solid fa-mobile-screen-button"></i> Giriş Yöntemleri</h2>
+              <p>Hesabına giriş yollarını yönet.</p>
+            </div>
+          </div>
+          <div class="kart-govde">
+          <div class="ayar-liste">
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-envelope"></i></span>
+              <div class="as-metin"><b>E-posta ile giriş</b><span>ornekuye@eposta.com — birincil giriş yöntemin.</span></div>
+              <span class="as-acik"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Aktif</span>
+            </div>
+            
+            
+            
+              </div>
+          </div>
+        </form>
+
+        <div class="kart panel">
+          <div class="kart-bas">
+            <div>
+              <h2 class="kart-baslik"><i class="fa-solid fa-desktop"></i> Açık Oturumlarım</h2>
+              <p>Hesabına giriş yapılmış cihazlar. Tanımadığın bir cihaz varsa oturumu kapat ve şifreni değiştir.</p>
+            </div>
+          </div>
+          <div class="kart-govde">
+          <div class="ayar-liste">
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-mobile-screen"></i></span>
+              <div class="as-metin"><b>iPhone 14 — Safari</b><span>İstanbul · şu anda aktif — bu cihaz</span></div>
+              <span class="as-acik"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Bu cihaz</span>
+            </div>
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-laptop"></i></span>
+              <div class="as-metin"><b>MacBook Pro — Chrome</b><span>İstanbul · son görülme 3 saat önce</span></div>
+              <div class="as-eylem"><button class="satir-dugme" type="button">Oturumu Kapat</button></div>
+            </div>
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-tablet-screen-button"></i></span>
+              <div class="as-metin"><b>iPad — Safari</b><span>Ankara · son görülme 12 gün önce</span></div>
+              <div class="as-eylem"><button class="satir-dugme" type="button">Oturumu Kapat</button></div>
+            </div>
+          </div>
+          </div>
+          <div class="kart-alt">
+            <span class="not">Bu cihaz dışındaki tüm oturumlar kapatılır; yeniden giriş yapman gerekir.</span>
+            <button class="dugme hayalet" type="button"><i class="fa-solid fa-right-from-bracket"></i> Diğer Tüm Oturumları Kapat</button>
+          </div>
+        </div>
+      </section>
+</div>
+
+<div class="fit-pane" data-pane="dil" id="hs-pane-dil" role="tabpanel" aria-labelledby="hs-tab-dil" tabindex="-1" hidden="">
+<section class="hs-sec" id="dil" role="tabpanel" tabindex="0" aria-labelledby="tab-dil">
+        <form class="kart panel" data-savecard="dil">
+          <div class="kart-bas">
+            <div>
+              <h2 id="dilH" class="kart-baslik"><i class="fa-solid fa-globe"></i> Dil ve Bölge</h2>
+              <p>Arayüz dili, bölge ve ölçü birimleri. Birim tercihin rota mesafelerinde, mekân uzaklıklarında ve keşif grafiklerinde geçerli olur.</p>
+            </div>
+          </div>
+          <div class="kart-govde">
+          <div class="alan-izgara c2">
+            <div class="alan">
+              <label class="alan-etiket" for="dlDil">Arayüz dili</label>
+              <select class="alan-secim" id="dlDil">
+                <option value="tr" selected="">Türkçe</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+            <div class="alan">
+              <label class="alan-etiket" for="dlBolge">Bölge</label>
+              <select class="alan-secim" id="dlBolge">
+                <option selected="">Türkiye</option>
+                <option>Almanya</option>
+                <option>Birleşik Krallık</option>
+                <option>Amerika Birleşik Devletleri</option>
+              </select>
+            </div>
+          </div>
+          <div class="alan-izgara c2">
+            <div class="alan">
+              <label class="alan-etiket" for="dlSaat">Saat dilimi</label>
+              <select class="alan-secim" id="dlSaat">
+                <option selected="">(GMT+03:00) İstanbul</option>
+                <option>(GMT+01:00) Berlin</option>
+                <option>(GMT+00:00) Londra</option>
+              </select>
+            </div>
+            <div class="alan">
+              <label class="alan-etiket" for="dlHafta">Haftanın ilk günü</label>
+              <select class="alan-secim" id="dlHafta">
+                <option selected="">Pazartesi</option>
+                <option>Pazar</option>
+              </select>
+            </div>
+          </div>
+          <div class="alan-izgara c3">
+            <div class="alan">
+              <label class="alan-etiket" for="dlAgirlik">Fiyat gösterimi</label>
+              <select class="alan-secim" id="dlAgirlik">
+                <option selected="">Simge ile (₺)</option>
+                <option>Kod ile (TRY)</option>
+              </select>
+            </div>
+            <div class="alan">
+              <label class="alan-etiket" for="dlMesafe">Mesafe birimi</label>
+              <select class="alan-secim" id="dlMesafe">
+                <option selected="">Kilometre (km)</option>
+                <option>Mil (mi)</option>
+              </select>
+            </div>
+            <div class="alan">
+              <label class="alan-etiket" for="dlBoy">Mesafe yuvarlama</label>
+              <select class="alan-secim" id="dlBoy">
+                <option selected="">Ondalıklı (1,2 km)</option>
+                <option>Tam sayı (1 km)</option>
+              </select>
+            </div>
+            
+            <div class="alan">
+              <label class="alan-etiket" for="dlSicaklik">Sıcaklık birimi</label>
+              <select class="alan-secim" id="dlSicaklik">
+                <option selected="">Celsius (°C)</option>
+                <option>Fahrenheit (°F)</option>
+              </select>
+            </div>
+          </div>
+          <div class="ayar-liste">
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-bolt"></i></span>
+              <div class="as-metin"><b>Fiyat aralığı gösterimi</b><span>Mekân fiyat aralığının gösterim biçimi.</span></div>
+              <label class="sr-only" for="dlEnerji">Fiyat aralığı gösterimi</label>
+              <select class="alan-secim" id="dlEnerji">
+                <option selected="">Simge ile (₺₺₺)</option>
+                <option>Aralık ile (250–400 ₺)</option>
+              </select>
+            </div>
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-eye-slash"></i></span>
+              <div class="as-metin"><b>Fiyat aralığını gizle</b><span>Açıkken mekân kartlarında fiyat aralığı gösterilmez; yalnız mutfak, semt ve puan görünür.</span></div>
+              <label class="anahtar" for="dlGizle"><input type="checkbox" id="dlGizle"><span class="anahtar-ray"></span><span class="sr-only">Fiyat aralığını gizle</span></label>
+            </div>
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-calendar-day"></i></span>
+              <div class="as-metin"><b>Tarih biçimi</b><span>Rezervasyon, takvim ve kayıt listelerinde kullanılır.</span></div>
+              <label class="sr-only" for="dlTarih">Tarih biçimi</label>
+              <select class="alan-secim" id="dlTarih">
+                <option selected="">14.03.2026 (gg.aa.yyyy)</option>
+                <option>2026-03-14 (yyyy-aa-gg)</option>
+              </select>
+            </div>
+          </div>
+          </div>
+          <div class="kart-alt">
+            <span class="not">Birim değişikliği geçmiş kayıtlarını silmez, yalnız gösterimi çevirir.</span>
+            <span class="kaydedildi" role="status"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Kaydedildi</span>
+            <button class="dugme birincil" type="submit"><i class="fa-solid fa-floppy-disk"></i> Tercihleri Kaydet</button>
+          </div>
+        </form>
+      </section>
+</div>
+
+<div class="fit-pane" data-pane="bagli" id="hs-pane-bagli" role="tabpanel" aria-labelledby="hs-tab-bagli" tabindex="-1" hidden="">
+<section class="sec-fit fit-seam is-onbanner">
+  <div class="wrap kap">
+
+    <div class="sec-head">
+      <div>
+        <span class="ust-etiket"><i class="fa-solid fa-arrows-left-right"></i> Veri akışının yönü</span>
+        <h2>Bu sayfada ne oluyor?</h2>
+        <p class="lead">Bir bağlantı iki yönlü olabilir: bir kısmı Dada Gourmet'e <b>gelir</b>,
+        bir kısmı Dada Gourmet'ten dış sisteme <b>gider</b>. Aşağıdaki üç kutu hangisinin
+        hangi yönde aktığını açıkça söyler.</p>
+        <div class="sec-tools">
+          <a class="see-all" href="#">Amaç bazlı izinler <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ba-map">
+      <div class="ba-mapc">
+        <div class="ico"><i class="fa-solid fa-arrow-right-to-bracket" aria-hidden="true"></i></div>
+        <h3>Dada Gourmet'e gelen</h3>
+        <p>Bağlı sistemden okunan takvim ve konum verisi. Yalnız açtığın izin kadarı okunur.</p>
+        <ul>
+          <li><i class="fa-solid fa-check" aria-hidden="true"></i> Rezervasyon ve etkinlik kaydı</li>
+          <li><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinlik ve festival kaydı</li>
+          <li><i class="fa-solid fa-check" aria-hidden="true"></i> Yaklaşık yol süresi (uygulama tahmini)</li>
+          <li><i class="fa-solid fa-check" aria-hidden="true"></i> Davetli listesi ve not — yalnız sen açarsan</li>
+        </ul>
+      </div>
+      <div class="ba-mapc is-out">
+        <div class="ico"><i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i></div>
+        <h3>Dada Gourmet'ten giden</h3>
+        <p>Yalnız tek bir şey çıkar ve o da ayrı bir izne bağlıdır. Kapatırsan hiçbir veri gönderilmez.</p>
+        <ul>
+          <li><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Dada Gourmet'te tamamladığın ziyaret (tarih, mekân, yaklaşık süre)</li>
+          <li><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Bağlantı başına ayrı yazma izni — Apple Takvim ve Google Takvim için tek tek</li>
+        </ul>
+      </div>
+      <div class="ba-mapc is-never">
+        <div class="ico"><i class="fa-solid fa-ban" aria-hidden="true"></i></div>
+        <h3>Hiçbir koşulda gitmeyen</h3>
+        <p>Bu sayfadaki hiçbir anahtar aşağıdakileri dış bir sisteme açmaz.</p>
+        <ul>
+          <li><i class="fa-solid fa-xmark" aria-hidden="true"></i> Keşif tercihlerin, kaydettiğin mekânlar ve özel listelerin</li>
+          <li><i class="fa-solid fa-xmark" aria-hidden="true"></i> Rehberinle yazışman ve randevu kayıtların</li>
+          <li><i class="fa-solid fa-xmark" aria-hidden="true"></i> Ödeme ve fatura bilgin</li>
+          <li><i class="fa-solid fa-xmark" aria-hidden="true"></i> Değerlendirme taslakların ve özel notların</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bilgi-notu">
+      <i class="fa-solid fa-circle-info"></i>
+      <p><b>Bağlantılardan gelen veri bir yer bildirimi değildir ve konumunu kimseyle paylaşmaz.</b>
+      Yaklaşık konum ve yol süresi cihazının tahminidir; kesin ölçüm değildir. Mekânın açık olduğu
+    saatler, adresi ve rezervasyon şartları için mekânın kendi bilgisini esas al.
+      Ayrıntı: <a href="#">Konum Verisi Politikası</a> ·
+      Verinin amacı ve saklanması: <a href="#">Veri ve İzinlerim</a> ·
+      Yasal metin: <a href="#">Aydınlatma Metni</a>.</p>
+    </div>
+
+  </div>
+</section>
+<section class="sec-fit">
+  <div class="wrap kap">
+
+    <div class="sec-head">
+      <div>
+        <span class="ust-etiket"><i class="fa-solid fa-list-check"></i> Dört seçenek</span>
+        <h2>Bağlantıların</h2>
+        <p class="lead">Her kartta beş şey yazılı: bağlantı durumu, verdiğin izinler,
+        son senkronizasyon, hangi verinin hangi yöne aktarıldığı ve bağlantıyı kesme.</p>
+      </div>
+    </div>
+
+    
+    <div class="ba-bar">
+      <div class="cipler" id="baFilter" role="group" aria-label="Bağlantı durumu süzgeci">
+        
+        <span class="cipler-basligi">Durum</span>
+        <button class="cip suzgec on" type="button" data-val="all" aria-pressed="true">Tümü</button>
+        <button class="cip suzgec" type="button" data-val="on" aria-pressed="false"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Etkin</button>
+        <button class="cip suzgec" type="button" data-val="off" aria-pressed="false"><i class="fa-solid fa-circle-minus" aria-hidden="true"></i> Etkin değil</button>
+      </div>
+      <div class="ba-count"><b id="baCount">4</b> bağlantı gösteriliyor </div>
+    </div>
+
+    <div class="ba-grid" id="baGrid">
+
+      
+      <article class="ba-card fp-card" id="baglanti-apple-health" data-app="apple-health" data-durum="on" data-ad="Apple Takvim" data-lbl-on="Bağlı" data-lbl-off="Bağlı değil" data-cut-on="Bağlantıyı kes" data-cut-off="Yeniden bağlan" data-senk-on="Bugün 13:05" data-senk-off="Bağlantı kesildi">
+        <div class="ozet-bas">
+          <h3><i class="fa-brands fa-apple" aria-hidden="true"></i> Apple Takvim</h3>
+          <span class="ba-head-ico">
+            <span class="rozet olumlu" data-role="badge"><i class="fa-solid fa-check" aria-hidden="true"></i> Bağlı</span>
+          </span>
+        </div>
+
+        
+        <div class="ba-top">
+          <div class="ba-box">
+            <h4><i class="fa-solid fa-plug" aria-hidden="true"></i> Bağlantı durumu</h4>
+            <p class="v"><span data-role="durum-txt">Bağlı</span> </p>
+            <small data-role="durum-alt">iPhone 13 · iOS 18.3 · 4 Mart 2026'dan beri bağlı. Telefonunun takvimi buraya yazar; <a href="#">Ziyaret Günlüğü</a>'nde bu kaynak <b>Telefon</b> adıyla görünür.</small>
+          </div>
+          <div class="ba-box">
+            <h4><i class="fa-solid fa-rotate" aria-hidden="true"></i> Son senkronizasyon</h4>
+            <p class="v"><span data-role="senk">Bugün 13:05</span></p>
+            <small data-role="senk-alt">Otomatik · arka planda, uygulamayı açmana gerek yok</small>
+          </div>
+        </div>
+
+        
+        <div class="ba-sech">
+          <h4><i class="fa-solid fa-sliders" aria-hidden="true"></i> Verilen izinler</h4>
+          <span class="hint">Her biri ayrı ayrı kapatılabilir</span>
+        </div>
+        <div class="ba-perms">
+          <div class="fp-toggle">
+            <span class="txt"><b>Rezervasyon kaydı</b><small>Takvimindeki rezervasyonlar Ziyaret Günlüğü'ne düşer. Kapatırsan rezervasyon satırı boş kalır, eski kayıtlar silinmez.</small></span>
+            <span class="fp-sw-lbl">Açık</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="true" data-perm="rezervasyon" aria-label="Apple Takvim — rezervasyon kaydı izni"></button>
+          </div>
+          <div class="fp-toggle">
+            <span class="txt"><b>Etkinlik ve festival kaydı</b><small>Telefonunun takvimindeki etkinlik ve festival kayıtları günlüğüne eklenir.</small></span>
+            <span class="fp-sw-lbl">Açık</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="true" data-perm="etkinlik" aria-label="Apple Takvim — etkinlik ve festival kaydı izni"></button>
+          </div>
+          <div class="fp-toggle">
+            <span class="txt"><b>Yaklaşık yol süresi</b><small>Mekâna yaklaşık yol süresi okunur. Değer uygulamanın tahminidir; kesin ölçüm değildir ve öyle sunulmaz.</small></span>
+            <span class="fp-sw-lbl">Açık</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="true" data-perm="yol" aria-label="Apple Takvim — yaklaşık yol süresi izni"></button>
+          </div>
+          <div class="fp-toggle">
+            <span class="txt"><b>Davetli listesi</b><small>İsteğe bağlıdır. Kapalıyken davetli listesi okunmaz ve günlüğünde davetli satırı görünmez.</small></span>
+            <span class="fp-sw-lbl">Kapalı</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="false" data-perm="davetli" aria-label="Apple Takvim — davetli listesi izni"></button>
+          </div>
+          <div class="fp-toggle">
+            <span class="txt"><b>Takvim notu</b><small>İsteğe bağlıdır. Yalnız takvim kaydını Ziyaret Günlüğü'ne bağlarken kullanılır; not içeriği değerlendirilmez.</small></span>
+            <span class="fp-sw-lbl">Kapalı</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="false" data-perm="not" aria-label="Apple Takvim — takvim notu izni"></button>
+          </div>
+          <div class="fp-toggle">
+            <span class="txt"><b>Dada Gourmet ziyaretlerini Apple Takvim'e yaz</b><small><b>Tek çıkış izni budur.</b> Dada Gourmet'te tamamladığın ziyaret Apple Takvim'e kaydedilir. Kapatırsan Dada Gourmet hiçbir veri göndermez.</small></span>
+            <span class="fp-sw-lbl">Açık</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="true" data-perm="yazma" aria-label="Apple Takvim — DadaGourmet ziyaretlerini yazma izni"></button>
+          </div>
+        </div>
+        <div class="ba-warn" data-role="nozin" hidden="">
+          <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+          <p>Bağlantı duruyor ama açık izin kalmadı — şu an hiçbir veri aktarılmıyor.</p>
+        </div>
+
+        
+        <div class="ba-sech">
+          <h4><i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> Hangi veriler aktarılıyor</h4>
+          <span class="hint">Yön ve kaynak sistem her satırda yazılı</span>
+        </div>
+        <div class="ba-flow">
+          <div class="ba-frow" data-flow="rezervasyon">
+            <span class="ba-dir in" data-role="dir" data-base="in" data-base-html="&lt;i class=&quot;fa-solid fa-arrow-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Apple Takvim → DadaGourmet"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Apple Takvim → Dada Gourmet</span>
+            <span class="txt"><b>Rezervasyon ve etkinlik kaydı</b><small>Gün içinde saatlik toplanır</small></span>
+          </div>
+          <div class="ba-frow" data-flow="etkinlik">
+            <span class="ba-dir in" data-role="dir" data-base="in" data-base-html="&lt;i class=&quot;fa-solid fa-arrow-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Apple Takvim → DadaGourmet"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Apple Takvim → Dada Gourmet</span>
+            <span class="txt"><b>Etkinlik, festival ve tur kayıtları</b><small>Başlangıç saati, süre ve tür</small></span>
+          </div>
+          <div class="ba-frow" data-flow="yol">
+            <span class="ba-dir in" data-role="dir" data-base="in" data-base-html="&lt;i class=&quot;fa-solid fa-arrow-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Apple Takvim → DadaGourmet"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Apple Takvim → Dada Gourmet</span>
+            <span class="txt"><b>Yaklaşık yol süresi</b><small>Cihaz tahminidir, kesin değer değildir</small></span>
+          </div>
+          <div class="ba-frow" data-flow="davetli">
+            <span class="ba-dir in" data-role="dir" data-base="in" data-base-html="&lt;i class=&quot;fa-solid fa-arrow-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Apple Takvim → DadaGourmet"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Apple Takvim → Dada Gourmet</span>
+            <span class="txt"><b>Davetli listesi</b><small>İsteğe bağlı — izin kapalıyken okunmaz</small></span>
+          </div>
+          <div class="ba-frow is-off" data-flow="not">
+            <span class="ba-dir none" data-role="dir" data-base="in" data-base-html="&lt;i class=&quot;fa-solid fa-arrow-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Apple Takvim → DadaGourmet"><i class="fa-solid fa-ban" aria-hidden="true"></i> Aktarılmıyor</span>
+            <span class="txt"><b>Takvim notu</b><small>İsteğe bağlı — izin kapalıyken okunmaz</small></span>
+          </div>
+          <div class="ba-frow is-off" data-flow="yazma">
+            <span class="ba-dir none" data-role="dir" data-base="out" data-base-html="&lt;i class=&quot;fa-solid fa-arrow-left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; DadaGourmet → Apple Takvim"><i class="fa-solid fa-ban" aria-hidden="true"></i> Aktarılmıyor</span>
+            <span class="txt"><b>Tamamladığın Dada Gourmet ziyareti</b><small>Tarih, mekân ve yaklaşık süre — başka hiçbir alan gönderilmez</small></span>
+          </div>
+        </div>
+
+        
+        <div class="ba-foot">
+          <div class="ba-foot-txt">
+            <h4><i class="fa-solid fa-link-slash" aria-hidden="true"></i> Bağlantıyı kesme</h4>
+            <p>Kestiğinde tüm izinler aynı anda geri alınır ve okuma da yazma da durur.
+            Dada Gourmet'te oluşmuş eski kayıtların silinmez; onları
+            <a href="#">Veri ve İzinlerim</a> sayfasından silebilirsin.
+            Bağlantıyı istediğin an yeniden kurabilirsin.</p>
+          </div>
+          <button class="ba-cut" type="button" data-cut=""><i class="fa-solid fa-link-slash" aria-hidden="true"></i> <span data-role="cut-txt">Bağlantıyı kes</span></button>
+        </div>
+      </article>
+
+      
+      <article class="ba-card fp-card" id="baglanti-health-connect" data-app="health-connect" data-durum="off" data-ad="Google Takvim" data-lbl-on="Bağlı" data-lbl-off="Bağlı değil" data-cut-on="Bağlantıyı kes" data-cut-off="Google Takvim'e bağlan" data-senk-on="Az önce" data-senk-off="Hiç senkronize edilmedi">
+        <div class="ozet-bas">
+          <h3><i class="fa-brands fa-android" aria-hidden="true"></i> Google Takvim</h3>
+          <span class="ba-head-ico">
+            <span class="rozet pasif" data-role="badge"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Bağlı değil</span>
+          </span>
+        </div>
+
+        <div class="ba-top">
+          <div class="ba-box">
+            <h4><i class="fa-solid fa-plug" aria-hidden="true"></i> Bağlantı durumu</h4>
+            <p class="v"><span data-role="durum-txt">Bağlı değil</span> </p>
+            <small data-role="durum-alt">Google Takvim bağlantısı için Google hesabınla yetki vermen gerekir; bu hesapta henüz yetki verilmedi. Bağla düğmesi yetki penceresini açar.</small>
+          </div>
+          <div class="ba-box">
+            <h4><i class="fa-solid fa-rotate" aria-hidden="true"></i> Son senkronizasyon</h4>
+            <p class="v"><span data-role="senk">Hiç senkronize edilmedi</span></p>
+            <small data-role="senk-alt">Bağlantı kurulmadığı için aktarım başlamadı</small>
+          </div>
+        </div>
+
+        <div class="ba-sech">
+          <h4><i class="fa-solid fa-sliders" aria-hidden="true"></i> Verilen izinler</h4>
+          <span class="hint">Bağlantı kurulunca tek tek açılır</span>
+        </div>
+        <div class="ba-perms">
+          <div class="fp-toggle">
+            <span class="txt"><b>Rezervasyon kaydı</b><small>Google Takvim'deki rezervasyon ve etkinlik kayıtların paylaşılır. Bağlantı kurulmadan açılamaz.</small></span>
+            <span class="fp-sw-lbl">Kapalı</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="false" data-perm="rezervasyon" disabled="" aria-label="Google Takvim — rezervasyon kaydı izni"></button>
+          </div>
+          <div class="fp-toggle">
+            <span class="txt"><b>Etkinlik kayıtları</b><small>Google Takvim'de biriken etkinlik ve festival kayıtları günlüğüne eklenir.</small></span>
+            <span class="fp-sw-lbl">Kapalı</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="false" data-perm="etkinlik" disabled="" aria-label="Google Takvim — etkinlik kayıtları izni"></button>
+          </div>
+          <div class="fp-toggle">
+            <span class="txt"><b>Yaklaşık yol süresi</b><small>Etkinliğe yaklaşık yol süresi okunur. Uygulama tahminidir, kesin ölçüm değildir.</small></span>
+            <span class="fp-sw-lbl">Kapalı</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="false" data-perm="yol" disabled="" aria-label="Google Takvim — yaklaşık yol süresi izni"></button>
+          </div>
+          <div class="fp-toggle">
+            <span class="txt"><b>Davetli listesi</b><small>İsteğe bağlıdır ve bağlansa bile varsayılan olarak kapalı gelir.</small></span>
+            <span class="fp-sw-lbl">Kapalı</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="false" data-perm="davetli" disabled="" aria-label="Google Takvim — davetli listesi izni"></button>
+          </div>
+          <div class="fp-toggle">
+            <span class="txt"><b>Dada Gourmet ziyaretlerini Google Takvim'e yaz</b><small><b>Tek çıkış izni budur.</b> Açarsan Dada Gourmet'te tamamladığın ziyaret Google Takvim'e kaydedilir; kapalıyken Dada Gourmet hiçbir veri göndermez.</small></span>
+            <span class="fp-sw-lbl">Kapalı</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="false" data-perm="yazma" disabled="" aria-label="Google Takvim — DadaGourmet ziyaretlerini yazma izni"></button>
+          </div>
+        </div>
+        <div class="ba-warn" data-role="nozin" hidden="">
+          <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+          <p>Bağlantı duruyor ama açık izin kalmadı — şu an hiçbir veri aktarılmıyor.</p>
+        </div>
+
+        <div class="ba-sech">
+          <h4><i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> Hangi veriler aktarılıyor</h4>
+          <span class="hint">Şu an hiçbiri — bağlantı kurulmadı</span>
+        </div>
+        <div class="ba-flow">
+          <div class="ba-frow is-off" data-flow="rezervasyon">
+            <span class="ba-dir none" data-role="dir" data-base="in" data-base-html="&lt;i class=&quot;fa-solid fa-arrow-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Google Takvim → DadaGourmet"><i class="fa-solid fa-ban" aria-hidden="true"></i> Aktarılmıyor</span>
+            <span class="txt"><b>Rezervasyon ve etkinlik kaydı</b><small>Gün içinde saatlik toplanır</small></span>
+          </div>
+          <div class="ba-frow is-off" data-flow="etkinlik">
+            <span class="ba-dir none" data-role="dir" data-base="in" data-base-html="&lt;i class=&quot;fa-solid fa-arrow-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Google Takvim → DadaGourmet"><i class="fa-solid fa-ban" aria-hidden="true"></i> Aktarılmıyor</span>
+            <span class="txt"><b>Etkinlik kayıtları</b><small>Başlangıç saati, süre ve tür</small></span>
+          </div>
+          <div class="ba-frow is-off" data-flow="yol">
+            <span class="ba-dir none" data-role="dir" data-base="in" data-base-html="&lt;i class=&quot;fa-solid fa-arrow-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Google Takvim → DadaGourmet"><i class="fa-solid fa-ban" aria-hidden="true"></i> Aktarılmıyor</span>
+            <span class="txt"><b>Yaklaşık yol süresi</b><small>Cihaz tahminidir, kesin değer değildir</small></span>
+          </div>
+          <div class="ba-frow is-off" data-flow="davetli">
+            <span class="ba-dir none" data-role="dir" data-base="in" data-base-html="&lt;i class=&quot;fa-solid fa-arrow-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Google Takvim → DadaGourmet"><i class="fa-solid fa-ban" aria-hidden="true"></i> Aktarılmıyor</span>
+            <span class="txt"><b>Davetli listesi</b><small>İsteğe bağlı — izin kapalıyken okunmaz</small></span>
+          </div>
+          <div class="ba-frow is-off" data-flow="yazma">
+            <span class="ba-dir none" data-role="dir" data-base="out" data-base-html="&lt;i class=&quot;fa-solid fa-arrow-left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; DadaGourmet → Google Takvim"><i class="fa-solid fa-ban" aria-hidden="true"></i> Aktarılmıyor</span>
+            <span class="txt"><b>Tamamladığın Dada Gourmet ziyareti</b><small>Tarih, mekân ve yaklaşık süre — başka hiçbir alan gönderilmez</small></span>
+          </div>
+        </div>
+
+        <div class="ba-foot">
+          <div class="ba-foot-txt">
+            <h4><i class="fa-solid fa-link-slash" aria-hidden="true"></i> Bağlantıyı kesme</h4>
+            <p>Şu an kesilecek bir bağlantı yok. Bağladığında izinler kapalı gelir ve hangisini
+            açacağına sen karar verirsin; kestiğinde tüm izinler aynı anda geri alınır.
+            Google Takvim tarafındaki izni telefonunun sistem ayarlarından da geri alabilirsin —
+            iki taraf birbirinden bağımsızdır. Dada Gourmet'teki eski kayıtların bağlantıdan bağımsızdır;
+            silmek istersen <a href="#">Veri ve İzinlerim</a> sayfasından silersin.</p>
+          </div>
+          <button class="ba-cut" type="button" data-cut=""><i class="fa-solid fa-link" aria-hidden="true"></i> <span data-role="cut-txt">Google Takvim'e bağlan</span></button>
+        </div>
+      </article>
+
+      
+      <article class="ba-card fp-card" id="baglanti-akilli-saat" data-app="akilli-saat" data-durum="on" data-ad="Konum servisi" data-lbl-on="Bağlı" data-lbl-off="Bağlı değil" data-cut-on="Bağlantıyı kes" data-cut-off="Saat bağla" data-senk-on="Bugün 07:12" data-senk-off="Bağlantı kesildi">
+        <div class="ozet-bas">
+          <h3><i class="fa-solid fa-stopwatch" aria-hidden="true"></i> Konum servisi</h3>
+          <span class="ba-head-ico">
+            <span class="rozet olumlu" data-role="badge"><i class="fa-solid fa-check" aria-hidden="true"></i> Bağlı</span>
+          </span>
+        </div>
+
+        <div class="ba-top">
+          <div class="ba-box">
+            <h4><i class="fa-solid fa-plug" aria-hidden="true"></i> Bağlantı durumu</h4>
+            <p class="v"><span data-role="durum-txt">Bağlı</span> </p>
+            <small data-role="durum-alt">Konum izni verildi · 22 Şubat 2026'dan beri açık. <a href="#">Ziyaret Günlüğü</a>'nde bu kaynak <b>Konum servisi</b> adıyla görünür.</small>
+          </div>
+          <div class="ba-box">
+            <h4><i class="fa-solid fa-rotate" aria-hidden="true"></i> Son senkronizasyon</h4>
+            <p class="v"><span data-role="senk">Bugün 07:12</span></p>
+            <small data-role="senk-alt">Uygulamayı açtığında · gün içinde birkaç kez</small>
+          </div>
+        </div>
+
+        <div class="ba-sech">
+          <h4><i class="fa-solid fa-sliders" aria-hidden="true"></i> Verilen izinler</h4>
+          <span class="hint">Her biri ayrı ayrı kapatılabilir</span>
+        </div>
+        <div class="ba-perms">
+          <div class="fp-toggle">
+            <span class="txt"><b>Yaklaşık konum ve semt</b><small>Yakınındaki mekân önerileri için semt bilgisi okunur; tam adres kaydedilmez.</small></span>
+            <span class="fp-sw-lbl">Açık</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="true" data-perm="rezervasyon" aria-label="Konum servisi — yaklaşık konum ve semt izni"></button>
+          </div>
+          <div class="fp-toggle">
+            <span class="txt"><b>Rezervasyon kayıtları</b><small>Bir mekâna vardığında ziyaret kaydı otomatik önerilir; onaylamadan kaydedilmez.</small></span>
+            <span class="fp-sw-lbl">Açık</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="true" data-perm="etkinlik" aria-label="Konum servisi — rezervasyon kayıtları izni"></button>
+          </div>
+          <div class="fp-toggle">
+            <span class="txt"><b>Yaklaşık yol süresi</b><small>Uygulamanın tahmini. Kesin ölçüm değildir ve öyle sunulmaz.</small></span>
+            <span class="fp-sw-lbl">Açık</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="true" data-perm="yol" aria-label="Konum servisi — yaklaşık yol süresi izni"></button>
+          </div>
+          <div class="fp-toggle">
+            <span class="txt"><b>Davetli listesi</b><small>İsteğe bağlıdır — bunu sen açtın. Kapatırsan davetli listesi okunmaz ve günlüğündeki davetli satırı boş kalır.</small></span>
+            <span class="fp-sw-lbl">Açık</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="true" data-perm="davetli" aria-label="Konum servisi — davetli listesi izni"></button>
+          </div>
+        </div>
+        <div class="ba-warn" data-role="nozin" hidden="">
+          <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+          <p>Bağlantı duruyor ama açık izin kalmadı — şu an hiçbir veri aktarılmıyor.</p>
+        </div>
+
+        <div class="ba-sech">
+          <h4><i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> Hangi veriler aktarılıyor</h4>
+          <span class="hint">Tek yönlü: konum okunur, cihaza hiçbir şey yazılmaz</span>
+        </div>
+        <div class="ba-flow">
+          <div class="ba-frow" data-flow="rezervasyon">
+            <span class="ba-dir in" data-role="dir" data-base="in" data-base-html="&lt;i class=&quot;fa-solid fa-arrow-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Konum servisi → DadaGourmet"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Konum servisi → Dada Gourmet</span>
+            <span class="txt"><b>Yaklaşık konum ve semt</b><small>Yalnız uygulama açıkken okunur</small></span>
+          </div>
+          <div class="ba-frow" data-flow="etkinlik">
+            <span class="ba-dir in" data-role="dir" data-base="in" data-base-html="&lt;i class=&quot;fa-solid fa-arrow-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Konum servisi → DadaGourmet"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Konum servisi → Dada Gourmet</span>
+            <span class="txt"><b>Rezervasyon kayıtları</b><small>Başlangıç saati, süre ve tür</small></span>
+          </div>
+          <div class="ba-frow" data-flow="yol">
+            <span class="ba-dir in" data-role="dir" data-base="in" data-base-html="&lt;i class=&quot;fa-solid fa-arrow-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Konum servisi → DadaGourmet"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Konum servisi → Dada Gourmet</span>
+            <span class="txt"><b>Yaklaşık yol süresi</b><small>Saat tahminidir, kesin değer değildir</small></span>
+          </div>
+          <div class="ba-frow" data-flow="davetli">
+            <span class="ba-dir in" data-role="dir" data-base="in" data-base-html="&lt;i class=&quot;fa-solid fa-arrow-right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Konum servisi → DadaGourmet"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Konum servisi → Dada Gourmet</span>
+            <span class="txt"><b>Davetli listesi</b><small>İsteğe bağlı — bu izni sen açtın</small></span>
+          </div>
+          <div class="ba-frow">
+            <span class="ba-dir none"><i class="fa-solid fa-ban" aria-hidden="true"></i> Cihaza gönderim yok</span>
+            <span class="txt"><b>Dada Gourmet cihazına hiçbir veri yazmaz</b><small>Bu bağlantı tek yönlüdür; çıkış izni yalnız Apple Takvim ve Google Takvim kartlarında vardır</small></span>
+          </div>
+        </div>
+
+        <div class="ba-foot">
+          <div class="ba-foot-txt">
+            <h4><i class="fa-solid fa-link-slash" aria-hidden="true"></i> Bağlantıyı kesme</h4>
+            <p>Kestiğinde konum servisinin dört izni birden geri alınır ve okuma durur; cihazının kendi
+          kayıtlarına dokunulmaz. Dada Gourmet'te oluşmuş eski kayıtların da silinmez —
+            <a href="#">Veri ve İzinlerim</a> sayfasından silebilirsin.
+            Konumunu zaten Apple Takvim üzerinden paylaşıyorsan bu bağlantıyı kesip yalnız takvim
+          üzerinden de devam edebilirsin.</p>
+          </div>
+          <button class="ba-cut" type="button" data-cut=""><i class="fa-solid fa-link-slash" aria-hidden="true"></i> <span data-role="cut-txt">Bağlantıyı kes</span></button>
+        </div>
+      </article>
+
+      
+      <article class="ba-card fp-card" id="baglanti-manuel" data-app="manuel" data-durum="on" data-ad="Manuel ziyaret girişi" data-lbl-on="Açık" data-lbl-off="Kapalı" data-cut-on="Manuel girişi kapat" data-cut-off="Manuel girişi aç" data-senk-on="Senkronizasyon yok" data-senk-off="Senkronizasyon yok">
+        <div class="ozet-bas">
+          <h3><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> Manuel ziyaret girişi</h3>
+          <span class="ba-head-ico">
+            <span class="rozet olumlu" data-role="badge"><i class="fa-solid fa-check" aria-hidden="true"></i> Açık</span>
+          </span>
+        </div>
+
+        <div class="ba-top">
+          <div class="ba-box">
+            <h4><i class="fa-solid fa-plug" aria-hidden="true"></i> Bağlantı durumu</h4>
+            <p class="v"><span data-role="durum-txt">Açık</span> </p>
+            <small data-role="durum-alt">Dış bir sisteme bağlanmaz — <b>bağlantı yok</b>. Takvim bağlantın olmasa da ziyaretini elle kaydedebilirsin. <a href="#">Ziyaret Günlüğü</a>'nde bu kaynak <b>Manuel giriş</b> adıyla görünür.</small>
+          </div>
+          <div class="ba-box">
+            <h4><i class="fa-solid fa-rotate" aria-hidden="true"></i> Son senkronizasyon</h4>
+            <p class="v"><span data-role="senk">Senkronizasyon yok</span></p>
+            <small data-role="senk-alt">Kayıt anında işlenir · son manuel kayıt: dün 21:40</small>
+          </div>
+        </div>
+
+        <div class="ba-sech">
+          <h4><i class="fa-solid fa-sliders" aria-hidden="true"></i> Verilen izinler</h4>
+          <span class="hint">Hangi alanı elle gireceğini sen seçersin</span>
+        </div>
+        <div class="ba-perms">
+          <div class="fp-toggle">
+            <span class="txt"><b>Ziyaret tarihini elle gir</b><small>Günlüğünde ziyaret tarihi alanı açık kalır. Kapatırsan bu alan hiç görünmez.</small></span>
+            <span class="fp-sw-lbl">Açık</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="true" data-perm="manuel-tarih" aria-label="Manuel giriş — ziyaret tarihi alanı"></button>
+          </div>
+          <div class="fp-toggle">
+            <span class="txt"><b>Ziyaret süresi ve türünü elle gir</b><small>Kahvaltı, akşam yemeği, kahve ya da kendi eklediğin bir tür. Ziyaret Günlüğü'ne kaydolur.</small></span>
+            <span class="fp-sw-lbl">Açık</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="true" data-perm="manuel-tur" aria-label="Manuel giriş — ziyaret süresi ve türü alanı"></button>
+          </div>
+          <div class="fp-toggle">
+            <span class="txt"><b>Yaklaşık yol süresini elle gir</b><small>Kapalıyken Dada Gourmet bu değeri semt ve mesafeden yaklaşık olarak kendisi çıkarır; sayı yine yaklaşıktır.</small></span>
+            <span class="fp-sw-lbl">Kapalı</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="false" data-perm="manuel-yol" aria-label="Manuel giriş — yaklaşık yol süresi alanı"></button>
+          </div>
+          <div class="fp-toggle">
+            <span class="txt"><b>Ziyaret notu ekle</b><small>İsteğe bağlıdır. Kendi notunu yazarsın; not değerlendirmeye girmez.</small></span>
+            <span class="fp-sw-lbl">Açık</span>
+            <button class="fp-sw" type="button" role="switch" aria-checked="true" data-perm="manuel-not" aria-label="Manuel giriş — ziyaret notu alanı"></button>
+          </div>
+        </div>
+        <div class="ba-warn" data-role="nozin" hidden="">
+          <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+          <p>Manuel giriş açık ama hiçbir alan seçili değil — günlüğünde elle girilecek alan görünmez.</p>
+        </div>
+
+        <div class="ba-sech">
+          <h4><i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> Hangi veriler aktarılıyor</h4>
+          <span class="hint">Dış sisteme çıkış yok</span>
+        </div>
+        <div class="ba-flow">
+          <div class="ba-frow" data-flow="manuel-tarih">
+            <span class="ba-dir self" data-role="dir" data-base="self" data-base-html="&lt;i class=&quot;fa-solid fa-keyboard&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Sen → DadaGourmet"><i class="fa-solid fa-keyboard" aria-hidden="true"></i> Sen → Dada Gourmet</span>
+            <span class="txt"><b>Rezervasyon kaydı</b><small>Yalnız senin girdiğin bilgi</small></span>
+          </div>
+          <div class="ba-frow" data-flow="manuel-tur">
+            <span class="ba-dir self" data-role="dir" data-base="self" data-base-html="&lt;i class=&quot;fa-solid fa-keyboard&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Sen → DadaGourmet"><i class="fa-solid fa-keyboard" aria-hidden="true"></i> Sen → Dada Gourmet</span>
+            <span class="txt"><b>Ziyaret süresi ve türü</b><small>Ziyaret Günlüğü kaydına düşer</small></span>
+          </div>
+          <div class="ba-frow is-off" data-flow="manuel-yol">
+            <span class="ba-dir none" data-role="dir" data-base="self" data-base-html="&lt;i class=&quot;fa-solid fa-keyboard&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Sen → DadaGourmet"><i class="fa-solid fa-ban" aria-hidden="true"></i> Aktarılmıyor</span>
+            <span class="txt"><b>Yaklaşık yol süresi</b><small>Kapalıyken semt ve mesafeden yaklaşık olarak çıkarılır</small></span>
+          </div>
+          <div class="ba-frow" data-flow="manuel-not">
+            <span class="ba-dir self" data-role="dir" data-base="self" data-base-html="&lt;i class=&quot;fa-solid fa-keyboard&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Sen → DadaGourmet"><i class="fa-solid fa-keyboard" aria-hidden="true"></i> Sen → Dada Gourmet</span>
+            <span class="txt"><b>Ziyaret notu</b><small>Serbest not — değerlendirilmez</small></span>
+          </div>
+          <div class="ba-frow">
+            <span class="ba-dir none"><i class="fa-solid fa-ban" aria-hidden="true"></i> Dış sisteme gönderim yok</span>
+            <span class="txt"><b>Manuel kayıtların hiçbir dış sisteme gönderilmez</b><small>Apple Takvim, Google Takvim ve konum servisi bağlantıları manuel kayıtlarına erişemez</small></span>
+          </div>
+        </div>
+
+        <div class="ba-foot">
+          <div class="ba-foot-txt">
+            <h4><i class="fa-solid fa-link-slash" aria-hidden="true"></i> Bağlantıyı kesme</h4>
+            <p>Kesilecek bir <b>dış</b> bağlantı yok — manuel giriş Dada Gourmet'in kendi içindedir.
+            Karşılığı, manuel girişi tamamen kapatmaktır: alanlar günlüğünden kalkar, yazdıkların
+    durur. Kayıtları silmek istersen
+            <a href="#">Veri ve İzinlerim</a> sayfasından silebilir,
+            tek tek düzeltmek istersen <a href="#">Geçmişim</a>
+            sayfasından düzenleyebilirsin.</p>
+          </div>
+          <button class="ba-cut" type="button" data-cut=""><i class="fa-solid fa-pen-slash" aria-hidden="true"></i> <span data-role="cut-txt">Manuel girişi kapat</span></button>
+        </div>
+      </article>
+
+    </div>
+
+    
+    <div class="bos-durum" id="baEmpty" hidden="">
+      <div class="bos-ikon"><i class="fa-solid fa-plug-circle-xmark" aria-hidden="true"></i></div>
+      <h3>Bu durumda bağlantı yok</h3>
+      <p>Seçtiğin duruma uyan bağlantı bulunmadı. Süzgeci sıfırlayıp dördünü de görebilirsin.</p>
+      <button class="dugme birincil" type="button" id="baEmptyReset"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Süzgeci sıfırla</button>
+    </div>
+
+  </div>
+</section>
+<section class="sec-fit">
+  <div class="wrap kap">
+
+    <div class="sec-head">
+      <div>
+        <span class="ust-etiket"><i class="fa-solid fa-rotate"></i> Senkronizasyon</span>
+        <h2>Ne sıklıkla güncellensin?</h2>
+        <p class="lead">Bu tercih tüm etkin bağlantılar için geçerlidir. Bağlantı başına
+        izinler yukarıda ayrı ayrı duruyor; burası yalnız <b>ne zaman</b> okunacağını belirler.</p>
+      </div>
+    </div>
+
+    <div class="fp-grid">
+      <div class="fp-card">
+        <div class="ozet-bas"><h3><i class="fa-solid fa-clock-rotate-left"></i> Sıklık ve elle yenileme</h3></div>
+        <div class="ba-sync">
+          <div class="ba-fld">
+            <label for="baFreq">Senkronizasyon sıklığı</label>
+            <select id="baFreq" name="baFreq">
+              <option value="oto" selected="">Otomatik — cihaz uygun olduğunda</option>
+              <option value="saat">Saatte bir</option>
+              <option value="gun">Günde bir</option>
+              <option value="elle">Yalnız elle yenilediğimde</option>
+            </select>
+            <span class="help" id="baFreqHelp">Otomatikte cihazın pil ve ağ durumuna göre gün içinde birkaç kez okunur.</span>
+          </div>
+          <div class="ba-syncbtn">
+            <button class="dugme birincil" type="button" id="baSyncNow"><i class="fa-solid fa-rotate" aria-hidden="true"></i> Şimdi senkronize et</button>
+          </div>
+        </div>
+        <p class="ba-live" id="baLive" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="fp-card">
+        <div class="ozet-bas"><h3><i class="fa-solid fa-shoe-prints"></i> Senkronlanan veri nereye düşer</h3>
+          <a class="fp-act" href="#">Ziyaret Günlüğü <i class="fa-solid fa-arrow-right"></i></a></div>
+        <div class="fp-list">
+          <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-shoe-prints"></i></span>
+            <span class="ks-metin"><b>Ziyaret Günlüğü</b><small>Rezervasyon, etkinlik, ziyaret ve yaklaşık yol süresi gün gün burada listelenir</small></span>
+            <span class="ks-uc"><a class="fp-act" href="#">Aç</a></span></div>
+          <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-chart-line"></i></span>
+            <span class="ks-metin"><b>Keşif Özetim</b><small>Haftalık keşif dengen ve gelişimin — kendi başlangıcınla kıyaslanır, başkasıyla değil</small></span>
+            <span class="ks-uc"><a class="fp-act" href="#">Aç</a></span></div>
+          <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-clock-rotate-left"></i></span>
+            <span class="ks-metin"><b>Geçmişim</b><small>Kaydı düzeltmek ya da silmek istediğinde buradan tek tek düzenlersin</small></span>
+            <span class="ks-uc"><a class="fp-act" href="#">Aç</a></span></div>
+          <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-shield-halved"></i></span>
+            <span class="ks-metin"><b>Veri ve İzinlerim</b><small>Amaç bazlı izinler, rehberinin gördükleri, saklama süresi ve veri silme</small></span>
+            <span class="ks-uc"><a class="fp-act" href="#">Aç</a></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bilgi-notu">
+      <i class="fa-solid fa-shield-halved"></i>
+      <p><b>Bu sayfa yalnız cihaz ve uygulama bağlantılarını yönetir.</b>
+      Verinin hangi <b>amaçla</b> tutulduğu, rehberinin ne gördüğü, saklama süresi ve
+      verini indirme/silme işlemleri <a href="#">Veri ve İzinlerim</a>
+      sayfasındadır; iki sayfa aynı ilkeyi paylaşır: izinler isteğe bağlı, geri alınabilir ve
+      açıklamalıdır. Bağlı Uygulamalar'daki hiçbir anahtar oradaki amaç izinlerini otomatik açmaz.
+      Hesabın ve paketinle ilgili işlemler için <a href="#">Hesabım</a>,
+      yasal metinler için <a href="#">KVKK Aydınlatma Metni</a>.</p>
+    </div>
+
+  </div>
+</section>
+</div>
+
+<div class="fit-pane" data-pane="veri" id="hs-pane-veri" role="tabpanel" aria-labelledby="hs-tab-veri" tabindex="-1" hidden="">
+<div class="wrap kap"><div class="fp-grid">
+      
+      <div class="fp-card" id="indir">
+        <div class="ozet-bas"><h3><i class="fa-solid fa-database"></i> Verini gör, indir, sil</h3></div>
+        <div class="fp-list">
+          <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-list"></i></span>
+            <span class="ks-metin"><b>Tuttuğumuz veriler</b><small>Profil, ziyaret kaydı, değerlendirme, keşif görevi katılımı, mesajlar</small></span>
+            <span class="ks-uc"><button class="fp-act fp-actbtn" type="button" id="vzListele" data-lg-gate="" data-lg-title="Verini listelemek için giriş yap" data-lg-desc="Hangi verilerin tutulduğunu görmek için hesabına giriş yapman gerekiyor." aria-expanded="false" aria-controls="vzListe">Listele</button></span></div>
+
+          
+          <div class="vz-liste" id="vzListe" hidden="">
+            <table class="vz-tablo">
+              <caption class="sr-only">Hesabında tutulan veri grupları</caption>
+              <thead><tr><th scope="col">Veri grubu</th><th scope="col">Kayıt</th><th scope="col">İlk kayıt</th><th scope="col">Saklama</th></tr></thead>
+              
+              <tbody data-yer-tutucu="veri-listesi-sayilari">
+                <tr><td>Profil ve hesap bilgileri</td><td>1</td><td>14 Şub 2026</td><td>Hesap açık kaldıkça</td></tr>
+                <tr><td>Ziyaret ve rota kaydı</td><td>184</td><td>16 Şub 2026</td><td>Hesap açık kaldıkça</td></tr>
+                <tr><td>Değerlendirme ve fotoğraf</td><td>241</td><td>16 Şub 2026</td><td>Hesap açık kaldıkça</td></tr>
+                <tr><td>Kaydedilen mekân ve liste</td><td>32</td><td>18 Şub 2026</td><td>Hesap açık kaldıkça</td></tr>
+                <tr><td>Keşif görevi katılımları</td><td>7</td><td>2 Mar 2026</td><td>Hesap açık kaldıkça</td></tr>
+                <tr><td>Rehber mesajları ve dosyalar</td><td>96</td><td>12 Mar 2026</td><td>Hesap açık kaldıkça</td></tr>
+                <tr><td>Bağlı uygulama senkron kaydı</td><td>1.408</td><td>19 Şub 2026</td><td>90 gün</td></tr>
+                <tr><td>Destek talepleri ve yazışma</td><td>8</td><td>21 Mar 2026</td><td>Yasal saklama süresi</td></tr>
+              </tbody>
+            </table>
+            <p class="alan-yardim"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Hesabını silersen bu grupların tamamı 30 gün içinde silinir; faturalar yasal saklama süresince muhasebe kaydında kalır.</p>
+          </div>
+
+          <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-download"></i></span>
+            <span class="ks-metin"><b>Veriyi indir</b><small>Makine okunur dosya olarak, tek seferde</small></span>
+            <span class="ks-uc"><button class="fp-act fp-actbtn" type="button" id="vzIndir" data-lg-gate="" data-lg-title="Veriyi indirmek için giriş yap" data-lg-desc="Verini makine okunur dosya olarak indirmek için hesabına giriş yapman gerekiyor.">İndir</button></span></div>
+
+          <div class="vz-indir" id="vzIndirDurum" hidden="">
+            <div class="vz-adimlar" id="vzAdimlar">
+              <span class="vz-adim acik"><i class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i> Paket hazırlanıyor</span>
+              <span class="vz-adim"><i class="fa-regular fa-circle" aria-hidden="true"></i> Dosya oluşturuluyor</span>
+              <span class="vz-adim"><i class="fa-regular fa-circle" aria-hidden="true"></i> Bağlantı e-postana gönderiliyor</span>
+            </div>
+            <p class="durum-satir" id="vzIndirNot" role="status"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> <span>Paketin hazırlanması birkaç dakika sürebilir; hazır olunca <b>demo@eposta.com</b> adresine indirme bağlantısı gönderilir. Bağlantı 48 saat geçerlidir.</span></p>
+          </div>
+          <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-pen"></i></span>
+            <span class="ks-metin"><b>Kaydı düzelt</b><small>Yanlış girdiğin ziyaret ya da değerlendirme kaydını düzeltebilirsin</small></span>
+            <span class="ks-uc"><a class="fp-act" href="#">Geçmişe git</a></span></div>
+          <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-trash-can"></i></span>
+            <span class="ks-metin"><b>Veriyi sil</b><small>Yalnız Dada Gourmet verisi ya da tüm hesap — ikisi ayrı seçenektir</small></span>
+            <span class="ks-uc"><a class="fp-act" href="#">Sil</a></span></div>
+        </div>
+      </div>
+
+      <div class="fp-card">
+        <div class="ozet-bas"><h3><i class="fa-solid fa-hourglass-half"></i> Saklama ve erişim</h3></div>
+        <div class="fp-list">
+          <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-regular fa-calendar"></i></span>
+            <span class="ks-metin"><b>Ziyaret ve değerlendirme kaydı</b><small>Hesabın açık kaldığı sürece; hesap silinince 30 gün içinde silinir</small></span>
+            <span class="ks-uc">Aktif</span></div>
+          <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-user-shield"></i></span>
+            <span class="ks-metin"><b>Rol bazlı erişim</b><small>Rehber yalnız kendi danışanını görür; yönetim erişimi işlem kaydına yazılır</small></span>
+            <span class="ks-uc">Açık</span></div>
+          <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-clipboard-list"></i></span>
+            <span class="ks-metin"><b>İşlem kaydı</b><small>Verine kimin ne zaman eriştiği tutulur</small></span>
+            <span class="ks-uc"><a class="fp-act" href="#">Görüntüle <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></span></div>
+          <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-child"></i></span>
+            <span class="ks-metin"><b>Yaş ve veli onayı</b><small>16 yaş altı kullanıcıda veli onayı istenir; alkol servisi yapan mekân önerileri kapalıdır</small></span>
+            <span class="ks-uc">Uygulanıyor</span></div>
+        </div>
+      </div>
+    </div></div>
+</div>
+
+<div class="fit-pane" data-pane="dondur" id="hs-pane-dondur" role="tabpanel" aria-labelledby="hs-tab-dondur" tabindex="-1" hidden="">
+<section class="hs-sec" id="veri" role="tabpanel" tabindex="0" aria-labelledby="tab-veri">
+        <div class="kart panel uyari-kart" id="dondur">
+          <div class="kart-bas">
+            <div>
+              <h2 id="dondurH" class="kart-baslik"><i class="fa-solid fa-circle-pause"></i> Hesabı Dondurma</h2>
+              <p>Bir süre ara vermek istersen hesabını kapatmadan dondurabilirsin.</p>
+            </div>
+          </div>
+          <div class="kart-govde">
+
+          <p class="uyari-kutu">
+            <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            <span><b>Uyarı:</b> dondurma süresince profilin ve keşif görevi katılımların gizlenir, serin durur ve rehber randevuların iptal edilir. Verilerin silinmez.</span>
+          </p>
+
+          
+          <ul class="madde-liste">
+            <li><i class="fa-solid fa-circle" aria-hidden="true"></i> <span>Ziyaret kayıtların, listelerin ve rozetlerin korunur; geri döndüğünde yerinde durur.</span></li>
+            <li><i class="fa-solid fa-circle" aria-hidden="true"></i> <span>Bildirimler ve hatırlatmalar durur.</span></li>
+            <li><i class="fa-solid fa-circle" aria-hidden="true"></i> <span><b>Dada Gourmet Pro üyeliği otomatik durmaz.</b> Tahsilatın da durmasını istiyorsan önce <a href="#">otomatik yenilemeyi kapat</a> (Ödemelerim › Abonelik).</span></li>
+            <li><i class="fa-solid fa-circle" aria-hidden="true"></i> <span>Giriş yaptığın anda hesabın kendiliğinden aktifleşir.</span></li>
+          </ul>
+
+          <form class="onay-kapisi" data-confirm="">
+            <div class="alan">
+              <label class="alan-etiket" for="dondurSure">Dondurma süresi</label>
+              
+              <select class="alan-secim" id="dondurSure">
+                <option>1 hafta</option>
+                <option selected="">2 hafta</option>
+                <option>1 ay</option>
+                <option>3 ay</option>
+                <option>Ben tekrar giriş yapana kadar</option>
+              </select>
+            </div>
+            <label class="onay-kutusu" for="dondurOnay">
+              <input type="checkbox" id="dondurOnay" data-confirm-check="">
+              <span>Dondurma sırasında profilimin gizleneceğini, randevularımın iptal edileceğini ve Pro tahsilatının kendiliğinden durmayacağını anladım.</span>
+            </label>
+            <div class="onay-eylemler">
+              <button class="dugme uyari" type="submit" data-confirm-btn="" disabled="" aria-describedby="dondurDurum"><i class="fa-regular fa-circle-pause"></i> Hesabı Dondur</button>
+              <p class="durum-satir blocked" id="dondurDurum" role="status" data-confirm-state=""><i class="fa-solid fa-lock" aria-hidden="true"></i> <span>Düğme kapalı: dondurmak için önce onay kutusunu işaretle.</span></p>
+            </div>
+          </form>
+          </div>
+        </div>
+
+      
+        <div class="kart panel tehlike-kart" id="sil">
+          <div class="kart-bas">
+            <div>
+              <h2 id="silH" class="kart-baslik"><i class="fa-solid fa-user-xmark"></i> Hesabımı Sil</h2>
+              <p>Hesabını kalıcı olarak kapatır. Ara vermek istiyorsan <a href="#dondur">dondurma</a> geri alınabilir bir seçenektir.</p>
+            </div>
+          </div>
+          <div class="kart-govde">
+
+          <p class="uyari-kutu">
+            <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            <span><b>Uyarı — bu işlem geri alınamaz.</b> 30 gün sonunda ziyaret kayıtların, değerlendirmelerin, listelerin, rozetlerin ve rehber yazışmaların kalıcı olarak silinir.</span>
+          </p>
+
+          <ul class="madde-liste">
+            <li><i class="fa-solid fa-circle" aria-hidden="true"></i> <span>İlk 30 gün içinde giriş yaparsan silme iptal edilir ve hesabın geri gelir.</span></li>
+            <li><i class="fa-solid fa-circle" aria-hidden="true"></i> <span>Aktif Dada Gourmet Pro üyeliğin ve rehber paketlerin silme talebiyle birlikte iptal edilir; kalan dönem için ücret iadesi yapılmaz.</span></li>
+            <li><i class="fa-solid fa-circle" aria-hidden="true"></i> <span>Faturaların yasal saklama süresi boyunca muhasebe kaydında kalır (silinemez), fakat profiline bağlı kalmaz.</span></li>
+            <li><i class="fa-solid fa-circle" aria-hidden="true"></i> <span>Silmeden önce <a href="#">verilerinin bir kopyasını indirebilirsin</a>.</span></li>
+          </ul>
+
+          <form class="onay-kapisi" data-confirm="" data-confirm-phrase="HESABIMI SİL">
+            <div class="alan">
+              <label class="alan-etiket" for="silNeden">Ayrılma nedenin <span class="istege-bagli">(opsiyonel)</span></label>
+              <select class="alan-secim" id="silNeden">
+                <option selected="">Belirtmek istemiyorum</option>
+                <option>Uygulamayı kullanmıyorum</option>
+                <option>Başka bir uygulamaya geçtim</option>
+                <option>Çok fazla bildirim alıyorum</option>
+                <option>Gizlilik kaygısı</option>
+                <option>Ücretli paket bana uygun değil</option>
+              </select>
+            </div>
+            <label class="onay-kutusu" for="silOnay">
+              <input type="checkbox" id="silOnay" data-confirm-check="">
+              <span>Hesabımın ve tüm keşif verilerimin 30 gün sonunda geri alınamaz şekilde silineceğini, aktif üyeliğimin iptal edileceğini ve ücret iadesi yapılmayacağını anladım.</span>
+            </label>
+            <div class="alan">
+              <label class="alan-etiket" for="silIfade"><span>Onaylamak için <b>HESABIMI SİL</b> yaz</span> <span class="zorunlu">*</span></label>
+              <input class="alan-girdi" id="silIfade" type="text" autocomplete="off" spellcheck="false" placeholder="HESABIMI SİL" data-confirm-input="" aria-describedby="silDurum">
+            </div>
+            <div class="onay-eylemler">
+              <button class="dugme tehlike" type="submit" data-confirm-btn="" disabled="" aria-describedby="silDurum"><i class="fa-regular fa-trash-can"></i> Hesabımı Kalıcı Olarak Sil</button>
+              <p class="durum-satir blocked" id="silDurum" role="status" data-confirm-state=""><i class="fa-solid fa-lock" aria-hidden="true"></i> <span>Düğme kapalı: silme için onay kutusunu işaretle ve HESABIMI SİL ifadesini birebir yaz.</span></p>
+            </div>
+          </form>
+
+          <div class="alt-not"><i class="fa-solid fa-circle-question" aria-hidden="true"></i> <span>Kararsızsan silmek yerine <a href="#bildirim">bildirimleri kapatabilir</a>, <a href="#dondur">hesabını dondurabilir</a> ya da <a href="#">bize yazabilirsin</a>.</span></div>
+          </div>
+        </div>
+      </section>
+</div>
+</div>
+</div>
+
+<!--@main-disi-->
+<div class="fb-overlay" id="fotoOverlay"></div>
+<div class="fb-modal" id="fotoModal" data-avatar-url="" data-kapak-url="" role="dialog" aria-modal="true" aria-labelledby="fotoModalTitle">
+  <div class="fb-panel" tabindex="-1">
+    <div class="fb-head">
+      <div>
+        <h3 id="fotoModalTitle">Profil Fotoğrafı</h3>
+        <p id="fotoModalSub">JPG, PNG veya WebP · en az 400×400 px · en çok 5 MB. Kare kırpılır.</p>
+      </div>
+      <button class="fb-close" id="fotoClose" type="button" aria-label="Kapat"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="fb-body">
+
+      
+      <div class="fy-drop" id="fyDrop">
+        <input class="sr-only" id="fyFile" type="file" accept="image/jpeg,image/png,image/webp">
+        <span class="fy-drop-ico" aria-hidden="true"><i class="fa-solid fa-cloud-arrow-up"></i></span>
+        <b>Dosyayı buraya sürükle</b>
+        <span>ya da bilgisayarından seç</span>
+        <label class="btn btn-ghost fy-pick" for="fyFile"><i class="fa-solid fa-folder-open"></i> Dosya Seç</label>
+      </div>
+
+      
+      <div class="fy-stage" id="fyStage" hidden="">
+        <div class="fy-frame" id="fyFrame" tabindex="0" role="group" aria-label="Fotoğrafı sürükleyerek veya ok tuşlarıyla konumlandır" aria-describedby="fyOlcekYardim"><img draggable="false" id="fyImg" alt="Seçtiğin fotoğrafın önizlemesi"></div>
+        <button class="btn btn-ghost fy-pick" id="fyDegistir" type="button"><i class="fa-solid fa-folder-open" aria-hidden="true"></i> Başka dosya seç</button>
+        <dl class="hs-facts fy-facts">
+          <div><dt>Dosya</dt><dd id="fyAd">—</dd></div>
+          <div><dt>Boyut</dt><dd id="fyBoyut">—</dd></div>
+          <div><dt>Ölçü</dt><dd id="fyOlcu">—</dd></div>
+          <div><dt>Çerçeve</dt><dd id="fyKirp">—</dd></div>
+        </dl>
+        <div class="fy-zoom">
+          <label class="fk-label" for="fyOlcek">Yakınlaştır</label>
+          <input class="fy-range" id="fyOlcek" type="range" min="100" max="220" value="100" step="1" aria-describedby="fyOlcekYardim">
+          <span class="fk-help" id="fyOlcekYardim"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Fotoğrafı sürükle; tekerlek, kaydırıcı veya iki parmakla yakınlaştır. Çerçevede görünen alan kaydedilir.</span>
+        </div>
+      </div>
+
+      <p class="hs-state" id="fyDurum" role="status"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> <span>Henüz dosya seçmedin.</span></p>
+
+      <div class="pc-foot fy-foot">
+        <span class="note">Uygula ile kaydedilir. Vazgeç mevcut fotoğrafını korur.</span>
+        
+        <button class="btn btn-ghost fy-kaldir" type="button" id="fyKaldir" hidden=""><i class="fa-solid fa-trash-can" aria-hidden="true"></i> <span id="fyKaldirEtiket">Fotoğrafı Kaldır</span></button>
+        <button class="btn btn-ghost" type="button" id="fyVazgec">Vazgeç</button>
+        <button class="btn btn-primary" type="button" id="fyUygula" disabled=""><i class="fa-solid fa-check" aria-hidden="true"></i> Uygula</button>
+      </div>
+    </div>
+  </div>
+</div>

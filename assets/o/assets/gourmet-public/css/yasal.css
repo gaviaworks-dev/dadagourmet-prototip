@@ -1,0 +1,48 @@
+/* ══ YASAL EKRANLARI — ÖRTME KATMANI ═══════════════════════════════════════════
+   Bu dosya bir SAYFA CSS'i DEĞİL, örtme katmanıdır. Kanon `gourmet-yasal.css`tir
+   (donör: reference/gourmet-yasal/gourmet-yasal.css, bayt bayt vendor edildi) ve
+   /yasal · /yasal/{slug} · /kunye · /gourmet-ara onu donörün head sırasında YÜKLER.
+   Bu dosya yalnız o iki yasal ekranında, kanondan HEMEN SONRA gelir.
+
+   İLKE — `site-overrides.css`in başlığındaki kuralın aynısı:
+   KANONUN ZATEN VERDİĞİ HİÇBİR ŞEY BURADA TEKRARLANMAZ.
+
+   GEÇMİŞİ (2026-09-15 ölçümü): bu dosya 6317 B'lık tam bir sayfa CSS'iydi —
+   `public/reference/yasal/yasal.css`ten (Gastro'da canlı yasal sayfa dili) Gourmet
+   kabuğuna belgeli bir kaynak-transfer. Donörde karşılığı yoktu (`reference/yasal/
+   yasal.css` → 404) ve kapının AD_HARITASI'ndaki `gourmet-yasal.css → yasal.css`
+   eşlemesi yüzünden KANONUN YERİNE geçmişti; gerçek kanon hiç yüklenmiyordu.
+   Eşleme kaldırıldı, kanon vendor edildi, bu dosya da 84 kuralından 78'i kanonla
+   BİREBİR AYNI olduğu için aşağıdaki artığa indirildi.
+
+   AŞAĞIDAKİLER SİLİNEMEZ — hiçbiri kanonda YOK (ölçüldü, seçici seçici):
+   · Üç mobil kural (≤640px): donörün `gourmet-yasal.css`i bu üçünü hiç tanımlamıyor.
+     Silinirse /yasal ve /yasal/{slug} telefonda bozulur — tanım satırları iki sütun
+     kalır, alt gezinme yatay taşar.
+   · `.prose__body a`: kanon bağ stilini `a.inline`a daraltıyor; yasal metinlerde
+     gövde içi bağların hepsi işaretli olmalı.
+   · `.lg-toc[hidden]`: içindekiler kutusunun gizlenmesi; kanonda karşılığı yok.
+   · `.prose__body ul li` üzerindeki DÖRT bildirim: uzun-form yasal metinde madde
+     hizalaması. Kuralın geri kalanı kanonda, burada YALNIZ fark bildiriliyor.
+
+   BİLEREK DÜŞÜRÜLDÜ: eski dosyadaki `.lg-top{background:#211e16}`. Kanonun
+   gradient+görselini EZİYORDU. Ölçüldü: hero'yu zaten donörle birebir
+   `.px-media`/`.px-veil` div'leri boyuyor, yani düz renk hiç görünmüyordu —
+   ama kanonu bastırdığı için kaldırıldı.
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* gövde içi bağlar — kanon `.prose__body a.inline` diyor, yasal metinde hepsi işaretli */
+.prose__body a{color:var(--tomato);font-weight:700;text-decoration:underline;text-underline-offset:2px}
+
+/* uzun-form madde hizalaması — kuralın geri kalanı kanonda, burada yalnız fark */
+.prose__body ul li{text-align:justify;-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}
+
+/* içindekiler kutusu gizlenebilir — kanonda `[hidden]` karşılığı yok */
+.lg-toc[hidden]{display:none}
+
+/* ===== MOBİL (≤640px) — ÜÇÜ DE KANONDA YOK ===== */
+@media (max-width:640px){
+  .lg-defs .dr{grid-template-columns:1fr}
+  .lg-foot .lg-nav{width:100%;flex-direction:column}
+  .lg-foot .lg-nav a{width:100%;justify-content:space-between}
+}

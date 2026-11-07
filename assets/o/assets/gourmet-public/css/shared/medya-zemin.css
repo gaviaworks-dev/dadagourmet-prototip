@@ -1,0 +1,13 @@
+/* =====================================================================
+   MEDYA ZEMİNİ — `/medya/{id}?w=` sürümünün bant seçimi (Beyar revizesi R8, 2026-09-17)
+   Satır içi `background-image` GENİŞ bant (≥1025 px) sürümüdür; daha dar ekranda
+   aynı öğenin `--zemin-orta` / `--zemin-dar` değişkeni devreye girer. Değerleri
+   `App\Katalog\Servisler\MedyaSurumServisi::zeminStili()` basar; bant genişlikleri
+   oradaki ölçüm tablosunda.
+   `!important` BİLİNÇLİ: satır içi stil her stylesheet kuralını yener; bu iki kural
+   yalnız o değişkeni TAŞIYAN öğeye (`[style*=…]`) dokunur, başka hiçbir zemine değil.
+   Yalnız bu görsellerin basıldığı ekranlarda bağlanır (küresel değil — `.ai/rules/css.md`
+   "CSS kural sayısı" tuzağı).
+   ===================================================================== */
+@media (max-width:1024px){[style*="--zemin-orta"]{background-image:var(--zemin-orta)!important}}
+@media (max-width:420px){[style*="--zemin-dar"]{background-image:var(--zemin-dar)!important}}

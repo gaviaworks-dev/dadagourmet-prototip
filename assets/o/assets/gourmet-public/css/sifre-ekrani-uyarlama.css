@@ -1,0 +1,92 @@
+/* ŞİFRE EKRANLARI — ince uyarlama katmanı (kural sayısı: 5).
+ *
+ * Kanon CSS (`gourmet-ekran.css`) VENDOR'dur ve donörle bayt bayt aynı kalmak
+ * zorundadır (.ai/rules/css.md · scripts/olcum/vendor-denetim.mjs). Aşağıdaki iki
+ * kusur kanon dosyada kural EKSİKLİĞİNDEN doğuyor; düzeltme bu katmanda.
+ *
+ * ⚠ NEDEN `kimlik-uyarlama.css` DEĞİL. O dosya var ama ÖKSÜZ: kendi başlığı ve
+ * `kimlik/layout.blade.php`in başlığı, dört kimlik ekranının 2026-09-15'te
+ * `go-giris.html` donörüne taşındığını ve o kabuğun (dolayısıyla o CSS'in) hiçbir
+ * yerden yüklenmediğini yazıyor. İçeriği `kimlik.css`in `.au-*` grameri; bugünkü
+ * ekranlar `.giris-*` grameri kullanıyor. Onu diriltmek, emekli bir gramerin
+ * kurallarını canlı üç ekrana geri sokardı — kapsamı ölçülmemiş bir yan etki.
+ * Öksüzün kaderi lead kararında; bu kulvar ona DOKUNMADI.
+ *
+ * 🔴 KÜRESEL BAĞLANMAZ. Yalnız üç ekran (`giris` · `sifremi-unuttum` ·
+ * `sifre-yenile`) bunu `@push('sayfa_css')` ile bağlar. Kabuğa
+ * (layouts/site.blade.php) bağlamak kapının "CSS kural sayısı" eksenini devirir —
+ * ölçülmüş emsal: `ray-kaydirma-uyarlama.css` anasayfada 962 → 978 yapmıştı
+ * (donör 946, tolerans 18,9). Dört kural bu üç ekranda toleransın içinde kalır.
+ */
+
+/* ------------------------------------------------------------------ 1 · ŞİFRE KURALI
+ * `go-giris.js` (U6) yazdıkça `li.classList.toggle('ok', gecti)` çağırıyor ve ikonu
+ * `fa-regular fa-circle` → `fa-solid fa-circle-check` yapıyor. Ama kanonda
+ * `.sifre-kural li.ok` diye BİR KURAL YOK (gourmet-ekran.css:571-573 yalnız
+ * `.sifre-kural`, `li` ve `li i` tanımlıyor) — yani sınıf takılıyor, ikon değişiyor,
+ * RENK sabit kalıyordu. Ölçüldü 2026-09-16 canlıda, "a → aA → aA1 → aA1! → aA1!aaaa"
+ * dizisiyle: beş adımın beşinde de `rgb(113,113,113)`. Kullanıcı "sağlandı" geri
+ * bildirimini yalnız ikon biçiminden çıkarmak zorundaydı. Dört markada da aynı eksik.
+ *
+ * 🔴 RENK UYDURULMADI. Bu markada ayrı bir "başarı" jetonu YOK (ölçüldü: yalnız
+ * `--c-mint:#6cca98` var, o da bir vurgu tonu). Kanonun KENDİ "sağlandı" rengi
+ * `gourmet-ekran.css:267`de yazılı: `.alan-yardim.tamam { color: var(--aksan-koyu); }`.
+ * Şifre kuralı da o rengi alır — dört markada aynı desen (Gastro'da turuncu, burada
+ * mor); marka aksanı neyse "sağlandı" odur. Yeni bir yeşil TANIMLAMA.
+ *
+ * ⚠ Sınıf adı `ok` — Diet/Fit/Gourmet üçünde de aynı. `tamam` diye ikinci bir ad
+ * kullanma; dört marka tek sözleşmede tutuluyor (Diet'te `tamam` vardı, `ok`a çevrildi).
+ */
+.sifre-kural li.ok {
+    color: var(--aksan-koyu);
+}
+
+.sifre-kural li.ok i {
+    color: var(--aksan-koyu);
+}
+
+/* ------------------------------------------------------------------ 2 · DURUM NOTU
+ * Şifre sıfırlandıktan sonra denetleyici `/giris`e `durum` flash'ıyla dönüyor ve
+ * `kimlik/bilesenler/giris-serit.blade.php` onu `<p class="bilgi-notu">` olarak
+ * basıyor. `.bilgi-notu` public CSS'te TANIMSIZDI — yalnız `gourmet-admin/admin.css`
+ * içinde var ve o dosya public sayfalara hiç yüklenmiyor. Sonuç: "Şifren güncellendi"
+ * mesajı biçimsiz düz paragraf olarak çıkıyordu. Ölçüldü 2026-09-16.
+ *
+ * Biçim kanonun kendi `.kimlik-durum` kalıbından alındı (aynı yeşil aile, aynı
+ * yuvarlak, aynı ikon hizası). Yeni bir görsel dil icat edilmedi.
+ */
+.bilgi-notu {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0 0 20px;
+    padding: 12px 14px;
+    border: 1px solid #cfe8d7;
+    border-radius: var(--radius-md, 12px);
+    background: #edf8f1;
+    color: #27633e;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.45;
+}
+
+.bilgi-notu > i {
+    flex: none;
+    margin-top: 3px;
+}
+
+/* ------------------------------------------------------------------ 3 · BAŞARI KUTUSUNDAKİ DÜĞME
+ * "Bağlantı yola çıktı" kutusundaki `Girişe Dön` düğmesi üstteki metne YAPIŞIK
+ * duruyordu. Ölçüldü 2026-09-17 canlıda @1440: düğmenin üst boşluğu Gourmet'te
+ * `0 px`, kardeşlerinde `22 px` (Diet `sifre-panosu.blade.php:32`, Fit
+ * `fit-giris.blade.php:737` — ikisi de satır içi `style="margin-top:22px"`).
+ *
+ * Kanon `gourmet-ekran.css:580-586` `.giris-basari` bloğunda `.dugme` için hiçbir
+ * kural tanımlamıyor; boşluk oradan gelmiyordu. Beyar kararı (2026-09-17): boşluk
+ * kardeşlerle eşitlensin ama SATIR İÇİ STİLLE DEĞİL, sınıfla. Kural bu yüzden burada.
+ *
+ * Değer uydurulmadı: kardeşlerdeki 22 px'in kanondaki karşılığı `--bosluk-22`.
+ */
+.giris-basari .dugme {
+    margin-top: var(--bosluk-22, 22px);
+}

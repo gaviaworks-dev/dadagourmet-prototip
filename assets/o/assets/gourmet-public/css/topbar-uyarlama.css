@@ -1,0 +1,45 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   ÜST SİYAH BANT — MARKA AİLESİ UYARLAMASI
+   donör (aile kanonu): https://gaviaworks-dev.github.io/DadaMentor/Dizin/
+   donör (bant markup'ı): https://gaviaworks-dev.github.io/DadaMentor/Gourmet/anasayfa.html
+
+   NEDEN AYRI DOSYA: bandın marka yuvaları iki VENDOR dosyada duruyor —
+   `gourmet.css` (.bs-gastro/.bs-diet/.bs-fit/.bs-gourmet/.bs-campus) ve
+   `shared/t5-b.css` (.bs-diet/.bs-fit düzeltmesi + .bs-akademi/.bs-store
+   kilitli yuvaları). İkisi de donörle BAYT BAYT aynı (cmp ile doğrulandı,
+   t5-b.css 14.260 B); kanona kural eklemek sahte vendor olurdu
+   (.ai/rules/assets.md). Emsal: etkinlik-detay-uyarlama.css,
+   gurme-lezzetler-uyarlama.css.
+
+   TEK KURAL — kapsam bilerek dar: .ai/rules/css.md "küresel uyarlama dosyası
+   kapıdaki CSS kural sayısını devirir" diyor (16 kural 962→978 yapmıştı,
+   tolerans ~18,9). Bu dosya 1 kural taşır.
+
+   ─── ÖLÇÜM (2026-09-16, `scripts/olcum/tb-renk.mjs`) ─────────────────────
+   `--marka` / `--bs-c` kardeş ağaçlarda ve Dizin kanonunda:
+
+     marka     Dizin kanonu   Gastro ağacı   Diet ağacı   Gourmet donörü+yerel
+     gastro    #742982        #742982        #E14827      #E14827   ◀ TEK FARK
+     diet      #009A44        #009A44        #009A44      #009A44
+     gourmet   #742982        #742982        #b14fc5      #742982
+     fit       #0093D0        #0093D0        #0093d0      #0093D0
+
+   Yani bantta Dizin kanonundan sapan TEK yuva DadaGastro. Hakem markanın
+   kendi ağacı: `Gastro/` `--bs-c:#742982` · `--bs-bg` 18% · `--bs-bd` 46% ·
+   `--bs-ic` = color-mix(in srgb, #742982 63%, #fff). Aynı emsal t5-b.css'in
+   `.bs-diet`/`.bs-fit` şerhinde de yazılı ("markalar kazanır").
+
+   `--bs-ic` DÜZ ALTILIK yazılıyor, color-mix değil: t5-b.css'in kayıtlı
+   dersi — color-mix'in hesaplanan değeri `color(srgb …)` biçiminde 0–1
+   döner ve kontrast araçlarını bozar. Karışım doğrulandı:
+   0,63·(220,61,23) + 0,37·(255,255,255) = (233,133,109) = #E9856D
+   (Gastro ağacında ölçülen: color(srgb 0.913529 0.520706 0.426824) — aynı).
+
+   NE BOZULUR: `--bs-c` bandın hover/odak dolgusu, `--bs-ic` durağan ikon
+   rengi, `--bs-bg`/`--bs-bd` yalnız `.is-active` hâli (Gourmet'te DadaGastro
+   hiç aktif olmaz, yine de kardeş ağaçla aynı kalsın diye yazıldı).
+   Bu kuralı kaldırıp "donörde #E14827 yazıyor" demek YANLIŞ olur — Gourmet
+   prototipi aile renk turundan ÖNCE dondurulmuş bir an; Dizin ile Gastro'nun
+   kendi ağacı iki tanık olarak #742982 diyor.
+   ══════════════════════════════════════════════════════════════════════════ */
+.bs-gastro { --bs-c: #742982; --bs-bg: rgba(116,41,130,.18); --bs-bd: rgba(116,41,130,.46); --bs-ic: #E9856D; }

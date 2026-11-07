@@ -1,0 +1,41 @@
+/* Video Mutfağı P0-5 — tarif köprüsü. Kanon dosyalarına dokunmadan yalnız yeni parçaların yerleşimi.
+
+   1) "Bu Tarifin Videosunu İzle" kartı (V2 `.vd-tarif-kopru`, dosyanın sonunda).
+   2) "Tarif videosu" bölümü dosya türünde <video> basar; `f6/icerik-bloklari.css` yalnız iframe'i boyuyor.
+   3) `#adimlar` çapası (izle sayfasının "Yazılı adımlara git" bağı): kanonun `#yorumlar`/`#bendeyaptim` kalıbı
+      (`tarif-detay.css:877-878`), sabit üst menü başlığı örtmesin. Bu dosya tarif sayfasının <head>inde koşulsuz yüklü. */
+.icerik-video video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+}
+#adimlar {
+  scroll-margin-top: 140px;
+}
+
+/* ---------- Tarif köprüsü (D.2a): "Bu Tarifin Videosunu İzle (mm:ss)" — Gastro .mega-find satır kartı + 16:9 poster ---------- */
+.rd-head .mega-find.vd-tarif-kopru { margin: 12px 0 16px; max-width: 560px; gap: 14px; padding: 10px 14px 10px 10px; text-decoration: none; }
+.vd-tarif-kopru__poster { position: relative; flex: none; width: 136px; aspect-ratio: 16 / 9; border-radius: var(--radius-sm, 8px); overflow: hidden; background: #1a1712; }
+.vd-tarif-kopru__poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s var(--ease, ease); }
+.vd-tarif-kopru__poster::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15, 13, 9, 0) 40%, rgba(15, 13, 9, .5)); }
+.vd-tarif-kopru__oynat { position: absolute; z-index: 1; left: 50%; top: 50%; width: 34px; height: 34px; margin: -17px 0 0 -17px; display: grid; place-items: center; border-radius: 50%; background: var(--tomato, #742982); color: #fff; font-size: 13px; box-shadow: 0 2px 10px rgba(15, 13, 9, .3); }
+.vd-tarif-kopru__oynat i { margin-left: 2px; }
+.vd-tarif-kopru__sure { position: absolute; z-index: 1; right: 5px; bottom: 5px; padding: 2px 6px; border-radius: 4px; background: rgba(15, 13, 9, .78); color: #fff; font-size: 11px; font-weight: 700; font-family: GilroyBd, var(--font, "Gilroy", system-ui, sans-serif); line-height: 1.2; font-variant-numeric: tabular-nums; }
+.vd-tarif-kopru .mf-body b { font-size: 15px; font-family: GilroyBd, var(--font, "Gilroy", system-ui, sans-serif); }
+.vd-tarif-kopru__ad { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: 3px; font-size: 14px; font-weight: 700; font-family: GilroyBd, var(--font, "Gilroy", system-ui, sans-serif); line-height: 1.3; color: var(--ink, #211E16); }
+.vd-tarif-kopru .mf-body small { margin-top: 3px; color: var(--slate-2, #56514A); opacity: 1; }
+.mega-find.vd-tarif-kopru:hover .vd-tarif-kopru__ad { color: #fff; }
+.mega-find.vd-tarif-kopru:hover .vd-tarif-kopru__poster img { transform: scale(1.05); }
+.mega-find.vd-tarif-kopru:focus-visible { outline: 3px solid var(--tomato, #742982); outline-offset: 2px; }
+@media (max-width: 640px) {
+  .rd-head .mega-find.vd-tarif-kopru { max-width: none; gap: 12px; padding: 8px 10px 8px 8px; }
+  .vd-tarif-kopru__poster { width: 112px; }
+  .vd-tarif-kopru .mf-body b { font-size: 14px; }
+  .vd-tarif-kopru__ad { font-size: 13.5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vd-tarif-kopru__poster img { transition: none !important; }
+}
