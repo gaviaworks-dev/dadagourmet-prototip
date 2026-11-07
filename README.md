@@ -50,5 +50,5 @@ Girişli Hesabım render'ı yerel bir Gastro kopyasından alınır; o adım ve t
 - Sahte puan, yorum, takipçi, analitik yok. Örnek veri görünür `prototip örneği` etiketi taşır.
 - Şirket bilgisi Gastro ile aynıdır; Gastro'da değeri olmayan alan gösterilmez (K5 güncellemesi).
 - Siyah bantta Dada Akademi ve Dada Store yok.
-- Harita MapLibre (K7). Altlık prototipte OpenFreeMap üstünden gelir; erişilemezse düz zemine düşer. Google harita çağrısı yok.
+- Mekânlar ve mekân detayı haritası MapLibre. Dada Route canlı altyapıda, Leaflet ile kalır; geçiş K7 ile Faz 4'te yapılır.
 - Sır, `.env`, canlı üye bilgisi depoya girmez.
