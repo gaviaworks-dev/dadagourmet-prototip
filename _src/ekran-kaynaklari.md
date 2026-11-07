@@ -37,6 +37,10 @@ Kısaltma: G = dadagastro.com canlı render, O = dadagourmet.com canlı render, 
 | Hukuki örnek | `/yasal/kvkk` | O gövde, G zinciri | Unvan, Adres, E-posta Gastro değerleri; MERSİS, vergi ve KEP satırları ile taslak bandı yok | K5 güncellemesi: yer tutucu basılmaz |
 | Ekran haritası | `/ekranlar` | Yok, derleyici çıktısı | Yeni | Onay turu için liste |
 
+## Sıfır sonuç
+
+Konsept kartları, konsept şeridi ve süzgeç seçeneklerinde 0 sonuçlu kalem gizlidir (W1.1, K8). Derleyici `/`, `/mekanlar`, `/etkinlikler` için denetler, kalırsa hata verir. Mekân Bul bilerek ayrıdır: Beyar talimatıyla veri olmayan seçenek görünür, boş sonuç ve öneri verir.
+
 ## Bağlar
 
 Prototipte karşılığı olmayan iç bağ uyarı vermez, en yakın gerçek ekrana gider. Tablo `_src/build.mjs` `YEDEK`: mekân detayı Mikla'ya; `hesabim/*` Gurme Panelim sekmelerine ya da Ayarlar'a; `yasal/*` KVKK örneğine; işletme ve SSS İletişim'e; basın Hakkımızda'ya; Gurme Lezzetler, Şehir Rehberleri ve arama Mekânlar'a. Konum düğmesi canlı `#lkModal` penceresini açar, seçim sunucuya gitmez.

@@ -126,5 +126,7 @@ for (const f of uretimDosyalari) {
 // Mekânlar süzgecinin istemci verisi: tek kaynak _src/veri ve _src/parcalar
 if (veri['mekan-filtre']) { const kartlar = JSON.parse(oku(path.join(SRC, 'parcalar/mekan-kartlar.json'))); const { mekanlar, secenek, alinma } = veri['mekan-filtre']; for (const slug of Object.keys(kartlar)) kartlar[slug] = kartZengin(kartlar[slug], mekanBySlug[slug]); fs.writeFileSync(path.join(KOK, 'assets/js/mekan-liste-veri.js'), 'window.DG_LISTE=' + JSON.stringify({ alinma, mekanlar, secenek, kartlar }) + ';\n'); }
 if (veri.etkinlik) fs.writeFileSync(path.join(KOK, 'assets/js/etkinlik-veri.js'), 'window.DG_ETKINLIK=' + JSON.stringify({ ...veri.etkinlik, kartlar: JSON.parse(oku(path.join(SRC, 'parcalar/etkinlik-kartlar.json'))) }) + ';\n');
+// K8 denetimi: sıfır sonuçlu konsept ve süzgeç seçeneği yayına çıkamaz
+for (const y of ['', 'mekanlar', 'etkinlikler']) { const f = path.join(KOK, y, 'index.html'); if (!fs.existsSync(f)) continue; const h = oku(f); const s0 = (h.match(/(?:\D)0\s+mekân|class="fcnt">0</g) ?? []).length; if (s0) hatalar.push(`Sıfır sonuçlu seçenek: /${y} ${s0} adet`); }
 console.log(uretilen.length + ' sayfa üretildi');
 if (hatalar.length) { console.error('HATALAR:\n' + hatalar.join('\n')); process.exitCode = 1; }
