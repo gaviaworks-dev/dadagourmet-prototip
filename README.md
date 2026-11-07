@@ -48,7 +48,7 @@ Girişli Hesabım render'ı yerel bir Gastro kopyasından alınır; o adım ve t
 
 - Markup elle yazılmaz: donörün render edilmiş DOM'u alınır, yalnız dinamik parça değişir. Donörü olmayan parça `ekran-kaynaklari.md`'de sapma olarak yazılır.
 - Sahte puan, yorum, takipçi, analitik yok. Örnek veri görünür `prototip örneği` etiketi taşır.
-- Şirket bilgisi yer tutucudur ve `patrondan bekliyor` etiketi taşır (K5).
+- Şirket bilgisi Gastro ile aynıdır; Gastro'da değeri olmayan alan gösterilmez (K5 güncellemesi).
 - Siyah bantta Dada Akademi ve Dada Store yok.
 - Harita MapLibre (K7). Altlık prototipte OpenFreeMap üstünden gelir; erişilemezse düz zemine düşer. Google harita çağrısı yok.
 - Sır, `.env`, canlı üye bilgisi depoya girmez.

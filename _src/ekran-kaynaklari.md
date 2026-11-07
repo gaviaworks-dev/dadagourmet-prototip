@@ -13,7 +13,7 @@ Kısaltma: G = dadagastro.com canlı render, O = dadagourmet.com canlı render, 
 | Kabuk: üst bant | tüm sayfalar | G `/giris` | Sol tarafta 203 mekân; sosyal blok yok; dil TR ve EN; Akademi ve Store yok | Mekân sayısı canlıdan. Gourmet'te doğrulanmış sosyal hesap yok. K17. Beyar kuralı |
 | Kabuk: başlık | tüm sayfalar | G `/giris` | Mega menü yerine O'nun 5 kalemi; konum düğmesi eklendi; hesap menüsü Gourmet kalemleri ve Gurme Panelim | Menü içeriği markaya özel (kanon §5.1). K3 |
 | Kabuk: çekmece | tüm sayfalar | G `/giris` | Kalemler Gourmet; "DadaGastro'ya Dön" yok; dil TR ve EN | Kanon soru 11 önerisi; K17 |
-| Kabuk: altbilgi | tüm sayfalar | G `/giris` | Sütunlar, kurumsal ve yasal şerit O'dan; sosyal blok yok; mağaza düğmeleri pasif; telif satırında unvan yer tutucu | Kanon: sütun içerikleri Gourmet'e özel. Uygulama yayında değil. K5 |
+| Kabuk: altbilgi | tüm sayfalar | G `/giris` | Sütunlar, kurumsal ve yasal şerit O'dan; sosyal blok yok; mağaza düğmeleri pasif; telif satırında şirket unvanı | Kanon: sütun içerikleri Gourmet'e özel. Uygulama yayında değil. K5 |
 | Kabuk: alt çubuk | tüm sayfalar | O `/` | 5 kalem Gourmet | Web için karar kanon soru 10'da açık; bugünkü hâl korundu |
 | Çerez bandı | tüm sayfalar | G `/giris` | Yok | |
 | Görüş Bildir | tüm sayfalar | G `/giris` | İlgili alan ve konu seçenekleri O'dan | Kanon §5.4: Gourmet listesi kalır |
@@ -29,9 +29,9 @@ Kısaltma: G = dadagastro.com canlı render, O = dadagourmet.com canlı render, 
 | Mekân detayı | `/mekan/mikla` | O `/mekan/mikla`, rezervasyon penceresi R | Rezervasyon düğmesi ve penceresi geri geldi; Dada Route bandı geri geldi; Ne Yenir ve Ne Alınır sekmeleri eklendi; kapak 480 px; künye düğmeleri yok; harita MapLibre; takvim örnek | K2, W2.2, W3.3, K7. Metin talep dili (§8 #17). Ne Alınır'da satış yok, "tescilli" sözü yok (§8 #10). Bilgi Hatası Bildir tetiği eklenmedi: A4 kararı açık |
 | Dada Route | `/dada-route` | O `/dada-route` | DOM aynı; Leaflet yerine MapLibre; statik örnek rota; katman paneli solda; il kartları; Google, Apple, Yandex aktarımı; `dada-route.js` yerine dar betik | K7. Panel solda kaldı (§8 #11 açık). Dinlenme katmanı "güvenli" demez (§8 #9). Canlı betik sunucu uçlarına bağlı |
 | Hakkımızda | `/hakkimizda` | O gövde, G zinciri | "81 il" yerine 15; "esnaf lokantası" cümlesi "mekân" oldu | Sabit sayı kuralı; K6 |
-| Künye | `/kunye` | G `/kunye` | Unvan, MERSİS, Adres, E-posta yer tutucu, görünür etiket | K5 |
-| İletişim | `/iletisim` | G `/iletisim` | Marka ve bağlam metni Gourmet; e-posta yer tutucu; sosyal bağ yok | Canlı Gourmet sayfası eksik (MB 0.20). K5 |
-| Hukuki örnek | `/yasal/kvkk` | O gövde, G zinciri | Yer tutuculara görünür etiket | K5 |
+| Künye | `/kunye` | G `/kunye` | Unvan, Adres, E-posta Gastro değerleri; marka adı Gourmet | K5 güncellemesi: Gastro'da nasılsa öyle |
+| İletişim | `/iletisim` | G `/iletisim` | Marka ve bağlam metni Gourmet; destek adresi yerine şirket e-postası; sosyal bağ yok | Canlı Gourmet sayfası eksik (MB 0.20). Gourmet destek adresi ölçülmedi |
+| Hukuki örnek | `/yasal/kvkk` | O gövde, G zinciri | Unvan, Adres, E-posta Gastro değerleri; MERSİS, vergi ve KEP satırları ile taslak bandı yok | K5 güncellemesi: yer tutucu basılmaz |
 | Ekran haritası | `/ekranlar` | Yok, derleyici çıktısı | Yeni | Onay turu için liste |
 
 ## Mekânlar süzgeci

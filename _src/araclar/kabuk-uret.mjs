@@ -61,7 +61,7 @@ const k = await p.evaluate(({ go, logo }) => {
   const app = $('.foot-app', f); $('h5', app).textContent = "Dada Gourmet'i İndir"; $('.foot-app-lead', app).textContent = go.lead;
   $$('.app-btn', app).forEach((a) => { a.removeAttribute('href'); a.removeAttribute('target'); a.removeAttribute('rel'); a.setAttribute('role', 'link'); a.setAttribute('aria-disabled', 'true'); a.title = 'Uygulama yayında değil'; });
   $('nav.foot-corp', f).innerHTML = go.corp; $('nav.foot-legal', f).innerHTML = go.legal;
-  $('.fb-left', f).innerHTML = '© 2026 <b><span class="bd">Dada</span><span class="sf">Gourmet</span></b> · <span class="pb-etiket" data-patron="unvan">[unvan: patrondan bekliyor]</span> · Tüm hakları saklıdır.';
+  $('.fb-left', f).innerHTML = '© 2026 <b><span class="bd">Dada</span><span class="sf">Gourmet</span></b> · Dada İst Ajans Hizmetleri Ticaret Limited Şirketi · Tüm hakları saklıdır.';
   // 5. Alt çubuk canlı Gourmet kalemleri; Görüş Bildir konuları Gourmet alan listesi
   const fbm = $('#fbModal'); $$('.fb-chiprow', fbm).slice(0, 1).forEach((e) => (e.innerHTML = go.gorusAlan));
   const q = $$('.fb-fields[data-for="soru"] select option', fbm); ['Üyelik & Hesap', 'Rezervasyon', 'Mekân bilgisi', 'İşletme başvurusu', 'Diğer'].forEach((t, i) => { if (q[i + 1]) q[i + 1].textContent = t; });

@@ -44,7 +44,6 @@ yaz('kayit/index', { ...kimlik, baslik: 'Kayıt Ol', donor: 'https://dadagastro.
 yaz('sifremi-unuttum/index', { ...kimlik, baslik: 'Şifremi Unuttum', donor: 'https://dadagastro.com/giris (sifre panosu)' }, await varyant('sifre', 'Şifremi Unuttum', 'giris'));
 yaz('sifre-yenile/index', { ...kimlik, baslik: 'Yeni Şifre', donor: 'https://dadagastro.com/giris (yeni-sifre panosu)' }, await varyant('yeni-sifre', 'Yeni Şifre', 'giris'));
 
-const patron = (ad) => `<span class="pb-etiket" data-patron="${ad}">patrondan bekliyor</span>`;
 // Hakkımızda: canlı Gourmet gövdesi ve Gastro zinciri (sınıf kümesi aynı). "81 il" sabiti gerçek sayıyla değişir.
 p = await ac(dom('o-hakkimizda'));
 yaz('hakkimizda/index', { baslik: 'Hakkımızda', zincir: 'hakkimizda', donor: 'https://dadagourmet.com/hakkimizda + https://dadagastro.com/hakkimizda' }, await p.evaluate(() => { kok(document.body); const m = document.querySelector('main');
@@ -53,22 +52,24 @@ yaz('hakkimizda/index', { baslik: 'Hakkımızda', zincir: 'hakkimizda', donor: '
 // Künye: satırlar Gastro'dan; değerler K5 yer tutucusu
 p = await ac(dom('g-kunye'));
 yaz('kunye/index', { baslik: 'Künye', zincir: 'kunye', donor: 'https://dadagastro.com/kunye' }, await p.evaluate(({ }) => { kok(document.body); const m = document.querySelector('main');
-  const et = (a) => `<span class="pb-etiket" data-patron="${a}">patrondan bekliyor</span>`;
-  const satir = (i, a, d) => `<div class="kunye-row"><i class="fa-solid ${i}"></i><div class="kl"><span>${a}</span><b>[${a.toLowerCase()}] ${et(d)}</b></div></div>`;
-  m.querySelector('.kunye-rows').innerHTML = satir('fa-building', 'Unvan', 'unvan') + satir('fa-hashtag', 'MERSİS No', 'mersis') + satir('fa-location-dot', 'Adres', 'adres') + satir('fa-envelope', 'E-posta', 'eposta');
   metin(m, /DadaGastro/g, 'Dada Gourmet'); m.querySelectorAll('.px-media').forEach((e) => { e.setAttribute('style', "background-image:url('https://dadagourmet.com/assets/gourmet-public/img/legal-restaurant.avif')"); e.innerHTML = ''; }); return m.innerHTML; }, {}));
 // İletişim: canlı Gourmet sayfası eksik (MB 0.20), Gastro sayfası marka değiştirilerek alınır
 p = await ac(dom('g-iletisim'));
 yaz('iletisim/index', { baslik: 'İletişim', zincir: 'iletisim', donor: 'https://dadagastro.com/iletisim' }, await p.evaluate(() => { kok(document.body); const m = document.querySelector('main');
-  const et = '<span class="pb-etiket" data-patron="iletisim">patrondan bekliyor</span>';
   metin(m, /DadaGastro|Dada Gastro/g, 'Dada Gourmet');
   metin(m, /tarif|Tarif/g, (x) => (x[0] === 'T' ? 'Mekân' : 'mekân'));
-  m.querySelectorAll('.ci-row').forEach((r) => { const a = r.querySelector('span')?.textContent.trim(); const b = r.querySelector('b'); if (b && /E-posta|Adres|Telefon|Unvan/.test(a)) b.innerHTML = `[${a.toLowerCase()}] ${et}`; });
-  m.querySelectorAll('a[href^="mailto:"]').forEach((a) => { a.removeAttribute('href'); a.innerHTML = '[e-posta] ' + et; });
+  m.querySelectorAll('.ci-row b').forEach((b) => { if (/@/.test(b.textContent)) b.textContent = 'dadamentorcom@gmail.com'; });
+  m.querySelectorAll('a[href^="mailto:"]').forEach((a) => { a.setAttribute('href', 'mailto:dadamentorcom@gmail.com'); a.textContent = 'dadamentorcom@gmail.com'; });
   m.querySelectorAll('.px-media').forEach((e) => { e.setAttribute('style', "background-image:url('https://dadagourmet.com/assets/gourmet-public/img/contact-kitchen.avif')"); e.innerHTML = ''; });
   m.querySelectorAll('a[href*="instagram.com"],a[href*="facebook.com"],a[href*="x.com/"]').forEach((a) => a.remove());
   return m.innerHTML; }));
 // Hukuki örnek: canlı Gourmet KVKK metni; yer tutucular görünür etikete bağlanır
 p = await ac(dom('o-kvkk'));
-yaz('yasal/kvkk/index', { baslik: 'KVKK Aydınlatma Metni', zincir: 'kvkk', donor: 'https://dadagourmet.com/yasal/kvkk + https://dadagastro.com/yasal/kvkk' }, (await p.evaluate(() => { kok(document.body); return document.querySelector('main').innerHTML; })).replace(/\[(unvan|adres|MERSİS no|vergi dairesi \/ vergi no|KEP adresi|e-posta|yürürlük tarihi)\]/g, (m, a) => `${m} ${patron(a)}`));
+yaz('yasal/kvkk/index', { baslik: 'KVKK Aydınlatma Metni', zincir: 'kvkk', donor: 'https://dadagourmet.com/yasal/kvkk + https://dadagastro.com/yasal/kvkk' }, await p.evaluate(() => { kok(document.body); const m = document.querySelector('main');
+  const sil = (e) => e.parentNode?.removeChild(e);
+  const yaprak = (re) => [...m.querySelectorAll('li,p,tr,dd,dt,div')].filter((e) => re.test(e.textContent) && ![...e.querySelectorAll('li,p,tr,dd,dt,div')].some((c) => re.test(c.textContent)));
+  yaprak(/\[(MERSİS no|vergi dairesi \/ vergi no|KEP adresi)\]/).forEach(sil);
+  yaprak(/Durum: Taslak/).forEach(sil); yaprak(/taslak olarak hazırl/).forEach(sil);
+  metin(m, /\[unvan\]/g, 'Dada İst Ajans Hizmetleri Ticaret Limited Şirketi'); metin(m, /\[adres\]/g, 'Yavuz Sultan Selim Mah. No:52/B, Fatih/İstanbul 34083'); metin(m, /\[e-posta\]/g, 'dadamentorcom@gmail.com');
+  return m.innerHTML; }));
 await kapat(); console.log('kurumsal tamam');
