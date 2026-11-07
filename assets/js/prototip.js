@@ -42,6 +42,17 @@
     m.style.marginBottom = !sigmaz && getComputedStyle(f).position === 'fixed' ? f.offsetHeight + 'px' : '';
   };
   window.addEventListener('load', perdeAyarla); window.addEventListener('resize', perdeAyarla); document.addEventListener('DOMContentLoaded', perdeAyarla);
+  /* Mobil menü: üye zincirinde `portal` yüklenmez, çekmeceyi açan kod da onunla gider. Davranış aynen burada */
+  document.addEventListener('DOMContentLoaded', function () {
+    if (!document.documentElement.dataset.uyeSayfa) { return; }
+    var d = document.getElementById('drawer'), o = document.getElementById('drawerOverlay'), h = document.getElementById('hamburger'), x = document.getElementById('drawerClose');
+    if (!d || !o || !h || !x) { return; }
+    var cekmece = function (on) { d.classList.toggle('open', on); o.classList.toggle('open', on); document.body.style.overflow = on ? 'hidden' : ''; };
+    h.addEventListener('click', function () { cekmece(true); });
+    [x, o].forEach(function (e) { e.addEventListener('click', function () { cekmece(false); }); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { cekmece(false); } });
+    [].forEach.call(d.querySelectorAll('.d-sub a,.d-item > a.d-link,.drawer-foot a,.drawer-foot > button'), function (e) { e.addEventListener('click', function () { cekmece(false); }); });
+  });
   window.prototipBildir = bildir;
   /* Demo kayıtları: rezervasyon, favori, değerlendirme gibi işlemler yalnız bu tarayıcıda durur, hiçbir yere gitmez. Gurme Panelim buradan okur. */
   var KAYIT = 'dg-kayit', bellek = {};
