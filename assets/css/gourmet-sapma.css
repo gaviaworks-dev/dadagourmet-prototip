@@ -47,3 +47,10 @@
 /* Hesabım kapağı: Gastro tohum görseli yerine canlı Gourmet görseli */
 .kimlik-bant .kapak{background:#1d1321 url("../o/assets/gourmet-public/img/about-dining.avif") center/cover no-repeat}
 .kimlik-bant .kimlik-avatar:not(:empty){display:grid;place-items:center;background:var(--marka,#742982);color:#fff;font-size:34px;font-weight:700}
+/* Seçili filtre etiketleri (FU.5) ve sonuç yok önerisi (FU.7) */
+.mkl-secili{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}.mkl-secili[hidden]{display:none}
+.mkl-etiket{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid var(--marka-cizgi,#e3d4e6);background:var(--marka-yikama,#ede4ef);color:var(--marka-koyu,#62236e);font:inherit;font-size:12.5px;font-weight:700;cursor:pointer}
+.mkl-etiket-temizle{background:none;border:0;padding:6px 4px;font:inherit;font-size:12.5px;font-weight:700;color:var(--marka,#742982);cursor:pointer}
+.mkl-oneri{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:12px 0}
+label.fct-row.xtra{display:none}.fct.more-open label.fct-row.xtra:not([hidden]){display:flex}
+.pg-gap{padding:0 4px;color:var(--muted,#6f6f6f)}

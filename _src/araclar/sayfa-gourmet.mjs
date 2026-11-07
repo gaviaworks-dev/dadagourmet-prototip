@@ -22,7 +22,7 @@ yaz('index', { yol: '', baslik: 'Lezzetin rotasını keşfet', zincir: 'hakkimiz
   const yer = (k) => { const i = sira.findIndex((s) => k.textContent.includes(s)); return i < 0 ? 99 : i; };
   [...t.children].sort((a, b) => yer(a) - yer(b)).forEach((k) => t.appendChild(k));
   // K6 ve K8: Esnaf çipi kalkar; Kahvaltı mutfak seçeneği 0 sonuçlu, sayaçlı kullanım amacına gider
-  m.querySelectorAll('.gm-facet').forEach((a) => { if (/Esnaf/.test(a.textContent)) a.parentNode.removeChild(a); else if (/Kahvaltı/.test(a.textContent)) a.setAttribute('href', '{{kok}}mekanlar/?vesile=kahvalti'); });
+  m.querySelectorAll('.gm-facet').forEach((a) => { if (/Esnaf/.test(a.textContent)) a.parentNode.removeChild(a); else if (/Kahvaltı/.test(a.textContent)) a.setAttribute('href', '{{kok}}mekanlar/?vesile=kahvalti'); else if (/Kebap/.test(a.textContent)) a.setAttribute('href', '{{kok}}mekanlar/?mutfak=kebap-ocakbasi'); else if (/Deniz/.test(a.textContent)) a.setAttribute('href', '{{kok}}mekanlar/?mutfak=deniz-urunleri'); });
   // W1.3a: vitrinde önce Türkiye'deki etkinlikler
   if (trKart.length) m.querySelector('#evTrack').innerHTML = trKart.join('');
   return m.innerHTML; }, { trKart }));
@@ -34,7 +34,7 @@ const ilceGrup = await p.evaluate(() => { const g = document.querySelectorAll('.
 p = await ac(dom('o-ilce'));
 const semtGrup = await p.evaluate(() => document.querySelectorAll('.mkl-fct-location .fct-sub')[2].outerHTML);
 p = await ac(dom('o-mekanlar'));
-yaz('mekanlar/index', { baslik: 'Mekânlar', aktif: 'mekanlar', zincir: 'hakkimizda', gourmet: true, css: ['gourmet-mekan-liste.css', 'banner-uyarlama.css', 'ikon-uyarlama.css', 'mekan-karti-uyarlama.css', 'mekan-filtre-paneli-uyarlama.css', 'gourmet-sapma'], js: ['assets/vendor/maplibre/maplibre-gl.js', 'assets/js/mekan-veri.js', 'assets/js/harita.js', 'assets/js/sayfa/mekanlar.js'], govdeSinif: 'pg-mekanlar', donor: 'https://dadagourmet.com/mekanlar + filtre dokümanı §16-18' }, await p.evaluate(({ ilceGrup, semtGrup }) => { kok(document.body); const m = document.querySelector('main'); const $$ = (s, r = m) => [...r.querySelectorAll(s)];
+yaz('mekanlar/index', { baslik: 'Mekânlar', aktif: 'mekanlar', zincir: 'hakkimizda', gourmet: true, css: ['gourmet-mekan-liste.css', 'banner-uyarlama.css', 'ikon-uyarlama.css', 'mekan-karti-uyarlama.css', 'mekan-filtre-paneli-uyarlama.css', 'gourmet-sapma'], js: ['assets/vendor/maplibre/maplibre-gl.js', 'assets/js/mekan-liste-veri.js', 'assets/js/harita.js', 'assets/js/sayfa/mekanlar.js'], govdeSinif: 'pg-mekanlar', donor: 'https://dadagourmet.com/mekanlar + filtre dokümanı §16-18' }, await p.evaluate(({ ilceGrup, semtGrup }) => { kok(document.body); const m = document.querySelector('main'); const $$ = (s, r = m) => [...r.querySelectorAll(s)];
   // K8: sıfır sonuçlu seçenek gizli (ülke seçeneği dahil)
   $$('label.fct-row').forEach((l) => { const c = l.querySelector('.fcnt'); if (c && c.textContent.trim() === '0') l.remove(); });
   $$('.subcat').forEach((a) => { if (/(^|\D)0\s+mekân/.test(a.textContent)) a.remove(); });
@@ -47,15 +47,15 @@ yaz('mekanlar/index', { baslik: 'Mekânlar', aktif: 'mekanlar', zincir: 'hakkimi
   const ornek = gruplar.find((g) => /Beslenme/.test(g.querySelector('.fct-head').textContent)); const enerji = ornek.cloneNode(true);
   const eh = enerji.querySelector('.fct-head'); eh.querySelector('.fct-head-ico').className = 'fa-solid fa-charging-station fct-head-ico';
   [...eh.childNodes].forEach((n) => { if (n.nodeType === 3 && n.textContent.trim()) n.textContent = ' Enerji ve Araç Şarj '; }); eh.querySelectorAll('span:not(.fct-dot)').forEach((s) => (s.textContent = 'Enerji ve Araç Şarj'));
-  const satir = enerji.querySelector('label.fct-row'); const gov = enerji.querySelector('.fct-body'); const kalip = satir.cloneNode(true); gov.innerHTML = '<p class="fct-not"><span class="ornek-etiket">prototip örneği</span> Mekân sayacı bu grupta henüz yok.</p>';
-  ['Elektrikli Araç Şarj Noktası Var', 'Yakınında Şarj İstasyonu', 'AC Şarj', 'DC Hızlı Şarj', 'Şarj Sırasında Yemek Yeme İmkânı'].forEach((a, i) => { const r = kalip.cloneNode(true); r.querySelector('.ft').textContent = a; r.querySelector('.fcnt')?.remove(); const inp = r.querySelector('input'); inp.name = 'sarj[]'; inp.value = 'ornek-' + i; inp.checked = false; gov.appendChild(r); });
+  const satir = enerji.querySelector('label.fct-row'); const gov = enerji.querySelector('.fct-body'); const kalip = satir.cloneNode(true); gov.innerHTML = '<p class="fct-not"><span class="ornek-etiket">prototip örneği</span> Mekân başına şarj verisi henüz yok; bu grup süzmez.</p>';
+  ['Elektrikli Araç Şarj Noktası Var', 'Yakınında Şarj İstasyonu', 'AC Şarj', 'DC Hızlı Şarj', 'Şarj Sırasında Yemek Yeme İmkânı'].forEach((a, i) => { const r = kalip.cloneNode(true); r.querySelector('.ft').textContent = a; r.querySelector('.fcnt')?.remove(); const inp = r.querySelector('input'); inp.name = 'sarj-ornek'; inp.value = 'ornek-' + i; inp.checked = false; inp.disabled = true; gov.appendChild(r); });
   const ulasim = gruplar.find((g) => /Ulaşım/.test(g.querySelector('.fct-head').textContent)); ulasim.before(enerji);
   // Kart: FK.10-13 eylemleri ve üç sütun için harita alanı
   $$('article.mkl-card').forEach((k) => { const slug = (k.getAttribute('data-git') || '').replace(/.*mekan\//, '').replace(/\/$/, ''); k.dataset.slug = slug;
     k.insertAdjacentHTML('beforeend', `<div class="mkl-kart-eylem"><a class="mke-birincil" href="{{kok}}mekan/${slug}/">Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="${slug}" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="{{kok}}dada-route/?durak=${slug}" aria-label="Dada Route'a Ekle" title="Dada Route'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div>`); });
   const sehir = m.querySelector('.mkl-fct-location .fct-sub'); sehir.dataset.konum = 'sehir';
   sehir.insertAdjacentHTML('afterend', ilceGrup.replace('class="fct fct-sub', 'hidden data-konum="ilce" class="fct fct-sub') + semtGrup.replace('class="fct fct-sub', 'hidden data-konum="semt" class="fct fct-sub'));
-  const semt = m.querySelector('[data-konum="semt"] .fct-body'); if (semt && !semt.querySelector('label.fct-row')) semt.insertAdjacentHTML('beforeend', '<p class="fct-not">Bu ilçede semt kaydı henüz yok.</p>');
+  m.querySelector('.lst-bar').insertAdjacentHTML('afterend', '<div class="mkl-secili" id="mklSecili" hidden></div>');
   const lay = m.querySelector('.lst-layout'); lay.classList.add('mkl-uc-kolon');
   lay.insertAdjacentHTML('beforeend', '<aside class="mkl-harita-kolon" aria-label="Harita"><div id="mklMapKolon" class="mkl-harita" data-harita="liste"></div><p class="mkl-harita-not"><span class="ornek-etiket">prototip örneği</span> MapLibre; konumlar canlı mekân verisinden, statik kopya.</p></aside>');
   return m.innerHTML; }, { ilceGrup, semtGrup }));

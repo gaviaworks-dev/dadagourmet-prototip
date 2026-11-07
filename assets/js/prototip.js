@@ -29,6 +29,7 @@
   window.prototipBildir = bildir;
   document.addEventListener('submit', function (e) {
     e.preventDefault();
+    if (e.target.hasAttribute('data-yerel')) { return; }
     bildir('Prototip: form gönderilmedi.');
   }, true);
   document.addEventListener('click', function (e) {

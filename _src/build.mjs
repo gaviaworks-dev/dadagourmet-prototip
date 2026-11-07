@@ -98,5 +98,7 @@ for (const f of uretimDosyalari) {
   });
   fs.writeFileSync(f, yazimDuzelt(s));
 }
+// Mekânlar süzgecinin istemci verisi: tek kaynak _src/veri ve _src/parcalar
+if (veri['mekan-filtre']) { const kartlar = JSON.parse(oku(path.join(SRC, 'parcalar/mekan-kartlar.json'))); const { mekanlar, secenek, alinma } = veri['mekan-filtre']; fs.writeFileSync(path.join(KOK, 'assets/js/mekan-liste-veri.js'), 'window.DG_LISTE=' + JSON.stringify({ alinma, mekanlar, secenek, kartlar }) + ';\n'); }
 console.log(uretilen.length + ' sayfa üretildi');
 if (hatalar.length) { console.error('HATALAR:\n' + hatalar.join('\n')); process.exitCode = 1; }

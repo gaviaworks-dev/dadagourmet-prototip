@@ -34,6 +34,12 @@ Kısaltma: G = dadagastro.com canlı render, O = dadagourmet.com canlı render, 
 | Hukuki örnek | `/yasal/kvkk` | O gövde, G zinciri | Yer tutuculara görünür etiket | K5 |
 | Ekran haritası | `/ekranlar` | Yok, derleyici çıktısı | Yeni | Onay turu için liste |
 
+## Mekânlar süzgeci
+
+Veri `_src/araclar/mekan-veri.mjs` ile canlı `/mekanlar` ve `/mekanlar/harita-verisi` uçlarından, yalnız GET ile alındı. Her seçenek canlı süzgeçten soruldu; sayaç ve harita sayısı 12 grupta birebir tuttu. 203 mekân, 15 il, 41 ilçe, 128 semt. Semt 197 mekânda dolu, 6 mekânda boş; boş olan uydurulmadı. Açık Olma sayaçları çekim anına aittir, statik kopyadır.
+
+Enerji ve Araç Şarj grubu süzmez: kamuya açık uçlarda mekân başına şarj verisi yok. Seçenekler pasif, örnek etiketli. Sıralama menüsü prototipte çalışmaz. Yalnız Mikla'nın detay sayfası var, diğer kartlar "sonraki tur" uyarısı verir.
+
 ## Altbilgi perdesi
 
 Gastro kanonu: 641 px ve üstünde altbilgi `position:fixed`, `#pageMain` alt boşluğu altbilgi boyuna eşit; içerik kaydıkça altından açılır. Tam sayfa görüntüde bu boşluk boş görünür, altbilgi görünmez. Altbilgi pencereden uzunsa `altbilgi-akista` ile akışa döner; 640 ve altı zaten akıştadır.

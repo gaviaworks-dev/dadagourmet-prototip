@@ -72,7 +72,7 @@
 <script defer src="../assets/g/varliklar/reference/shared/dm-kabuk.js"></script>
 <script defer src="../assets/g/varliklar/reference/shared/dm-gorus.js"></script>
 <script defer src="../assets/vendor/maplibre/maplibre-gl.js"></script>
-<script defer src="../assets/js/mekan-veri.js"></script>
+<script defer src="../assets/js/mekan-liste-veri.js"></script>
 <script defer src="../assets/js/harita.js"></script>
 <script defer src="../assets/js/sayfa/mekanlar.js"></script>
 </head>
@@ -888,7 +888,7 @@
 </div><div hidden="" data-konum="semt" class="fct fct-sub open" data-group="Semt">
     <button class="fct-head" type="button">Semt <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
     <div class="fct-body">
-                                    <p class="fct-not">Bu ilçede semt kaydı henüz yok.</p></div>
+                                    </div>
 </div>
                                                                                     </div>
                                     </div>
@@ -1370,28 +1370,28 @@
 </div>
                                                                                                                                 <div class="fct open" data-group="Beslenme">
     <button class="fct-head" type="button"><i class="fa-solid fa-charging-station fct-head-ico" aria-hidden="true"></i> Enerji ve Araç Şarj <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
-    <div class="fct-body"><p class="fct-not"><span class="ornek-etiket">prototip örneği</span> Mekân sayacı bu grupta henüz yok.</p><label class="fct-row">
-                <input type="checkbox" name="sarj[]" value="ornek-0" data-count="39">
+    <div class="fct-body"><p class="fct-not"><span class="ornek-etiket">prototip örneği</span> Mekân başına şarj verisi henüz yok; bu grup süzmez.</p><label class="fct-row">
+                <input type="checkbox" name="sarj-ornek" value="ornek-0" data-count="39" disabled="">
                 <span class="cbx"></span>
                 <span class="ft">Elektrikli Araç Şarj Noktası Var</span>
                 
             </label><label class="fct-row">
-                <input type="checkbox" name="sarj[]" value="ornek-1" data-count="39">
+                <input type="checkbox" name="sarj-ornek" value="ornek-1" data-count="39" disabled="">
                 <span class="cbx"></span>
                 <span class="ft">Yakınında Şarj İstasyonu</span>
                 
             </label><label class="fct-row">
-                <input type="checkbox" name="sarj[]" value="ornek-2" data-count="39">
+                <input type="checkbox" name="sarj-ornek" value="ornek-2" data-count="39" disabled="">
                 <span class="cbx"></span>
                 <span class="ft">AC Şarj</span>
                 
             </label><label class="fct-row">
-                <input type="checkbox" name="sarj[]" value="ornek-3" data-count="39">
+                <input type="checkbox" name="sarj-ornek" value="ornek-3" data-count="39" disabled="">
                 <span class="cbx"></span>
                 <span class="ft">DC Hızlı Şarj</span>
                 
             </label><label class="fct-row">
-                <input type="checkbox" name="sarj[]" value="ornek-4" data-count="39">
+                <input type="checkbox" name="sarj-ornek" value="ornek-4" data-count="39" disabled="">
                 <span class="cbx"></span>
                 <span class="ft">Şarj Sırasında Yemek Yeme İmkânı</span>
                 
@@ -1523,7 +1523,7 @@
                                                                     </div>
                             </div>
                         </div>
-                    </div>
+                    </div><div class="mkl-secili" id="mklSecili" hidden=""></div>
 
                     
                                                                     <div class="mkl-grid" id="mklGrid">
