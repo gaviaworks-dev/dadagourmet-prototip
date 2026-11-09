@@ -20,13 +20,11 @@ const vitrin = `<section class="gm-vitrin gm-sec--light"><div class="wrap"><div 
 p = await ac(dom('o-home'));
 yaz('index', { yol: '', baslik: 'Lezzetin rotasını keşfet', zincir: 'hakkimizda', gourmet: true, css: ['anasayfa.css', 'gourmet-sapma'], js: ['assets/js/sayfa/ana.js'], govdeSinif: 'pg-anasayfa', donor: 'https://dadagourmet.com/ (gövde) + https://dadagastro.com/ (kabuk)' }, await p.evaluate(({ trKart, vitrin }) => { kok(document.body); const m = document.querySelector('main');
   // Slogan ve konsept alt başlığı canlıdaki gibi: "saklı esnaf" vaadi kalır (Beyar 9 Kas, K6'nın yerine; şartname W1.2 bu vaadi güçlendirmeyi istiyor)
-  // K8: sıfır sonuçlu konsept gizli. Vitrin dengesi: yerel ve tarihi önce, lüks sonra (W1.2)
+  // Şartname W1.1: sıfır sonuçlu konsept gizli
   const t = m.querySelector('#conceptTrack'); const kartlar = [...t.children];
   const say = (k) => parseInt((k.textContent.match(/(\d+)\s*mekân/) || [0, 0])[1], 10);
   kartlar.filter((k) => say(k) === 0).forEach((k) => k.remove());
-  const sira = ['Yerel Lezzet Noktası', 'Tarihi', 'Geleneksel', 'Taş Konak', 'Doğa İçinde', 'Butik', 'Bahçeli', 'Şef Restoranı', 'Modern', 'Manzaralı', 'Deniz Kenarı', 'Teraslı', 'Lüks', 'Sanat ve Kültür', 'Dağ / Yayla'];
-  const yer = (k) => { const i = sira.findIndex((s) => k.textContent.includes(s)); return i < 0 ? 99 : i; };
-  [...t.children].sort((a, b) => yer(a) - yer(b)).forEach((k) => t.appendChild(k));
+  // Konsept sırası canlıdaki gibi kalır (Beyar 9 Kas); vitrin dengesi ayrı Vitrin bölümünde (W1.2)
   // Esnaf Lokantası çipi canlıdaki gibi kalır (Beyar 9 Kas); prototipte Esnaf Lokantası kategorisine gider. Kahvaltı mutfak seçeneği 0 sonuçlu, sayaçlı kullanım amacına gider
   m.querySelectorAll('.gm-facet').forEach((a) => { if (/Esnaf/.test(a.textContent)) a.setAttribute('href', '{{kok}}mekanlar/?kategori=esnaf-lokantasi'); else if (/Kahvaltı/.test(a.textContent)) a.setAttribute('href', '{{kok}}mekanlar/?vesile=kahvalti'); else if (/Kebap/.test(a.textContent)) a.setAttribute('href', '{{kok}}mekanlar/?mutfak=kebap-ocakbasi'); else if (/Deniz/.test(a.textContent)) a.setAttribute('href', '{{kok}}mekanlar/?mutfak=deniz-urunleri'); });
   // W1.3a: vitrinde önce Türkiye'deki etkinlikler
