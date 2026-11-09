@@ -38,5 +38,26 @@
   var defter = document.getElementById('puanDefter');
   var PD = { kesin: ['kesinleşti', 'olumlu'], bekliyor: ['bekliyor', 'bekleme'], dustu: ['düştü', 'durdu'] };
   if (defter) { defter.innerHTML = K.oku('puan').map(function (k) { var d = PD[k.durum || 'bekliyor']; return satir('fa-clock-rotate-left', ad(k, k.ad), k.durum === 'kesin' ? 'Onaylandı' : k.durum === 'dustu' ? 'Onaylanmadı' : 'Onay bekliyor', '+' + k.tutar + ' ' + d[0], d[1]); }).join('') || '<div class="bos-durum"><h4>Henüz puan hareketin yok</h4></div>'; }
-  if (window.dgRozet) { window.dgRozet(kesin); }
+  /* Rozet ve rütbe: ÖRNEK kural seti (Beyar onayı bekliyor). Rozet yalnız onaylanmış eylemden kazanılır; rütbe kesinleşen puandan */
+  var sayi = function (tur, kosul) { return K.oku(tur).filter(kosul).length; };
+  var yayinda = function (k) { return k.durum === 'yayinda'; };
+  var ROZET = [
+    ['fa-star', 'İlk Tadım', 'İlk değerlendirmen yayına girdi', sayi('degerlendirme', yayinda), 1],
+    ['fa-pen-nib', 'Gurme Kalem', '5 değerlendirmen yayına girdi', sayi('degerlendirme', yayinda), 5],
+    ['fa-camera', 'Tabak Avcısı', 'Fotoğraflı 3 değerlendirmen yayına girdi', sayi('degerlendirme', function (k) { return yayinda(k) && k.foto; }), 3],
+    ['fa-location-dot', 'Kâşif', 'İlk mekân önerin yayına girdi', sayi('oneri', function (k) { return yayinda(k) && k.tur !== 'etkinlik'; }), 1],
+    ['fa-calendar-plus', 'Hasat Habercisi', 'İlk etkinlik önerin yayına girdi', sayi('oneri', function (k) { return yayinda(k) && k.tur === 'etkinlik'; }), 1],
+    ['fa-utensils', 'Masa Müdavimi', 'İlk rezervasyonun gerçekleşti', sayi('rezervasyon', function (k) { return k.durum === 'gerceklesti'; }), 1],
+    ['fa-circle-check', 'Yol Arkadaşı', '3 mekânı Ziyaret Ettim ile işaretledin', sayi('ziyaret', function () { return true; }), 3],
+    ['fa-ticket', 'Etkinlik Dostu', 'İlk etkinlik randevunu oluşturdun', sayi('randevu', function () { return true; }), 1]
+  ];
+  var RUTBE = [[0, 'Meraklı'], [100, 'Lezzet Avcısı'], [300, 'Gurme'], [700, 'Usta Gurme'], [1500, 'Şef Masası']];
+  var kazanilan = ROZET.filter(function (r) { return r[3] >= r[4]; }).length;
+  var rutbe = RUTBE.filter(function (r) { return kesin >= r[0]; }).pop();
+  yaz('[data-puan="rutbe"]', rutbe[1]);
+  var rs = document.querySelector('[data-rozet-sayi]'); if (rs) { rs.lastChild.nodeValue = ' Rozet ' + kazanilan; }
+  var rl = document.getElementById('rozetListe');
+  if (rl) { rl.innerHTML = ROZET.map(function (r) { var ok = r[3] >= r[4]; return satir(r[0], kac(r[1]), r[2] + ' · ' + Math.min(r[3], r[4]) + '/' + r[4], ok ? 'Kazanıldı' : 'Yolda', ok ? 'olumlu' : 'pasif'); }).join(''); }
+  var ru = document.getElementById('rutbeListe');
+  if (ru) { ru.innerHTML = RUTBE.map(function (r, i) { var son = RUTBE[i + 1], on = r === rutbe; return satir('fa-medal', kac(r[1]), son ? r[0] + '–' + (son[0] - 1) + ' kesinleşen puan' : r[0] + ' ve üzeri kesinleşen puan', on ? 'Şu anki rütben' : kesin >= r[0] ? 'Geçildi' : 'Kilitli', on ? 'olumlu' : 'pasif'); }).join(''); }
 })();
