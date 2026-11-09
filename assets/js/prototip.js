@@ -78,13 +78,30 @@
     oku: function (tur) { return hepsi()[tur] || []; },
     ekle: function (tur, k) { var v = hepsi(); (v[tur] = v[tur] || []).unshift(k); sakla(v); return k; },
     sil: function (tur, id) { var v = hepsi(); v[tur] = (v[tur] || []).filter(function (k) { return k.id !== id; }); sakla(v); },
-    var: function (tur, id) { return (hepsi()[tur] || []).some(function (k) { return k.id === id; }); }
+    var: function (tur, id) { return (hepsi()[tur] || []).some(function (k) { return k.id === id; }); },
+    /* Karar ekranları (İşletme Paneli, Yönetim) durumu buradan değiştirir; üye aynı kaydı Gurme Panelim'de görür */
+    guncelle: function (tur, id, alan) { var v = hepsi(); (v[tur] || []).forEach(function (k) { if (k.id === id) { Object.keys(alan).forEach(function (a) { k[a] = alan[a]; }); } }); sakla(v); }
   };
-  /* Dada Puan: şartname değerleri. Gönderimde bekler, onayda kesinleşir (§8 #6, #18) */
+  /* Dada Puan: şartname değerleri. Gönderimde bekler, onayda kesinleşir (§8 #6, #18); reddedilen kayıt puanı düşer */
   window.dgPuan = {
     KURAL: { yorum: 15, oneri: 50, puanlama: 2, rezervasyon: 25 },
-    ekle: function (id, ad, tutar) { window.dgKayit.ekle('puan', { id: id, ad: ad, tutar: tutar }); }
+    ekle: function (id, ad, tutar) { window.dgKayit.ekle('puan', { id: id, ad: ad, tutar: tutar, durum: 'bekliyor' }); },
+    kesinlestir: function (id) { window.dgKayit.guncelle('puan', id, { durum: 'kesin' }); },
+    dusur: function (id) { window.dgKayit.guncelle('puan', id, { durum: 'dustu' }); },
+    toplam: function (durum) { return window.dgKayit.oku('puan').reduce(function (t, k) { return t + ((k.durum || 'bekliyor') === durum ? k.tutar : 0); }, 0); }
   };
+  /* Örnek kayıtlar: döngü ilk açılışta görünsün diye bir kez yazılır, hepsi `ornek` işaretli. Tarih bugüne göre kurulur */
+  (function () {
+    var v = hepsi(); if (v.tohum === 2) { return; }
+    var gun = function (n) { var d = new Date(); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+    var koy = function (tur, k) { (v[tur] = v[tur] || []).push(k); };
+    var yok = function (tur, id) { return !(v[tur] || []).some(function (k) { return k.id === id; }); };
+    if (yok('rezervasyon', 'ornek-rez')) { koy('rezervasyon', { id: 'ornek-rez', mekan: 'Mikla', yer: 'Beyoğlu, İstanbul', gun: gun(3), saat: '20:00', kisi: 2, alerjen: '', durum: 'talep', ornek: true }); }
+    if (yok('rezervasyon', 'ornek-rez-gecmis')) { koy('rezervasyon', { id: 'ornek-rez-gecmis', mekan: 'Mikla', yer: 'Beyoğlu, İstanbul', gun: gun(-2), saat: '19:30', kisi: 2, alerjen: 'Fıstık alerjisi', durum: 'onaylandi', ornek: true }); koy('puan', { id: 'ornek-rez-gecmis', ad: 'Mikla rezervasyonu', tutar: 25, durum: 'bekliyor', ornek: true }); }
+    if (yok('oneri', 'ornek-oneri-m')) { koy('oneri', { id: 'ornek-oneri-m', tur: 'mekan', ad: 'Örnek mekân önerisi', yer: 'Kadıköy, İstanbul', durum: 'inceleniyor', ornek: true }); koy('puan', { id: 'ornek-oneri-m', ad: 'Örnek mekân önerisi', tutar: 50, durum: 'bekliyor', ornek: true }); }
+    if (yok('oneri', 'ornek-oneri-e')) { koy('oneri', { id: 'ornek-oneri-e', tur: 'etkinlik', ad: 'Örnek etkinlik önerisi', yer: 'Urla, İzmir', durum: 'yayinda', ornek: true }); koy('puan', { id: 'ornek-oneri-e', ad: 'Örnek etkinlik önerisi', tutar: 50, durum: 'kesin', ornek: true }); }
+    v.tohum = 2; sakla(v);
+  })();
   /* Giriş isteyen eylem: misafiri girişe götürür, sonra aynı sayfaya döner */
   window.dgUye = function () { if (uye) { return true; } location.href = kok + 'giris/?donus=' + encodeURIComponent((document.documentElement.dataset.yol || '') + '/'); return false; };
   document.addEventListener('DOMContentLoaded', function () {
@@ -116,7 +133,7 @@
       e.stopImmediatePropagation();
       if (!uye) { window.dgUye(); return; }
       var ad = f.elements.name.value.trim() || 'Mekân önerisi', id = 'oneri-' + Date.now();
-      window.dgKayit.ekle('oneri', { id: id, ad: ad, yer: f.elements.location.value.trim() });
+      window.dgKayit.ekle('oneri', { id: id, tur: 'mekan', ad: ad, yer: f.elements.location.value.trim(), durum: 'inceleniyor' });
       window.dgPuan.ekle(id, ad + ' önerisi', window.dgPuan.KURAL.oneri);
       f.reset(); document.getElementById('moClose').click();
       bildir('Önerin Topluluk Katkılarım\'a işlendi. +' + window.dgPuan.KURAL.oneri + ' bekleyen puan.');

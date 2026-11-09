@@ -44,7 +44,7 @@
       var ipucu = $('#dgRevIpucu');
       if (!oy.lezzet || !oy.servis || !oy.ambiyans) { ipucu.className = 'rf-hint err'; ipucu.textContent = 'Lezzet, servis ve ambiyansı puanla'; return; }
       var tutar = kazanc(), id = 'deg-' + Date.now();
-      K.ekle('degerlendirme', { id: id, mekan: MEKAN, lezzet: oy.lezzet, servis: oy.servis, ambiyans: oy.ambiyans, metin: metin.value.trim(), foto: foto.files.length > 0, tutar: tutar });
+      K.ekle('degerlendirme', { id: id, mekan: MEKAN, lezzet: oy.lezzet, servis: oy.servis, ambiyans: oy.ambiyans, metin: metin.value.trim(), foto: foto.files.length > 0, tutar: tutar, durum: 'inceleniyor' });
       window.dgPuan.ekle(id, MEKAN + ' değerlendirmesi', tutar);
       rev.classList.add('sent'); var t = $('#dgRevTamam'); t.hidden = false; $('span', t).textContent = 'Değerlendirmen alındı. Denetim sonrası yayınlanır; +' + tutar + ' bekleyen puan onayda kesinleşir.';
     }, true);
@@ -69,7 +69,7 @@
     doldur('guest_name', 'Örnek Üye'); doldur('guest_phone', '0500 000 00 00'); doldur('guest_email', 'ornek@eposta.com');
     form.submit = function () {
       var gun = deger('#rsvDateInput'), saat = deger('#rsvSlotInput'), kisi = deger('#rsvPartySizeInput'), alerjen = deger('#rsvAlerjen').trim();
-      K.ekle('rezervasyon', { id: 'rez-' + gun + '-' + saat, mekan: MEKAN, yer: 'Beyoğlu, İstanbul', gun: gun, saat: saat, kisi: +kisi, alerjen: alerjen, not: deger('#rsvNote').trim() });
+      K.ekle('rezervasyon', { id: 'rez-' + gun + '-' + saat, mekan: MEKAN, yer: 'Beyoğlu, İstanbul', gun: gun, saat: saat, kisi: +kisi, alerjen: alerjen, not: deger('#rsvNote').trim(), durum: 'talep' });
       window.dgPuan.ekle('rez-' + gun + '-' + saat, MEKAN + ' rezervasyonu', P.rezervasyon);
       var tarih = gun.split('-').reverse().join('.');
       $('#rsvRecap').innerHTML = '<span><i class="fa-solid fa-user-group" aria-hidden="true"></i> ' + kisi + ' kişi</span><span><i class="fa-regular fa-calendar" aria-hidden="true"></i> ' + tarih + '</span><span><i class="fa-regular fa-clock" aria-hidden="true"></i> ' + saat + '</span>' + (alerjen ? '<span><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Alerjen notu var</span>' : '');

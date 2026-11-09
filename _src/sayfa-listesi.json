@@ -80,6 +80,11 @@
   "duzen": "public"
  },
  {
+  "yol": "isletme",
+  "baslik": "İşletme Paneli",
+  "duzen": "uye"
+ },
+ {
   "yol": "kayit",
   "baslik": "Kayıt Ol",
   "duzen": "public"
@@ -128,5 +133,10 @@
   "yol": "yasal/kvkk",
   "baslik": "KVKK Aydınlatma Metni",
   "duzen": "public"
+ },
+ {
+  "yol": "yonetim",
+  "baslik": "Yönetim",
+  "duzen": "uye"
  }
 ]
