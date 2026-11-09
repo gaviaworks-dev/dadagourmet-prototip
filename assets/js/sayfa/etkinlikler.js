@@ -49,7 +49,7 @@
   var kart = function (e) {
     var h = (V.kartlar[e.slug] || '').split('{{kok}}').join(kok);
     var bag = kok + 'etkinlik-detay/?e=' + e.slug;
-    var dip = '<div class="disc-card-foot"><a class="btn btn-sm btn-ghost" href="' + bag + '">Detayı incele</a>' + (gecmis(e) ? '<span class="ev-gecmis">Geçmiş etkinlik</span>' : kayitli(e) ? '<span class="ev-gecmis"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Randevun var</span>' : '<button class="btn btn-sm btn-primary" type="button" data-randevu="' + e.slug + '">Randevu Oluştur</button>') + '</div>';
+    var dip = '<div class="disc-card-foot"><a class="btn btn-sm btn-ghost" href="' + bag + '">Detayı incele</a>' + (gecmis(e) ? '<span class="ev-gecmis">Etkinlik sona erdi</span>' : kayitli(e) ? '<span class="ev-gecmis"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Randevun var</span>' : '<button class="btn btn-sm btn-primary" type="button" data-randevu="' + e.slug + '">Randevu Oluştur</button>') + '</div>';
     h = h.replace(/<div class="disc-card-foot">[\s\S]*<\/div>\s*<\/article>\s*$/, dip + '</article>').replace('<article ', '<article data-slug="' + e.slug + '" ');
     return K.var('favori', 'etkinlik-' + e.slug) ? h.replace('fa-regular fa-heart', 'fa-solid fa-heart') : h;
   };
@@ -76,7 +76,12 @@
     var rb = $('#evdRandevu'); rb.dataset.randevu = e.slug; if (gecmis(e)) { rb.parentNode.removeChild(rb); }
     if (e.bilet) { var bl = $('#evdBilet'); bl.href = e.bilet; bl.hidden = false; }
     var bk = $('.evd-bridge-acts a'); if (bk && e.tr) { bk.href = kok + 'mekanlar/?il=' + encodeURIComponent(tr(e.sehir)); }
-    $('#evdDiger').innerHTML = V.etkinlikler.filter(function (x) { return x.slug !== e.slug && !!x.tr === !!e.tr && !gecmis(x); }).slice(0, 3).map(kart).join('');
+    /* Takvimdeki diğer etkinlikler canlıdaki gibi: bütün etkinlikler (geçmiş dahil) kayıt numarasına göre dizilir, bu etkinlikten sonraki üç gelir, sonda başa sarar (canlı `EtkinlikOkumaServisi::digerleri`). Numara canlı kartın data-etkinlik-id'sinden */
+    var no = function (x) { return +((/data-etkinlik-id="(\d+)"/.exec(V.kartlar[x.slug] || '') || [])[1] || 0); };
+    var sirali = V.etkinlikler.slice().sort(function (a, b) { return no(a) - no(b); }), yer = sirali.indexOf(e);
+    var digerleri = sirali.filter(function (x) { return x !== e; }), secilen = [];
+    for (var k = 1; k <= 3 && digerleri.length; k++) { var aday = digerleri[(Math.max(0, yer) + k - 1) % digerleri.length]; if (secilen.indexOf(aday) < 0) { secilen.push(aday); } }
+    $('#evdDiger').innerHTML = secilen.map(kart).join('');
     return;
   }
 
