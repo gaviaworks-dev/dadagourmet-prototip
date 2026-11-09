@@ -2,7 +2,7 @@
 
 Dada Gourmet'in güncel hedef prototipi (Faz 1, karar K1). Ortak ekranların donörü canlı Gastro render'ı; bu depo Gourmet'in yeni donörüdür. Faz 4'te Blade'e bu sayfaların render edilmiş DOM'undan geçilir.
 
-Durum: yalnız yerel. Remote yok, push yok, Pages yok. Yayın kararı Beyar'ındır. `robots.txt` her yolu kapatır, her sayfada `noindex, nofollow` vardır.
+Durum: public depo `gaviaworks-dev/dadagourmet-prototip`, GitHub Pages'te yayında (Beyar kararı, 7 Kas). `admin/` panel donörleri public depoya girmez, yerel `panel-donor-yerel` dalında durur. Push ve yayın Beyar onayıyladır. `robots.txt` her yolu kapatır, her sayfada `noindex, nofollow` vardır.
 
 ## Çalıştırma
 
