@@ -54,7 +54,7 @@ yaz('sifre-yenile/index', { ...kimlik, baslik: 'Yeni Şifre', donor: 'https://da
 p = await ac(dom('o-hakkimizda'));
 yaz('hakkimizda/index', { baslik: 'Hakkımızda', zincir: 'hakkimizda', donor: 'https://dadagourmet.com/hakkimizda + https://dadagastro.com/hakkimizda' }, await p.evaluate(() => { kok(document.body); const m = document.querySelector('main');
   m.querySelectorAll('.st b,.lst-stats b,.lst-stats strong,.st strong').forEach((b) => { if (b.textContent.trim() === '81') b.textContent = '15'; });
-  metin(m, /\b81 il\b/g, '15 il'); metin(m, /küçük bir esnaf lokantasını da/, 'küçük bir mekânı da'); return m.innerHTML; }));
+  metin(m, /\b81 il\b/g, '15 il'); /* "küçük bir esnaf lokantası" canlıdaki gibi kalır (Beyar 9 Kas) */ return m.innerHTML; }));
 // Künye: satırlar Gastro'dan; değerler K5 yer tutucusu
 p = await ac(dom('g-kunye'));
 yaz('kunye/index', { baslik: 'Künye', zincir: 'kunye', donor: 'https://dadagastro.com/kunye' }, await p.evaluate(({ }) => { kok(document.body); const m = document.querySelector('main');
