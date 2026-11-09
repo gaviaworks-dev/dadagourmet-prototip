@@ -133,10 +133,65 @@
     var s = new maplibregl.LngLatBounds(); l.forEach(function (m) { s.extend([m.lng, m.lat]); });
     h.fitBounds(s, { padding: 40, maxZoom: 13, duration: 300 });
   }
+  /* Sıralama: canlı menünün sekiz kalemi. Veri statik kopya olduğu için yalnız kayıtta karşılığı olan ölçüt sıralar.
+     Şimdi Açık ve Rezervasyon Uygunluğu canlı etkinlik listesinde olduğu gibi listeyi süzer. Karşılığı olmayan
+     ölçütte liste Önerilen sırasında kalır ve bant bunu söyler; uydurma sıra yok. */
+  var sira = 'onerilen', konum = null, konumDurum = '';
+  var yer = {}; V.mekanlar.forEach(function (m, i) { yer[m.slug] = i; });
+  var puanli = V.mekanlar.some(function (m) { return ozellik(m, 'puan').some(function (p) { return p !== 'yok'; }); });
+  var ETIKET = '<span class="ornek-etiket">prototip örneği</span> ';
+  function uzaklik(m) {
+    var r = Math.PI / 180, a = Math.sin((m.lat - konum.lat) * r / 2), b = Math.sin((m.lng - konum.lng) * r / 2);
+    return Math.asin(Math.sqrt(a * a + Math.cos(konum.lat * r) * Math.cos(m.lat * r) * b * b));
+  }
+  function sirala(l) {
+    var var_ = function (g, d) { return function (m) { return ozellik(m, g).indexOf(d) >= 0; }; };
+    if (sira === 'simdi_acik') { l = l.filter(var_('acik', 'simdi')); }
+    if (sira === 'rezervasyon_uygun') { l = l.filter(var_('acik', 'rezervasyon')); }
+    var anahtar = null;
+    if (sira === 'fiyat_artan') { anahtar = function (m) { return +(ozellik(m, 'fiyat')[0] || 9); }; }
+    if (sira === 'en_yakin' && konum) { anahtar = uzaklik; }
+    if (!anahtar) { return l; }
+    return l.slice().sort(function (a, b) { return (anahtar(a) - anahtar(b)) || (yer[a.slug] - yer[b.slug]); });
+  }
+  function siraNotu() {
+    var n = $('#mklSiraNot');
+    if (!n) { n = document.createElement('p'); n.className = 'mkl-harita-not'; n.id = 'mklSiraNot'; $('.lst-bar').after(n); }
+    var t = '';
+    if ((sira === 'en_yuksek_puan' || sira === 'en_cok_yorumlanan') && !puanli) { t = 'Henüz değerlendirilmiş mekân yok; liste Önerilen sırasında.'; }
+    if (sira === 'en_yeni') { t = ETIKET + 'Eklenme tarihi bu kopyada yok; liste Önerilen sırasında.'; }
+    if (sira === 'simdi_acik') { t = ETIKET + 'Açık bilgisi canlı verinin çekim anına aittir.'; }
+    if (sira === 'en_yakin') { t = konum ? 'Konumuna göre yakından uzağa.' : konumDurum === 'bekliyor' ? 'Konumun isteniyor.' : 'Konum alınamadı; liste Önerilen sırasında.'; }
+    n.innerHTML = t; n.hidden = !t;
+  }
+  function siraSec(s, a) {
+    sira = s;
+    var ad = a ? a.textContent.trim() : ''; if (ad) { $('#sortCur').textContent = ad; }
+    $$('.sort-menu a').forEach(function (x) { x.classList.toggle('active', x === a); });
+    siraKapat(false);
+    var u = new URL(location.href); if (s === 'onerilen') { u.searchParams.delete('sirala'); } else { u.searchParams.set('sirala', s); }
+    history.replaceState(null, '', u.pathname + u.search + u.hash);
+    if (s === 'en_yakin' && !konum) {
+      if (!navigator.geolocation) { konumDurum = 'yok'; }
+      else {
+        konumDurum = 'bekliyor';
+        navigator.geolocation.getCurrentPosition(function (p) { konum = { lat: p.coords.latitude, lng: p.coords.longitude }; konumDurum = ''; yenile(true); },
+          function () { konumDurum = 'yok'; yenile(true); }, { timeout: 8000 });
+      }
+    }
+    yenile(true);
+  }
+  function siraKapat(odak) {
+    var dd = $('#sortDd'), b = $('#sortBtn'); if (!dd.classList.contains('open')) { return; }
+    dd.classList.remove('open'); b.setAttribute('aria-expanded', 'false'); if (odak) { b.focus(); }
+  }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { siraKapat(true); } });
+  function siraBag(a) { return (/[?&]sirala=([a-z_]+)/.exec(a.getAttribute('href') || '') || [])[1] || 'onerilen'; }
+
   function yenile(sifirla) {
     if (sifirla) { sayfa = 1; }
     var d = durum(); altKonumlar(d); d = durum();
-    var sonuc = suz(d); sayaclar(d); var l = etiketler(d);
+    var sonuc = sirala(suz(d)); sayaclar(d); var l = etiketler(d); siraNotu();
     $('#lstSum').innerHTML = '<b>' + sonuc.length + ' mekân</b> listeleniyor';
     sayfalama(sonuc.length);
     $('#mklGrid').innerHTML = sonuc.slice((sayfa - 1) * SAYFA, sayfa * SAYFA).map(kart).join('');
@@ -171,6 +226,10 @@
   document.addEventListener('change', function (e) { if (e.target.closest('.sheet-body') && e.target.type === 'checkbox') { if (e.target.name === 'il[]' && !e.target.checked) { temizleIlce(); } yenile(true); } });
   function temizleIlce() { var il = secili('il'); $$('input[name="ilce[]"]:checked').forEach(function (i) { var r = i.closest('label'); if (il.indexOf(r.dataset.il) < 0) { i.checked = false; } }); }
   document.addEventListener('click', function (e) {
+    /* Aç, kapa, dışa tıklama: canlı `gourmet-mekan-liste.js`deki dinleyicinin aynısı; o dosya bu sayfaya yüklenmiyor */
+    var sb = e.target.closest('#sortBtn'); if (sb) { var ac = $('#sortDd').classList.toggle('open'); sb.setAttribute('aria-expanded', ac ? 'true' : 'false'); return; }
+    if (!e.target.closest('#sortDd')) { siraKapat(false); }
+    var so = e.target.closest('.sort-menu a'); if (so) { e.preventDefault(); siraSec(siraBag(so), so); return; }
     var hd = e.target.closest('.fct-head'); if (hd) { e.preventDefault(); hd.parentElement.classList.toggle('open'); return; }
     var mr = e.target.closest('.fct-more'); if (mr) { e.preventDefault(); var k = mr.closest('.fct'); var ac = k.classList.toggle('more-open'); if (ac) { mr.innerHTML = 'Daha az göster <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>'; } yenile(); return; }
     var et = e.target.closest('.mkl-etiket'); if (et) { var i = kutu(et.dataset.g, et.dataset.d); if (i) { i.checked = false; temizleIlce(); } yenile(true); return; }
@@ -191,5 +250,7 @@
   /* Rail: konsept değeri bağdan okunur. Adres parametreleri açılışta seçim olur */
   $$('a.subcat').forEach(function (a) { var m = /[?&]konsept=([^&]+)/.exec(a.getAttribute('href') || ''); if (m) { a.dataset.konsept = decodeURIComponent(m[1]); } });
   new URLSearchParams(location.search).forEach(function (d, g) { var i = kutu(g.replace('[]', ''), d); if (i) { i.checked = true; } });
-  yenile(true);
+  var ilkSira = new URLSearchParams(location.search).get('sirala');
+  var ilkBag = ilkSira && $$('.sort-menu a').filter(function (a) { return siraBag(a) === ilkSira; })[0];
+  if (ilkBag) { siraSec(ilkSira, ilkBag); } else { yenile(true); }
 })();
