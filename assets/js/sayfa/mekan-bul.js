@@ -8,6 +8,16 @@
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
   var kac = function (t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
   var has = function (m, g, d) { return (m.f[g] || []).indexOf(d) >= 0; };
+  /* Haritadan Seç tarifi: yazının içindeki il ve ilçe adları; ör. "İstanbul Havalimanı çevresi" İstanbul'u eşler */
+  var tarif = '', tarifOnbellek = null;
+  var tarifYer = function () {
+    if (tarifOnbellek && tarifOnbellek.t === tarif) { return tarifOnbellek.l; }
+    var t = tarif.toLocaleLowerCase('tr'), l = [];
+    V.secenek.ilce.forEach(function (o) { if (t.indexOf(o.ad.toLocaleLowerCase('tr')) >= 0) { l.push(['ilce', o.deger]); } });
+    if (!l.length) { V.secenek.il.forEach(function (o) { if (t.indexOf(o.ad.toLocaleLowerCase('tr')) >= 0) { l.push(['il', o.deger]); } }); }
+    tarifOnbellek = { t: tarif, l: l }; return l;
+  };
+  document.addEventListener('input', function (e) { if (e.target.id === 'mbHaritaTxt') { tarif = e.target.value.trim(); } });
   var km = function (a, b, c, d) { var r = Math.PI / 180, x = (d - b) * r * Math.cos((a + c) * r / 2), y = (c - a) * r; return Math.sqrt(x * x + y * y) * 6371; };
   /* İstanbul–İzmir örnek güzergâhına en yakın uzaklık */
   var hatUzak = function (m) {
@@ -68,6 +78,8 @@
   var konumdaMi = function (m) {
     if (durum.yontem === 'bolge' && durum.il) { if (!has(m, 'il', durum.il)) { return false; } if (durum.ilce && !has(m, 'ilce', durum.ilce)) { return false; } }
     if (durum.yontem === 'mevcut' && durum.lat !== null) { return km(durum.lat, durum.lng, m.lat, m.lng) <= durum.mesafe; }
+    /* Haritadan Seç: canlıda alan çizme yok, bölge yazılır. Prototip yazıdaki il ya da ilçe adını eşler; eşleşme yoksa konum süzmez */
+    if (durum.yontem === 'harita' && tarifYer().length) { return tarifYer().some(function (y) { return has(m, y[0], y[1]); }); }
     return true;
   };
   var kriterler = function () {
@@ -113,6 +125,7 @@
     var k = kriterler(), cip = '';
     if (durum.yontem === 'bolge' && durum.il) { cip += '<span class="res-chip"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> ' + kac($('#mbSehir option:checked').textContent.replace(/\s*\(\d+\)$/, '')) + (durum.ilce ? ' / ' + kac($('#mbIlce option:checked').textContent) : '') + '</span>'; }
     if (durum.yontem === 'mevcut' && durum.lat !== null) { cip += '<span class="res-chip"><i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i> ' + durum.mesafe + ' km içinde</span>'; }
+    if (durum.yontem === 'harita' && tarif) { cip += '<span class="res-chip"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> ' + kac(tarif) + (tarifYer().length ? '' : ' · konum eşleşmedi') + '</span>'; }
     cip += k.map(function (c) { return '<span class="res-chip"><i class="fa-solid ' + c.ikon + '" aria-hidden="true"></i> ' + kac(c.ad) + '</span>'; }).join('');
     $('#mbCipler').innerHTML = cip;
     var veriYok = k.filter(function (c) { return !V.mekanlar.some(c.uy); })[0], l = hesapla(k), html;

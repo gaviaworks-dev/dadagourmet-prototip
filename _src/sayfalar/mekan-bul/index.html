@@ -60,7 +60,7 @@
                                 </div></div><div class="wstep" data-adim="2"><div class="fc-head">
                                 <h2><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Konum ve bütçe</h2>
                                 <span class="fc-step">Adım 2 / 3</span>
-                            </div><h3 class="mb-alt-baslik">Nerede?</h3><div class="pick-grid mb-grid-3" data-q="yontem"><label class="pick">
+                            </div><h3 class="mb-alt-baslik">Nerede?</h3><div class="pick-grid mb-grid-4" data-q="yontem"><label class="pick">
                 <input type="radio" name="yontem" value="hepsi">
                 <span class="pk-ico"><i class="fa-solid fa-earth-europe" aria-hidden="true"></i></span>
                 <span class="pk-txt"><b>Fark Etmez</b><small>Tüm Türkiye</small></span>
@@ -75,7 +75,7 @@
                 <span class="pk-ico"><i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i></span>
                 <span class="pk-txt"><b>Konumumu Kullan</b><small>Yakınımdakiler</small></span>
                 <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
-            </label></div><div class="mb-sub-field" data-sub="bolge" hidden="">
+            </label><label class="pick"> <input type="radio" name="yontem" value="harita"> <span class="pk-ico"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></span> <span class="pk-txt"><b>Haritadan Seç</b><small>Bölgeyi tarif et</small></span> <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span> </label></div><div class="mb-sub-field" data-sub="bolge" hidden="">
                     <div class="mb-cascade" id="mbCascade">
                 <div class="mo-field">
                     <label for="mbSehir">İl</label>
@@ -99,7 +99,7 @@
             </button>
             <span class="pick-note" id="mbGeoStatus"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Tarayıcı konum izni isteyecek. Vermezsen Bölge Seç ile devam edebilirsin.</span>
         </div>
-    </div><div class="dist-bar" id="mbDistBar" hidden="">
+    </div><div class="mb-sub-field" data-sub="harita" hidden=""> <div class="mo-field"> <label for="mbHaritaTxt">Bölge <span class="opt">ör. İstanbul Havalimanı çevresi</span></label> <input type="text" name="metin" id="mbHaritaTxt" value="" placeholder="Bölge tarifi"> <span class="pick-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Harita üzerinde alan çizme ileride gelecek — şimdilik bölgeyi yazarak tarif edebilirsin.</span> </div> </div><div class="dist-bar" id="mbDistBar" hidden="">
         <span class="db-lbl"><i class="fa-solid fa-route" aria-hidden="true"></i> Arama yarıçapı · <b id="mbDistVal">25 km</b></span>
         <div class="dist-wrap">
             <div class="dist-track"><div class="dist-fill" id="mbDistFill" style="width: 48.9796%;"></div></div>
