@@ -52,7 +52,9 @@
     $$('.pick').forEach(function (l) { l.classList.toggle('sel', $('input', l).checked); });
     $('[data-sub="bolge"]').hidden = durum.yontem !== 'bolge';
     $('[data-sub="mevcut"]').hidden = durum.yontem !== 'mevcut';
-    $('#mbDistBar').hidden = durum.yontem !== 'mevcut';
+    $('[data-sub="harita"]').hidden = durum.yontem !== 'harita';
+    /* `.dist-bar{display:flex}` hidden özniteliğini ezer; görünürlük doğrudan yazılır */
+    var db = $('#mbDistBar'); db.hidden = durum.yontem !== 'mevcut'; db.style.display = db.hidden ? 'none' : '';
   };
   var goster = function (n) {
     adim = n;
