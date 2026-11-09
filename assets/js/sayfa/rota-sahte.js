@@ -45,13 +45,14 @@
     var ust = l.filter(function (m) { return m.sapmaKm <= 1; }).length;
     return { mekanlar: l.slice(0, 60), sayac: { yolUstu: ust, yolaYakin: l.length - ust, toplam: l.length }, kirpildi: l.length > 60 };
   }
-  /* Şarj: yalnız rotaya 20 km içindeki örnek noktalar; eşleşen mekân gerçek konumdan, 1 km yürüme mesafesi (§8 #10) */
+  /* Şarj: yalnız rotaya 20 km içindeki örnek noktalar; eşleşen mekân gerçek konumdan, 1 km yürüme mesafesi (§8 #10).
+     Şarj süresi (R2.5b) tahmin: 60 kWh batarya %20→%80, DC 120 kW verimle ~26 dk, AC 22 kW ~100 dk; yürüme 80 m/dk */
   function sarj(q) {
     var tur = q.get('tur') || 'tum', min = +q.get('min_kw') || 0;
     var l = R.katman.sarj.map(function (n, i) {
       var u = hataUzak({ lat: n[1], lng: n[0] }), dc = /DC/.test(n[2]);
-      var yakin = M.map(function (m) { return { id: m.slug, slug: m.slug, ad: m.name, mesafe_m: Math.round(km(n[1], n[0], m.lat, m.lng) * 1000), url: kok + 'mekan/mikla/' }; }).filter(function (m) { return m.mesafe_m <= 1000; }).sort(function (a, b) { return a.mesafe_m - b.mesafe_m; });
-      return { id: 'ornek-' + i, ad: n[2] + ' (prototip örneği)', tur: dc ? 'DC' : 'AC', kw: dc ? 120 : 22, lat: n[1], lng: n[0], rotadan_km: Math.round(u.d * 10) / 10, sahiplik: null, operator: null, veri_saglayici: 'Prototip örneği', lisans: 'örnek veri', mekanlar: yakin };
+      var yakin = M.map(function (m) { var mm = Math.round(km(n[1], n[0], m.lat, m.lng) * 1000); return { id: m.slug, slug: m.slug, ad: m.name + ' · yürüyerek ' + Math.max(1, Math.round(mm / 80)) + ' dk', mesafe_m: mm, url: kok + 'mekan/mikla/' }; }).filter(function (m) { return m.mesafe_m <= 1000; }).sort(function (a, b) { return a.mesafe_m - b.mesafe_m; });
+      return { id: 'ornek-' + i, ad: n[2] + ' (prototip örneği)', tur: dc ? 'DC' : 'AC', kw: dc ? 120 : 22, lat: n[1], lng: n[0], rotadan_km: Math.round(u.d * 10) / 10, sahiplik: null, operator: 'Prototip örneği · %20→%80 şarj tahmini ' + (dc ? '~26' : '~100') + ' dk (60 kWh batarya)', veri_saglayici: 'Prototip örneği', lisans: 'örnek veri', mekanlar: yakin };
     }).filter(function (s) { return s.rotadan_km <= 20 && (tur === 'tum' || s.tur === tur) && s.kw >= min; });
     return { istasyonlar: l, veri_hazir: true, toplam: l.length };
   }

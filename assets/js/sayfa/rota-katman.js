@@ -76,6 +76,7 @@
   var appleBag = function (z) { return 'https://maps.apple.com/directions?source=' + encodeURIComponent(kor(z[0])) + '&destination=' + encodeURIComponent(kor(z[z.length - 1])) + z.slice(1, -1).map(function (n) { return '&waypoint=' + encodeURIComponent(kor(n)); }).join('') + '&mode=driving'; };
   var yandexBag = function (z) { return 'https://yandex.com.tr/maps/?rtext=' + z.map(kor).join('~') + '&rtt=auto'; };
   var kisa = function (n) { return String(n.ad).split(',')[0]; };
+  var paylasBag = function (z) { return location.origin + location.pathname + '?rota=' + encodeURIComponent(JSON.stringify(z.map(function (n) { return [String(n.ad), +(+n.lat).toFixed(5), +(+n.lng).toFixed(5)]; }))); };
   var aktarDugme = function (ikon, ad, l, bag) {
     return l.map(function (z, i) { var etap = l.length > 1 ? ' · Etap ' + (i + 1) + '/' + l.length : ''; return '<a class="yg-aktar-bag" href="' + kac(bag(z)) + '" target="_blank" rel="noopener noreferrer"><i class="' + ikon + '" aria-hidden="true"></i><span><b>' + ad + etap + '</b>' + (l.length > 1 ? '<small>' + kac(kisa(z[0]) + ' → ' + kisa(z[z.length - 1])) + '</small>' : '') + '</span><i class="fa-solid fa-arrow-up-right-from-square yg-aktar-ok" aria-hidden="true"></i></a>'; }).join('');
   };
@@ -87,6 +88,9 @@
     if (gl.length > 1) { not.push('Google ' + (mobil() ? 'mobil tarayıcıda 3' : '9') + ' ara durak alır; rota ' + gl.length + ' etaba bölündü.'); }
     if (ara) { not.push('Apple Maps çok durağı iOS 18.4 ve macOS 15.4 sonrasında açar.'); not.push('Yandex uygulaması yalnız kalkış ve varışı alabilir.'); }
     $('#ygAktarNot').textContent = not.join(' ');
+    /* Tek akıllı rota bağlantısı (R3.6d): bütün duraklar tek adreste; açan kişi Google, Apple ya da Yandex'i seçer */
+    var tek = paylasBag(z);
+    $('#ygAktarListe').insertAdjacentHTML('beforeend', '<button type="button" class="yg-aktar-bag" data-tek-bag="' + kac(tek) + '"><i class="fa-solid fa-link" aria-hidden="true"></i><span><b>Tek rota bağlantısı</b><small>' + z.length + ' nokta, üç navigasyon uygulaması</small></span></button>');
   };
   var hepsi = function () { ilEsle(); yenile(); aktar(); };
   window.addEventListener('dg-rota', function () { setTimeout(hepsi, 0); });
@@ -95,6 +99,17 @@
   new MutationObserver(function () { durakBoya(); aktar(); }).observe($('#ygStopList'), { childList: true, subtree: true });
   var plan = $('#ygPlanList'); if (plan) { new MutationObserver(aktar).observe(plan, { childList: true, subtree: true }); }
   document.addEventListener('click', function (e) {
+    /* Araç türü (R3.3a): Elektrikli, Enerji ve şarj katmanını ve DC hızlı süzgecini açar; Yakıtlı kapatır */
+    var ar = e.target.closest('[data-arac]');
+    if (ar) {
+      $$('[data-arac]').forEach(function (b) { b.setAttribute('aria-pressed', b === ar ? 'true' : 'false'); });
+      var ev = ar.dataset.arac === 'elektrikli', sk = $('.yg-katman-dugme[data-katman="sarj"]');
+      if (sk && (sk.getAttribute('aria-pressed') === 'true') !== ev) { sk.click(); }
+      if (ev) { setTimeout(function () { var dc = $$('#ygSarjBody button').filter(function (b) { return /DC/.test(b.textContent); })[0]; if (dc) { dc.click(); } }, 50); }
+      return;
+    }
+    var tb = e.target.closest('[data-tek-bag]');
+    if (tb) { var bg = tb.dataset.tekBag, ok = function () { (window.prototipBildir || function () {})('Tek rota bağlantısı kopyalandı.'); }; if (navigator.clipboard) { navigator.clipboard.writeText(bg).then(ok, function () { window.prompt('Bağlantı', bg); }); } else { window.prompt('Bağlantı', bg); } return; }
     var d = e.target.closest('[data-durak]');
     if (d && window.dgRotaApi) { if (d.getAttribute('aria-pressed') !== 'true') { window.dgRotaApi.durakYap({ ad: d.dataset.durak, lat: +d.dataset.lat, lng: +d.dataset.lng }); } durakBoya(); return; }
     var k = e.target.closest('.yg-katman-dugme'); if (!k) { return; }
@@ -103,6 +118,14 @@
     if (ad === 'sarj') { var t = $('#ygSarjToggle'); if (t && (t.getAttribute('aria-pressed') === 'true') !== on) { t.click(); } return; }
     acik[ad] = on; if (on) { grup[ad].addTo(h); } else { h.removeLayer(grup[ad]); } yenile();
   });
+  /* Paylaşılan rota (?rota=): duraklar adresten okunur, üç uygulamaya çok duraklı aktarım bağları basılır */
+  (function () {
+    var m = /[?&]rota=([^&]+)/.exec(location.search); if (!m) { return; }
+    var z; try { z = JSON.parse(decodeURIComponent(m[1])).map(function (x) { return { ad: x[0], lat: x[1], lng: x[2] }; }); } catch (e) { return; }
+    if (!z || z.length < 2) { return; }
+    var gl = etaplar(z, mobil() ? 3 : 9);
+    $('section.yg-katman').insertAdjacentHTML('beforebegin', '<section class="yg-aktar" id="ygPaylasilan" aria-label="Paylaşılan rota"><div class="yg-katman-bas"><span class="yg-eyebrow">Paylaşılan rota</span><span class="yg-aktar-sayi">' + z.length + ' nokta · ' + (z.length - 2) + ' ara durak</span></div><p class="yg-aktar-not">' + kac(z.map(kisa).join(' → ')) + '</p><div class="yg-aktar-liste">' + aktarDugme('fa-brands fa-google', 'Google Maps', gl, googleBag) + aktarDugme('fa-brands fa-apple', 'Apple Maps', [z], appleBag) + aktarDugme('fa-brands fa-yandex', 'Yandex', [z], yandexBag) + '</div></section>');
+  })();
   /* Açılış canlıdaki gibi boş karşılama (Beyar, 9 Kas). `?ornek=1` inceleme için örnek güzergâhı yükler */
   if (/[?&]ornek=1/.test(location.search)) { setTimeout(function () { var p = $('#ygPilots button, #ygPilots a'); if (p) { p.click(); } }, 300); }
 })();
