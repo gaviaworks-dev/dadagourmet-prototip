@@ -23,7 +23,6 @@
 .ny-eylem[aria-pressed="true"]{border-color:var(--marka,#742982);color:var(--marka,#742982)}
 /* Mekânlar: canlı düzen. Gastro zinciri satır yüksekliğini büyütüyordu; ölçüler canlıyla aynı */
 .pg-mekanlar .search-input input,.pg-mekanlar .sort-btn,.pg-mekanlar .btn-filter{line-height:normal}
-@media(max-width:640px){.pg-mekanlar .ke-head h1{font-size:40px;line-height:1.12}}
 .mkl-harita-not{margin:8px 0 0;font-size:12px;color:var(--muted,#6f6f6f)}
 /* Mekân kartı alt satırı: Gastro tarif kartı (`.r-card` sütun, `.r-foot{margin-top:auto}`, aralık --sp-2 8px) gibi.
    Gövde esnek sütun; konum satırı ve eylemler kartın altına sabit, aynı sıradaki kartlarda aynı çizgide; eylemler başlıkla aynı sol hizada */
@@ -83,7 +82,7 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 .yg-il-bolum+.yg-il-bolum{border-top:0;border-left:1px solid var(--line)}
 .yg-il-bolum-bas{margin-bottom:5px}
 .yg-il-cipler{gap:4px}
-@media (max-width:767px){
+@media (max-width:640px){
   .yg-il-kart{grid-template-columns:minmax(0,1fr)}
   .yg-il-bolum{padding:7px 12px}
   .yg-il-bolum+.yg-il-bolum{border-left:0;border-top:1px solid var(--line)}
@@ -134,7 +133,7 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 .vt-gorsel{flex:0 0 88px;height:72px;border-radius:10px;background-size:cover;background-position:center}
 .vt-metin{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}.vt-metin b{font-size:14.5px;line-height:1.25}.vt-metin small{font-size:12.5px;color:var(--muted,#6f6f6f)}
 .vt-sutun .see-all{margin-top:auto;align-self:flex-start}
-@media(max-width:980px){.vt-izgara{grid-template-columns:minmax(0,1fr)}.gm-vitrin{padding:40px 0}}
+@media(max-width:1024px){.vt-izgara{grid-template-columns:minmax(0,1fr)}.gm-vitrin{padding:40px 0}}
 
 /* Rezervasyon penceresi: boş hata kutusu ve üst görsel */
 #rsvClientError[hidden]{display:none}
@@ -175,6 +174,9 @@ button.yg-il-cip{display:inline-flex;align-items:center;gap:5px;font-family:inhe
 /* Responsive turu (kırılma noktaları dadadiet-prototip ile aynı: 640, 860, 1024) */
 /* Route: yarım sayfada panel 34dvh pencere dışında kalır; son öğe ancak bu payla erişilir */
 @media(max-width:860px){
+  /* Alt sayfa tutamağı 44px dokunma yüksekliği (önce 26); çizgi ortada, en küçük durak (peek) aynı içeriği gösterir */
+  .yg-sheet-grip{height:44px}.yg-sheet-grip::before{top:19px}
+  .yg-panel.sheet-peek{transform:translateY(calc(86dvh - 102px))}
   .yg-panel.sheet-half .yg-view{padding-bottom:calc(34dvh + 28px)}
   .yg-panel.sheet-half #viewAll .yg-all-body{padding-bottom:calc(34dvh + 26px)}
   .yg-sheet-ctx{border:0}
@@ -234,7 +236,6 @@ body.pg-gurme-lezzetler-detay .art-hero h1{font-size:clamp(30px,3.5vw,44px)}
 @media(min-width:1025px){body.pg-gurme-lezzetler-detay .art-hero{min-height:560px}}
 @media(max-width:640px){
   body.pg-gurme-lezzetler section.below-header.ke-top:not(#_){min-height:552px;padding-bottom:48px}
-  body.pg-gurme-lezzetler .ke-head h1{font-size:40px}
   body.pg-gurme-lezzetler .ke-filter{padding-top:4px}
   body.pg-gurme-lezzetler-detay .art-col p{text-align:left}
 }
@@ -261,7 +262,7 @@ body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .page-main p{tex
 #gmModules .gm-mod-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;overflow:visible}
 #gmModules .gm-mod{flex:none;min-width:0}
 #gmModules .cat-nav{display:none}
-@media (max-width:767px){#gmModules .gm-mod-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:640px){#gmModules .gm-mod-grid{grid-template-columns:minmax(0,1fr)}}
 
 /* ==== Dada Route revizesi (Beyar, 9 Kas) · yalnız /dada-route (seçiciler `.yg-` ailesi ya da `.yg-app` altında) ==== */
 /* Tek çip/hap köşesi (Beyar #13): canlıdaki site düğmesi "Rota Kur" `.yg-tab` 12px (`--radius-md`) = kanon `--yuvarlak-cip` (→ `--yuvarlak-md`).
@@ -323,3 +324,40 @@ body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .page-main p{tex
 .yg-dcard--katman .yg-kl-durak{align-self:flex-start;margin-top:2px;padding:3px 9px}
 body.gastronomi-kapali .yg-dash.yg-dash--katmanli:not([hidden]){display:block!important}
 .yg-dash--katman-sekme #ygDashCount,.yg-dash--katman-sekme #ygDashAll{display:none}
+
+/* ==== Duyarlı hizalama: Gastro ve Diet kuralları (Beyar, 9 Kas). Ölçüm: scratchpad/responsive/esleme.md ==== */
+/* Masaüstü süzgeç sütunu Gastro'daki gibi sayfayla akar (static); canlı Gourmet gövdesindeki sticky + iç kaydırma kalkar */
+@media(min-width:1025px){body .lst-side{position:static;top:auto;max-height:none;overflow:visible}}
+/* Mekân ve etkinlik detayındaki eylem çubuğu 641–1024'te Gastro tarif çubuğu gibi ortada ve dar (768'de 599px):
+   iki alt köşedeki yüzen düğmeler (54px + 22px kenar) çubuğun dışında kalır */
+@media(min-width:641px) and (max-width:1024px){.vd-actbar,.evd-actbar{max-width:min(600px,calc(100vw - 184px))}}
+/* Liste sayfası başlığı telefonda Gastro liste başlığıyla aynı (29px); sayfaya özel 40px kuralları kaldırıldı */
+@media(max-width:640px){.ke-top .ke-head h1:not(.gm-hero-h1){font-size:29px;line-height:1.12}}
+/* Aralıklar Gastro'daki gibi: telefonda kart rayı 14px, liste ızgarası 13px */
+@media(max-width:640px){
+  .disc-grid.drag-scroll{gap:14px}
+  :is(#mklGrid,.mkl-grid,#evGrid,#lzGrid){gap:13px}
+}
+/* Liste kartı ≤640: Gastro tarif listesindeki yatay satır kartı (görsel solda 132px, metin sağda, kart çerçeveli).
+   Tek varyant: Mekânlar, Mekân Bul sonuçları, Etkinlikler, Gurme Lezzetler. İçerik ve sıra aynı kalır.
+   Görsel ilk beş metin satırını kaplar; kartın kendi eylem satırları (Detayları Gör ve ikonlar, randevu, Mekân Bul gerekçeleri) tam genişlikte altta */
+@media(max-width:640px){
+  :is(#mklGrid,.mkl-grid,#evGrid,#lzGrid)>.disc-card{position:relative;background:var(--paper,#fff);border:1px solid var(--line);border-radius:var(--radius-lg,16px);overflow:hidden;box-shadow:0 2px 10px rgba(33,30,22,.06)}
+  :is(#mklGrid,.mkl-grid)>.disc-card,:is(#evGrid,#lzGrid)>.disc-card>.disc-card-link{display:grid;grid-template-columns:132px minmax(0,1fr);column-gap:14px;row-gap:0;align-content:start;padding:12px 14px 0 0}
+  :is(#evGrid,#lzGrid)>.disc-card{display:flex;flex-direction:column}
+  :is(#mklGrid,.mkl-grid)>.disc-card>.disc-fig,:is(#evGrid,#lzGrid)>.disc-card>.disc-card-link>.disc-fig{grid-column:1;grid-row:1/span 5;align-self:stretch;height:auto;min-height:0;aspect-ratio:auto;margin:-12px 0 0;border-radius:0}
+  :is(#mklGrid,.mkl-grid)>.disc-card>:not(.disc-fig),:is(#evGrid,#lzGrid)>.disc-card>.disc-card-link>:not(.disc-fig){grid-column:2;min-width:0}
+  :is(#mklGrid,.mkl-grid,#evGrid,#lzGrid) .disc-card .disc-cat{margin-top:0}
+  :is(#mklGrid,.mkl-grid,#evGrid,#lzGrid) .disc-card h3{font-size:14.5px;line-height:1.25;margin-bottom:6px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+  :is(#mklGrid,.mkl-grid,#evGrid,#lzGrid) .disc-card p{font-size:12.5px;line-height:1.4;min-height:0;max-height:2.8em;margin-bottom:8px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+  :is(#mklGrid,.mkl-grid,#evGrid,#lzGrid) .disc-card .disc-meta{padding:8px 0 12px;margin-top:0;flex-wrap:wrap;gap:4px 12px}
+  :is(#mklGrid,.mkl-grid,#evGrid,#lzGrid) .disc-card .disc-meta>*{white-space:nowrap;min-width:0}
+  :is(#evGrid,#lzGrid) .disc-card :is(.disc-cat,h3){padding-right:40px}
+  :is(#mklGrid,.mkl-grid,#evGrid,#lzGrid) .disc-card .kart-nitelik{margin:4px 0 0}
+  /* Tam genişlik alt satırlar: çizgiyle ayrılır, kartın iç boşluğu 14px */
+  :is(#mklGrid,.mkl-grid)>.disc-card>:is(.mkl-kart-eylem,.mb-reasons,.mb-card-actions),:is(#evGrid,#lzGrid)>.disc-card>.disc-card-foot{grid-column:1/-1;margin:0 -14px 0 0;padding:10px 14px;border-top:1px solid var(--line);box-sizing:border-box;width:auto}
+  :is(#mklGrid,.mkl-grid)>.disc-card>.mb-reasons{margin-bottom:0}
+  :is(#mklGrid,.mkl-grid)>.disc-card>.mb-reasons+.mb-card-actions{border-top:0;padding-top:0;margin-top:0}
+  :is(#evGrid,#lzGrid)>.disc-card>.disc-card-foot{display:flex;flex-direction:row;gap:8px;margin:0}
+  :is(#evGrid,#lzGrid)>.disc-card>.disc-card-foot>*{flex:1 1 0;justify-content:center;min-width:0}
+}
