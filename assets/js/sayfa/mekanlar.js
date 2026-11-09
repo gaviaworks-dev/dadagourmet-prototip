@@ -73,7 +73,9 @@
       $$('input[name="' + g + '[]"]').forEach(function (i) {
         var r = i.closest('label.fct-row'), n = adet[i.value] || 0, c = $('.fcnt', r);
         if (!c) { c = document.createElement('span'); c.className = 'fcnt'; r.appendChild(c); }
-        c.textContent = n; r.hidden = n === 0 && !i.checked; r.style.display = r.hidden ? 'none' : '';
+        c.textContent = n; r.classList.toggle('soluk', n === 0);
+        /* Şartname W1.1 yalnız konsepti gizler; öbür gruplarda 0 sonuçlu seçenek canlıdaki gibi soluk görünür */
+        r.hidden = g === 'konsept' && n === 0 && !i.checked; r.style.display = r.hidden ? 'none' : '';
       });
     });
     $$('.sheet-body > .fct').forEach(function (k) {
