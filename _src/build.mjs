@@ -98,6 +98,8 @@ const YEDEK = [
   [/^hesabim\/ziyaretler$/, ['hesabim/gurme-panelim/ziyaret-gecmisim']],
   [/^hesabim\/degerlendirmeler$/, ['hesabim/gurme-panelim/degerlendirmelerim']],
   [/^hesabim\/rozetlerim$/, ['hesabim/gurme-panelim/puan-durumu']],
+  // Canlı /sss üyeyi Çözüm Merkezi'nin SSS sekmesine yollar
+  [/^sss$/, ['hesabim/cozum-merkezi/cozum']],
   [/^hesabim\/.+/, ['hesabim/ayarlar']],
   [/^yasal(\/.+)?$/, ['yasal/kvkk']],
   [/^(isletme(\/.+)?|sss)$/, ['iletisim']],
