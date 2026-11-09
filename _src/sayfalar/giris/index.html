@@ -41,6 +41,7 @@
                                 <h1>Tekrar hoş geldin</h1>
                                 <p>Kaldığın yerden devam et — listelerin ve rezervasyonların seni bekliyor.</p>
                             <span class="ornek-etiket">prototip örneği</span></div>
+                        <div class="bilgi-notu"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><p>Demo hesap bilgileri dolu, Giriş Yap ile hesabı gör.</p></div>
 
                                                                                     
                             <div class="giris-serit reddedildi" id="loginErr" role="alert">
@@ -66,6 +67,8 @@
 
                                 
                                                                 <input type="hidden" name="hedef" id="giHedef" value="kullanici">
+                            <p class="giris-segment-giris" id="giRolEtiket"><i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> Hangi hesaba giriyorsun?</p>
+                            <div class="giris-segment rol" role="group" aria-labelledby="giRolEtiket" id="giRol"><button class="aktif" type="button" data-rol="uye" data-eposta="{{uye.eposta}}" aria-pressed="true"><i class="fa-solid fa-user" aria-hidden="true"></i> Kullanıcı</button><button type="button" data-rol="isletme" data-eposta="mekan.sahibi@eposta.com" aria-pressed="false"><i class="fa-solid fa-store" aria-hidden="true"></i> İşletme</button><button type="button" data-rol="yonetici" data-eposta="yonetici@eposta.com" aria-pressed="false"><i class="fa-solid fa-user-shield" aria-hidden="true"></i> Yönetici</button></div>
 
                                 
                                                                 <div class="alan" id="giEmailField">

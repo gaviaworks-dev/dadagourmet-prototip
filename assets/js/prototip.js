@@ -14,13 +14,25 @@
   kimlik.content = JSON.stringify(uye ? { auth: true, roles: ['kullanici'], ad: ornek[0], kullaniciAdi: ornek[1] } : { auth: false });
   document.head.appendChild(kimlik);
   if (document.documentElement.dataset.uyeSayfa && !uye) { location.replace(kok + 'giris/?donus=' + encodeURIComponent(document.documentElement.dataset.yol + '/')); }
-  /* Canlıda giriş ve kayıt ekranı üyeye açılmaz, Hesabım'a yönlenir */
-  if (uye && /^(giris|kayit)$/.test(document.documentElement.dataset.yol || '')) { location.replace(kok + 'hesabim/ayarlar/'); }
-  var uyeOl = function () {
+  /* Demo rolleri (Diet prototipindeki düzen): üye Gurme Panelim'e, mekân sahibi İşletme Paneli'ne, yönetici Yönetim'e iner */
+  var ROL_EV = { uye: 'hesabim/gurme-panelim/', isletme: 'isletme/', yonetici: 'yonetim/' };
+  var rolOku = function () { try { var r = localStorage.getItem('dg-rol'); return ROL_EV[r] ? r : 'uye'; } catch (e) { return 'uye'; } };
+  window.dgRol = rolOku;
+  /* Canlıda giriş ve kayıt ekranı oturumluya açılmaz, kendi alanına yönlenir */
+  if (uye && /^(giris|kayit)$/.test(document.documentElement.dataset.yol || '')) { location.replace(kok + ROL_EV[rolOku()]); }
+  var uyeOl = function (rol) {
+    rol = ROL_EV[rol] ? rol : 'uye';
     var kaydedildi = oturumYaz(true), d = adres.get('donus') || '';
-    var hedef = /^[a-z0-9/-]+$/.test(d) ? d : 'hesabim/ayarlar/';
+    try { localStorage.setItem('dg-rol', rol); } catch (e) { /* depo kapalı */ }
+    var hedef = rol === 'uye' && /^[a-z0-9/-]+$/.test(d) ? d : ROL_EV[rol];
     location.href = kok + hedef + (kaydedildi ? '' : '?auth=1');
   };
+  /* Rol seçici: rol değişince o hesabın demo e-postası dolar; şifre aynı kalır */
+  document.addEventListener('click', function (e) {
+    var r = e.target.closest('#giRol button'); if (!r) { return; }
+    [].forEach.call(r.parentNode.querySelectorAll('button'), function (b) { var a = b === r; b.classList.toggle('aktif', a); b.setAttribute('aria-pressed', a ? 'true' : 'false'); });
+    var g = document.getElementById('giEmail'); if (g) { g.value = r.dataset.eposta; g.classList.remove('hatali'); }
+  });
   var yerel = function (u) { try { return new URL(u, location.href).origin === location.origin; } catch (e) { return false; } };
   var yanit = function () { return new Response('{"ok":true,"prototip":true}', { status: 200, headers: { 'Content-Type': 'application/json' } }); };
   var ozFetch = window.fetch.bind(window);
@@ -88,7 +100,7 @@
     e.preventDefault();
     var f = e.target;
     if (f.hasAttribute('data-yerel')) { return; }
-    if (f.id === 'formGiris' || f.id === 'formKayit') { e.stopImmediatePropagation(); uyeOl(); return; }
+    if (f.id === 'formGiris' || f.id === 'formKayit') { e.stopImmediatePropagation(); var ra = f.querySelector('#giRol .aktif'); uyeOl(ra ? ra.dataset.rol : 'uye'); return; }
     if (f.id === 'formSifre') {
       e.stopImmediatePropagation();
       var ok = document.getElementById('sifreOk');
