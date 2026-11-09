@@ -45,6 +45,71 @@
   "duzen": "uye"
  },
  {
+  "yol": "hesabim/bildirimler",
+  "baslik": "Bildirimler",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/cozum-merkezi",
+  "baslik": "Çözüm Merkezi",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/cozum-merkezi/2fa8c519",
+  "baslik": "Çözüm Merkezi",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/cozum-merkezi/5e2b8d41",
+  "baslik": "Çözüm Merkezi",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/cozum-merkezi/9b04d3e6",
+  "baslik": "Çözüm Merkezi",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/cozum-merkezi/c71e04ab",
+  "baslik": "Çözüm Merkezi",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/cozum-merkezi/cozum",
+  "baslik": "Çözüm Merkezi",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/cozum-merkezi/oneri",
+  "baslik": "Çözüm Merkezi",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/cozum-merkezi/yeni",
+  "baslik": "Çözüm Merkezi",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/etkinlikler",
+  "baslik": "Etkinliklerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/etkinlikler/biletlerim",
+  "baslik": "Etkinliklerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/etkinlikler/ilgilendigim",
+  "baslik": "Etkinliklerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/etkinlikler/katildigim",
+  "baslik": "Etkinliklerim",
+  "duzen": "uye"
+ },
+ {
   "yol": "hesabim/gurme-panelim",
   "baslik": "Rezervasyonlarım · Gurme Panelim",
   "duzen": "uye"
@@ -75,6 +140,76 @@
   "duzen": "uye"
  },
  {
+  "yol": "hesabim/kesif-tercihleri",
+  "baslik": "Keşif Tercihlerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/listeler",
+  "baslik": "Listelerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/listeler/paylasilan",
+  "baslik": "Listelerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/listeler/taslak",
+  "baslik": "Listelerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/odemelerim",
+  "baslik": "Ödemelerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/odemelerim/faturalar",
+  "baslik": "Ödemelerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/odemelerim/faturalar/iade",
+  "baslik": "Ödemelerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/odemelerim/faturalar/rehber",
+  "baslik": "Ödemelerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/odemelerim/faturalar/uyelik",
+  "baslik": "Ödemelerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/odemelerim/iade",
+  "baslik": "Ödemelerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/odemelerim/kartlar",
+  "baslik": "Ödemelerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/paketlerim",
+  "baslik": "Paketlerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/paketlerim/kademeler",
+  "baslik": "Paketlerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/paketlerim/karsilastir",
+  "baslik": "Paketlerim",
+  "duzen": "uye"
+ },
+ {
   "yol": "iletisim",
   "baslik": "İletişim",
   "duzen": "public"
@@ -82,6 +217,56 @@
  {
   "yol": "isletme",
   "baslik": "İşletme Paneli",
+  "duzen": "uye"
+ },
+ {
+  "yol": "isletme/basvurular/1042/duzenle",
+  "baslik": "Başvuruyu düzenle",
+  "duzen": "uye"
+ },
+ {
+  "yol": "isletme/basvurular/987/duzenle",
+  "baslik": "Başvuruyu düzenle",
+  "duzen": "uye"
+ },
+ {
+  "yol": "isletme/basvurular/yeni",
+  "baslik": "İşletme ekle",
+  "duzen": "uye"
+ },
+ {
+  "yol": "isletme/degerlendirmeler",
+  "baslik": "İşletmene gelen değerlendirmeler",
+  "duzen": "uye"
+ },
+ {
+  "yol": "isletme/degisiklik-talepleri",
+  "baslik": "Değişiklik taleplerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "isletme/degisiklik-talepleri/318",
+  "baslik": "Değişiklik talebi",
+  "duzen": "uye"
+ },
+ {
+  "yol": "isletme/degisiklik-talepleri/331",
+  "baslik": "Değişiklik talebi",
+  "duzen": "uye"
+ },
+ {
+  "yol": "isletme/degisiklik-talepleri/347",
+  "baslik": "Değişiklik talebi",
+  "duzen": "uye"
+ },
+ {
+  "yol": "isletme/degisiklik-talepleri/gonderilen",
+  "baslik": "Değişiklik talebi",
+  "duzen": "uye"
+ },
+ {
+  "yol": "isletme/degisiklik-talepleri/yeni",
+  "baslik": "Değişiklik talebi oluştur",
   "duzen": "uye"
  },
  {
