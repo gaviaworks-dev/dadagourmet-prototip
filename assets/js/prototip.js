@@ -203,6 +203,9 @@
     var oner = e.target.closest && e.target.closest('[data-mo-open],#mekanOnerBtn');
     /* Etkinlik Öner (W2.4b, akış 6): aynı öneri penceresi etkinlik kipinde açılır. Altbilgideki düğme canlıda Görüş Bildir'i açıyor; burada öneri formuna gider */
     var etk = e.target.closest && (e.target.closest('[data-etkinlik-oner]') || (e.target.closest('[data-feedback-open]') && /Etkinlik Öner/.test(e.target.closest('[data-feedback-open]').textContent) ? e.target.closest('[data-feedback-open]') : null));
+    /* Altbilgideki Öneri ve Şikâyet: canlıdaki gibi Görüş Bildir penceresini açar (sekmenin kendi açılış yolu) */
+    var gorus = !etk && e.target.closest && e.target.closest('[data-feedback-open]'), fbSekme = document.getElementById('fbTab');
+    if (gorus && fbSekme) { e.preventDefault(); e.stopImmediatePropagation(); fbSekme.click(); return; }
     var mo = document.getElementById('moModal'), moO = document.getElementById('moOverlay');
     if ((oner || etk) && mo) { e.preventDefault(); e.stopImmediatePropagation(); oneriKipi(mo, etk ? 'etkinlik' : 'mekan'); mo.classList.add('show', 'open'); moO.classList.add('show', 'open'); mo.removeAttribute('inert'); if (!mo.querySelector('.mo-puan')) { mo.querySelector('.mo-foot').insertAdjacentHTML('beforebegin', '<p class="mo-puan"><i class="fa-solid fa-award" aria-hidden="true"></i> Editör onayında +' + window.dgPuan.KURAL.oneri + ' Dada Puan kesinleşir. Onaya kadar bekleyen puan olarak görünür.</p>'); } return; }
     if (mo && (e.target === moO || (e.target.closest && e.target.closest('#moModal .fb-close,#moCancel')))) { mo.classList.remove('show', 'open'); moO.classList.remove('show', 'open'); mo.setAttribute('inert', ''); return; }
