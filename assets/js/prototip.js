@@ -29,6 +29,15 @@
   };
   /* Rol seçici: rol değişince o hesabın demo e-postası dolar; şifre aynı kalır */
   document.addEventListener('click', function (e) {
+    /* Nasıl giriş yapmak istersin? E-posta ya da Telefon (canlı `giris` düzeni): seçilen alan açılır, öbürü kapanıp gönderime girmez */
+    var gm = e.target.closest('#giSeg [data-gimode]');
+    if (gm) {
+      [].forEach.call(gm.parentNode.querySelectorAll('button'), function (b) { var a = b === gm; b.classList.toggle('aktif', a); b.setAttribute('aria-pressed', a ? 'true' : 'false'); });
+      var tel = gm.dataset.gimode === 'tel', ef = document.getElementById('giEmailField'), tf = document.getElementById('giTelField');
+      if (ef && tf) { ef.hidden = tel; tf.hidden = !tel; [].forEach.call(ef.querySelectorAll('input'), function (i) { i.disabled = tel; }); [].forEach.call(tf.querySelectorAll('input'), function (i) { i.disabled = !tel; }); }
+      var gy = document.querySelector('input[name="giris_yontemi"]'); if (gy) { gy.value = tel ? 'telefon' : 'eposta'; }
+      return;
+    }
     var r = e.target.closest('#giRol button'); if (!r) { return; }
     [].forEach.call(r.parentNode.querySelectorAll('button'), function (b) { var a = b === r; b.classList.toggle('aktif', a); b.setAttribute('aria-pressed', a ? 'true' : 'false'); });
     var g = document.getElementById('giEmail'); if (g) { g.value = r.dataset.eposta; g.classList.remove('hatali'); }
