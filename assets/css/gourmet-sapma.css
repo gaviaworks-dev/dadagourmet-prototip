@@ -25,7 +25,12 @@
 .pg-mekanlar .search-input input,.pg-mekanlar .sort-btn,.pg-mekanlar .btn-filter{line-height:normal}
 @media(max-width:640px){.pg-mekanlar .ke-head h1{font-size:40px;line-height:1.12}}
 .mkl-harita-not{margin:8px 0 0;font-size:12px;color:var(--muted,#6f6f6f)}
-.mkl-kart-eylem{display:flex;align-items:center;gap:6px;padding:10px 14px 14px;margin-top:auto}
+/* Mekân kartı alt satırı: Gastro tarif kartı (`.r-card` sütun, `.r-foot{margin-top:auto}`, aralık --sp-2 8px) gibi.
+   Gövde esnek sütun; konum satırı ve eylemler kartın altına sabit, aynı sıradaki kartlarda aynı çizgide; eylemler başlıkla aynı sol hizada */
+.mkl-card{display:flex;flex-direction:column}.mkl-card>.disc-cat{align-self:flex-start}
+.mkl-card .disc-meta{margin-top:auto}
+.mkl-card :has(+ .disc-meta){margin-bottom:13px}
+.mkl-kart-eylem{display:flex;align-items:center;gap:8px;width:100%;box-sizing:border-box;padding:0;margin-top:12px}
 .mke-birincil{flex:1;text-align:center;padding:8px 10px;border-radius:10px;background:var(--marka,#742982);color:#fff;font-weight:700;font-size:13px}
 .mke-ikon{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;border:1px solid var(--marka-cizgi,#e3d4e6);background:#fff;color:var(--marka,#742982);cursor:pointer}
 .fct-not{font-size:12px;color:var(--muted,#6f6f6f);margin:0 0 8px}
@@ -96,10 +101,10 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 @media(max-width:760px){.pick-grid.mb-grid-4,.pick-grid.mb-grid-3{grid-template-columns:repeat(2,minmax(0,1fr))}.wiz-foot{flex-wrap:wrap}.wiz-foot .wf-actions{margin-left:0;width:100%;justify-content:flex-end}}
 .mb-sonuc{max-width:1176px;margin:0 auto}.mb-hesap{margin:-6px 0 18px;font-size:12.5px;color:var(--muted)}
 .mb-res-group{margin-top:28px}.mb-res-group .mkl-grid{margin-top:0}
-.mb-reasons{list-style:none;margin:10px 16px 0;padding:0;display:grid;gap:5px;font-size:12.5px;color:var(--slate)}
+.mb-reasons{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:5px;font-size:12.5px;color:var(--slate)}
 .mb-reasons li{display:flex;align-items:center;gap:7px}.mb-reasons i{color:var(--marka,#742982);font-size:12px}
 .mb-reasons .mb-eksik{color:var(--muted)}.mb-reasons .mb-eksik i{color:var(--muted)}
-.mb-card-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px 16px;margin-top:auto}
+.mb-card-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 0 0;margin-top:12px}
 .mb-rez{font-size:12px;color:var(--muted);display:inline-flex;gap:6px;align-items:center}.mb-reasons{margin-bottom:10px}
 .mb-card-actions .btn{margin-left:auto;padding:8px 14px;font-size:13px}
 .mb-daha{display:flex;justify-content:center;margin-top:20px}
