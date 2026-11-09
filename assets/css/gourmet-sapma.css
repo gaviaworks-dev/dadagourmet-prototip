@@ -59,10 +59,6 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 .yg-fl-chip{border-radius:var(--yuvarlak-cip)}
 .yg-katman,.yg-iller{margin:20px 0}
 .yg-katman-bas{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
-.yg-katman-liste{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.yg-katman-dugme{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:42px;padding:9px 10px;border:1px solid var(--line);border-radius:var(--yuvarlak-md);background:var(--paper);color:var(--slate);font:inherit;font-size:13px;font-weight:700;line-height:1.2;cursor:pointer}
-.yg-katman-dugme i{flex:0 0 18px;text-align:center}
-.yg-katman-dugme[aria-pressed="true"]{border-color:var(--marka);background:var(--marka-yikama);color:var(--marka-koyu)}
 .yg-il-liste{display:grid;gap:12px}
 .yg-il-kart{border:1px solid var(--marka-cizgi);border-radius:var(--yuvarlak-lg);background:var(--paper);overflow:hidden}
 .yg-il-kart-bas{display:flex;align-items:center;gap:8px;padding:11px 14px;background:var(--marka-yikama);color:var(--marka-koyu)}
@@ -182,11 +178,7 @@ button.yg-il-cip{display:inline-flex;align-items:center;gap:5px;font-family:inhe
   .yg-panel.sheet-half .yg-view{padding-bottom:calc(34dvh + 28px)}
   .yg-panel.sheet-half #viewAll .yg-all-body{padding-bottom:calc(34dvh + 26px)}
   .yg-sheet-ctx{border:0}
-  .yg-dcard{flex-basis:232px}
 }
-/* Route mekân rayı: ad kesilmez, iki satıra iner */
-.yd-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:normal;text-overflow:clip}
-.yd-loc{white-space:normal;text-overflow:clip}
 /* Mekân detayı: künye tam genişlikte kalınca kayan şerit kopyaları yan yana görünüyordu. 1024 ve altında durur, kopyalar gizlenir, sarılır */
 @media(max-width:1024px){
   .kc-chips .chip-row.kc-marquee{overflow:visible}
@@ -270,3 +262,64 @@ body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .page-main p{tex
 #gmModules .gm-mod{flex:none;min-width:0}
 #gmModules .cat-nav{display:none}
 @media (max-width:767px){#gmModules .gm-mod-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* ==== Dada Route revizesi (Beyar, 9 Kas) · yalnız /dada-route (seçiciler `.yg-` ailesi ya da `.yg-app` altında) ==== */
+/* Tek çip/hap köşesi (Beyar #13): canlıdaki site düğmesi "Rota Kur" `.yg-tab` 12px (`--radius-md`) = kanon `--yuvarlak-cip` (→ `--yuvarlak-md`).
+   `.ornek-etiket` site genelinde 999px (prototip.css); burada yalnız `.yg-app` altında daraltılır. Pilot rota düğmeleri canlıdaki gibi hap kalır */
+.yg-app .ornek-etiket,.yg-il-cip,.yg-il-rozet,.yg-il-harita-rozet,.yg-tol-chip,.yg-fl-chip,.yg-katman .cip,.yg-serit-sekme{border-radius:var(--yuvarlak-cip)}
+/* Katman çipleri: kanon §43 `.cip` ve `.aktif` jetonlarıyla (bilesenler.css bu sayfanın zincirinde yok). Seçili çip dolu zemin ve onay işareti.
+   Aralıklar kanon boşluk jetonu (Beyar #14). */
+.yg-katman-grup+.yg-katman-grup{margin-top:var(--bosluk-12)}
+.yg-katman-grup-ad{display:block;margin-bottom:var(--bosluk-6);font-size:var(--yazi-12);font-weight:var(--agirlik-kalin);color:var(--murekkep-yumusak)}
+.yg-katman .cipler{display:flex;flex-wrap:wrap;gap:var(--bosluk-6)}
+.yg-katman .cip{display:inline-flex;align-items:center;gap:var(--bosluk-7);position:relative;padding:var(--bosluk-8) var(--bosluk-12);border:var(--cizgi-1) solid var(--cizgi);background:var(--kagit);color:var(--murekkep-yumusak);font-family:inherit;font-size:var(--yazi-13);font-weight:var(--agirlik-govde);line-height:1.2;cursor:pointer;transition:var(--sure) var(--yumusama)}
+.yg-katman .cip::before{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.yg-katman .cip:hover{border-color:var(--aksan);background:var(--aksan-yikama);color:var(--aksan-koyu)}
+.yg-katman .cip[aria-pressed="true"]{border-color:var(--aksan-koyu);background:var(--aksan-koyu);color:var(--kagit);font-weight:var(--agirlik-kalin)}
+.yg-katman .cip[aria-pressed="true"]::after{content:"\f00c";font:var(--fa-font-solid);font-size:var(--yazi-11)}
+.yg-katman .cip i{font-size:var(--yazi-12)}
+.yg-katman .cip:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
+/* Şarj kartı Enerji ve şarj katmanına bağlandı: aç/kapa düğmesi gizli, kart katman açıkken görünür */
+.yg-sarj-toggle[hidden],.yg-sarj[hidden]{display:none}
+.yg-sarj #ygSarjBody .yg-sarj-filters{padding-top:0}
+/* Coğrafi İşaret ve Kültür Kartı: "{İl}’in meşhurları", Ne Yenir? ve Ne Alınır? iki dikey ayrım, ürün başına Ara durak ekle */
+.yg-iller-bas{padding:0;border:0;background:none;font:inherit;cursor:pointer}
+.yg-iller-bas:hover .yg-eyebrow{text-decoration:underline;text-underline-offset:3px}
+.yg-il-kart{transition:box-shadow var(--sure) var(--yumusama),border-color var(--sure) var(--yumusama)}
+.yg-il-kart.is-one{border-color:var(--marka);box-shadow:0 0 0 3px var(--marka-yikama)}
+.yg-il-kart-bas h4{flex:1;min-width:0}
+.yg-il-rozet{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;background:var(--kagit);color:var(--marka-koyu);font-size:var(--yazi-11);font-weight:var(--agirlik-kalin);white-space:nowrap}
+.yg-il-urunler{display:grid;gap:9px;margin:0;padding:0;list-style:none}
+.yg-il-urun{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0}
+.yg-il-urun-ad{font-size:13px;font-weight:var(--agirlik-kalin);line-height:1.25;color:var(--slate)}
+.yg-il-urun-ad small{display:block;font-size:11.5px;font-weight:var(--agirlik-govde);color:var(--muted,#6f6f6f)}
+.yg-il-dip{grid-column:1/-1;margin:0;padding:8px 12px;border-top:1px solid var(--line);font-size:11.5px;line-height:1.45;color:var(--muted,#6f6f6f)}
+.yg-il-dip .ornek-etiket{margin-right:4px}
+.yg-il-kart--bos .yg-il-dip{border-top:0}
+/* Haritada il rozeti ve koridor etiketi */
+.yg-il-harita-rozet{position:absolute;transform:translate(-50%,-150%);display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border:1px solid var(--marka-cizgi);background:var(--kagit);color:var(--marka-koyu);font-family:inherit;font-size:11.5px;font-weight:var(--agirlik-kalin);line-height:1.2;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.2);cursor:pointer}
+.yg-il-harita-rozet i{font-size:10px;color:var(--marka)}
+.yg-il-harita-rozet:hover{border-color:var(--marka);background:var(--marka-yikama)}
+.yg-koridor-etiket span{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+/* Hızlı süzgeç ve sapma toleransı sağda kesiliyordu: kaydırma yerine sarar, kayan solgunluk kalkar. Pilot şerit canlıdaki gibi kayar */
+.yg-corr .yg-tol-chips,.yg-quick #ygQuickFilters{flex-wrap:wrap;overflow:visible}
+.yg-corr .yg-tol-chips::after,.yg-quick #ygQuickFilters::after{content:none}
+/* Telefonda konum düğmesi başlığın altına kayıp kırpılıyordu: başlıkla çakışınca gizlenir (sınıfı rota-katman.js verir) */
+.yg-locate.yg-locate--ortu{opacity:0;pointer-events:none}
+/* Alt şerit mekân kartı canlıyla aynı (Beyar #11). Kaynak canlı `assets/gourmet-public/css/dada-route.css` 432–433 ve 963:
+   ad tek satır ve üç nokta, konum tek satır; telefonda kart 200px. Bu dosyanın üstteki iki satıra indiren kuralını geri alır */
+.yg-dash .yd-name{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:none}
+.yg-dash .yd-loc{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:860px){.yg-dash .yg-dcard:not(.sponsor){flex-basis:200px}}
+/* Alt şerit sekmeleri: açık katman şeritte sekme olur (Beyar #9). Çip canlı `.yg-tol-chip` ölçüsünde */
+.yg-dash-sekmeler{display:flex;gap:var(--bosluk-6);margin:0 0 var(--bosluk-9);overflow-x:auto;scrollbar-width:thin}
+.yg-dash-sekmeler[hidden],.yg-dash-scroll[hidden]{display:none}
+.yg-serit-sekme{flex:0 0 auto;display:inline-flex;align-items:center;gap:var(--bosluk-6);height:30px;padding:0 var(--bosluk-12);border:1px solid var(--line);background:var(--paper);color:var(--slate-2);font:inherit;font-size:12.5px;font-weight:600;white-space:nowrap;cursor:pointer}
+.yg-serit-sekme[aria-selected="true"]{border-color:var(--tomato);background:var(--tomato);color:#fff;font-weight:700}
+.yg-serit-sekme[aria-selected="true"] .yg-dash-cnt{background:#fff;color:var(--tomato)}
+.yg-dcard--katman{cursor:default}
+.yg-dcard--katman .yd-media{display:grid;place-items:center;color:#fff;font-size:22px}
+.yg-katman-pin--sarj{background:var(--sarj-renk,#1f7a5c)}
+.yg-dcard--katman .yg-kl-durak{align-self:flex-start;margin-top:2px;padding:3px 9px}
+body.gastronomi-kapali .yg-dash.yg-dash--katmanli:not([hidden]){display:block!important}
+.yg-dash--katman-sekme #ygDashCount,.yg-dash--katman-sekme #ygDashAll{display:none}
