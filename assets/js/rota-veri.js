@@ -11,9 +11,9 @@ window.DG_ROTA = {
     dinlenme: [[29.05, 40.45, 'Örnek dinlenme alanı', 'Aydınlatma, tuvalet'], [27.7, 39.05, 'Örnek dinlenme alanı', 'Aydınlatma, kafeterya'], [30.85, 40.24, 'Örnek dinlenme alanı', 'Aydınlatma, tuvalet'], [31.27, 38.04, 'Örnek dinlenme alanı', 'Tuvalet, kafeterya'], [28.95, 40.33, 'Örnek bağ evi', 'Konaklamalı · bağ evi lokantası, 6 oda'], [27.98, 39.42, 'Örnek yeme-içme çiftliği', 'Konaklamalı · bungalov, çiftlik kahvaltısı'], [27.55, 38.72, 'Örnek köy lokantası', 'Konaklamalı · köy evi, akşam yemeği'], [32.4, 39.5, 'Örnek yeme-içme çiftliği', 'Konaklamalı · bungalov']]
   },
   iller: [
-    { il: 'Bursa', lng: 29.06, lat: 40.2, neYenir: ['İskender', 'Pideli köfte'], neAlinir: ['Kestane şekeri'] },
-    { il: 'Balıkesir', lng: 27.89, lat: 39.65, neYenir: ['Höşmerim'], neAlinir: ['Zeytinyağı'] },
-    { il: 'Manisa', lng: 27.43, lat: 38.62, neYenir: ['Manisa kebabı'], neAlinir: ['Mesir macunu'] },
+    { il: 'Bursa', lng: 29.06, lat: 40.2, neYenir: ['İskender', 'Pideli köfte'], neAlinir: ['Kestane şekeri'], ci: ['Bursa İskender Kebabı', 'Bursa Kestane Şekeri', 'Gemlik Zeytini'] },
+    { il: 'Balıkesir', lng: 27.89, lat: 39.65, neYenir: ['Höşmerim'], neAlinir: ['Zeytinyağı'], ci: ['Balıkesir Höşmerimi', 'Ayvalık Zeytinyağı'] },
+    { il: 'Manisa', lng: 27.43, lat: 38.62, neYenir: ['Manisa kebabı'], neAlinir: ['Mesir macunu'], ci: ['Manisa Mesir Macunu'] },
     { il: 'İzmir', lng: 27.14, lat: 38.42, neYenir: ['Boyoz', 'Kumru'], neAlinir: ['Kuru incir'] }
   ]
 };

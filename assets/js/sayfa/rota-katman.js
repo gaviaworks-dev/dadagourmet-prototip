@@ -54,8 +54,10 @@
   var bolum = function (sinif, ik, ad, l, il, dLat, dLng) {
     return '<div class="yg-il-bolum ' + sinif + '"><div class="yg-il-bolum-bas"><span class="yg-il-ikon"><i class="fa-solid ' + ik + '" aria-hidden="true"></i></span><b>' + ad + '</b></div><div class="yg-il-cipler">' + l.map(function (x) { return '<button type="button" class="yg-il-cip" data-durak="' + kac(x + ' · ' + il.il) + '" data-lat="' + (il.lat + dLat) + '" data-lng="' + (il.lng + dLng) + '" aria-pressed="false" title="Ara durak olarak ekle"><i class="fa-solid fa-plus" aria-hidden="true"></i> ' + kac(x) + '</button>'; }).join('') + '</div></div>';
   };
+  /* Coğrafi işaret kartı (R2.2a, akış 2): dokümandaki güzergâh illeri için örnek ürünler; tescil eşlemesi canlı aşamasında (Beyar, 9 Kas) */
+  var ciBolum = function (i) { return i.ci && i.ci.length ? '<div class="yg-il-bolum yg-il-ci"><div class="yg-il-bolum-bas"><span class="yg-il-ikon"><i class="fa-solid fa-certificate" aria-hidden="true"></i></span><b>Coğrafi işaretli</b><span class="ornek-etiket">prototip örneği</span></div><div class="yg-il-cipler">' + i.ci.map(function (x) { return '<span class="yg-il-cip">' + kac(x) + '</span>'; }).join('') + '</div></div>' : ''; };
   $('#ygIlKart').innerHTML = R.iller.map(function (i) {
-    return '<article class="yg-il-kart" data-il="' + kac(i.il) + '"><header class="yg-il-kart-bas"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><h4>' + kac(i.il) + '</h4></header>' + bolum('yg-il-yenir', 'fa-bowl-food', 'Ne Yenir?', i.neYenir, i, 0.06, -0.1) + bolum('yg-il-alinir', 'fa-basket-shopping', 'Ne Alınır?', i.neAlinir, i, -0.06, 0.1) + '</article>';
+    return '<article class="yg-il-kart" data-il="' + kac(i.il) + '"><header class="yg-il-kart-bas"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><h4>' + kac(i.il) + '</h4></header>' + bolum('yg-il-yenir', 'fa-bowl-food', 'Ne Yenir?', i.neYenir, i, 0.06, -0.1) + bolum('yg-il-alinir', 'fa-basket-shopping', 'Ne Alınır?', i.neAlinir, i, -0.06, 0.1) + ciBolum(i) + '</article>';
   }).join('');
   /* Noktalar örnek olduğu için canlı Open Charge Map atfı yerine örnek kaynağı yazılır */
   var atif = $('.yg-sarj-credit'); if (atif) { atif.textContent = 'Kaynak: prototip örneği. Canlıda Open Charge Map verisi kullanılır.'; }
