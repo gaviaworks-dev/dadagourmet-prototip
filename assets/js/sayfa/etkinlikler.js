@@ -36,7 +36,7 @@
     var r = t.closest('[data-randevu]');
     if (r) { ev.preventDefault(); var e = bul(r.dataset.randevu || new URLSearchParams(location.search).get('e')); if (e) { randevuAc(e); } return; }
     if (t.closest('#evRandevuKapat,#evRandevuVazgec') || t.id === 'evRandevuOverlay') { pencere(false); return; }
-    if (t.closest('[data-etkinlik-oner]')) { var f = $('#fbTab'); if (f) { f.click(); } return; }
+    /* Etkinlik Öner: öneri penceresini prototip.js açar (etkinlik kipi) */
     var s = t.closest('.disc-save');
     if (s) {
       ev.preventDefault(); ev.stopPropagation(); if (!window.dgUye()) { return; }

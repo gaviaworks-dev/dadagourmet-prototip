@@ -132,8 +132,9 @@
     if (f.id === 'moForm') {
       e.stopImmediatePropagation();
       if (!uye) { window.dgUye(); return; }
-      var ad = f.elements.name.value.trim() || 'Mekân önerisi', id = 'oneri-' + Date.now();
-      window.dgKayit.ekle('oneri', { id: id, tur: 'mekan', ad: ad, yer: f.elements.location.value.trim(), durum: 'inceleniyor' });
+      var kip = f.dataset.kip === 'etkinlik' ? 'etkinlik' : 'mekan';
+      var ad = f.elements.name.value.trim() || (kip === 'etkinlik' ? 'Etkinlik önerisi' : 'Mekân önerisi'), id = 'oneri-' + Date.now();
+      window.dgKayit.ekle('oneri', { id: id, tur: kip, ad: ad, yer: f.elements.location.value.trim(), gun: kip === 'etkinlik' && f.elements.tarih ? f.elements.tarih.value : '', durum: 'inceleniyor' });
       window.dgPuan.ekle(id, ad + ' önerisi', window.dgPuan.KURAL.oneri);
       f.reset(); document.getElementById('moClose').click();
       bildir('Önerin Topluluk Katkılarım\'a işlendi. +' + window.dgPuan.KURAL.oneri + ' bekleyen puan.');
@@ -141,6 +142,21 @@
     }
     bildir('Prototip: form gönderilmedi.');
   }, true);
+  /* Öneri penceresi iki kipte: mekân (canlı metin) ve etkinlik. Metinler ilk açılışta saklanır, kip değişince geri yazılır */
+  var oneriKipi = function (mo, kip) {
+    var f = mo.querySelector('#moForm'); if (!f) { return; }
+    var alanlar = { '#moTitle': 'Etkinlik Öner', '#moTitle + p': 'Bildiğin bir hasat günü, festival ya da atölyeyi öner — editör onayıyla takvime eklenir.', 'label[for="moName"]': 'Etkinlik adı', 'label[for="moCity"]': 'Şehir / yer', 'label[for="moWhy"]': 'Etkinliği kısaca anlat', '#moUp > span > span': 'Etkinliğin bir karesi önerini güçlendirir' };
+    var yer = { '#moName': 'Örn. Urla Bağ Bozumu Şenliği', '#moCity': 'Örn. İzmir, Urla', '#moWhy': 'Ne zaman, kimler katılabilir, öne çıkan lezzetler…' };
+    if (!f.dataset.asil) { var asil = {}; Object.keys(alanlar).concat(Object.keys(yer)).forEach(function (k) { var e = mo.querySelector(k); if (e) { asil[k] = yer[k] ? e.placeholder : e.textContent; } }); f.dataset.asil = JSON.stringify(asil); }
+    var a = JSON.parse(f.dataset.asil), etk = kip === 'etkinlik';
+    Object.keys(alanlar).forEach(function (k) { var e = mo.querySelector(k); if (e) { e.textContent = etk ? alanlar[k] : a[k]; } });
+    Object.keys(yer).forEach(function (k) { var e = mo.querySelector(k); if (e) { e.placeholder = etk ? yer[k] : a[k]; } });
+    var tip = mo.querySelector('#moType'); if (tip) { tip.closest('.mo-field').hidden = etk; }
+    var tarih = mo.querySelector('#moTarih');
+    /* Tarih alanı satırda Mekân tipinin yerini alır: Şehir / yer ile yan yana */
+    if (!tarih) { mo.querySelector('#moCity').closest('.mo-field').insertAdjacentHTML('afterend', '<div class="mo-field" id="moTarihAlan"><label for="moTarih">Tarih</label><input type="date" name="tarih" id="moTarih"></div>'); tarih = mo.querySelector('#moTarih'); }
+    mo.querySelector('#moTarihAlan').hidden = !etk; tarih.required = etk; f.dataset.kip = kip;
+  };
   /* Konum penceresi: canlı `#lkModal` DOM'u. Seçim bu tarayıcıda kalır, sunucuya gitmez. Tarayıcı izni yalnız düğmeye basınca istenir. */
   var konumAc = function (ac) { var m = document.getElementById('lkModal'), o = document.getElementById('lkOverlay'); if (!m) { return; } m.classList.toggle('show', ac); m.classList.toggle('open', ac); o.classList.toggle('show', ac); o.classList.toggle('open', ac); m.toggleAttribute('inert', !ac); };
   var konumOlay = function (e) {
@@ -175,8 +191,10 @@
     if (bag && uye && !depo && bag.origin === location.origin && bag.getAttribute('href') !== '#') { var u = new URL(bag.href); u.searchParams.set('auth', '1'); bag.href = u.href; }
     if (konumOlay(e)) { return; }
     var oner = e.target.closest && e.target.closest('[data-mo-open],#mekanOnerBtn');
+    /* Etkinlik Öner (W2.4b, akış 6): aynı öneri penceresi etkinlik kipinde açılır. Altbilgideki düğme canlıda Görüş Bildir'i açıyor; burada öneri formuna gider */
+    var etk = e.target.closest && (e.target.closest('[data-etkinlik-oner]') || (e.target.closest('[data-feedback-open]') && /Etkinlik Öner/.test(e.target.closest('[data-feedback-open]').textContent) ? e.target.closest('[data-feedback-open]') : null));
     var mo = document.getElementById('moModal'), moO = document.getElementById('moOverlay');
-    if (oner && mo) { e.preventDefault(); mo.classList.add('show', 'open'); moO.classList.add('show', 'open'); mo.removeAttribute('inert'); if (!mo.querySelector('.mo-puan')) { mo.querySelector('.mo-foot').insertAdjacentHTML('beforebegin', '<p class="mo-puan"><i class="fa-solid fa-award" aria-hidden="true"></i> Editör onayında +' + window.dgPuan.KURAL.oneri + ' Dada Puan kesinleşir. Onaya kadar bekleyen puan olarak görünür.</p>'); } return; }
+    if ((oner || etk) && mo) { e.preventDefault(); e.stopImmediatePropagation(); oneriKipi(mo, etk ? 'etkinlik' : 'mekan'); mo.classList.add('show', 'open'); moO.classList.add('show', 'open'); mo.removeAttribute('inert'); if (!mo.querySelector('.mo-puan')) { mo.querySelector('.mo-foot').insertAdjacentHTML('beforebegin', '<p class="mo-puan"><i class="fa-solid fa-award" aria-hidden="true"></i> Editör onayında +' + window.dgPuan.KURAL.oneri + ' Dada Puan kesinleşir. Onaya kadar bekleyen puan olarak görünür.</p>'); } return; }
     if (mo && (e.target === moO || (e.target.closest && e.target.closest('#moModal .fb-close,#moCancel')))) { mo.classList.remove('show', 'open'); moO.classList.remove('show', 'open'); mo.setAttribute('inert', ''); return; }
     if (kapiOlay(e)) { return; }
     var git = e.target.closest && e.target.closest('[data-git]');
