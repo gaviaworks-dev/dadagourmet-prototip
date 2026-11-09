@@ -48,6 +48,7 @@
 <link rel="stylesheet" href="../assets/css/gourmet-sapma.css">
 <link rel="stylesheet" href="../assets/o/assets/gourmet-public/css/konum.css">
 <link rel="stylesheet" href="../assets/css/prototip.css">
+<link rel="stylesheet" href="../assets/css/mentor-fab.css">
 <script src="../assets/js/prototip.js"></script>
 <script defer src="../assets/g/kabuk/avatar-yedek.js"></script>
 <script defer src="../assets/g/kabuk/yer-tutucu.js"></script>
@@ -76,6 +77,7 @@
 <script defer src="../assets/js/mekan-liste-veri.js"></script>
 <script defer src="../assets/js/harita.js"></script>
 <script defer src="../assets/js/sayfa/mekanlar.js"></script>
+<script defer src="../assets/js/mentor-fab.js"></script>
 </head>
 <body data-brand="gourmet" data-fit-hero-kind="liste" class="pg-hakkimizda has-dark-hero pg-mekanlar">
 <div class="topbar ust-bant">
@@ -2125,6 +2127,38 @@
 <div class="fb-modal lk-modal" id="lkModal" role="dialog" aria-modal="true" aria-labelledby="lkTitle" aria-describedby="lkDesc" inert="" data-msg-geo-success="Konumun algılandı. Şu an yalnızca Türkiye'deki mekânları gösteriyoruz." data-msg-geo-denied="Konum izni reddedildi. Dilediğin zaman listeden seçebilirsin." data-msg-geo-timeout="Konum alınamadı (zaman aşımı). Tekrar dene." data-msg-geo-generic="Konumun şu an alınamadı. Lütfen tekrar dene." data-msg-geo-unsupported="Bu tarayıcı konum paylaşımını desteklemiyor." data-msg-selected-suffix="seçildi.">
         <div class="fb-panel lk-panel"><div class="fb-head"><div><h3 id="lkTitle">Neredesin?</h3><p id="lkDesc">Dada Gourmet deneyimini konumuna göre kişiselleştirelim.</p></div><button class="fb-close" id="lkClose" type="button" aria-label="Kapat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="fb-body lk-body"><button type="button" class="lk-geo" id="lkGeoBtn"><i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i><span>Konumumu Kullan</span></button><div class="lk-divider"><span>veya listeden seç</span></div><div class="lk-search"><i class="fa-solid fa-magnifying-glass lk-search-ico" aria-hidden="true"></i><input type="text" id="lkSearchInput" class="lk-search-input" aria-label="Ülke ara" placeholder="Ülke ara…" role="combobox" aria-expanded="true" aria-controls="lkList" aria-autocomplete="list" autocomplete="off"></div><div class="lk-list" id="lkList" role="listbox" aria-label="Ülke listesi"><button type="button" id="lkRow-tr" class="lk-row " data-country="tr" data-search="turkiye turkey türkiye" role="option" aria-selected="false"><img class="lk-flag" src="../assets/o/assets/gourmet-public/flags/tr.svg" alt="" width="24" height="17"><span class="lk-name">Türkiye</span><i class="fa-solid fa-check lk-check" aria-hidden="true"></i></button></div><div class="lk-empty" id="lkEmpty" hidden=""><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Aradığın ülke bulunamadı. Şu an yalnız Türkiye için hizmet veriyoruz, yeni ülkeler yolda.</div><button type="button" class="lk-skip" id="lkSkip">Şimdi değil</button></div></div>
     </div>
+<aside class="mini" id="dadaMentor" data-state="mini" aria-label="DadaMentor">
+  <div class="mp-media">
+    <div class="mp-atmos"></div>
+    <video muted loop playsinline preload="none" aria-hidden="true" data-mentor-video="../assets/video/mentor-panel.mp4"></video>
+  </div>
+  <div class="mp-fade"></div>
+  <button class="mp-mini-overlay" type="button" aria-expanded="false" aria-controls="dadaMentorGovde" aria-label="Mentör panelini aç">
+    <span class="mav"><svg viewBox="0 0 512 512" aria-hidden="true"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm50.7-186.9L162.4 380.6c-19.4 7.5-38.5-11.6-31-31l55.5-144.3c3.3-8.5 9.9-15.1 18.4-18.4l144.3-55.5c19.4-7.5 38.5 11.6 31 31L325.1 306.7c-3.2 8.5-9.9 15.1-18.4 18.4zM288 256a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg></span>
+    <span class="mp-mini-lbl">Mentör</span>
+  </button>
+  <div class="mp-top" inert>
+    <span class="mp-tag"><svg viewBox="0 0 512 512" aria-hidden="true"><path d="M256 448c141.4 0 256-93.1 256-208S397.4 32 256 32S0 125.1 0 240c0 45.1 17.7 86.8 47.7 120.9c-1.9 24.5-11.4 46.3-21.4 62.9c-5.5 9.2-11.1 16.6-15.2 21.6c-2.1 2.5-3.7 4.4-4.9 5.7c-.6 .6-1 1.1-1.3 1.4l-.3 .3 0 0 0 0 0 0 0 0c-4.6 4.6-5.9 11.4-3.4 17.4c2.5 6 8.3 9.9 14.8 9.9c28.7 0 57.6-8.9 81.6-19.3c22.9-10 42.4-21.9 54.3-30.6c31.8 11.5 67 17.9 104.1 17.9zM128 208a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm128 0a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm96 32a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg> Mentor</span>
+    <button class="mp-toggle" type="button" aria-label="Paneli küçült">
+      <svg viewBox="0 0 448 512" aria-hidden="true"><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg>
+    </button>
+  </div>
+  <div class="mp-chat" id="dadaMentorGovde" inert>
+    <div class="mp-id">
+      <span class="mp-av"><svg viewBox="0 0 512 512" aria-hidden="true"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm50.7-186.9L162.4 380.6c-19.4 7.5-38.5-11.6-31-31l55.5-144.3c3.3-8.5 9.9-15.1 18.4-18.4l144.3-55.5c19.4-7.5 38.5 11.6 31 31L325.1 306.7c-3.2 8.5-9.9 15.1-18.4 18.4zM288 256a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/></svg></span>
+      <span class="mp-kimlik">
+        <span class="nm"><span class="bd">Dada</span><span class="sf">Mentor</span></span>
+        <span class="mp-rozetler">
+          <span class="mp-pro"><svg viewBox="0 0 576 512" aria-hidden="true"><path d="M309 106c11.4-7 19-19.7 19-34c0-22.1-17.9-40-40-40s-40 17.9-40 40c0 14.4 7.6 27 19 34L209.7 220.6c-9.1 18.2-32.7 23.4-48.6 10.7L72 160c5-6.7 8-15 8-24c0-22.1-17.9-40-40-40S0 113.9 0 136s17.9 40 40 40c.2 0 .5 0 .7 0L86.4 427.4c5.5 30.4 32 52.6 63 52.6H426.6c30.9 0 57.4-22.1 63-52.6L535.3 176c.2 0 .5 0 .7 0c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40c0 9 3 17.3 8 24l-89.1 71.3c-15.9 12.7-39.5 7.5-48.6-10.7L309 106z"/></svg> Pro pakette</span>
+          <span class="mp-yakinda">Yakında</span>
+        </span>
+      </span>
+    </div>
+    <div class="mp-bubble">Lezzet keşfinde sana yol gösteren kişisel rehberin.</div>
+    <p class="mp-hint">Bugün nerede yiyeceğini, damak zevkine uyan mekânları ve lezzet rotanı Mentör'le planlarsın.</p>
+    <div class="mp-row"><a class="mp-opt active" href="../kayit/" data-misafir-href="../kayit/" data-uye-href="../hesabim/paketlerim/" data-uye-metin="Pro'yu incele">Üye ol</a></div>
+  </div>
+</aside>
 
 </body>
 </html>
