@@ -258,3 +258,10 @@ body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .page-main p{tex
 
 /* Telefon alanı: canlının ortak kuralı (gourmet-ortak.css:1075) aynen; kanonun `.kart.panel .alan-girdi` dolgusu numarayı ülke düğmesinin altına itiyordu */
 #pageMain .alan-telefon .alan-girdi{padding-left:104px}
+
+/* Ana sayfa · Nasıl keşfetmek istersin?: header sırasıyla dört kart (Beyar 9 Kas; canlıda Gurme Lezzetler kartı yok).
+   Canlıdaki yatay şerit dört kartta yarım kart bırakıyordu; aynı kart bileşeni geniş ekranda 2×2, telefonda tek sütun ızgara */
+#gmModules .gm-mod-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;overflow:visible}
+#gmModules .gm-mod{flex:none;min-width:0}
+#gmModules .cat-nav{display:none}
+@media (max-width:767px){#gmModules .gm-mod-grid{grid-template-columns:minmax(0,1fr)}}
