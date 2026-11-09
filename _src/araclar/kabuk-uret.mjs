@@ -44,8 +44,8 @@ const k = await p.evaluate(({ go, logo }) => {
   const menu = $('.acct-menu', h);
   $('.acct-id b', menu).textContent = '{{uye.ad}}'; $('.acct-id small', menu).textContent = '@{{uye.kullanici}}';
   $$('.acct-ava,.da-ava').forEach((e) => (e.textContent = '{{uye.harf}}'));
-  // Okunmamış sayı tohumdan gelir; bildirim kutusu prototipte yok. Canlıda rozet yalnız okunmamış varken basılır, zil Bildirim Tercihleri sekmesine gider
-  $$('.hb-badge', h).forEach((e) => e.parentNode.removeChild(e)); $$('a[href*="hesabim/bildirimler"]').forEach((a) => a.setAttribute('href', K + 'hesabim/ayarlar/#bildirim'));
+  // Okunmamış sayı tohumdan gelir. Canlıda rozet yalnız okunmamış varken basılır; zil ve çekmece canlıdaki gibi Bildirimler sayfasına gider
+  $$('.hb-badge', h).forEach((e) => e.parentNode.removeChild(e));
   [...menu.children].filter((e) => !e.classList.contains('acct-id')).forEach((e) => e.remove());
   menu.insertAdjacentHTML('beforeend', dv + kalem('fa-utensils', 'Gurme Panelim', 'hesabim/gurme-panelim/') + kalem('fa-location-dot', 'Mekânlarım', 'hesabim/kaydedilenler/') + kalem('fa-calendar-days', 'Etkinliklerim', 'hesabim/etkinlikler/') + kalem('fa-list-ul', 'Listelerim', 'hesabim/listeler/') + kalem('fa-compass', 'Keşif Tercihlerim', 'hesabim/kesif-tercihleri/') + dv + kalem('fa-medal', 'Rozetlerim', 'hesabim/rozetlerim/') + dv + kalem('fa-crown', 'Paketlerim', 'hesabim/paketlerim/') + kalem('fa-receipt', 'Ödemelerim', 'hesabim/odemelerim/') + kalem('fa-sliders', 'Hesap Ayarları', 'hesabim/ayarlar/') + kalem('fa-headset', 'Çözüm Merkezi', 'hesabim/cozum-merkezi/') + dv + `<a href="${K}" class="acct-logout" data-cikis=""><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Çıkış</span></a>`);
   // 3. Çekmece
