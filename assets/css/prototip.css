@@ -1,10 +1,13 @@
 /* Prototip katmanı: yalnız görünür etiketler. Renkler kanon token'larından. */
 .ornek-etiket{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:999px;background:var(--marka-yikama,#ede4ef);color:var(--marka-koyu,#62236e);font-size:12px;font-weight:700;line-height:1.5}
 .ekran-haritasi{padding:calc(var(--kabuk-h,113px) + 32px) 0 48px}.ekran-haritasi ul{list-style:none;padding:0;columns:2}.ekran-haritasi li{padding:4px 0;break-inside:avoid}.ekran-haritasi small{color:#6f6f6f;font-weight:400}
-@media(max-width:700px){.ekran-haritasi ul{columns:1}}
+@media(max-width:640px){.ekran-haritasi ul{columns:1}}
 .nav-item a .fa-route{font-size:inherit;margin-right:2px}
 /* Gastro üye zinciri `portal` dosyasını yüklemiyor; logo boyu orada. Gourmet kelime logosu için aynı değerler */
 .header .brand .gastro-word-mark{display:block;height:29px;width:auto;flex:0 0 auto}
+/* 360 genişlikte Gourmet başlığında üç ikon var (Ara, Konum, Menü); 165px kelime logosu sağ iç boşluğu 9px'e yiyordu.
+   375 altında logo Gastro logosunun ayak izine (143px) iner, sağ ve sol boşluk 32px kalır */
+@media(max-width:374px){.header .brand .gastro-word-mark{height:25px}}
 .drawer-brand .gastro-word-mark{display:block;height:22.9px;width:auto}
 .foot-lockup .gastro-word-mark{display:block;height:33.8px;width:auto;color:#fff}
 html[data-baslik-zemin="acik"] .header .gourmet-word-mark{color:var(--marka,#742982)}
@@ -50,7 +53,9 @@ header a i.fa-route, nav a i.fa-route { opacity: 1 !important; }
 .yg-fab{position:fixed;right:22px;bottom:calc(26px + var(--bc-lift,0px));z-index:56;display:inline-flex;align-items:center;height:54px;padding:0;overflow:hidden;background:var(--tomato);color:#fff;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:.01em;white-space:nowrap;border-radius:var(--radius-lg);box-shadow:0 8px 22px #7429826b,0 2px 8px #211e161f;transition:transform .22s var(--ease),box-shadow .22s var(--ease),background .2s var(--ease)}.yg-fab i{flex:0 0 54px;width:54px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}.yg-fab .yg-fab-tx{max-width:0;opacity:0;overflow:hidden;white-space:nowrap;padding-right:0;transition:max-width .3s var(--ease),opacity .22s var(--ease),padding-right .3s var(--ease)}.yg-fab:hover .yg-fab-tx,.yg-fab:focus-visible .yg-fab-tx{max-width:220px;opacity:1;padding-right:22px}.yg-fab:hover{background:var(--tomato-dark);transform:translateY(-3px);box-shadow:0 14px 30px #74298280,0 4px 12px #211e1629}.yg-fab:active{transform:translateY(-1px)}.yg-fab:focus-visible{outline:3px solid var(--tomato-tint);outline-offset:2px}
 @media(max-width:640px){.yg-fab{right:16px;bottom:calc(88px + env(safe-area-inset-bottom,0px) + var(--bc-lift,0px));height:48px}.yg-fab i{flex-basis:48px;width:48px}.yg-fab:hover .yg-fab-tx,.yg-fab:focus-visible .yg-fab-tx{max-width:0;opacity:0;padding-right:0}}
 .to-top{position:fixed;right:22px;bottom:calc(92px + var(--bc-lift,0px));z-index:55;width:54px;height:54px;border-radius:var(--radius-lg);background:#fff;color:var(--tomato-deep);border:1px solid var(--line);cursor:pointer;font-size:16px;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 8px 20px #211e1629;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .25s var(--ease),transform .25s var(--ease),visibility .25s,background .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}.to-top.show{opacity:1;visibility:visible;transform:none}.to-top:hover{background:var(--tomato-deep);color:#fff;border-color:var(--tomato-deep);transform:translateY(-2px)}.to-top:focus-visible{outline:3px solid var(--tomato-tint);outline-offset:2px}
-@media(max-width:640px){.to-top{right:16px;bottom:calc(148px + env(safe-area-inset-bottom,0px) + var(--bc-lift,0px));width:48px;height:48px}}
+@media(max-width:640px){.to-top{right:16px;bottom:calc(85px + env(safe-area-inset-bottom,0px) + var(--bc-lift,0px));width:48px;height:48px}}
+/* ≤640: alt çubuğun ortası zaten Rota. Gastro'da bu köşede yalnız başa dön düğmesi var; Route düğmesi alt çubuk varken gizlenir */
+@media(max-width:640px){body:has(.bottom-nav) .yg-fab{display:none}}
 @media(prefers-reduced-motion:reduce){.to-top{transition:opacity .15s linear}.to-top:hover{transform:none}}
 
 /* Yasal menü: 32 kalem dar ekranda metni bir ekran aşağı itiyordu; kanon şerit kalıbıyla tek satır kayar */
@@ -62,3 +67,35 @@ header a i.fa-route, nav a i.fa-route { opacity: 1 !important; }
 }
 /* Üye zinciri bildirim kuralını da yüklemiyor: gizli bildirim altbilginin altında görünüyordu. `gourmet.css`ten aynen */
 .ke-toast{position:fixed;left:50%;bottom:calc(28px + var(--bc-lift, 0px));transform:translate(-50%) translateY(20px);background:var(--slate,#211e16);color:#fff;font-size:13.5px;font-weight:600;padding:13px 20px;border-radius:var(--radius-md);box-shadow:var(--sh-lg);display:flex;align-items:center;gap:10px;opacity:0;visibility:hidden;transition:.3s var(--ease);z-index:120}.ke-toast.show{opacity:1;visibility:visible;transform:translate(-50%) translateY(0)}.ke-toast.show.soft{opacity:.85}.ke-toast i{color:var(--green,#3BB77E)}
+
+/* Dokunma hedefi ≥44px (Beyar, Diet düzeyi): tek blok, telefon ve dokunmatik işaretçi. Görsel boy mümkünse korunur,
+   yalnız vuruş alanı büyür. Paragraf içi metin bağları ve büyük bir etiketin içindeki onay kutuları muaf */
+@media (max-width:640px),(pointer:coarse){
+  /* İkon düğmeler: kutu 44px */
+  :is(.mke-ikon,.pg,.sheet-close,.cat-nav button,.fct-ulke-ac,.kimlik-avatar-duzenle,.md-stage-acts button,.psh-pop :is(a,button),.row-nav button,.vs-btn,.dugme.ikon){min-width:44px;min-height:44px}
+  /* Kart üstündeki kaydet düğmesi: görsel 34px daire aynı yerde kalır, saydam pay vuruş alanını 44px yapar */
+  .disc-save{width:44px;height:44px;padding:5px;margin:-5px;background-clip:content-box}
+  /* Metinli düğme, sekme ve çipler: yükseklik 44px, metin ortada */
+  :is(.btn-sm,.btn-filter,.sort-btn,a.chip,button.chip,.gm-facet,.dt,.mke-birincil,.fct-ulke-sec){min-height:44px;align-content:center}
+  /* Metin bağları ve "daha fazla" düğmeleri: dolgu ile vuruş alanı 44px, eksi kenar boşluğu yerleşimi korur */
+  :is(.see-all,.fct-more,.pro-daha,.wf-skip,.fil-clear,.mkl-etiket-temizle,.rd-crumb a,.kirinti a,.pf-crumb a){padding-block:calc((44px - 1lh) / 2);margin-block:calc((1lh - 44px) / 2)}
+  /* Ekmek kırıntısındaki ev ikonu (10×9) */
+  :is(.rd-crumb,.kirinti,.pf-crumb) :is(a:first-of-type,a.crumb-home,a.kirinti-ev){padding:17.5px;margin:-17.5px}
+  input[type=range]{min-height:44px}
+  .maplibregl-ctrl-attrib a{padding-block:16px;margin-block:-16px}
+  /* Harita denetimleri */
+  .maplibregl-ctrl-group button{width:44px;height:44px}
+  .leaflet-touch .leaflet-bar a{width:44px;height:44px;line-height:44px}
+  /* Harita pini 14px kalır; vuruş alanı görünmez halkayla 44px */
+  .dg-pin::after{content:"";position:absolute;inset:-15px;border-radius:50%}
+  /* Dada Route (tam ekran harita ve alt sayfa): düğme, sekme, çip ve pilot rota 44px; tutamak ve logo dolguyla */
+  :is(.yg-close,.yg-viewtoggle button,.yg-tab,.yg-pilot,.yg-newroute,.yg-reverse,.yg-add,.yg-kcip,.yg-fl-chip,.yg-tol-chip,.yg-serit-sekme,.yg-kl-durak,.yg-il-cip,.yg-telefon-dugme,.yg-katman .cip){min-height:44px;align-content:center}
+  .yg-stop-x{min-width:44px;min-height:44px}
+  .yg-brand .dg-brand{padding-block:9px;margin-block:-9px}
+  .leaflet-control-attribution a{padding-block:16px;margin-block:-16px}
+  .yg-iller-bas{padding-block:calc((44px - 1lh) / 2);margin-block:calc((1lh - 44px) / 2)}
+  /* Harita etiketi, pin ve şerit başlığı düğmesi: görsel aynı, vuruş alanı görünmez payla 44px (canlıdaki `.yg-stop-clear::before` kalıbı) */
+  .yg-dash-all{position:relative}
+  :is(.yg-dash-all,.yg-il-harita-rozet,.yg-pin)::after{content:"";position:absolute;inset:-11px -4px}
+  .yg-pin::after{inset:-8px;border-radius:50%}
+}
