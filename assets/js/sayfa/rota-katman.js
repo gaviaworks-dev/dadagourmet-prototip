@@ -103,6 +103,6 @@
     if (ad === 'sarj') { var t = $('#ygSarjToggle'); if (t && (t.getAttribute('aria-pressed') === 'true') !== on) { t.click(); } return; }
     acik[ad] = on; if (on) { grup[ad].addTo(h); } else { h.removeLayer(grup[ad]); } yenile();
   });
-  /* İnceleme kolaylığı: açılışta örnek güzergâh yüklenir. `?bos=1` canlının boş hâli */
-  if (!/[?&]bos=1/.test(location.search)) { setTimeout(function () { var p = $('#ygPilots button, #ygPilots a'); if (p) { p.click(); } }, 300); }
+  /* Açılış canlıdaki gibi boş karşılama (Beyar, 9 Kas). `?ornek=1` inceleme için örnek güzergâhı yükler */
+  if (/[?&]ornek=1/.test(location.search)) { setTimeout(function () { var p = $('#ygPilots button, #ygPilots a'); if (p) { p.click(); } }, 300); }
 })();
