@@ -66,7 +66,13 @@
     var ciplar = $$('.evd-chip'); ciplar[0].lastChild.nodeValue = ' ' + e.zaman; ciplar[1].lastChild.nodeValue = ' ' + e.yer;
     $('.evd-about p').textContent = e.ozet;
     var durum = $('.evd-program .evd-status'); if (durum && e.bas) { durum.lastChild.nodeValue = ' ' + e.bas.slice(0, 4) + ' takvim bilgisi doğrulandı · Detaylı program henüz açıklanmadı'; }
-    $$('.evd-row').forEach(function (r) { var b = $('b', r).textContent, s = $('span', r); if (b === 'Tür') { s.textContent = e.tur; } if (b === 'Tarih') { s.textContent = e.zaman; } if (b === 'Yer') { s.textContent = e.yer; } });
+    /* Bir bakışta ve Kimler Katılabilir?: canlı detay sayfasının değerleri (`etkinlik-detay-veri.mjs`); değer yoksa satır basılmaz */
+    var dt = (V.detay || {})[e.slug] || {};
+    var esc = function (t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
+    $$('.evd-row').forEach(function (r) { var b = $('b', r).textContent, s = $('span', r); if (b === 'Tür') { s.textContent = e.tur; } if (b === 'Tarih') { s.textContent = e.zaman; } if (b === 'Yer') { s.textContent = dt.yer || e.yer; } if (b === 'Ücret') { r.parentNode.removeChild(r); } });
+    if (dt.ucret) { $('.evd-card').insertAdjacentHTML('beforeend', '<div class="evd-row"><i class="fa-solid fa-coins" aria-hidden="true"></i><div><b>Ücret</b><span>' + esc(dt.ucret) + '</span></div></div>'); }
+    var eskiKim = $('.evd-kimler'); if (eskiKim) { eskiKim.parentNode.removeChild(eskiKim); }
+    if (dt.kimler && dt.kimler.length) { $('.evd-program').insertAdjacentHTML('afterend', '<div class="evd-program evd-kimler"><h3><i class="fa-solid fa-user-group" aria-hidden="true"></i> Kimler Katılabilir?</h3><div class="evd-tag-row">' + dt.kimler.map(function (c) { return '<span class="chip"><i class="' + esc(c[0]) + '" aria-hidden="true"></i>' + esc(c[1]) + '</span>'; }).join('') + '</div></div>'); }
     var rb = $('#evdRandevu'); rb.dataset.randevu = e.slug; if (gecmis(e)) { rb.parentNode.removeChild(rb); }
     if (e.bilet) { var bl = $('#evdBilet'); bl.href = e.bilet; bl.hidden = false; }
     var bk = $('.evd-bridge-acts a'); if (bk && e.tr) { bk.href = kok + 'mekanlar/?il=' + encodeURIComponent(tr(e.sehir)); }
