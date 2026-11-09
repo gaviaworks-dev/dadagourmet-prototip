@@ -1,0 +1,96 @@
+/* YÜZEN MENTÖR DÜĞMESİ VE PANELİ — donör: dadagastro.com /kabuk/mentor.css (release 20261107-mentor, 9 Kas çekimi), markup
+   `_src/parcalar/mentor.html`, davranış `assets/js/mentor-fab.js`. Ölçüler, geçişler ve yerleşim donörden birebir; renkler Gourmet kanon
+   belirteçleri. Bazı zincirler (yasal, künye, hakkımızda, rota) kanon belirteçlerini yüklemez: her belirteç kanondaki değeriyle yedeklenir.
+   Gourmet gövde CSS'i (`gourmet.css`) eski `.mentor-panel` kurallarını `!important` genişlikle taşır; kök o sınıfı almaz, her kural
+   `#dadaMentor` ile yazılır (aynı adlı `.mp-*` kuralları özgüllükle ezilir).
+   Yerleşim: dipten mesafe `--mentor-taban` ya da `--mentor-engel`in (çerez bandı, alt çubuk, eylem çubuğu; JS ölçer) 12px üstü. */
+#dadaMentor{
+  --mentor-marka:var(--marka,#742982);
+  --mentor-yikama:var(--marka-yikama,color-mix(in srgb,#742982 13.7%,#fff));
+  --mentor-parlak:var(--marka-parlak,color-mix(in srgb,#742982 50%,#fff));
+  --mentor-kagit:var(--kagit,#fff);
+  --mentor-koyu:var(--koyu-zemin,#211E16);
+  --mentor-koyu-2:var(--marka-koyu-zemin-2,#1E1422);
+  --mentor-cizgi:color-mix(in srgb,var(--mentor-kagit) 16%,transparent);
+  --mentor-yumusak:color-mix(in srgb,var(--mentor-kagit) 82%,transparent);
+  --mentor-cam:color-mix(in srgb,var(--mentor-koyu) 40%,transparent);
+  --mentor-kolay:var(--yumusama,cubic-bezier(.22,.61,.36,1));
+  --mentor-yay:cubic-bezier(.16,1,.3,1);
+  --mentor-taban:var(--bosluk-24,24px);
+  --mentor-dip:max(var(--mentor-taban),calc(var(--mentor-engel,0px) + var(--bosluk-12,12px)));
+  position:fixed;left:var(--bosluk-16,16px);right:auto;top:auto;bottom:var(--mentor-dip);
+  width:360px;height:min(72vh,540px,calc(100dvh - var(--mentor-dip) - var(--bosluk-16,16px)));
+  z-index:var(--kat-sohbet-ortu,94);box-sizing:border-box;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:space-between;text-align:left;
+  border:var(--cizgi-1,1px) solid var(--mentor-cizgi);border-radius:var(--yuvarlak-xl,24px);
+  box-shadow:0 28px 80px color-mix(in srgb,var(--mentor-koyu) 46%,transparent);
+  background:var(--mentor-koyu);
+  transition:width .5s var(--mentor-yay),height .5s var(--mentor-yay),border-radius .5s var(--mentor-yay),box-shadow .42s var(--mentor-kolay),transform .45s var(--mentor-yay),opacity .35s var(--mentor-kolay),bottom .25s var(--mentor-kolay),visibility 0s;
+  animation:dadaMentorGiris .5s var(--mentor-yay);
+}
+#dadaMentor *,#dadaMentor *::before,#dadaMentor *::after{box-sizing:border-box}
+#dadaMentor svg{display:block;width:1em;height:1em;fill:currentColor}
+@keyframes dadaMentorGiris{from{opacity:0;transform:translateY(26px) scale(.965)}to{opacity:1;transform:none}}
+
+#dadaMentor .mp-media{position:absolute;inset:0;z-index:0;overflow:hidden}
+#dadaMentor .mp-atmos{position:absolute;inset:0;background:radial-gradient(110% 60% at 34% 24%,color-mix(in srgb,var(--mentor-marka) 24%,transparent),transparent 58%),linear-gradient(162deg,var(--mentor-koyu) 0%,var(--mentor-koyu-2) 92%)}
+#dadaMentor .mp-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#dadaMentor .mp-fade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,color-mix(in srgb,var(--mentor-koyu) 5%,transparent) 0%,transparent 30%,color-mix(in srgb,var(--mentor-koyu) 34%,transparent) 54%,color-mix(in srgb,var(--mentor-koyu) 82%,transparent) 78%,color-mix(in srgb,var(--mentor-koyu) 97%,transparent) 100%)}
+#dadaMentor .mp-top{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:var(--bosluk-15,15px) var(--bosluk-16,16px);flex:none;transition:opacity .25s var(--mentor-kolay)}
+#dadaMentor .mp-tag{display:inline-flex;align-items:center;gap:var(--bosluk-8,8px);font-weight:300;font-size:var(--yazi-11,11px);letter-spacing:.18em;text-transform:uppercase;color:var(--mentor-yumusak)}
+#dadaMentor .mp-tag svg{font-size:var(--yazi-11,11px);color:var(--mentor-parlak)}
+#dadaMentor .mp-toggle{width:30px;height:30px;padding:0;border-radius:var(--yuvarlak-daire,50%);border:var(--cizgi-1,1px) solid var(--mentor-cizgi);background:var(--mentor-cam);backdrop-filter:blur(4px);color:var(--mentor-yumusak);display:grid;place-items:center;cursor:pointer;font-size:var(--yazi-12,12px);transition:.2s var(--mentor-kolay)}
+#dadaMentor .mp-toggle:hover{color:var(--mentor-kagit);border-color:color-mix(in srgb,var(--mentor-kagit) 40%,transparent)}
+#dadaMentor .mp-chat{position:relative;z-index:3;padding:0 var(--bosluk-16,16px) var(--bosluk-17,17px);display:flex;flex-direction:column;gap:var(--bosluk-11,11px);flex:none;min-height:0;justify-content:flex-end;transition:opacity .3s var(--mentor-kolay),transform .3s var(--mentor-kolay)}
+#dadaMentor .mp-id{display:flex;align-items:center;gap:var(--bosluk-11,11px);flex:none}
+#dadaMentor .mp-av{width:38px;height:38px;border-radius:var(--yuvarlak-daire,50%);background:var(--mentor-marka);color:var(--mentor-kagit);display:grid;place-items:center;font-size:var(--yazi-15,15px);flex:none;box-shadow:0 0 0 4px color-mix(in srgb,var(--mentor-marka) 22%,transparent)}
+#dadaMentor .mp-kimlik{display:flex;flex-direction:column;align-items:flex-start;gap:var(--bosluk-5,5px);min-width:0}
+#dadaMentor .nm{font-size:var(--yazi-15-5,15.5px);color:var(--mentor-kagit);line-height:1.1}
+#dadaMentor .nm .bd{font-weight:800}
+#dadaMentor .nm .sf{font-weight:300}
+#dadaMentor .mp-rozetler{display:flex;flex-wrap:wrap;align-items:center;gap:var(--bosluk-6,6px)}
+/* Rozet: Pro hapı (taç + marka metin, açık zemin) */
+#dadaMentor .mp-pro{display:inline-flex;align-items:center;gap:var(--bosluk-6,6px);font-size:var(--yazi-11-5,11.5px);line-height:1;font-weight:var(--agirlik-kalin,700);color:var(--mentor-marka);background:var(--mentor-yikama);padding:var(--bosluk-6,6px) var(--bosluk-11,11px);border-radius:var(--yuvarlak-hap,999px);white-space:nowrap}
+#dadaMentor .mp-yakinda{display:inline-flex;align-items:center;font-size:var(--yazi-11-5,11.5px);line-height:1;font-weight:600;color:var(--mentor-yumusak);border:var(--cizgi-1,1px) solid var(--mentor-cizgi);background:var(--mentor-cam);padding:var(--bosluk-5,5px) var(--bosluk-10,10px);border-radius:var(--yuvarlak-hap,999px);white-space:nowrap}
+#dadaMentor .mp-bubble{flex:none;align-self:flex-start;max-width:94%;background:color-mix(in srgb,var(--mentor-koyu) 86%,transparent);backdrop-filter:blur(7px);border:var(--cizgi-1,1px) solid var(--mentor-cizgi);border-radius:4px 15px 15px 15px;padding:var(--bosluk-12,12px) var(--bosluk-15,15px);font-weight:600;font-size:var(--yazi-15-5,15.5px);line-height:1.4;color:var(--mentor-kagit)}
+#dadaMentor .mp-hint{flex:none;font-size:var(--yazi-12-5,12.5px);font-weight:500;line-height:1.5;color:color-mix(in srgb,var(--mentor-kagit) 72%,transparent);margin:-2px 0 2px}
+#dadaMentor .mp-row{flex:0 0 auto;display:grid;grid-template-columns:1fr;gap:var(--bosluk-8,8px)}
+#dadaMentor .mp-opt{display:inline-flex;align-items:center;justify-content:center;min-width:0;cursor:pointer;white-space:nowrap;text-decoration:none;padding:var(--bosluk-9,9px) var(--bosluk-10,10px);border-radius:var(--yuvarlak-md,12px);backdrop-filter:blur(7px);font-weight:600;font-size:var(--yazi-12-5,12.5px);transition:background .2s var(--mentor-kolay),border-color .2s var(--mentor-kolay),color .2s var(--mentor-kolay),transform .2s var(--mentor-kolay)}
+#dadaMentor .mp-opt.active{background:var(--mentor-marka);border:var(--cizgi-1,1px) solid transparent;color:var(--mentor-kagit);box-shadow:0 5px 18px color-mix(in srgb,var(--mentor-marka) 42%,transparent)}
+#dadaMentor .mp-opt.active:hover{color:var(--mentor-kagit);transform:translateY(-1px)}
+
+/* kapalı hâl: ikon + yazı kartı */
+#dadaMentor .mp-mini-overlay{display:flex;position:absolute;inset:0;z-index:5;align-items:center;justify-content:flex-start;gap:var(--bosluk-11,11px);margin:0;padding:0 var(--bosluk-22,22px) 0 var(--bosluk-8,8px);width:100%;border:0;background:none;font:inherit;color:inherit;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s var(--mentor-kolay)}
+#dadaMentor .mp-mini-overlay .mav{width:40px;height:40px;border-radius:var(--yuvarlak-daire,50%);background:var(--mentor-marka);color:var(--mentor-kagit);display:grid;place-items:center;font-size:var(--yazi-17,17px);flex:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--mentor-marka) 26%,transparent);transform:scale(.55);transition:transform .45s var(--mentor-yay)}
+#dadaMentor .mp-mini-lbl{font-weight:800;font-size:var(--yazi-14-5,14.5px);letter-spacing:-.01em;color:var(--mentor-kagit);white-space:nowrap;opacity:0;transform:translateX(-6px);transition:opacity .3s var(--mentor-kolay) .05s,transform .35s var(--mentor-yay) .05s}
+#dadaMentor.mini .mp-mini-lbl{opacity:1;transform:none}
+#dadaMentor.mini{width:148px;height:56px;max-height:56px;border-radius:var(--yuvarlak-lg,16px);cursor:pointer;background:var(--mentor-koyu);border:var(--cizgi-1,1px) solid color-mix(in srgb,var(--mentor-kagit) 9%,transparent);box-shadow:0 14px 38px color-mix(in srgb,var(--mentor-koyu) 46%,transparent)}
+#dadaMentor.mini .mp-media,#dadaMentor.mini .mp-fade{opacity:0}
+#dadaMentor.mini .mp-top,#dadaMentor.mini .mp-chat{position:absolute;left:0;right:0}
+#dadaMentor.mini .mp-chat{bottom:0;opacity:0;pointer-events:none;transform:translateY(6px)}
+#dadaMentor.mini .mp-top{top:0;opacity:0;pointer-events:none}
+#dadaMentor.mini .mp-mini-overlay{position:relative;inset:auto;height:100%;opacity:1;pointer-events:auto}
+#dadaMentor.mini .mp-mini-overlay .mav{transform:scale(1)}
+#dadaMentor .mp-mini-overlay:focus-visible,#dadaMentor .mp-toggle:focus-visible,#dadaMentor .mp-opt:focus-visible{outline:2px solid var(--mentor-kagit);outline-offset:2px}
+#dadaMentor .mp-mini-overlay:focus-visible{outline-offset:-3px;border-radius:var(--yuvarlak-lg,16px)}
+
+/* altbilgi perdesi açılınca kenara çekilir */
+#dadaMentor.foot-hide{transform:translateY(150%);opacity:0;visibility:hidden;pointer-events:none;transition-delay:0s,0s,0s,0s,0s,0s,0s,.35s}
+
+/* masaüstü (canlı Gastro 7 Kas): kapalı düğme 56×56 kare, yalnız ikon; fareyle ya da klavye odağında 148px'e açılır */
+@media (min-width:641px){
+  #dadaMentor.mini{width:56px}
+  #dadaMentor.mini .mp-mini-lbl{opacity:0;transform:translateX(-6px)}
+  #dadaMentor.mini:hover,#dadaMentor.mini:focus-within{width:148px}
+  #dadaMentor.mini:hover .mp-mini-lbl,#dadaMentor.mini:focus-within .mp-mini-lbl{opacity:1;transform:none}
+}
+/* mobil: ikon ağırlıklı kare; taban alt çubuğun üstü (donör değeri), çubuk ölçülürse hangisi büyükse */
+@media (max-width:640px){
+  #dadaMentor{--mentor-taban:calc(88px + env(safe-area-inset-bottom,0px));width:calc(100vw - var(--bosluk-32,32px));max-width:360px;height:min(64vh,520px,calc(100dvh - var(--mentor-dip) - var(--bosluk-16,16px)))}
+  #dadaMentor.mini{width:56px;height:56px}
+  #dadaMentor .mp-mini-overlay{justify-content:center;padding:0}
+  #dadaMentor .mp-mini-lbl{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  #dadaMentor,#dadaMentor .mp-opt,#dadaMentor .mp-toggle,#dadaMentor .mp-mini-overlay .mav,#dadaMentor .mp-mini-lbl{transition-duration:.001ms!important;animation-duration:.001ms!important}
+}
