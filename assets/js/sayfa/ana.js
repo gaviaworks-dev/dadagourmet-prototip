@@ -28,7 +28,8 @@
     }).join('');
     var not = document.getElementById('evKonumNot');
     if (!not) { not = document.createElement('p'); not.id = 'evKonumNot'; not.className = 'mkl-harita-not'; ray.parentNode.insertBefore(not, ray); }
-    not.textContent = 'Konumuna göre sıralandı: en yakın etkinlik ' + Math.round(l[0].d) + ' km uzakta, ' + l[0].e.yer + '.';
+    var en = l.reduce(function (a, b) { return b.d < a.d ? b : a; });
+    not.textContent = 'Konumuna göre sıralandı: en yakın etkinlik ' + Math.round(en.d) + ' km uzakta, ' + en.e.yer + '.';
   }
   var kayitli = oku('dg-konum'); if (kayitli) { try { diz(JSON.parse(kayitli)); } catch (e) { /* bozuk kayıt */ } }
   document.addEventListener('dg-konum', function (e) { diz(e.detail); });
