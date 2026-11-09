@@ -68,7 +68,7 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 .yg-il-cipler{display:flex;flex-wrap:wrap;gap:6px}
 .yg-il-cip{padding:5px 10px;border:1px solid var(--marka-cizgi);border-radius:var(--yuvarlak-cip);background:var(--paper);color:var(--marka-koyu);font-size:12.5px;font-weight:600;line-height:1.2}
 .yg-katman-pin{display:grid!important;place-items:center;border-radius:var(--yuvarlak-sm);border:2px solid #fff;background:var(--marka);color:#fff;font-size:13px;box-shadow:0 1px 5px rgba(0,0,0,.35)}
-.yg-katman-pin--ibadet{background:#2f6fb0}.yg-katman-pin--dinlenme{background:#8a6410}.yg-katman-pin--neyenir{background:var(--marka)}.yg-katman-pin--nealinir{background:var(--marka-koyu)}
+.yg-katman-pin--ibadet,.yg-katman-pin--tarihi{background:#2f6fb0}.yg-katman-pin--dinlenme{background:#8a6410}.yg-katman-pin--neyenir{background:var(--marka)}.yg-katman-pin--nealinir{background:var(--marka-koyu)}
 .yg-brand .gourmet-word-mark{display:block;height:26px;width:auto;color:var(--marka)}
 .yg-brand .dg-word{display:block}
 .gastronomi-kapali .yg-vpin,.gastronomi-kapali .yg-vcluster{display:none}

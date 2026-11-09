@@ -5,15 +5,16 @@
   var R = window.DG_ROTA, L = window.L, h = window.dgRotaHarita; if (!R || !h) { return; }
   var $ = function (s) { return document.querySelector(s); }, $$ = function (s) { return [].slice.call(document.querySelectorAll(s)); };
   var kac = function (t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
-  var KORIDOR_KM = 15, IL_KM = 30;
-  var ikon = { ibadet: 'fa-mosque', dinlenme: 'fa-bed', neyenir: 'fa-bowl-food', nealinir: 'fa-basket-shopping' };
-  var baslik = { ibadet: 'İbadethane', dinlenme: 'Dinlenme alanı', neyenir: 'Ne Yenir?', nealinir: 'Ne Alınır?' };
-  var grup = { ibadet: L.layerGroup(), dinlenme: L.layerGroup(), neyenir: L.layerGroup(), nealinir: L.layerGroup() };
+  var KORIDOR_KM = 15, IL_KM = 30, KORIDOR = { tarihi: 25 };
+  var ikon = { ibadet: 'fa-mosque', tarihi: 'fa-landmark', dinlenme: 'fa-bed', neyenir: 'fa-bowl-food', nealinir: 'fa-basket-shopping' };
+  var baslik = { ibadet: 'İbadethane', tarihi: 'Tarihi inanç yapıları', dinlenme: 'Dinlenme alanı', neyenir: 'Ne Yenir?', nealinir: 'Ne Alınır?' };
+  var grup = { ibadet: L.layerGroup(), tarihi: L.layerGroup(), dinlenme: L.layerGroup(), neyenir: L.layerGroup(), nealinir: L.layerGroup() };
   var acik = {};
 
   /* Nokta havuzu: katman başına tek biçim */
   var noktalar = {
     ibadet: R.katman.ibadet.map(function (n) { return { ad: n[2], lat: n[1], lng: n[0], alt: n[3] }; }),
+    tarihi: R.katman.tarihi.map(function (n) { return { ad: n[2], lat: n[1], lng: n[0], alt: n[3] + ' · Ziyaret saatleri: örnek' }; }),
     dinlenme: R.katman.dinlenme.map(function (n) { return { ad: n[2], lat: n[1], lng: n[0], alt: n[3] + ' · Kaynak: örnek · Doğrulama: örnek tarih' }; }),
     neyenir: [], nealinir: []
   };
@@ -34,11 +35,11 @@
     Object.keys(grup).forEach(function (k) {
       grup[k].clearLayers();
       if (!acik[k]) { return; }
-      var yakin = noktalar[k].map(function (n) { return { n: n, d: uzak(n) }; }).filter(function (x) { return x.d <= KORIDOR_KM; }).sort(function (a, b) { return a.d - b.d; });
+      var yakin = noktalar[k].map(function (n) { return { n: n, d: uzak(n) }; }).filter(function (x) { return x.d <= (KORIDOR[k] || KORIDOR_KM); }).sort(function (a, b) { return a.d - b.d; });
       yakin.forEach(function (x) { grup[k].addLayer(pin(k, x.n)); });
       adet += yakin.length;
       html += '<div class="yg-kl-grup"><b>' + baslik[k] + ' <span>' + yakin.length + '</span></b>' + (yakin.length ? yakin.map(function (x) {
-        return '<div class="yg-kl-satir"><span class="yg-il-ikon"><i class="fa-solid ' + ikon[k] + '" aria-hidden="true"></i></span><span class="yg-kl-metin"><b>' + kac(x.n.ad) + '</b><small>' + kac(x.n.alt) + ' · yoldan ' + Math.max(1, Math.round(x.d)) + ' km</small></span><button type="button" class="yg-kl-durak" data-durak="' + kac(x.n.ad) + '" data-lat="' + x.n.lat + '" data-lng="' + x.n.lng + '" aria-pressed="false">Durak Yap</button></div>';
+        return '<div class="yg-kl-satir"><span class="yg-il-ikon"><i class="fa-solid ' + ikon[k] + '" aria-hidden="true"></i></span><span class="yg-kl-metin"><b>' + kac(x.n.ad) + '</b><small>' + kac(x.n.alt) + ' · ' + (k === 'tarihi' ? 'yol ayrımından ' : 'yoldan ') + Math.max(1, Math.round(x.d)) + ' km</small></span><button type="button" class="yg-kl-durak" data-durak="' + kac(x.n.ad) + '" data-lat="' + x.n.lat + '" data-lng="' + x.n.lng + '" aria-pressed="false">Durak Yap</button></div>';
       }).join('') : '<p class="yg-kl-bos">Bu güzergâhta örnek nokta yok.</p>') + '</div>';
     });
     satirlar.innerHTML = html; liste.hidden = !Object.keys(grup).some(function (k) { return acik[k]; });

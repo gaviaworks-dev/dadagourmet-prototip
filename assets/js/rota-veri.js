@@ -6,6 +6,8 @@ window.DG_ROTA = {
   katman: {
     sarj: [[29.3, 40.84, 'Örnek DC hızlı şarj'], [29.0625, 40.1835, 'Örnek DC hızlı şarj'], [28.72, 40.06, 'Örnek DC hızlı şarj'], [27.85, 39.4, 'Örnek AC şarj'], [31.47, 40.1, 'Örnek DC hızlı şarj'], [31.6, 38.54, 'Örnek DC hızlı şarj']],
     ibadet: [[29.08, 40.3, 'Örnek cami', 'Cami'], [27.85, 39.6, 'Örnek mescit', 'Mescit'], [30.2, 40.45, 'Örnek cami', 'Cami'], [31.98, 39.04, 'Örnek mescit', 'Mescit']],
+    /* Tarihi inanç yapıları (R2.3b): ibadethaneden ayrı alt katman, varsayılan kapalı (Beyar, 9 Kas; K22 cami ve mescit önde). Noktalar örnek */
+    tarihi: [[29.07, 40.19, 'Örnek tarihi kilise', 'Kilise · 19. yüzyıl'], [27.9, 39.63, 'Örnek tarihi sinagog', 'Sinagog'], [27.44, 38.6, 'Örnek manastır kalıntısı', 'Manastır · ören yeri'], [27.13, 38.41, 'Örnek tarihi sinagog', 'Sinagog'], [30.4, 40.5, 'Örnek tarihi kilise', 'Kilise']],
     dinlenme: [[29.05, 40.45, 'Örnek dinlenme alanı', 'Aydınlatma, tuvalet'], [27.7, 39.05, 'Örnek dinlenme alanı', 'Aydınlatma, kafeterya'], [30.85, 40.24, 'Örnek dinlenme alanı', 'Aydınlatma, tuvalet'], [31.27, 38.04, 'Örnek dinlenme alanı', 'Tuvalet, kafeterya'], [28.95, 40.33, 'Örnek bağ evi', 'Konaklamalı · bağ evi lokantası, 6 oda'], [27.98, 39.42, 'Örnek yeme-içme çiftliği', 'Konaklamalı · bungalov, çiftlik kahvaltısı'], [27.55, 38.72, 'Örnek köy lokantası', 'Konaklamalı · köy evi, akşam yemeği'], [32.4, 39.5, 'Örnek yeme-içme çiftliği', 'Konaklamalı · bungalov']]
   },
   iller: [
