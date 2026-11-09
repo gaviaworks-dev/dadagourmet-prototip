@@ -231,8 +231,7 @@
     var pg = t.closest('#pagi [data-sayfa]'); if (pg && !pg.disabled) { sayfa = +pg.dataset.sayfa; yenile(); $('.lst-bar').scrollIntoView({ block: 'start' }); window.scrollBy(0, -120); return; }
     var sb = t.closest('#sortBtn'); if (sb) { $('#sortDd').classList.toggle('open'); return; }
     var si = t.closest('[data-sira]'); if (si) { ev.preventDefault(); sira = si.dataset.sira; $('#sortCur').textContent = si.textContent.trim(); $$('[data-sira]').forEach(function (x) { x.classList.toggle('active', x === si); }); $('#sortDd').classList.remove('open'); yenile(true); return; }
-    var bs = function (on) { $('#lstSide').classList.toggle('open', on); $('#sheetOverlay').classList.toggle('open', on); document.documentElement.style.overflow = on ? 'hidden' : ''; };
-    if (t.closest('#btnFilter')) { bs(true); } else if (t.closest('#sheetClose,#sheetApply') || t.id === 'sheetOverlay') { ev.preventDefault(); bs(false); }
+    /* Süzgeç sayfasını aç-kapa ortak denetleyicide: prototip.js `dgSuzgec` */
   });
   var ara = $('#evArama input[name="q"]'); ara.addEventListener('input', function () { aranan = tr(ara.value.trim()); yenile(true); });
   var q = new URLSearchParams(location.search); if (q.get('bolge') === 'dunya') { var d = $('[data-bolge="dunya"]'); if (d) { d.click(); } }

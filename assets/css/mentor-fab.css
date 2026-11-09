@@ -94,3 +94,5 @@
 @media (prefers-reduced-motion:reduce){
   #dadaMentor,#dadaMentor .mp-opt,#dadaMentor .mp-toggle,#dadaMentor .mp-mini-overlay .mav,#dadaMentor .mp-mini-lbl{transition-duration:.001ms!important;animation-duration:.001ms!important}
 }
+/* Süzgeç alt sayfası açıkken Mentör düğmesi sayfanın seçeneklerinin üstüne biniyordu (390'da "Kahvaltı Mekânı" satırı); sayfa kapanınca geri gelir */
+html:has(.lst-side.open) #dadaMentor{visibility:hidden;pointer-events:none}

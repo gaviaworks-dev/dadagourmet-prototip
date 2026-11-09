@@ -78,6 +78,29 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { cekmece(false); } });
     [].forEach.call(d.querySelectorAll('.d-sub a,.d-item > a.d-link,.drawer-foot a,.drawer-foot > button'), function (e) { e.addEventListener('click', function () { cekmece(false); }); });
   });
+  /* Süzgeç sayfası (≤1024 alt sayfa, Mekânlar ve Etkinlikler): Gastro `liste.js` davranışı tek yerde.
+     Aç: #btnFilter. Kapa: #sheetClose, #sheetApply, örtü, Esc. Açıkken gövde kaymaz, odak sayfaya geçer; kapanınca açan düğmeye döner */
+  var suzgecDon = null;
+  var suzgec = function (ac) {
+    var s = document.getElementById('lstSide'); if (!s || s.classList.contains('open') === !!ac) { return; }
+    var o = document.getElementById('sheetOverlay'), t = document.getElementById('btnFilter'), k = document.getElementById('sheetClose');
+    s.classList.toggle('open', !!ac); if (o) { o.classList.toggle('open', !!ac); }
+    document.body.style.overflow = ac ? 'hidden' : '';
+    if (t) { t.setAttribute('aria-expanded', ac ? 'true' : 'false'); }
+    if (ac) { suzgecDon = document.activeElement; if (k) { k.focus({ preventScroll: true }); } }
+    else { if (suzgecDon && suzgecDon.focus) { suzgecDon.focus({ preventScroll: true }); } suzgecDon = null; }
+  };
+  window.dgSuzgec = suzgec;
+  /* Detay eylem çubuğu (mekân, etkinlik) Gastro tarif çubuğu gibi sabit engel sayılır: canlı Gourmet işaretindeki `data-bc-clear` çubuğu
+     "kayan" sınıfına koyuyor ve başa dön düğmesi çubuğu hiç hesaba katmıyordu. Engel sayılınca çubuk düğmeyle kesiştiğinde
+     (çubuk iki satıra uzarsa) bottom-clearance.js düğmeyi çubuğun 12px üstüne kaldırır */
+  document.addEventListener('DOMContentLoaded', function () { [].forEach.call(document.querySelectorAll('.vd-actbar[data-bc-bar],.evd-actbar[data-bc-bar]'), function (b) { b.removeAttribute('data-bc-clear'); }); });
+  document.addEventListener('click', function (e) {
+    var t = e.target; if (!t.closest) { return; }
+    if (t.closest('#btnFilter')) { suzgec(true); return; }
+    if (t.closest('#sheetClose,#sheetApply') || t.id === 'sheetOverlay') { e.preventDefault(); suzgec(false); }
+  });
+  document.addEventListener('keydown', function (e) { var s = document.getElementById('lstSide'); if (e.key === 'Escape' && s && s.classList.contains('open')) { suzgec(false); } });
   window.prototipBildir = bildir;
   /* Demo kayıtları: rezervasyon, favori, değerlendirme gibi işlemler yalnız bu tarayıcıda durur, hiçbir yere gitmez. Gurme Panelim buradan okur. */
   var KAYIT = 'dg-kayit', bellek = {};

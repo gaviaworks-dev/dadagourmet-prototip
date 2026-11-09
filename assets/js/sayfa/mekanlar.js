@@ -241,10 +241,9 @@
     var sc = e.target.closest('a.subcat'); if (sc) { e.preventDefault(); if (sc.dataset.konsept) { var kn = kutu('konsept', sc.dataset.konsept); if (kn) { kn.checked = !kn.checked; } } else { $$('input[name="konsept[]"]').forEach(function (x) { x.checked = false; }); } yenile(true); return; }
     var pg = e.target.closest('#pagi [data-sayfa]'); if (pg && !pg.disabled) { sayfa = +pg.dataset.sayfa; yenile(); $('.lst-bar').scrollIntoView({ block: 'start' }); return; }
     var hb = e.target.closest('[data-haritada]'); if (hb) { e.preventDefault(); e.stopPropagation(); var m = V.mekanlar.filter(function (x) { return x.slug === hb.dataset.haritada; })[0]; if (m) { gorunumSec('harita'); if (hazir) { haritadaGoster(m); } else { bekleyen = m; } $('.lst-bar').scrollIntoView({ block: 'start' }); } return; }
-    if (e.target.closest('#btnFilter')) { sayfaAc(true); } else if (e.target.closest('#sheetClose') || e.target.id === 'sheetOverlay') { sayfaAc(false); }
+    /* Süzgeç sayfasını aç-kapa ortak denetleyicide: prototip.js `dgSuzgec` */
     var vs = e.target.closest('#mklViewSeg .vs-btn'); if (vs) { gorunumSec(vs.dataset.view); }
   });
-  function sayfaAc(on) { $('#lstSide').classList.toggle('open', on); $('#sheetOverlay').classList.toggle('open', on); document.documentElement.style.overflow = on ? 'hidden' : ''; }
   function hepsiniTemizle() { $$('.sheet-body input:checked').forEach(function (i) { i.checked = false; }); aranan = ''; konumAranan = ''; var q = $('#mklHeroQ'), k = $('#mklHeroKonum'); if (q) { q.value = ''; } if (k) { k.value = ''; } yenile(true); }
   var q = $('#mklHeroQ'), kn = $('#mklHeroKonum'), form = $('#mklHeroSearch');
   if (form) { form.setAttribute('data-yerel', ''); }
