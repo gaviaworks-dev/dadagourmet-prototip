@@ -159,6 +159,7 @@
   };
   /* Konum penceresi: canlı `#lkModal` DOM'u. Seçim bu tarayıcıda kalır, sunucuya gitmez. Tarayıcı izni yalnız düğmeye basınca istenir. */
   var konumAc = function (ac) { var m = document.getElementById('lkModal'), o = document.getElementById('lkOverlay'); if (!m) { return; } m.classList.toggle('show', ac); m.classList.toggle('open', ac); o.classList.toggle('show', ac); o.classList.toggle('open', ac); m.toggleAttribute('inert', !ac); };
+  window.dgKonumAc = konumAc;
   var konumOlay = function (e) {
     var t = e.target; if (!t.closest) { return false; }
     if (t.closest('[data-location-trigger]')) { e.preventDefault(); konumAc(true); return true; }
@@ -167,7 +168,7 @@
     if (t.closest('#lkRow-tr')) { konumAc(false); bildir('Türkiye ' + m.dataset.msgSelectedSuffix); return true; }
     if (t.closest('#lkGeoBtn')) {
       if (!navigator.geolocation) { bildir(m.dataset.msgGeoUnsupported); return true; }
-      navigator.geolocation.getCurrentPosition(function () { konumAc(false); bildir(m.dataset.msgGeoSuccess); }, function (h) { bildir(h.code === 1 ? m.dataset.msgGeoDenied : h.code === 3 ? m.dataset.msgGeoTimeout : m.dataset.msgGeoGeneric); }, { timeout: 8000 });
+      navigator.geolocation.getCurrentPosition(function (k) { konumAc(false); bildir(m.dataset.msgGeoSuccess); try { localStorage.setItem('dg-konum', JSON.stringify({ lat: k.coords.latitude, lng: k.coords.longitude })); } catch (x) { /* depo kapalı */ } document.dispatchEvent(new CustomEvent('dg-konum', { detail: { lat: k.coords.latitude, lng: k.coords.longitude } })); }, function (h) { bildir(h.code === 1 ? m.dataset.msgGeoDenied : h.code === 3 ? m.dataset.msgGeoTimeout : m.dataset.msgGeoGeneric); }, { timeout: 8000 });
       return true;
     }
     return false;
