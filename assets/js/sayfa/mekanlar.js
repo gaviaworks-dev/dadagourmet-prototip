@@ -6,6 +6,8 @@
   var V = window.DG_LISTE; if (!V) { return; }
   var kok = document.documentElement.dataset.kok || './';
   var GRUPLAR = ['kategori', 'konsept', 'mutfak', 'vesile', 'fiyat', 'puan', 'hizmet', 'beslenme', 'ulasim', 'acik', 'seckiler'];
+  /* "N kategori daha" düğmesi canlıdaki gibi grubun adını taşır */
+  var DAHA = { kategori: 'kategori', konsept: 'konsept', mutfak: 'mutfak', vesile: 'amaç', hizmet: 'hizmet' };
   var SAYFA = 12, sayfa = 1, aranan = '', konumAranan = '';
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
   var kac = function (t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
@@ -82,7 +84,7 @@
       var n = $$('input:checked', k).length, dot = $(':scope > .fct-head .fct-dot', k); if (dot) { dot.textContent = n; dot.classList.toggle('on', n > 0); }
       var b = $(':scope > .fct-body > .fct-more', k); if (!b) { return; }
       var xtra = $$(':scope > .fct-body > label.xtra', k).filter(function (r) { return !r.hidden; }).length;
-      b.style.display = xtra ? '' : 'none'; if (!k.classList.contains('more-open')) { b.innerHTML = xtra + ' seçenek daha <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>'; }
+      b.style.display = xtra ? '' : 'none'; if (!k.classList.contains('more-open')) { var gi = k.querySelector('input[type="checkbox"]'), ad = gi ? DAHA[gi.name.replace('[]', '')] || 'seçenek' : 'seçenek'; b.innerHTML = xtra + ' ' + ad + ' daha <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>'; }
     });
     $$('.subcat[data-konsept]').forEach(function (a) { var on = d.konsept.indexOf(a.dataset.konsept) >= 0; a.classList.toggle('active', on); });
     var tum = $('.subcat:not([data-konsept])'); if (tum) { tum.classList.toggle('active', !d.konsept.length); }
