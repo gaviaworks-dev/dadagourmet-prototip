@@ -251,3 +251,6 @@ body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .page-main p{tex
   body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) section.below-header:not(#_)>.wrap>nav+.lst-hero:last-child{padding-top:2px;padding-bottom:26px}
   body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) :is(.lst-hero .lead p,.seo-prose p){text-align:start}
 }
+
+/* Öneri formundaki bot tuzağı alanı: canlı `site-overrides.css` kuralı aynen; o dosya zincirde yok, alan her sayfada görünüyordu */
+.hp-field{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important}
