@@ -120,7 +120,11 @@ const mekanBySlug = Object.fromEntries((veri['mekan-filtre']?.mekanlar ?? []).ma
 const nitelikIkon = (m) => { const l = NITELIK.filter(([g, d]) => m?.f?.[g]?.includes(d)); const tekil = l.filter(([, d], i) => !(d === 'otopark' && l.some(([, x]) => x === 'vale'))); return tekil.length ? `<div class="kart-nitelik">${tekil.map(([, , i, a]) => `<span class="kn" title="${a}" aria-label="${a}"><i class="fa-solid ${i}" aria-hidden="true"></i></span>`).join('')}</div>` : ''; };
 // Puanı olmayan kartta yıldız ve tire görünmez (AK-30 kuralı kartın tamamına)
 const puansizSil = (h) => h.replace(/<span class="r-rate r-yok"[^>]*>\s*<i[^>]*><\/i>\s*<span aria-hidden="true">–<\/span>\s*<\/span>/g, '');
-const kartZengin = (k, m) => puansizSil(k).replace('<div class="disc-meta">', nitelikIkon(m) + '<div class="disc-meta">');
+// Doğrulanmış nitelik rozetleri (W1.4e, Beyar 9 Kas): birkaç mekânda ÖRNEK doğrulama; süzgeç verisine girmez, yalnız kartta görünür
+const ORNEK_DOGRULAMA = { 'levan-urla': ['otopark', 'glutensiz', 'cocuk'], 'narimor-urla': ['vale', 'evcil'], 'the-townhouse-suadiye': ['vale', 'glutensiz', 'evcil', 'cocuk'], 'monteverdi-ristorante': ['vale', 'glutensiz'] };
+const DOGRULAMA_IKON = { otopark: ['fa-square-parking', 'Otopark'], vale: ['fa-square-parking', 'Vale'], glutensiz: ['fa-wheat-awn-circle-exclamation', 'Glütensiz seçenek'], evcil: ['fa-paw', 'Evcil hayvan kabul edilir'], cocuk: ['fa-children', 'Çocuk alanı'] };
+const dogrulanmisIkon = (slug) => { const l = ORNEK_DOGRULAMA[slug]; return l ? `<div class="kart-nitelik">${l.map((d) => `<span class="kn" title="${DOGRULAMA_IKON[d][1]} · doğrulandı" aria-label="${DOGRULAMA_IKON[d][1]}, doğrulandı"><i class="fa-solid ${DOGRULAMA_IKON[d][0]}" aria-hidden="true"></i></span>`).join('')}<span class="ornek-etiket">doğrulandı · prototip örneği</span></div>` : ''; };
+const kartZengin = (k, m) => puansizSil(k).replace('<div class="disc-meta">', (dogrulanmisIkon(m?.slug) || nitelikIkon(m)) + '<div class="disc-meta">');
 const uretimDosyalari = [...uretilen.map((u) => u.yol), 'ekranlar'].map((y) => path.join(KOK, y, 'index.html'));
 for (const f of uretimDosyalari) {
   const s = fs.readFileSync(f, 'utf8').replace(/<article class="disc-card[^"]*"[^>]*data-git="[^"]*mekan\/([a-z0-9-]+)\/"[\s\S]*?<\/article>/g, (k, slug) => kartZengin(k, mekanBySlug[slug])).replace(/href="((?:\.\.\/)*|\.\/)([a-z0-9][^"#?]*?)\/?((?:[?#][^"]*)?)"/g, (m, on, y, ek) => {
