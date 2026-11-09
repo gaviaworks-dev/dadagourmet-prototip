@@ -45,7 +45,7 @@ export function kabukla(s) {
 <html lang="tr" data-kok="${K}" data-yol="${s.yol ?? ''}"${uye ? ' data-uye-sayfa="1"' : ''} class="sg-js" data-kabuk-kimlik="yazildi"${z.baslikZemin ? ` data-baslik-zemin="${z.baslikZemin}"` : ''}>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${kacis(m.baslik ?? 'Dada Gourmet')} · Dada Gourmet</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="dg-ornek-uye" content="{{uye.ad}}|{{uye.kullanici}}">
