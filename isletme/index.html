@@ -6,7 +6,7 @@
 <title>İşletme Paneli · Dada Gourmet</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="dg-ornek-uye" content="Örnek Üye|ornekuye">
-<!-- donör: Kabuk ve satır DOM'u Gurme Panelim (go-mekanlarim.html?auth=1); kalıp DadaGourmet-panel isletme/rezervasyonlar · canlı Gastro release 20261107-mentor-6700538df4 -->
+<!-- donör: canlı dadagourmet.com/isletme, DadaGourmet-acil resources/views/isletme (index, basvurular/form, degisiklik-talepleri, degerlendirmeler); rezervasyon bölümü kalıbı DadaGourmet-panel isletme/rezervasyonlar · canlı Gastro release 20261107-mentor-6700538df4 -->
 <link rel="icon" href="../assets/img/favicon.ico">
 <link rel="stylesheet" href="../assets/g/kabuk/kabuk-kimlik.css">
 <link rel="stylesheet" href="../assets/g/kabuk/zil-sayaci.css">
@@ -64,7 +64,9 @@
 <script defer src="../assets/g/alan/mega-serit.js"></script>
 <script defer src="../assets/g/varliklar/reference/shared/dm-gorus.js"></script>
 <script defer src="../assets/g/varliklar/reference/shared/dm-kabuk.js"></script>
+<script defer src="../assets/js/sayfa/uye-alan.js"></script>
 <script defer src="../assets/js/sayfa/karar.js"></script>
+<script defer src="../assets/js/sayfa/isletme-portal.js"></script>
 </head>
 <body data-brand="gourmet" data-fit-hero-kind="profil" class="is-auth">
 <div class="topbar ust-bant">
@@ -103,7 +105,7 @@
       <nav class="nav ana-menu" aria-label="Dada Gourmet ana menü"><div class="nav-item"><a href="../mekanlar/">Mekânlar</a></div><div class="nav-item"><a href="../mekan-bul/">Mekân Bul</a></div><div class="nav-item"><a href="../gurme-lezzetler/">Gurme Lezzetler</a></div><div class="nav-item"><a href="../dada-route/"><i class="fa-solid fa-route" aria-hidden="true"></i> Dada Route</a></div><div class="nav-item"><a href="../etkinlikler/">Etkinlikler</a></div></nav>
       <div class="head-actions">
         <button class="icon-btn ikon-dugme" aria-label="Ara" data-git="../mekanlar/"><i class="fa-solid fa-magnifying-glass"></i></button><button class="icon-btn ikon-dugme" type="button" data-location-trigger="" aria-label="Konum seç" title="Konum seç"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></button>
-        <a class="icon-btn ikon-dugme head-bell" href="../hesabim/ayarlar/#bildirim" aria-label="Bildirimler"><i class="fa-solid fa-bell"></i></a>
+        <a class="icon-btn ikon-dugme head-bell" href="../hesabim/bildirimler/" aria-label="Bildirimler"><i class="fa-solid fa-bell"></i></a>
         <button class="btn-login" data-git="../giris/"><i class="fa-solid fa-user"></i> Giriş Yap</button>
         <div class="acct-item acct-wrap">
           <button class="acct-btn" aria-label="Hesabım" aria-haspopup="true">
@@ -129,7 +131,7 @@
                         
                         
                         
-                    <div class="acct-div"></div><a href="../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils" aria-hidden="true"></i> <span>Gurme Panelim</span></a><a href="../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <span>Mekânlarım</span></a><a href="../hesabim/gurme-panelim/"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> <span>Etkinliklerim</span></a><a href="../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-list-ul" aria-hidden="true"></i> <span>Listelerim</span></a><a href="../hesabim/ayarlar/#tercihler"><i class="fa-solid fa-compass" aria-hidden="true"></i> <span>Keşif Tercihlerim</span></a><div class="acct-div"></div><a href="../hesabim/gurme-panelim/puan-durumu/"><i class="fa-solid fa-medal" aria-hidden="true"></i> <span>Rozetlerim</span></a><div class="acct-div"></div><a href="../hesabim/ayarlar/"><i class="fa-solid fa-crown" aria-hidden="true"></i> <span>Paketlerim</span></a><a href="../hesabim/ayarlar/"><i class="fa-solid fa-receipt" aria-hidden="true"></i> <span>Ödemelerim</span></a><a href="../hesabim/ayarlar/"><i class="fa-solid fa-sliders" aria-hidden="true"></i> <span>Hesap Ayarları</span></a><a href="../hesabim/ayarlar/"><i class="fa-solid fa-headset" aria-hidden="true"></i> <span>Çözüm Merkezi</span></a><div class="acct-div"></div><a href="../" class="acct-logout" data-cikis=""><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Çıkış</span></a></div>
+                    <div class="acct-div"></div><a href="../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils" aria-hidden="true"></i> <span>Gurme Panelim</span></a><a href="../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <span>Mekânlarım</span></a><a href="../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> <span>Etkinliklerim</span></a><a href="../hesabim/listeler/"><i class="fa-solid fa-list-ul" aria-hidden="true"></i> <span>Listelerim</span></a><a href="../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass" aria-hidden="true"></i> <span>Keşif Tercihlerim</span></a><div class="acct-div"></div><a href="../hesabim/gurme-panelim/puan-durumu/"><i class="fa-solid fa-medal" aria-hidden="true"></i> <span>Rozetlerim</span></a><div class="acct-div"></div><a href="../hesabim/paketlerim/"><i class="fa-solid fa-crown" aria-hidden="true"></i> <span>Paketlerim</span></a><a href="../hesabim/odemelerim/"><i class="fa-solid fa-receipt" aria-hidden="true"></i> <span>Ödemelerim</span></a><a href="../hesabim/ayarlar/"><i class="fa-solid fa-sliders" aria-hidden="true"></i> <span>Hesap Ayarları</span></a><a href="../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset" aria-hidden="true"></i> <span>Çözüm Merkezi</span></a><div class="acct-div"></div><a href="../" class="acct-logout" data-cikis=""><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Çıkış</span></a></div>
         </div>
         <button class="icon-btn ikon-dugme hamburger" id="hamburger" aria-label="Menü"><i class="fa-solid fa-bars"></i></button>
       </div>
@@ -143,7 +145,7 @@
     <button class="drawer-close" id="drawerClose" aria-label="Menüyü kapat"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <nav class="drawer-nav"><div class="d-item"><a class="d-link" href="../mekanlar/"><i class="fa-solid fa-compass"></i> Mekânlar</a></div><div class="d-item"><a class="d-link" href="../mekan-bul/"><i class="fa-solid fa-wand-magic-sparkles"></i> Mekân Bul</a></div><div class="d-item"><a class="d-link" href="../gurme-lezzetler/"><i class="fa-solid fa-book-open"></i> Gurme Lezzetler</a></div><div class="d-item"><a class="d-link" href="../dada-route/"><i class="fa-solid fa-route"></i> Dada Route</a></div><div class="d-item"><a class="d-link" href="../etkinlikler/"><i class="fa-solid fa-calendar-days"></i> Etkinlikler</a></div><div class="d-item"><a class="d-link" href="../giris/?fb=1" data-gorus-giris="menu"><i class="fa-solid fa-comment-dots"></i> Görüş Bildir</a></div><div class="d-item d-acct-block">
-      <div class="d-sub d-acct-sub"><div class="d-sub-group">Modüllerim</div><a href="../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils"></i> Gurme Panelim</a><a href="../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot"></i> Mekânlarım</a><a href="../hesabim/gurme-panelim/"><i class="fa-solid fa-calendar-days"></i> Etkinliklerim</a><a href="../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-list-ul"></i> Listelerim</a><a href="../hesabim/ayarlar/#tercihler"><i class="fa-solid fa-compass"></i> Keşif Tercihlerim</a><div class="d-sub-group">Gelişimim</div><a href="../hesabim/gurme-panelim/puan-durumu/"><i class="fa-solid fa-medal"></i> Rozetlerim</a><div class="d-sub-group">Hesabım</div><a href="../hesabim/ayarlar/"><i class="fa-solid fa-crown"></i> Paketlerim</a><a href="../hesabim/ayarlar/"><i class="fa-solid fa-receipt"></i> Ödemelerim</a><a href="../hesabim/ayarlar/"><i class="fa-solid fa-sliders"></i> Hesap Ayarları</a><a href="../hesabim/ayarlar/"><i class="fa-solid fa-headset"></i> Çözüm Merkezi</a><div class="d-sub-group">Oturum</div><a href="../" data-cikis=""><i class="fa-solid fa-right-from-bracket"></i> Çıkış</a></div>
+      <div class="d-sub d-acct-sub"><div class="d-sub-group">Modüllerim</div><a href="../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils"></i> Gurme Panelim</a><a href="../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot"></i> Mekânlarım</a><a href="../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days"></i> Etkinliklerim</a><a href="../hesabim/listeler/"><i class="fa-solid fa-list-ul"></i> Listelerim</a><a href="../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass"></i> Keşif Tercihlerim</a><div class="d-sub-group">Gelişimim</div><a href="../hesabim/gurme-panelim/puan-durumu/"><i class="fa-solid fa-medal"></i> Rozetlerim</a><div class="d-sub-group">Hesabım</div><a href="../hesabim/paketlerim/"><i class="fa-solid fa-crown"></i> Paketlerim</a><a href="../hesabim/odemelerim/"><i class="fa-solid fa-receipt"></i> Ödemelerim</a><a href="../hesabim/ayarlar/"><i class="fa-solid fa-sliders"></i> Hesap Ayarları</a><a href="../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset"></i> Çözüm Merkezi</a><div class="d-sub-group">Oturum</div><a href="../" data-cikis=""><i class="fa-solid fa-right-from-bracket"></i> Çıkış</a></div>
     </div></nav>
   <div class="drawer-foot">
     <button class="btn btn-primary drawer-login" style="width:100%" data-git="../giris/"><i class="fa-solid fa-user"></i> Giriş Yap</button>
@@ -152,7 +154,7 @@
       <div class="da-info">
         <b></b>
         <div class="da-links">
-          <a href="../hesabim/ayarlar/#bildirim">Bildirimler</a>
+          <a href="../hesabim/bildirimler/">Bildirimler</a>
           <a href="../" data-cikis="">Çıkış</a>
         </div>
       </div>
@@ -172,8 +174,7 @@
   </div>
 </aside>
 
-<main class="page-main" id="pageMain"><div class="zebra">
-<section class="bolum kimlik-bant kabuk-alti">
+<main class="page-main" id="pageMain"><div class="zebra"><section class="bolum kimlik-bant kabuk-alti">
   <div class="wrap kap">
     <nav class="kirinti pf-crumb" aria-label="Sayfa yolu">
       <a href="../" class="crumb-home"><i class="fa-solid fa-house" aria-hidden="true"></i><span class="sr-only">Dada Gourmet ana sayfa</span></a>
@@ -181,8 +182,46 @@
       <span class="cur">İşletme Paneli</span>
     </nav>
   </div>
-</section>
-<div class="bolum kap" data-karar-ekrani="isletme">
+</section><div class="pf-tabbar sekme-ray">
+  <div class="wrap kap">
+    <nav class="sekmeler ortali" aria-label="İşletme portalı bölümleri">
+      <a class="sekme aktif" href="../isletme/" id="isletme-tab-yonet" aria-current="page"><i class="fa-solid fa-store" aria-hidden="true"></i> İşletmeni yönet</a>
+      <a class="sekme" href="../isletme/degerlendirmeler/" id="isletme-tab-degerlendirme"><i class="fa-solid fa-star-half-stroke" aria-hidden="true"></i> Değerlendirmeler</a>
+      <a class="sekme" href="../isletme/degisiklik-talepleri/" id="isletme-tab-degisiklik"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> Değişiklik talepleri</a>
+      <a class="sekme" href="../isletme/basvurular/yeni/" id="isletme-tab-basvuru"><i class="fa-solid fa-plus" aria-hidden="true"></i> İşletme ekle</a>
+    </nav>
+  </div>
+</div><div class="bolum kap">
+  <div class="bolum-bas">
+    <div>
+      <span class="ust-etiket"><i class="fa-solid fa-store" aria-hidden="true"></i> İşletme portalı</span>
+      <h2>İşletmeni yönet</h2>
+      <p class="giris-metni">Başvurularını, doğrulama belgelerini ve onaylanmış mekânlarını tek yerden takip et.</p>
+    </div>
+    <div class="bolum-araclar"><span class="ornek-etiket">prototip örneği</span></div>
+  </div>
+  <div class="bilgi-notu" data-rol-notu hidden><i class="fa-solid fa-circle-info" aria-hidden="true"></i><p>Bu ekran mekân sahibi hesabına açıktır. Demo için Giriş Yap ekranında İşletme'yi seç.</p></div>
+  <div class="kart">
+    <div class="kart-bas">
+      <div>
+        <h3 class="kart-baslik"><i class="fa-solid fa-file-signature" aria-hidden="true"></i> Başvurular</h3>
+        <p>İşletme bilgilerini gönder; ekibimiz inceleyip onayladığında mekân yönetimi açılır.</p>
+      </div>
+    </div>
+    <div class="fp-list" data-basvuru-liste><div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-file-signature" aria-hidden="true"></i></span><span class="ks-metin"><b>Nalia Karadeniz Mutfağı <span class="rozet bekleme">İncelemede</span></b><small>Başvuru #1042 · Nalia Gıda Turizm Ltd. Şti.</small></span><span class="ks-uc"><a class="dugme hayalet kucuk" href="../isletme/basvurular/1042/duzenle/">Başvuruyu görüntüle</a></span></div><div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-file-signature" aria-hidden="true"></i></span><span class="ks-metin"><b>Mikla <span class="rozet olumlu">Onaylandı</span></b><small>Başvuru #987 · Örnek Gıda ve Turizm A.Ş.</small></span><span class="ks-uc"><a class="dugme hayalet kucuk" href="../isletme/basvurular/987/duzenle/">Başvuruyu görüntüle</a></span></div></div>
+    <div class="kart-alt"><a class="dugme birincil" href="../isletme/basvurular/yeni/"><i class="fa-solid fa-plus" aria-hidden="true"></i> İşletme ekle</a></div>
+  </div>
+  <div class="kart">
+    <div class="kart-bas">
+      <div>
+        <h3 class="kart-baslik"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Onaylanmış işletmeler</h3>
+        
+      </div>
+    </div>
+    <div class="fp-list"><div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-store" aria-hidden="true"></i></span><span class="ks-metin"><b><a href="../mekan/mikla/">Mikla</a></b><small>Sahiplik</small></span><span class="ks-uc"><span class="rozet olumlu">1 mekân</span></span></div></div>
+    <div class="kart-alt"><a class="dugme hayalet" href="../isletme/degisiklik-talepleri/"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> Değişiklik talepleri</a></div>
+  </div>
+</div><div class="bolum kap" data-karar-ekrani="isletme">
     <div class="bolum-bas">
         <div>
             <span class="ust-etiket"><i class="fa-solid fa-store" aria-hidden="true"></i> İşletme Paneli · Mikla</span>
@@ -191,11 +230,8 @@
         </div>
         <div class="bolum-araclar"><span class="ornek-etiket">prototip örneği</span></div>
     </div>
-    <div class="bilgi-notu" data-rol-notu hidden><i class="fa-solid fa-circle-info" aria-hidden="true"></i><p>Bu ekran mekân sahibi hesabına açıktır. Demo için Giriş Yap ekranında İşletme'yi seç.</p></div>
     <div class="kart"><div class="kart-bas"><div><h3 class="kart-baslik"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Talepler</h3><p>Bekleyenler üstte; misafir notu ve alerjen bilgisi satırda.</p></div></div><div class="fp-list" data-liste="rezervasyon"></div></div>
-</div>
-</div>
-</main>
+</div></div></main>
 <footer class="footer orange">
     <div class="wrap">
         <div class="foot-grid">
@@ -211,9 +247,9 @@
             
             <div class="foot-col"><h5>Keşfet ve Planla</h5><a href="../mekanlar/">Mekânlar</a><a href="../mekan-bul/">Mekân Bul</a><a href="../sehir-rehberleri/">Şehir Rehberleri</a><a href="../dada-route/">Dada Route</a><a href="../etkinlikler/">Etkinlikler</a><a href="../gurme-lezzetler/">Gurme Lezzetler</a></div>
             
-            <div class="foot-col"><h5>Katıl ve Paylaş</h5><button class="foot-linkbtn" type="button" data-mo-open="">Mekân Öner</button><button class="foot-linkbtn" type="button" data-feedback-open="">Etkinlik Öner</button><a href="../hesabim/gurme-panelim/degerlendirmelerim/">Değerlendirme Yap</a><a href="../hesabim/gurme-panelim/gurme-favorilerim/">Liste Oluştur</a><a href="../dada-route/">Rotanı Oluştur</a><a href="../iletisim/">İşletmeni Ekle</a></div>
+            <div class="foot-col"><h5>Katıl ve Paylaş</h5><button class="foot-linkbtn" type="button" data-mo-open="">Mekân Öner</button><button class="foot-linkbtn" type="button" data-feedback-open="">Etkinlik Öner</button><a href="../hesabim/gurme-panelim/degerlendirmelerim/">Değerlendirme Yap</a><a href="../hesabim/listeler/">Liste Oluştur</a><a href="../dada-route/">Rotanı Oluştur</a><a href="../isletme/basvurular/yeni/">İşletmeni Ekle</a></div>
             
-            <div class="foot-col"><h5>Listelerim ve Planlarım</h5><a href="../hesabim/gurme-panelim/gurme-favorilerim/">Kaydettiklerim</a><a href="../hesabim/gurme-panelim/gurme-favorilerim/">Listelerim</a><a href="../hesabim/gurme-panelim/ziyaret-gecmisim/">Ziyaret Ettiklerim</a><a href="../hesabim/gurme-panelim/degerlendirmelerim/">Değerlendirmelerim</a><a href="../hesabim/gurme-panelim/">Rezervasyonlarım</a></div>
+            <div class="foot-col"><h5>Listelerim ve Planlarım</h5><a href="../hesabim/gurme-panelim/gurme-favorilerim/">Kaydettiklerim</a><a href="../hesabim/listeler/">Listelerim</a><a href="../hesabim/gurme-panelim/ziyaret-gecmisim/">Ziyaret Ettiklerim</a><a href="../hesabim/gurme-panelim/degerlendirmelerim/">Değerlendirmelerim</a><a href="../hesabim/gurme-panelim/">Rezervasyonlarım</a></div>
             
             <div class="foot-app">
                 <h5>Dada Gourmet'i İndir</h5>
@@ -226,7 +262,7 @@
         </div>
 
         
-        <nav class="foot-corp" aria-label="Kurumsal"><a href="../hakkimizda/">Hakkımızda</a><span class="sep"></span><a href="../kunye/">Künye</a><span class="sep"></span><a href="../hakkimizda/">Basın ve Medya</a><span class="sep"></span><a href="../iletisim/">İletişim</a><span class="sep"></span><a href="../iletisim/">Çözüm Merkezi</a><span class="sep"></span><button class="foot-linkbtn" type="button" data-feedback-open="">Öneri ve Şikâyet</button></nav>
+        <nav class="foot-corp" aria-label="Kurumsal"><a href="../hakkimizda/">Hakkımızda</a><span class="sep"></span><a href="../kunye/">Künye</a><span class="sep"></span><a href="../hakkimizda/">Basın ve Medya</a><span class="sep"></span><a href="../iletisim/">İletişim</a><span class="sep"></span><a href="../hesabim/cozum-merkezi/cozum/">Çözüm Merkezi</a><span class="sep"></span><button class="foot-linkbtn" type="button" data-feedback-open="">Öneri ve Şikâyet</button></nav>
 
         
         <nav class="foot-legal" aria-label="Yasal"><a href="../yasal/kvkk/">Kullanım Koşulları</a><span class="sep"></span><a href="../yasal/kvkk/">İçerik ve Telif Politikası</a><span class="sep"></span><a href="../yasal/kvkk/">İşletme Listeleme Politikası</a><span class="sep"></span><a href="../yasal/kvkk/">Gizlilik Politikası</a><span class="sep"></span><a href="../yasal/kvkk/">Çerez Politikası</a><span class="sep"></span><a href="../yasal/kvkk/">KVKK Aydınlatma Metni</a><span class="sep"></span><a href="../yasal/kvkk/">Sorumluluk Reddi</a><span class="sep"></span><a href="../yasal/kvkk/">Tüm Yasal Metinler →</a></nav>
