@@ -255,3 +255,6 @@ body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .page-main p{tex
 
 /* Öneri formundaki bot tuzağı alanı: canlı `site-overrides.css` kuralı aynen; o dosya zincirde yok, alan her sayfada görünüyordu */
 .hp-field{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important}
+
+/* Telefon alanı: canlının ortak kuralı (gourmet-ortak.css:1075) aynen; kanonun `.kart.panel .alan-girdi` dolgusu numarayı ülke düğmesinin altına itiyordu */
+#pageMain .alan-telefon .alan-girdi{padding-left:104px}
