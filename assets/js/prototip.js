@@ -59,6 +59,13 @@
     clearTimeout(bildir.z); bildir.z = setTimeout(function () { t.classList.remove('show', 'on'); }, 2800);
   };
   /* Altbilgi perdesi kaldırıldı (H4, Beyar 10 Kas): altbilgi normal akışta, kural prototip.css'te. Ana içeriğe alt boşluk yazılmaz */
+  /* Taşan sekme rayında etkin sekme görünür alana alınır (yalnız rayın kendisi kayar, sayfa kaymaz); sekme değişince de */
+  var rayOrtala = function (s) {
+    var r = s && s.closest('.sekmeler[data-scroll-fade]'); if (!r || r.scrollWidth <= r.clientWidth) { return; }
+    r.scrollLeft += s.getBoundingClientRect().left - r.getBoundingClientRect().left - (r.clientWidth - s.offsetWidth) / 2;
+  };
+  document.addEventListener('DOMContentLoaded', function () { [].forEach.call(document.querySelectorAll('.sekmeler[data-scroll-fade] .sekme.aktif'), rayOrtala); });
+  document.addEventListener('click', function (e) { var s = e.target.closest && e.target.closest('.sekmeler[data-scroll-fade] .sekme'); if (s) { setTimeout(function () { rayOrtala(s); }, 0); } });
   /* Mobil menü: üye zincirinde `portal` yüklenmez, çekmeceyi açan kod da onunla gider. Davranış aynen burada */
   document.addEventListener('DOMContentLoaded', function () {
     if (!document.documentElement.dataset.uyeSayfa) { return; }

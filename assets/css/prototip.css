@@ -18,6 +18,12 @@ html[data-baslik-zemin="acik"] .header .gourmet-word-mark{color:var(--marka,#742
 .footer.orange{position:static!important}
 #pageMain{margin-bottom:0!important}
 .page-main{z-index:auto}
+/* Taşan sekme rayı (H2): kanon `.sekmeler.ortali` kayar ama ipucu yoktu ("Etkinlik (" yarım kalıyordu). Canlı scroll-affordance.js
+   kaydırılacak yer varken `.has-scroll-r`/`.has-scroll-l` koyar; solma rayın kendi zemininden maskeyle yapılır (yeni renk yok, kaymaz) */
+.sekmeler[data-scroll-fade].has-scroll-r::after,.sekmeler[data-scroll-fade].has-scroll-l::before{content:none}
+.sekmeler[data-scroll-fade].has-scroll-r{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 56px),transparent)}
+.sekmeler[data-scroll-fade].has-scroll-l{-webkit-mask-image:linear-gradient(to left,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(to left,#000 calc(100% - 56px),transparent)}
+.sekmeler[data-scroll-fade].has-scroll-l.has-scroll-r{-webkit-mask-image:linear-gradient(to right,transparent,#000 56px,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(to right,transparent,#000 56px,#000 calc(100% - 56px),transparent)}
 /* Altbilgideki düğme bağları Gourmet'ten; Gastro zincirinde kuralı yok, bağ görünümü verilir */
 .foot-linkbtn{display:block;background:none;border:0;padding:0;margin:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
 .foot-col .foot-linkbtn{width:100%;margin-bottom:var(--foot-link-gap,12px)}

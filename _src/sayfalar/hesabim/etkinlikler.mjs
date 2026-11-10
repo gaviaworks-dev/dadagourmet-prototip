@@ -2,7 +2,7 @@
 // _parcalar/etkinliklerim-bant). Yedi sekme; canlıdaki `?sekme=` burada alt yol. Gurme Panelim'le çakışan üç sekme
 // (Rezervasyonlarım, Etkinlik Değerlendirmelerim, Etkinlik Önerilerim) yeniden kurulmaz, ray oradaki karşılığına gider
 // (Beyar kararı). Satırlar _src/veri/etkinlik.json'daki gerçek etkinliklerden örnek; Biletlerim canlıda da her zaman boş.
-import { bant, sayac, ray, bolumBas, kartBas, kart, pano, satir, rozet, bos, sayfa, et, kac } from './_kalip.mjs';
+import { bant, sayac, ray, bolumBas, kartBas, kart, pano, satir, rozet, satirDugme, bos, sayfa, et, kac } from './_kalip.mjs';
 
 // Canlıdaki "Rezervasyon" sayacı Gurme Panelim > Rezervasyonlarım satırlarını sayar (örnek değer)
 const REZERVASYON = 2;
@@ -28,13 +28,13 @@ export default function ({ veri }) {
   let no = 0;
   const sat = ([slug, r]) => {
     const e = bul(slug); const id = `etk-kayit-kaldir-${++no}`;
-    const uc = `${rozet(r)}<button class="dugme hayalet kucuk" type="submit" form="${id}">Kaldır</button>`;
+    const uc = `${rozet(r)}${satirDugme('Kaldır', `form="${id}" aria-label="${kac(e.ad)}: kaldır"`, 'fa-solid fa-xmark', 'submit')}`;
     const form = `<form id="${id}" data-dm-form="etkKayitKaldir" data-dm-mesaj="Kaldırma isteğin bu tarayıcıya yazıldı; prototipte satır listede kalır." hidden><input type="hidden" name="etkinlik" value="${e.slug}"><input type="hidden" name="tur" value="${TUR[r]}"></form>`;
     return satir('fa-regular fa-calendar', kac(e.ad), kac(altMetin(e)), uc, `etkinlik-detay/?e=${e.slug}`).replace(/<\/div>$/, `${form}</div>`);
   };
 
   const PANO = {
-    'etk-katilacagim': { yol: 'hesabim/etkinlikler', ikon: 'fa-regular fa-circle-check', etiket: 'Takvim', baslik: 'Katılacağın etkinlikler', giris: 'Katılacağım dediğin etkinlikler tarih sırasıyla burada. Takvimine ekleyip hatırlatma alabilirsin.', birim: 'etkinlik', kartBaslik: 'Yaklaşan katılımların', kartGiris: `Rehberde <b>${E.length} gastronomi etkinliği</b> kayıtlı; listeden seçebilirsin.`, liste: 'etkKatilacak', bos: ['Henüz bir etkinliğe katılacağım demedin', 'Lezzet Takvimi’nden bir etkinlik seç; tarih yaklaşınca hatırlatırız.', ['etkinlikler/', 'Lezzet Takvimi', 'fa-solid fa-calendar-days']], not: 'Katılım kaydın hesabına bağlıdır: hangi cihazdan girersen gir aynı liste gelir.' },
+    'etk-katilacagim': { yol: 'hesabim/etkinlikler', ikon: 'fa-solid fa-calendar-day', etiket: 'Takvim', baslik: 'Katılacağın etkinlikler', giris: 'Katılacağım dediğin etkinlikler tarih sırasıyla burada. Takvimine ekleyip hatırlatma alabilirsin.', birim: 'etkinlik', kartBaslik: 'Yaklaşan katılımların', kartGiris: `Rehberde <b>${E.length} gastronomi etkinliği</b> kayıtlı; listeden seçebilirsin.`, liste: 'etkKatilacak', bos: ['Henüz bir etkinliğe katılacağım demedin', 'Lezzet Takvimi’nden bir etkinlik seç; tarih yaklaşınca hatırlatırız.', ['etkinlikler/', 'Lezzet Takvimi', 'fa-solid fa-calendar-days']], not: 'Katılım kaydın hesabına bağlıdır: hangi cihazdan girersen gir aynı liste gelir.' },
     'etk-katildigim': { yol: 'hesabim/etkinlikler/katildigim', ikon: 'fa-solid fa-circle-check', etiket: 'Geçmiş', baslik: 'Katıldığın etkinlikler', giris: 'Gittiğin etkinlikler. Katılım kaydı, etkinlik değerlendirmesi yazabilmenin koşuludur.', birim: 'katılım', kartBaslik: 'Katılım geçmişin', kartGiris: 'Sona eren etkinlikler burada arşivlenir.', liste: 'etkKatildim', bos: ['Henüz katıldığın etkinlik yok', 'Bir etkinliğe katılacağını işaretle; etkinlik sona erdiğinde satır kendiliğinden bu panoya geçer.', ['etkinlikler/', 'Takvime bak', 'fa-solid fa-calendar-days']], not: 'Katılım kaydı yalnız sana görünür; bir satırın geçmişe düşmesi etkinliğin bitiş tarihine bağlıdır.' },
     'etk-ilgilendigim': { yol: 'hesabim/etkinlikler/ilgilendigim', ikon: 'fa-regular fa-heart', etiket: 'İlgi', baslik: 'İlgilendiğin etkinlikler', giris: 'Kararsız olduğun etkinlikler. Karar verince <b>Katılacağım</b>a taşı.', birim: 'etkinlik', kartBaslik: 'İlgi listen', kartGiris: 'Favoriye aldığın ve takip ettiğin etkinlikler tek listede; satır ucundaki rozet hangisi olduğunu söyler.', liste: 'etkIlgi', bos: ['İlgi listen boş', 'Takvimde ilgini çeken etkinliği işaretle; kararını sonra verirsin.', ['etkinlikler/', 'Etkinliklere bak', 'fa-solid fa-calendar-days']], not: 'Bu liste yalnız sana görünür.' },
     // Canlıda da her zaman boş: bilet deposu yok, satış etkinliğin dış bağından (Beyar kararı 2026-09-15)
@@ -43,7 +43,7 @@ export default function ({ veri }) {
 
   // Ray canlı sırasıyla; çakışan üç sekme Gurme Panelim karşılığına gider
   const RAY = [
-    ['etk-katilacagim', 'hesabim/etkinlikler/', 'fa-regular fa-circle-check', 'Katılacağım Etkinlikler'],
+    ['etk-katilacagim', 'hesabim/etkinlikler/', 'fa-solid fa-calendar-day', 'Katılacağım Etkinlikler'],
     ['etk-katildigim', 'hesabim/etkinlikler/katildigim/', 'fa-solid fa-circle-check', 'Katıldığım Etkinlikler'],
     ['etk-ilgilendigim', 'hesabim/etkinlikler/ilgilendigim/', 'fa-regular fa-heart', 'İlgilendiğim Etkinlikler'],
     ['etk-rezervasyon', 'hesabim/gurme-panelim/', 'fa-solid fa-calendar-check', 'Rezervasyonlarım'],
@@ -52,7 +52,7 @@ export default function ({ veri }) {
     ['etk-oneri', 'hesabim/gurme-panelim/topluluk-katkilarim/', 'fa-solid fa-calendar-plus', 'Etkinlik Önerilerim'],
   ];
   const serit = sayac('Etkinliklerim özeti', [
-    ['fa-regular fa-circle-check', 'Katılacağın', KAYIT['etk-katilacagim'].length],
+    ['fa-solid fa-calendar-day', 'Katılacağın', KAYIT['etk-katilacagim'].length],
     ['fa-solid fa-circle-check', 'Katıldığın', KAYIT['etk-katildigim'].length],
     ['fa-solid fa-calendar-check', 'Rezervasyon', REZERVASYON],
     ['fa-solid fa-ticket', 'Bilet', 0],

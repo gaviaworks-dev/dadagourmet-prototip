@@ -37,6 +37,23 @@
 .dg-pin.kare{border-radius:4px}.dg-pin.vurgulu{width:22px;height:22px;z-index:3}
 /* Gurme Panelim, Puan Durumu yapısı */
 .puan-yapi{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;padding:16px}
+/* ==== Hesabım liste satırı (profil turu H1, H3; Beyar 10 Kas) ====
+   H1: satırlar kartta `.kart-govde` içinde (Diet `kart > kart-govde > fp-list > kalem-satiri`); iç boşluk kanonun --bosluk-24'ü.
+   H3: satır ucu tek sıra; durum rozeti ve `.satir-dugme` aynı yükseklikte (fare 36px, dokunmatik 44px), rozet dikeyde ortalı.
+   Telefonda uç metnin altına iner ve metinle hizalanır (ikon 38 + aralık 14); başlık dar sütunda beş satıra kırılmaz */
+.kart-govde>.fp-list>.kalem-satiri:first-child{padding-top:0}
+.kart-govde>.fp-list>.kalem-satiri:last-child{padding-bottom:0}
+.kalem-satiri .ks-uc{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:var(--bosluk-8)}
+.kalem-satiri .ks-uc>.rozet,.kalem-satiri .ks-uc>.satir-dugme{min-height:36px;box-sizing:border-box}
+.kalem-satiri .ks-uc>.rozet{display:inline-flex;align-items:center;padding-block:0}
+.kalem-satiri .ks-uc>.satir-dugme{padding-block:0;justify-content:center}
+@media (pointer:coarse){.kalem-satiri .ks-uc>.rozet,.kalem-satiri .ks-uc>.satir-dugme{min-height:44px}}
+@media (max-width:640px){
+  .kalem-satiri{flex-wrap:wrap;row-gap:var(--bosluk-10)}
+  .kalem-satiri .ks-metin{flex:1 1 calc(100% - 38px - var(--bosluk-14))}
+  .kalem-satiri .ks-uc:not(:empty){flex:1 1 100%;justify-content:flex-start;padding-left:calc(38px + var(--bosluk-14))}
+  .kalem-satiri .ks-uc:empty{display:none}
+}
 .mke-birincil{white-space:nowrap;font-size:12.5px;padding:9px 6px}
 /* Gourmet katmanları Gastro başlığının altında kalıyordu: rezervasyon ve ışık kutusu başlığın üstüne alınır */
 .rsv-overlay{z-index:1400}.rsv-modal{z-index:1401}.lightbox{z-index:1402}

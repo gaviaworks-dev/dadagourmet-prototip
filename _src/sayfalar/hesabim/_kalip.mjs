@@ -48,10 +48,13 @@ export const bant = ({ cur, ikon, giris, serit = '' }) => `<section class="bolum
 </section>`;
 
 // Sekme rayı: canlıdaki gibi her sekme ayrı adres (<a>). [[anahtar, yol, ikon, etiket], …]; yol {{kok}}'e göre
+// Sekme ikonları dolu (Gastro/Diet sekme kanonu, H2): `fa-regular` verilse de `fa-solid` basılır.
+// Taşan ray kayar; kenar solması `data-scroll-fade` (canlı shared/scroll-affordance.js ölçer, solma prototip.css'te)
+export const doluIkon = (i) => String(i).replace(/\bfa-regular\b/g, 'fa-solid');
 export const ray = (aria, sekmeler, aktif, onek) => `<div class="pf-tabbar sekme-ray">
   <div class="wrap kap">
-    <nav class="sekmeler ortali" aria-label="${aria}">
-${sekmeler.map(([a, y, i, e]) => `      <a class="sekme${a === aktif ? ' aktif' : ''}" href="{{kok}}${y}" id="${onek}-tab-${a}"${a === aktif ? ' aria-current="page"' : ''}><i class="${i}" aria-hidden="true"></i> ${e}</a>`).join('\n')}
+    <nav class="sekmeler ortali" aria-label="${aria}" data-scroll-fade="">
+${sekmeler.map(([a, y, i, e]) => `      <a class="sekme${a === aktif ? ' aktif' : ''}" href="{{kok}}${y}" id="${onek}-tab-${a}"${a === aktif ? ' aria-current="page"' : ''}><i class="${doluIkon(i)}" aria-hidden="true"></i> ${e}</a>`).join('\n')}
     </nav>
   </div>
 </div>`;
@@ -72,12 +75,15 @@ export const kartBas = (ikon, baslik, giris = '', arac = '') => `<div class="kar
       </div>${arac}
     </div>`;
 
-// Liste satırı (kalem-satiri): uç = rozet ya da düğme HTML'i
+// Liste satırı (kalem-satiri): uç = rozet ya da düğme HTML'i. Kart içinde `.kart-govde` iç boşluğunda durur (Diet kanonu, H1):
+// ikon sol çizgiye, uç sağ çizgiye yapışmaz. Uçtaki rozet ve satır düğmesi aynı yükseklikte (H3, gourmet-sapma.css)
 export const satir = (ikon, ad, alt, uc = '', href = '') => {
   const b = href ? `<a href="{{kok}}${href}">${ad}</a>` : ad;
   return `<div class="kalem-satiri"><span class="ks-ikon"><i class="${ikon}" aria-hidden="true"></i></span><span class="ks-metin"><b>${b}</b><small>${alt}</small></span><span class="ks-uc">${uc}</span></div>`;
 };
 export const rozet = (metin, tur = 'pasif') => `<span class="rozet ${tur}">${metin}</span>`;
+// Satır sonu işlem düğmesi: kanon `.satir-dugme` (Diet `kalem-satiri` ucu). Ek öznitelikler (form, data-*) `ek` ile
+export const satirDugme = (metin, ek = '', ikon = '', tur = 'button') => `<button class="satir-dugme" type="${tur}"${ek ? ' ' + ek : ''}>${ikon ? `<i class="${ikon}" aria-hidden="true"></i> ` : ''}${metin}</button>`;
 
 export const bos = (ikon, baslik, metin, bag = null) => `<div class="bos-durum">
           <span class="bos-ikon"><i class="${ikon}" aria-hidden="true"></i></span>
@@ -99,7 +105,7 @@ export const pano = ({ id, bas, kart, ek = '', not = '' }) => `<div class="fit-p
 
 export const kart = ({ bas, liste = '', listeId = '', alt = '', govde = '' }) => `<div class="kart">
     ${bas}
-    ${liste !== '' ? `<div class="fp-list"${listeId ? ` id="${listeId}"` : ''}>${liste}</div>` : ''}${govde}
+    ${liste !== '' ? `<div class="kart-govde"><div class="fp-list"${listeId ? ` id="${listeId}"` : ''}>${liste}</div></div>` : ''}${govde}
     ${alt ? `<div class="kart-alt">${alt}</div>` : ''}
   </div>`;
 
@@ -131,6 +137,6 @@ export const panelDugme = (id, ikon, metin, sinif = 'dugme birincil') => `<butto
 // Sayfa kaydı: build.mjs'in beklediği {yol, meta, govde}
 export const sayfa = (yol, baslik, icerik, { js = [], donor = '', disi = '' } = {}) => ({
   yol,
-  meta: { baslik, duzen: 'uye', zincir: 'hesabim', css: ['gourmet-sapma'], js: ['assets/js/sayfa/uye-alan.js', ...js], donor: donor || 'canlı dadagourmet.com, DadaGourmet-acil 4eb638c resources/views/hesap' },
+  meta: { baslik, duzen: 'uye', zincir: 'hesabim', css: ['gourmet-sapma'], js: ['assets/o/assets/gourmet-public/js/shared/scroll-affordance.js', 'assets/js/sayfa/uye-alan.js', ...js], donor: donor || 'canlı dadagourmet.com, DadaGourmet-acil 4eb638c resources/views/hesap' },
   govde: `<div class="zebra">${icerik}</div>${disi ? `\n<!--@main-disi-->\n<div class="fb-overlay" data-dm-ortu=""></div>\n${disi}` : ''}`,
 });
