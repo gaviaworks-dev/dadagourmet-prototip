@@ -34,6 +34,9 @@ const g = await p.evaluate(() => { kok(document.body); const b = document.body; 
   $('#ygSummary').insertAdjacentHTML('afterend', '<section class="yg-iller" id="ygIller" aria-label="İl kartları" hidden><div class="yg-katman-bas"><button type="button" class="yg-iller-bas" id="ygIllerBas"><span class="yg-eyebrow">Yol üstü iller</span></button><span class="ornek-etiket">prototip örneği</span></div><div class="yg-il-liste" id="ygIlKart"></div></section>');
   // Telefona gönder penceresi: kabuk `parcalar/rota-telefon.html`, metin `rota-telefon-veri.js`
   $('#ygReport').insertAdjacentHTML('beforebegin', '<!-- @parca rota-telefon -->\n\n  ');
+  // Alt marka kilidi (Beyar, 10 Kas): Gastro Kids/Health başlık kilidinin yapısı, "Route" logonun sağ üst çaprazında. Ayraç ve "Dada Route" yazısı kalkar
+  const mb = $('header.yg-top .dg-brand'); mb.classList.add('yg-kilit'); mb.setAttribute('aria-label', 'Dada Gourmet Route · Keşfet');
+  mb.insertAdjacentHTML('beforeend', '<span class="yg-kilit-alt" aria-hidden="true">Route</span>'); $('header.yg-top .yg-sep').remove(); $('header.yg-top .yg-title').remove();
   return { ust: $('header.yg-top').outerHTML, app: $('.yg-app').outerHTML, govdeSinif: b.className }; });
 const f = path.join(SRC, 'sayfalar/dada-route/index.html'); fs.mkdirSync(path.dirname(f), { recursive: true });
 const O = 'assets/o/assets/gourmet-public';
