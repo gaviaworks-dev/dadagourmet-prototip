@@ -22,6 +22,23 @@ function aktifle(html, aktif) {
   return html.replace(new RegExp(`(<div class="nav-item"><a )(href="[^"]*${aktif}/")`), '$1class="active" $2');
 }
 
+// Mobil alt çubuğun etkin kalemi (K2, 11 Kas). Parça canlı Gourmet ana sayfasından üretilir ve orada "Ana Sayfa" sabit etkin
+// (canlı `layouts/site.blade.php`), bu yüzden her sayfada Ana Sayfa yanıyordu. Kural canlı Gastro'dan (ölçüldü 11 Kas): kalem kendi bölümünde
+// ve o bölümün detay sayfalarında etkin (`/tarif/…` ve `/sefler` Tarifler, `/giris` ve `/kayit` Profil). Alt çubukta karşılığı olmayan sayfada
+// hiçbir kalem etkin değil (Diet prototipi `altCubuk` kuralı; canlı Gastro'da bu sayfalar ana sayfa kopyasını taşıyor)
+const ALT_CUBUK = [
+  ['', /^$/],
+  ['mekanlar/', /^(mekanlar|mekan|mekan-bul)(\/|$)/],
+  ['dada-route/', /^dada-route(\/|$)/],
+  ['etkinlikler/', /^(etkinlikler|etkinlik-detay)(\/|$)/],
+  ['giris/', /^(giris|kayit|sifremi-unuttum|sifre-yenile|hesabim)(\/|$)/],
+];
+function altCubuk(yol = '') {
+  const hedef = ALT_CUBUK.find(([, desen]) => desen.test(yol))?.[0];
+  return parca('alt-cubuk').replace(/(<a href="\{\{kok\}\}([^"]*)" class="bn-item ac-kalem)(?: active)?([^"]*")(?: aria-current="page")?/g,
+    (_, bas, href, son) => (href === hedef ? `${bas} active${son} aria-current="page"` : `${bas}${son}`));
+}
+
 // İşletme Paneli: Gastro/Diet panel kanonunun kendi kabuğu (public başlık, altbilgi, Mentör yok). Ayrıntı `panel.mjs`
 function panelSayfa(s, m) {
   const css = [...PANEL_CSS, ...(m.css ?? []).map(gourmetCss)].map((c) => `<link rel="stylesheet" href="${K}${c}">`).join('\n');
@@ -66,7 +83,7 @@ export function kabukla(s) {
   // `<!--@main-disi-->` sonrası katmanlar <main>'in yığın bağlamından çıkar (canlıda da body altındadır)
   const [icerik, disari = ''] = s.govde.split('<!--@main-disi-->');
   const govde = duzen === 'tam' ? s.govde
-    : `${aktifle(parca('ust'), m.aktif)}\n<main class="page-main" id="pageMain">${icerik}</main>\n${parca('dip')}\n${parca('alt-cubuk')}\n${parca('katman')}\n${parca('konum')}\n${mentorVar ? mentor : ''}${disari}`;
+    : `${aktifle(parca('ust'), m.aktif)}\n<main class="page-main" id="pageMain">${icerik}</main>\n${parca('dip')}\n${altCubuk(s.yol)}\n${parca('katman')}\n${parca('konum')}\n${mentorVar ? mentor : ''}${disari}`;
   return `<!doctype html>
 <html lang="tr" data-kok="${K}" data-yol="${s.yol ?? ''}"${uye ? ' data-uye-sayfa="1"' : ''} class="sg-js" data-kabuk-kimlik="yazildi"${z.baslikZemin ? ` data-baslik-zemin="${z.baslikZemin}"` : ''}>
 <head>

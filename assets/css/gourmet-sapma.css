@@ -24,6 +24,14 @@
 /* Mekânlar: canlı düzen. Gastro zinciri satır yüksekliğini büyütüyordu; ölçüler canlıyla aynı */
 .pg-mekanlar .search-input input,.pg-mekanlar .sort-btn,.pg-mekanlar .btn-filter{line-height:normal}
 .mkl-harita-not{margin:8px 0 0;font-size:12px;color:var(--muted,#6f6f6f)}
+/* M4 (Beyar 11 Kas) · sayfa değişince liste başı (`mekanlar.js` `.lst-bar` scrollIntoView) sabit başlığın altında kalmasın: üst bant + başlık + 16px */
+.pg-mekanlar .lst-bar{scroll-margin-top:calc(var(--ust-bant-h,40px) + var(--header-h,72px) + var(--bosluk-16,16px))}
+@media(max-width:640px){.pg-mekanlar .lst-bar{scroll-margin-top:calc(var(--header-h-dar,62px) + var(--bosluk-16,16px))}}
+/* M2 (Beyar 11 Kas) · hero eylemleri iki sütun: her sütunda üstte düğme, altta açıklaması; İşletme Ekle kendi açıklamasının sol kenarında.
+   Sütun ölçüsü canlı `.ke-cta-split` ile aynı (en çok 620px, aralık 30px, iki eş sütun). Telefonda alt alta: düğme + açıklaması, sonra öbürü */
+.ke-cta.mkl-cta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--bosluk-30);align-items:start;max-width:620px}
+.mkl-cta .ke-cta-split{max-width:none}
+@media(max-width:640px){.ke-cta.mkl-cta{grid-template-columns:minmax(0,1fr);row-gap:var(--bosluk-24)}}
 /* Mekân kartı alt satırı: Gastro tarif kartı (`.r-card` sütun, `.r-foot{margin-top:auto}`, aralık --sp-2 8px) gibi.
    Gövde esnek sütun; konum satırı ve eylemler kartın altına sabit, aynı sıradaki kartlarda aynı çizgide; eylemler başlıkla aynı sol hizada */
 .mkl-card{display:flex;flex-direction:column}.mkl-card>.disc-cat{align-self:flex-start}
@@ -48,15 +56,40 @@
 .kalem-satiri .ks-uc>.rozet{display:inline-flex;align-items:center;padding-block:0}
 .kalem-satiri .ks-uc>.satir-dugme{padding-block:0;justify-content:center}
 @media (pointer:coarse){.kalem-satiri .ks-uc>.rozet,.kalem-satiri .ks-uc>.satir-dugme{min-height:44px}}
+/* Dalga 2 mobil · hesap: ikonlu tek düğme (liste detayı sıralama) içerikten 43,8px kalıyordu; dokunmatikte eni de en az 44 */
+@media (pointer:coarse){.kalem-satiri .ks-uc>.satir-dugme{min-width:44px}}
 @media (max-width:640px){
   .kalem-satiri{flex-wrap:wrap;row-gap:var(--bosluk-10)}
   .kalem-satiri .ks-metin{flex:1 1 calc(100% - 38px - var(--bosluk-14))}
   .kalem-satiri .ks-uc:not(:empty){flex:1 1 100%;justify-content:flex-start;padding-left:calc(38px + var(--bosluk-14))}
   .kalem-satiri .ks-uc:empty{display:none}
 }
+/* Dalga 2 mobil · hesap: Hesap Ayarları › Bağlı Uygulamalar düğmesi ve sıklık seçimi Gastro gömülü CSS'inde 42px; dokunmatikte 44 */
+@media (pointer:coarse){.ba-cut,.ba-fld select{min-height:44px}}
+/* ==== Gurme Favorilerim: ekle, çıkar, süz (favori ajanı, 11 Kas) ====
+   Bileşenler kanondan: `.kart-suzgec .cip.suzgec`, `.satir-dugme`, `.geri-al`, `.arama`, `.fb-modal`. Yeni renk ve radyus yok (hap radyusu yok).
+   Satırın tamamı detaya açılır (`.tiklanir` örtüsü); uçtaki Çıkar düğmesi örtünün üstünde durur. Pencerede Ne Yenir tabakları seçilen mekânın altında girintili */
+.favori-liste .kalem-satiri.tiklanir .ks-uc{position:relative;z-index:1}
+.favori-suzgec{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;column-gap:var(--bosluk-16)}
+.favori-geri-al span{min-width:0}
+@media (pointer:coarse){.favori-geri-al button{min-height:44px;min-width:44px}}
+.favori-pencere .arama{max-width:none}
+.favori-pencere .favori-durum{padding-inline:0}
+.favori-sonuc>.kalem-satiri:last-child{padding-bottom:0}
+.favori-sec{display:block;flex:1;min-width:0;padding:0;border:0;background:none;font:inherit;color:inherit;text-align:left;cursor:pointer;border-radius:var(--yuvarlak-sm)}
+.favori-sec:hover b{color:var(--aksan-koyu)}
+.favori-sec:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
+.favori-sec small i{font-size:var(--yazi-11);margin-left:var(--bosluk-4)}
+.favori-tabaklar{margin:0 0 var(--bosluk-8) calc(38px + var(--bosluk-14));padding-left:var(--bosluk-14);border-left:var(--cizgi-1) solid var(--cizgi)}
+.favori-tabaklar>.kalem-satiri:last-child{border-bottom:0}
+.favori-tabak-bas{margin:var(--bosluk-8) 0 0;font-size:var(--yazi-12-5);font-weight:var(--agirlik-kalin);color:var(--metin-ikincil)}
+@media (pointer:coarse){.favori-sec,.favori-ara .arama-girdi{min-height:44px}}
+@media (max-width:640px){.favori-tabaklar{margin-left:0}}
 /* Listelerim (H5): satırın tamamı detaya açılır (başlık bağı satırı kaplar); sıra numarası ikon kutusunda; paylaşım bağlantısı satırı */
 .kalem-satiri.tiklanir{position:relative}
 .kalem-satiri.tiklanir .ks-metin a::after{content:"";position:absolute;inset:0}
+/* Dalga 2 mobil · hesap: satır örtüsü uçtaki düğmelerin (sırala, Çıkar, Kaldır) altında kalır; Liste detayı ve Etkinliklerim satırları da `.tiklanir` */
+.kalem-satiri.tiklanir .ks-uc>:is(a,button){position:relative;z-index:1}
 .kalem-satiri.tiklanir:hover .ks-metin a{color:var(--aksan-koyu)}
 .kalem-satiri.tiklanir .ks-metin a:focus-visible{outline:none}
 .kalem-satiri.tiklanir:has(.ks-metin a:focus-visible){outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
@@ -69,7 +102,7 @@
 .liste-bag[hidden]{display:none}
 .kart[data-liste-paylasim]{margin-top:var(--bosluk-16)}
 @media (max-width:640px){.liste-bag-satir{flex-direction:column}}
-/* Keşif Tercihlerim (H6): seçim özeti, arama, gruplu çipler (kanon `.cip.suzgec[aria-pressed]`), fiyat segmenti (kanon `.sekmeler.esit`),
+/* Keşif Tercihlerim (H6): seçim özeti, arama, gruplu çipler (kanon `.cip.suzgec[aria-pressed]`), fiyat aralığı (H6b, aşağıda),
    değişiklik olunca beliren tek kaydet çubuğu. Ölçü ve renk kanon token'ı; yeni renk yok */
 .tercih-kart .tercih-ozet{display:flex;align-items:center;flex-wrap:wrap;gap:var(--bosluk-12) var(--bosluk-16);padding:var(--bosluk-18) var(--bosluk-24);border-bottom:var(--cizgi-1) solid var(--cizgi)}
 .tercih-ozet-metin{display:flex;flex-direction:column;gap:2px;min-width:150px}
@@ -82,6 +115,9 @@
 /* Kanonun 44px dokunma örtüsü (§43 `.cip::before`, WCAG 2.5.8): hap kalemde kapalıydı, kaldırma düğmesi olduğu için açılır */
 .cip.hap.tercih-secili{position:relative}
 .cip.hap.tercih-secili::before{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+/* Dalga 2 mobil · hesap (2): hap 30px, örtü 44px; satır aralığı 6px iken alt alta iki hapın örtüleri 8px üst üste biniyordu (390'da dokunma
+   yüksekliği 37'ye düşüyordu). Dokunmatikte satır aralığı 14: 30 + 14 = 44, örtüler çakışmaz; hapın görünür boyu ve 12px köşesi aynı */
+@media (pointer:coarse){.tercih-ozet-cipler{row-gap:var(--bosluk-14)}}
 .tercih-temizle{margin-left:auto}
 .tercih-temizle[hidden]{display:none}
 .tercih-ara{position:relative;max-width:420px;margin-bottom:var(--bosluk-20)}
@@ -102,11 +138,6 @@
 .tercih-fazla{display:inline-flex;align-items:center;gap:var(--bosluk-6);min-height:44px;margin-top:var(--bosluk-6);padding:0;border:0;background:none;font:inherit;font-size:var(--yazi-13);font-weight:var(--agirlik-kalin);color:var(--aksan-koyu);cursor:pointer}
 .tercih-fazla:hover span{text-decoration:underline;text-underline-offset:2px}
 .tercih-fazla:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset);border-radius:var(--yuvarlak-sm)}
-.tercih-kart .kart-govde .sekmeler.esit.tercih-segment{width:100%;max-width:640px;margin-inline:0}
-.tercih-segment .tercih-segment-kalem{flex:1;flex-direction:column;justify-content:center;gap:2px;min-height:76px;text-align:center}
-.tercih-segment-kalem b{font-size:var(--yazi-20);line-height:1.1}
-.tercih-segment-kalem span{font-size:var(--yazi-12-5);font-weight:var(--agirlik-orta)}
-.tercih-segment-not{margin-top:var(--bosluk-12)}
 /* Tek kaydet çubuğu: değişiklik varken alttan çıkar; sabit engel sayılır (`data-bc-bar`, mentor-fab.js düğmeyi üstüne alır) */
 .tercih-kaydet{position:fixed;left:50%;bottom:var(--bosluk-16);z-index:40;width:min(880px,calc(100% - 360px));transform:translate(-50%,calc(100% + 32px));visibility:hidden;transition:transform var(--sure) var(--yumusama),visibility 0s linear .3s}
 .tercih-kaydet.kirli{transform:translate(-50%,0);visibility:visible;transition:transform var(--sure) var(--yumusama)}
@@ -118,6 +149,10 @@
 .tercih-kaydet-eylem{display:flex;gap:var(--bosluk-8);margin-left:auto}
 form[data-kesif-tercihleri]:has(.tercih-kaydet.kirli) .modul-govde{padding-bottom:120px}
 @media (max-width:1024px){.tercih-kaydet{width:calc(100% - 32px)}}
+/* Dalga 2 mobil · hesap: çubuk açıkken sayfa sonunda altbilginin son satırları çubuğun altında kalıyordu (390/360/768 ölçüldü).
+   Altbilginin dibine çubuğun kapladığı yükseklik kadar pay (`--tercih-kaydet-pay`, kesif-tercihleri.js ölçer); ≥1025 görünümü aynı */
+@media (max-width:640px){html:has(.tercih-kaydet.kirli) .footer.orange{padding-bottom:var(--tercih-kaydet-pay,208px)}}
+@media (min-width:641px) and (max-width:1024px){html:has(.tercih-kaydet.kirli) .footer.orange{padding-bottom:var(--tercih-kaydet-pay,86px)}}
 @media (max-width:640px){
   .tercih-kart .tercih-ozet{padding:var(--bosluk-16)}
   .tercih-kaydet{bottom:calc(var(--alt-cubuk-h,64px) + var(--alt-cubuk-dip,14px) + 8px + env(safe-area-inset-bottom,0px));width:calc(100% - 24px)}
@@ -126,8 +161,126 @@ form[data-kesif-tercihleri]:has(.tercih-kaydet.kirli) .modul-govde{padding-botto
   .tercih-kaydet-eylem .dugme{justify-content:center}
   .tercih-kaydet-eylem [data-kaydet]{flex:1}
   .tercih-kaydet-durum span{white-space:normal}
-  .tercih-segment .tercih-segment-kalem{min-height:64px;padding-inline:var(--bosluk-8)}
 }
+/* Keşif Tercihlerim › Sevdiğim Mutfaklar (kesif, 11 Kas; H6 Seçenek A): bölge akordeonu. İskelet kanon §21 `.akordeon` (tek açık grup),
+   başlık anatomisi Gastro dolapta-ne-var `.mz-cat-h` (ikon · ad · "N mutfak" · seçili sayısı · ok), çip mevcut `.tercih-cip`,
+   bayrak Gastro /tarifler `.chip-flag` (17×12, 2px köşe). Yalnız kanon token'ı; yeni renk yok */
+.mt-bayrak{display:inline-block;flex:none;width:var(--bosluk-17);height:var(--bosluk-12);border-radius:var(--yuvarlak-rozet);object-fit:cover;box-shadow:0 0 0 var(--cizgi-1) var(--cizgi)}
+.cip.tercih-cip .mt-bayrak{margin-right:var(--bosluk-2)}
+.mt-ara-satir{display:flex;align-items:center;flex-wrap:wrap;gap:var(--bosluk-8) var(--bosluk-16);margin-bottom:var(--bosluk-20)}
+.mt-ara-satir .tercih-ara{flex:1 1 320px;margin-bottom:0}
+.mt-ara-ipucu{margin:0;font-size:var(--yazi-12-5);color:var(--metin-ikincil);font-weight:var(--agirlik-orta)}
+.mt-ara-ipucu b{color:var(--murekkep)}
+.mt-sonuc[hidden],.mt-akordeon[hidden]{display:none}
+.mt-sonuc .tercih-grup-sayi{color:var(--metin-ikincil)}
+/* Kanon §23 `.modul-govde .akordeon` okuma kolonu (860px, ortalı) SSS içindir; burada kart gövdesinin tam genişliği */
+.tercih-kart .akordeon.mt-akordeon{gap:var(--bosluk-10);max-width:none;margin:0}
+.mt-grup-h{margin:0;font:inherit}
+.mt-grup-bas{min-height:64px;padding:var(--bosluk-14) var(--bosluk-20)}
+.mt-grup-metin{display:flex;flex-direction:column;gap:var(--bosluk-2);min-width:0;flex:1 1 auto}
+.mt-grup-ad{font-size:var(--yazi-15-5);font-weight:var(--agirlik-kalin);line-height:var(--satir-baslik)}
+.mt-grup-alt{font-size:var(--yazi-12-5);font-weight:var(--agirlik-orta);color:var(--metin-ikincil);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mt-grup-alt b{color:var(--aksan-koyu);font-weight:var(--agirlik-kalin)}
+.mt-grup-sayi{flex:none}
+.mt-grup-sayi:empty{display:none}
+.mt-grup-bas .akordeon-ok{margin-left:var(--bosluk-4)}
+/* Gövde ikon hizasından başlar (kanon §21 `.akordeon-govde p` sol dolgusunun aynı hesabı) */
+.mt-govde-ic{padding:0 var(--bosluk-20) var(--bosluk-20) calc(var(--bosluk-20) + 34px + var(--bosluk-14))}
+.mt-grup-arac{display:flex;align-items:center;justify-content:space-between;gap:var(--bosluk-4) var(--bosluk-12);margin:calc(-1 * var(--bosluk-6)) 0 var(--bosluk-6)}
+.mt-grup-arac .tercih-fazla{margin-top:0;flex:none}
+/* §21 cevap metni dolgusunu bu yardım satırı almaz */
+.akordeon-govde .mt-grup-arac p{margin:0;padding:0;font-size:var(--yazi-12-5);color:var(--metin-ikincil)}
+@media (max-width:640px){
+  .mt-grup-bas{padding:var(--bosluk-12) var(--bosluk-14);min-height:60px}
+  .mt-grup-ad{font-size:var(--yazi-14-5)}
+  .mt-govde-ic{padding:0 var(--bosluk-14) var(--bosluk-16)}
+  .mt-grup-arac{flex-direction:column;align-items:flex-start;margin-top:0}
+}
+/* Keşif Tercihlerim H6b (kesif, 11 Kas): bütün sekmeler tek aileye. Akordeon yukarıdaki blok (mutfak, mekân türü, şehir);
+   burada kısa listelerin çip IZGARASI, "Fark etmez" satırı, telefonda özet çubuğu ve fiyat ARALIĞI. Yeni bileşende hap (999px)
+   radyus yok: kart ve düğme `--yuvarlak-md`, ray `--yuvarlak-sm`, tutamak daire. Yalnız kanon token'ı */
+.mt-grup-arac .tercih-fazla{margin-left:auto}
+/* Izgara: eşit kolon, çip hücreyi doldurur, uzun ad sarar (çip duvarı ve yamuk satır sonu yok) */
+.tercih-cipler.tercih-izgara{display:grid;grid-template-columns:repeat(auto-fill,minmax(212px,1fr));gap:var(--bosluk-8)}
+.tercih-izgara .cip.tercih-cip{justify-content:flex-start;width:100%;min-height:48px;white-space:normal;text-align:left;line-height:var(--satir-sik)}
+.tercih-izgara .cip.tercih-cip>i:first-child{width:var(--bosluk-18);flex:none;text-align:center}
+.tercih-izgara .cip.tercih-cip .tercih-isaret{margin-left:auto;flex:none}
+/* "Fark etmez": ızgaradan ayrı satır, ayırıcı "ya da" */
+.tercih-tekil{display:flex;align-items:center;flex-wrap:wrap;gap:var(--bosluk-8) var(--bosluk-12);margin-top:var(--bosluk-16);padding-top:var(--bosluk-16);border-top:var(--cizgi-1) dashed var(--cizgi)}
+.tercih-tekil-veya{font-size:var(--yazi-12);font-weight:var(--agirlik-kalin);letter-spacing:.06em;text-transform:uppercase;color:var(--metin-ikincil)}
+.tercih-tekil-not{font-size:var(--yazi-12-5);color:var(--metin-ikincil)}
+/* Fiyat aralığı */
+.fiyat-aralik{display:flex;flex-direction:column;gap:var(--bosluk-14)}
+.fiyat-kademeler{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--bosluk-10)}
+.fiyat-kademe{display:flex;flex-direction:column;align-items:center;gap:var(--bosluk-6);min-height:132px;padding:var(--bosluk-16) var(--bosluk-10);background:var(--kagit);border:var(--cizgi-1) solid var(--cizgi);border-radius:var(--yuvarlak-md);font:inherit;color:var(--murekkep);text-align:center;cursor:pointer;transition:border-color var(--sure) var(--yumusama),background var(--sure) var(--yumusama),box-shadow var(--sure) var(--yumusama)}
+.fiyat-kademe:hover{border-color:var(--aksan);box-shadow:var(--golge-sm)}
+.fiyat-kademe:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
+.fiyat-kademe-ikon{width:var(--bosluk-40);height:var(--bosluk-40);border-radius:var(--yuvarlak-daire);display:grid;place-items:center;background:var(--aksan-yikama);color:var(--aksan-koyu);font-size:var(--yazi-15)}
+.fiyat-kademe-isaret{font-size:var(--yazi-18);line-height:1;letter-spacing:.02em;color:var(--aksan-koyu)}
+.fiyat-kademe-ad{font-size:var(--yazi-14);font-weight:var(--agirlik-kalin)}
+.fiyat-kademe small{font-size:var(--yazi-12);color:var(--metin-ikincil);font-weight:var(--agirlik-orta)}
+.fiyat-kademe.arada{background:var(--aksan-yikama);border-color:var(--aksan-cizgi)}
+.fiyat-kademe.arada .fiyat-kademe-ikon{background:var(--kagit)}
+.fiyat-kademe.uc{border-color:var(--aksan)}
+.fiyat-kademe.uc .fiyat-kademe-ikon{background:var(--aksan-koyu);color:var(--kagit)}
+/* Ray: uçlar ilk ve son kartın ortasında (4 eşit kolon: kenar payı = (genişlik - 3 boşluk) / 8) */
+.fiyat-ray{position:relative;height:44px;margin-inline:calc((100% - 3 * var(--bosluk-10)) / 8);touch-action:none;cursor:pointer}
+.fiyat-ray::before{content:"";position:absolute;left:0;right:0;top:50%;height:var(--bosluk-6);margin-top:calc(var(--bosluk-3) * -1);border-radius:var(--yuvarlak-sm);background:var(--cizgi)}
+.fiyat-ray-dolu{position:absolute;top:50%;height:var(--bosluk-6);margin-top:calc(var(--bosluk-3) * -1);border-radius:var(--yuvarlak-sm);background:var(--aksan)}
+.fiyat-aralik.bos .fiyat-ray-dolu{background:transparent}
+.fiyat-tutamak{position:absolute;top:50%;width:var(--bosluk-24);height:var(--bosluk-24);margin:calc(var(--bosluk-12) * -1) 0 0 calc(var(--bosluk-12) * -1);border-radius:var(--yuvarlak-daire);background:var(--aksan-koyu);border:var(--bosluk-3) solid var(--kagit);box-shadow:var(--golge-sm);cursor:grab;touch-action:none}
+.fiyat-tutamak::before{content:"";position:absolute;inset:calc(var(--bosluk-10) * -1 - var(--bosluk-3))}
+.fiyat-tutamak:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
+.fiyat-aralik.bos .fiyat-tutamak{background:var(--kagit);border-color:var(--cizgi-2)}
+.fiyat-alt{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--bosluk-10) var(--bosluk-16)}
+.fiyat-ozet{display:flex;align-items:center;gap:var(--bosluk-8);margin:0;font-size:var(--yazi-14);color:var(--murekkep)}
+.fiyat-ozet>i{color:var(--aksan)}
+.fiyat-ozet b{color:var(--aksan-koyu)}
+.cip.fiyat-fark>i:first-child{color:var(--aksan)}
+.cip.fiyat-fark[aria-pressed="true"]>i:first-child{color:inherit}
+.cip.fiyat-fark .tercih-isaret{display:none;font-size:var(--yazi-11)}
+.cip.fiyat-fark[aria-pressed="true"] .tercih-isaret{display:inline-block}
+.fiyat-ipucu{margin:0}
+@media (max-width:640px){
+  /* Özet çubuğu: sayı ve Temizle aynı satırda, haplar altta (Temizle tek başına bir satır kaplamaz) */
+  .tercih-kart .tercih-ozet{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start}
+  .tercih-ozet .tercih-temizle{grid-column:2;grid-row:1;margin-left:0}
+  .tercih-ozet .tercih-ozet-cipler{grid-column:1 / -1}
+  .tercih-cipler.tercih-izgara{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tercih-izgara .cip.tercih-cip{min-height:48px;padding-inline:var(--bosluk-10)}
+  .fiyat-kademeler{gap:var(--bosluk-6)}
+  .fiyat-ray{margin-inline:calc((100% - 3 * var(--bosluk-6)) / 8)}
+  .fiyat-kademe{min-height:100px;padding:var(--bosluk-12) var(--bosluk-4);gap:var(--bosluk-4)}
+  .fiyat-kademe-ikon{width:var(--bosluk-32);height:var(--bosluk-32);font-size:var(--yazi-13)}
+  .fiyat-kademe-isaret{font-size:var(--yazi-14)}
+  .fiyat-kademe-ad{font-size:var(--yazi-12-5);line-height:var(--satir-sik)}
+  .fiyat-kademe small{display:none}
+  .mt-grup-arac .tercih-fazla{margin-left:0}
+}
+/* Keşif Tercihlerim H6c (kesif, 11 Kas; Beyar "seçililer çok sert"): seçili durum YUMUŞAK, sayfada tek dolu öğe birincil eylem
+   (Tercihlerimi kaydet) ve etkin sekme. Kanon §43 `.cip[aria-pressed="true"]` (koyu dolu) yalnız bu sayfanın kartlarında ezilir;
+   dil özet hapları ve Mekân Bul seçili kartıyla aynı aile: marka yıkaması zemin, marka çerçeve, marka koyu yazı ve ikon, sonda onay.
+   Renk dışı ayrım: seçilide çerçeve iki kat (1px çizgi + 1px iç gölge, ölçü kaymaz) ve onay işareti; seçisizde ikisi de yok.
+   Kontrast (Gourmet markası #742982): yazı `--aksan-koyu` / `--aksan-yikama` 8.63:1, seçili + üzerine gelme `--aksan-cizgi` 7.71:1,
+   seçisiz üzerine gelme `--aksan-yikama-5` 10.03:1. Radyusa dokunulmaz (radyus ajanının tek kuralı). */
+.tercih-kart .cip.suzgec[aria-pressed="true"]{background:var(--aksan-yikama);border-color:var(--aksan);color:var(--aksan-koyu);box-shadow:inset 0 0 0 var(--cizgi-1) var(--aksan)}
+.tercih-kart .cip.suzgec[aria-pressed="true"]:hover{background:var(--aksan-cizgi)}
+.tercih-kart .cip.suzgec[aria-pressed="false"]:hover{background:var(--aksan-yikama-5);border-color:var(--aksan-cizgi);color:var(--aksan-koyu)}
+.tercih-kart .cip.suzgec:active{background:var(--aksan-cizgi)}
+.tercih-kart .cip.suzgec:disabled{opacity:.45;cursor:not-allowed;background:var(--kagit);border-color:var(--cizgi);color:var(--metin-ikincil);box-shadow:none}
+/* Onay işareti seçilide marka rengiyle (ikon zaten `inherit`) */
+.tercih-kart .cip.suzgec[aria-pressed="true"] .tercih-isaret{color:var(--aksan)}
+/* Akordeon başlığındaki "N seçili": koyu dolu rozet yerine açık zemin + marka yazı */
+.mt-grup-sayi.rozet{background:var(--aksan-yikama);border-color:var(--aksan-cizgi);color:var(--aksan-koyu)}
+/* Fiyat: uç kademeler yumuşak seçili, aradakiler daha açık; ikon dairesi dolu değil */
+.fiyat-kademe.arada{background:var(--aksan-yikama-5);border-color:var(--aksan-cizgi)}
+.fiyat-kademe.uc{background:var(--aksan-yikama);border-color:var(--aksan);box-shadow:inset 0 0 0 var(--cizgi-1) var(--aksan)}
+.fiyat-kademe.arada .fiyat-kademe-ikon,.fiyat-kademe.uc .fiyat-kademe-ikon{background:var(--kagit);color:var(--aksan-koyu)}
+.fiyat-kademe.arada:hover{background:var(--aksan-yikama)}
+.fiyat-kademe.uc:hover{background:var(--aksan-cizgi)}
+.fiyat-kademe:active{background:var(--aksan-cizgi)}
+/* Tutamak: dolu koyu daire yerine kâğıt zemin + marka koyu halka */
+.fiyat-tutamak{background:var(--kagit);border-color:var(--aksan-koyu)}
 .mke-birincil{white-space:nowrap;font-size:12.5px;padding:9px 6px}
 /* Gourmet katmanları Gastro başlığının altında kalıyordu: rezervasyon ve ışık kutusu başlığın üstüne alınır */
 .rsv-overlay{z-index:1400}.rsv-modal{z-index:1401}.lightbox{z-index:1402}
@@ -162,13 +315,17 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 .yg-katman-pin--ibadet,.yg-katman-pin--tarihi{background:#2f6fb0}.yg-katman-pin--dinlenme{background:#8a6410}.yg-katman-pin--neyenir{background:var(--marka)}.yg-katman-pin--nealinir{background:var(--marka-koyu)}
 .yg-brand .gourmet-word-mark{display:block;height:26px;width:auto;color:var(--marka)}
 .yg-brand .dg-word{display:block}
-/* D1 · Alt marka kilidi (10 Kas). Kanon: dadagastro.com/kids ve /health başlığı (`.pg-kids .header .brand::after`): akış dışı mutlak
-   konumlu alt kelime, GilroyXB 800, 16px (≤640: 15px), satır 1, logo kutusuna 4px biner. Fark (Beyar): "Route" logonun altında değil,
-   sağ üst çaprazında, üst simge gibi: alt kenarı logonun üst kenarından 9px aşağıda (logonun ortasından 4px yukarıda; telefonda bağın
-   44px dolgusu ortayı değiştirmez). Renk logonun rengi (--marka). Kilit başlık bandında dikeyde ortalansın diye bütünü 6px aşağıda */
-.yg-kilit{position:relative;transform:translateY(6px)}
-.yg-kilit-alt{position:absolute;left:calc(100% + 2px);bottom:calc(50% + 4px);font-family:"GilroyXB","Gilroy",sans-serif;font-size:16px;font-weight:800;line-height:1;letter-spacing:0;color:var(--marka);white-space:nowrap;pointer-events:none}
-@media (max-width:640px){.yg-kilit-alt{font-size:15px}}
+/* D1 · Alt marka kilidi (10 Kas; 11 Kas Beyar: "Route" logonun ALTINDA). Kanon birebir: dadagastro.com/kids ve /health başlığı
+   (`.pg-kids .header .brand{position:relative}` + `::after{position:absolute;right:2px;top:calc(100% - 4px)}`, GilroyXB 800, 16px,
+   satır 1, harf aralığı 0; ≤640: 15px ve `top:calc(100% - 5px)`). Kanonda `.brand` kutusu logonun kendisi; burada aynı kutu `.dg-word`
+   (bağın telefondaki 44px dokunma dolgusu kutuya girmez). Logo bantta kanondaki gibi ortalı kalır, alt kelime akış dışı. Renk --marka */
+.yg-brand .dg-word{position:relative}
+.yg-kilit-alt{position:absolute;right:2px;top:calc(100% - 4px);font-family:"GilroyXB","Gilroy",sans-serif;font-size:16px;font-weight:800;line-height:1;letter-spacing:0;color:var(--marka);white-space:nowrap;pointer-events:none}
+@media (max-width:640px){.yg-kilit-alt{top:calc(100% - 5px);font-size:15px}}
+/* D17d (Beyar, 11 Kas; D17/D17b/D17c çizim motifinin yerine) · "Route"un solunda başlık menüsündeki "Dada Route" kaleminin ikonu
+   (`fa-solid fa-route`); menüdeki gibi (`prototip.css` `.nav-item a .fa-route`): ikon yazı boyunda, 2px sağ pay + boşluk, renk yazının rengi.
+   Grup sağdan yaslı kaldığı için "Route" D1 konumunda, ikon logonun altında sola doğru uzanır */
+.yg-kilit-alt i{font-size:inherit;margin-right:2px}
 .gastronomi-kapali .yg-vpin,.gastronomi-kapali .yg-vcluster{display:none}
 
 /* İl kartı yerleşimi: Ne Yenir ve Ne Alınır yan yana, iç boşluk sıkı; dar ekranda alt alta. */
@@ -187,12 +344,52 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 }
 
 /* Mekân Bul: 4 adım (B revizesi 10 Kas), sonuç listesi. Sınıflar canlı `mekan-bul.css`; burada yalnız eklenen parçalar */
-/* B3 mutfak sekmeleri: etkin sekme canlı `.ev-filter .chip.active` görünümü (`.mb-tab.active .mb-tab-dot` beyaz rozeti buna göre yazılmış) */
-.mb-tabs .chip.mb-tab.active{background:var(--tomato-deep);border-color:var(--tomato-deep);color:#fff;font-weight:700}
+/* B7 mutfak sekmeleri (Beyar 11 Kas): kanon §11 `.sekmeler.esit` segmenti, satıra eşit yayılır. Etkinlikler "Türkiye | Uluslararası" ve
+   Dada Route "Yakıtlı | Elektrikli" segmentinin aynı kuralları (bilesenler.css bu sayfanın zincirinde yok; değerler jeton, kalem ölçüsü kategori şeridi).
+   Seçim sayısı rozeti `.mb-tab-dot` (canlı) korunur. Telefonda da tek satır (kanon: şerit iki satır olmaz): ad ilk sözcüğe kısalır, Öğün · Türk · Dünya */
+.mb-tabs.sekmeler{display:flex;flex-wrap:nowrap;gap:var(--bosluk-4);width:100%;box-sizing:border-box;overflow:visible;padding:var(--bosluk-4);background:var(--kagit);border:var(--cizgi-1) solid var(--cizgi);border-radius:var(--yuvarlak-md)}
+.mb-tabs .sekme.mb-tab{flex:1 1 0;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:var(--bosluk-7);min-height:44px;padding:var(--bosluk-9) var(--bosluk-16);border:none;border-radius:var(--yuvarlak-sm);background:transparent;color:var(--metin-ikincil);font-family:inherit;font-size:var(--yazi-13);font-weight:var(--agirlik-kalin);line-height:normal;white-space:nowrap;cursor:pointer;transition:var(--sure) var(--yumusama)}
+.mb-tabs .sekme i{font-size:var(--yazi-12-5);opacity:.85}
+.mb-tabs .sekme:hover{color:var(--aksan-koyu);background:var(--aksan-yikama)}
+.mb-tabs .sekme.mb-tab.active{background:var(--aksan-koyu);color:var(--kagit)}
+.mb-tabs .sekme.active i{opacity:1}
+.mb-tabs .sekme:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
+.mb-tab-ad{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.mb-tabs.arama-modu .sekme{opacity:.45;pointer-events:none}
+@media (max-width:640px){.mb-tabs .sekme.mb-tab{font-size:var(--yazi-12-5);padding:var(--bosluk-9) var(--bosluk-7)}.mb-tab-uzun{display:none}}
+/* B8 mutfak araması: Keşif Tercihlerim `.tercih-ara` kutusu + kanon §3 `.alan-girdi`. bilesenler.css ve tokenlar.css zincirde yok;
+   zincirde olmayan jetonun kanon değeri (tokenlar.css) yedek olarak yazılı. Tarayıcının kendi × düğmesi yerine 44px temizle düğmesi */
+.mb-ara{position:relative;max-width:420px;margin:0 0 var(--bosluk-16)}
+.mb-ara>i{position:absolute;left:var(--bosluk-14);top:50%;transform:translateY(-50%);color:var(--metin-ikincil);font-size:var(--yazi-13);pointer-events:none}
+.mb-ara .alan-girdi{display:block;width:100%;min-height:44px;box-sizing:border-box;margin:0;font-family:inherit;font-size:var(--yazi-14,14px);font-weight:var(--agirlik-govde);color:var(--murekkep);background:var(--zemin,#f9f9f9);border:var(--cizgi-1) solid var(--cizgi);border-radius:var(--yuvarlak-md);padding:var(--bosluk-13,13px) 44px var(--bosluk-13,13px) calc(var(--bosluk-14) * 2 + 14px);outline:none;-webkit-appearance:none;appearance:none;transition:border-color var(--sure) var(--yumusama),box-shadow var(--sure) var(--yumusama)}
+.mb-ara .alan-girdi::placeholder{color:var(--yer-tutucu,#6f6f6f)}
+.mb-ara .alan-girdi:focus{border-color:var(--aksan);box-shadow:var(--golge-halka,0 0 0 3px var(--aksan-yikama))}
+.mb-ara .alan-girdi::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+.mb-ara-temizle{position:absolute;top:0;right:0;width:44px;height:100%;min-height:44px;display:grid;place-items:center;padding:0;border:0;border-radius:var(--yuvarlak-md);background:none;color:var(--metin-ikincil);font-size:var(--yazi-13);cursor:pointer}
+.mb-ara-temizle:hover{color:var(--aksan-koyu)}
+.mb-ara-temizle:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:calc(var(--odak-kalinlik) * -1)}
+.mb-ara-temizle[hidden],.mb-ara-yok[hidden],.mb-tabpanel[hidden],.mb-tabpanel .pick[hidden]{display:none}
+.mb-ara-yok{margin:0;color:var(--metin-ikincil);font-size:var(--yazi-13)}
+/* Arama kipi: üç grup alt alta, Keşif Tercihlerim `.tercih-grup` / `.tercih-grup-bas` başlık dili; normalde başlık gizli (sekme adı yeter) */
+.mb-panel-bas{display:none}
+.mb-arama .mb-tabpanel:not([hidden]){display:block;animation:none}
+.mb-arama .mb-tabpanel:not([hidden])~.mb-tabpanel:not([hidden]){margin-top:var(--bosluk-22);padding-top:var(--bosluk-22);border-top:var(--cizgi-1) solid var(--cizgi)}
+.mb-arama .mb-panel-bas{display:flex;align-items:center;gap:var(--bosluk-8,8px);margin:0 0 var(--bosluk-12);font-size:var(--yazi-12-5);font-weight:var(--agirlik-kalin);letter-spacing:.06em;text-transform:uppercase;color:var(--metin-ikincil)}
+.mb-panel-bas>i{color:var(--aksan)}
+.mb-panel-sayi{text-transform:none;letter-spacing:0;color:var(--aksan-koyu)}
+/* B8 bayrak: Gastro tercih sihirbazı `.tercih-bayrak` (28px, 4:3, rozet köşesi) `.pk-ico` dairesinde; ≤760 daire 40px, Gastro Hesabım ölçüsü 20px.
+   Sonuç çipinde Gastro /tarifler `.chip-flag` 17×12 */
+.pick .pk-ico .mb-bayrak{display:block;width:var(--bosluk-28,28px);height:auto;border-radius:var(--yuvarlak-rozet,6px)}
+@media(max-width:760px){.pick .pk-ico .mb-bayrak{width:var(--bosluk-20)}}
+.res-chip .mb-bayrak{display:inline-block;flex:none;width:17px;height:12px;border-radius:2px;object-fit:cover;box-shadow:0 0 0 var(--cizgi-1) var(--cizgi)}
 /* B4 nitelik akordiyonu: kabuğun `.fct-body` 240px iç kaydırması sihirbazda kapalı; zaman satırları ≥44px */
 .mb-acc .fct-body{max-height:none;overflow:visible}.mb-acc .fct-row{min-height:44px}
-/* Telefonda üç mutfak sekmesi sığmaz; kayan şerit üçüncü sekmeyi gizliyordu, alt satıra sarar */
-@media (max-width:640px){.mb-tabs{flex-wrap:wrap;overflow-x:visible}.mb-tabs .mb-tab{flex:1 1 auto;justify-content:center}}
+/* B9 (Beyar 11 Kas): tek açık grup (JS). Kapalı başlıkta seçim sayısı (canlı `.fct-dot`) ve seçilenlerin kısa adları tek satır */
+.mb-acc .mb-acc-ozet{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px;font-weight:500;color:var(--muted)}
+.mb-acc .fct.open .mb-acc-ozet{display:none}
+/* B10: odak alan özet çubuğu ve adım başlığı; fareyle gelince halka yok, klavyeyle kanon odak halkası */
+.mb-sonuc .res-summary:focus,.wstep .fc-head h2:focus{outline:none}
+.mb-sonuc .res-summary:focus-visible,.wstep .fc-head h2:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
 @media (max-width:640px),(pointer:coarse){.mb-tabs .mb-tab,#mbStepper .stp{min-height:44px}#mbStepper .stp{min-width:44px;justify-content:center}}
 .mb-alt-baslik{font-size:15px;margin:0 0 12px}.pick-grid+.mb-sub-field,.mb-sub-field+.mb-sub-field{margin-top:14px}
 .wstep .pick-grid+.mb-alt-baslik,.wstep .mb-sub-field+.mb-alt-baslik,.wstep .dist-bar+.mb-alt-baslik{margin-top:26px}
@@ -231,10 +428,20 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 #evBos[hidden]{display:none}#evBos{text-align:center;padding:48px 16px}
 .ev-filter .chip i{margin-right:8px}
 #evGrid .disc-card,#evdDiger .disc-card{width:100%;max-width:none;flex:none}
+/* Dalga 2 mobil · Etkinlikler takvimi (11 Kas): ≤640'ta gün hücresi 41px (360'ta 37px); canlı kuralındaki "1 etkinlik" yazısı hücreden taşıp
+   kesiliyordu ("etkinli|k"). Yazı telefonda gizlenir; sayı noktalar (en çok 4) ve düğmenin erişilebilir adıyla ("01 Kasım 2026, 1 etkinlik") kalır */
+@media(max-width:640px){.ev-cal-day .ecd-more{display:none}}
 
 /* Mekân kartı nitelik ikonları (W1.4): kanon rengi, kart metni üstüne binmez */
 .kart-nitelik{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;padding:0 var(--kart-kenar,0)}
 .kart-nitelik .kn{width:26px;height:26px;display:grid;place-items:center;border-radius:var(--yuvarlak-sm,8px);background:var(--marka-yikama,#ede4ef);color:var(--marka,#742982);font-size:12px}
+/* M1 + M3 (Beyar 11 Kas) · rozetler ayrı satırda değil, kategori satırında (`build.mjs` kartZengin `.kart-ust`): etiket solda, ikonlar
+   sağa yaslı tek satır. Kategori etiketinin kart bağlamındaki boşluğu (16px üst, 7px alt) satıra taşınır. Satır her kartta 26px (ikon boyu):
+   rozetli ve rozetsiz kart eş yükseklik. Uzun kategori adı tek satır kalır, sığmazsa üç noktayla kısalır; ikonlar daralmaz */
+.kart-ust{display:flex;align-items:center;gap:var(--bosluk-8);min-height:26px;margin:16px 0 7px;min-width:0}
+.kart-ust>.disc-cat{margin:0;flex:0 1 auto;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kart-ust>.kart-nitelik{flex:none;flex-wrap:nowrap;margin:0 0 0 auto;padding:0}
+.kart-nitelik .kn{flex:none}
 .mkl-grid .disc-card{width:auto;max-width:none;flex:none}
 
 /* A1 · Ana sayfa Gurme Lezzetler rayı (Beyar 10 Kas): kap canlı `anasayfa.css` §4 `.gm-concept`/`.gl-teaser-grid`, kart liste kartı.
@@ -288,16 +495,55 @@ button.yg-il-cip{display:inline-flex;align-items:center;gap:5px;font-family:inhe
   .yg-panel.sheet-half #viewAll .yg-all-body{padding-bottom:calc(34dvh + 26px)}
   .yg-sheet-ctx{border:0}
 }
+/* Dalga 2 mobil · rota (11 Kas): klavye açıkken (paneldeki metin girdisine odak) yarım ya da peek alt sayfada girdi görünür alanın en
+   altında, öneri listesi tamamen ekran dışında kalıyordu (390 × 480: girdi y 450–496, liste 502–790). Odakta alt sayfa geçici olarak TAM
+   konumuna çıkar (`rota-sahte.js` `.yg-klavye`; canlı kip değişmez, odak bitince eski kipe döner), alt pay girdiyi kaydırma alanının başına
+   almaya yeter (yarım kipin payı) */
+@media(max-width:860px){
+  .yg-panel.yg-klavye{transform:translateY(0)}
+  .yg-panel.yg-klavye .yg-view,.yg-panel.yg-klavye #viewAll .yg-all-body{padding-bottom:calc(34dvh + 28px)}
+}
+/* Dalga 2 mobil · rota (11 Kas): durak sürükleme tutamağı canlıda 22 × 42 px ve sıralama yalnız HTML sürükle-bırak; dokunmatikte sürükleme
+   hiç çalışmıyordu (dokunarak 3. durak 1.nin üstüne: sıra değişmedi). ≤860'ta tutamak 44 × 44, dokunuşu tarayıcı kaydırmaya almaz;
+   parmakla sürükleme `rota-sahte.js` `durakSurukleKur` ile canlının kendi bırakma işleyicisine gider */
+@media(max-width:860px){
+  .yg-stop .yg-grip{width:44px;height:44px;touch-action:none}
+}
+/* Dalga 2 mobil · rota (11 Kas): mekân detay kartı ve "Tümünü Gör" listesi dokunma alanları 44 px. Canlı telefon ölçüleri: kapat 32 × 32,
+   "Güzergâha Ekle" 40 (canlı ≤860 kuralı), "Ara durak yap" 40, "Mekân sayfası" 38, Kaydet/Paylaş/Bildir 38, "Geri" 36, liste "Ekle" 40.
+   Kapat düğmesinin görünümü aynı, vuruş alanı görünmez payla; öbürleri 44 px yükseklik */
+@media(max-width:860px){
+  .yg-detail-x::before{content:"";position:absolute;inset:-6px}
+  .yg-detail-add,.yg-detail-stop,.yg-detail-more,.yg-bc-back,.yg-fl-add{height:44px}
+  .yg-detail-sbtn{min-height:44px}
+}
 /* Mekân detayı: künye tam genişlikte kalınca kayan şerit kopyaları yan yana görünüyordu. 1024 ve altında durur, kopyalar gizlenir, sarılır */
 @media(max-width:1024px){
   .kc-chips .chip-row.kc-marquee{overflow:visible}
   .kc-marquee-track{flex-wrap:wrap;width:auto;animation:none}
   .kc-marquee-track>[aria-hidden="true"]{display:none}
 }
-/* Kart adı, süzgeç satırı ve etkinlik konumu kesilmez: alt satıra iner */
+/* Kart adı ve süzgeç satırı kesilmez: alt satıra iner */
 .mkl-grid .disc-card h3,.md-similar .disc-card h3{white-space:normal;text-overflow:clip}
 .fct-row .ft{white-space:normal;text-overflow:clip}
-.ev-meta{flex-wrap:wrap}.ev-meta .dw-txt{white-space:normal;text-overflow:clip}
+/* E3 (Beyar 11 Kas) etkinlik kartı meta satırı: canlı `etkinlikler.css` ve `anasayfa.css` RV3 madde 5 kuralı aynen (tarih · konum TEK satır, sığmayan konum
+   üç noktayla kısalır). Önceki `flex-wrap:wrap` sığmayan konumu bütünüyle alt satıra atıyor, tarihin sağında yalnız ayraç kalıyordu.
+   Etkinlik detayı "diğer etkinlikler" kartları canlı kuralı yüklemediği için kural burada da duruyor (Etkinlikler, ana sayfa, detay tek kaynak) */
+.ev-meta{flex-wrap:nowrap;gap:9px}
+.ev-meta>span{min-width:0}
+.ev-meta .dw-txt{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev-meta .ev-when{flex:0 0 auto}
+.ev-meta .disc-where{flex:1 1 auto}
+.ev-meta-sep{color:var(--line);font-weight:700;flex:0 0 auto}
+/* E4 (Beyar 11 Kas) etkinlik kartı görseli: tür rozeti (sol alt) ile giriş/fiyat notu (sağ alt) üst üste binmez. Canlı `site-overrides.css` §ev-card kuralı:
+   iki kutu tek satır, ayrık pay (rozet %42-15px, not %58-15px, arada en az 4px), taşan metin üç noktayla, tam hâli kartın `title`ında. Prototip bu dosyayı
+   yüklemiyordu: not kutusu bütün genişliğe yayılıp rozetin üstüne biniyordu. Canlıdan tek sapma: canlıda notun %58'i kendini saran `.m-types`e göre
+   çözülüyor (döngüsel yüzde), not sığdığı hâlde kesiliyor ("Ücretsiz" → "Ü..", 24px). Burada pay görselin genişliğine göre `.m-types`te; not sığarsa tam görünür */
+.ev-card .disc-fig .disc-badges{max-width:calc(42% - 15px)}
+.ev-card .disc-fig .disc-badge{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.ev-card .disc-fig .disc-badge i{margin-right:2px}
+.ev-card .disc-fig .m-types{max-width:calc(58% - 15px);justify-content:flex-end}
+.ev-card .disc-fig .disc-price-pill{min-width:0;max-width:100%;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* Rotayı telefona gönder: aktarım düğmesi kalıbı ve canlı `.yg-gate` penceresi üstüne. Renk ve radius kanon token'ı */
 .yg-telefon-dugme{width:100%;margin-top:8px;font:inherit;font-size:13.5px;text-align:left;cursor:pointer}
@@ -311,9 +557,20 @@ button.yg-il-cip{display:inline-flex;align-items:center;gap:5px;font-family:inhe
 .yg-telefon-qr svg{display:block;width:100%;height:100%;fill:var(--slate)}
 .yg-telefon-kisa{font-size:13px;font-weight:700;color:var(--marka-koyu);overflow-wrap:anywhere}
 .yg-telefon-not{font-size:11.5px;line-height:1.35;color:var(--muted,#6f6f6f)}
+/* Dalga 2 mobil · rota (11 Kas): Route pencerelerinde (telefona gönder, kayıt kapısı, bildir) canlı kapat düğmesi 32 × 32 ve metin düğmesi
+   (`.yg-gate-ghost` "Vazgeç", "Kaydetmeden Devam Et") 38 px. Dokunmatikte görünüm aynı, vuruş alanı görünmez payla 44 px (canlı `.yg-stop-clear::before` kalıbı) */
+@media (max-width:860px){
+  .yg-gate-x::before{content:"";position:absolute;inset:-6px}
+  .yg-gate-ghost{position:relative}.yg-gate-ghost::before{content:"";position:absolute;inset:-3px 0}
+}
 
 /* Süzgeç sayfası açıkken yüzen düğmeler sayfanın kapat ve uygula düğmesinin üstüne biniyordu */
 html:has(.lst-side.open) :is(.yg-fab,.to-top,.feedback-tab,.fb-rail){display:none}
+/* Dalga 2 mobil · süzgeç sayfası boyu (11 Kas): sayfa `bottom-clearance.js` ile alt çubuğun ya da çerez bandının üstüne kalkıyor (`--bc-lift`),
+   boyu ise 82vh kalıyordu. Çerez bandı açıkken (ilk ziyaret) 390'da sayfa 344px kalkıp tepesi başlığın altına, ekran dışına çıkıyordu
+   (top −192: Filtrele başlığı, Temizle ve kapat düğmesi erişilemez); 360'ta alt çubuk varken bile tepe başlığa 20px biniyordu.
+   Boy, kalkış payı ve başlık (`--kabuk-h`) düşülerek sınırlanır; tepe her durumda başlığın 12px altında kalır */
+@media(max-width:1024px){html #lstSide.lst-side{max-height:min(82vh,calc(100dvh - var(--bc-lift,0px) - var(--kabuk-h,63px) - 12px))}}
 
 /* Mekân Bul: dar ekranda "Sonuçları Gör" iki satıra sıkışıyordu; Geri kendi boyunda, birincil düğme kalanı alır */
 @media(max-width:640px){
@@ -379,8 +636,12 @@ body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .page-main p{tex
 
 /* ==== Dada Route revizesi (Beyar, 9 Kas) · yalnız /dada-route (seçiciler `.yg-` ailesi ya da `.yg-app` altında) ==== */
 /* Tek çip/hap köşesi (Beyar #13): canlıdaki site düğmesi "Rota Kur" `.yg-tab` 12px (`--radius-md`) = kanon `--yuvarlak-cip` (→ `--yuvarlak-md`).
-   `.ornek-etiket` site genelinde 999px (prototip.css); burada yalnız `.yg-app` altında daraltılır. Pilot rota düğmeleri canlıdaki gibi hap kalır */
-.yg-app .ornek-etiket,.yg-il-cip,.yg-il-rozet,.yg-il-harita-rozet,.yg-tol-chip,.yg-fl-chip,.yg-katman .cip,.yg-serit-sekme{border-radius:var(--yuvarlak-cip)}
+   `.ornek-etiket`, `.yg-il-rozet` ve `.yg-il-harita-rozet` (30px altı etiketler) site geneli "Etiket radyusu · Beyar 11 Kas" bloğundan gelir (prototip.css).
+   D12 (Beyar 11 Kas): pilot güzergâh çipleri de çip köşesinde (canlıda 999px hap); panelin küçük satır düğmeleri ("Yeni Rota Oluştur",
+   "Konumumu kullan", "Başlangıç ve Varışı Değiştir", tam listedeki "Geri") kanon satır düğmesi köşesinde `--yuvarlak-sm`, `.yg-add` ve
+   satır içi "Ara durak ekle" / "Rotaya ekle" ile aynı */
+.yg-il-cip,.yg-tol-chip,.yg-fl-chip,.yg-katman .cip,.yg-serit-sekme,.yg-pilot{border-radius:var(--yuvarlak-cip)}
+.yg-newroute,.yg-reverse,.yg-bc-back{border-radius:var(--yuvarlak-sm)}
 /* Katman çipleri: kanon §43 `.cip` ve `.aktif` jetonlarıyla (bilesenler.css bu sayfanın zincirinde yok). Seçili çip dolu zemin ve onay işareti.
    Aralıklar kanon boşluk jetonu (Beyar #14). */
 .yg-katman-grup+.yg-katman-grup{margin-top:var(--bosluk-12)}
@@ -393,6 +654,12 @@ body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .page-main p{tex
 .yg-katman .cip[aria-pressed="true"]::after{content:"\f00c";font:var(--fa-font-solid);font-size:var(--yazi-11)}
 .yg-katman .cip i{font-size:var(--yazi-12)}
 .yg-katman .cip:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
+/* D11 (Beyar 11 Kas) · "İhtiyaç" ve "Gastro · haritada göster" çipleri tek satır. Üç çip 399 px; panel içi 363 px (1440), 354 px (390):
+   iç boşluk kanon sınırında daraltılınca da sığmıyor, Hızlı Filtreler'deki kayan şerit ve kenar solması (ortak `scroll-affordance`, D9).
+   Dikey pay: masaüstünde 34 px çipin 44 px vuruş alanı kaydırma kutusunda kırpılmasın */
+.yg-katman .cipler{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-block:var(--bosluk-5);margin-block:calc(var(--bosluk-5) * -1)}
+.yg-katman .cipler::-webkit-scrollbar{display:none}
+.yg-katman .cipler>.cip{flex:none;white-space:nowrap}
 /* Şarj kartı Enerji ve şarj katmanına bağlandı: aç/kapa düğmesi gizli, kart katman açıkken görünür */
 .yg-sarj-toggle[hidden],.yg-sarj[hidden]{display:none}
 .yg-sarj #ygSarjBody .yg-sarj-filters{padding-top:0}
@@ -414,6 +681,12 @@ body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .page-main p{tex
 .yg-il-harita-rozet{position:absolute;transform:translate(-50%,-150%);display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border:1px solid var(--marka-cizgi);background:var(--kagit);color:var(--marka-koyu);font-family:inherit;font-size:11.5px;font-weight:var(--agirlik-kalin);line-height:1.2;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.2);cursor:pointer}
 .yg-il-harita-rozet i{font-size:10px;color:var(--marka)}
 .yg-il-harita-rozet:hover{border-color:var(--marka);background:var(--marka-yikama)}
+/* D18 (11 Kas) · Rozet durak pinine ya da başka rozete binerse noktanın sağına, soluna, altına kayar ya da gizlenir (`rota-katman.js` `rozetDuzen`).
+   Pay: durak pininin yarısı (28px pin, canlı `stopIcon` `iconSize`) + kanon boşluğu */
+.yg-il-harita-rozet[data-yer="sag"]{transform:translate(calc(14px + var(--bosluk-4)),-50%)}
+.yg-il-harita-rozet[data-yer="sol"]{transform:translate(calc(-100% - 14px - var(--bosluk-4)),-50%)}
+.yg-il-harita-rozet[data-yer="alt"]{transform:translate(-50%,calc(14px + var(--bosluk-4)))}
+.yg-il-harita-rozet.is-gizli{visibility:hidden}
 .yg-koridor-etiket span{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.2)}
 /* D2 · Gerçek rota (10 Kas): çizgi OSRM'den geldiyse "Örnek koridor" etiketi görünmez; yalnız yol ağı yedeğinde (`data-rota-kaynak="yedek"`) kalır */
 #routeMap[data-rota-kaynak="osrm"] .yg-koridor-etiket{display:none}
@@ -436,7 +709,6 @@ body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .page-main p{tex
 .yg-dcard--katman{cursor:default}
 .yg-dcard--katman .yd-media{display:grid;place-items:center;color:#fff;font-size:22px}
 .yg-katman-pin--sarj{background:var(--sarj-renk,#1f7a5c)}
-.yg-dcard--katman .yg-kl-durak{align-self:flex-start;margin-top:2px;padding:3px 9px}
 body.gastronomi-kapali .yg-dash.yg-dash--katmanli:not([hidden]){display:block!important}
 .yg-dash--katman-sekme #ygDashCount,.yg-dash--katman-sekme #ygDashAll{display:none}
 
@@ -453,11 +725,49 @@ body.gastronomi-kapali .yg-dash.yg-dash--katmanli:not([hidden]){display:block!im
 .yg-katman .yg-sarj{margin:var(--bosluk-8) 0 0}
 .yg-yakit[hidden]{display:none}
 .yg-sarj-credit:empty{display:none}
+/* D10 (Beyar 11 Kas) · Yakıt rengi yakıtı çağrıştırır, elektrik mavisi şarjda kalır. Canlı şarj kartı bütün renklerini dört değişkenden alır
+   (`dada-route-sarj.css` :root `--sarj-*`); yakıt kartı, yakıt pini ve "Yakıtlı" segmentinde bu dört değişken kanon jetonlarına bağlanır:
+   ana `--eko-gastro` #DC3D17 (beyaz üstünde 4,45:1), koyu `--tehlike-koyu` #8c1d17 (açık zeminde 7,09:1), açık `--tehlike-yikama-2` #fbdcd8,
+   kenar `--tehlike-cizgi-yumusak` #f3cdc0. "Yola yakın" `--uyari` #8a4b00 kehribar ve "Yol üstü" yeşilden ayrı ton */
+.yg-yakit,.yg-yakit-pin,.yg-katman .sekme[data-arac="yakit"]{--sarj-renk:var(--eko-gastro);--sarj-koyu:var(--tehlike-koyu);--sarj-acik:var(--tehlike-yikama-2);--sarj-kenar:var(--tehlike-cizgi-yumusak)}
+/* Segmentte etkin değilken ikon kendi kartının rengi (Yakıtlı yakıt, Elektrikli şarj mavisi); etkin segment beyaz kalır */
+.yg-katman .sekme:not(.aktif) i{color:var(--sarj-renk);opacity:1}
+/* D13 (Beyar 11 Kas) · Kart içi metin kart genişliğinde kırılır. Canlı `.yg-sarj-credit{white-space:nowrap}` canlının kısa atfı içindir;
+   prototipin uzun "Kaynak: prototip örneği …" satırı 1440'ta 66 px, 390'da 75 px taşıyordu. Uzun istasyon adı ve operatör de kırılır */
+.yg-katman .yg-sarj-credit{white-space:normal;overflow-wrap:anywhere}
+.yg-katman .yg-sarj-row b,.yg-katman .yg-sarj-row small,.yg-katman .yg-sarj-detail :is(h3,p){overflow-wrap:anywhere}
+.yg-katman .yg-sarj-filters select{max-width:100%}
+/* D14 (Beyar 11 Kas) · Güzergâhlarım misafir boş durumu: paragraf ile "Giriş Yap" arası 0 px idi (canlıda da; `.yg-gate-acts` aslında
+   giriş penceresi için, orada üst boşluğu başlık verir). Metin → düğme aralığı aynı boş durumun canlı `.yg-empty-cta` boşluğu 18 px;
+   ritim: metin 18 · Giriş Yap 8 Ücretsiz Üye Ol (aynı grup, canlı `gap`) · 18 · İlk rotanı kur (ayrı eylem) */
+.yg-empty>.yg-gate-acts{margin-top:var(--bosluk-18)}
+/* Dalga 2 mobil · rota (11 Kas): Güzergâhlarım dokunma alanları 44 px. Canlı ölçüler: "İlk rotanı kur" 42, kart eylemleri 40, sil 40 × 40,
+   silme onayı (Vazgeç / Sil) 34, yolculuk tarihi 28, favori yıldızı 28 × 28. Dokunmatik genişlikte yükseklik 44 (eylem satırı +4, onay +10,
+   tarih +16 px); yıldızın görünür boyutu aynı, vuruş alanı görünmez payla (canlı `.yg-stop-clear::before` kalıbı) */
+@media (max-width:860px){
+  .yg-empty-cta button,.yg-sv-btn,.yg-sv-confirm button,.yg-sv-trip-i{height:44px}
+  .yg-sv-del{width:44px}.yg-sv-confirm button{min-width:44px}
+  .yg-sv-fav{position:relative}.yg-sv-fav::before{content:"";position:absolute;inset:-8px}
+}
 /* D4 · "{İl}’in meşhurları": Ne Yenir? ve Ne Alınır? alt alta; her bölümün başlığı yapışkan zemin bandı, bölümler arası marka çizgisi.
    En çok 5 ürün satırı görünür (yükseklik rota-katman.js ölçer), fazlası kart içinde kayar: altta solgunluk ve "Kaydır" ipucu */
 .yg-il-liste .yg-il-kart{display:block}
+/* D15 (Beyar 11 Kas) · Tek il kartı açık: üstte rota sırasıyla il seçici, Hızlı Filtreler'in tek satır kayan çip şeridi (`.yg-fl-chip`,
+   sayaç canlı `.yg-sv-kn`, ortak `scroll-affordance`); pasif il (tescil verisi yok) canlı `.yg-fl-chip:disabled`. Başlıkta toplam özet */
+.yg-iller .yg-il-secici{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:var(--bosluk-6);margin:0 0 var(--bosluk-10);padding-bottom:2px}
+.yg-iller .yg-il-secici::-webkit-scrollbar{display:none}
+.yg-iller .yg-il-secici .yg-il-sec{flex:0 0 auto;display:inline-flex;align-items:center;gap:var(--bosluk-6);height:32px;padding:0 var(--bosluk-12);font-size:var(--yazi-12-5);white-space:nowrap}
+.yg-iller .yg-il-secici .yg-il-sec:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:calc(var(--odak-kalinlik) * -1)}
+.yg-iller-bas{display:inline-flex;align-items:baseline;flex-wrap:wrap;gap:var(--bosluk-4) var(--bosluk-8);text-align:left}
+.yg-iller-ozet{font-size:var(--yazi-12);font-weight:var(--agirlik-kalin);color:var(--metin-ikincil)}
+.yg-il-harita-rozet.is-secili{border-color:var(--marka);background:var(--marka);color:var(--kagit)}
+.yg-il-harita-rozet.is-secili i{color:var(--kagit)}
 .yg-il-kayar{position:relative}
 .yg-il-govde{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--marka-cizgi) transparent}
+/* Dalga 2 mobil · rota (11 Kas): telefonda kart gövdesi görünür panelin %69'u (390: 385 / 558 px); `contain` yüzünden parmak karttayken
+   iç kaydırma sona gelince alt sayfa hiç kaymıyordu (ölçüldü: iç 183 → 183, dış 957 → 957). Dokunmatik genişlikte kaydırma zinciri açık:
+   iç kaydırma önce, sonuna gelince sonraki hareket alt sayfayı kaydırır. Masaüstünde tekerlek davranışı (contain) aynı */
+@media (max-width:860px){.yg-il-govde{overscroll-behavior-y:auto}}
 .yg-il-govde:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:calc(var(--odak-kalinlik) * -1)}
 .yg-il-govde .yg-il-bolum,.yg-il-govde .yg-il-bolum+.yg-il-bolum{padding:0;border-left:0}
 .yg-il-govde .yg-il-bolum+.yg-il-bolum{border-top:var(--cizgi-1) solid var(--marka-cizgi)}
@@ -473,23 +783,88 @@ body.gastronomi-kapali .yg-dash.yg-dash--katmanli:not([hidden]){display:block!im
 .yg-il-kaydir i{font-size:var(--yazi-11)}
 /* D5 · Satır içi "Ara durak ekle" / "Rotaya ekle": kanon `.dugme.satir` köşesi (--yuvarlak-sm), çip köşesi değil */
 .yg-il-cip,.yg-kl-durak{flex:none;border-radius:var(--yuvarlak-sm);white-space:nowrap}
+/* D5 (11 Kas) · Durak listesindeki kesik çizgili "Ara Durak Ekle" kutusu da --yuvarlak-sm (canlı 12px). Yanındaki "+" daire ve durak girdileri değişmez */
+.yg-add{border-radius:var(--yuvarlak-sm)}
 /* D6 · "Yola yakın" etiketi "Yol üstü" yeşilinden ayrı: kanon uyarı (kehribar) jetonu, beyazla 6,6:1. Sponsor kartının koyu zemin kuralı daha özgül, değişmez */
 .yd-tag.near,.yg-fl-tag.near,.yg-detail-tag.near,.yg-vtip-tier.near,.yg-cc.near b{color:var(--uyari)}
-/* D7 + D8 · Alt şeritte "İhtiyaçlar" sekmesi: alt başlıklı üç grup (İbadethane, Dinlenme alanı, Karavan parkları), kart canlı `.yg-dcard` */
-.yg-dash-title .ornek-etiket{text-transform:none;letter-spacing:normal}
-.yg-dash-title .ornek-etiket[hidden]{display:none}
-.yg-dash-katman{gap:var(--bosluk-16)}
-.yg-ih-grup{flex:none;display:flex;flex-direction:column;gap:var(--bosluk-8)}
-.yg-ih-grup+.yg-ih-grup{padding-left:var(--bosluk-16);border-left:var(--cizgi-1) solid var(--cizgi)}
-.yg-ih-bas{position:sticky;left:0;align-self:flex-start;display:inline-flex;align-items:center;gap:var(--bosluk-7);margin:0;font-size:var(--yazi-13);font-weight:var(--agirlik-kalin);color:var(--murekkep)}
+/* D7 + D8 · Alt şeritte "İhtiyaçlar" sekmesi: üç grup (İbadethane, Dinlenme alanı, Karavan parkları), kart canlı `.yg-dcard` */
+/* D7 + K4 (Beyar 11 Kas) · Şerit ve kart canlıyla aynı ölçüde. Ölçüm (canlı sayfa, aynı mekân yanıtı): Mekânlar kartı canlıyla birebir
+   (1440: 232×135,4, görsel 74×133,4; 390: 200×153,5, görsel 74×151,5); fark şeritteydi: ayrı sekme satırı (+39 px, telefonda +53 px),
+   İhtiyaçlar'da grup başlığı satırı, 304/280 px geniş kart ve kart içi düğme satırı (kart 128/185 px). Sekmeler canlı başlık satırına girer
+   (görsel 30 px, vuruş alanı 44 px), İhtiyaçlar kartı canlı ölçüyü izler (232 / telefonda 200); gruplar D16'da alt sekme oldu */
+.yg-dash-head .yg-dash-title{flex:none}
+/* D16 (Beyar 11 Kas) · Sekme satırı: birincil Mekânlar | İhtiyaçlar ve İhtiyaçlar açıkken ikincil alt sekmeler (İbadethane | Dinlenme alanı |
+   Karavan parkı) aynı kapta. Sığmazsa kap kayar (Hızlı Filtreler'in kayan şerit + kenar solması kalıbı); 8 px dikey pay 44 px vuruş alanını
+   kaydırma kutusunda kırpmaz, satır yüksekliği 30 px kalır (şerit 213,4 / 226,5 px). "prototip örneği" satırda bir kez, sağda */
+.yg-dash-head .yg-serit-kap{flex:1 1 auto;min-width:0;display:flex;align-items:center;gap:var(--bosluk-10);overflow-x:auto;scrollbar-width:none;padding-block:var(--bosluk-8);margin-block:calc(var(--bosluk-8) * -1)}
+.yg-dash-head .yg-serit-kap::-webkit-scrollbar{display:none}
+.yg-dash-head .yg-dash-sekmeler{flex:none;margin:0;overflow:visible}
+.yg-ih-sekmeler{flex:none;display:flex;align-items:center;gap:var(--bosluk-4);padding-left:var(--bosluk-10);border-left:var(--cizgi-1) solid var(--cizgi)}
+.yg-ih-sekmeler[hidden],.yg-dash-head .ornek-etiket[hidden]{display:none}
+.yg-ih-sekme{position:relative;flex:none;display:inline-flex;align-items:center;gap:var(--bosluk-5);height:26px;padding:0 var(--bosluk-10);border:var(--cizgi-1) solid transparent;border-radius:var(--yuvarlak-cip);background:none;color:var(--slate-2);font:inherit;font-size:var(--yazi-12);font-weight:600;white-space:nowrap;cursor:pointer}
+.yg-ih-sekme::after{content:"";position:absolute;inset:-10px 0}
+/* Dalga 2 mobil · rota: üzerine gelme çerçevesi yalnız fareli cihazda; dokunmatikte satır kayınca dokunulan yerdeki sekmede takılı kalıyordu */
+@media (hover:hover){.yg-ih-sekme:hover:not([disabled]):not([aria-selected="true"]){color:var(--marka-koyu);border-color:var(--cizgi)}}
+.yg-ih-sekme[aria-selected="true"]{border-color:var(--marka-cizgi);background:var(--marka-yikama);color:var(--marka-koyu);font-weight:var(--agirlik-kalin)}
+.yg-ih-sekme[disabled]{opacity:.45;cursor:not-allowed}
+.yg-ih-sekme:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:calc(var(--odak-kalinlik) * -1)}
+/* Kenar solması kayan kutunun içinde `position:absolute` olunca içerikle birlikte kayıyor ve kaydırılmış şeritte ortada beyaz bant bırakıyordu
+   (390'da ölçüldü). Bu sayfanın kayan şeritlerinde solma yapışkan uç öğe olur: görünür kenarda kalır, yer kaplamaz (eksi kenar boşluğu = genişlik + aralık) */
+.yg-dash-head .yg-serit-kap{--sf-ara:var(--bosluk-10)}
+:is(.yg-dash-head .yg-serit-kap,.yg-katman .cipler,.yg-iller .yg-il-secici).has-scroll-r::after{position:sticky;right:0;top:auto;bottom:auto;flex:0 0 26px;align-self:stretch;margin-left:calc(-26px - var(--sf-ara,var(--bosluk-6)))}
+:is(.yg-dash-head .yg-serit-kap,.yg-katman .cipler,.yg-iller .yg-il-secici).has-scroll-l::before{position:sticky;left:0;top:auto;bottom:auto;flex:0 0 26px;align-self:stretch;margin-right:calc(-26px - var(--sf-ara,var(--bosluk-6)))}
+/* Dalga 2 mobil · rota (11 Kas): yapışkan beyaz solma yarı saydam krem panelde (`.yg-panel` rgba(252,250,246,.82)) beyaz bant olarak görünüyor,
+   Pilot Güzergâhlar ve Hızlı Filtreler'de ise solma hâlâ `position:absolute` (içerikle kayıp ortada bant). Route'un bütün kayan şeritlerinde
+   solma renk katmanı yerine kabın kendi maskesi: içerik kenarda saydamlaşır, zemin ne olursa olsun bant yok, kutu kaymadığı için kenarda sabit.
+   Kalıp `prototip.css` `.sekmeler[data-scroll-fade]` maskesi; genişlik canlı `scroll-affordance.css` 26px */
+:is(#ygPilots,#ygQuickFilters,#ygAllChips,#ygSavedTabs,.yg-dash-head .yg-serit-kap,.yg-katman .cipler,.yg-iller .yg-il-secici)[data-scroll-fade]:is(.has-scroll-r,.has-scroll-l)::after,
+:is(#ygPilots,#ygQuickFilters,#ygAllChips,#ygSavedTabs,.yg-dash-head .yg-serit-kap,.yg-katman .cipler,.yg-iller .yg-il-secici)[data-scroll-fade]:is(.has-scroll-r,.has-scroll-l)::before{content:none}
+:is(#ygPilots,#ygQuickFilters,#ygAllChips,#ygSavedTabs,.yg-dash-head .yg-serit-kap,.yg-katman .cipler,.yg-iller .yg-il-secici)[data-scroll-fade].has-scroll-r{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 26px),transparent)}
+:is(#ygPilots,#ygQuickFilters,#ygAllChips,#ygSavedTabs,.yg-dash-head .yg-serit-kap,.yg-katman .cipler,.yg-iller .yg-il-secici)[data-scroll-fade].has-scroll-l{-webkit-mask-image:linear-gradient(to left,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(to left,#000 calc(100% - 26px),transparent)}
+:is(#ygPilots,#ygQuickFilters,#ygAllChips,#ygSavedTabs,.yg-dash-head .yg-serit-kap,.yg-katman .cipler,.yg-iller .yg-il-secici)[data-scroll-fade].has-scroll-l.has-scroll-r{-webkit-mask-image:linear-gradient(to right,transparent,#000 26px,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(to right,transparent,#000 26px,#000 calc(100% - 26px),transparent)}
+.yg-dash-head .yg-ih-ornek{flex:none;padding:0 var(--bosluk-8);font-size:var(--yazi-11);line-height:1.6;text-transform:none;letter-spacing:normal}
+/* Dalga 2 mobil · rota: bu satırdaki etiket 18 px yüksek; R2 etiket radyusu kuralı (<20 px → `--yuvarlak-rozet` 6 px), 22 px etiketin 8'i değil */
+.yg-dash-head .yg-ih-ornek{border-radius:var(--yuvarlak-rozet)}
+.yg-dash--katmanli .yg-dash-title #ygDashCount{display:none}
+.yg-dash .yg-dash-head .yg-serit-sekme{position:relative;z-index:1;min-height:30px}
+.yg-dash .yg-dash-head .yg-serit-sekme::after{content:"";position:absolute;inset:-8px -1px}
+@media (max-width:860px){
+  .yg-dash--katmanli .yg-dash-head .yg-dash-title{display:none}
+  .yg-dash .yg-dash-head .yg-serit-sekme{padding:0 var(--bosluk-10)}
+  .yg-dash .yg-dash-head .yg-serit-sekme>i{display:none}
+}
+/* 360'ta iki sekme ve "Tümünü Gör" tek satıra ancak sığar (320 px) */
+@media (max-width:380px){
+  .yg-dash-head .yg-dash-sekmeler{gap:var(--bosluk-4)}
+  .yg-dash .yg-dash-head .yg-serit-sekme{padding:0 var(--bosluk-6)}
+}
 .yg-ih-sayi{font-size:var(--yazi-11);font-weight:var(--agirlik-kalin);color:var(--metin-ikincil)}
-.yg-ih-kartlar{display:flex;gap:11px;flex:1}
-.yg-ih-kartlar>.yg-kl-bos{align-self:center;width:200px}
-.yg-dash .yg-dash-katman .yg-dcard{flex:0 0 304px}
-.yg-ih-satir{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--bosluk-4) var(--bosluk-8)}
-.yg-dcard--katman .yg-kl-durak{padding:var(--bosluk-4) var(--bosluk-10)}
+/* Dalga 2 mobil · rota (11 Kas): telefonda İhtiyaçlar açılınca satırda yalnız ilk alt sekme görünüyordu (390: kap 248 px, içerik 567 px).
+   ≤640'ta alt sekme ikon + sayı (ikon Katmanlar çipi ve kart görsel kutusundakiyle aynı; ad ekran okuyucuda ve `title`da), vuruş alanı 44 px;
+   satır ve şerit yüksekliği değişmez (30 / 226,5 px). Masaüstü ve 768'de ad yazılı kalır, ikon gizli */
+.yg-ih-sekme>i{display:none}
+@media (max-width:640px){
+  .yg-ih-sekme{justify-content:center;min-width:44px;padding:0 var(--bosluk-8)}
+  .yg-ih-sekme>i{display:inline-block;font-size:var(--yazi-12)}
+  .yg-ih-sekme .yg-ih-ad{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+}
+.yg-ih-sekme[aria-selected="true"] .yg-ih-sayi{color:inherit}
+.yg-dash-katman>.yg-kl-bos{align-self:center;width:200px}
+/* Görsel kutusu: ikon üstte, "Rotaya ekle" altta kutuya oturur (vuruş alanı 44 px); canlı `.yd-badge` gibi görselin üstünde */
+.yg-dcard--katman .yd-media{padding-bottom:54px}
+/* İhtiyaç noktaları rotaya 15 km'ye kadar: "Yola yakın · 12 km" 200 px kartta 4 px taşıp iki satıra iniyordu; tek satırda kalır, gövdenin sağ iç boşluğuna (11 px) sığar */
+.yg-dcard--katman .yd-tag{white-space:nowrap}
+.yg-dash .yg-dcard--katman .yd-media .yg-ih-ekle{position:absolute;left:var(--bosluk-5);right:var(--bosluk-5);bottom:var(--bosluk-5);min-height:44px;display:flex;align-items:center;justify-content:center;margin:0;padding:var(--bosluk-4);border:0;border-radius:var(--yuvarlak-sm);background:var(--paper);color:var(--marka-koyu);font-size:var(--yazi-11-5);font-weight:var(--agirlik-kalin);line-height:1.15;text-align:center;white-space:normal}
+.yg-dash .yg-dcard--katman .yd-media .yg-ih-ekle[aria-pressed="true"]{background:var(--marka-yikama)}
+.yg-dash .yg-dcard--katman .yd-media .yg-ih-ekle:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
 .yg-katman-pin--karavan{background:var(--durum-acik-metin)}
-@media (max-width:860px){.yg-dash .yg-dash-katman .yg-dcard{flex-basis:280px}.yg-sarj-toggle{min-height:44px}}
+@media (max-width:860px){.yg-sarj-toggle{min-height:44px}}
+/* K4 · Telefonda peek alt sayfası bu dosyada 102 px (tutamak 44 px); canlı betik şeridi 84 px üstüne koyuyordu, son satır 18 px sayfanın altında kalıyordu */
+@media (max-width:860px){.yg-app:has(.yg-panel.sheet-peek) .yg-dash:not(.collapsed){bottom:calc(var(--dashb,8px) + 18px)}}
+/* Dalga 2 mobil · rota (11 Kas): Leaflet atıf satırı (OpenStreetMap) telefonda haritanın en altında, alt sayfanın her kipinde onun arkasında
+   kalıyordu (390: atıf 217–390 × 827–844, üstündeki öğe `.yg-tabs`; kesişim 2913 px²; canlıda da). Haritanın sağ üst köşesi boş: atıf oraya,
+   yakınlaştırma düğmeleriyle aynı yüksekliğe (canlı `.leaflet-top{top:68px}`) çıkar; alt şerit, konum düğmesi ve alt sayfayla kesişmez */
+@media (max-width:860px){.yg-app .leaflet-bottom.leaflet-right{top:68px;bottom:auto}}
 /* D9 · Sapma toleransı ve hızlı filtreler derli toplu: başlık ve sayaç tek satır, altında tek satır kanon segment;
    hızlı filtreler tek satır kayan şerit (canlı davranışı, ortak `scroll-affordance` solgunluğu). 9 Kas'taki "sarar" kararının yerine */
 .yg-corr{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:var(--bosluk-8);row-gap:var(--bosluk-6);margin-top:var(--bosluk-16)}
@@ -504,10 +879,12 @@ body.gastronomi-kapali .yg-dash.yg-dash--katmanli:not([hidden]){display:block!im
 .yg-corr .yg-tol-chips{display:flex;flex-wrap:nowrap;overflow:visible;gap:var(--bosluk-4);padding:var(--bosluk-4);background:var(--kagit);border:var(--cizgi-1) solid var(--cizgi);border-radius:var(--yuvarlak-md)}
 .yg-corr .yg-tol-chip{flex:1 1 auto;min-width:0;display:inline-flex;align-items:center;justify-content:center;height:auto;min-height:34px;padding:0 var(--bosluk-8);border:0;border-radius:var(--yuvarlak-sm);font-size:var(--yazi-12-5);white-space:nowrap}
 .yg-corr .yg-tol-chip:hover:not(.is-active){background:var(--aksan-yikama);color:var(--aksan-koyu)}
+/* Dalga 2 mobil · rota: 360'ta "5 dk" 43 px genişliğe iniyordu; parça en az 44 px */
+@media (max-width:860px){.yg-corr .yg-tol-chip{min-width:44px}}
 .yg-quick{margin-top:var(--bosluk-12)}
 .yg-quick .yg-quick-h{margin-bottom:var(--bosluk-6)}
 #ygQuickWrap #ygQuickFilters{flex-wrap:nowrap;overflow-x:auto;gap:var(--bosluk-6);margin-bottom:0}
-#ygQuickWrap #ygQuickFilters.has-scroll-r::after,#ygQuickWrap #ygQuickFilters.has-scroll-l::before{content:""}
+/* Dalga 2 mobil · rota: solma artık maske (yukarıda, D16 solma bloğunun yanında); renk katmanı geri açılmaz */
 #ygQuickWrap .yg-fl-chip{height:32px;padding:0 var(--bosluk-12);font-size:var(--yazi-12-5)}
 
 /* ==== Duyarlı hizalama: Gastro ve Diet kuralları (Beyar, 9 Kas). Ölçüm: scratchpad/responsive/esleme.md ==== */
@@ -533,12 +910,24 @@ body.gastronomi-kapali .yg-dash.yg-dash--katmanli:not([hidden]){display:block!im
   :is(#mklGrid,.mkl-grid)>.disc-card>.disc-fig,:is(#evGrid,#lzGrid)>.disc-card>.disc-card-link>.disc-fig{grid-column:1;grid-row:1/span 5;align-self:stretch;height:auto;min-height:0;aspect-ratio:auto;margin:-12px 0 0;border-radius:0}
   :is(#mklGrid,.mkl-grid)>.disc-card>:not(.disc-fig),:is(#evGrid,#lzGrid)>.disc-card>.disc-card-link>:not(.disc-fig){grid-column:2;min-width:0}
   :is(#mklGrid,.mkl-grid,#evGrid,#lzGrid) .disc-card .disc-cat{margin-top:0}
-  :is(#mklGrid,.mkl-grid,#evGrid,#lzGrid) .disc-card h3{font-size:14.5px;line-height:1.25;margin-bottom:6px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+  /* E4: canlı `.disc-card h3{min-height:2.6em}` iki satırlık kırpmadan (2.5em) uzun; aradaki şeritte üçüncü satır görünüyordu */
+  :is(#mklGrid,.mkl-grid,#evGrid,#lzGrid) .disc-card h3{font-size:14.5px;line-height:1.25;min-height:0;max-height:2.5em;margin-bottom:6px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
   :is(#mklGrid,.mkl-grid,#evGrid,#lzGrid) .disc-card p{font-size:12.5px;line-height:1.4;min-height:0;max-height:2.8em;margin-bottom:8px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
   :is(#mklGrid,.mkl-grid,#evGrid,#lzGrid) .disc-card .disc-meta{padding:8px 0 12px;margin-top:0;flex-wrap:wrap;gap:4px 12px}
   :is(#mklGrid,.mkl-grid,#evGrid,#lzGrid) .disc-card .disc-meta>*{white-space:nowrap;min-width:0}
+  /* E3: yatay satır kartının metin sütunu (~200px) tarih ve konumu tek satıra almıyor; canlı kural konumu birkaç harfe kırpardı.
+     Her kartta aynı iki satır: tarih, altında konum (sığmazsa üç nokta); ortada asılı kalan ayraç gizli */
+  #evGrid .ev-card .ev-meta{flex-direction:column;align-items:flex-start;gap:4px}
+  #evGrid .ev-card .ev-meta>span{max-width:100%}
+  #evGrid .ev-card .ev-meta-sep{display:none}
+  /* E4: görsel sütunu 132px; masaüstü ayrık payı (%42 / %58) rozeti ~40px'e, notu ~60px'e indirirdi. Bu kartta rozet görselin sol üstünde,
+     not sağ altında, ikisi de görsel genişliğinin 26px eksiğine kadar; üst üste binmez */
+  #evGrid .ev-card .disc-fig .disc-badges{top:13px;bottom:auto;max-width:calc(100% - 26px)}
+  #evGrid .ev-card .disc-fig .m-types{max-width:calc(100% - 26px)}
   :is(#evGrid,#lzGrid) .disc-card :is(.disc-cat,h3){padding-right:40px}
-  :is(#mklGrid,.mkl-grid,#evGrid,#lzGrid) .disc-card .kart-nitelik{margin:4px 0 0}
+  /* M3: kategori satırı telefonda üstte boşluksuz; ikonlar sığarsa etiketin sağında, sığmazsa (dar metin sütunu, 3-4 ikon) etiketin
+     altında tek satır, sağa yaslı. Etiket kısalmaz, satır taşmaz. Rozetsiz kart eskisi gibi etiket boyunda */
+  :is(#mklGrid,.mkl-grid) .disc-card .kart-ust{margin-top:0;min-height:0;flex-wrap:wrap;row-gap:var(--bosluk-4)}
   /* Tam genişlik alt satırlar: çizgiyle ayrılır, kartın iç boşluğu 14px */
   :is(#mklGrid,.mkl-grid)>.disc-card>:is(.mkl-kart-eylem,.mb-reasons,.mb-card-actions),:is(#evGrid,#lzGrid)>.disc-card>.disc-card-foot{grid-column:1/-1;margin:0 -14px 0 0;padding:10px 14px;border-top:1px solid var(--line);box-sizing:border-box;width:auto}
   :is(#mklGrid,.mkl-grid)>.disc-card>.mb-reasons{margin-bottom:0}

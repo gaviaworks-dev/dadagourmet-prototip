@@ -4,7 +4,7 @@
 // (biri cayma ile iade edildi, öteki 30 günlük dönemi bitti; alımlar tek seferlik, kendiliğinden yenilenmez) —
 // bu yüzden Ücretsiz durumla çelişmez. Kayıtlı Kartlar canlıda her hesapta boş (kart kasası yok), aynen basılır.
 import { bant, gourmetSayac, panelDugme, sayfa, et } from './_kalip.mjs';
-import { gastroRay, gastroPano, SEKME_CSS, SEKME_JS } from './_gastro-sekme.mjs';
+import { gastroRay, gastroPano, gastroKimlik, SEKME_CSS, SEKME_JS } from './_gastro-sekme.mjs';
 
 const O = 'hesabim/odemelerim/';
 const KDV = 20; // FaturaServisi::KDV_ORANI
@@ -41,7 +41,7 @@ const abonelik = `${sekmeBas('fa-solid fa-crown', 'Paket aboneliği', 'Aktif abo
         <div id="odAbone">
 <div class="paket-karti"><div class="paket-bas"><span class="paket-rozet"><i class="fa-solid fa-user" aria-hidden="true"></i> Ücretsiz</span><div class="paket-bilgi"><b>Dada Gourmet Ücretsiz <span class="durum-hapi acik"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Etkin</span></b><span class="paket-yenileme"><i class="fa-solid fa-calendar-day" aria-hidden="true"></i>
  Ücretsiz kademe süresizdir, tahsilat alınmaz.
-</span></div><div class="paket-fiyat"><b>₺0</b><span>/ ay</span></div></div><div class="paket-govde"><p class="durum-satir"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> <span>Gourmet'i keşfetmeye bugün başlamak için yeterli. Süresi dolmaz, tahsilat alınmaz. Bu kademede toplam 30 özellik açık. Tam döküm <a href="{{kok}}hesabim/paketlerim/karsilastir/">Paketlerim</a>'de.</span></p></div><div class="paket-eylemler"><a class="dugme birincil" href="{{kok}}hesabim/paketlerim/kademeler/"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i> Kademeleri İncele</a><a class="dugme hayalet" href="{{kok}}hesabim/paketlerim/karsilastir/"><i class="fa-solid fa-table-list" aria-hidden="true"></i> Kademeleri Karşılaştır</a></div></div></div>`;
+</span></div><div class="paket-fiyat"><b>₺0</b><span>/ ay</span></div></div><div class="paket-govde"><p class="durum-satir"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> <span>Gourmet'i keşfetmeye bugün başlamak için yeterli. Süresi dolmaz, tahsilat alınmaz. Bu kademede toplam 30 özellik açık. Tam döküm <a href="{{kok}}hesabim/paketlerim/karsilastir/">Paketlerim</a>'de.</span></p></div><div class="paket-eylemler"><a class="dugme birincil" href="{{kok}}pro/"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i> Kademeleri İncele</a><a class="dugme hayalet" href="{{kok}}hesabim/paketlerim/karsilastir/"><i class="fa-solid fa-table-list" aria-hidden="true"></i> Kademeleri Karşılaştır</a></div></div></div>`;
 
 // ── FATURALAR ── süzgeç: canlıda GET ile sunucuda; prototipte her tür ayrı adres
 const TURLER = [['tumu', 'fa-list', 'Tümü'], ['uyelik', 'fa-crown', 'Üyelik'], ['rehber', 'fa-user-tie', 'Rehber'], ['iade', 'fa-rotate-left', 'İade']];
@@ -307,7 +307,8 @@ const kabuk = (icerik) => `<section class="bolum">
 export default function () {
   return SAYFALAR.map(([yol, k, tur]) => {
     const pano = { abonelik, faturalar: faturalar(tur), kartlar, iade };
-    const govde = bant({ cur: 'Ödemelerim', ikon: 'fa-solid fa-utensils', giris: 'Abonelik, faturalar, kayıtlı kartlar ve iade talepleri tek adreste. Sekme değişir, kimlik kartın yerinde kalır.', serit: gourmetSayac() })
+    // Gastro g-odemelerim kimlik kartı: paket rozeti kademe ikonuyla, rütbe rozeti yok
+    const govde = gastroKimlik(bant({ cur: 'Ödemelerim', ikon: 'fa-solid fa-utensils', giris: 'Abonelik, faturalar, kayıtlı kartlar ve iade talepleri tek adreste. Sekme değişir, kimlik kartın yerinde kalır.', serit: gourmetSayac() }))
       + gastroRay('od', 'Ödemelerim bölümleri', SEKME, k)
       + `<div class="modul-govde">
 ${SEKME.map(([a]) => gastroPano('od', a, k, kabuk(pano[a]))).join('\n')}

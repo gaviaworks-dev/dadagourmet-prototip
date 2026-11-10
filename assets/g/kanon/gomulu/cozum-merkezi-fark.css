@@ -1,7 +1,30 @@
 /* Gastro /hesabim/cozum-merkezi sayfa paketinin (kanon/gomulu/s-0a5a60aef305.css) Hesabım paketinden (s-87b1c5be9aa3.css,
-   bu zincirde yüklü) farkı: Çözüm Merkezi render'ında kullanılıp zincirde kuralı olmayan sınıflar. `faq-sec`,
-   `faq-cta-sec`, `tk-form-sec` Gastro'da da boş kural; kuralı olan tek sınıf gönderim onayı `tk-ok`. Kurallar aynen. */
+   bu zincirde yüklü) kural düzeyinde farkı: s-0a5'te olup s-87b'de birebir olmayan kurallardan, seçicisindeki bütün sınıflar
+   bu sayfada geçenler (11 Kas parite; Gastro'da boş olan `faq-sec`, `faq-cta-sec`, `tk-form-sec`, `ds-body` kuralları
+   alınmadı). Kurallar aynen. Dünkü dosyada yalnız `tk-ok` vardı: form başlığı (`fc-head`), hata özeti (`fk-summary`), talep
+   listesi (`ds-list`), SSS arama kutusu ve boş sonucu (`faq-searchbar`, `.sx`, `faq-none`) ve modül gövdesi genişliği eksikti. */
+.fc-head{margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.fc-head h2{font-size:20px;display:flex;align-items:center;gap:11px}
+.fc-head h2 i{flex:none;width:38px;height:38px;border-radius:var(--radius-md);background:var(--fit-tint);color:var(--fit-deep);display:grid;place-items:center;font-size:15px}
+.fc-head p{font-size:13px;color:var(--muted);font-weight:500;margin-top:7px}
+.fk-summary{display:flex;align-items:flex-start;gap:9px;margin:0 0 20px;padding:13px 15px;border-radius:var(--radius-md);background:#fdecea;border:1px solid #efc2bd;color:#8c1d18;font-size:13px;font-weight:600;line-height:1.5}
+.fk-summary i{font-size:14px;margin-top:1px;flex:none}
+.fk-summary[hidden]{display:none}
 .tk-ok{display:flex;align-items:flex-start;gap:10px;margin:0 0 20px;padding:13px 15px;border-radius:var(--radius-md); background:var(--bg);border:1px dashed var(--line);color:var(--slate-2);font-size:13px;font-weight:600;line-height:1.5}
 .tk-ok i{font-size:14px;margin-top:1px;flex:none;color:var(--slate-2)}
 .tk-ok a{color:var(--fit-deep);text-decoration:underline;text-underline-offset:2px}
 .tk-ok[hidden]{display:none}
+.ds-list{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq-searchbar{padding:26px 0 0}
+.faq-searchbar .faq-search .sx{background:var(--bg);color:var(--slate)}
+.faq-searchbar .faq-search .sx:hover{background:var(--line)}
+.faq-search .sx{flex:none;width:40px;height:42px;padding:0;border-radius:var(--radius-sm);border:none;background:rgba(255,255,255,.14);color:#fff;font-size:14px;cursor:pointer;display:none;place-items:center;transition:background .2s var(--ease)}
+.faq-search .sx:hover{background:rgba(255,255,255,.26)}
+.faq-search .sx:focus-visible{outline:3px solid var(--fit-bright);outline-offset:2px}
+/* Dalga 2 mobil · hesap: SSS arama girdisi 39px, temizle düğmesi 40x42; dokunmatikte 44 */
+@media (pointer:coarse){.faq-search>input{min-height:44px}.faq-search .sx{width:44px;height:44px}}
+.faq-none{display:none;max-width:860px;margin:0 auto;text-align:center;padding:56px 20px 50px;background:var(--paper);border:1.5px dashed #ddd;border-radius:var(--radius-lg)}
+.faq-none h3{font-size:20px;margin-bottom:8px}
+.faq-none p{font-size:14px;color:var(--muted);font-weight:500;max-width:400px;margin:0 auto 22px;line-height:1.55}
+.modul-govde .pf-tabbar.hs-rail, .modul-govde .ds-body .wrap > *{max-width:860px;margin-inline:auto}
+.modul-govde .pf-tabbar.hs-rail{margin-block:0}

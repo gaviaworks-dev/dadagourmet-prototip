@@ -15,8 +15,8 @@
   document.head.appendChild(kimlik);
   /* İşletme Paneli (`data-panel="isletme"`) girişi mekân sahibi rolü seçili açılır */
   if (document.documentElement.dataset.uyeSayfa && !uye) { location.replace(kok + 'giris/?' + (document.documentElement.dataset.panel === 'isletme' ? 'rol=isletme&' : '') + 'donus=' + encodeURIComponent(document.documentElement.dataset.yol + '/')); }
-  /* Demo rolleri (Diet prototipindeki düzen): üye Gurme Panelim'e, mekân sahibi İşletme Paneli'ne, yönetici Yönetim'e iner */
-  var ROL_EV = { uye: 'hesabim/gurme-panelim/', isletme: 'isletme/', yonetici: 'yonetim/' };
+  /* Demo rolleri (canlı giriş: Kullanıcı | İşletme): üye Gurme Panelim'e, mekân sahibi İşletme Paneli'ne iner. Yönetici rolü yok (Beyar, 11 Kas); eski oturumdaki `yonetici` üyeye düşer */
+  var ROL_EV = { uye: 'hesabim/gurme-panelim/', isletme: 'isletme/' };
   var rolOku = function () { try { var r = localStorage.getItem('dg-rol'); return ROL_EV[r] ? r : 'uye'; } catch (e) { return 'uye'; } };
   window.dgRol = rolOku;
   /* Canlıda giriş ve kayıt ekranı oturumluya açılmaz, kendi alanına yönlenir */
@@ -54,13 +54,163 @@
     if (yerel(adres) && !/\/assets\//.test(adres)) { return Promise.resolve(yanit()); }
     return ozFetch(girdi, ayar);
   };
-  var bildir = function (metin) {
+  /* Bildirim: `bildir(metin, 'uyari')` uyarı/hata kipinde (Dalga 2 mobil · genel, 11 Kas). Kanon `#keToast` tek kipli: ikon hep yeşil onay,
+     "Devam etmek için en az bir ortam seç." gibi uyarılar da onayla çıkıyordu. Uyarıda ikon kanonun hata ikonu (`fa-circle-exclamation`,
+     telefon alanı hata satırıyla aynı) ve rengi koyu zeminde okunan kanon sarısı (`--yellow`; kural prototip.css); kapanınca onay ikonuna döner */
+  var bildir = function (metin, tur) {
     var t = document.getElementById('keToast'), m = document.getElementById('keToastMsg');
     if (!t || !m) { return; }
+    var uyari = tur === 'uyari', i = t.querySelector('i');
+    t.classList.toggle('uyari', uyari); t.setAttribute('role', uyari ? 'alert' : 'status');
+    if (i) { i.classList.toggle('fa-circle-exclamation', uyari); i.classList.toggle('fa-circle-check', !uyari); }
     m.textContent = metin; t.classList.add('show', 'on');
-    clearTimeout(bildir.z); bildir.z = setTimeout(function () { t.classList.remove('show', 'on'); }, 2800);
+    clearTimeout(bildir.z); bildir.z = setTimeout(function () { t.classList.remove('show', 'on'); setTimeout(function () { if (!t.classList.contains('show')) { t.classList.remove('uyari'); t.setAttribute('role', 'status'); if (i) { i.classList.remove('fa-circle-exclamation'); i.classList.add('fa-circle-check'); } } }, 350); }, 2800);
   };
-  /* Altbilgi perdesi kaldırıldı (H4, Beyar 10 Kas): altbilgi normal akışta, kural prototip.css'te. Ana içeriğe alt boşluk yazılmaz */
+  /* Altbilgi perdesi (H4, Beyar 11 Kas; 10 Kas'taki normal akış kararı geri alındı). Canlı Gastro portal betiğinin ve `gastro/altbilgi-perde.js`in
+     işi tek yerde, her zincirde (üye zinciri ikisini de yüklemiyor): ≥641'de altbilgi sabitse `#pageMain` alt boşluğu altbilgi boyu, altbilgi
+     pencereden uzunsa köke `altbilgi-akista` (altbilgi akışa döner). Kurallar prototip.css'te. Altbilgi boyu sonradan değişince (yazı tipi,
+     pencere, çerez bandı) ResizeObserver yeniden ölçer: boşluk eski boyda kalırsa sayfa sonunda altbilginin üstü içeriğin altında kalıyordu */
+  var perdeAyarla = function () {
+    var f = document.querySelector('.footer.orange'), m = document.getElementById('pageMain'); if (!f || !m) { return; }
+    var genis = window.matchMedia('(min-width:641px)').matches;
+    document.documentElement.classList.toggle('altbilgi-akista', genis && f.offsetHeight > window.innerHeight);
+    var bosluk = genis && getComputedStyle(f).position === 'fixed' ? f.offsetHeight + 'px' : '';
+    if (m.style.marginBottom !== bosluk) { m.style.marginBottom = bosluk; }
+  };
+  document.addEventListener('DOMContentLoaded', function () {
+    perdeAyarla();
+    var f = document.querySelector('.footer.orange'); if (!f) { return; }
+    if (window.ResizeObserver) { new ResizeObserver(perdeAyarla).observe(f); }
+    /* Klavye odağı perde hâlindeki altbilgiye girince sayfa sona iner, yoksa odaklanan bağ içeriğin altında kalır (Diet prototipi `ortak.js`) */
+    f.addEventListener('focusin', function () { if (getComputedStyle(f).position === 'fixed') { window.scrollTo(0, document.documentElement.scrollHeight); } });
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(perdeAyarla); }
+  });
+  window.addEventListener('load', perdeAyarla); window.addEventListener('resize', perdeAyarla);
+  /* Başlığın saydam (tepede) kipi (K-KIRINTI, 11 Kas). Gastro kopyası `dm-kabuk.js`, `app` ve `parallax` betikleri hero'lu sayfada başlığı
+     scrollY < 60 boyunca saydam tutuyor; kırıntı 15px kaydırmada saydam başlığın altına girip logonun üstünden geçiyordu (60px'e kadar).
+     Canlı Gastro'nun yeni kuralı (`/tarifler` <head> satır içi betiği, ölçüldü 11 Kas): başlık yalnız scrollY <= 0'da saydam, eski üç bağlayıcı
+     devre dışı (`__dmKabuk`, `data-at-top-bound`). İşaret ertelenmiş betiklerden önce (`interactive`) konur, kural tek yerde kalır.
+     Yalnız `at-top`: `tepede` kanon başlığının (`.ikon-dugme`, `.ana-menu`) kipi, prototip başlığında hiç basılmıyordu, görünüm aynı kalır */
+  window.__dmKabuk = true;
+  var baslikTepede = function () {
+    var h = document.querySelector('.header'); if (!h) { return; }
+    h.dataset.atTopBound = '1';
+    /* Hero ölçütü üç eski bağlayıcının birleşimi: `data-hero` (dm-kabuk, parallax), `data-fit-over`, `has-dark-hero` (app; doğrulama bandı yoksa) */
+    var b = document.body;
+    var hero = h.getAttribute('data-hero') === '1' || (b && (b.getAttribute('data-fit-over') === '1' || (b.classList.contains('has-dark-hero') && !document.querySelector('[data-verify-banner]'))));
+    var tepede = hero && window.scrollY <= 0 && location.search.indexOf('hdr=solid') === -1;
+    h.classList.toggle('at-top', tepede);
+  };
+  document.addEventListener('readystatechange', function () { var h = document.readyState !== 'loading' && document.querySelector('.header'); if (h) { h.dataset.atTopBound = '1'; } });
+  window.addEventListener('scroll', baslikTepede, { passive: true }); window.addEventListener('pageshow', baslikTepede);
+  document.addEventListener('DOMContentLoaded', baslikTepede); window.addEventListener('load', baslikTepede);
+  /* Telefon maskesi (K8, 11 Kas): ortak Gastro maskesi (`f6/telefon-maskesi.js`, `gastro/telefon-alani.js`) yalnız 5 ile başlayan cep
+     numarası kabul ediyordu. Canlı Gourmet sunucusu sabit hattı da alıyor (`KayitIstegi`, `ProfilIstegi`: 7-15 rakam; iletişim ve işletme
+     başvurusu `[0-9+() .-]{7,40}`) ve canlı `kimlik.js` maskesi ilk haneye bakmıyor. Kural: TR cep (5xx), alan kodlu sabit hat (2xx, 3xx, 4xx),
+     0850 / 0800 ve 444 numaraları; hepsi canlı kuralın alt kümesi. Biçim 3-3-2-2, 444 numarası 444 X XXX. Ülke seçici Gastro'daki gibi TR'ye kilitli.
+     Gastro dosyaları donör kopyası olduğu için değişmedi: `f6` maskesi alana `data-telefon-maskesi` görünce bağlanmaz (alanlar betikten önce,
+     `interactive` anında işaretlenir), `GastroTelefonAlani` sarılır. +90 öneki olmayan alanda (rezervasyon) numara 0 ile yazılır.
+     İşletme paneli alanları (`inputmode="tel"`, canlıda serbest metin) yalnız denetlenir, biçimlenmez: panel değişikliği metinden kıyaslıyor */
+  var TEL_SECICI = 'input[type="tel"], input[data-tel-mask], input[inputmode="tel"]';
+  var TEL_BICIM = 'Geçerli bir telefon numarası gir (cep, sabit hat, 0850 ya da 444 numarası).';
+  var TEL_EKSIK = 'Telefon numarası 10 hane olmalı (444 numarası 7 hane).';
+  var TEL_KILIT = 'Şu an yalnız Türkiye (+90) numaraları kaydedilebiliyor.';
+  var telHane = function (ham) {
+    var d = String(ham == null ? '' : ham).replace(/\D+/g, '');
+    while (d.charAt(0) === '0') { d = d.slice(1); }
+    if (d.slice(0, 2) === '90' && d.length > 10) { d = d.slice(2); }
+    return d.slice(0, d.slice(0, 3) === '444' ? 7 : 10);
+  };
+  var telBicim = function (d) {
+    if (d.slice(0, 3) === '444') { return [d.slice(0, 3), d.slice(3, 4), d.slice(4, 7)].filter(Boolean).join(' '); }
+    return [d.slice(0, 3), d.slice(3, 6), d.slice(6, 8), d.slice(8, 10)].filter(Boolean).join(' ');
+  };
+  /* Önek: 2-5 ile başlayan alan kodu ya da cep; 8 ile yalnız 800 ve 850 */
+  var telOnek = function (d) { return /^[2-5]/.test(d) || /^8(?:$|[05](?:$|0))/.test(d); };
+  var telMesaj = function (d, odakGitti) {
+    if (!d) { return ''; }
+    if (!telOnek(d)) { return TEL_BICIM; }
+    return odakGitti && d.length < (d.slice(0, 3) === '444' ? 7 : 10) ? TEL_EKSIK : '';
+  };
+  window.dgTelefon = { hane: telHane, bicim: telBicim, mesaj: telMesaj };
+  /* İmleç: yeniden biçimlemeden sonra imleçten SONRAKİ hane sayısı korunur (başa 0 eklense de imleç kaymaz) */
+  var telYaz = function (g, metin, imlec) {
+    var sonra = imlec && g.selectionStart != null ? g.value.slice(g.selectionStart).replace(/\D+/g, '').length : -1;
+    if (g.value === metin) { return; }
+    g.value = metin;
+    if (sonra < 0 || document.activeElement !== g) { return; }
+    var y = metin.length; for (var n = 0; y > 0 && n < sonra; y--) { if (/\d/.test(metin.charAt(y - 1))) { n++; } }
+    try { g.setSelectionRange(y, y); } catch (e) { /* type=tel seçim taşımayabilir */ }
+  };
+  /* Hata satırı: alanın kendi düğümü (`aria-describedby`), yoksa sayfanın hata sınıfından üretilir ve hata bitince sökülür (f6 düzeni) */
+  var TEL_HATA = { 'giris-hata': 'acik', 'alan-hata': 'goster', 'fk-hata': 'show', 'fk-error': null, 'fk-err': null };
+  var telHataSinif = function (e) { return (e.className || '').split(/\s+/).filter(function (s) { return Object.prototype.hasOwnProperty.call(TEL_HATA, s); })[0] || null; };
+  var telHata = function (g, metin) {
+    var sarmal = g.closest('.alan-telefon'), d = null;
+    (g.getAttribute('aria-describedby') || '').split(/\s+/).forEach(function (id) { var x = id && document.getElementById(id); if (!d && x && telHataSinif(x)) { d = x; } });
+    if (!d && g._dgTelHata && g._dgTelHata.parentNode) { d = g._dgTelHata; }
+    if (metin) {
+      if (!d) {
+        var ornek = (g.closest('form') || document).querySelector('.giris-hata,.alan-hata,.fk-hata,.fk-error,.fk-err');
+        d = document.createElement('p'); d.className = (ornek && telHataSinif(ornek)) || (g.classList.contains('alan-girdi') ? 'alan-hata' : 'fk-error');
+        d.setAttribute('role', 'alert'); d.setAttribute('data-telefon-hatasi', ''); d.innerHTML = '<i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span></span>';
+        (sarmal || g).insertAdjacentElement('afterend', d); g._dgTelHata = d;
+      }
+      if (d.hasAttribute('hidden') && !d.hasAttribute('data-telefon-hatasi')) { d.setAttribute('data-telefon-gizle', ''); }
+      var s = d.querySelector('span'); if (s) { s.textContent = metin; } else { d.textContent = ' ' + metin; }
+      if (TEL_HATA[telHataSinif(d)]) { d.classList.add(TEL_HATA[telHataSinif(d)]); }
+      d.removeAttribute('hidden'); g.setAttribute('aria-invalid', 'true');
+      if (sarmal) { sarmal.classList.add('has-error'); } if (g.classList.contains('alan-girdi')) { g.classList.add('hatali'); }
+      return;
+    }
+    if (d && d.hasAttribute('data-telefon-hatasi')) { d.parentNode.removeChild(d); g._dgTelHata = null; }
+    else if (d) { if (TEL_HATA[telHataSinif(d)]) { d.classList.remove(TEL_HATA[telHataSinif(d)]); } if (d.hasAttribute('data-telefon-gizle')) { d.setAttribute('hidden', ''); } }
+    g.removeAttribute('aria-invalid'); if (sarmal) { sarmal.classList.remove('has-error'); } g.classList.remove('hatali');
+  };
+  var telBagla = function (g) {
+    if (g.dataset.dgTel || g.dataset.telefonMaskesi) { return; }
+    g.dataset.dgTel = '1'; g.dataset.telefonMaskesi = '1';
+    var sarmal = g.closest('.alan-telefon'), sifirli = !sarmal, bicimli = g.type === 'tel' || g.hasAttribute('data-tel-mask');
+    if (sarmal) {
+      [].forEach.call(sarmal.querySelectorAll('.alan-ulke'), function (b) { b.disabled = true; b.setAttribute('aria-disabled', 'true'); b.setAttribute('aria-expanded', 'false'); b.title = TEL_KILIT; });
+      var k = sarmal.querySelector('.alan-ulke-katman'); if (k) { k.setAttribute('hidden', ''); }
+      var u = sarmal.querySelector('input[type="hidden"][name="telefon_ulke"],input[type="hidden"][name="telefonUlke"],input[type="hidden"][name="ulke"]'); if (u) { u.value = 'TR'; }
+    }
+    var gizli = sarmal && sarmal.querySelector('input[type="hidden"][name="telefon"]');
+    if (!g.getAttribute('inputmode')) { g.setAttribute('inputmode', 'numeric'); }
+    if (bicimli && !g.getAttribute('autocomplete')) { g.setAttribute('autocomplete', 'tel-national'); }
+    var uygula = function (imlec) {
+      var d = telHane(g.value); if (!bicimli) { return; }
+      telYaz(g, d ? (sifirli && d.slice(0, 3) !== '444' ? '0' : '') + telBicim(d) : (sifirli && /^\s*0/.test(g.value) ? '0' : ''), imlec);
+      if (gizli) { gizli.value = d; }
+    };
+    var denetle = function (odak) { telHata(g, telMesaj(telHane(g.value), odak)); };
+    uygula(false); denetle(false);
+    g.addEventListener('input', function () { uygula(true); denetle(false); });
+    g.addEventListener('blur', function () { uygula(false); denetle(true); });
+    g.addEventListener('change', function () { uygula(false); denetle(false); });
+  };
+  var telTara = function () { [].forEach.call(document.querySelectorAll(TEL_SECICI), telBagla); };
+  /* `interactive` ertelenmiş betiklerden önce gelir: f6 maskesi işaretli alana bağlanmaz */
+  document.addEventListener('readystatechange', function () { if (document.readyState !== 'loading') { telTara(); } });
+  document.addEventListener('focusin', function (e) { if (e.target && e.target.matches && e.target.matches(TEL_SECICI)) { telBagla(e.target); } }, true);
+  /* İletişim sayfası ülke seçicili ortak bileşeni (`GastroTelefonAlani`) kullanıyor: Türkiye seçiliyken biçim ve denetim yukarıdaki kuraldan,
+     başka ülkede bileşenin kendi kuralı. Bileşenin dinleyicileri önce bağlanır, bunlar sonra koşar */
+  var telAlaniSar = function (asil) {
+    return { dgSarili: true, bagla: function (s) {
+      var g = s.tel, tr = s.trMi;
+      var ic = asil.bagla({ tel: g, trMi: tr, kod: s.kod, hata: function (m) { if (!tr()) { s.hata(m); } } });
+      var uygula = function (imlec) { if (tr()) { telYaz(g, telBicim(telHane(g.value)), imlec); } };
+      var denetle = function (odak) { if (tr()) { s.hata(telMesaj(telHane(g.value), odak)); } };
+      g.addEventListener('input', function () { uygula(true); denetle(false); });
+      g.addEventListener('blur', function () { uygula(false); denetle(true); });
+      g.addEventListener('change', function () { uygula(false); denetle(false); });
+      uygula(false);
+      return { uygula: function (k) { ic.uygula(k); uygula(k); }, denetle: function (o) { ic.denetle(o); denetle(o); } };
+    } };
+  };
+  var telAlani;
+  try { Object.defineProperty(window, 'GastroTelefonAlani', { configurable: true, get: function () { return telAlani; }, set: function (v) { telAlani = v && v.bagla && !v.dgSarili ? telAlaniSar(v) : v; } }); } catch (e) { /* tanımlanamazsa bileşen kendi kuralıyla kalır */ }
   /* Taşan sekme rayında etkin sekme görünür alana alınır (yalnız rayın kendisi kayar, sayfa kaymaz); sekme değişince de */
   var rayOrtala = function (s) {
     var r = s && s.closest('.sekmeler[data-scroll-fade]'); if (!r || r.scrollWidth <= r.clientWidth) { return; }
@@ -79,6 +229,88 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { cekmece(false); } });
     [].forEach.call(d.querySelectorAll('.d-sub a,.d-item > a.d-link,.drawer-foot a,.drawer-foot > button'), function (e) { e.addEventListener('click', function () { cekmece(false); }); });
   });
+  /* ==== Dalga 2 mobil · kabuk katmanları (11 Kas) ====
+     Arka plan kilidi: Gastro/Gourmet kabuğu `html,body{overflow-x:clip}` kullandığı için gövdeye yazılan `overflow:hidden` görüntü alanına
+     geçmiyor; çekmece, süzgeç sayfası, Görüş Bildir ve giriş kapısı açıkken sayfa arkada kayıyordu (390'da 600 → 1794). Kilit köke sınıfla
+     (`html.dg-kilit`, kural prototip.css). Çekmece ve iki pencere için odak: açılınca içeri (kapat düğmesi), Tab içeride döner, kapanınca açan
+     öğeye döner; kapalı çekmece `inert` (ekran dışındaki bağlar Tab sırasından çıkar). Süzgeç sayfasının odağı kendi denetleyicisinde (`suzgec`).
+     Hangi betik açarsa açsın (portal, üye zinciri, dm-gorus) sınıf değişimi izlenir, tek yer */
+  var KATMAN = [
+    { s: '#drawer', c: 'open', odak: true, ac: '#hamburger' },
+    { s: '#lstSide', c: 'open', odak: false },
+    { s: '#fbModal', c: 'show', odak: true },
+    { s: '#lgGate', c: 'show', odak: true }
+  ];
+  var katmanAcik = function (k) { var e = document.querySelector(k.s); return !!(e && e.classList.contains(k.c)); };
+  var katmanOnce = {};
+  var katmanGuncelle = function () {
+    var herhangi = false;
+    KATMAN.forEach(function (k) {
+      var e = document.querySelector(k.s); if (!e) { return; }
+      var acik = e.classList.contains(k.c); herhangi = herhangi || acik;
+      if (k.s === '#drawer') { if (acik) { e.removeAttribute('inert'); } else { e.setAttribute('inert', ''); } }
+      if (!k.odak || !!katmanOnce[k.s] === acik) { return; }
+      if (acik) {
+        katmanOnce[k.s] = document.activeElement && document.activeElement !== document.body ? document.activeElement : (k.ac && document.querySelector(k.ac)) || true;
+        setTimeout(function () { if (!e.contains(document.activeElement)) { var l = odaklanir(e), x = e.querySelector('#drawerClose, #fbClose, [data-lg-close]'); x = x && l.indexOf(x) >= 0 ? x : l[0]; if (x) { x.focus({ preventScroll: true }); } } }, 60);
+      } else {
+        var don = katmanOnce[k.s]; katmanOnce[k.s] = null;
+        if (don && don.focus && document.contains(don) && (e.contains(document.activeElement) || document.activeElement === document.body)) { don.focus({ preventScroll: true }); }
+      }
+    });
+    document.documentElement.classList.toggle('dg-kilit', herhangi);
+  };
+  document.addEventListener('DOMContentLoaded', function () {
+    var gozcu = window.MutationObserver ? new MutationObserver(katmanGuncelle) : null;
+    KATMAN.forEach(function (k) { var e = document.querySelector(k.s); if (e && gozcu) { gozcu.observe(e, { attributes: true, attributeFilter: ['class'] }); } });
+    katmanGuncelle();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab') { return; }
+    var k = KATMAN.filter(function (x) { return x.odak && katmanAcik(x); })[0]; if (!k) { return; }
+    var p = document.querySelector(k.s), l = odaklanir(p), a = document.activeElement; if (!l.length) { return; }
+    if (!p.contains(a)) { e.preventDefault(); l[0].focus(); } else if (e.shiftKey && a === l[0]) { e.preventDefault(); l[l.length - 1].focus(); } else if (!e.shiftKey && a === l[l.length - 1]) { e.preventDefault(); l[0].focus(); }
+  });
+  /* Yazım kipi (sanal klavye): telefonda ve dokunmatik tablette (≤1024) form alanı odaktayken ya da görsel görüntü alanı klavye yüzünden
+     belirgin küçüldüğünde (`visualViewport.height` < `innerHeight` × 0,75) alt çubuk, Mentör düğmesi, Route düğmesi ve başa dön çekilir
+     (kural prototip.css). Klavye görüntü alanını daralttığında sabit alt öğeler odaktaki alanı, hata satırını ve açık tarih seçicinin günlerini
+     örtüyordu (İletişim, Kayıt, Hesap Ayarları, Çözüm Merkezi). Odak alanlar arasında gezerken titremesin diye çıkış bir tık ertelenir; masaüstü etkilenmez */
+  var YAZIM = 'input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]):not([type=reset]):not([type=file]):not([type=range]):not([type=color]):not([type=hidden]),textarea,select,[contenteditable="true"],[contenteditable=""]';
+  var yazimKapsam = window.matchMedia('(max-width:640px), (pointer:coarse) and (max-width:1024px)');
+  /* Açık tarih seçici ve açılır liste içindeki düğmeler de yazım sayılır: gün seçerken Mentör düğmesi geri gelip günleri örtmesin */
+  var ACILIR = '.alan-tarih-katman,.acilir-yuzey,[role=listbox],[role=grid]';
+  var yazimMi = function (e) { return !!(e && e.matches && ((e.matches(YAZIM) && !e.readOnly && !e.disabled) || e.closest(ACILIR))); };
+  var yazimOdak = false, yazimKlavye = false;
+  var yazimYaz = function () { document.documentElement.classList.toggle('dg-yazim', yazimKapsam.matches && (yazimOdak || yazimKlavye)); };
+  document.addEventListener('focusin', function (e) { if (yazimMi(e.target)) { yazimOdak = true; yazimYaz(); } });
+  document.addEventListener('focusout', function () { setTimeout(function () { yazimOdak = yazimMi(document.activeElement); yazimYaz(); }, 120); });
+  if (window.visualViewport) { window.visualViewport.addEventListener('resize', function () { yazimKlavye = window.visualViewport.height < window.innerHeight * 0.75; yazimYaz(); }); }
+  /* Sayfa sonu: 641–1024'te Dada Route düğmesi (sağ alt, 54px) altbilginin son satırını (imza) örtüyordu (768'de 54×32 kesişim). Başa dön
+     düğmesinin kanon kuralı (`site.js` `updateToTop`: sona 120px kala gizlenir) Route düğmesine de uygulanır; sınıf köke, kural prototip.css */
+  var sonda = function () { document.documentElement.classList.toggle('dg-sonda', document.documentElement.scrollHeight - window.innerHeight - window.scrollY <= 120); };
+  window.addEventListener('scroll', sonda, { passive: true }); window.addEventListener('resize', sonda); window.addEventListener('load', sonda);
+  /* Harita denetimleri (11 Kas, mobil-rota bulgusu): yüzen düğmeler (başa dön, Route, küçük Mentör) `bottom-clearance.js` ile çerez bandının ya da
+     alt çubuğun üstüne kalkınca harita yakınlaştırma ve bilgi düğmelerinin üstüne biniyordu (Mekânlar harita görünümü 390, çerez bandı açık:
+     başa dön "−" düğmesini 37×16 örtüyor; 768'de başa dön / Route bilgi düğmesini). Yüzen düğme görünür bir harita denetimiyle kesişirken
+     çekilir (`.dg-harita-ortusu`, kural prototip.css); kesişme bitince geri gelir. Ölçüm yalnız sayfada harita denetimi varken koşar */
+  var YUZEN = ['.to-top', '.yg-fab', '#dadaMentor'];
+  var HARITA_DENETIM = '.maplibregl-ctrl-group,.maplibregl-ctrl-attrib,.leaflet-control-zoom,.leaflet-control-attribution';
+  var haritaKare = 0;
+  var haritaBak = function () {
+    haritaKare = 0;
+    var d = [].filter.call(document.querySelectorAll(HARITA_DENETIM), function (c) { var r = c.getBoundingClientRect(); return r.width > 0 && r.bottom > 0 && r.top < window.innerHeight && c.offsetParent !== null; });
+    YUZEN.forEach(function (s) {
+      var e = document.querySelector(s); if (!e) { return; }
+      var a = e.getBoundingClientRect(), kes = a.width > 0 && (e.id !== 'dadaMentor' || e.classList.contains('mini')) && d.some(function (c) { var r = c.getBoundingClientRect(); return a.left < r.right + 4 && a.right > r.left - 4 && a.top < r.bottom + 4 && a.bottom > r.top - 4; });
+      e.classList.toggle('dg-harita-ortusu', kes);
+    });
+  };
+  var haritaIste = function () { if (!haritaKare && document.querySelector(HARITA_DENETIM)) { haritaKare = window.requestAnimationFrame(haritaBak); } };
+  window.addEventListener('scroll', haritaIste, { passive: true }); window.addEventListener('resize', haritaIste);
+  document.addEventListener('click', function () { setTimeout(haritaIste, 350); });
+  /* Görünüm değişimi, çerez bandının açılıp kapanması ve `--bc-lift` geçişi kaydırmasız olur: harita varken yarım saniyede bir yeniden bakılır */
+  setInterval(haritaIste, 500);
+  /* ==== /Dalga 2 mobil · kabuk katmanları ==== */
   /* Süzgeç sayfası (≤1024 alt sayfa, Mekânlar ve Etkinlikler): Gastro `liste.js` davranışı tek yerde.
      Aç: #btnFilter. Kapa: #sheetClose, #sheetApply, örtü, Esc. Açıkken gövde kaymaz, odak sayfaya geçer; kapanınca açan düğmeye döner */
   var suzgecDon = null;
@@ -168,6 +400,15 @@
     if (yok('oneri', 'ornek-oneri-e')) { koy('oneri', { id: 'ornek-oneri-e', tur: 'etkinlik', ad: 'Örnek etkinlik önerisi', yer: 'Urla, İzmir', durum: 'yayinda', ornek: true }); koy('puan', { id: 'ornek-oneri-e', ad: 'Örnek etkinlik önerisi', tutar: 50, durum: 'kesin', ornek: true }); }
     v.tohum = 2; sakla(v);
   })();
+  /* Gurme Favorilerim örnekleri (favori ajanı, 11 Kas): eski sabit iki satırın yerine depoda iki `ornek` kayıt, bir kez yazılır; çıkarılan örnek
+     geri gelmez. Kimlikler mekân kartı, mekân detayı ve Ne Yenir düğmelerinin yazdığı kimliklerle aynı (`mekan-<slug>`, `tabak-<tabak>`): tek depo */
+  (function () {
+    var v = hepsi(); if (v.favoriTohum) { return; }
+    var l = v.favori = v.favori || [], yok = function (id) { return !l.some(function (k) { return k.id === id; }); };
+    if (yok('mekan-mikla')) { l.push({ id: 'mekan-mikla', tur: 'Mekân', ad: 'Mikla', mekan: 'Beyoğlu, İstanbul', ornek: true }); }
+    if (yok('tabak-otlu-kuzu')) { l.push({ id: 'tabak-otlu-kuzu', tur: 'Tabak', ad: 'Otlu kuzu', mekan: 'Mikla', ornek: true }); }
+    v.favoriTohum = 1; sakla(v);
+  })();
   /* Giriş isteyen eylem: misafiri girişe götürür, sonra aynı sayfaya döner */
   window.dgUye = function () { if (uye) { return true; } location.href = kok + 'giris/?donus=' + encodeURIComponent((document.documentElement.dataset.yol || '') + '/'); return false; };
   document.addEventListener('DOMContentLoaded', function () {
@@ -206,7 +447,7 @@
       var ad = f.elements.name.value.trim() || (kip === 'etkinlik' ? 'Etkinlik önerisi' : 'Mekân önerisi'), id = 'oneri-' + Date.now();
       window.dgKayit.ekle('oneri', { id: id, tur: kip, ad: ad, yer: f.elements.location.value.trim(), gun: kip === 'etkinlik' && f.elements.tarih ? f.elements.tarih.value : '', durum: 'inceleniyor' });
       window.dgPuan.ekle(id, ad + ' önerisi', window.dgPuan.KURAL.oneri);
-      f.reset(); document.getElementById('moClose').click();
+      f.reset(); var mf = document.getElementById('moFile'); if (mf) { mf.dispatchEvent(new Event('change', { bubbles: true })); } document.getElementById('moClose').click();
       bildir('Önerin Topluluk Katkılarım\'a işlendi. +' + window.dgPuan.KURAL.oneri + ' bekleyen puan.');
       return;
     }
@@ -227,22 +468,99 @@
     if (!tarih) { mo.querySelector('#moCity').closest('.mo-field').insertAdjacentHTML('afterend', '<div class="mo-field" id="moTarihAlan"><label for="moTarih">Tarih</label><input type="date" name="tarih" id="moTarih"></div>'); tarih = mo.querySelector('#moTarih'); }
     mo.querySelector('#moTarihAlan').hidden = !etk; tarih.required = etk; f.dataset.kip = kip;
   };
-  /* Konum penceresi: canlı `#lkModal` DOM'u. Seçim bu tarayıcıda kalır, sunucuya gitmez. Tarayıcı izni yalnız düğmeye basınca istenir. */
-  var konumAc = function (ac) { var m = document.getElementById('lkModal'), o = document.getElementById('lkOverlay'); if (!m) { return; } m.classList.toggle('show', ac); m.classList.toggle('open', ac); o.classList.toggle('show', ac); o.classList.toggle('open', ac); m.toggleAttribute('inert', !ac); };
+  /* Pencere denetleyicisi (K6, 11 Kas): canlı `site.js` `createDialogController`. Açılınca ilk öğeye odak, Esc kapatır, Tab pencerede döner,
+     sayfa kaymaz, kapanınca odak açan öğeye döner. Öneri (`#moModal`, Mekân/Etkinlik Öner) ve konum (`#lkModal`) pencereleri kullanır */
+  function odaklanir(k) { return [].filter.call(k.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'), function (x) { return x.offsetWidth > 0 || x.offsetHeight > 0; }); };
+  var pencere = function (pid, oid) {
+    var d = { acik: false }, once = null;
+    var tus = function (e) {
+      var p = document.getElementById(pid);
+      if (e.key === 'Escape') { d.kapa(); return; }
+      if (e.key !== 'Tab') { return; }
+      var l = odaklanir(p), a = document.activeElement; if (!l.length) { return; }
+      if (!p.contains(a)) { e.preventDefault(); l[0].focus(); } else if (e.shiftKey && a === l[0]) { e.preventDefault(); l[l.length - 1].focus(); } else if (!e.shiftKey && a === l[l.length - 1]) { e.preventDefault(); l[0].focus(); }
+    };
+    d.ac = function () {
+      var p = document.getElementById(pid), o = document.getElementById(oid); if (!p || !o) { return; }
+      if (!d.acik) { once = document.activeElement; document.addEventListener('keydown', tus); }
+      d.acik = true; p.removeAttribute('inert'); p.classList.add('show', 'open'); o.classList.add('show', 'open'); document.documentElement.style.overflow = 'hidden';
+      setTimeout(function () { var l = odaklanir(p); if (l[0] && !p.contains(document.activeElement)) { l[0].focus(); } }, 80);
+    };
+    d.kapa = function () {
+      var p = document.getElementById(pid), o = document.getElementById(oid); if (!p || !d.acik) { return; }
+      d.acik = false; p.classList.remove('show', 'open'); o.classList.remove('show', 'open'); p.setAttribute('inert', ''); document.documentElement.style.overflow = '';
+      document.removeEventListener('keydown', tus); if (once && once.focus && document.contains(once)) { once.focus(); } once = null;
+    };
+    return d;
+  };
+  var moP = pencere('moModal', 'moOverlay');
+  /* Aynı denetleyici sayfa betiklerine açık (favori ajanı, 11 Kas): Gurme Favorilerim › Favori ekle penceresi `dgDiyalog(pencereId, örtüId)` ile kurulur */
+  window.dgDiyalog = pencere;
+  /* Fotoğraf seçilince etiket dosya adını gösterir (canlı `site.js` `moFile` dinleyicisi) */
+  document.addEventListener('change', function (e) {
+    if (e.target.id !== 'moFile') { return; }
+    var l = document.getElementById('moUpLabel'), w = document.getElementById('moUp'), f = e.target.files && e.target.files[0];
+    if (l) { l.textContent = f ? f.name : (l.getAttribute('data-default') || l.textContent); } if (w) { w.classList.toggle('has-file', !!f); }
+  });
+  /* Konum (E2, Beyar 11 Kas): canlı `#lkModal` "Neredesin?" ve `site.js` akışı. "Konumumu Kullan" tarayıcı konumunu canlının seçenekleriyle ister;
+     başarıda pencere kapanır, canlı başarı metni çıkar. Ret, zaman aşımı ve desteklenmeyen tarayıcı canlı metinleriyle bildirilir, odak Türkiye satırına
+     geçer (canlıda da), ülke sessizce Türkiye kalır. Canlı koordinatı kullanmaz (ters kodlama yok); prototip koordinatı yalnız bu tarayıcıda tutar
+     (`dg-konum`), ülkeyi `ulke.js` gömülü tablodan bulur, dışarı istek yok. Listeden seçim ve "Şimdi değil" canlıda `/konum/sec`, `/konum/atla` ile
+     `dadagourmet_konum` çerezine yazılır; burada aynı değerler (`tr`, `atlandi`) `dg-konum-tercihi`ne. İlk giriş: canlı kabuğun donörü (`gourmet-konum.js`, A5)
+     pencereyi ilk ziyarette çerez bandı kapandıktan sonra açar; burada da öyle, tarayıcıda bir kez. İzin zaten verilmişse pencere açılmadan konum alınır.
+     `?ulke=` (test) varken izin istenmez */
+  var lk = pencere('lkModal', 'lkOverlay');
+  var konumAc = function (ac) { if (ac) { lk.ac(); } else { lk.kapa(); } };
   window.dgKonumAc = konumAc;
+  var depoOku = function (k) { try { return localStorage.getItem(k); } catch (x) { return null; } };
+  var depoYaz = function (k, v) { try { if (v === null) { localStorage.removeItem(k); } else { localStorage.setItem(k, v); } } catch (x) { /* depo kapalı */ } };
+  var konumYay = function (d) { document.dispatchEvent(new CustomEvent('dg-konum', { detail: d })); };
+  var satirIsaretle = function () { var r = document.getElementById('lkRow-tr'), s = depoOku('dg-konum-tercihi') === 'tr'; if (r) { r.classList.toggle('is-selected', s); r.setAttribute('aria-selected', s ? 'true' : 'false'); } };
+  var konumIste = function (sessiz) {
+    var m = document.getElementById('lkModal'), metin = function (k) { return m ? m.dataset[k] : ''; };
+    if (!navigator.geolocation) { if (!sessiz) { bildir(metin('msgGeoUnsupported'), 'uyari'); } return; }
+    navigator.geolocation.getCurrentPosition(function (k) {
+      var d = { lat: k.coords.latitude, lng: k.coords.longitude };
+      depoYaz('dg-konum', JSON.stringify(d)); depoYaz('dg-konum-tercihi', null); satirIsaretle();
+      konumAc(false); bildir(metin('msgGeoSuccess')); konumYay(d);
+    }, function (h) {
+      if (sessiz) { return; }
+      bildir(metin(h.code === 1 ? 'msgGeoDenied' : h.code === 3 ? 'msgGeoTimeout' : 'msgGeoGeneric'), 'uyari');
+      var tr = document.getElementById('lkRow-tr'); if (tr) { tr.focus(); }
+    }, { enableHighAccuracy: false, timeout: 7000, maximumAge: 300000 });
+  };
   var konumOlay = function (e) {
     var t = e.target; if (!t.closest) { return false; }
     if (t.closest('[data-location-trigger]')) { e.preventDefault(); konumAc(true); return true; }
-    if (t.closest('#lkClose,#lkSkip') || t.id === 'lkOverlay') { konumAc(false); return true; }
+    if (t.closest('#lkSkip')) { depoYaz('dg-konum-tercihi', 'atlandi'); satirIsaretle(); konumAc(false); konumYay(null); return true; }
+    if (t.closest('#lkClose') || t.id === 'lkOverlay' || t.id === 'lkModal') { konumAc(false); return true; }
     var m = document.getElementById('lkModal');
-    if (t.closest('#lkRow-tr')) { konumAc(false); bildir('Türkiye ' + m.dataset.msgSelectedSuffix); return true; }
-    if (t.closest('#lkGeoBtn')) {
-      if (!navigator.geolocation) { bildir(m.dataset.msgGeoUnsupported); return true; }
-      navigator.geolocation.getCurrentPosition(function (k) { konumAc(false); bildir(m.dataset.msgGeoSuccess); try { localStorage.setItem('dg-konum', JSON.stringify({ lat: k.coords.latitude, lng: k.coords.longitude })); } catch (x) { /* depo kapalı */ } document.dispatchEvent(new CustomEvent('dg-konum', { detail: { lat: k.coords.latitude, lng: k.coords.longitude } })); }, function (h) { bildir(h.code === 1 ? m.dataset.msgGeoDenied : h.code === 3 ? m.dataset.msgGeoTimeout : m.dataset.msgGeoGeneric); }, { timeout: 8000 });
-      return true;
-    }
+    if (t.closest('#lkRow-tr')) { depoYaz('dg-konum-tercihi', 'tr'); satirIsaretle(); konumAc(false); bildir('Türkiye ' + m.dataset.msgSelectedSuffix); konumYay(null); return true; }
+    if (t.closest('#lkGeoBtn')) { konumIste(false); return true; }
     return false;
   };
+  /* Ülke arama (canlı `site.js` `lkSearchInput`): listede yalnız Türkiye var, eşleşmezse canlı boş durum metni */
+  document.addEventListener('input', function (e) {
+    if (e.target.id !== 'lkSearchInput') { return; }
+    var q = e.target.value.toLocaleLowerCase('tr').trim(), r = document.getElementById('lkRow-tr'), b = document.getElementById('lkEmpty'), uyan = !q || !!(r && (r.dataset.search || '').indexOf(q) >= 0);
+    if (r) { r.hidden = !uyan; } if (b) { b.hidden = uyan; }
+  });
+  document.addEventListener('DOMContentLoaded', function () {
+    satirIsaretle();
+    if (adres.get('ulke') || !document.getElementById('lkModal') || depoOku('dg-konum-ilk') || depoOku('dg-konum-tercihi') || depoOku('dg-konum')) { return; }
+    var bant = document.getElementById('cookieBanner'), bitti = false, goruldu = false, zaman = null, gozcu = null;
+    var basla = function () {
+      if (bitti) { return; } bitti = true; if (gozcu) { gozcu.disconnect(); } clearTimeout(zaman);
+      depoYaz('dg-konum-ilk', '1');
+      var izin = navigator.permissions && navigator.permissions.query ? navigator.permissions.query({ name: 'geolocation' }) : Promise.reject(new Error('izin sorgusu yok'));
+      izin.then(function (s) { if (s.state === 'granted') { konumIste(true); } else { konumAc(true); } }, function () { konumAc(true); });
+    };
+    if (!bant) { setTimeout(basla, 700); return; }
+    /* Çerez bandı açılırsa kapanmasını bekler (donör B13-6: iki pencere üst üste binmez); bant `load`dan sonra 900 ms içinde gelmezse hemen açılır */
+    var bak = function () { if (bant.classList.contains('show')) { goruldu = true; clearTimeout(zaman); } else if (goruldu) { setTimeout(basla, 300); } };
+    gozcu = new MutationObserver(bak); gozcu.observe(bant, { attributes: true, attributeFilter: ['class'] }); bak();
+    if (!goruldu) { var sure = function () { zaman = setTimeout(function () { if (!goruldu) { basla(); } }, 900); }; if (document.readyState === 'complete') { sure(); } else { window.addEventListener('load', sure, { once: true }); } }
+  });
   /* Giriş kapısı: canlı `#lgGate` penceresi. Üyede eylem kendi betiğine düşer */
   var kapiAc = function (on, t) {
     var g = document.getElementById('lgGate'), o = document.getElementById('lgOverlay'); if (!g) { return; }
@@ -268,12 +586,13 @@
     var gorus = !etk && e.target.closest && e.target.closest('[data-feedback-open]'), fbSekme = document.getElementById('fbTab');
     if (gorus && fbSekme) { e.preventDefault(); e.stopImmediatePropagation(); fbSekme.click(); return; }
     var mo = document.getElementById('moModal'), moO = document.getElementById('moOverlay');
-    if ((oner || etk) && mo) { e.preventDefault(); e.stopImmediatePropagation(); oneriKipi(mo, etk ? 'etkinlik' : 'mekan'); mo.classList.add('show', 'open'); moO.classList.add('show', 'open'); mo.removeAttribute('inert'); if (!mo.querySelector('.mo-puan')) { mo.querySelector('.mo-foot').insertAdjacentHTML('beforebegin', '<p class="mo-puan"><i class="fa-solid fa-award" aria-hidden="true"></i> Editör onayında +' + window.dgPuan.KURAL.oneri + ' Dada Puan kesinleşir. Onaya kadar bekleyen puan olarak görünür.</p>'); } return; }
-    if (mo && (e.target === moO || (e.target.closest && e.target.closest('#moModal .fb-close,#moCancel')))) { mo.classList.remove('show', 'open'); moO.classList.remove('show', 'open'); mo.setAttribute('inert', ''); return; }
+    if ((oner || etk) && mo) { e.preventDefault(); e.stopImmediatePropagation(); oneriKipi(mo, etk ? 'etkinlik' : 'mekan'); if (!mo.querySelector('.mo-puan')) { mo.querySelector('.mo-foot').insertAdjacentHTML('beforebegin', '<p class="mo-puan"><i class="fa-solid fa-award" aria-hidden="true"></i> Editör onayında +' + window.dgPuan.KURAL.oneri + ' Dada Puan kesinleşir. Onaya kadar bekleyen puan olarak görünür.</p>'); } moP.ac(); return; }
+    if (mo && (e.target === moO || e.target === mo || (e.target.closest && e.target.closest('#moModal .fb-close,#moCancel')))) { moP.kapa(); return; }
     if (kapiOlay(e)) { return; }
     var git = e.target.closest && e.target.closest('[data-git]');
-    /* Kart içindeki düğme ve bağ kendi işini yapar; kart tıklaması onu ezmez */
-    if (git && !e.target.closest('a,button')) { location.href = git.getAttribute('data-git'); }
+    /* Kart içindeki düğme ve bağ kendi işini yapar; kart tıklaması onu ezmez. data-git'i kendisi taşıyan düğme (Giriş Yap, Ara) gezinir */
+    var gitIc = git && e.target.closest('a,button');
+    if (git && (!gitIc || gitIc === git || !git.contains(gitIc))) { location.href = git.getAttribute('data-git'); }
   }, true);
   /* Sekme şeridi kaydırılabilir: seçili sekme açılışta görünür alana gelir. Sayfa kaymaz, yalnız şerit */
   window.addEventListener('load', function () {

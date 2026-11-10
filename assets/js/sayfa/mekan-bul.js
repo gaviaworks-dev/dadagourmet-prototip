@@ -3,6 +3,8 @@
    birleşik etikette kodlardan biri yeter (ör. Otopark / Vale = otopark, ozel-otopark ya da vale).
    Oran: yalnız cevaplanan kriterler paydaya girer. Ağırlıklar canlı `MekanBulEslestirmeServisi::AGIRLIKLAR`:
    ortam (canlıda ne_icin) 40, bütçe 20, mutfak 15, her nitelik 15, şimdi açık 15, rezervasyon 10.
+   Grup eşikleri canlı `UYGUN_ESIGI` 0.8 ve `YAKIN_ESIGI` 0.4: yuvarlanmamış orana bakılır. Canlının üçüncü grubu
+   (Farklı Bir Deneyim, oran < 0.4) prototipte yok; Beyar 10 Kas iki grup.
    Konum eşleşme değil süzgeçtir: seçilen yerin dışındaki mekân listeye girmez. Hiçbir mekânda verisi olmayan seçim boş sonuç ve öneri verir. */
 (function () {
   'use strict';
@@ -14,8 +16,8 @@
   var N = $$('.wstep').length;
   /* Seçenek kutusu: ad, süzme alanı, kodlar. Kodlardan biri yeter */
   var kutu = function (i) {
-    var l = i.closest('label'), b = $('.pk-txt b', l) || $('.ft', l), f = i.dataset.f, kod = (i.dataset.kod || i.value).split(' ');
-    return { ad: b.textContent.trim(), ikon: (($('.pk-ico i', l) || {}).className || 'fa-solid fa-check').replace('fa-solid ', ''), uy: function (m) { return kod.some(function (k) { return has(m, f, k); }); } };
+    var l = i.closest('label'), b = $('.pk-txt b', l) || $('.ft', l), f = i.dataset.f, kod = (i.dataset.kod || i.value).split(' '), bayrak = $('.pk-ico img', l);
+    return { ad: b.textContent.trim(), ikon: (($('.pk-ico i', l) || {}).className || 'fa-solid fa-check').replace('fa-solid ', ''), bayrak: bayrak ? bayrak.getAttribute('src') : '', uy: function (m) { return kod.some(function (k) { return has(m, f, k); }); } };
   };
   /* Haritadan Seç tarifi: yazının içindeki il ve ilçe adları; ör. "İstanbul Havalimanı çevresi" İstanbul'u eşler */
   var tarif = '', tarifOnbellek = null;
@@ -29,13 +31,14 @@
   var km = function (a, b, c, d) { var r = Math.PI / 180, x = (d - b) * r * Math.cos((a + c) * r / 2), y = (c - a) * r; return Math.sqrt(x * x + y * y) * 6371; };
   var BUTCE = { 1: 'Ekonomik (₺)', 2: 'Orta (₺₺)', 3: 'Üst Orta (₺₺₺)', 4: 'Lüks (₺₺₺₺)' };
   var AGIRLIK = { ortam: 40, butce: 20, mutfak: 15, nitelik: 15, simdi: 15, rez: 10 };
+  var ESIK = { uygun: 0.8, yakin: 0.4 };
   var durum = { yontem: 'hepsi', il: '', ilce: '', lat: null, lng: null, mesafe: 25, butce: '', ortam: [], mutfak: [], nitelik: [], simdi: false, rez: false };
   var adim = 1;
   var secili = function (ad) { return $$('input[name="' + ad + '"]:checked').map(function (i) { return i.value; }); };
 
   /* Seçenek sayıları: her kutuda kayıtlı mekân sayısı görünür, 0 gizlenmez: boş seçim öneri verir */
   var yaz = function (i, n) { var l = i.closest('.pick'), s = $('.pk-txt small', l); if (!s) { s = document.createElement('small'); $('.pk-txt', l).appendChild(s); } s.textContent = n ? n + ' mekân' : 'Kayıt yok'; };
-  $$('input[name="ortam"],input[name="mutfak"],input[name="nitelik"]').forEach(function (i) { yaz(i, V.mekanlar.filter(kutu(i).uy).length); });
+  $$('input[name="ortam"]:not([data-fark]),input[name="mutfak"],input[name="nitelik"]').forEach(function (i) { yaz(i, V.mekanlar.filter(kutu(i).uy).length); });
   $$('input[name="butce"]').forEach(function (i) { if (!i.value) { return; } var n = V.mekanlar.filter(function (m) { return has(m, 'fiyat', i.value); }).length; var s = $('.pk-txt small', i.closest('.pick')); s.textContent = s.textContent + ' · ' + (n ? n + ' mekân' : 'kayıt yok'); });
   var ilSec = $('#mbSehir'), ilceSec = $('#mbIlce');
   V.secenek.il.forEach(function (o) { ilSec.insertAdjacentHTML('beforeend', '<option value="' + o.deger + '">' + kac(o.ad) + ' (' + o.sayi + ')</option>'); });
@@ -54,7 +57,8 @@
     /* `.dist-bar{display:flex}` hidden özniteliğini ezer; görünürlük doğrudan yazılır */
     var db = $('#mbDistBar'); db.hidden = durum.yontem !== 'mevcut'; db.style.display = db.hidden ? 'none' : '';
     $$('[data-tab-count]').forEach(function (d) { var n = $$('[data-panel="' + d.dataset.tabCount + '"] input:checked').length; d.textContent = n; d.hidden = !n; });
-    $$('.mb-acc .fct').forEach(function (g) { var n = $$('input:checked', g).length; $('.fct-dot', g).textContent = n; g.classList.toggle('has-active', n > 0); });
+    /* B9: kapalı grup başlığı seçim sayısını ve seçilenlerin kısa adlarını taşır (açıkken ad özeti gizli, CSS) */
+    $$('.mb-acc .fct').forEach(function (g) { var c = $$('input:checked', g), n = c.length; $('.fct-dot', g).textContent = n; g.classList.toggle('has-active', n > 0); $('[data-acc-ozet]', g).textContent = c.map(function (i) { return kutu(i).ad; }).join(', '); });
   };
   var sekme = function (k) {
     $$('#mbMutfakSekme .mb-tab').forEach(function (t) { var a = t.dataset.tab === k; t.classList.toggle('active', a); t.setAttribute('aria-selected', a ? 'true' : 'false'); });
@@ -66,6 +70,32 @@
     $$('#mbStepper .stp').forEach(function (s) { var a = +s.dataset.adim; s.classList.toggle('active', a === n); s.classList.toggle('done', a < n); });
     $$('#mbStepper .stp-line').forEach(function (s, i) { s.classList.toggle('done', i + 1 < n); });
     $('.wiz-solo').hidden = false; $('#mbSonuc').hidden = true;
+  };
+  /* B10 (Beyar 11 Kas): ekran değişince kaydırma belge yüksekliğine değil hedef öğeye gider. İçerik oturduktan sonra (iki rAF) ölçülür;
+     sabit başlığın alt kenarı kadar pay bırakılır, odak hedefe taşınır (preventScroll). Hareket azaltılmışsa animasyonsuz */
+  var azHareket = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var basPayi = function () { var b = $('header.kabuk-basi') || $('header'); return (b ? Math.max(0, b.getBoundingClientRect().bottom) : 0) + 16; };
+  var odakla = function (hedef, odak) {
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      var y = hedef.getBoundingClientRect().top + window.pageYOffset - basPayi();
+      window.scrollTo({ top: Math.max(0, Math.round(y)), behavior: azHareket ? 'instant' : 'smooth' });
+      if (odak) { odak.focus({ preventScroll: true }); }
+    }); });
+  };
+  var adimaGit = function () { var h = $('.wstep.active .fc-head h2'); h.setAttribute('tabindex', '-1'); odakla($('#mbStepper'), h); };
+  /* Ekran okuyucuya sonuç: grup başlıkları sayılarıyla ya da boş sonuç başlığı */
+  var duyur = function () {
+    var d = $('#mbDuyuru'), bosB = $('#mbGruplar .res-empty h3'), g = $$('#mbGruplar .res-bar h2').map(function (h) { return h.textContent.replace(/\s+/g, ' ').trim(); });
+    d.textContent = ''; requestAnimationFrame(function () { d.textContent = bosB ? bosB.textContent + '.' : 'Sonuçlar: ' + g.join(', ') + '.'; });
+  };
+  /* Yeni Arama: sayfayı yeniden yüklemeden sihirbazı başa alır, kaydırma sihirbazın başına */
+  var yeniArama = function () {
+    $$('#mbCard input[type="checkbox"],#mbCard input[type="radio"]').forEach(function (i) { i.checked = false; });
+    $('input[name="yontem"][value="hepsi"]').checked = true; $('input[name="butce"][value=""]').checked = true;
+    durum.yontem = 'hepsi'; durum.il = ''; durum.ilce = ''; durum.butce = ''; durum.lat = null; durum.lng = null;
+    ilSec.value = ''; ilceDoldur(); tarif = ''; $('#mbHaritaTxt').value = ''; araTemizle(); sekme('ogun');
+    $$('.mb-acc .fct').forEach(function (g, i) { g.classList.toggle('open', !i); $('.fct-head', g).setAttribute('aria-expanded', i ? 'false' : 'true'); });
+    history.replaceState(null, '', location.pathname); boya(); goster(1); adimaGit();
   };
 
   /* Eşleşme */
@@ -79,7 +109,7 @@
   var TUMU = [['Tüm mekânlar', 'mekanlar/', function () { return true; }]];
   /* Çoklu kriter (ortam, mutfak): seçilenlerden biri yeter; kartta tutanların adı yazılır */
   var coklu = function (ad, tur, baslik, ikon) {
-    var k = $$('input[name="' + ad + '"]:checked').map(kutu); if (!k.length) { return null; }
+    var k = $$('input[name="' + ad + '"]:checked:not([data-fark])').map(kutu); if (!k.length) { return null; }
     var adlar = k.map(function (x) { return x.ad; });
     return { tur: tur, ad: adlar.join(', '), cipler: k, agirlik: AGIRLIK[tur], ikon: ikon, eksik: baslik + ': ' + adlar.join(', ') + ' yok',
       uy: function (m) { return k.some(function (x) { return x.uy(m); }); },
@@ -100,7 +130,7 @@
     return V.mekanlar.filter(konumdaMi).map(function (m) {
       var tut = k.filter(function (c) { return c.uy(m); }), kalan = k.filter(function (c) { return !c.uy(m); });
       var p = tut.reduce(function (t, c) { return t + c.agirlik; }, 0);
-      return { m: m, yuzde: pay ? Math.round(p / pay * 100) : 0, tut: tut, kalan: kalan };
+      return { m: m, oran: pay ? p / pay : 0, yuzde: pay ? Math.round(p / pay * 100) : 0, tut: tut, kalan: kalan };
     }).sort(function (a, b) { return b.yuzde - a.yuzde; });
   };
 
@@ -117,6 +147,8 @@
     var gor = l.slice(0, 12), kalan = l.slice(12);
     return '<div class="mb-res-group"><div class="res-bar"><h2>' + baslik + ' <span class="q">' + l.length + '</span></h2><p>' + not + '</p></div><div class="mkl-grid">' + gor.map(kart).join('') + '</div>' + (kalan.length ? '<div class="mb-daha"><button class="btn btn-ghost" type="button" data-daha="' + kac(kalan.map(function (s) { return s.m.slug; }).join(',')) + '">' + kalan.length + ' mekân daha göster</button></div>' : '') + '</div>';
   };
+  /* B6: Fark Etmez ile hiç kriter kalmayabilir. Canlı `MekanBulEslestirmeServisi::puanla`: payda yoksa oran 1.0, herkes En Uygun ve %100 */
+  var sirala = function (k) { var l = hesapla(k); return k.length ? l : l.map(function (s) { s.yuzde = 100; s.oran = 1; return s; }); };
   var bos = function (baslik, metin, oneriler) {
     var d = oneriler.map(function (o) { var n = V.mekanlar.filter(o[2]).length; return n ? '<a class="fchip" href="' + kok + o[1] + '">' + kac(o[0]) + ' · ' + n + ' mekân</a>' : ''; }).join('');
     return '<div class="res-empty show"><div class="re-ico"><i class="fa-solid fa-compass" aria-hidden="true"></i></div><h3>' + kac(baslik) + '</h3><p>' + kac(metin) + '</p><div class="fchips mb-oneri">' + d + '<button class="fchip" type="button" data-mo-open=""><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Mekân Öner</button></div><button class="btn btn-primary" type="button" id="mbSecimDegis"><i class="fa-solid fa-sliders" aria-hidden="true"></i> Seçimi Değiştir</button></div>';
@@ -128,14 +160,15 @@
     ['simdi', 'rez'].forEach(function (a) { if ($('input[name="' + a + '"]').checked) { q.set(a, '1'); } });
     history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : ''));
   };
-  var sonuc = function () {
+  var sonuc = function (kaydir) {
     var k = kriterler(), cip = '';
     if (durum.yontem === 'bolge' && durum.il) { cip += '<span class="res-chip"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> ' + kac($('#mbSehir option:checked').textContent.replace(/\s*\(\d+\)$/, '')) + (durum.ilce ? ' / ' + kac($('#mbIlce option:checked').textContent) : '') + '</span>'; }
     if (durum.yontem === 'mevcut' && durum.lat !== null) { cip += '<span class="res-chip"><i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i> ' + durum.mesafe + ' km içinde</span>'; }
     if (durum.yontem === 'harita' && tarif) { cip += '<span class="res-chip"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> ' + kac(tarif) + (tarifYer().length ? '' : ' · konum eşleşmedi') + '</span>'; }
-    cip += k.map(function (c) { return (c.cipler || [c]).map(function (x) { return '<span class="res-chip"><i class="fa-solid ' + x.ikon + '" aria-hidden="true"></i> ' + kac(x.ad) + '</span>'; }).join(''); }).join('');
+    if ($('input[data-fark]').checked) { cip += '<span class="res-chip"><i class="fa-solid fa-shuffle" aria-hidden="true"></i> Ortam: Fark Etmez</span>'; }
+    cip += k.map(function (c) { return (c.cipler || [c]).map(function (x) { return '<span class="res-chip">' + (x.bayrak ? '<img class="mb-bayrak" src="' + kac(x.bayrak) + '" alt="" width="17" height="12">' : '<i class="fa-solid ' + x.ikon + '" aria-hidden="true"></i>') + ' ' + kac(x.ad) + '</span>'; }).join(''); }).join('');
     $('#mbCipler').innerHTML = cip;
-    var veriYok = k.filter(function (c) { return !V.mekanlar.some(c.uy); })[0], l = hesapla(k), html;
+    var veriYok = k.filter(function (c) { return !V.mekanlar.some(c.uy); })[0], l = sirala(k), html;
     var paySatir = k.map(function (c) { return kac(c.tur === 'ortam' ? 'Ortam' : c.tur === 'mutfak' ? 'Mutfak' : c.tur === 'butce' ? 'Bütçe' : c.ad) + ' ' + c.agirlik; }).join(' + ');
     $('#mbHesap').textContent = k.length && !veriYok && l.length ? 'Oran: tutan kriterlerin ağırlığı / seçtiğin kriterlerin toplamı (' + paySatir + ').' : '';
     if (veriYok) {
@@ -143,13 +176,14 @@
     } else if (!l.length) {
       html = bos('Bu konumda mekân bulamadık', 'Konumu genişlet ya da başka bir bölge seç.', TUMU);
     } else {
-      var uygun = l.filter(function (s) { return s.yuzde >= 85; }), yakin = l.filter(function (s) { return s.yuzde >= 40 && s.yuzde < 85; });
-      html = grup('En Uygun Seçenekler', '%85 ve üzeri uyum.', uygun) + grup('Yakın Alternatifler', 'Bir veya iki kriteri karşılamayan seçenekler.', yakin);
+      var uygun = l.filter(function (s) { return s.oran >= ESIK.uygun; }), yakin = l.filter(function (s) { return s.oran >= ESIK.yakin && s.oran < ESIK.uygun; });
+      html = grup('En Uygun Seçenekler', '%' + Math.round(ESIK.uygun * 100) + ' ve üzeri uyum.', uygun) + grup('Yakın Alternatifler', 'Bir veya iki kriteri karşılamayan seçenekler.', yakin);
       if (!html) { html = bos('Seçimlerine yakın mekân bulamadık', 'Nitelikleri azaltmayı dene.', TUMU); }
     }
     $('#mbGruplar').innerHTML = html;
     $('.wiz-solo').hidden = true; $('#mbSonuc').hidden = false; adresYaz();
-    $('#mbSonuc').scrollIntoView({ behavior: 'auto', block: 'start' }); window.scrollBy(0, -120);
+    /* B10: adres çubuğundan doğrudan açılışta kaydırma yok; düğmeyle açılınca özet çubuğu başlığın altına gelir ve odağı alır */
+    if (kaydir) { duyur(); odakla($('#mbSonuc .res-summary'), $('#mbSonuc .res-summary')); }
   };
 
   /* Olaylar */
@@ -159,6 +193,8 @@
     if (t.name === 'yontem') { durum.yontem = t.value; }
     if (t.id === 'mbSehir') { durum.il = t.value; durum.ilce = ''; ilceDoldur(); }
     if (t.id === 'mbIlce') { durum.ilce = t.value; }
+    /* B6: Fark Etmez tek başına seçili kalır; başka ortam seçilince kendisi kalkar */
+    if (t.name === 'ortam' && t.checked) { $$('input[name="ortam"]').forEach(function (i) { if (i !== t && (t.hasAttribute('data-fark') || i.hasAttribute('data-fark'))) { i.checked = false; } }); }
     boya();
   });
   document.addEventListener('input', function (e) {
@@ -169,21 +205,29 @@
   document.addEventListener('click', function (e) {
     var t = e.target.closest ? e.target : e.target.parentNode;
     if (t.closest('[data-ileri]')) {
-      if (adim === 1 && durum.yontem === 'bolge' && !durum.il) { window.prototipBildir('Bir il seç ya da Fark Etmez\'i işaretle.'); return; }
-      if (adim === 1 && durum.yontem === 'mevcut' && durum.lat === null) { window.prototipBildir('Önce Konumumu Bul\'a bas.'); return; }
-      if (adim === 2 && !secili('ortam').length) { window.prototipBildir('Devam etmek için en az bir ortam seç.'); return; }
-      if (adim < N) { goster(adim + 1); } else { sonuc(); } return;
+      if (adim === 1 && durum.yontem === 'bolge' && !durum.il) { window.prototipBildir('Bir il seç ya da Fark Etmez\'i işaretle.', 'uyari'); return; }
+      if (adim === 1 && durum.yontem === 'mevcut' && durum.lat === null) { window.prototipBildir('Önce Konumumu Bul\'a bas.', 'uyari'); return; }
+      if (adim === 2 && !secili('ortam').length) { window.prototipBildir('Devam etmek için en az bir ortam seç.', 'uyari'); return; }
+      if (adim < N) { goster(adim + 1); adimaGit(); } else { sonuc(true); } return;
     }
-    if (t.closest('[data-geri]')) { goster(adim - 1); return; }
-    var st = t.closest('#mbStepper .stp.done'); if (st) { goster(+st.dataset.adim); return; }
+    if (t.closest('[data-geri]')) { goster(adim - 1); adimaGit(); return; }
+    var st = t.closest('#mbStepper .stp.done'); if (st) { goster(+st.dataset.adim); adimaGit(); return; }
     var sk = t.closest('#mbMutfakSekme .mb-tab'); if (sk) { sekme(sk.dataset.tab); return; }
-    /* Aç-kapa kabuğun ortak `.fct-head` bağında (app.js); burada yalnız aria-expanded izlenir */
-    var ah = t.closest('.mb-acc .fct-head'); if (ah) { ah.setAttribute('aria-expanded', ah.parentNode.classList.contains('open') ? 'true' : 'false'); return; }
-    if (t.closest('#mbDuzenle,#mbSecimDegis')) { goster(1); return; }
-    if (t.closest('#mbYeni')) { location.href = location.pathname; return; }
+    /* Aç-kapa kabuğun ortak `.fct-head` bağında (app.js). B9 (Beyar 11 Kas): tek açık grup, kanon §21; açık başlığa basınca kapanır.
+       Üstteki grup kapanınca tıklanan başlık yerinde kalır (kayma telafisi); açılan grubun gövdesi ekrana sığmıyorsa başlık sabit başlığın altına gelene kadar kaydırılır */
+    var ah = t.closest('.mb-acc .fct-head');
+    if (ah) {
+      var g = ah.parentNode, ust = ah.getBoundingClientRect().top;
+      $$('.mb-acc .fct').forEach(function (o) { if (o !== g) { o.classList.remove('open'); } $('.fct-head', o).setAttribute('aria-expanded', o.classList.contains('open') ? 'true' : 'false'); });
+      var kay = ah.getBoundingClientRect().top - ust; if (kay) { window.scrollBy({ top: kay, behavior: 'instant' }); }
+      if (g.classList.contains('open')) { var r = g.getBoundingClientRect(), fazla = r.bottom - window.innerHeight + 16, tavan = r.top - basPayi(); if (fazla > 0 && tavan > 0) { window.scrollBy({ top: Math.min(fazla, tavan), behavior: azHareket ? 'instant' : 'smooth' }); } }
+      return;
+    }
+    if (t.closest('#mbDuzenle,#mbSecimDegis')) { goster(1); adimaGit(); return; }
+    if (t.closest('#mbYeni')) { yeniArama(); return; }
     var d = t.closest('[data-daha]');
     if (d) {
-      var k = kriterler(), sl = d.dataset.daha.split(','), l = hesapla(k).filter(function (s) { return sl.indexOf(s.m.slug) >= 0; });
+      var k = kriterler(), sl = d.dataset.daha.split(','), l = sirala(k).filter(function (s) { return sl.indexOf(s.m.slug) >= 0; });
       d.closest('.mb-res-group').querySelector('.mkl-grid').insertAdjacentHTML('beforeend', l.map(kart).join('')); d.parentNode.parentNode.removeChild(d.parentNode); return;
     }
     if (t.closest('#mbGeolocate')) {
@@ -198,6 +242,27 @@
     var l = $$('#mbMutfakSekme .mb-tab'), i = l.indexOf(document.activeElement); if (i < 0) { return; }
     var y = l[(i + (e.key === 'ArrowRight' ? 1 : l.length - 1)) % l.length]; y.focus(); sekme(y.dataset.tab); e.preventDefault();
   });
+  /* B8 mutfak araması (Beyar 11 Kas): Keşif Tercihlerim "Mutfak ara…" kutusunun davranışı. Türkçe katlama Dada Route yer aramasının
+     `dgKatla`sı (rota-sahte.js; bu sayfada yüklü değilse aynı kural): İ/ı/I, ş, ğ, ü, ö, ç katlanır, büyük-küçük harf fark etmez.
+     Arama varken şerit söner (kanon §11 `.sekmeler.arama-modu`), üç grubun eşleşen kartları grup başlığıyla alt alta; Esc ve × temizler */
+  var katla = window.dgKatla || function (s) { return String(s).toLocaleLowerCase('tr').replace(/[ıİI]/g, 'i').replace(/i̇/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[âà]/g, 'a').replace(/[îì]/g, 'i').replace(/[ûù]/g, 'u').replace(/\s+/g, ' ').trim(); };
+  var araKutu = $('#mbMutfakAra');
+  var ara = function () {
+    var q = katla(araKutu.value), es = 0;
+    araKutu.closest('.wstep').classList.toggle('mb-arama', !!q); $('#mbMutfakSekme').classList.toggle('arama-modu', !!q);
+    $$('#mbMutfakSekme .mb-tab').forEach(function (b) { if (q) { b.setAttribute('tabindex', '-1'); b.setAttribute('aria-disabled', 'true'); } else { b.removeAttribute('tabindex'); b.removeAttribute('aria-disabled'); } });
+    $$('.mb-tabpanel').forEach(function (p) {
+      var n = 0;
+      $$('.pick', p).forEach(function (l) { var uy = !q || katla($('.pk-txt b', l).textContent).indexOf(q) >= 0; l.hidden = !uy; if (uy) { n++; } });
+      p.hidden = !!q && !n; $('[data-panel-sayi]', p).textContent = q ? n : ''; es += n;
+    });
+    $('#mbAraYok').hidden = !q || es > 0; $('#mbAraTemizle').hidden = !araKutu.value;
+    $('#mbAraDurum').textContent = q ? (es ? es + ' mutfak bulundu.' : 'Aramana uyan mutfak yok.') : '';
+  };
+  var araTemizle = function () { araKutu.value = ''; ara(); };
+  araKutu.addEventListener('input', ara);
+  araKutu.addEventListener('keydown', function (e) { if (e.key === 'Escape' && araKutu.value) { e.preventDefault(); e.stopPropagation(); araTemizle(); } });
+  $('#mbAraTemizle').addEventListener('click', function () { araTemizle(); araKutu.focus(); });
 
   /* Adres: seçimli bağ doğrudan sonucu açar (en az bir ortam gerekir, adım 2 kuralı) */
   var q = new URLSearchParams(location.search);
@@ -208,7 +273,10 @@
   ['ortam', 'mutfak', 'nitelik'].forEach(function (a) { (q.get(a) || '').split(',').forEach(function (v) { if (v) { isaret(a, v); } }); });
   ['simdi', 'rez'].forEach(function (a) { if (q.get(a) === '1') { isaret(a, '1'); } });
   var ilkSekme = $('.mb-tabpanel input:checked'); if (ilkSekme) { sekme(ilkSekme.closest('.mb-tabpanel').dataset.panel); }
-  $$('.mb-acc .fct').forEach(function (g) { if ($('input:checked', g)) { g.classList.add('open'); $('.fct-head', g).setAttribute('aria-expanded', 'true'); } });
+  /* B6: adreste Fark Etmez başka ortamla geldiyse ortam seçimi geçerli. B9: tek açık grup; seçimli ilk grup açılır, yoksa Hizmetler */
+  var fk = $('input[data-fark]'); if (fk.checked && $$('input[name="ortam"]:checked').length > 1) { fk.checked = false; }
+  var acik = $$('.mb-acc .fct').filter(function (g) { return $('input:checked', g); })[0];
+  if (acik) { $$('.mb-acc .fct').forEach(function (g) { g.classList.toggle('open', g === acik); $('.fct-head', g).setAttribute('aria-expanded', g === acik ? 'true' : 'false'); }); }
   boya();
   if (secili('ortam').length) { sonuc(); }
 })();

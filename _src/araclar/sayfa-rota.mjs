@@ -37,9 +37,15 @@ const g = await p.evaluate(() => { kok(document.body); const b = document.body; 
   $('#ygSummary').insertAdjacentHTML('afterend', '<section class="yg-iller" id="ygIller" aria-label="İl kartları" hidden><div class="yg-katman-bas"><button type="button" class="yg-iller-bas" id="ygIllerBas"><span class="yg-eyebrow">Yol üstü iller</span></button><span class="ornek-etiket">prototip örneği</span></div><div class="yg-il-liste" id="ygIlKart"></div></section>');
   // Telefona gönder penceresi: kabuk `parcalar/rota-telefon.html`, metin `rota-telefon-veri.js`
   $('#ygReport').insertAdjacentHTML('beforebegin', '<!-- @parca rota-telefon -->\n\n  ');
-  // Alt marka kilidi (Beyar, 10 Kas): Gastro Kids/Health başlık kilidinin yapısı, "Route" logonun sağ üst çaprazında. Ayraç ve "Dada Route" yazısı kalkar
+  // Alt marka kilidi (Beyar, 10 Kas; 11 Kas D1): Gastro Kids/Health başlık kilidi, "Route" logonun altında. Alt kelime logonun kutusuna
+  // (`.dg-word`, kanonda `.brand`) bağlanır ki bağın 44px dokunma dolgusu konumu değiştirmesin. Ayraç ve "Dada Route" yazısı kalkar
   const mb = $('header.yg-top .dg-brand'); mb.classList.add('yg-kilit'); mb.setAttribute('aria-label', 'Dada Gourmet Route · Keşfet');
-  mb.insertAdjacentHTML('beforeend', '<span class="yg-kilit-alt" aria-hidden="true">Route</span>'); $('header.yg-top .yg-sep').remove(); $('header.yg-top .yg-title').remove();
+  // D17d (Beyar, 11 Kas; D17/D17b/D17c çizim motifinin yerine): "Route"un solunda sitenin başlık menüsündeki "Dada Route" kaleminin ikonu
+  // (`parcalar/kabuk/ust.html` `fa-solid fa-route`), menüdeki gibi ikon + boşluk + kelime; boyu yazı boyunda, renk yazının rengi
+  mb.querySelector('.dg-word').insertAdjacentHTML('beforeend', '<span class="yg-kilit-alt" aria-hidden="true"><i class="fa-solid fa-route" aria-hidden="true"></i> Route</span>'); $('header.yg-top .yg-sep').remove(); $('header.yg-top .yg-title').remove();
+  // Dalga 2 mobil · rota: ham çekimde `scroll-affordance.js` izi kalmış (`data-sf-wired="1"`, donmuş `has-scroll-r`); betik bu şeritleri
+  // kablolanmış sanıp hiç ölçmüyordu (Pilot Güzergâhlar, Hızlı Filtreler, Sapma toleransı, Tümünü Gör çipleri): solma sabit sağda donuyordu
+  b.querySelectorAll('[data-sf-wired]').forEach((e) => { e.removeAttribute('data-sf-wired'); e.classList.remove('has-scroll-r', 'has-scroll-l'); });
   return { ust: $('header.yg-top').outerHTML, app: $('.yg-app').outerHTML, govdeSinif: b.className }; });
 const f = path.join(SRC, 'sayfalar/dada-route/index.html'); fs.mkdirSync(path.dirname(f), { recursive: true });
 const O = 'assets/o/assets/gourmet-public';

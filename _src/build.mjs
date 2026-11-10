@@ -122,14 +122,24 @@ const yazimDuzelt = (h) => h.split(/(<script[\s\S]*?<\/script>|<style[\s\S]*?<\/
 // Mekân kartı: nitelik mikro ikonları (W1.4). Yalnız canlı veride kaydı olan nitelik görünür; kayıt yoksa ikon yok. Veride "çocuk alanı" yok, en yakın kayıt bebek sandalyesi kendi adıyla yazılır
 const NITELIK = [['ulasim', 'vale', 'fa-square-parking', 'Vale'], ['ulasim', 'otopark', 'fa-square-parking', 'Otopark'], ['beslenme', 'glutensiz', 'fa-wheat-awn-circle-exclamation', 'Glütensiz seçenek'], ['hizmet', 'evcil-hayvan-dostu', 'fa-paw', 'Evcil hayvan kabul edilir'], ['hizmet', 'bebek-sandalyesi', 'fa-baby', 'Bebek sandalyesi']];
 const mekanBySlug = Object.fromEntries((veri['mekan-filtre']?.mekanlar ?? []).map((m) => [m.slug, m]));
-const nitelikIkon = (m) => { const l = NITELIK.filter(([g, d]) => m?.f?.[g]?.includes(d)); const tekil = l.filter(([, d], i) => !(d === 'otopark' && l.some(([, x]) => x === 'vale'))); return tekil.length ? `<div class="kart-nitelik">${tekil.map(([, , i, a]) => `<span class="kn" title="${a}" aria-label="${a}"><i class="fa-solid ${i}" aria-hidden="true"></i></span>`).join('')}</div>` : ''; };
+// M3 (Beyar 11 Kas): rozetler ayrı satırda değil, kategori satırının sağında. Grup bir liste; her ikonun ipucu ve erişilebilir adı var. En çok 4 ikon
+const rozetGrup = (l) => (l.length ? `<div class="kart-nitelik" role="list" aria-label="Nitelikler">${l.slice(0, 4).map(([i, a]) => `<span class="kn" role="listitem" title="${a}"><i class="fa-solid ${i}" role="img" aria-label="${a}"></i></span>`).join('')}</div>` : '');
+const nitelikIkon = (m) => { const l = NITELIK.filter(([g, d]) => m?.f?.[g]?.includes(d)); const tekil = l.filter(([, d], i) => !(d === 'otopark' && l.some(([, x]) => x === 'vale'))); return rozetGrup(tekil.map(([, , i, a]) => [i, a])); };
 // Puanı olmayan kartta yıldız ve tire görünmez (AK-30 kuralı kartın tamamına)
 const puansizSil = (h) => h.replace(/<span class="r-rate r-yok"[^>]*>\s*<i[^>]*><\/i>\s*<span aria-hidden="true">–<\/span>\s*<\/span>/g, '');
-// Doğrulanmış nitelik rozetleri (W1.4e, Beyar 9 Kas): birkaç mekânda ÖRNEK doğrulama; süzgeç verisine girmez, yalnız kartta görünür
+// Doğrulanmış nitelik rozetleri (W1.4e, Beyar 9 Kas): birkaç mekânda ÖRNEK doğrulama; süzgeç verisine girmez, yalnız kartta görünür.
+// M1 (Beyar 11 Kas): kartta "doğrulandı · prototip örneği" etiketi yok, yalnız ikon (karttaki örnek etiketi kuralından muaf).
+// Anlam her ikonun ipucunda ve erişilebilir adında ("Doğrulanmış: Otopark"); örnek notu Mekânlar listesinin başında tek satır (#mklRozetNot)
 const ORNEK_DOGRULAMA = { 'levan-urla': ['otopark', 'glutensiz', 'cocuk'], 'narimor-urla': ['vale', 'evcil'], 'the-townhouse-suadiye': ['vale', 'glutensiz', 'evcil', 'cocuk'], 'monteverdi-ristorante': ['vale', 'glutensiz'] };
 const DOGRULAMA_IKON = { otopark: ['fa-square-parking', 'Otopark'], vale: ['fa-square-parking', 'Vale'], glutensiz: ['fa-wheat-awn-circle-exclamation', 'Glütensiz seçenek'], evcil: ['fa-paw', 'Evcil hayvan kabul edilir'], cocuk: ['fa-children', 'Çocuk alanı'] };
-const dogrulanmisIkon = (slug) => { const l = ORNEK_DOGRULAMA[slug]; return l ? `<div class="kart-nitelik">${l.map((d) => `<span class="kn" title="${DOGRULAMA_IKON[d][1]} · doğrulandı" aria-label="${DOGRULAMA_IKON[d][1]}, doğrulandı"><i class="fa-solid ${DOGRULAMA_IKON[d][0]}" aria-hidden="true"></i></span>`).join('')}<span class="ornek-etiket">doğrulandı · prototip örneği</span></div>` : ''; };
-const kartZengin = (k, m) => puansizSil(k).replace('<div class="disc-meta">', (dogrulanmisIkon(m?.slug) || nitelikIkon(m)) + '<div class="disc-meta">');
+const dogrulanmisIkon = (slug) => rozetGrup((ORNEK_DOGRULAMA[slug] ?? []).map((d) => [DOGRULAMA_IKON[d][0], 'Doğrulanmış: ' + DOGRULAMA_IKON[d][1]]));
+// Kategori satırı `.kart-ust`: solda kategori etiketi, sağda rozet grubu (varsa). Rozeti olmayan kartta yalnız etiket; ayrı rozet satırı ve yer tutucu yok
+// Dalga 2 mobil · genel (11 Kas): kategori etiketi `text-transform:uppercase` ve sayfa `lang="tr"`; İngilizce ad "Fine Dining" Türkçe
+// büyük harfle "FİNE DİNİNG" çiziliyordu. Yalnız yabancı adlı etikete `lang="en"` (Mekânlar ve Mekân Bul kartı aynı kaynaktan). `lang` sınıftan
+// önce: `rota-sahte.js` etiketi `disc-cat">` kalıbıyla okuyor
+const YABANCI_KATEGORI = new Set(['Fine Dining']);
+const katDil = (c) => c.replace(/<span class="disc-cat">([^<]*)<\/span>/, (t, ad) => (YABANCI_KATEGORI.has(ad.trim()) ? `<span lang="en" class="disc-cat">${ad}</span>` : t));
+const kartZengin = (k, m) => puansizSil(k).replace(/<span class="disc-cat">[\s\S]*?<\/span>/, (c) => `<div class="kart-ust">${katDil(c)}${dogrulanmisIkon(m?.slug) || nitelikIkon(m)}</div>`);
 const uretimDosyalari = [...uretilen.map((u) => u.yol), 'ekranlar'].map((y) => path.join(KOK, y, 'index.html'));
 for (const f of uretimDosyalari) {
   const s = fs.readFileSync(f, 'utf8').replace(/<article class="disc-card[^"]*"[^>]*data-git="[^"]*mekan\/([a-z0-9-]+)\/"[\s\S]*?<\/article>/g, (k, slug) => kartZengin(k, mekanBySlug[slug])).replace(/href="((?:\.\.\/)*|\.\/)([a-z0-9][^"#?]*?)\/?((?:[?#][^"]*)?)"/g, (m, on, y, ek) => {

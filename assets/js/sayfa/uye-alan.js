@@ -1,7 +1,8 @@
 /* Üye alanı ortak davranışı (canlı hesap ekranları):
    - `data-dm-panel` düğmesi aynı sayfadaki `.fb-modal` penceresini açar, `data-dm-kapat` ve örtü kapatır.
    - Pencere formu prototipte sunucuya gitmez; bu tarayıcıya yazar, satırı listenin başına ekler.
-   - `[data-puan="toplam"]` demo kayıtlarındaki kesinleşen puanla dolar. */
+   - `[data-puan="toplam"]` demo kayıtlarındaki kesinleşen puanla dolar.
+   - Sekme yerinde değişince (`dg:sekme`, H8) yalnız yeni içerikteki listeler bu tarayıcının kayıtlarıyla dolar; dinleyiciler bir kez bağlıdır. */
 (function () {
   'use strict';
   var ortu = document.querySelector('[data-dm-ortu]');
@@ -44,9 +45,15 @@
     var alt = sablon(f.getAttribute('data-dm-alt') || 'Bu tarayıcıda kaydedildi');
     hedef.insertAdjacentHTML('afterbegin', '<div class="kalem-satiri"><span class="ks-ikon"><i class="' + (f.getAttribute('data-dm-ikon') || 'fa-solid fa-list') + '" aria-hidden="true"></i></span><span class="ks-metin"><b>' + kac(ad) + '</b><small>' + kac(alt) + '</small></span><span class="ks-uc"><span class="rozet bekleme">' + kac(sablon(f.getAttribute('data-dm-rozet') || 'Yeni')) + '</span></span></div>');
   };
-  if (window.dgKayit) {
-    [].forEach.call(document.querySelectorAll('form[data-dm-form]'), function (f) { window.dgKayit.oku(f.getAttribute('data-dm-form')).slice().reverse().forEach(function (v) { yerlestir(f, v); }); });
-  }
+  var doldur = function (kapsam) {
+    if (!window.dgKayit) { return; }
+    [].forEach.call(document.querySelectorAll('form[data-dm-form]'), function (f) {
+      var h = document.querySelector('[data-dm-hedef="' + f.getAttribute('data-dm-form') + '"]'); if (!h || (kapsam && !kapsam.contains(h))) { return; }
+      window.dgKayit.oku(f.getAttribute('data-dm-form')).slice().reverse().forEach(function (v) { yerlestir(f, v); });
+    });
+  };
+  doldur(null);
+  document.addEventListener('dg:sekme', function (e) { ortu = document.querySelector('[data-dm-ortu]'); doldur(e.detail && e.detail.alan); });
   document.addEventListener('submit', function (e) {
     var f = e.target.closest && e.target.closest('form[data-dm-form]'); if (!f) { return; }
     e.preventDefault();

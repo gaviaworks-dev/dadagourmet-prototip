@@ -14,6 +14,20 @@ ${sekmeler.map(([k, i, e]) => `      <button class="sekme${k === aktif ? ' aktif
   </div>
 </div>`;
 
+// Gastro kimlik kartı (g-paketlerim, g-odemelerim, g-rozetlerim, g-hesabim, g-cozum-merkezi render'ı, 11 Kas parite):
+// paket rozetinin ikonu kademenin ikonu (Gastro PaketServisi::IKON: Ücretsiz user, Pro crown, Pro Max gem); Paketlerim,
+// Rozetlerim ve Ayarlar'da ardından rütbe rozeti (Gastro `data-kademe`, Gourmet merdiveninin ilk basamağı); "Üyelik
+// başlangıcı" iki noktasız. Çözüm Merkezi'nde başlık üyenin adı değil sayfanın adı, rozet yok. `_kalip.bant` çıktısına uygulanır.
+export const PAKET_IKON = { 'Ücretsiz': 'user', Pro: 'crown', 'Pro Max': 'gem' };
+export const RUTBE_ROZET = '<span class="rozet dolu" data-kademe="merakli"><i class="fa-solid fa-heart" aria-hidden="true"></i> <span data-puan="rutbe">Meraklı</span></span>';
+export const gastroKimlik = (html, { ikon = PAKET_IKON['Ücretsiz'], rutbe = false, baslik = '' } = {}) => {
+  let h = html
+    .replace('<i class="fa-solid fa-crown" aria-hidden="true"></i> {{uye.paket}}</span>', `<i class="fa-solid fa-${ikon}" aria-hidden="true"></i> {{uye.paket}}</span>${rutbe ? ' ' + RUTBE_ROZET : ''}`)
+    .replace('Üyelik başlangıcı: ', 'Üyelik başlangıcı ');
+  if (baslik) h = h.replace(/<h1>[\s\S]*?<\/h1>/, `<h1>${baslik}</h1>`);
+  return h;
+};
+
 // Pano kabuğu: Gastro'daki gibi `fit-pane` + role=tabpanel; yalnız etkin olan açık
 export const gastroPano = (onek, k, aktif, icerik) => `<div class="fit-pane${k === aktif ? ' aktif' : ''}" data-pane="${k}" id="${onek}-pane-${k}" role="tabpanel" aria-labelledby="${onek}-tab-${k}" tabindex="${k === aktif ? 0 : -1}"${k === aktif ? '' : ' hidden=""'}>
 ${icerik}

@@ -30,7 +30,8 @@ export default function ({ veri }) {
     const e = bul(slug); const id = `etk-kayit-kaldir-${++no}`;
     const uc = `${rozet(r)}${satirDugme('Kaldır', `form="${id}" aria-label="${kac(e.ad)}: kaldır"`, 'fa-solid fa-xmark', 'submit')}`;
     const form = `<form id="${id}" data-dm-form="etkKayitKaldir" data-dm-mesaj="Kaldırma isteğin bu tarayıcıya yazıldı; prototipte satır listede kalır." hidden><input type="hidden" name="etkinlik" value="${e.slug}"><input type="hidden" name="tur" value="${TUR[r]}"></form>`;
-    return satir('fa-regular fa-calendar', kac(e.ad), kac(altMetin(e)), uc, `etkinlik-detay/?e=${e.slug}`).replace(/<\/div>$/, `${form}</div>`);
+    // Satırın tamamı etkinliğe açılır (`.tiklanir`, Listelerim kalıbı; Dalga 2 mobil: başlık bağı 14px yüksekti); Kaldır örtünün üstünde
+    return satir('fa-regular fa-calendar', kac(e.ad), kac(altMetin(e)), uc, `etkinlik-detay/?e=${e.slug}`).replace('class="kalem-satiri"', 'class="kalem-satiri tiklanir"').replace(/<\/div>$/, `${form}</div>`);
   };
 
   const PANO = {

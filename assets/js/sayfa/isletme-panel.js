@@ -15,6 +15,10 @@
   const KD = window.dgKayit, PU = window.dgPuan;
   const bildir = (m, tur) => { if (window.DM_TOAST) { window.DM_TOAST(m, tur); } };
   window.prototipBildir = bildir;
+  /* Dalga 2 mobil · panel: alttaki sabit kaydet çubuğu (`.form-eylem.cubuk-sabit`) odaklanan alanın üstüne biniyordu (klavye açıkken
+     tarayıcı alanı görünür alanın dibine kaydırır). Belgenin alt kaydırma payı çubuğun boyu kadar; çubuk yoksa pay yok */
+  const cubukPay = () => { const c = $('.form-eylem.cubuk-sabit'); document.documentElement.style.scrollPaddingBottom = c && c.offsetHeight ? (c.offsetHeight + 8) + 'px' : ''; };
+  document.addEventListener('DOMContentLoaded', cubukPay); window.addEventListener('resize', cubukPay);
   const onay = (bas, metin, dugme, cb) => { if (window.DM_ONAY) { window.DM_ONAY(bas, metin, dugme, (e) => { if (e) { cb(); } }); } else if (window.confirm(metin)) { cb(); } };
 
   /* ── Durum deposu ─────────────────────────────────────────────────── */

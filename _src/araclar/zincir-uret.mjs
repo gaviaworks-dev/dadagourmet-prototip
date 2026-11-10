@@ -8,6 +8,6 @@ const liste = (f) => { const h = fs.readFileSync(path.join(D, f + '.html'), 'utf
   const js = []; for (const m of h.matchAll(/<script\b[^>]*\bsrc="([^"]+)"[^>]*>/g)) { const y = yol(m[1]); if (atla.test(y) || js.some((j) => j.y === y)) continue; js.push({ y, modul: /type="module"/.test(m[0]) }); }
   const html = h.match(/<html([^>]*)>/)[1], govde = h.match(/<body([^>]*)>/)[1];
   return { css, js, baslikZemin: /data-baslik-zemin="([^"]+)"/.exec(html)?.[1] ?? null, govdeSinif: /class="([^"]*)"/.exec(govde)?.[1] ?? '', heroTur: /data-fit-hero-kind="([^"]*)"/.exec(govde)?.[1] ?? null }; };
-const z = {}; for (const [a, f] of Object.entries({ giris: 'g-giris', kayit: 'g-kayit', hakkimizda: 'g-hakkimizda', kunye: 'g-kunye', iletisim: 'g-iletisim', yasal: 'g-yasal', kvkk: 'g-kvkk', ana: 'g-home', hesabim: 'gl-hesabim' })) z[a] = liste(f);
+const z = {}; for (const [a, f] of Object.entries({ giris: 'g-giris', kayit: 'g-kayit', hakkimizda: 'g-hakkimizda', pro: 'g-pro', kunye: 'g-kunye', iletisim: 'g-iletisim', yasal: 'g-yasal', kvkk: 'g-kvkk', ana: 'g-home', hesabim: 'gl-hesabim' })) z[a] = liste(f);
 z.rota = { css: z.hakkimizda.css.filter((c) => c.includes('fontawesome')), js: [], baslikZemin: null, govdeSinif: '', heroTur: null };
 fs.writeFileSync(path.join(SRC, 'kabuk/zincir.json'), JSON.stringify(z, null, 1)); console.log(Object.keys(z).join(' '));

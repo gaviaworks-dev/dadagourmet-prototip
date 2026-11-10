@@ -68,6 +68,10 @@ yaz('iletisim/index', { baslik: 'İletişim', zincir: 'iletisim', donor: 'https:
   m.querySelectorAll('a[href^="mailto:"]').forEach((a) => { a.setAttribute('href', 'mailto:dadamentorcom@gmail.com'); a.textContent = 'dadamentorcom@gmail.com'; });
   m.querySelectorAll('.px-media').forEach((e) => { e.setAttribute('style', "background-image:url('https://dadagourmet.com/assets/gourmet-public/img/contact-kitchen.avif')"); e.innerHTML = ''; });
   m.querySelectorAll('a[href*="instagram.com"],a[href*="facebook.com"],a[href*="x.com/"]').forEach((a) => a.remove());
+  // Konu seçicisi çekimde betikle çizilmiş hâlde geliyor; `iletisim.js` aynısını yeniden kurunca sayfada iki "Konu seç" kutusu çıkıyordu
+  // (ilki ölü, etiket ona bağlı). Seçici sökülür, etiket gizli `<select>`e bağlanır; betik kendi kutusunu ve sayacını kurar (Dalga 2 mobil, 11 Kas)
+  m.querySelectorAll('select#konu ~ .gastro-secici').forEach((e) => e.remove());
+  m.querySelectorAll('label[for="konuArama"]').forEach((l) => { l.setAttribute('for', 'konu'); l.classList.remove('gastro-secim-etiket'); l.querySelectorAll('.gastro-secim-sayac').forEach((e) => e.remove()); });
   return m.innerHTML; }));
 // Hukuki örnek: canlı Gourmet KVKK metni; yer tutucular görünür etikete bağlanır
 p = await ac(dom('o-kvkk'));

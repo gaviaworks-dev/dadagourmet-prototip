@@ -26,6 +26,24 @@
     });
   });
 
+  /* Mekânı kaydet (kapak üstündeki yer imi; canlıda `POST /mekan/{mekan}/kaydet`, tür favori): Gurme Favorilerim'le aynı kayıt (favori ajanı, 11 Kas).
+     Misafirde `data-lg-gate` giriş kapısını açar (prototip.js); üyede aç/kapa. Favorilerim'den çıkarılınca burada boş görünür */
+  var kaydet = $('.md-stage-acts button[data-lg-gate]'), MID = 'mekan-mikla';
+  var kaydetBoya = function () {
+    if (!kaydet) { return; }
+    var on = K.var('favori', MID), i = $('i', kaydet);
+    kaydet.setAttribute('aria-pressed', on ? 'true' : 'false'); if (i) { i.className = (on ? 'fa-solid' : 'fa-regular') + ' fa-bookmark'; }
+  };
+  window.addEventListener('pageshow', function (e) { if (e.persisted) { kaydetBoya(); $$('[data-favori-tabak]').forEach(tabakBoya); } });
+  if (kaydet) {
+    kaydetBoya();
+    kaydet.addEventListener('click', function () {
+      if (!window.dgUye()) { return; }
+      if (K.var('favori', MID)) { K.sil('favori', MID); bildir('Favorilerinden çıkarıldı.'); } else { K.ekle('favori', { id: MID, tur: 'Mekân', ad: MEKAN, mekan: 'Beyoğlu, İstanbul' }); bildir('Gurme Favorilerim\'e eklendi.'); }
+      kaydetBoya();
+    });
+  }
+
   /* Değerlendirme: lezzet, servis, ambiyans ve fotoğraf. Moderasyona gider; puan bekler, onayda kesinleşir */
   var rev = $('#dgRev'), P = window.dgPuan.KURAL, oy = {};
   if (rev) {
@@ -57,7 +75,7 @@
   $$('.vd-actbar__act[data-lg-gate], #mdListBtn').forEach(function (b) {
     b.addEventListener('click', function () {
       if (/Ziyaret/.test(b.textContent)) { if (!K.var('ziyaret', 'mikla')) { K.ekle('ziyaret', { id: 'mikla', mekan: MEKAN, yer: 'Beyoğlu, İstanbul', gun: new Date().toLocaleDateString('tr-TR') }); } bildir('Ziyaret Geçmişim\'e eklendi.'); return; }
-      if (b.id === 'mdListBtn') { if (!K.var('favori', 'mekan-mikla')) { K.ekle('favori', { id: 'mekan-mikla', tur: 'Mekân', ad: MEKAN, mekan: 'Beyoğlu, İstanbul' }); } bildir('Gurme Favorilerim\'e eklendi.'); }
+      if (b.id === 'mdListBtn') { if (!K.var('favori', 'mekan-mikla')) { K.ekle('favori', { id: 'mekan-mikla', tur: 'Mekân', ad: MEKAN, mekan: 'Beyoğlu, İstanbul' }); } bildir('Gurme Favorilerim\'e eklendi.');  kaydetBoya(); }
     });
   });
 

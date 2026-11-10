@@ -91,7 +91,11 @@
     secili = coz(alan.value);
     gorunen = new Date((secili || UST).getFullYear(), (secili || UST).getMonth(), 1);
     ciz();
-    selAy.focus();
+    selAy.focus({ preventScroll: true });
+    /* Dalga 2 mobil · hesap: telefonda takvim alanın altında açılınca alt kısmı (son hafta, Temizle) görünür alanın dışında kalıyordu
+       (390: 481-875 / 844). Takvim taşıyorsa en yakın kenara kaydırılır; sığıyorsa sayfa yerinde kalır */
+    var r = pop.getBoundingClientRect();
+    if (r.bottom > window.innerHeight || r.top < 0) { pop.scrollIntoView({ block: 'nearest' }); }
   }
   function kapat(odakDon){
     pop.hidden = true;

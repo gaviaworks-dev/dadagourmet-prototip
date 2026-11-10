@@ -209,9 +209,13 @@
     var u = new URL(location.href); if (v === 'liste') { u.searchParams.delete('gorunum'); } else { u.searchParams.set('gorunum', v); } history.replaceState(null, '', u);
     yenile(true);
   };
-  var yerelSay = V.etkinlikler.filter(U.yerel).length;
-  $('#evBolgeAd').textContent = U.ad; $('#evSayYerel').textContent = yerelSay;
-  $('#evSayDunya').textContent = V.etkinlikler.length - yerelSay;
+  var yerelSay = 0;
+  var ulkeYaz = function () {
+    yerelSay = V.etkinlikler.filter(U.yerel).length;
+    $('#evBolgeAd').textContent = U.ad; $('#evSayYerel').textContent = yerelSay;
+    $('#evSayDunya').textContent = V.etkinlikler.length - yerelSay;
+  };
+  ulkeYaz();
   /* Kullanıcının ülkesinde hiç etkinlik yoksa ilk sekmenin boş durumu: Uluslararası'ya geçiş ve Etkinlik Öner (şartname akış 6) */
   var bos = $('#evBos'), bosIlk = bos.innerHTML;
   function bosYaz() {
@@ -246,6 +250,8 @@
     /* Süzgeç sayfasını aç-kapa ortak denetleyicide: prototip.js `dgSuzgec` */
   });
   var ara = $('#evArama input[name="q"]'); ara.addEventListener('input', function () { aranan = tr(ara.value.trim()); yenile(true); });
+  /* Konum penceresinden yeni ülke (`ulke.js` `dg-ulke`): ilk sekme adı, sayaçlar, boş durum ve liste sayfa yenilenmeden güncellenir */
+  document.addEventListener('dg-ulke', function () { ulkeYaz(); bos.innerHTML = bosIlk; bos.dataset.ulke = ''; yenile(true); });
   var q = new URLSearchParams(location.search); if (q.get('bolge') === 'dunya') { var d = $('[data-bolge="dunya"]'); if (d) { d.click(); } }
   if (/^(takvim|harita)$/.test(q.get('gorunum') || '')) { gorunumSec(q.get('gorunum')); } else { yenile(true); }
 })();

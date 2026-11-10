@@ -1,6 +1,28 @@
 /* İşletme Paneli eki: kanonda (tokenlar · bilesenler · admin · ek-bilesenler) karşılığı olmayan birkaç düzen.
    Yeni renk, radyus ya da ölçü yok; yalnız kanon tokenleri okunur. Bileşenin kendisi kanondan (ayar-satir, medya-kart, olcer, cip, segment). */
 
+/* ==== Etiket radyusu · Beyar 11 Kas ==== Public zincirdeki bloğun (assets/css/prototip.css) panel karşılığı; kural aynı:
+   30px ve üstü etiket/hap düğme --yuvarlak-md (kanon `.dugme`), 20-29px etiket --yuvarlak-sm (kanon `.durum-hapi`).
+   Ölçer, anahtar, sayı balonu, avatar ve nokta biçimi gereği yuvarlak kalır. */
+.cip.hap,.galeri-hap,.paket-rozet,.kapak-duzenle{border-radius:var(--yuvarlak-md)}
+.ornek-etiket,#dadaMentor .mp-pro,#dadaMentor .mp-yakinda{border-radius:var(--yuvarlak-sm)}
+/* ==== /Etiket radyusu ==== */
+
+/* ==== Dalga 2 mobil · panel dokunma hedefleri ==== Kanon kitinin ikon düğmesi (`--kit-dokunma-h`, varsayılan 36px) ve segment
+   düğmeleri (36px; `.kucuk` 30px) dokunmatikte 44px; fare kipinde (masaüstü) ölçü aynı kalır. */
+@media (pointer:coarse){
+  .yetkili{--kit-dokunma-h:44px}
+  .yetkili .segment button,.yetkili .segment.kucuk button{min-height:44px;min-width:44px}
+}
+/* Etkinlikler süzgeç segmenti 390'da kartın sağ kenarını 4px aşıyordu (kart 16-374, segment 41-378). Kanonun 360 altı kuralı
+   (ek-bilesenler.css: segment kendi içinde kayar) telefon kırılımının tamamına */
+@media (max-width:640px){
+  .yetkili .segment{max-width:100%;overflow-x:auto;scrollbar-width:none}
+  .yetkili .segment::-webkit-scrollbar{display:none}
+  .yetkili .segment button{flex:none}
+}
+/* ==== /Dalga 2 mobil · panel ==== */
+
 /* Saat kutusu: Diet Genel Bakış'taki randevu saat kutusunun kanon karşılığı (as-ikon içinde saat) */
 .ayar-satir .as-ikon.saat-ikon{width:auto;min-width:52px;padding:0 var(--bosluk-8)}
 .ayar-satir .as-ikon.saat-ikon b{font-size:var(--yazi-13);font-weight:var(--agirlik-kalin);color:var(--aksan-koyu)}

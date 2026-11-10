@@ -1,3 +1,14 @@
 /* Gastro /hesabim/odemelerim sayfa paketinin (kanon/gomulu/s-ff27496b3767.css) Hesabım paketinden (s-87b1c5be9aa3.css,
-   bu zincirde yüklü) farkı: Ödemelerim render'ında kullanılıp zincirde kuralı olmayan tek sınıf `od-sec`. Kural aynen. */
+   bu zincirde yüklü) kural düzeyinde farkı: s-ff2'de olup s-87b'de birebir olmayan kurallardan, seçicisindeki bütün sınıflar
+   bu sayfada geçenler (11 Kas parite). Kurallar aynen; renkler token. Dünkü dosyada yalnız `od-sec` vardı; durum hapı
+   (`od-pill`) kuralsızdı. Fatura belgesi penceresinin `fd-*` kuralları alınmadı: Gastro'nun `#fdModal`ı `dl` künyesi ve
+   betikle dolan bir pencere, buradaki pencere canlı Gourmet'in `#fatura-belgesi` markup'ı (künye `ul.belge-toplam`); Gastro
+   kuralı o markup'ta künyeyi üç dar sütuna ezer. */
 .od-sec+.od-sec{margin-top:44px}
+.od-pill{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;letter-spacing:.02em;padding:5px 10px;border-radius:var(--radius-sm);white-space:nowrap}
+.od-pill i{font-size:10.5px}
+.od-pill.ok{color:var(--fit-deep);background:var(--fit-tint);border:1px solid var(--fit-line)}
+.od-pill.off{color:var(--slate-2);background:#f1f1f1;border:1px solid #e2e2e2}
+@media (max-width:640px){
+.od-sonuc .od-sonuc-txt{text-align:left;text-align-last:auto}
+}

@@ -17,12 +17,12 @@
             <span class="kimlik-avatar harf">{{uye.harf}}<button type="button" class="kimlik-avatar-duzenle" data-photo-edit="avatar" aria-label="Profil fotoğrafını değiştir" title="JPG veya PNG, en az 400×400 px, en çok 5 MB. Kare kırpılır."><i class="fa-solid fa-camera" aria-hidden="true"></i></button></span>
             <div class="kimlik-govde">
         
-        <h1>{{uye.ad}} <span class="rozet dolu" data-paket=""><i class="fa-solid fa-crown" aria-hidden="true"></i> {{uye.paket}}</span></h1>
+        <h1>{{uye.ad}} <span class="rozet dolu" data-paket=""><i class="fa-solid fa-user" aria-hidden="true"></i> {{uye.paket}}</span> <span class="rozet dolu" data-kademe="merakli"><i class="fa-solid fa-heart" aria-hidden="true"></i> <span data-puan="rutbe">Meraklı</span></span></h1>
         <span class="kimlik-kullanici"><span class="fp-uad">@{{uye.kullanici}}</span></span>
         <p class="kimlik-giris">Profilin, bildirim tercihlerin, güvenlik ve bölge tercihlerin burada; hesabını dondurma ve silme de. Paketin ve kademeler <a href="{{kok}}hesabim/paketlerim/">Paketlerim</a>'de, abonelik ödemeleri · faturalar · kayıtlı kartlar · iade talepleri <a href="{{kok}}hesabim/odemelerim/">Ödemelerim</a>'de.</p>
         
         <div class="kimlik-meta">
-          <span><i class="fa-solid fa-calendar-days"></i> Üyelik başlangıcı: {{uye.uyelik}}</span>          <span data-rozet-sayi=""><i class="fa-solid fa-award" aria-hidden="true"></i> Rozet 0</span>
+          <span><i class="fa-solid fa-calendar-days"></i> Üyelik başlangıcı {{uye.uyelik}}</span>          <span data-rozet-sayi=""><i class="fa-solid fa-award" aria-hidden="true"></i> Rozet 0</span>
           <span class="ornek-etiket">prototip örneği</span>
         </div>
       </div>
@@ -115,7 +115,7 @@
               <div class="alan-tarih" data-tar-kok="">
                 
                 <input class="alan-girdi" id="hsDogum" name="dogum" type="text" inputmode="numeric" placeholder="gg.aa.yyyy" value="" autocomplete="bday" aria-describedby="hsDogumHelp hsDogumHata">
-                <button class="alan-tarih-dugme" type="button" id="hsDogumAc" aria-haspopup="dialog" aria-expanded="false" aria-controls="hsDogumPop" aria-label="Takvimi aç"><i class="fa-regular fa-calendar" aria-hidden="true"></i></button>
+                <button class="alan-tarih-dugme" type="button" id="hsDogumAc" aria-haspopup="dialog" aria-expanded="false" aria-controls="hsDogumPop" aria-label="Takvimi aç"><i class="fa-solid fa-calendar" aria-hidden="true"></i></button>
                 <div class="alan-tarih-katman" id="hsDogumPop" role="dialog" aria-label="Doğum tarihi seç" hidden="">
                   <div class="alan-tarih-bas">
                     <button class="alan-tarih-ok" type="button" data-ay="-1" aria-label="Önceki ay"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
@@ -169,7 +169,7 @@
           <div class="kart-govde">
           <div class="ayar-liste">
             <div class="ayar-satir">
-              <span class="as-ikon" aria-hidden="true"><i class="fa-regular fa-id-badge"></i></span>
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-id-badge"></i></span>
               <div class="as-metin"><b>Profilim herkese açık</b><span>Kapatırsan profilini yalnız takip ettiğin ve seni takip edenler görür.</span></div>
               <label class="anahtar" for="vsProfil"><input type="checkbox" id="vsProfil" name="profil_herkese_acik" value="1" checked=""><span class="anahtar-ray"></span><span class="sr-only">Profilim herkese açık</span></label>
             </div>
@@ -214,7 +214,7 @@
         <form class="kart panel" data-savecard="bildirim">
           <div class="kart-bas">
             <div>
-              <h2 id="bildirimH" class="kart-baslik"><i class="fa-regular fa-bell"></i> Bildirim Tercihlerim</h2>
+              <h2 id="bildirimH" class="kart-baslik"><i class="fa-solid fa-bell"></i> Bildirim Tercihlerim</h2>
               <p>Hangi bildirimi hangi kanaldan alacağını seç. Rezervasyon talebi hatırlatmaları onaylanan saate göre gönderilir.</p>
             </div>
           </div>
@@ -270,7 +270,7 @@
             </div>
           </div>
 
-          <div class="alt-not"><i class="fa-regular fa-bell" aria-hidden="true"></i> <span>Gelen bildirimlerini görmek için <a href="{{kok}}hesabim/bildirimler/">bildirim akışına git</a>. Rezervasyon talebi hatırlatmalarının hangi günlere düştüğü <a href="{{kok}}hesabim/etkinlikler/">Etkinlik Takvimim</a> sekmesinden gelir.</span></div>
+          <div class="alt-not"><i class="fa-solid fa-bell" aria-hidden="true"></i> <span>Gelen bildirimlerini görmek için <a href="{{kok}}hesabim/bildirimler/">bildirim akışına git</a>. Rezervasyon talebi hatırlatmalarının hangi günlere düştüğü <a href="{{kok}}hesabim/etkinlikler/">Etkinlik Takvimim</a> sekmesinden gelir.</span></div>
 
           </div>
           <div class="kart-alt">
@@ -281,7 +281,7 @@
         </form>
       
       <div class="fp-card okuma-kolonu">
-      <div class="ozet-bas"><h3><i class="fa-regular fa-bell"></i> Bildirim kategorileri</h3>
+      <div class="ozet-bas"><h3><i class="fa-solid fa-bell"></i> Bildirim kategorileri</h3>
         <a class="fp-act" href="#">Kanal ayarları <i class="fa-solid fa-arrow-right"></i></a></div>
       <p>Her kategori ayrı kapatılabilir; sıklığı da kanal ayarlarından belirlersin.</p>
       <div class="fp-toggle">
@@ -539,7 +539,7 @@
     <div class="sec-head">
       <div>
         <span class="ust-etiket"><i class="fa-solid fa-arrows-left-right"></i> Veri akışının yönü</span>
-        <h2>Bu sayfada ne oluyor?</h2>
+        <h2>Bu sekmede ne oluyor?</h2>
         <p class="lead">Bir bağlantı iki yönlü olabilir: bir kısmı Dada Gourmet'e <b>gelir</b>,
         bir kısmı Dada Gourmet'ten dış sisteme <b>gider</b>. Aşağıdaki üç kutu hangisinin
         hangi yönde aktığını açıkça söyler.</p>
@@ -1062,7 +1062,7 @@
       </div>
 
       <div class="fp-card">
-        <div class="ozet-bas"><h3><i class="fa-solid fa-shoe-prints"></i> Senkronlanan veri nereye düşer</h3>
+        <div class="ozet-bas"><h3><i class="fa-solid fa-list-check"></i> Senkronlanan veri nereye düşer</h3>
           <a class="fp-act" href="#">Ziyaret Günlüğü <i class="fa-solid fa-arrow-right"></i></a></div>
         <div class="fp-list">
           <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-shoe-prints"></i></span>
@@ -1133,8 +1133,8 @@
           <div class="vz-indir" id="vzIndirDurum" hidden="">
             <div class="vz-adimlar" id="vzAdimlar">
               <span class="vz-adim acik"><i class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i> Paket hazırlanıyor</span>
-              <span class="vz-adim"><i class="fa-regular fa-circle" aria-hidden="true"></i> Dosya oluşturuluyor</span>
-              <span class="vz-adim"><i class="fa-regular fa-circle" aria-hidden="true"></i> Bağlantı e-postana gönderiliyor</span>
+              <span class="vz-adim"><i class="fa-solid fa-circle" aria-hidden="true"></i> Dosya oluşturuluyor</span>
+              <span class="vz-adim"><i class="fa-solid fa-circle" aria-hidden="true"></i> Bağlantı e-postana gönderiliyor</span>
             </div>
             <p class="durum-satir" id="vzIndirNot" role="status"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> <span>Paketin hazırlanması birkaç dakika sürebilir; hazır olunca <b>{{uye.eposta}}</b> adresine indirme bağlantısı gönderilir. Bağlantı 48 saat geçerlidir.</span></p>
           </div>
@@ -1150,7 +1150,7 @@
       <div class="fp-card">
         <div class="ozet-bas"><h3><i class="fa-solid fa-hourglass-half"></i> Saklama ve erişim</h3></div>
         <div class="fp-list">
-          <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-regular fa-calendar"></i></span>
+          <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-calendar"></i></span>
             <span class="ks-metin"><b>Ziyaret ve değerlendirme kaydı</b><small>Hesabın açık kaldığı sürece; hesap silinince 30 gün içinde silinir</small></span>
             <span class="ks-uc">Aktif</span></div>
           <div class="kalem-satiri"><span class="ks-ikon"><i class="fa-solid fa-user-shield"></i></span>
@@ -1208,7 +1208,7 @@
               <span>Dondurma sırasında profilimin gizleneceğini, rezervasyon taleplerimin iptal edileceğini ve paket tahsilatının kendiliğinden durmayacağını anladım.</span>
             </label>
             <div class="onay-eylemler">
-              <button class="dugme uyari" type="submit" data-confirm-btn="" disabled="" aria-describedby="dondurDurum"><i class="fa-regular fa-circle-pause"></i> Hesabı Dondur</button>
+              <button class="dugme uyari" type="submit" data-confirm-btn="" disabled="" aria-describedby="dondurDurum"><i class="fa-solid fa-circle-pause"></i> Hesabı Dondur</button>
               <p class="durum-satir blocked" id="dondurDurum" role="status" data-confirm-state=""><i class="fa-solid fa-lock" aria-hidden="true"></i> <span>Düğme kapalı: dondurmak için önce onay kutusunu işaretle.</span></p>
             </div>
           </form>
@@ -1258,7 +1258,7 @@
               <input class="alan-girdi" id="silIfade" type="text" autocomplete="off" spellcheck="false" placeholder="HESABIMI SİL" data-confirm-input="" aria-describedby="silDurum">
             </div>
             <div class="onay-eylemler">
-              <button class="dugme tehlike" type="submit" data-confirm-btn="" disabled="" aria-describedby="silDurum"><i class="fa-regular fa-trash-can"></i> Hesabımı Kalıcı Olarak Sil</button>
+              <button class="dugme tehlike" type="submit" data-confirm-btn="" disabled="" aria-describedby="silDurum"><i class="fa-solid fa-trash-can"></i> Hesabımı Kalıcı Olarak Sil</button>
               <p class="durum-satir blocked" id="silDurum" role="status" data-confirm-state=""><i class="fa-solid fa-lock" aria-hidden="true"></i> <span>Düğme kapalı: silme için onay kutusunu işaretle ve HESABIMI SİL ifadesini birebir yaz.</span></p>
             </div>
           </form>

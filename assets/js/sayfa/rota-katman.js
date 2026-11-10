@@ -59,9 +59,9 @@
   /* ---- Canlı kart dili (dada-route.js `proxLabel`, `sapmaMetni`): tüm kartlarda aynı ---- */
   var mesafeYaz = function (d) { return d < 1 ? (Math.round(d * 100) * 10) + ' m' : Math.round(d) + ' km'; };
   var yakinlik = function (d) { return d < 0.5 ? 'Tam yol üstü' : (d <= TAM_KM ? 'Yol üstü' : 'Yola yakın') + ' · ' + mesafeYaz(d); };
-  var sapmaMetni = function (d, ayrim) {
+  var sapmaMetni = function (d) {
     var dk = Math.max(0, Math.round(d * 2 / HIZ * 60)), km = d < 1 ? (Math.round(d * 100) * 10) + ' m' : (Math.round(d * 10) / 10).toString().replace('.', ',') + ' km';
-    return (ayrim ? 'Yol ayrımından ' : 'Rotadan ') + km + (dk <= 0 ? ' · yolculuğa süre eklemez' : ' · yolculuğa yaklaşık ' + dk + ' dakika ekler');
+    return 'Rotadan ' + km + (dk <= 0 ? ' · yolculuğa süre eklemez' : ' · yolculuğa yaklaşık ' + dk + ' dakika ekler');
   };
   /* Rotaya ekle düğmesi: mevcut ara durak mekanizması (`dgRotaApi.durakYap`); etiket rotadaysa değişir */
   var durakDugme = function (ad, lat, lng, etiket, sinif) {
@@ -108,9 +108,9 @@
      İbadethane ana dinler (cami, mescit, kilise, sinagog, cemevi, manastır; doküman R2.3 "yol ayrım mesafesiyle"),
      Dinlenme alanı (R2.4: dinlenme cebi, konaklamalı yeme-içme), Karavan parkları (Beyar eki) ---- */
   var IHT = [
-    { id: 'ibadet', ad: 'İbadethane', ikon: 'fa-place-of-worship', kat: ['ibadet', 'tarihi'], ayrim: true },
+    { id: 'ibadet', ad: 'İbadethane', ikon: 'fa-place-of-worship', kat: ['ibadet', 'tarihi'] },
     { id: 'dinlenme', ad: 'Dinlenme alanı', ikon: 'fa-bed', kat: ['dinlenme'] },
-    { id: 'karavan', ad: 'Karavan parkları', ikon: 'fa-caravan', kat: ['karavan'] }
+    { id: 'karavan', ad: 'Karavan parkı', ikon: 'fa-caravan', kat: ['karavan'] }
   ];
   var ihtVeri = {}, ihtSayi = 0;
   var ihtiyacHesap = function () {
@@ -138,22 +138,34 @@
   };
   var yenile = function () { ihtiyacHesap(); pinleriCiz(); seritYenile(); yakitYenile(); durakBoya(); };
 
-  /* ---- Alt şerit: Mekânlar | İhtiyaçlar. "Mekânlar" canlı kadranın kendisi ---- */
-  var dash = $('#ygDash'), seritAktif = 'mekan';
+  /* ---- Alt şerit: Mekânlar | İhtiyaçlar. "Mekânlar" canlı kadranın kendisi.
+     Sekmeler canlı başlık satırının içinde (Beyar 11 Kas D7/K4): ayrı sekme satırı şeridi canlıdan 39 px (telefonda 53 px) uzatıyordu ---- */
+  /* D16 (Beyar 11 Kas): İhtiyaçlar etkinken aynı satırda ikincil alt sekmeler (İbadethane | Dinlenme alanı | Karavan parkları);
+     şeritte yalnız seçili grubun kartları, grup başlık karoları yok. Satır sığmazsa kayan şerit ve kenar solması (ortak `scroll-affordance`);
+     "prototip örneği" başlık satırında bir kez */
+  var dash = $('#ygDash'), seritAktif = 'mekan', ihtGrup = null;
   if (dash) {
-    dash.querySelector('.yg-dash-head').insertAdjacentHTML('afterend', '<div class="yg-dash-sekmeler" id="ygSerit" role="tablist" aria-label="Yol üstü şeridi" hidden></div>');
+    $('.yg-dash-title').insertAdjacentHTML('afterend', '<div class="yg-serit-kap" data-scroll-fade><div class="yg-dash-sekmeler" id="ygSerit" role="tablist" aria-label="Yol üstü şeridi" hidden></div>' +
+      '<div class="yg-ih-sekmeler" id="ygIhSekme" role="tablist" aria-label="İhtiyaç grupları" hidden></div></div><span class="ornek-etiket yg-ih-ornek" hidden>prototip örneği</span>');
     $('#ygDashScroll').insertAdjacentHTML('afterend', '<div class="yg-dash-scroll yg-dash-katman" id="ygDashKatman" role="tabpanel" aria-label="İhtiyaçlar" data-scroll-fade hidden></div>');
-    if (window.ScrollAffordance) { window.ScrollAffordance.wire($('#ygDashKatman')); }
-    $('.yg-dash-title').insertAdjacentHTML('beforeend', '<span class="ornek-etiket yg-dash-ornek" hidden>prototip örneği</span>');
+    if (window.ScrollAffordance) { window.ScrollAffordance.wire($('#ygDashKatman')); window.ScrollAffordance.wire($('.yg-serit-kap')); }
+    /* Alt sekme klavyesi: ok tuşları, Home, End; pasif grup atlanır */
+    $('#ygIhSekme').addEventListener('keydown', function (e) {
+      var l = $$('#ygIhSekme [data-ih-grup]:not([disabled])'), n = l.indexOf(document.activeElement); if (n < 0) { return; }
+      var y = { ArrowRight: n + 1, ArrowLeft: n - 1, Home: 0, End: l.length - 1 }[e.key]; if (y === undefined) { return; }
+      e.preventDefault(); y = (y + l.length) % l.length; ihtSec(l[y].dataset.ihGrup, true);
+    });
   }
-  /* Kart: canlı alt kadran kartı (`.yg-dcard`: görsel, ad, konum, yakınlık etiketi, sapma metni). Görsel yerine tür ikonu;
-     kart içinde eylem düğmesi olduğu için kök `article` (canlıda `button`) */
+  /* Kart: canlı alt kadran kartı (`.yg-dcard`) ölçü ve satır düzeniyle aynı: görsel kutusu, ad, konum, yakınlık etiketi, sapma metni
+     (canlı `sapmaMetni` biçimi). Görsel yerine tür ikonu; "Rotaya ekle" görsel kutusunun altında, canlı `.yd-badge` gibi kutuya oturur,
+     böylece canlıda olmayan düğme satırı kartı uzatmaz. Kart içinde eylem düğmesi olduğu için kök `article` (canlıda `button`) */
   var ihtKart = function (g, x) {
     var tam = x.d <= TAM_KM;
-    return '<article class="yg-dcard yg-dcard--katman" data-kart-lat="' + x.n.lat + '" data-kart-lng="' + x.n.lng + '"><span class="yd-media yg-katman-pin--' + g.id + '"><i class="fa-solid ' + x.n.ikon + '" aria-hidden="true"></i></span>' +
+    return '<article class="yg-dcard yg-dcard--katman" data-kart-lat="' + x.n.lat + '" data-kart-lng="' + x.n.lng + '"><span class="yd-media yg-katman-pin--' + g.id + '"><i class="fa-solid ' + x.n.ikon + '" aria-hidden="true"></i>' +
+      durakDugme(x.n.ad, x.n.lat, x.n.lng, ['Rotaya ekle', 'Rotada'], 'yg-kl-durak yg-ih-ekle') + '</span>' +
       '<span class="yd-body"><span class="yd-name" title="' + kac(x.n.ad) + '">' + kac(x.n.ad) + '</span><span class="yd-loc" title="' + kac(x.n.alt || '') + '">' + kac(x.n.alt || g.ad) + '</span>' +
-      '<span class="yg-ih-satir"><span class="yd-tag ' + (tam ? 'on' : 'near') + '">' + yakinlik(x.d) + '</span>' + durakDugme(x.n.ad, x.n.lat, x.n.lng, ['Rotaya ekle', 'Rotada']) + '</span>' +
-      '<span class="yd-detour">' + sapmaMetni(x.d, g.ayrim) + '</span></span></article>';
+      '<span class="yd-tag ' + (tam ? 'on' : 'near') + '">' + yakinlik(x.d) + '</span>' +
+      '<span class="yd-detour">' + sapmaMetni(x.d) + '</span></span></article>';
   };
   var seritYenile = function () {
     if (!dash) { return; }
@@ -162,21 +174,50 @@
     if (!sekme.some(function (t) { return t[0] === seritAktif; })) { seritAktif = sekme.length ? sekme[0][0] : 'mekan'; }
     $('#ygSerit').innerHTML = sekme.map(function (t) { return '<button type="button" role="tab" class="yg-serit-sekme" data-serit="' + t[0] + '" aria-selected="false" aria-controls="' + (t[0] === 'mekan' ? 'ygDashScroll' : 'ygDashKatman') + '"><i class="fa-solid ' + t[1] + '" aria-hidden="true"></i>' + t[2] + ' <span class="yg-dash-cnt">' + t[3] + '</span></button>'; }).join('');
     $('#ygSerit').hidden = !rota; dash.classList.toggle('yg-dash--katmanli', rota);
-    $('#ygDashKatman').innerHTML = IHT.map(function (g) {
-      var l = ihtVeri[g.id] || [];
-      return '<section class="yg-ih-grup" aria-label="' + g.ad + '"><h5 class="yg-ih-bas"><span class="yg-il-ikon"><i class="fa-solid ' + g.ikon + '" aria-hidden="true"></i></span>' + g.ad + ' <span class="yg-ih-sayi">' + l.length + '</span></h5>' +
-        '<div class="yg-ih-kartlar">' + (l.length ? l.map(function (x) { return ihtKart(g, x); }).join('') : '<p class="yg-kl-bos">Bu güzergâhta örnek nokta yok.</p>') + '</div></section>';
+    /* Varsayılan alt sekme kartı olan ilk grup; kartı olmayan grup sekmesi pasif */
+    var dolu = function (g) { return (ihtVeri[g.id] || []).length > 0; };
+    if (!IHT.some(function (g) { return g.id === ihtGrup && dolu(g); })) { var ilk = IHT.filter(dolu)[0]; ihtGrup = ilk ? ilk.id : IHT[0].id; }
+    /* Dalga 2 mobil · rota: alt sekmede grup ikonu (Katmanlar çipi ve kart görsel kutusundaki ikonun aynısı); ≤640'ta ad görsel olarak gizlenir,
+       sekme ikon + sayı olur (erişilebilir ad ve `title` tam ad). Masaüstünde ikon gizli, görünüm aynı */
+    $('#ygIhSekme').innerHTML = IHT.map(function (g) {
+      var n = (ihtVeri[g.id] || []).length, on = g.id === ihtGrup;
+      return '<button type="button" role="tab" class="yg-ih-sekme" data-ih-grup="' + g.id + '" aria-selected="' + on + '" aria-controls="ygDashKatman" tabindex="' + (on ? 0 : -1) + '" title="' + g.ad + '"' + (n ? '' : ' disabled') + '><i class="fa-solid ' + g.ikon + '" aria-hidden="true"></i><span class="yg-ih-ad">' + g.ad + '</span> <span class="yg-ih-sayi">' + n + '</span></button>';
     }).join('');
+    ihtKartlarCiz();
     seritSec(seritAktif);
+  };
+  var ihtKartlarCiz = function () {
+    var g = IHT.filter(function (x) { return x.id === ihtGrup; })[0] || IHT[0], l = ihtVeri[g.id] || [], kap = $('#ygDashKatman');
+    kap.setAttribute('aria-label', 'İhtiyaçlar · ' + g.ad);
+    kap.innerHTML = l.length ? l.map(function (x) { return ihtKart(g, x); }).join('') : '<p class="yg-kl-bos">Bu güzergâhta örnek nokta yok.</p>';
+    kap.scrollLeft = 0; durakBoya();
+    if (window.ScrollAffordance) { window.ScrollAffordance.sync(kap); }
+  };
+  /* Seçilen alt sekme dar ekranda yarım kalmasın: sekme satırı yalnız yatay kayar (sayfa dikeyde kaymaz) */
+  var seritGoster = function (b) {
+    var k = $('.yg-serit-kap'); if (!k) { return; } var s = k.getBoundingClientRect(), r = b.getBoundingClientRect();
+    if (r.right > s.right - 8) { k.scrollLeft += r.right - s.right + 8; } else if (r.left < s.left + 8) { k.scrollLeft -= s.left + 8 - r.left; }
+  };
+  var ihtSec = function (id, odak) {
+    ihtGrup = id;
+    $$('#ygIhSekme [data-ih-grup]').forEach(function (b) { var on = b.dataset.ihGrup === id; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; if (on) { seritGoster(b); if (odak) { b.focus({ preventScroll: true }); } } });
+    ihtKartlarCiz();
   };
   var seritSec = function (k) {
     if (!dash) { return; }
     seritAktif = k; $$('#ygSerit [data-serit]').forEach(function (b) { b.setAttribute('aria-selected', b.dataset.serit === k ? 'true' : 'false'); });
     var m = k === 'mekan', kap = $('#ygDashKatman'); $('#ygDashScroll').hidden = !m; kap.hidden = m; dash.classList.toggle('yg-dash--katman-sekme', !m);
+    $('#ygIhSekme').hidden = m; $('.yg-ih-ornek').hidden = m;
     var bt = $('#ygDashTitleTxt'); if (bt) { bt.textContent = m ? 'Yol üstü mekânlar' : 'Yol üstü · İhtiyaçlar'; }
-    var oe = $('.yg-dash-ornek'); if (oe) { oe.hidden = m; }
+    /* Dar ekranda sekme satırı kayar: İhtiyaçlar açılınca satır alt sekmeleri gösterecek kadar kayar, Mekânlar'da başa döner */
+    var sk = $('.yg-serit-kap'), ih = $('#ygSerit [data-serit="ihtiyac"]');
+    /* Dalga 2 mobil · rota: alt sekmelerin üçü de görünür kalsın; sığmazsa İhtiyaçlar sekmesinin başı sol solmanın altına kayar */
+    var ihs = $('#ygIhSekme'), son = ihs ? ihs.offsetLeft + ihs.offsetWidth - (sk ? sk.clientWidth : 0) + 4 : 0;
+    if (sk) { sk.scrollLeft = !m && ih ? Math.max(0, ih.offsetLeft - 2, son) : 0; if (window.ScrollAffordance) { window.ScrollAffordance.sync(sk); } }
     if (!m && window.ScrollAffordance) { window.ScrollAffordance.sync(kap); }
     durakBoya();
+    /* Şerit yüksekliği sekmeyle değişebilir: canlı betik konum düğmesi ve detay kartı payını `resize`da yeniden ölçer (`syncBottomOffset`) */
+    window.dispatchEvent(new Event('resize'));
   };
   /* Rotadaki durakla eşleşen düğme basılı görünür: ad ve konum aynı olmalı (aynı adlı örnek noktalar karışmasın) */
   var durakBoya = function () {
@@ -285,29 +326,132 @@
       if (govdeRO) { govdeRO.observe(g); } govdeOlc(g);
     });
   };
+  /* D11 (Beyar 11 Kas): "İhtiyaç" ve "Gastro · haritada göster" çipleri tek satır; panel genişliğine sığmayınca Hızlı Filtreler'deki
+     kayan şerit ve kenar solması (ortak `scroll-affordance`) */
+  var seritRO = window.ResizeObserver && window.ScrollAffordance ? new ResizeObserver(function (e) { e.forEach(function (x) { window.ScrollAffordance.sync(x.target); }); }) : null;
+  $$('.yg-katman .cipler').forEach(function (c) { c.setAttribute('data-scroll-fade', ''); if (window.ScrollAffordance) { window.ScrollAffordance.wire(c); } if (seritRO) { seritRO.observe(c); } });
   /* Noktalar örnek olduğu için canlı Open Charge Map atfı yerine örnek kaynağı yazılır */
   var atif = $('.yg-sarj-credit:not(#ygYakitKaynak)'); if (atif) { atif.textContent = 'Kaynak: prototip örneği. Canlıda Open Charge Map verisi kullanılır.'; }
   var demoBas = $('#ygDemo .yg-demo-h'); if (demoBas) { demoBas.innerHTML = '<span class="ornek-etiket">prototip örneği</span>'; }
 
-  /* İl kartları yalnız güzergâhın geçtiği iller için, yolculuk sırasıyla */
-  var ozet = $('#ygSummary'), iller = $('#ygIller'), ilAnahtar = '';
+  /* İl kartları yalnız güzergâhın geçtiği iller için, yolculuk sırasıyla.
+     D15 (Beyar 11 Kas): aynı anda tek il kartı açık. Üstte rota sırasıyla il seçici (Hızlı Filtreler'in tek satır kayan çip şeridi,
+     `.yg-fl-chip` + ortak `scroll-affordance`), altında yalnız seçili ilin kartı; bölüm yüksekliği il sayısından bağımsız.
+     Tescil verisi olmayan il çipi rota sırasını göstermek için durur ama pasiftir (seçilemez) */
+  var ozet = $('#ygSummary'), iller = $('#ygIller'), ilAnahtar = '', ilListe = [], ilSecili = null;
+  var ilUrun = function (i) { var k = K[i.il]; return k ? (k.yenir || []).length + (k.alinir || []).length : 0; };
+  var secici = null, ilOzetEl = null;
+  if (iller) {
+    $('#ygIlKart').insertAdjacentHTML('beforebegin', '<div class="yg-fl-chips yg-il-secici" id="ygIlSecici" role="tablist" aria-label="Yol üstü iller, rota sırasıyla" data-scroll-fade></div>');
+    secici = $('#ygIlSecici'); $('#ygIlKart').setAttribute('role', 'tabpanel');
+    if (window.ScrollAffordance) { window.ScrollAffordance.wire(secici); } if (seritRO) { seritRO.observe(secici); }
+    var ib = $('#ygIllerBas'); if (ib) { ib.insertAdjacentHTML('beforeend', '<span class="yg-iller-ozet" id="ygIllerOzet"></span>'); ilOzetEl = $('#ygIllerOzet'); }
+  }
+  var seciciCiz = function () {
+    var veri = ilListe.filter(ilUrun), top = veri.reduce(function (t, i) { return t + ilUrun(i); }, 0);
+    if (ilOzetEl) { ilOzetEl.textContent = ilListe.length ? ilListe.length + ' il · ' + top + ' tescilli ürün' : ''; }
+    secici.innerHTML = ilListe.map(function (i) {
+      var n = ilUrun(i), on = i.il === ilSecili;
+      return '<button type="button" role="tab" class="yg-fl-chip yg-il-sec' + (on ? ' is-active' : '') + '" data-il-sec="' + kac(i.il) + '" aria-selected="' + on + '" aria-controls="ygIlKart" tabindex="' + (on ? 0 : -1) + '"' +
+        (n ? '' : ' disabled title="Tescilli ürün verisi prototipte henüz yok"') + '>' + kac(i.il) + ' <span class="yg-sv-kn">' + n + '</span></button>';
+    }).join('');
+    if (window.ScrollAffordance) { window.ScrollAffordance.sync(secici); }
+  };
+  var ilKartCiz = function () {
+    var i = ilListe.filter(function (x) { return x.il === ilSecili; })[0];
+    $('#ygIlKart').innerHTML = i ? ilKart(i) : '';
+    govdeKur(); durakBoya();
+  };
+  /* Çipi şeridin görünür alanına getirir (yalnız yatay; panel dikeyde kaymaz) */
+  var cipGoster = function (b) {
+    if (!b) { return; } var s = secici.getBoundingClientRect(), r = b.getBoundingClientRect();
+    if (r.left < s.left + 8) { secici.scrollLeft -= s.left + 8 - r.left; } else if (r.right > s.right - 8) { secici.scrollLeft += r.right - s.right + 8; }
+  };
+  var ilSec = function (ad, odak) {
+    var i = ilListe.filter(function (x) { return x.il === ad; })[0]; if (!i || !ilUrun(i)) { return false; }
+    ilSecili = ad;
+    $$('#ygIlSecici [data-il-sec]').forEach(function (b) { var on = b.dataset.ilSec === ad; b.classList.toggle('is-active', on); b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; if (on) { cipGoster(b); if (odak) { b.focus({ preventScroll: true }); } } });
+    $$('.yg-il-harita-rozet').forEach(function (b) { b.classList.toggle('is-secili', b.dataset.ilOn === ad); }); rozetSonra(0);
+    ilKartCiz();
+    return true;
+  };
   var ilEsle = function () {
     /* Çizgi ve kart aynı kaynaktan (Beyar, 9 Kas): çizginin geçtiği iller `dgRotaIller` sırasıyla; çizginin geçmediği ile kart yok */
     var adlar = ozet.hidden || !window.dgRotaIller ? [] : window.dgRotaIller();
     var l = adlar.map(function (a) { return IL.filter(function (i) { return i.il === a; })[0]; }).filter(Boolean);
     var anahtar = l.map(function (i) { return i.il; }).join('|');
-    if (anahtar !== ilAnahtar) { $('#ygIlKart').innerHTML = l.map(ilKart).join(''); ilAnahtar = anahtar; ilRozet(l); }
+    if (anahtar !== ilAnahtar) {
+      ilListe = l; ilAnahtar = anahtar;
+      if (!l.some(function (i) { return i.il === ilSecili && ilUrun(i); })) { var ilk = l.filter(ilUrun)[0]; ilSecili = ilk ? ilk.il : null; }
+      ilRozet(l); seciciCiz(); ilKartCiz();
+    }
     iller.hidden = !l.length; govdeKur(); durakBoya();
+    if (!iller.hidden && window.ScrollAffordance) { window.ScrollAffordance.sync(secici); }
   };
-  /* Haritada il rozeti: rotanın geçtiği her ile küçük ad rozeti; tıklanınca ilin kartı öne gelir (Beyar, 9 Kas) */
+  if (secici) {
+    secici.addEventListener('click', function (e) { var b = e.target.closest('[data-il-sec]'); if (b && !b.disabled) { ilSec(b.dataset.ilSec); var i = ilListe.filter(function (x) { return x.il === b.dataset.ilSec; })[0]; if (i && h.panInside && !window.matchMedia('(max-width:860px)').matches) { h.panInside([i.lat, i.lng], { padding: [80, 80] }); } } });
+    /* Sekme listesi klavyesi: ok tuşları, Home, End; pasif iller atlanır */
+    secici.addEventListener('keydown', function (e) {
+      var l = $$('#ygIlSecici [data-il-sec]:not([disabled])'), n = l.indexOf(document.activeElement); if (n < 0) { return; }
+      var y = { ArrowRight: n + 1, ArrowLeft: n - 1, Home: 0, End: l.length - 1 }[e.key]; if (y === undefined) { return; }
+      e.preventDefault(); y = (y + l.length) % l.length; ilSec(l[y].dataset.ilSec, true);
+    });
+  }
+  /* Haritada il rozeti: rotanın geçtiği her ile küçük ad rozeti; tıklanınca il seçilir ve kartı öne gelir (Beyar, 9 Kas; D15) */
   var rozetler = L.layerGroup().addTo(h);
   var ilRozet = function (l) {
     rozetler.clearLayers();
     l.forEach(function (i) {
-      var ik = L.divIcon({ className: 'yg-il-harita', html: '<button type="button" class="yg-il-harita-rozet" data-il-on="' + kac(i.il) + '"><i class="fa-solid fa-certificate" aria-hidden="true"></i>' + kac(i.il) + '</button>', iconSize: [0, 0] });
+      var ik = L.divIcon({ className: 'yg-il-harita', html: '<button type="button" class="yg-il-harita-rozet' + (i.il === ilSecili ? ' is-secili' : '') + '" data-il-on="' + kac(i.il) + '"><i class="fa-solid fa-certificate" aria-hidden="true"></i>' + kac(i.il) + '</button>', iconSize: [0, 0] });
       rozetler.addLayer(L.marker([i.lat, i.lng], { icon: ik, keyboard: false, zIndexOffset: 900 }));
     });
+    rozetSonra(0);
   };
+  /* D18 (11 Kas) · İl rozetleri durak pinlerinin ve birbirlerinin üstüne binmesin. Rozet varsayılan olarak noktanın üstünde; durak pini
+     (`.yg-pin.stop`) ya da daha önce yerleşmiş rozetle kesişirse sırayla sağa, sola, alta denenir; hiçbiri boş değilse rozet gizlenir.
+     Öncelik: seçili il, sonra durak pini olan il (kalkış, varış, ara durak), sonra tescilli ürünü çok olan il, sonra rota sırası. Rozet
+     haritanın görünür alanından (başlığın altı; telefonda alt sayfa ve açık alt şeridin üstü, masaüstünde panelin sağı) taşan yere konmaz.
+     Yakınlık değişince, rota ve duraklar yenilenince, il seçilince yeniden hesaplanır (ekran koordinatı; animasyon bitince) */
+  var ROZET_YER = ['ust', 'sag', 'sol', 'alt'];
+  var rozetKes = function (a, b) { return Math.min(a.right, b.right) - Math.max(a.left, b.left) > 0 && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 0; };
+  var rozetPay = function (r, d) { return { left: r.left - d, top: r.top - d, right: r.right + d, bottom: r.bottom + d }; };
+  var rozetDuzen = function () {
+    var bs = $$('.yg-il-harita-rozet'); if (!bs.length) { return; }
+    var urun = function (b) { var i = ilListe.filter(function (x) { return x.il === b.dataset.ilOn; })[0]; return i ? ilUrun(i) : 0; };
+    var sira = bs.map(function (b, n) { return { b: b, n: n, o: (b.classList.contains('is-secili') ? 1000 : 0) + urun(b) }; }).sort(function (a, c) { return c.o - a.o || a.n - c.n; });
+    var pinler = $$('#routeMap .yg-pin.stop').map(function (p) { return rozetPay(p.getBoundingClientRect(), 2); });
+    var dolu = pinler.slice(), alan = rozetAlan();
+    var icinde = function (q) { return q.left >= alan.left && q.right <= alan.right && q.top >= alan.top && q.bottom <= alan.bottom; };
+    sira.forEach(function (x) {
+      var nokta = x.b.parentElement.getBoundingClientRect();
+      if (pinler.some(function (d) { return rozetKes(rozetPay({ left: nokta.left, top: nokta.top, right: nokta.left, bottom: nokta.top }, 1), d); })) { x.o += 500; }
+    });
+    sira.sort(function (a, c) { return c.o - a.o || a.n - c.n; });
+    sira.forEach(function (x) {
+      var b = x.b, r = null; b.classList.remove('is-gizli');
+      for (var k = 0; k < ROZET_YER.length && !r; k++) {
+        b.dataset.yer = ROZET_YER[k]; var q = b.getBoundingClientRect();
+        if (icinde(q) && !dolu.some(function (d) { return rozetKes(q, d); })) { r = q; }
+      }
+      if (!r) { b.dataset.yer = 'ust'; if (x.o < 1000) { b.classList.add('is-gizli'); return; } r = b.getBoundingClientRect(); }
+      dolu.push(rozetPay(r, 2));
+    });
+  };
+  var rozetAlan = function () {
+    var k = h.getContainer().getBoundingClientRect(), a = { left: k.left, top: k.top, right: k.right, bottom: k.bottom };
+    var ust = $('.yg-top'), pn = $('.yg-panel'), sr = $('#ygDash');
+    if (ust) { a.top = Math.max(a.top, ust.getBoundingClientRect().bottom); }
+    if (pn) { var r = pn.getBoundingClientRect(); if (window.matchMedia('(max-width:860px)').matches) { a.bottom = Math.min(a.bottom, r.top); } else if (r.right < k.right) { a.left = Math.max(a.left, r.right); } }
+    if (sr && !sr.hidden && !sr.classList.contains('collapsed') && !sr.classList.contains('full-hidden')) { var d = sr.getBoundingClientRect(); if (d.height && d.top > a.top && d.top < a.bottom) { a.bottom = d.top; } }
+    return a;
+  };
+  var rozetZaman = 0;
+  var rozetSonra = function (ms) { clearTimeout(rozetZaman); rozetZaman = setTimeout(function () { requestAnimationFrame(rozetDuzen); }, ms); };
+  /* görünür alan sınırı kaydırınca da değişir; alt sayfa kipi ve şerit değişince `resize` gelir */
+  h.on('zoomend moveend', function () { rozetSonra(60); });
+  window.addEventListener('resize', function () { rozetSonra(300); });
+  if (window.MutationObserver && $('.yg-panel')) { new MutationObserver(function () { rozetSonra(450); }).observe($('.yg-panel'), { attributes: true, attributeFilter: ['class'] }); }
+  document.addEventListener('dg:rota', function () { rozetSonra(400); });
   var ilOne = function (ad) {
     var k = ad ? $('.yg-il-kart[data-il="' + ad + '"]') : iller; if (!k || iller.hidden) { return; }
     var gor = $('#ygViewToggle [data-v="list"]'); if (gor && window.matchMedia('(max-width:860px)').matches && !$('.yg-panel').classList.contains('sheet-full')) { gor.click(); }
@@ -376,8 +520,9 @@
     var ar = e.target.closest('[data-arac]'); if (ar) { aracSec(ar.dataset.arac); return; }
     if (e.target.closest('#ygYakitToggle')) { yakitDegis(!yakitAcik); return; }
     var yr = e.target.closest('[data-yakit]'); if (yr) { yakitAc(yr.dataset.yakit); var x = yakitSonuc.filter(function (y) { return y.id === yr.dataset.yakit; })[0]; if (x) { h.flyTo([x.v.lat, x.v.lng], Math.max(h.getZoom(), 11), { duration: 0.6 }); } return; }
-    var ir = e.target.closest('[data-il-on]'); if (ir) { ilOne(ir.dataset.ilOn); return; }
+    var ir = e.target.closest('[data-il-on]'); if (ir) { ilOne(ilSec(ir.dataset.ilOn) ? ir.dataset.ilOn : null); return; }
     if (e.target.closest('#ygIllerBas')) { ilOne(null); return; }
+    var ig = e.target.closest('[data-ih-grup]'); if (ig) { if (!ig.disabled) { ihtSec(ig.dataset.ihGrup); } return; }
     var sk2 = e.target.closest('[data-serit]'); if (sk2) { seritSec(sk2.dataset.serit); return; }
     var kk = e.target.closest('[data-kart-lat]'); if (kk && !e.target.closest('[data-durak]')) { h.flyTo([+kk.dataset.kartLat, +kk.dataset.kartLng], Math.max(h.getZoom(), 10), { duration: 0.6 }); return; }
     var tb = e.target.closest('[data-tek-bag]');

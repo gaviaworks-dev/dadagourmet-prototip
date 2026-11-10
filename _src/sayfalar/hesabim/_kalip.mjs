@@ -36,7 +36,7 @@ export const bant = ({ cur, ikon, giris, serit = '' }) => `<section class="bolum
         <h1>{{uye.ad}} <span class="rozet dolu" data-paket=""><i class="fa-solid fa-crown" aria-hidden="true"></i> {{uye.paket}}</span></h1>
         <span class="kimlik-kullanici"><span class="fp-uad">@{{uye.kullanici}}</span></span>
         <div class="kimlik-meta">
-          <span><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Üyelik başlangıcı: {{uye.uyelik}}</span>
+          <span><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Üyelik başlangıcı {{uye.uyelik}}</span>
           <span data-rozet-sayi=""><i class="fa-solid fa-award" aria-hidden="true"></i> Rozet 0</span>
           ${et}
         </div>
@@ -50,10 +50,11 @@ export const bant = ({ cur, ikon, giris, serit = '' }) => `<section class="bolum
 // Sekme rayı: canlıdaki gibi her sekme ayrı adres (<a>). [[anahtar, yol, ikon, etiket], …]; yol {{kok}}'e göre
 // Sekme ikonları dolu (Gastro/Diet sekme kanonu, H2): `fa-regular` verilse de `fa-solid` basılır.
 // Taşan ray kayar; kenar solması `data-scroll-fade` (canlı shared/scroll-affordance.js ölçer, solma prototip.css'te)
+// `data-sekme-gecis`: sekme bağı yalnız rayın altındaki `.modul-govde`yi değiştirir, sayfa yeniden yüklenmez (H8, `assets/js/sayfa/sekme-gecis.js`)
 export const doluIkon = (i) => String(i).replace(/\bfa-regular\b/g, 'fa-solid');
 export const ray = (aria, sekmeler, aktif, onek) => `<div class="pf-tabbar sekme-ray">
   <div class="wrap kap">
-    <nav class="sekmeler ortali" aria-label="${aria}" data-scroll-fade="">
+    <nav class="sekmeler ortali" aria-label="${aria}" data-scroll-fade="" data-sekme-gecis="">
 ${sekmeler.map(([a, y, i, e]) => `      <a class="sekme${a === aktif ? ' aktif' : ''}" href="{{kok}}${y}" id="${onek}-tab-${a}"${a === aktif ? ' aria-current="page"' : ''}><i class="${doluIkon(i)}" aria-hidden="true"></i> ${e}</a>`).join('\n')}
     </nav>
   </div>
@@ -134,9 +135,10 @@ ${alanlar}
 
 export const panelDugme = (id, ikon, metin, sinif = 'dugme birincil') => `<button class="${sinif}" type="button" data-dm-panel="${id}" aria-haspopup="dialog" aria-expanded="false" aria-controls="${id}"><i class="${ikon}" aria-hidden="true"></i> ${metin}</button>`;
 
-// Sayfa kaydı: build.mjs'in beklediği {yol, meta, govde}
+// Sayfa kaydı: build.mjs'in beklediği {yol, meta, govde}. Sekme rayı (`ray()`) olan sayfaya sekme geçişi betiği eklenir (H8)
+export const SEKME_GECIS_JS = 'assets/js/sayfa/sekme-gecis.js';
 export const sayfa = (yol, baslik, icerik, { js = [], donor = '', disi = '' } = {}) => ({
   yol,
-  meta: { baslik, duzen: 'uye', zincir: 'hesabim', css: ['gourmet-sapma'], js: ['assets/o/assets/gourmet-public/js/shared/scroll-affordance.js', 'assets/js/sayfa/uye-alan.js', ...js], donor: donor || 'canlı dadagourmet.com, DadaGourmet-acil 4eb638c resources/views/hesap' },
+  meta: { baslik, duzen: 'uye', zincir: 'hesabim', css: ['gourmet-sapma'], js: ['assets/o/assets/gourmet-public/js/shared/scroll-affordance.js', 'assets/js/sayfa/uye-alan.js', ...js, ...(icerik.includes('data-sekme-gecis=') ? [SEKME_GECIS_JS] : [])], donor: donor || 'canlı dadagourmet.com, DadaGourmet-acil 4eb638c resources/views/hesap' },
   govde: `<div class="zebra">${icerik}</div>${disi ? `\n<!--@main-disi-->\n<div class="fb-overlay" data-dm-ortu=""></div>\n${disi}` : ''}`,
 });

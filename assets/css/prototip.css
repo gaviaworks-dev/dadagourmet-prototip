@@ -1,5 +1,18 @@
 /* Prototip katmanı: yalnız görünür etiketler. Renkler kanon token'larından. */
 .ornek-etiket{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:999px;background:var(--marka-yikama,#ede4ef);color:var(--marka-koyu,#62236e);font-size:12px;font-weight:700;line-height:1.5}
+/* ==== Etiket radyusu · Beyar 11 Kas ==== Kanondan sapma: Gastro/Diet'te etiket ve çip ailesi hap (--yuvarlak-hap 999px); Gourmet'te
+   Beyar kararıyla düğme köşesi ("tagler bu kadar yuvarlak olmayacak; buton radiusu öyle olsun", Keşif Tercihlerim seçim hapları).
+   Kural, etiket yüksekliğine göre; köşe hiçbir etikette yüksekliğin %40'ını geçmez, yani hap kalmaz:
+     30px ve üstü (seçim hapı, süzgeç/seçim etiketi, kademe ve galeri hapı, hap düğme) → --yuvarlak-md 12px = kanon `.dugme` köşesi
+     20-29px (prototip örneği, bilgi/durum etiketi, kart üstü rozet, sekme çipi)    → --yuvarlak-sm 8px  = kanon `.durum-hapi` ve küçük düğme
+     20px altı (mini kart rozeti)                                                → --yuvarlak-rozet 6px = kanon `.rozet`
+   Biçimi gereği yuvarlak kalanlar: avatar, dairesel ikon düğmesi, radyo, anahtar, kaydırıcı, ölçer/ilerleme, adım halkası, pin, nokta, sayı balonu.
+   Bu dosyada, çünkü gourmet-sapma.css kurumsal ve kimlik zincirinde (giris, kayit, hakkimizda, iletisim, yasal…) yüklenmiyor; prototip.css bütün
+   public zincirde ve Dada Route'ta son sıradadır. Tokenlar.css'i yüklemeyen zincir için yedek değer token'ın kendi değeridir. İşletme paneli: isletme-panel.css */
+.cip.hap,.galeri-hap,.paket-rozet,.kapak-duzenle,.mkl-etiket,.evd-chip,.evd-status,.disc-fig .disc-match,.yg-retry,.yg-sheet-ctx-cta{border-radius:var(--yuvarlak-md,12px)}
+.ornek-etiket,:root #dadaMentor .mp-pro,:root #dadaMentor .mp-yakinda,.gt-badge,.yg-il-harita-rozet,.yg-ih-sekme,.yg-detail-badge,.yg-sv-vbadge,.yg-sarj-added{border-radius:var(--yuvarlak-sm,8px)}
+.editor-box .eb-tag,.yg-il-rozet,.yd-badge,.yg-fl-badge,.yg-vtip-spon,.yg-alt-d{border-radius:var(--yuvarlak-rozet,6px)}
+/* ==== /Etiket radyusu ==== */
 .ekran-haritasi{padding:calc(var(--kabuk-h,113px) + 32px) 0 48px}.ekran-haritasi ul{list-style:none;padding:0;columns:2}.ekran-haritasi li{padding:4px 0;break-inside:avoid}.ekran-haritasi small{color:#6f6f6f;font-weight:400}
 @media(max-width:640px){.ekran-haritasi ul{columns:1}}
 .nav-item a .fa-route{font-size:inherit;margin-right:2px}
@@ -12,16 +25,59 @@
 .foot-lockup .gastro-word-mark{display:block;height:33.8px;width:auto;color:#fff}
 html[data-baslik-zemin="acik"] .header .gourmet-word-mark{color:var(--marka,#742982)}
 .giris-pano[data-pano="gourmet"]{background-image:linear-gradient(180deg,rgba(29,19,33,.3) 0%,rgba(29,19,33,.58) 55%,rgba(20,13,23,.88) 100%),url('../o/assets/gourmet-public/img/about-dining.avif');background-size:cover;background-position:center}
-/* Altbilgi normal akışta (Beyar 10 Kas, H4). Gastro `portal-*.css` ≥641'de altbilgiyi `position:fixed` perde yapıyor, portal betiği ve
-   Gastro `altbilgi-perde.js` `#pageMain`e altbilgi boyunda alt boşluk yazıyor; ana içerik z-index 2 ile altbilginin üstünden kayıyordu.
-   Perde kaldırıldı: altbilgi her genişlikte akışta, ana içerik ne boşluk ne yığın katmanı taşır (betiğin satır içi boşluğu !important ile ezilir) */
-.footer.orange{position:static!important}
-#pageMain{margin-bottom:0!important}
-.page-main{z-index:auto}
+/* Altbilgi perdesi (H4, Beyar 11 Kas; 10 Kas'taki normal akış kararı geri alındı). Canlı Gastro ile birebir, ölçüldü 11 Kas (1440, 1280, 1024, 768, 390 × 900):
+   ≥641'de altbilgi `position:fixed;left:0;right:0;bottom:0;z-index:1`, ana içerik `position:relative;z-index:2` ve opak zemin (`--bg`), `#pageMain`
+   alt boşluğu altbilgi boyu (prototip.js `perdeAyarla`); içerik kayınca altbilgi altından açılır, sayfa sonunda tamamı görünür. Altbilgi pencereden
+   uzunsa köke `altbilgi-akista`: altbilgi akışta, boşluk 0. ≤640 akışta. Kurallar `portal-*.css` ve `gastro/altbilgi-perde.css`ten aynen;
+   üye zinciri ikisini de yüklemiyor, kuralı buradan alır */
+@media(min-width:641px){.footer.orange{position:fixed;left:0;right:0;bottom:0;z-index:1}.page-main{position:relative;z-index:2;background:var(--bg)}}
+html.altbilgi-akista .footer.orange{position:static}
+html.altbilgi-akista #pageMain{margin-bottom:0!important}
+/* ==== Dalga 2 mobil · kabuk (11 Kas) ==== Arka plan kilidi ve yazım kipi; sınıfları prototip.js "kabuk katmanları" bloğu koyar.
+   Kilit: `html,body{overflow-x:clip}` yüzünden gövde kilidi görüntü alanına geçmiyordu; kök kilitlenir (pencere denetleyicisi de kökü kilitler) */
+html.dg-kilit{overflow:hidden}
+/* Yazım kipi (telefon ve dokunmatik tablet; form alanı odakta ya da klavye görüntü alanını daraltmış): alt çubuk ve yüzen düğmeler
+   (küçük Mentör, Route, başa dön) odaktaki alanı ve açık tarih seçiciyi örtmesin. Kaydırma (`transform`) değil görünmezlik:
+   `bottom-clearance.js` alt çubuğu yerinde ölçmeye devam eder, kapalı süzgeç sayfası kalkmaz. Kapsam sorgusu prototip.js ile aynı */
+@media(max-width:640px),(pointer:coarse) and (max-width:1024px){
+  html.dg-yazim :is(.bottom-nav,#dadaMentor.mini,.to-top,.yg-fab){visibility:hidden;opacity:0;pointer-events:none}
+}
+/* Görüş Bildir dikey sekmesi (52×144, sağ 0) 641–1024'te içerik kenar payı 24–32px olduğu için içeriğin sağ ~20–28px'ini örtüyordu.
+   Kanonda bu aralık için kural yok; daraltma 44px dokunma alanını korurken payın içine sığmıyor. ≤640'taki kanon kuralı (`display:none`)
+   1024'e kadar uzatılır: bu aralıkta başlıkta çekmece var, giriş çekmecedeki "Görüş Bildir" ve altbilgideki "Öneri ve Şikâyet"ten
+   (ikisi de aynı pencereyi açar). Masaüstü (≥1025) konumu değişmez */
+@media(min-width:641px) and (max-width:1024px){.feedback-tab,.fb-rail{display:none}}
+/* Sayfa sonu (641–1024): Route düğmesi altbilgi imzasını örtmesin; başa dön düğmesi gibi sona 120px kala çekilir (masaüstünde kesişim yok) */
+@media(min-width:641px) and (max-width:1024px){html.dg-sonda .yg-fab{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s var(--ease),visibility .25s}}
+/* Harita denetimiyle kesişen yüzen düğme çekilir (prototip.js `haritaBak`) */
+:is(.to-top,.yg-fab,#dadaMentor).dg-harita-ortusu{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+/* ==== /Dalga 2 mobil · kabuk ==== */
+/* Süzgeç sayfası (641–1024, Mekânlar ve Etkinlikler) ana içeriğin içinde; Gourmet sayfası başlığın üstünden açılıyor (canlı Gastro'da başlığın
+   altından başlar). Ana içeriğin z-index 2 yığını sayfayı başlığın (60) ve üst bandın (70) altında bırakıp üst şeridini örtüyordu: açıkken yığın
+   sayfanın kendi katmanına (94) çıkar, örtü ve sayfa perdesiz hâldeki gibi başlığın üstünde durur */
+@media(min-width:641px){html:has(#lstSide.open) .page-main{z-index:94}}
+/* Kırıntı başlığın altında başlar (K-KIRINTI, 11 Kas). `.below-header` taban boşluğu Gastro `--header-offset` ve Gourmet `gourmet.css`te 112px
+   (≤640 62px), başlığın alt kenarı `--kabuk-h` 113px (63px): kendi üst boşluk kuralı olmayan detay sayfalarında (etkinlik, mekân) kırıntı
+   başlığın 1px altına giriyordu. Ofset jetonu kabuk yüksekliğine eşitlenir (1px); sayfaya özel kurallar (ke/lst/lg/con-top 128px) değişmez */
+:root{--header-offset:var(--kabuk-h,113px)}
 /* Başlık içindeki rozet başlığın eksi harf aralığını almasın ("3okunmamış" bitişik okunuyordu) */
 h1 .rozet,h2 .rozet,h1 .rozet.sayac{letter-spacing:normal}
 /* Taşan sekme rayı (H2): kanon `.sekmeler.ortali` kayar ama ipucu yoktu ("Etkinlik (" yarım kalıyordu). Canlı scroll-affordance.js
    kaydırılacak yer varken `.has-scroll-r`/`.has-scroll-l` koyar; solma rayın kendi zemininden maskeyle yapılır (yeni renk yok, kaymaz) */
+/* Dalga 2 mobil · genel (11 Kas): kalıp BÜTÜN `[data-scroll-fade]` şeritlerine (Hesabım sekme rayları, Mekân detay eylem çubuğu, Route şeritleri).
+   Ortak `scroll-affordance.css` solması `position:absolute` sözde öğe; kayan kapsayıcının içinde içerikle birlikte kayıyor, şerit ortaya
+   kaydırılınca bant kalemlerin üstünde kalıyordu (Mikla eylem çubuğu 390, scrollLeft 217: "Listeye Ekle" üstünde x 121–147). Genel kural maske,
+   genişlik canlı 26px. Kendi yüzeyi olan yüzen eylem çubuklarında (cam zemin, gölge, köşe) maske zemini ve gölgeyi de keseceği için solma
+   sözde öğe olarak kalır ama yapışkandır: şeridin görünür kenarına yapışır, içerikle kaymaz */
+[data-scroll-fade]:is(.has-scroll-r,.has-scroll-l)::after,[data-scroll-fade]:is(.has-scroll-r,.has-scroll-l)::before{content:none}
+[data-scroll-fade].has-scroll-r{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 26px),transparent)}
+[data-scroll-fade].has-scroll-l{-webkit-mask-image:linear-gradient(to left,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(to left,#000 calc(100% - 26px),transparent)}
+[data-scroll-fade].has-scroll-l.has-scroll-r{-webkit-mask-image:linear-gradient(to right,transparent,#000 26px,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(to right,transparent,#000 26px,#000 calc(100% - 26px),transparent)}
+:is(.vd-actbar,.evd-actbar,.rd-actbar)[data-scroll-fade]:is(.has-scroll-r,.has-scroll-l){-webkit-mask-image:none;mask-image:none}
+:is(.vd-actbar,.evd-actbar,.rd-actbar)[data-scroll-fade].has-scroll-r::after,:is(.vd-actbar,.evd-actbar,.rd-actbar)[data-scroll-fade].has-scroll-l::before{content:"";position:sticky;top:auto;bottom:auto;flex:0 0 26px;align-self:stretch;width:26px;pointer-events:none;z-index:1}
+:is(.vd-actbar,.evd-actbar,.rd-actbar)[data-scroll-fade].has-scroll-r::after{right:0;left:auto;margin-left:-26px;background:linear-gradient(to right,transparent,var(--sf-fade-color,rgba(255,255,255,.92)))}
+:is(.vd-actbar,.evd-actbar,.rd-actbar)[data-scroll-fade].has-scroll-l::before{left:0;right:auto;margin-right:-26px;background:linear-gradient(to left,transparent,var(--sf-fade-color,rgba(255,255,255,.92)))}
+/* Sekme rayları kendi solma genişliğinde (56px, H2) */
 .sekmeler[data-scroll-fade].has-scroll-r::after,.sekmeler[data-scroll-fade].has-scroll-l::before{content:none}
 .sekmeler[data-scroll-fade].has-scroll-r{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 56px),transparent)}
 .sekmeler[data-scroll-fade].has-scroll-l{-webkit-mask-image:linear-gradient(to left,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(to left,#000 calc(100% - 56px),transparent)}
@@ -78,6 +134,8 @@ header a i.fa-route, nav a i.fa-route { opacity: 1 !important; }
 }
 /* Üye zinciri bildirim kuralını da yüklemiyor: gizli bildirim altbilginin altında görünüyordu. `gourmet.css`ten aynen */
 .ke-toast{position:fixed;left:50%;bottom:calc(28px + var(--bc-lift, 0px));transform:translate(-50%) translateY(20px);background:var(--slate,#211e16);color:#fff;font-size:13.5px;font-weight:600;padding:13px 20px;border-radius:var(--radius-md);box-shadow:var(--sh-lg);display:flex;align-items:center;gap:10px;opacity:0;visibility:hidden;transition:.3s var(--ease);z-index:120}.ke-toast.show{opacity:1;visibility:visible;transform:translate(-50%) translateY(0)}.ke-toast.show.soft{opacity:.85}.ke-toast i{color:var(--green,#3BB77E)}
+/* Uyarı kipi (Dalga 2 mobil · genel): `prototipBildir(metin, 'uyari')`; ikon kanon sarısı, koyu zeminde okunur */
+.ke-toast.uyari i{color:var(--yellow,#FAC045)}
 
 /* Dokunma hedefi ≥44px (Beyar, Diet düzeyi): tek blok, telefon ve dokunmatik işaretçi. Görsel boy mümkünse korunur,
    yalnız vuruş alanı büyür. Paragraf içi metin bağları ve büyük bir etiketin içindeki onay kutuları muaf */
@@ -109,4 +167,47 @@ header a i.fa-route, nav a i.fa-route { opacity: 1 !important; }
   .yg-dash-all{position:relative}
   :is(.yg-dash-all,.yg-il-harita-rozet,.yg-pin)::after{content:"";position:absolute;inset:-11px -4px}
   .yg-pin::after{inset:-8px;border-radius:50%}
+  /* ---- Dalga 2 mobil · dokunma (11 Kas): 390/360/768 taramasında 44 altında kalan kabuk ve public sayfa hedefleri ---- */
+  /* Kabuk: başlık ve çekmece logosu (29/25/23px yüksek bağ) yalnız vuruş alanı büyür; çekmece kapat 42 → 44; tablet başlığı 43 → 44 */
+  .header .brand{padding-block:calc((44px - 29px) / 2);margin-block:calc((29px - 44px) / 2)}
+  .drawer-brand{padding-block:calc((44px - 22.9px) / 2);margin-block:calc((22.9px - 44px) / 2)}
+  :is(.drawer-close,.header .icon-btn,.fb-close){min-width:44px;min-height:44px}
+  .header .btn-login{min-height:44px}
+  /* Çekmece ayağı (üye): Bildirimler · Çıkış (19px), dil anahtarı üye zincirinde 24px (Diet kanonu `.drawer-lang-toggle{min-height:44px}`).
+     Bağlar satır içi kalır; en kısa bağ (Çıkış 27px) sağa doğru 44px'e tamamlanır, yazı yerinde */
+  .drawer-lang-toggle{min-height:44px}
+  /* Üst siyah şerit (641+ dokunmatik): şerit 40px yüksek; marka ikonları 27, mekân sayısı ve dil 19px. Görünür boy aynı, saydam halka
+     şeridin dikey ortasında 44px; en dar marka kalemi 43 → 44 */
+  .topbar :is(.tb-left a,.bs-item,.tb-lang-btn){position:relative}
+  .topbar .bs-item{min-width:44px}
+  .topbar :is(.tb-left a,.bs-item,.tb-lang-btn)::after{content:"";position:absolute;left:min(0px,calc((100% - 44px) / 2));right:min(0px,calc((100% - 44px) / 2));top:50%;height:44px;transform:translateY(-50%)}
+  .drawer .da-links a{min-width:44px;padding-block:calc((44px - 1lh) / 2);margin-block:calc((1lh - 44px) / 2)}
+  /* Pencereler ve Mentör: "Şimdi değil" (36), Mentör çağrısı (39), paneli küçült (30×30 daire görsel aynı, saydam pay; dolgu kutusu 28 + 2×8) */
+  :is(.lk-skip,#dadaMentor .mp-opt){min-height:44px}
+  #dadaMentor .mp-toggle{position:relative}
+  #dadaMentor .mp-toggle::after{content:"";position:absolute;inset:-8px}
+  /* Altbilgi (Gastro/Diet kanonunda bağ 36px, kurumsal 34, yasal 19): yazı ve sıra aynı, satır aralığı vuruş alanına çevrilir.
+     Düğme bağları (Mekân Öner, Etkinlik Öner, Öneri ve Şikâyet) komşu bağlarla aynı dolguya geçer. Telefonda altbilgi uzar (390'da ölçü raporda) */
+  .footer .foot-col :is(a,.foot-linkbtn){padding-block:calc((44px - 1lh) / 2);margin-bottom:0}
+  .footer .foot-corp :is(a,.foot-linkbtn){padding-block:calc((44px - 1lh) / 2);min-width:44px;text-align:center}
+  .footer .foot-legal{row-gap:0}
+  .footer .foot-legal :is(a,.foot-linkbtn){padding-block:calc((44px - 1lh) / 2)}
+  .footer .foot-sign{padding-block:calc((44px - 1lh) / 2);margin-block:calc((1lh - 44px) / 2)}
+  /* Liste ve süzgeç: arama kutusu 40 (Gastro kanonunda 47), ülke seçimi 43, alt grup başlığı 42, süzgeç "Temizle" (sayfa kuralı dolguyu eziyordu) */
+  .search-input input,.fb-select,.fct-head{min-height:44px}
+  .sheet-head .fil-clear{padding-block:calc((44px - 1lh) / 2);margin-block:calc((1lh - 44px) / 2)}
+  /* Detay sayfaları: mekân eylem çubuğu (41), Paylaş (42), Mekân Bul sonuç kartı Detay (36) ve Düzenle bağı (19), etkinlik takvimi ay okları (36) */
+  :is(.vd-actbar__act,.psh-btn,.mb-card-actions .btn){min-height:44px}
+  .ev-cal-nav a{min-width:44px;min-height:44px}
+  .res-edit{padding-block:calc((44px - 1lh) / 2);margin-block:calc((1lh - 44px) / 2)}
+  /* MapLibre bilgi düğmesi (24×24, kendisi `position:absolute`): görsel aynı, saydam pay */
+  .maplibregl-ctrl-attrib-button::after{content:"";position:absolute;inset:-10px}
+  /* Yasal sayfalar: menü şeridi (36), içindekiler (34), önceki/sonraki (42). Metin gövdesindeki bağlar (`.prose__body`) cümle içi sayılır, muaf */
+  :is(.lg-side .lg-menu a,#lgToc li a,.lg-nav a){min-height:44px}
+  /* Ekran haritası (/ekranlar) bağları */
+  .ekran-haritasi li{padding:0}
+  .ekran-haritasi :is(li,p) > a{display:inline-block;padding-block:calc((44px - 1lh) / 2)}
+  /* ---- /Dalga 2 mobil · dokunma ---- */
 }
+/* Başlık logosu 375 altında 25px (yukarıdaki kural); vuruş payı ona göre */
+@media (max-width:374px){.header .brand{padding-block:calc((44px - 25px) / 2);margin-block:calc((25px - 44px) / 2)}}

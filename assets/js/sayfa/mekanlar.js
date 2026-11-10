@@ -8,7 +8,12 @@
   var GRUPLAR = ['kategori', 'konsept', 'mutfak', 'vesile', 'fiyat', 'puan', 'hizmet', 'beslenme', 'ulasim', 'acik', 'seckiler'];
   /* "N kategori daha" düğmesi canlıdaki gibi grubun adını taşır */
   var DAHA = { kategori: 'kategori', konsept: 'konsept', mutfak: 'mutfak', vesile: 'amaç', hizmet: 'hizmet' };
-  var SAYFA = 12, sayfa = 1, aranan = '', konumAranan = '';
+  /* M4 (Beyar 11 Kas): sayfa başına 24 kart (3 sütunda 8, 2 sütunda 12 tam satır). Canlı 12 basar (17 sayfa); sapma ekran-kaynaklari.md */
+  var SAYFA = 24, sayfa = 1, aranan = '', konumAranan = '';
+  /* İlk iki satırdan (6 kart) sonraki kart görselleri görünüme yaklaşınca yüklenir: 24 kartla ilk yük ağırlaşmaz */
+  var HEMEN = 6, gozcu = 'IntersectionObserver' in window ? new IntersectionObserver(function (l) {
+    l.forEach(function (g) { if (!g.isIntersecting) { return; } var e = g.target; e.style.backgroundImage = e.getAttribute('data-bg'); e.removeAttribute('data-bg'); gozcu.unobserve(e); });
+  }, { rootMargin: '300px 0px' }) : null;
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
   var kac = function (t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
   var tr = function (t) { return String(t).toLocaleLowerCase('tr'); };
@@ -101,12 +106,23 @@
     return l;
   }
 
-  function kart(m) {
+  function kart(m, i) {
     var h = (V.kartlar[m.slug] || '').split('{{kok}}').join(kok);
+    if (gozcu && i >= HEMEN) { h = h.replace(/style="background-image:(url\([^"]*\))"/, 'data-bg="$1"'); }
     var bag = 'href="' + kok + 'mekan/mikla/"';
-    var eylem = '<div class="mkl-kart-eylem"><a class="mke-birincil" ' + bag + '>Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="' + m.slug + '" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="' + kok + 'dada-route/?durak=' + m.slug + '" aria-label="Dada Route\'a Ekle" title="Dada Route\'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" aria-label="Kaydet" title="Kaydet"><i class="fa-regular fa-bookmark" aria-hidden="true"></i></button></div>';
+    var eylem = '<div class="mkl-kart-eylem"><a class="mke-birincil" ' + bag + '>Detayları Gör</a><button type="button" class="mke-ikon" data-haritada="' + m.slug + '" aria-label="Haritada Göster" title="Haritada Göster"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i></button><a class="mke-ikon" href="' + kok + 'dada-route/?durak=' + m.slug + '" aria-label="Dada Route\'a Ekle" title="Dada Route\'a Ekle"><i class="fa-solid fa-route" aria-hidden="true"></i></a><button type="button" class="mke-ikon" data-lg-gate="" data-kaydet="' + m.slug + '" aria-label="Kaydet" title="Kaydet" aria-pressed="' + (kayitli(m) ? 'true' : 'false') + '"><i class="' + (kayitli(m) ? 'fa-solid' : 'fa-regular') + ' fa-bookmark" aria-hidden="true"></i></button></div>';
     return h.replace(/<\/article>\s*$/, eylem + '</article>').replace('<article ', '<article data-git="' + kok + 'mekan/mikla/" ');
   }
+  /* Kaydet (yer imi): canlıda `POST /mekan/{mekan}/kaydet` (tür favori). Prototipte Gurme Favorilerim'le aynı depo, `dgKayit('favori')`, kimlik `mekan-<slug>`
+     (favori ajanı, 11 Kas). Misafirde `data-lg-gate` giriş kapısını açar; Favorilerim'den çıkarılan mekânın düğmesi burada boş görünür */
+  var K = window.dgKayit;
+  function kayitli(m) { return !!(K && K.var('favori', 'mekan-' + m.slug)); }
+  function yerAdi(m) { var il = ilBilgi[ozellik(m, 'il')[0]]; return [m.ilce, il && il.ad].filter(Boolean).join(', '); }
+  /* Geri tuşuyla önbellekten dönülünce (başka sayfada çıkarılmış olabilir) yer imleri depodan yeniden boyanır */
+  window.addEventListener('pageshow', function (e) {
+    if (!e.persisted || !K) { return; }
+    $$('[data-kaydet]').forEach(function (b) { var on = K.var('favori', 'mekan-' + b.dataset.kaydet); b.setAttribute('aria-pressed', on ? 'true' : 'false'); $('i', b).className = (on ? 'fa-solid' : 'fa-regular') + ' fa-bookmark'; });
+  });
   function sayfalama(n) {
     var top = Math.max(1, Math.ceil(n / SAYFA)), p = $('#pagi'), s = '';
     if (sayfa > top) { sayfa = top; }
@@ -199,6 +215,7 @@
     $('#lstSum').innerHTML = '<b>' + sonuc.length + ' mekân</b> listeleniyor';
     sayfalama(sonuc.length);
     $('#mklGrid').innerHTML = sonuc.slice((sayfa - 1) * SAYFA, sayfa * SAYFA).map(kart).join('');
+    if (gozcu) { $$('#mklGrid [data-bg]').forEach(function (e) { gozcu.observe(e); }); }
     gorunumUygula(sonuc.length);
     var e = $('#lstEmpty'); e.style.display = sonuc.length ? 'none' : 'block'; if (!sonuc.length) { bosDurum(l); }
     haritaYaz(sonuc);
@@ -214,8 +231,11 @@
   function gorunumUygula(n) {
     var harita = gorunum === 'harita';
     $('#mklGrid').style.display = n && !harita ? '' : 'none';
-    $('#pagi').style.display = harita ? 'none' : '';
+    /* Sonuç tek sayfaya sığıyorsa sayfalama gizli */
+    $('#pagi').style.display = harita || n <= SAYFA ? 'none' : '';
     $('#mklMapWrap').hidden = !harita || !n; $('#mklHaritaNot').hidden = !harita || !n;
+    /* M1: kartlardaki doğrulanmış rozetlerin örnek notu liste başında tek satır; yalnız kart görünümünde */
+    var rn = $('#mklRozetNot'); if (rn) { rn.hidden = harita || !n; }
   }
   function gorunumSec(v) {
     gorunum = v;
@@ -240,6 +260,15 @@
     if (e.target.closest('.mkl-etiket-temizle') || e.target.closest('a.fil-clear') || e.target.closest('#lstEmpty a')) { e.preventDefault(); hepsiniTemizle(); return; }
     var sc = e.target.closest('a.subcat'); if (sc) { e.preventDefault(); if (sc.dataset.konsept) { var kn = kutu('konsept', sc.dataset.konsept); if (kn) { kn.checked = !kn.checked; } } else { $$('input[name="konsept[]"]').forEach(function (x) { x.checked = false; }); } yenile(true); return; }
     var pg = e.target.closest('#pagi [data-sayfa]'); if (pg && !pg.disabled) { sayfa = +pg.dataset.sayfa; yenile(); $('.lst-bar').scrollIntoView({ block: 'start' }); return; }
+    var kb = e.target.closest('[data-kaydet]');
+    if (kb && K) {
+      e.preventDefault(); e.stopPropagation(); if (window.dgUye && !window.dgUye()) { return; }
+      var km = V.mekanlar.filter(function (x) { return x.slug === kb.dataset.kaydet; })[0], kid = 'mekan-' + kb.dataset.kaydet, on = !K.var('favori', kid); if (!km) { return; }
+      if (on) { K.ekle('favori', { id: kid, tur: 'Mekân', ad: km.ad, mekan: yerAdi(km) }); } else { K.sil('favori', kid); }
+      kb.setAttribute('aria-pressed', on ? 'true' : 'false'); $('i', kb).className = (on ? 'fa-solid' : 'fa-regular') + ' fa-bookmark';
+      if (window.prototipBildir) { window.prototipBildir(on ? 'Gurme Favorilerim\'e eklendi.' : 'Favorilerinden çıkarıldı.'); }
+      return;
+    }
     var hb = e.target.closest('[data-haritada]'); if (hb) { e.preventDefault(); e.stopPropagation(); var m = V.mekanlar.filter(function (x) { return x.slug === hb.dataset.haritada; })[0]; if (m) { gorunumSec('harita'); if (hazir) { haritadaGoster(m); } else { bekleyen = m; } $('.lst-bar').scrollIntoView({ block: 'start' }); } return; }
     /* Süzgeç sayfasını aç-kapa ortak denetleyicide: prototip.js `dgSuzgec` */
     var vs = e.target.closest('#mklViewSeg .vs-btn'); if (vs) { gorunumSec(vs.dataset.view); }

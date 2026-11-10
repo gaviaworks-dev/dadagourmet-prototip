@@ -8,7 +8,136 @@
   var harita = document.getElementById('routeMap');
   if (harita && document.querySelector('meta[name="dada-kimlik"]') && /"auth":true/.test(document.querySelector('meta[name="dada-kimlik"]').content)) { harita.setAttribute('data-auth', '1'); }
   /* Katmanların haritaya erişimi: canlı betik haritayı dışa vermez, kurulurken alınır */
-  var ozMap = window.L.map; window.L.map = function () { var m = ozMap.apply(window.L, arguments); window.dgRotaHarita = m; return m; };
+  var ozMap = window.L.map; window.L.map = function () { var m = ozMap.apply(window.L, arguments); window.dgRotaHarita = m; setTimeout(function () { haritaSigdirKur(m); }, 0); return m; };
+
+  /* K5 (Beyar, 11 Kas) · Telefonda (≤860) rota görünür harita alanına sığar. Canlı `fitPad` alt sayfa TAM açıkken görünür şeridi
+     ~58px bırakır, harita zoom 3'e düşer ve merkez Afrika'da kalır; haritaya dönünce yeniden sığdırılmaz. Girdiye odaklanınca tarayıcı
+     `overflow:hidden` `.yg-app` kabını kaydırır (alt sayfa yarımken 34dvh), harita kabı ekranın üstüne kayar. Burada: rota kurulunca ve
+     alt sayfa kipi ya da pencere boyu değişince kap kaydırması sıfırlanır, `invalidateSize`, rota görünür alana (başlığın altı, alt
+     sayfa ve görünür alt şeridin üstü) sığdırılır. Kullanıcı haritayı kendisi oynattıysa kip değişince sığdırılmaz, yalnız kap kaymışsa.
+     Masaüstü: yalnız `invalidateSize` ve kap kaymışsa canlı `fitPad` dolgusuyla sığdırma; canlı sığdırma aynen kalır */
+  function haritaSigdirKur(m) {
+    var L = window.L, app = document.querySelector('.yg-app'), panel = document.querySelector('.yg-panel');
+    var ust = document.querySelector('.yg-top'), serit = document.getElementById('ygDash'), dar = window.matchMedia('(max-width:860px)');
+    if (!app || !panel || !m.getContainer) { return; }
+    var elle = false, bizim = 0, zamanlayici = 0, sonKip = kip();
+    function kip() { return ['peek', 'half', 'full'].filter(function (d) { return panel.classList.contains('sheet-' + d); })[0] || 'dok'; }
+    function sinir() { var g = window.dgRotaGeometri; return g && g.length > 1 ? L.latLngBounds(g) : null; }
+    function kapDuzelt() { if (!app.scrollTop && !app.scrollLeft) { return false; } app.scrollTop = 0; app.scrollLeft = 0; return true; }
+    function seritAcik() { return serit && !serit.hidden && !serit.classList.contains('collapsed') && !serit.classList.contains('full-hidden'); }
+    function dolgu() {
+      var k = m.getContainer().getBoundingClientRect(), p = panel.getBoundingClientRect();
+      if (!dar.matches) { return { paddingTopLeft: [Math.round(p.width) + 28, 84], paddingBottomRight: [40, 40] }; }
+      var ustY = ust ? ust.getBoundingClientRect().bottom : k.top, altY = Math.min(window.innerHeight, p.top);
+      if (seritAcik()) { var s = serit.getBoundingClientRect(); if (s.height && s.top > ustY && s.top < altY) { altY = s.top; } }
+      var ustD = Math.max(0, Math.round(ustY - k.top)) + 12, altD = Math.max(0, Math.round(k.bottom - altY)) + 16;
+      if (k.height - ustD - altD < 40) { altD = Math.max(0, Math.round(k.height - ustD - 40)); }
+      return { paddingTopLeft: [22, ustD], paddingBottomRight: [22, altD] };
+    }
+    function icerde(b, d) {
+      var k = m.getSize(), a = m.latLngToContainerPoint(b.getNorthWest()), c = m.latLngToContainerPoint(b.getSouthEast());
+      return a.x >= d.paddingTopLeft[0] - 22 && c.x <= k.x - d.paddingBottomRight[0] + 22 && a.y >= d.paddingTopLeft[1] - 12 && c.y <= k.y - d.paddingBottomRight[1] + 16;
+    }
+    function sigdir(yeniRota) {
+      /* Dalga 2 mobil · rota: canlı `fitActive` yakınlaşma animasyonu sürerken Leaflet yeni `fitBounds`u sessizce yutar (`_tryAnimatedZoom`);
+         peek'te rota z3'te kalıyordu. Animasyon bitince yeniden denenir */
+      if (m._animatingZoom) { m.once('zoomend', function () { setTimeout(function () { sigdir(yeniRota); }, 0); }); return; }
+      bizim = true;
+      var kaydi = kapDuzelt(); m.invalidateSize(false);
+      var b = sinir(), d = dolgu(), gerek = b && (kaydi || (dar.matches && (yeniRota ? !icerde(b, d) : !elle)));
+      if (yeniRota || gerek) { elle = false; }
+      /* Leaflet yakınlaşma animasyonu `movestart`ı bir kare sonra atar; bizim sığdırmamız `moveend`e kadar elle sayılmaz */
+      var bitti = function () { bizim = false; }, yedek = setTimeout(bitti, 1200);
+      /* Dalga 2 mobil · rota: `fitBounds` önce süren kaydırmayı durdurup eşzamanlı `moveend` atar; dinleyici çağrıdan ÖNCE kurulunca o
+         olay "bitti" sayılıyor, kendi kaydırmamızın `movestart`ı elle işaretleniyordu (yarımda kur → Haritayı Gör sığmıyordu). Sonra kurulur */
+      if (gerek) { m.fitBounds(b.pad(0.04), d); m.once('moveend', function () { clearTimeout(yedek); bitti(); }); } else { if (!b && dar.matches && !elle) { bosOrtala(d); } clearTimeout(yedek); bitti(); }
+    }
+    /* Dalga 2 mobil · rota: rota yokken canlı başlangıç merkezi (Türkiye, `L.map` `center`) haritanın geometrik ortasında, yani telefonda alt
+       sayfanın arkasında kalıyordu; yarım kipte görünür alanda Karadeniz ve Kırım görünüyordu. Aynı merkez ve yakınlık görünür alanın ortasına
+       alınır (yalnız ≤860, kullanıcı haritayı oynatmadıysa; kip değişince de) */
+    var ilkMerkez = m.getCenter();
+    function bosOrtala(d) {
+      var z = m.getZoom(), k = m.getSize(), hedefY = (d.paddingTopLeft[1] + k.y - d.paddingBottomRight[1]) / 2;
+      m.setView(m.unproject(m.project(ilkMerkez, z).add([0, k.y / 2 - hedefY]), z), z, { animate: false });
+    }
+    /* Dalga 2 mobil · rota: yeni rota bekleyen bir sığdırmayı ezilmez. `dg:rota`dan sonraki 350 ms içinde panel sınıfı değişince (ilk kip
+       ataması, rota çizimi) kip zamanlayıcısı yeni rota bilgisini siliyordu; canlı `fitActive` hareketi "elle" sayılıp kalıyor, "Haritayı Gör"de
+       harita z3'te kalıyordu (birleşik hâlde 390/360/768 ölçüldü) */
+    var yeniBekliyor = false;
+    function sonra(yeniRota, ms) { yeniBekliyor = yeniBekliyor || yeniRota; clearTimeout(zamanlayici); zamanlayici = setTimeout(function () { var y = yeniBekliyor; yeniBekliyor = false; sigdir(y); }, ms); }
+    /* Elle: sürükleme, dokunma, tekerlek her zaman; programla gelen hareket (canlı betiğin mekâna uçuşu) bizim değilse */
+    m.on('dragstart', function () { elle = true; });
+    ['pointerdown', 'wheel'].forEach(function (o) { m.getContainer().addEventListener(o, function () { elle = true; }, { passive: true }); });
+    m.on('movestart', function () { if (!bizim) { elle = true; } });
+    /* Canlı betik rotayı `dg:rota`dan sonra çizip kendisi sığdırır; onun animasyonu bitince bakılır */
+    document.addEventListener('dg:rota', function () { sonra(true, 350); });
+    /* Alt sayfa kipi: geçiş .34s; sürükleme sırasında değil, kip oturunca */
+    new MutationObserver(function () { var y = kip(); if (y !== sonKip && !panel.classList.contains('sheet-dragging')) { sonKip = y; sonra(false, 420); } }).observe(panel, { attributes: true, attributeFilter: ['class'] });
+    window.addEventListener('resize', function () { sonra(false, 250); });
+    sonra(false, 60);
+  }
+
+  /* Dalga 2 mobil · rota (11 Kas) · Klavye. Telefonda (≤860) yarım ya da peek alt sayfadaki girdiye dokununca klavye görüntü alanını
+     küçültüyor, girdi alt kenarda, öneri listesi ekran dışında kalıyordu. Odakta panel `.yg-klavye` ile tam konuma çıkar (canlı betiğin kipi
+     değişmez; harita sığdırma kip gözlemcisi tetiklenmez), girdi kaydırma alanının başına alınır, tarayıcının kaydırdığı `.yg-app` sıfırlanır;
+     görüntü alanı değişince (klavye açılıp kapanınca) yeniden yerleştirilir. Odak paneldeki başka bir metin girdisine geçmediyse sınıf kalkar */
+  (function klavyeKur() {
+    var panel = document.querySelector('.yg-panel'), app = document.querySelector('.yg-app'), dar = window.matchMedia('(max-width:860px)');
+    if (!panel) { return; }
+    var metin = function (e) { return e && e.matches && e.matches('input:not([type]),input[type="text"],input[type="search"]') && panel.contains(e); };
+    var kaydiran = function (e) { for (var a = e.parentElement; a && a !== panel; a = a.parentElement) { if (/auto|scroll/.test(getComputedStyle(a).overflowY)) { return a; } } return null; };
+    var yerlestir = function (e) {
+      if (app) { app.scrollTop = 0; } var k = kaydiran(e); if (!k) { return; }
+      k.scrollTop += e.getBoundingClientRect().top - k.getBoundingClientRect().top - 8;
+    };
+    var zaman = 0;
+    panel.addEventListener('focusin', function (e) {
+      if (!dar.matches || !metin(e.target)) { return; }
+      clearTimeout(zaman); panel.classList.add('yg-klavye');
+      /* panel geçişi .34s; yerleştirme geçiş bitince */
+      zaman = setTimeout(function () { if (metin(document.activeElement)) { yerlestir(document.activeElement); } }, 360);
+    });
+    panel.addEventListener('focusout', function () {
+      setTimeout(function () { if (!metin(document.activeElement)) { clearTimeout(zaman); panel.classList.remove('yg-klavye'); if (app) { app.scrollTop = 0; } } }, 0);
+    });
+    var vv = window.visualViewport || window;
+    vv.addEventListener('resize', function () { if (panel.classList.contains('yg-klavye') && metin(document.activeElement)) { clearTimeout(zaman); zaman = setTimeout(function () { yerlestir(document.activeElement); }, 120); } });
+  })();
+
+  /* Dalga 2 mobil · rota (11 Kas) · Dokunarak durak sıralama. Canlı liste yalnız HTML sürükle-bırak (`draggable`, `dragstart`/`drop`) dinler;
+     dokunmatik tarayıcı bu olayları parmak hareketinden üretmediği için telefonda sıralama yoktu. Tutamaktan başlayan fare dışı işaretçi
+     hareketi izlenir, parmağın altındaki durak vurgulanır (canlı `.dragging` / `.drop-into`), bırakınca canlının işleyicilerine aynı
+     `dragstart` → `drop` → `dragend` dizisi gönderilir: sıra, harita ve rota canlı kodla yenilenir. Fare canlı davranışta kalır */
+  (function durakSurukleKur() {
+    var liste = document.getElementById('ygStopList');
+    if (!liste || !window.PointerEvent) { return; }
+    var kaynak = null, hedef = null, no = null, y0 = 0, oynadi = false;
+    var ol = function (tip, el, dt) { var e; try { e = new DragEvent(tip, { bubbles: true, cancelable: true, dataTransfer: dt }); } catch (x) { e = new Event(tip, { bubbles: true, cancelable: true }); } el.dispatchEvent(e); };
+    var bitir = function (iptal) {
+      if (!kaynak) { return; }
+      var k = kaynak, h = hedef; kaynak = hedef = null; k.classList.remove('dragging'); if (h) { h.classList.remove('drop-into'); }
+      if (iptal || !oynadi || !h) { return; }
+      var dt = null; try { dt = new DataTransfer(); } catch (x) { /* eski tarayıcı */ }
+      ol('dragstart', k, dt); ol('drop', h, dt); ol('dragend', k, dt);
+    };
+    liste.addEventListener('pointerdown', function (e) {
+      var g = e.pointerType !== 'mouse' && e.target.closest('.yg-grip'); if (!g) { return; }
+      kaynak = g.closest('.yg-stop'); hedef = null; no = e.pointerId; y0 = e.clientY; oynadi = false;
+      try { g.setPointerCapture(no); } catch (x) { /* yakalama yok */ }
+      e.preventDefault();
+    });
+    liste.addEventListener('pointermove', function (e) {
+      if (!kaynak || e.pointerId !== no) { return; }
+      if (!oynadi && Math.abs(e.clientY - y0) < 6) { return; }
+      if (!oynadi) { oynadi = true; kaynak.classList.add('dragging'); }
+      var el = document.elementFromPoint(e.clientX, e.clientY), li = el && el.closest('#ygStopList .yg-stop');
+      li = li && li !== kaynak ? li : null;
+      if (li !== hedef) { if (hedef) { hedef.classList.remove('drop-into'); } hedef = li; if (hedef) { hedef.classList.add('drop-into'); } }
+      e.preventDefault();
+    });
+    liste.addEventListener('pointerup', function (e) { if (e.pointerId === no) { bitir(false); } });
+    liste.addEventListener('pointercancel', function (e) { if (e.pointerId === no) { bitir(true); } });
+  })();
 
   /* Yer araması (Beyar, 9 Kas: "trabzon" eşleşmiyordu): 81 il ve başlıca ilçe/semt `rota-yerler.js`ten.
      Türkçe duyarlı ve büyük-küçük harften bağımsız: İ/ı/I/i, ş, ğ, ü, ö, ç katlanır; "IZMIR", "ızmir", "istanbul" eşleşir */

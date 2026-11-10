@@ -7,6 +7,16 @@ window.dgHarita = (function () {
     var harita = new maplibregl.Map(Object.assign({ container: kap, style: STIL, attributionControl: false, cooperativeGestures: false }, secenek || {}));
     harita.addControl(new maplibregl.AttributionControl({ compact: true, customAttribution: '© OpenStreetMap' }));
     harita.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+    /* Dalga 2 mobil · rota (11 Kas): sıkışık atıf MapLibre'de ilk açılışta açık gelir ve ancak harita sürüklenince kapanır; telefonda kutu
+       haritanın altını 2–3 satır kaplıyordu (Mekânlar 390: 2 satır, Etkinlikler 390: 3 satır). Görüntü alanı ≤1024 ve harita ≤640 px ise
+       ilk açılışta kapalı, (i) düğmesiyle açılır; masaüstünde (mekân detayı yan sütunu dahil) görünüm aynı */
+    var atif = harita.getContainer().querySelector('.maplibregl-ctrl-attrib');
+    if (atif && harita.getContainer().offsetWidth <= 640 && window.matchMedia('(max-width:1024px)').matches) {
+      /* MapLibre açık hâli atıf verisi geldiğinde (stil yüklenince) kurar: ilk açılış bir kez kapatılır; kullanıcı (i) ile açarsa dokunulmaz */
+      var gozcu = new MutationObserver(function () { if (atif.classList.contains('maplibregl-compact-show')) { atif.classList.remove('maplibregl-compact-show'); atif.removeAttribute('open'); gozcu.disconnect(); } });
+      gozcu.observe(atif, { attributes: true, attributeFilter: ['class'] });
+      atif.addEventListener('click', function () { gozcu.disconnect(); }, { once: true });
+    }
     var yedekte = false;
     harita.on('error', function (e) { if (!yedekte && e && e.error && /style|fetch|Failed/i.test(String(e.error.message))) { yedekte = true; harita.setStyle(YEDEK); } });
     return harita;

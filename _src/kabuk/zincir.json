@@ -396,6 +396,139 @@
   "govdeSinif": "pg-hakkimizda has-dark-hero",
   "heroTur": "liste"
  },
+ "pro": {
+  "css": [
+   "kabuk/kabuk-kimlik.css",
+   "kabuk/zil-sayaci.css",
+   "kabuk/baslik-zemin.css",
+   "kabuk/kart-standart.css",
+   "kabuk/baslik-revize.css",
+   "kabuk/banner-standart.css",
+   "kabuk/magaza-rozeti.css",
+   "kabuk/altbilgi-marka.css",
+   "kabuk/ust-serit-inert.css",
+   "kabuk/gorus-ek.css",
+   "kabuk/basari-bildirimi.css",
+   "kabuk/cekmece-alt-menu.css",
+   "f6/tarif-bildirim.css",
+   "kabuk/cerez-bandi.css",
+   "varliklar/fontawesome/css/all.min.css",
+   "varliklar/build/assets/tokens-n1Tp8NEY.css",
+   "varliklar/build/assets/portal-DQfW7by7.css",
+   "varliklar/build/assets/kart-fMfp465y.css",
+   "varliklar/build/assets/parallax-S2t5vFDm.css",
+   "varliklar/reference/pro/pro.css",
+   "varliklar/reference/shared/dm-kabuk.css",
+   "kanon/alt-cubuk.css",
+   "kanon/hero.css",
+   "varliklar/reference/shared/dm-hero.css",
+   "varliklar/reference/shared/dm-p3.css",
+   "gastro/altbilgi-perde.css",
+   "alan/mega-serit.css",
+   "varliklar/reference/shared/bottom-clearance.css"
+  ],
+  "js": [
+   {
+    "y": "kabuk/avatar-yedek.js",
+    "modul": false
+   },
+   {
+    "y": "kabuk/yer-tutucu.js",
+    "modul": false
+   },
+   {
+    "y": "kabuk/depo-kapisi.js",
+    "modul": false
+   },
+   {
+    "y": "kabuk/yol-koprusu.js",
+    "modul": false
+   },
+   {
+    "y": "kabuk/dada-kabuk.js",
+    "modul": false
+   },
+   {
+    "y": "kabuk/basari-bildirimi.js",
+    "modul": false
+   },
+   {
+    "y": "kabuk/gorus-girisleri.js",
+    "modul": false
+   },
+   {
+    "y": "kabuk/cekmece-alt-menu.js",
+    "modul": false
+   },
+   {
+    "y": "gastro/gorsel-hazirla.js",
+    "modul": false
+   },
+   {
+    "y": "kabuk/gorus-gonder.js",
+    "modul": false
+   },
+   {
+    "y": "f6/telefon-maskesi.js",
+    "modul": false
+   },
+   {
+    "y": "kabuk/px-kaydirma.js",
+    "modul": false
+   },
+   {
+    "y": "kabuk/baslik-zemin.js",
+    "modul": false
+   },
+   {
+    "y": "gastro/sayi-kisaltma.js",
+    "modul": false
+   },
+   {
+    "y": "varliklar/build/assets/app-Dsop9IcY.js",
+    "modul": true
+   },
+   {
+    "y": "varliklar/build/assets/portal-Co4op6F_.js",
+    "modul": true
+   },
+   {
+    "y": "varliklar/build/assets/parallax-DWpYIxig.js",
+    "modul": true
+   },
+   {
+    "y": "f7/dil-menusu.js",
+    "modul": false
+   },
+   {
+    "y": "alan/mega-serit.js",
+    "modul": false
+   },
+   {
+    "y": "varliklar/reference/pro/pro.js",
+    "modul": false
+   },
+   {
+    "y": "varliklar/reference/shared/bottom-clearance.js",
+    "modul": false
+   },
+   {
+    "y": "gastro/altbilgi-perde.js",
+    "modul": false
+   },
+   {
+    "y": "varliklar/reference/shared/dm-kabuk.js",
+    "modul": false
+   },
+   {
+    "y": "varliklar/reference/shared/dm-gorus.js",
+    "modul": false
+   }
+  ],
+  "baslikZemin": "koyu",
+  "govdeSinif": "pg-pro has-dark-hero",
+  "heroTur": "liste"
+ },
  "kunye": {
   "css": [
    "kabuk/kabuk-kimlik.css",

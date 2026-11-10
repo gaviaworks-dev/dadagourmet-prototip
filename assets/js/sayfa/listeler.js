@@ -1,8 +1,8 @@
 /* Listelerim (H5): Gastronomi Rotalarım satırları ve liste detayı.
    - Rotalar `window.dgRota` deposundan (prototip.js): Dada Route › Güzergâhlarım ile aynı kayıtlar.
    - Liste detayı: sıra (yukarı/aşağı), çıkarma, görünürlük ve paylaşım bağlantısı. Durum `dgKayit('liste-durum')`ta, yalnız bu tarayıcıda. */
-(function () {
-  'use strict';
+(function kur() {
+  'use strict'; document.addEventListener('dg:sekme', kur); /* H8: sekme yerinde değişince Rotalarım satırları yeniden basılır */
   var K = window.dgKayit, R = window.dgRota, kok = document.documentElement.dataset.kok || './';
   var bildir = window.prototipBildir || function () {};
   var kac = function (t) { return String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };

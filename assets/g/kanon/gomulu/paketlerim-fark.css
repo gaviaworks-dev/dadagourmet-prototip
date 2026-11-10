@@ -1,5 +1,20 @@
 /* Gastro /hesabim/paketlerim sayfa paketinin (kanon/gomulu/s-59b958aea15c.css) Hesabım paketinden (s-87b1c5be9aa3.css,
-   bu zincirde yüklü) farkı: Paketlerim render'ında kullanılıp zincirde kuralı olmayan bölüm aralığı `pk-sec`. Kural aynen.
-   Kademe kartının `pro-card`/`pro-flag`/`t0…t3` kuralları kanonda `kademe-karti`/`kademe-bayrak` adıyla çiziliyor; aynı
-   elemanı iki kez boyamamak için alınmadı. */
+   bu zincirde yüklü) kural düzeyinde farkı: s-59b'de olup s-87b'de birebir olmayan kurallardan, seçicisindeki bütün
+   sınıflar Gastro'nun Ücretsiz ve Pro render'ında geçenler (11 Kas parite). Kurallar aynen; renkler token, Gourmet'e
+   zincirin marka eşlemesiyle döner. Kademe kartının `pro-card`/`pro-flag`/`t0` kuralları dünkü fark dosyasında yoktu:
+   Gastro'da etkin Ücretsiz kartın gri zemini (#fafafa, #e4e4e4 çizgi), öne çıkan kartın çizgisi, kart yüksekliği ve
+   "Herkese açık" bayrağı bunlardan gelir. */
 .pk-sec+.pk-sec{margin-top:44px}
+.pro-card{height:100%}
+.pro-card{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px 20px;display:flex;flex-direction:column;transition:.25s var(--ease)}
+.pro-card:hover{transform:translateY(-5px);box-shadow:var(--sh-md)}
+.pro-card.featured{border-color:color-mix(in srgb, var(--marka) 45%, transparent);box-shadow:var(--sh-md)}
+.pro-card.is-aktif{border-color:var(--fit);box-shadow:var(--sh-md)}
+.pro-card.t0{background:#fafafa;border-color:#e4e4e4}
+.pro-card.t0:hover{transform:translateY(-5px);box-shadow:var(--sh-sm)}
+.pro-flag{position:absolute;top:0;right:18px;transform:translateY(-50%);background:var(--fit);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:var(--radius-sm);box-shadow:0 6px 16px color-mix(in srgb, var(--marka) 32%, transparent);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.pro-card .btn{width:100%;justify-content:center;margin-top:4px}
+.pro-card .btn[disabled]{opacity:.45;pointer-events:none}
+@media (max-width:900px){
+.pro-flag{right:auto;left:20px}
+}

@@ -56,7 +56,11 @@ yaz('mekanlar/index', { baslik: 'Mekânlar', aktif: 'mekanlar', zincir: 'hakkimi
   sehir.insertAdjacentHTML('afterend', ilceGrup.replace('class="fct fct-sub', 'hidden data-konum="ilce" class="fct fct-sub') + semtGrup.replace('class="fct fct-sub', 'hidden data-konum="semt" class="fct fct-sub'));
   m.querySelector('.lst-bar').insertAdjacentHTML('afterend', '<div class="mkl-secili" id="mklSecili" hidden></div>');
   // Canlı düzen: sol süzgeç ve üç sütunlu ızgara; harita görünüm düğmesiyle açılır. Hero görseli canlı ekran görüntüsündeki görsel
-  m.querySelector('#mklGrid').insertAdjacentHTML('beforebegin', '<div class="mkl-map-wrap" id="mklMapWrap" hidden><div id="mklMapKolon" class="mkl-map" data-harita="liste"></div></div><p class="mkl-harita-not" id="mklHaritaNot" hidden><span class="ornek-etiket">prototip örneği</span> MapLibre; konumlar canlı mekân verisinden, statik kopya.</p>');
+  m.querySelector('#mklGrid').insertAdjacentHTML('beforebegin', '<div class="mkl-map-wrap" id="mklMapWrap" hidden><div id="mklMapKolon" class="mkl-map" data-harita="liste"></div></div><p class="mkl-harita-not" id="mklHaritaNot" hidden><span class="ornek-etiket">prototip örneği</span> MapLibre; konumlar canlı mekân verisinden, statik kopya.</p><p class="mkl-harita-not" id="mklRozetNot"><span class="ornek-etiket">prototip örneği</span> Kartlardaki doğrulanmış nitelik rozetleri örnektir.</p>');
+  // M2 (Beyar 11 Kas): iki sütun, her sütunda üstte düğme, altta açıklaması; İşletme Ekle kendi açıklamasıyla aynı sol hizada.
+  // Canlıda düğmeler yan yana, açıklamalar ayrı satırda (İşletme Ekle düğmesi x 283, açıklaması x 457 @1440). Açıklama kabı canlı `.ke-cta-split` kuralıyla
+  const cta = m.querySelector('.ke-cta'), ctaNot = m.querySelector('.ke-cta-split'); cta.classList.add('mkl-cta');
+  [...cta.children].forEach((d) => { const kol = document.createElement('div'); kol.className = 'mkl-cta-kol'; const not = document.createElement('div'); not.className = 'ke-cta-split'; not.append(ctaNot.firstElementChild); d.before(kol); kol.append(d, not); }); ctaNot.remove();
   m.querySelector('.px-media').style.backgroundImage = m.querySelector('.px-media').style.backgroundImage.replace('gurme-lezzetler', 'gourmet-mekan-bul');
   return m.innerHTML; }, { ilceGrup, semtGrup }));
 
@@ -64,7 +68,9 @@ yaz('mekanlar/index', { baslik: 'Mekânlar', aktif: 'mekanlar', zincir: 'hakkimi
 p = await ac(REF);
 const ref = await p.evaluate(() => { const r = document.querySelector('#rsvModal'); r.querySelectorAll('input[name="_token"]').forEach((e) => e.remove()); return { modal: r.outerHTML, overlay: document.querySelector('#rsvOverlay').outerHTML }; });
 p = await ac(dom('o-mikla'));
-const detay = await p.evaluate(({ ref }) => { kok(document.body); const m = document.querySelector('main'); const et = '<span class="ornek-etiket">prototip örneği</span>';
+// Dalga 2 mobil · genel (11 Kas): ham çekimde `scroll-affordance.js` izi kalıyor (`data-sf-wired="1"`, donmuş `has-scroll-*`); betik eylem
+// çubuğunu (`#vdActbar`) kablolanmış sanıp ölçmüyordu, solma çalışmıyordu. İz detay ve katman çekiminden önce temizlenir (Route üreteciyle aynı)
+const detay = await p.evaluate(({ ref }) => { kok(document.body); document.querySelectorAll('[data-sf-wired]').forEach((e) => { e.removeAttribute('data-sf-wired'); e.classList.remove('has-scroll-r', 'has-scroll-l'); }); const m = document.querySelector('main'); const et = '<span class="ornek-etiket">prototip örneği</span>';
   // K2: Rezervasyon geri gelir; künye düğmeleri (Yol Tarifi Al, Kaydet) gelmez. Metin talep dilinde (§8 #17 açık)
   const ara = m.querySelector('a.kc-reserve'); ara.classList.remove('btn-primary'); ara.classList.add('btn-ghost');
   ara.insertAdjacentHTML('beforebegin', `<button class="btn btn-primary kc-reserve" id="openRsv" type="button"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Rezervasyon Talebi Gönder</button><p class="kc-rez-not">Talebin mekân sahibine iletilir, onayıyla kesinleşir. ${et}</p>`);
@@ -144,7 +150,7 @@ yaz('hesabim/ayarlar/index', { baslik: 'Hesap Ayarları', duzen: 'uye', zincir: 
 
 // --- Gurme Panelim: K3, ayrı alan, 6 sekme ---
 p = await ac(dom('op-mekanlarim'));
-const iskelet = await p.evaluate(() => { const m = document.querySelector('main'); const b = m.querySelector('.kimlik-bant'); metin(b, /DadaGourmet/g, 'Dada Gourmet'); metin(b, /[a-z0-9._-]+@[a-z0-9.-]+\.test\b/g, '{{uye.eposta}}'); metin(b, /\bDemo\b/g, 'Örnek Üye');
+const iskelet = await p.evaluate(() => { const m = document.querySelector('main'); const b = m.querySelector('.kimlik-bant'); metin(b, /DadaGourmet/g, 'Dada Gourmet'); metin(b, /Üyelik başlangıcı: /g, 'Üyelik başlangıcı ') /* Gastro'da iki noktasız (Dalga 2 mobil · hesap) */; metin(b, /[a-z0-9._-]+@[a-z0-9.-]+\.test\b/g, '{{uye.eposta}}'); metin(b, /\bDemo\b/g, 'Örnek Üye');
   b.querySelector('.crumb-home').setAttribute('href', '{{kok}}'); b.querySelector('.cur').textContent = 'Gurme Panelim'; b.querySelector('.kimlik-giris').textContent = 'Rezervasyonların, favorilerin, ziyaretlerin ve katkıların tek merkezde.'; b.querySelector('.cp-stats').remove();
   const satir = m.querySelector('#mekFavori .kalem-satiri').outerHTML; const bas = (id) => m.querySelector(`#mekanlarim-pane-${id} .bolum-bas`).outerHTML; const bos = m.querySelector('#mekFavori .bos-durum').outerHTML; const kart = m.querySelector('#mekanlarim-pane-mek-favori .kart').cloneNode(false).outerHTML;
   const sekme = m.querySelector('nav.sekmeler .sekme').outerHTML;

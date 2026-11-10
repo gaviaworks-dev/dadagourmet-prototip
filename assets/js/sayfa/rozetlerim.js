@@ -1,26 +1,16 @@
 /* Rozetlerim: Gastro rozet ekranının Gourmet uyarlaması. Rozet, kademe ve puan sayıları bu tarayıcıdaki demo kayıtlarından
-   (dgKayit, dgPuan) okunur. Rozet ve rütbe kümesi Gurme Panelim › Puan Durumu'ndaki örnek setle aynı; kademe kesinleşen puandan.
+   (dgKayit, dgPuan) okunur. Rozet, rütbe ve puan kümesi `assets/js/rozet-veri.js` (tek kaynak, Gurme Panelim de oradan okur);
+   kartlar ve merdiven derlemede aynı dosyadan basılır, kademe kesinleşen puandan.
    Aile süzgeci Gastro'da `?aile=` bağıdır, prototipte aynı çipler sayfa içinde süzer. */
 (function () {
   'use strict';
-  var K = window.dgKayit, P = window.dgPuan; if (!K || !P) { return; }
+  var K = window.dgKayit, P = window.dgPuan, R = window.DG_ROZET; if (!K || !P || !R) { return; }
   var $ = function (s, k) { return (k || document).querySelector(s); }, $$ = function (s, k) { return [].slice.call((k || document).querySelectorAll(s)); };
   var kac = function (t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
   var yaz = function (s, v) { $$(s).forEach(function (e) { e.textContent = v; }); };
   var binlik = function (n) { return Number(n).toLocaleString('tr-TR'); };
-  var say = function (tur, kosul) { return K.oku(tur).filter(kosul || function () { return true; }).length; };
-  var yayinda = function (k) { return k.durum === 'yayinda'; };
-  var O = {
-    degerlendirme: say('degerlendirme', yayinda),
-    foto: say('degerlendirme', function (k) { return yayinda(k) && k.foto; }),
-    oneri: say('oneri', yayinda),
-    oneriMekan: say('oneri', function (k) { return yayinda(k) && k.tur !== 'etkinlik'; }),
-    oneriEtkinlik: say('oneri', function (k) { return yayinda(k) && k.tur === 'etkinlik'; }),
-    rezervasyon: say('rezervasyon', function (k) { return k.durum === 'gerceklesti'; }),
-    ziyaret: say('ziyaret'),
-    randevu: say('randevu')
-  };
-  var OLCU = { 'ilk-tadim': O.degerlendirme, 'gurme-kalem': O.degerlendirme, 'tabak-avcisi': O.foto, 'kasif': O.oneriMekan, 'hasat-habercisi': O.oneriEtkinlik, 'masa-mudavimi': O.rezervasyon, 'etkinlik-dostu': O.randevu, 'yol-arkadasi': O.ziyaret };
+  var O = R.olcumler(K), OLCU = {};
+  R.rozetler.forEach(function (r) { OLCU[r.k] = O[r.olcu]; });
   var kesin = P.toplam('kesin'), bekleyen = P.toplam('bekliyor');
 
   /* Rozet kartları: Gastro'nun kazanıldı / kilitli kipleri; kilitlide ilerleme çubuğu */
@@ -73,7 +63,7 @@
     $('.olcer span', c).style.width = (kesin ? Math.round(v / kesin * 100) : 0) + '%';
   });
   var D = { kesin: ['Kesinleşti', 'olumlu'], bekliyor: ['Onay bekliyor', 'bekleme'], dustu: ['Düştü', 'durdu'] };
-  var KURAL_AD = { degerlendirme: 'Değerlendirme', oneri: 'Öneri', rezervasyon: 'Rezervasyon' };
+  var KURAL_AD = {}; R.puanAileleri.forEach(function (a) { KURAL_AD[a.k] = a.kisa; });
   var dk = $('#rzDefter');
   if (dk && defter.length) {
     dk.innerHTML = '<div class="tablo-kap cerceveli" role="region" aria-label="Puan defteri" tabindex="0"><table class="tablo"><caption class="sr-only">Dada Puan hareketlerin, kuralları ve durumları</caption><thead><tr><th scope="col">Katkı</th><th scope="col">Kural</th><th scope="col">Durum</th><th scope="col">Puan</th></tr></thead><tbody>' +

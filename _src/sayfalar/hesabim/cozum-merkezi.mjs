@@ -9,7 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { bant, gourmetSayac, sayfa, et, kac } from './_kalip.mjs';
-import { gastroRay, gastroPano, SEKME_CSS, SEKME_JS } from './_gastro-sekme.mjs';
+import { gastroRay, gastroPano, gastroKimlik, SEKME_CSS, SEKME_JS } from './_gastro-sekme.mjs';
 
 const KOK = 'hesabim/cozum-merkezi';
 const DURUM = {
@@ -80,7 +80,8 @@ const SEKMELER = [
   ['oneri', 'fa-solid fa-comment-dots', 'Öneri ve Şikâyet'],
 ];
 
-const ust = bant({ cur: 'Çözüm Merkezi', ikon: 'fa-solid fa-utensils', giris: 'Destek taleplerin, yeni talep açma, sıkça sorulan sorular ve öneri/şikâyet. Sekme değişir, kimlik kartın yerinde kalır.', serit: gourmetSayac() });
+// Gastro g-cozum-merkezi kimlik kartı: başlık üyenin adı değil sayfanın adı, rozet yok; giriş cümlesi Gastro'nunki
+const ust = gastroKimlik(bant({ cur: 'Çözüm Merkezi', ikon: 'fa-solid fa-utensils', giris: 'Taleplerin, yeni talep açma, sık sorulanlar ve öneri kutusu tek adreste. Sekme değişir, kimlik kartın yerinde kalır.', serit: gourmetSayac() }), { baslik: 'Çözüm Merkezi' });
 
 const hata = (id) => `<p class="alan-hata" id="${id}" hidden=""><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span></span></p>`;
 const yardim = (id, metin) => `<p class="alan-yardim" id="${id}"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> ${metin}</p>`;

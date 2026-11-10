@@ -1,7 +1,7 @@
 /* Gurme Panelim: bu tarayıcıdaki demo kayıtlarını ilgili sekmenin başına ekler.
    Durumu İşletme Paneli (rezervasyon) ve Yönetim (öneri, değerlendirme) değiştirir; puan onayda kesinleşir. */
-(function () {
-  'use strict';
+(function kur() {
+  'use strict'; document.addEventListener('dg:sekme', kur); /* H8: sekme yerinde değişince yeni içerik için yeniden kurulur */
   var K = window.dgKayit, P = window.dgPuan, kok = document.documentElement.dataset.kok || './';
   var liste = document.querySelector('.fp-list'), sekme = document.documentElement.dataset.yol.split('/').pop(); if (!K || !liste) { return; }
   var kac = function (t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
@@ -10,8 +10,8 @@
   var ad = function (k, metin) { return (k.ornek ? et : '') + kac(metin); };
   var tarih = function (g) { return String(g || '').split('-').reverse().join('.'); };
   var gecti = function (k) { return new Date(k.gun + 'T' + (k.saat || '23:59')) < new Date(); };
-  var REZ = { talep: ['Mekân sahibi onayı bekleniyor', 'bekleme'], onaylandi: ['Onaylandı', 'olumlu'], reddedildi: ['Onaylanmadı', 'durdu'], iptal: ['İptal edildi', 'pasif'], gerceklesti: ['Gerçekleşti · +25 kesinleşti', 'olumlu'], gelmedi: ['Gelinmedi', 'pasif'] };
-  var ONERI = { inceleniyor: ['İnceleniyor · +50 bekleyen', 'bekleme'], yayinda: ['Yayında · +50 kesinleşti', 'olumlu'], reddedildi: ['Yayınlanmadı', 'durdu'] };
+  var REZ = { talep: ['Mekân sahibi onayı bekleniyor', 'bekleme'], onaylandi: ['Onaylandı', 'olumlu'], reddedildi: ['Onaylanmadı', 'durdu'], iptal: ['İptal edildi', 'pasif'], gerceklesti: ['Gerçekleşti · +' + P.KURAL.rezervasyon + ' kesinleşti', 'olumlu'], gelmedi: ['Gelinmedi', 'pasif'] };
+  var ONERI = { inceleniyor: ['İnceleniyor · +' + P.KURAL.oneri + ' bekleyen', 'bekleme'], yayinda: ['Yayında · +' + P.KURAL.oneri + ' kesinleşti', 'olumlu'], reddedildi: ['Yayınlanmadı', 'durdu'] };
   var degerlendirdi = function (mekan) { return K.oku('degerlendirme').some(function (d) { return d.mekan === mekan; }); };
   var yazicilar = {
     'degerlendirmelerim': function () { return K.oku('degerlendirme').map(function (k) { var y = k.durum === 'yayinda'; return satir('fa-star', ad(k, k.mekan), 'Lezzet ' + k.lezzet + ' · Servis ' + k.servis + ' · Ambiyans ' + k.ambiyans + (k.foto ? ' · Fotoğraflı' : ''), y ? 'Yayında · +' + k.tutar + ' kesinleşti' : 'İnceleniyor · +' + k.tutar + ' bekleyen', y ? 'olumlu' : 'bekleme'); }).join(''); },
@@ -25,33 +25,25 @@
       if (cagri) { var bas = document.querySelector('.bolum-bas'); if (bas) { bas.insertAdjacentHTML('afterend', cagri); } }
       return K.oku('rezervasyon').map(function (k) { var d = REZ[k.durum] || REZ.talep; return satir('fa-utensils', ad(k, k.mekan), k.yer + ' · ' + k.kisi + ' kişi · ' + tarih(k.gun) + ' ' + k.saat + (k.alerjen ? ' · Alerjen notu var' : ''), d[0], d[1]); }).join('') +
         K.oku('randevu').map(function (k) { return satir('fa-calendar-days', ad(k, k.ad), k.yer + ' · ' + k.kisi + ' kişi · ' + tarih(k.gun), 'Etkinlik randevusu'); }).join('');
-    },
-    'gurme-favorilerim': function () { return K.oku('favori').map(function (k) { return satir(k.tur === 'Etkinlik' ? 'fa-calendar-days' : 'fa-bowl-food', ad(k, k.ad), k.tur + ' · ' + k.mekan, k.tur); }).join(''); }
+    }
+    /* Gurme Favorilerim satırlarını, sayaçlarını, ekle ve çıkar akışını `favori.js` çizer (tek depo `dgKayit('favori')`) */
   };
   if (yazicilar[sekme]) { var h = yazicilar[sekme](); if (h) { var b = liste.querySelector('.bos-durum'); if (b) { b.parentNode.removeChild(b); } liste.insertAdjacentHTML('afterbegin', h); } }
   /* Puan: kesinleşen ve bekleyen tutar kayıtlardan; düşen (reddedilen) sayılmaz */
   var kesin = P.toplam('kesin'), bekleyen = P.toplam('bekliyor');
   var bant = document.querySelector('.kimlik-meta');
-  if (bant) { bant.insertAdjacentHTML('afterend', '<p class="kimlik-puan"><i class="fa-solid fa-award" aria-hidden="true"></i> <b>' + kesin + '</b> kesinleşen · <b>' + bekleyen + '</b> bekleyen puan</p>'); }
+  if (bant && !document.querySelector('.kimlik-puan')) { bant.insertAdjacentHTML('afterend', '<p class="kimlik-puan"><i class="fa-solid fa-award" aria-hidden="true"></i> <b>' + kesin + '</b> kesinleşen · <b>' + bekleyen + '</b> bekleyen puan</p>'); }
   var yaz = function (s, v) { var e = document.querySelector(s); if (e) { e.textContent = v; } };
   yaz('[data-puan="kesin"]', kesin); yaz('[data-puan="bekleyen"]', bekleyen);
   var defter = document.getElementById('puanDefter');
   var PD = { kesin: ['kesinleşti', 'olumlu'], bekliyor: ['bekliyor', 'bekleme'], dustu: ['düştü', 'durdu'] };
   if (defter) { defter.innerHTML = K.oku('puan').map(function (k) { var d = PD[k.durum || 'bekliyor']; return satir('fa-clock-rotate-left', ad(k, k.ad), k.durum === 'kesin' ? 'Onaylandı' : k.durum === 'dustu' ? 'Onaylanmadı' : 'Onay bekliyor', '+' + k.tutar + ' ' + d[0], d[1]); }).join('') || '<div class="bos-durum"><h4>Henüz puan hareketin yok</h4></div>'; }
-  /* Rozet ve rütbe: ÖRNEK kural seti (Beyar onayı bekliyor). Rozet yalnız onaylanmış eylemden kazanılır; rütbe kesinleşen puandan */
-  var sayi = function (tur, kosul) { return K.oku(tur).filter(kosul).length; };
-  var yayinda = function (k) { return k.durum === 'yayinda'; };
-  var ROZET = [
-    ['fa-star', 'İlk Tadım', 'İlk değerlendirmen yayına girdi', sayi('degerlendirme', yayinda), 1],
-    ['fa-pen-nib', 'Gurme Kalem', '5 değerlendirmen yayına girdi', sayi('degerlendirme', yayinda), 5],
-    ['fa-camera', 'Tabak Avcısı', 'Fotoğraflı 3 değerlendirmen yayına girdi', sayi('degerlendirme', function (k) { return yayinda(k) && k.foto; }), 3],
-    ['fa-location-dot', 'Kâşif', 'İlk mekân önerin yayına girdi', sayi('oneri', function (k) { return yayinda(k) && k.tur !== 'etkinlik'; }), 1],
-    ['fa-calendar-plus', 'Hasat Habercisi', 'İlk etkinlik önerin yayına girdi', sayi('oneri', function (k) { return yayinda(k) && k.tur === 'etkinlik'; }), 1],
-    ['fa-utensils', 'Masa Müdavimi', 'İlk rezervasyonun gerçekleşti', sayi('rezervasyon', function (k) { return k.durum === 'gerceklesti'; }), 1],
-    ['fa-circle-check', 'Yol Arkadaşı', '3 mekânı Ziyaret Ettim ile işaretledin', sayi('ziyaret', function () { return true; }), 3],
-    ['fa-ticket', 'Etkinlik Dostu', 'İlk etkinlik randevunu oluşturdun', sayi('randevu', function () { return true; }), 1]
-  ];
-  var RUTBE = [[0, 'Meraklı'], [100, 'Lezzet Avcısı'], [300, 'Gurme'], [700, 'Usta Gurme'], [1500, 'Şef Masası']];
+  /* Rozet ve rütbe: Beyar onaylı örnek set, tek kaynak `assets/js/rozet-veri.js` (Rozetlerim de oradan okur).
+     Rozet yalnız onaylanmış eylemden kazanılır; rütbe kesinleşen puandan */
+  var R = window.DG_ROZET; if (!R) { return; }
+  var O = R.olcumler(K);
+  var ROZET = R.rozetler.map(function (r) { return [r.ikon, r.ad, r.durum, O[r.olcu], r.esik]; });
+  var RUTBE = R.rutbeler.map(function (r) { return [r.esik, r.ad]; });
   var kazanilan = ROZET.filter(function (r) { return r[3] >= r[4]; }).length;
   var rutbe = RUTBE.filter(function (r) { return kesin >= r[0]; }).pop();
   yaz('[data-puan="rutbe"]', rutbe[1]);

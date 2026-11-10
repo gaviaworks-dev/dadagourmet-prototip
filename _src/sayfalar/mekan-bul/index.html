@@ -224,13 +224,18 @@
                 <span class="pk-ico"><i class="fa-solid fa-star" aria-hidden="true"></i></span>
                 <span class="pk-txt"><b>Şef Restoranı</b></span>
                 <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
-            </label></div><span class="pick-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Birden çok seçebilirsin. Seçtiklerinden en az birini taşıyan mekân bu kriteri karşılar.</span><div class="wiz-foot">
+            </label><label class="pick">
+                <input type="checkbox" name="ortam" value="fark-etmez" data-fark="">
+                <span class="pk-ico"><i class="fa-solid fa-shuffle" aria-hidden="true"></i></span>
+                <span class="pk-txt"><b>Fark Etmez</b><small>Hepsini tara</small></span>
+                <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
+            </label></div><span class="pick-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Birden çok seçebilirsin. Seçtiklerinden en az birini taşıyan mekân bu kriteri karşılar; Fark Etmez ortamı kriter dışı bırakır.</span><div class="wiz-foot">
                                     <span class="wf-note"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> 2 / 4 adım: istediğin an geri dönebilirsin.</span>
                                     <div class="wf-actions"><button class="btn btn-ghost" type="button" data-geri=""><i class="fa-solid fa-chevron-left" aria-hidden="true"></i> Geri</button><button class="btn btn-primary" type="button" data-ileri="">Devam <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button></div>
                                 </div></div><div class="wstep" data-adim="3"><div class="fc-head">
                                 <h2><i class="fa-solid fa-utensils" aria-hidden="true"></i> Ne yemek istersin?</h2>
                                 <span class="fc-step">Adım 3 / 4</span>
-                            </div><div class="mb-tabs" id="mbMutfakSekme" role="tablist" aria-label="Mutfak ailesi"><button type="button" class="chip mb-tab active" data-tab="ogun" role="tab" aria-selected="true" aria-controls="mbMutfak-ogun" id="mbSekme-ogun"><i class="fa-solid fa-mug-saucer" aria-hidden="true"></i> Öğün ve Lezzet <span class="mb-tab-dot" data-tab-count="ogun" hidden="">0</span></button><button type="button" class="chip mb-tab" data-tab="turk" role="tab" aria-selected="false" aria-controls="mbMutfak-turk" id="mbSekme-turk"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Türk ve Yöresel <span class="mb-tab-dot" data-tab-count="turk" hidden="">0</span></button><button type="button" class="chip mb-tab" data-tab="dunya" role="tab" aria-selected="false" aria-controls="mbMutfak-dunya" id="mbSekme-dunya"><i class="fa-solid fa-earth-americas" aria-hidden="true"></i> Dünya Mutfakları <span class="mb-tab-dot" data-tab-count="dunya" hidden="">0</span></button></div><div class="mb-tabpanel active" data-panel="ogun" id="mbMutfak-ogun" role="tabpanel" aria-labelledby="mbSekme-ogun"><div class="pick-grid mb-grid-3" data-q="mutfak-ogun"><label class="pick">
+                            </div><div class="mb-ara" role="search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input class="alan-girdi" type="search" id="mbMutfakAra" placeholder="Mutfak ara…" aria-label="Mutfak ara" autocomplete="off" enterkeyhint="search"><button class="mb-ara-temizle" type="button" id="mbAraTemizle" aria-label="Aramayı temizle" hidden=""><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div><div class="mb-tabs sekmeler esit" id="mbMutfakSekme" role="tablist" aria-label="Mutfak ailesi"><button type="button" class="sekme mb-tab active" data-tab="ogun" role="tab" aria-selected="true" aria-controls="mbMutfak-ogun" id="mbSekme-ogun"><i class="fa-solid fa-mug-saucer" aria-hidden="true"></i> <span class="mb-tab-ad">Öğün<span class="mb-tab-uzun"> ve Lezzet</span></span> <span class="mb-tab-dot" data-tab-count="ogun" hidden="">0</span></button><button type="button" class="sekme mb-tab" data-tab="turk" role="tab" aria-selected="false" aria-controls="mbMutfak-turk" id="mbSekme-turk"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> <span class="mb-tab-ad">Türk<span class="mb-tab-uzun"> ve Yöresel</span></span> <span class="mb-tab-dot" data-tab-count="turk" hidden="">0</span></button><button type="button" class="sekme mb-tab" data-tab="dunya" role="tab" aria-selected="false" aria-controls="mbMutfak-dunya" id="mbSekme-dunya"><i class="fa-solid fa-earth-americas" aria-hidden="true"></i> <span class="mb-tab-ad">Dünya<span class="mb-tab-uzun"> Mutfakları</span></span> <span class="mb-tab-dot" data-tab-count="dunya" hidden="">0</span></button></div><div class="mb-tabpanel active" data-panel="ogun" id="mbMutfak-ogun" role="tabpanel" aria-labelledby="mbSekme-ogun"><h3 class="mb-panel-bas"><i class="fa-solid fa-mug-saucer" aria-hidden="true"></i> Öğün ve Lezzet <span class="mb-panel-sayi" data-panel-sayi=""></span></h3><div class="pick-grid mb-grid-3" data-q="mutfak-ogun"><label class="pick">
                 <input type="checkbox" name="mutfak" value="kahvalti-serpme" data-f="mutfak" data-kod="kahvalti-serpme">
                 <span class="pk-ico"><i class="fa-solid fa-egg" aria-hidden="true"></i></span>
                 <span class="pk-txt"><b>Kahvaltı / Serpme</b></span>
@@ -245,9 +250,9 @@
                 <span class="pk-ico"><i class="fa-solid fa-fish" aria-hidden="true"></i></span>
                 <span class="pk-txt"><b>Deniz Ürünleri</b></span>
                 <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
-            </label></div></div><div class="mb-tabpanel" data-panel="turk" id="mbMutfak-turk" role="tabpanel" aria-labelledby="mbSekme-turk"><div class="pick-grid mb-grid-3" data-q="mutfak-turk"><label class="pick">
+            </label></div></div><div class="mb-tabpanel" data-panel="turk" id="mbMutfak-turk" role="tabpanel" aria-labelledby="mbSekme-turk"><h3 class="mb-panel-bas"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Türk ve Yöresel <span class="mb-panel-sayi" data-panel-sayi=""></span></h3><div class="pick-grid mb-grid-3" data-q="mutfak-turk"><label class="pick">
                 <input type="checkbox" name="mutfak" value="turk-mutfagi" data-f="mutfak" data-kod="turk-mutfagi">
-                <span class="pk-ico"><i class="fa-solid fa-utensils" aria-hidden="true"></i></span>
+                <span class="pk-ico"><img class="mb-bayrak" src="{{kok}}assets/g/varliklar/flags/tr.svg" alt="" width="28" height="21" decoding="async"></span>
                 <span class="pk-txt"><b>Türk Mutfağı</b></span>
                 <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
             </label><label class="pick">
@@ -285,48 +290,48 @@
                 <span class="pk-ico"><i class="fa-solid fa-bread-slice" aria-hidden="true"></i></span>
                 <span class="pk-txt"><b>İç Anadolu Mutfağı</b></span>
                 <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
-            </label></div></div><div class="mb-tabpanel" data-panel="dunya" id="mbMutfak-dunya" role="tabpanel" aria-labelledby="mbSekme-dunya"><div class="pick-grid mb-grid-3" data-q="mutfak-dunya"><label class="pick">
+            </label></div></div><div class="mb-tabpanel" data-panel="dunya" id="mbMutfak-dunya" role="tabpanel" aria-labelledby="mbSekme-dunya"><h3 class="mb-panel-bas"><i class="fa-solid fa-earth-americas" aria-hidden="true"></i> Dünya Mutfakları <span class="mb-panel-sayi" data-panel-sayi=""></span></h3><div class="pick-grid mb-grid-3" data-q="mutfak-dunya"><label class="pick">
                 <input type="checkbox" name="mutfak" value="italyan-mutfagi" data-f="mutfak" data-kod="italyan-mutfagi">
-                <span class="pk-ico"><i class="fa-solid fa-pizza-slice" aria-hidden="true"></i></span>
+                <span class="pk-ico"><img class="mb-bayrak" src="{{kok}}assets/g/varliklar/flags/it.svg" alt="" width="28" height="21" decoding="async"></span>
                 <span class="pk-txt"><b>İtalyan Mutfağı</b></span>
                 <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
             </label><label class="pick">
                 <input type="checkbox" name="mutfak" value="fransiz-mutfagi" data-f="mutfak" data-kod="fransiz-mutfagi">
-                <span class="pk-ico"><i class="fa-solid fa-wine-glass" aria-hidden="true"></i></span>
+                <span class="pk-ico"><img class="mb-bayrak" src="{{kok}}assets/g/varliklar/flags/fr.svg" alt="" width="28" height="21" decoding="async"></span>
                 <span class="pk-txt"><b>Fransız Mutfağı</b></span>
                 <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
             </label><label class="pick">
                 <input type="checkbox" name="mutfak" value="japon-mutfagi" data-f="mutfak" data-kod="japon-mutfagi">
-                <span class="pk-ico"><i class="fa-solid fa-bowl-rice" aria-hidden="true"></i></span>
+                <span class="pk-ico"><img class="mb-bayrak" src="{{kok}}assets/g/varliklar/flags/jp.svg" alt="" width="28" height="21" decoding="async"></span>
                 <span class="pk-txt"><b>Japon Mutfağı</b></span>
                 <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
             </label><label class="pick">
                 <input type="checkbox" name="mutfak" value="cin-mutfagi" data-f="mutfak" data-kod="cin-mutfagi">
-                <span class="pk-ico"><i class="fa-solid fa-bowl-food" aria-hidden="true"></i></span>
+                <span class="pk-ico"><img class="mb-bayrak" src="{{kok}}assets/g/varliklar/flags/cn.svg" alt="" width="28" height="21" decoding="async"></span>
                 <span class="pk-txt"><b>Çin Mutfağı</b></span>
                 <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
             </label><label class="pick">
                 <input type="checkbox" name="mutfak" value="kore-mutfagi" data-f="mutfak" data-kod="kore-mutfagi">
-                <span class="pk-ico"><i class="fa-solid fa-fire-burner" aria-hidden="true"></i></span>
+                <span class="pk-ico"><img class="mb-bayrak" src="{{kok}}assets/g/varliklar/flags/kr.svg" alt="" width="28" height="21" decoding="async"></span>
                 <span class="pk-txt"><b>Kore Mutfağı</b></span>
                 <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
             </label><label class="pick">
                 <input type="checkbox" name="mutfak" value="hint-mutfagi" data-f="mutfak" data-kod="hint-mutfagi">
-                <span class="pk-ico"><i class="fa-solid fa-mortar-pestle" aria-hidden="true"></i></span>
+                <span class="pk-ico"><img class="mb-bayrak" src="{{kok}}assets/g/varliklar/flags/in.svg" alt="" width="28" height="21" decoding="async"></span>
                 <span class="pk-txt"><b>Hint Mutfağı</b></span>
                 <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
             </label><label class="pick">
                 <input type="checkbox" name="mutfak" value="meksika-mutfagi" data-f="mutfak" data-kod="meksika-mutfagi">
-                <span class="pk-ico"><i class="fa-solid fa-pepper-hot" aria-hidden="true"></i></span>
+                <span class="pk-ico"><img class="mb-bayrak" src="{{kok}}assets/g/varliklar/flags/mx.svg" alt="" width="28" height="21" decoding="async"></span>
                 <span class="pk-txt"><b>Meksika Mutfağı</b></span>
                 <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
-            </label></div></div><span class="pick-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Birden çok seçebilirsin; sekme değiştirmek seçimini silmez. Hiçbirini seçmezsen mutfak kriter olmaz.</span><div class="wiz-foot">
+            </label></div></div><p class="mb-ara-yok" id="mbAraYok" hidden="">Aramana uyan mutfak yok.</p><p class="sr-only" id="mbAraDurum" aria-live="polite"></p><span class="pick-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Birden çok seçebilirsin; sekme değiştirmek seçimini silmez. Hiçbirini seçmezsen mutfak kriter olmaz.</span><div class="wiz-foot">
                                     <span class="wf-note"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> 3 / 4 adım: istediğin an geri dönebilirsin.</span>
                                     <div class="wf-actions"><button class="btn btn-ghost" type="button" data-geri=""><i class="fa-solid fa-chevron-left" aria-hidden="true"></i> Geri</button><button class="btn btn-primary" type="button" data-ileri="">Devam <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button></div>
                                 </div></div><div class="wstep" data-adim="4"><div class="fc-head">
                                 <h2><i class="fa-solid fa-sliders" aria-hidden="true"></i> Senin için önemli olan</h2>
                                 <span class="fc-step">Adım 4 / 4</span>
-                            </div><div class="mb-acc"><div class="fct open" data-acc=""><button class="fct-head" type="button" aria-expanded="true"><i class="fa-solid fa-bell-concierge mb-acc-ico" aria-hidden="true"></i> Hizmetler <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button><div class="fct-body"><div class="pick-grid mb-grid-3" data-q="nitelik-hizmet"><label class="pick">
+                            </div><div class="mb-acc"><div class="fct open" data-acc=""><button class="fct-head" type="button" aria-expanded="true"><i class="fa-solid fa-bell-concierge mb-acc-ico" aria-hidden="true"></i> Hizmetler <span class="fct-dot">0</span><span class="mb-acc-ozet" data-acc-ozet=""></span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button><div class="fct-body"><div class="pick-grid mb-grid-3" data-q="nitelik-hizmet"><label class="pick">
                 <input type="checkbox" name="nitelik" value="acik-alan" data-f="hizmet" data-kod="acik-alan bahce teras">
                 <span class="pk-ico"><i class="fa-solid fa-umbrella-beach" aria-hidden="true"></i></span>
                 <span class="pk-txt"><b>Açık alan / Teras</b></span>
@@ -371,7 +376,7 @@
                 <span class="pk-ico"><i class="fa-solid fa-people-group" aria-hidden="true"></i></span>
                 <span class="pk-txt"><b>Grup / Özel gün</b></span>
                 <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
-            </label></div></div></div><div class="fct" data-acc=""><button class="fct-head" type="button" aria-expanded="false"><i class="fa-solid fa-leaf mb-acc-ico" aria-hidden="true"></i> Beslenme <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button><div class="fct-body"><div class="pick-grid mb-grid-3" data-q="nitelik-beslenme"><label class="pick">
+            </label></div></div></div><div class="fct" data-acc=""><button class="fct-head" type="button" aria-expanded="false"><i class="fa-solid fa-leaf mb-acc-ico" aria-hidden="true"></i> Beslenme <span class="fct-dot">0</span><span class="mb-acc-ozet" data-acc-ozet=""></span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button><div class="fct-body"><div class="pick-grid mb-grid-3" data-q="nitelik-beslenme"><label class="pick">
                 <input type="checkbox" name="nitelik" value="vegan" data-f="beslenme" data-kod="vegan">
                 <span class="pk-ico"><i class="fa-solid fa-seedling" aria-hidden="true"></i></span>
                 <span class="pk-txt"><b>Vegan</b></span>
@@ -401,7 +406,7 @@
                 <span class="pk-ico"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></span>
                 <span class="pk-txt"><b>Alerjen bilgisi</b></span>
                 <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
-            </label></div></div></div><div class="fct" data-acc=""><button class="fct-head" type="button" aria-expanded="false"><i class="fa-solid fa-wheelchair mb-acc-ico" aria-hidden="true"></i> Ulaşım ve erişim <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button><div class="fct-body"><div class="pick-grid mb-grid-4" data-q="nitelik-ulasim"><label class="pick">
+            </label></div></div></div><div class="fct" data-acc=""><button class="fct-head" type="button" aria-expanded="false"><i class="fa-solid fa-wheelchair mb-acc-ico" aria-hidden="true"></i> Ulaşım ve erişim <span class="fct-dot">0</span><span class="mb-acc-ozet" data-acc-ozet=""></span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button><div class="fct-body"><div class="pick-grid mb-grid-4" data-q="nitelik-ulasim"><label class="pick">
                 <input type="checkbox" name="nitelik" value="otopark" data-f="ulasim" data-kod="otopark ozel-otopark vale">
                 <span class="pk-ico"><i class="fa-solid fa-square-parking" aria-hidden="true"></i></span>
                 <span class="pk-txt"><b>Otopark / Vale</b></span>
@@ -421,11 +426,11 @@
                 <span class="pk-ico"><i class="fa-solid fa-baby-carriage" aria-hidden="true"></i></span>
                 <span class="pk-txt"><b>Bebek arabası</b></span>
                 <span class="pk-check"><i class="fa-solid fa-check" aria-hidden="true"></i></span>
-            </label></div></div></div><div class="fct" data-acc=""><button class="fct-head" type="button" aria-expanded="false"><i class="fa-solid fa-calendar-check mb-acc-ico" aria-hidden="true"></i> Ne zaman gideceksin? <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button><div class="fct-body"><label class="fct-row"><input type="checkbox" name="simdi" value="1" data-f="acik" data-kod="simdi"><span class="cbx"></span><span class="ft">Şimdi açık olmalı</span></label><label class="fct-row"><input type="checkbox" name="rez" value="1" data-f="hizmet" data-kod="rezervasyon-aliyor online-rezervasyon"><span class="cbx"></span><span class="ft">Rezervasyon alıyor olmalı</span></label></div></div></div><span class="pick-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Hiçbirini seçmeden de devam edebilirsin. Seçtiğin her nitelik eşleşme oranına girer; birleşik etiketlerde biri yeter.</span><div class="wiz-foot">
+            </label></div></div></div><div class="fct" data-acc=""><button class="fct-head" type="button" aria-expanded="false"><i class="fa-solid fa-calendar-check mb-acc-ico" aria-hidden="true"></i> Ne zaman gideceksin? <span class="fct-dot">0</span><span class="mb-acc-ozet" data-acc-ozet=""></span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button><div class="fct-body"><label class="fct-row"><input type="checkbox" name="simdi" value="1" data-f="acik" data-kod="simdi"><span class="cbx"></span><span class="ft">Şimdi açık olmalı</span></label><label class="fct-row"><input type="checkbox" name="rez" value="1" data-f="hizmet" data-kod="rezervasyon-aliyor online-rezervasyon"><span class="cbx"></span><span class="ft">Rezervasyon alıyor olmalı</span></label></div></div></div><span class="pick-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Hiçbirini seçmeden de devam edebilirsin. Seçtiğin her nitelik eşleşme oranına girer; birleşik etiketlerde biri yeter.</span><div class="wiz-foot">
                                     <span class="wf-note"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> 4 / 4 adım: istediğin an geri dönebilirsin.</span>
                                     <div class="wf-actions"><button class="btn btn-ghost" type="button" data-geri=""><i class="fa-solid fa-chevron-left" aria-hidden="true"></i> Geri</button><button class="btn btn-primary" type="button" data-ileri="">Sonuçları Gör <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button></div>
                                 </div></div></div>
-                </div><div class="mb-sonuc" id="mbSonuc" hidden=""><div class="res-summary"><span class="rs-lbl"><i class="fa-solid fa-sliders" aria-hidden="true"></i> Seçimlerin:</span><span id="mbCipler"></span><button class="res-edit" type="button" id="mbDuzenle">Düzenle</button></div><p class="mb-hesap" id="mbHesap"></p><div id="mbGruplar"></div><div class="wiz-foot"><span class="wf-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Oran yalnız senin seçtiğin kriterlerden hesaplanır; mekân verisi canlı kayıtların kopyasıdır.</span><div class="wf-actions"><button class="btn btn-ghost" type="button" id="mbYeni"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Yeni Arama</button></div></div></div>
+                </div><div class="mb-sonuc" id="mbSonuc" hidden=""><p class="sr-only" id="mbDuyuru" role="status" aria-live="polite"></p><div class="res-summary" tabindex="-1"><span class="rs-lbl"><i class="fa-solid fa-sliders" aria-hidden="true"></i> Seçimlerin:</span><span id="mbCipler"></span><button class="res-edit" type="button" id="mbDuzenle">Düzenle</button></div><p class="mb-hesap" id="mbHesap"></p><div id="mbGruplar"></div><div class="wiz-foot"><span class="wf-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Oran yalnız senin seçtiğin kriterlerden hesaplanır; mekân verisi canlı kayıtların kopyasıdır.</span><div class="wf-actions"><button class="btn btn-ghost" type="button" id="mbYeni"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Yeni Arama</button></div></div></div>
             </div>
         </section>
     </div>
