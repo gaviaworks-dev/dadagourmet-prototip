@@ -375,6 +375,25 @@ body.gastronomi-kapali .yg-dash.yg-dash--katmanli:not([hidden]){display:block!im
 .yg-dcard--katman .yg-kl-durak{padding:var(--bosluk-4) var(--bosluk-10)}
 .yg-katman-pin--karavan{background:var(--durum-acik-metin)}
 @media (max-width:860px){.yg-dash .yg-dash-katman .yg-dcard{flex-basis:280px}.yg-sarj-toggle{min-height:44px}}
+/* D9 · Sapma toleransı ve hızlı filtreler derli toplu: başlık ve sayaç tek satır, altında tek satır kanon segment;
+   hızlı filtreler tek satır kayan şerit (canlı davranışı, ortak `scroll-affordance` solgunluğu). 9 Kas'taki "sarar" kararının yerine */
+.yg-corr{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:var(--bosluk-8);row-gap:var(--bosluk-6);margin-top:var(--bosluk-16)}
+.yg-corr[hidden]{display:none}
+.yg-corr>.yg-corr-top{grid-column:1;grid-row:1;margin:0}
+.yg-corr>.yg-corr-counts{grid-column:2;grid-row:1;justify-self:end;margin:0;gap:var(--bosluk-10)}
+.yg-corr>.yg-tol-chips{grid-column:1/-1;grid-row:2}
+.yg-corr>.yg-tol-custom{grid-column:1/-1;grid-row:3;margin-top:0}
+.yg-corr .yg-cc{flex:none;display:inline-flex;align-items:baseline;gap:var(--bosluk-4);padding:0;border:0;background:none;text-align:left}
+.yg-corr .yg-cc b{display:inline;font-size:var(--yazi-13)}
+.yg-corr .yg-cc span{font-size:var(--yazi-12)}
+.yg-corr .yg-tol-chips{display:flex;flex-wrap:nowrap;overflow:visible;gap:var(--bosluk-4);padding:var(--bosluk-4);background:var(--kagit);border:var(--cizgi-1) solid var(--cizgi);border-radius:var(--yuvarlak-md)}
+.yg-corr .yg-tol-chip{flex:1 1 auto;min-width:0;display:inline-flex;align-items:center;justify-content:center;height:auto;min-height:34px;padding:0 var(--bosluk-8);border:0;border-radius:var(--yuvarlak-sm);font-size:var(--yazi-12-5);white-space:nowrap}
+.yg-corr .yg-tol-chip:hover:not(.is-active){background:var(--aksan-yikama);color:var(--aksan-koyu)}
+.yg-quick{margin-top:var(--bosluk-12)}
+.yg-quick .yg-quick-h{margin-bottom:var(--bosluk-6)}
+#ygQuickWrap #ygQuickFilters{flex-wrap:nowrap;overflow-x:auto;gap:var(--bosluk-6);margin-bottom:0}
+#ygQuickWrap #ygQuickFilters.has-scroll-r::after,#ygQuickWrap #ygQuickFilters.has-scroll-l::before{content:""}
+#ygQuickWrap .yg-fl-chip{height:32px;padding:0 var(--bosluk-12);font-size:var(--yazi-12-5)}
 
 /* ==== Duyarlı hizalama: Gastro ve Diet kuralları (Beyar, 9 Kas). Ölçüm: scratchpad/responsive/esleme.md ==== */
 /* Masaüstü süzgeç sütunu Gastro'daki gibi sayfayla akar (static); canlı Gourmet gövdesindeki sticky + iç kaydırma kalkar */

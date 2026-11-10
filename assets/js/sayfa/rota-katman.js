@@ -325,6 +325,17 @@
     var o = p[Math.floor(p.length / 2)];
     etiket = L.marker([o[1], o[0]], { interactive: false, keyboard: false, icon: L.divIcon({ className: 'yg-koridor-etiket', html: '<span class="ornek-etiket">Örnek koridor · prototip örneği</span>', iconSize: [0, 0] }) }).addTo(h);
   };
+  /* Sapma toleransı kanon segmentinde (Beyar 10 Kas D9): canlı çip adı uzun ("En Fazla 10 Dakika Sapma"); segmentte kısa ad,
+     tam ad `title` ve `aria-label`da. Canlı betik çipleri her değişimde yeniden yazar, kısaltma her seferinde uygulanır */
+  var tolKisa = function () {
+    var tanim = {}; (BOOT.tolerans || []).forEach(function (t) { tanim[t.id] = t; });
+    $$('#ygTolChips .yg-tol-chip').forEach(function (b) {
+      if (b.dataset.kisa) { return; } var t = tanim[b.dataset.tol]; if (!t) { return; }
+      var tam = b.textContent.trim(); b.dataset.kisa = '1'; b.title = tam; b.setAttribute('aria-label', tam);
+      b.textContent = t.dk === 0 ? 'Tam yol üstü' : t.dk ? t.dk + ' dk' : 'Özel km';
+    });
+  };
+  var tc = $('#ygTolChips'); if (tc) { new MutationObserver(tolKisa).observe(tc, { childList: true }); tolKisa(); }
   /* Navigasyona aktarım. Sınırlar `mobil-arastirma.md` §4.1: Google 9 ara durak, mobil tarayıcıda 3; Apple iOS 18.4 ve macOS 15.4 sonrası çok durak;
      Yandex web `rtext` çok durak taşır, uygulamada yalnız kalkış ve varış belgeli. Sınır aşılırsa rota etaplara bölünür. */
   var mobil = function () { return window.matchMedia('(max-width: 767px), (pointer: coarse)').matches; };
