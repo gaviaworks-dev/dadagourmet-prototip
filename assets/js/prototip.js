@@ -13,18 +13,20 @@
   var ornek = (document.querySelector('meta[name="dg-ornek-uye"]') || { content: '|' }).content.split('|');
   kimlik.content = JSON.stringify(uye ? { auth: true, roles: ['kullanici'], ad: ornek[0], kullaniciAdi: ornek[1] } : { auth: false });
   document.head.appendChild(kimlik);
-  if (document.documentElement.dataset.uyeSayfa && !uye) { location.replace(kok + 'giris/?donus=' + encodeURIComponent(document.documentElement.dataset.yol + '/')); }
+  /* İşletme Paneli (`data-panel="isletme"`) girişi mekân sahibi rolü seçili açılır */
+  if (document.documentElement.dataset.uyeSayfa && !uye) { location.replace(kok + 'giris/?' + (document.documentElement.dataset.panel === 'isletme' ? 'rol=isletme&' : '') + 'donus=' + encodeURIComponent(document.documentElement.dataset.yol + '/')); }
   /* Demo rolleri (Diet prototipindeki düzen): üye Gurme Panelim'e, mekân sahibi İşletme Paneli'ne, yönetici Yönetim'e iner */
   var ROL_EV = { uye: 'hesabim/gurme-panelim/', isletme: 'isletme/', yonetici: 'yonetim/' };
   var rolOku = function () { try { var r = localStorage.getItem('dg-rol'); return ROL_EV[r] ? r : 'uye'; } catch (e) { return 'uye'; } };
   window.dgRol = rolOku;
   /* Canlıda giriş ve kayıt ekranı oturumluya açılmaz, kendi alanına yönlenir */
-  if (uye && /^(giris|kayit)$/.test(document.documentElement.dataset.yol || '')) { location.replace(kok + ROL_EV[rolOku()]); }
+  /* `?rol=` ile gelen (panel girişi) oturumluyu da rol değiştirmek için ekranda tutar */
+  if (uye && !ROL_EV[adres.get('rol')] && /^(giris|kayit)$/.test(document.documentElement.dataset.yol || '')) { location.replace(kok + ROL_EV[rolOku()]); }
   var uyeOl = function (rol) {
     rol = ROL_EV[rol] ? rol : 'uye';
     var kaydedildi = oturumYaz(true), d = adres.get('donus') || '';
     try { localStorage.setItem('dg-rol', rol); } catch (e) { /* depo kapalı */ }
-    var hedef = rol === 'uye' && /^[a-z0-9/-]+$/.test(d) ? d : ROL_EV[rol];
+    var hedef = /^[a-z0-9/-]+$/.test(d) && (rol === 'uye' ? !/^(isletme|yonetim)(\/|$)/.test(d) : d.indexOf(ROL_EV[rol]) === 0) ? d : ROL_EV[rol];
     location.href = kok + hedef + (kaydedildi ? '' : '?auth=1');
   };
   /* Rol seçici: rol değişince o hesabın demo e-postası dolar; şifre aynı kalır */
@@ -138,6 +140,10 @@
   window.dgUye = function () { if (uye) { return true; } location.href = kok + 'giris/?donus=' + encodeURIComponent((document.documentElement.dataset.yol || '') + '/'); return false; };
   document.addEventListener('DOMContentLoaded', function () {
     if (uye) { document.body.classList.add('is-auth'); document.body.setAttribute('data-roles', 'kullanici'); }
+    /* Giriş ekranı `?rol=isletme`: rol seçici o hesapla açılır (e-posta ve şifre örnekle dolu) */
+    var rs = ROL_EV[adres.get('rol')] && document.querySelector('#giRol button[data-rol="' + adres.get('rol') + '"]'); if (rs) { rs.click(); }
+    /* Hesap menüsündeki İşletmelerim canlıdaki gibi yalnız işletme yetkisinde (demo rolü isletme) görünür */
+    if (rolOku() !== 'isletme') { [].forEach.call(document.querySelectorAll('.acct-menu a[data-rol="isletme"],.d-acct-sub a[data-rol="isletme"]'), function (a) { a.parentNode.removeChild(a); }); }
     /* Canlıda alt çubuk Profil üyede Hesabım'a gider */
     if (uye) { [].forEach.call(document.querySelectorAll('.bn-item[href$="giris/"]'), function (a) { a.setAttribute('href', kok + 'hesabim/ayarlar/'); }); }
   });
