@@ -47,32 +47,48 @@
       var st = $$('.art-hstat'); st[0].lastChild.nodeValue = ' ' + t[0] + ' ' + AY[+t[1] - 1] + ' ' + t[2]; st[1].lastChild.nodeValue = ' ' + e.sure;
       /* Güncelleme tarihi ve görüntülenme yalnız örnek yazının canlı kaydında var */
       st.slice(2).forEach(function (x) { var ay = x.previousElementSibling; if (ay && ay.classList.contains('art-hsep')) { ay.parentNode.removeChild(ay); } x.parentNode.removeChild(x); });
-      /* Tam metin yalnız örnek yazıda var: kalan yazılarda canlı kart özeti durur, etiket satırı veride yok */
+      /* Tam metin yalnız örnek yazıda var: kalan yazılarda canlı kart özeti durur */
       $$(':scope > :not(.ptr)', kolon).forEach(function (x) { x.parentNode.removeChild(x); });
-      $$('.ptr-lbl, .ptr-rail', kolon).forEach(function (x) { x.parentNode.removeChild(x); });
       $('.ptr', kolon).insertAdjacentHTML('beforebegin', '<p>' + kac(e.ozet) + '</p><p>Prototipte bu yazının yalnız özeti var. <span class="ornek-etiket">prototip örneği</span></p>');
-      var adres = 'https://dadagourmet.com/gurme-lezzetler/' + e.slug, ad = encodeURIComponent(e.ad), ua = encodeURIComponent(adres);
-      $('.psh-pop .xx').href = 'https://twitter.com/intent/tweet?url=' + ua + '&text=' + ad; $('.psh-pop .wa').href = 'https://wa.me/?text=' + ad + '%20' + ua; $('.psh-pop .ml').href = 'mailto:?subject=' + ad + '&body=' + ua; $('#pshCopy').dataset.copy = adres;
     }
+    /* Etiketler: canlı detayın `#tagTrack` satırı (`lezzet-veri.mjs` her yazı için çeker). Canlıda etiket listeye gider; prototipte listenin `?q=` aramasına (canlı liste de bu parametreyi tanır).
+       Etiketi olmayan yazıda canlı gibi etiket satırı basılmaz, Paylaş yalnız kalır */
+    var iz = $('#tagTrack');
+    if ((e.etiket || []).length) { iz.innerHTML = e.etiket.map(function (x) { return '<a class="chip" href="' + kok + 'gurme-lezzetler/?q=' + encodeURIComponent(x) + '"><i class="fa-solid fa-tag" aria-hidden="true"></i> ' + kac(x) + '</a>'; }).join(''); }
+    else { $$('.ptr-lbl, .ptr-rail', kolon).forEach(function (x) { x.parentNode.removeChild(x); }); }
+    /* Paylaşılan adres bu prototipteki yazı; canlı bağ (dadagourmet.com/gurme-lezzetler/<slug>) Faz 4'te yerine geçer */
+    var adres = location.origin + location.pathname + '?l=' + e.slug, ad = encodeURIComponent(e.ad), ua = encodeURIComponent(adres);
+    $('.psh-pop .xx').href = 'https://twitter.com/intent/tweet?url=' + ua + '&text=' + ad; $('.psh-pop .wa').href = 'https://wa.me/?text=' + ad + '%20' + ua; $('.psh-pop .ml').href = 'mailto:?subject=' + ad + '&body=' + ua; $('#pshCopy').dataset.copy = adres;
     var yer = $('#lzIlgili'), ilgili = e.slug === ornek ? yer.dataset.ilgili.split(',').map(bul).filter(Boolean) : V.lezzetler.filter(function (x) { return x.kat === e.kat && x.slug !== e.slug; }).slice(0, 3);
     yer.innerHTML = ilgili.map(kart).join('');
-    /* Etiket rayı ve paylaş: canlı sayfa betiği */
+    /* Etiket rayı ve paylaş: canlı sayfa betiği. Paylaş: cihazın paylaşım penceresi (Web Share) varsa o açılır; yoksa canlı menü (X, WhatsApp, e-posta, bağlantıyı kopyala) */
     $$('.ptr .row-nav button').forEach(function (b) { b.addEventListener('click', function () { var r = document.getElementById(b.getAttribute('data-track')); if (r) { r.scrollBy({ left: b.getAttribute('data-dir') === 'prev' ? -220 : 220, behavior: 'smooth' }); } }); });
     var sh = $('#ptrShare'), dugme = $('#pshBtn'), cp = $('#pshCopy');
-    dugme.addEventListener('click', function (ev) { ev.preventDefault(); dugme.setAttribute('aria-expanded', sh.classList.toggle('open') ? 'true' : 'false'); });
-    document.addEventListener('click', function (ev) { if (!ev.target.closest('#ptrShare')) { sh.classList.remove('open'); dugme.setAttribute('aria-expanded', 'false'); } });
+    var menu = function (on) { sh.classList.toggle('open', on); dugme.setAttribute('aria-expanded', on ? 'true' : 'false'); };
+    dugme.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      if (navigator.share) { navigator.share({ title: e.ad, url: adres }).catch(function () { /* kullanıcı vazgeçti */ }); return; }
+      menu(!sh.classList.contains('open'));
+    });
+    document.addEventListener('click', function (ev) { if (!ev.target.closest('#ptrShare')) { menu(false); } });
+    document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && sh.classList.contains('open')) { menu(false); dugme.focus(); } });
+    var olmadi = function () { bildir('Bağlantı kopyalanamadı; adres çubuğundan kopyalayabilirsin.'); };
     cp.addEventListener('click', function (ev) {
-      ev.preventDefault(); try { navigator.clipboard.writeText(cp.dataset.copy || location.href); } catch (h) { /* pano erişimi yok */ }
-      var i = $('i', cp); cp.classList.add('ok'); i.className = 'fa-solid fa-check'; setTimeout(function () { cp.classList.remove('ok'); i.className = 'fa-solid fa-link'; }, 1500);
+      ev.preventDefault();
+      var tamam = function () { var i = $('i', cp); cp.classList.add('ok'); i.className = 'fa-solid fa-check'; bildir('Bağlantı kopyalandı.'); setTimeout(function () { cp.classList.remove('ok'); i.className = 'fa-solid fa-link'; }, 1500); };
+      try { navigator.clipboard.writeText(cp.dataset.copy || location.href).then(tamam, olmadi); } catch (h) { olmadi(); }
     });
     return;
   }
 
   /* Liste */
   var grid = $('#lzGrid'); if (!grid) { return; }
-  var kategori = '', sira = 'yeni', sayfa = 1, taban = kok + 'gurme-lezzetler/';
-  var adres = function (k, s, n) { var q = []; if (s !== 'yeni') { q.push('siralama=' + s); } if (k) { q.push('kategori=' + k); } if (n > 1) { q.push('sayfa=' + n); } return taban + (q.length ? '?' + q.join('&') : ''); };
-  var oku = function () { var q = new URLSearchParams(location.search), k = q.get('kategori') || ''; kategori = V.secenek.some(function (s) { return s.deger === k; }) ? k : ''; sira = q.get('siralama') === 'populer' ? 'populer' : 'yeni'; sayfa = Math.max(1, parseInt(q.get('sayfa'), 10) || 1); };
+  /* Arama `?q=`: canlı liste parametresi; çip, sıralama ve sayfa bağları onu taşır. Prototipte başlık, özet, kategori ve etiketlerde arar (etiket bağları buraya gelir) */
+  var kategori = '', sira = 'yeni', sayfa = 1, aranan = '', taban = kok + 'gurme-lezzetler/';
+  var kucuk = function (t) { return String(t).toLocaleLowerCase('tr'); };
+  var adres = function (k, s, n) { var q = []; if (s !== 'yeni') { q.push('siralama=' + s); } if (k) { q.push('kategori=' + k); } if (aranan) { q.push('q=' + encodeURIComponent(aranan)); } if (n > 1) { q.push('sayfa=' + n); } return taban + (q.length ? '?' + q.join('&') : ''); };
+  var oku = function () { var q = new URLSearchParams(location.search), k = q.get('kategori') || ''; kategori = V.secenek.some(function (s) { return s.deger === k; }) ? k : ''; sira = q.get('siralama') === 'populer' ? 'populer' : 'yeni'; sayfa = Math.max(1, parseInt(q.get('sayfa'), 10) || 1); aranan = (q.get('q') || '').trim(); };
+  var uyar = function (e) { if (kategori && e.kat !== kategori) { return false; } if (!aranan) { return true; } var a = kucuk(aranan); return [e.ad, e.ozet, e.katAd].concat(e.etiket || []).some(function (x) { return kucuk(x).indexOf(a) >= 0; }); };
   var numaralar = function (top) { var l = []; for (var i = 1; i <= top; i++) { if (i <= 3 || i === top || Math.abs(i - sayfa) <= 1) { l.push(i); } } return l; };
   var sayfalama = function (n, top) {
     var yer = $('#pagi'); yer.hidden = top < 2; if (top < 2) { yer.innerHTML = ''; return; }
@@ -82,12 +98,15 @@
     yer.innerHTML = s + ok(1, 'Sonraki sayfa') + '<span class="pagi-note" id="pagiNote">' + n + ' içerik · sayfa ' + sayfa + ' / ' + top + '</span>';
   };
   var yenile = function () {
-    var l = V.lezzetler.filter(function (e) { return !kategori || e.kat === kategori; });
+    var l = V.lezzetler.filter(uyar);
     /* Veri canlının "En Yeni" sırasında gelir; "En Çok Okunan" sırası `oku` alanındadır */
     if (sira === 'populer') { l = l.slice().sort(function (a, b) { return a.oku - b.oku; }); }
     var top = Math.max(1, Math.ceil(l.length / SAYFA)); sayfa = Math.min(sayfa, top);
     grid.innerHTML = l.slice((sayfa - 1) * SAYFA, sayfa * SAYFA).map(kart).join('');
     sayfalama(l.length, top);
+    $('#lzBos').classList.toggle('show', !l.length);
+    var ar = $('#lzArama'); ar.hidden = !aranan;
+    if (aranan) { ar.innerHTML = '<i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> <b>“' + kac(aranan) + '”</b> için ' + l.length + ' içerik <a href="' + taban + (kategori ? '?kategori=' + kategori : '') + '">Aramayı temizle</a>'; }
     $$('.ke-filter .chip').forEach(function (a) { var k = a.dataset.kategori, on = k === kategori; a.classList.toggle('active', on); a.href = adres(k, sira, 1); });
     $$('.disc-tabs .dt').forEach(function (a) { var s = a.dataset.sira; a.classList.toggle('active', s === sira); a.href = adres(kategori, s, 1); });
   };

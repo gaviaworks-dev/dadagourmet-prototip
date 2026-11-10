@@ -243,6 +243,12 @@ body.pg-gurme-lezzetler-detay .art-hero h1{font-size:clamp(30px,3.5vw,44px)}
   body.pg-gurme-lezzetler .ke-filter{padding-top:4px}
   body.pg-gurme-lezzetler-detay .art-col p{text-align:left}
 }
+/* C1 · Etiket araması (Beyar 10 Kas): etiket `?q=` ile listeye gelir; etkin arama satırı canlıda yok (sapma), metin ölçüsü canlı `.pagi-note` ailesi */
+body.pg-gurme-lezzetler .lz-arama{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:0 0 20px;font-size:13.5px;font-weight:500;color:var(--muted)}
+body.pg-gurme-lezzetler .lz-arama[hidden]{display:none}
+body.pg-gurme-lezzetler .lz-arama i{color:var(--tomato);font-size:12px}
+body.pg-gurme-lezzetler .lz-arama b{color:var(--slate)}
+body.pg-gurme-lezzetler .lz-arama a{font-weight:700;color:var(--tomato-deep);text-decoration:underline;text-underline-offset:3px}
 
 /* Şehir Rehberleri: kabuk zinciri `pg-hakkimizda` sınıfını taşır; fotoğraf ve banner ortalaması canlıda yok. Değerler canlı `hakkimizda-uyarlama.css`, `banner-uyarlama.css` */
 body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .lst-top{background-image:linear-gradient(90deg,rgba(28,25,18,.93),rgba(33,30,22,.72))}
