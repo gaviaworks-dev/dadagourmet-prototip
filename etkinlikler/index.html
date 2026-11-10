@@ -74,6 +74,7 @@
 <script defer src="../assets/vendor/maplibre/maplibre-gl.js"></script>
 <script defer src="../assets/js/etkinlik-veri.js"></script>
 <script defer src="../assets/js/harita.js"></script>
+<script defer src="../assets/js/ulke.js"></script>
 <script defer src="../assets/js/sayfa/etkinlikler.js"></script>
 <script defer src="../assets/js/mentor-fab.js"></script>
 </head>
@@ -213,7 +214,7 @@
 </section>
 <section class="ev-sec">
     <div class="wrap">
-        <div class="ev-bolge" role="tablist" aria-label="Etkinlik bölgesi"><button class="ev-bolge-sekme aktif" type="button" role="tab" aria-selected="true" data-bolge="tr"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Türkiye <span id="evSayTr"></span></button><button class="ev-bolge-sekme" type="button" role="tab" aria-selected="false" data-bolge="dunya"><i class="fa-solid fa-earth-europe" aria-hidden="true"></i> Uluslararası <span id="evSayDunya"></span></button></div><div class="ke-filter ev-filter can-scroll-right" role="tablist" aria-label="Etkinlik kategorisi">
+        <div class="sekmeler esit ev-bolge" role="tablist" aria-label="Etkinlik bölgesi"><button class="sekme ev-bolge-sekme aktif" type="button" role="tab" aria-selected="true" data-bolge="yerel"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <span class="ev-bolge-ad" id="evBolgeAd">Türkiye</span> <span class="sekme-sayi" id="evSayYerel"></span></button><button class="sekme ev-bolge-sekme" type="button" role="tab" aria-selected="false" data-bolge="dunya"><i class="fa-solid fa-earth-europe" aria-hidden="true"></i> Uluslararası <span class="sekme-sayi" id="evSayDunya"></span></button></div><div class="ke-filter ev-filter can-scroll-right" role="tablist" aria-label="Etkinlik kategorisi">
             <a class="chip  active " href="#"><i class="fa-solid fa-layer-group" aria-hidden="true"></i>Tümü</a>
                             <a class="chip " href="#" data-kategori="gastronomi-festivalleri"><i class="fa-solid fa-champagne-glasses" aria-hidden="true"></i>Gastronomi Festivalleri</a>
                             <a class="chip " href="#" data-kategori="tadim-etkinlikleri"><i class="fa-solid fa-wine-glass" aria-hidden="true"></i>Tadım Etkinlikleri</a>
