@@ -1,5 +1,6 @@
 /* Dada Route statik uçları. Canlı `dada-route.js` değişmeden çalışsın diye sunucu yanıtları burada üretilir.
-   Hiçbir yere istek gitmez. Rota, süre ve şarj noktaları örnektir; mekân konumları canlı kayıtların kopyasıdır. */
+   Dışarı giden tek istek rota geometrisi: OSRM açık demo sunucusuna yalnız durak koordinatlarını taşıyan GET (aşağıda "Rota").
+   Süre ve mesafe OSRM'in; şarj ve katman noktaları örnektir; mekân konumları canlı kayıtların kopyasıdır. */
 (function () {
   'use strict';
   var R = window.DG_ROTA, M = window.DG_MEKANLAR || [], V = window.DG_LISTE || { mekanlar: [], kartlar: {}, secenek: {} };
@@ -27,9 +28,9 @@
       .map(function (x) { return { id: x.y.id, ad: x.y.ad, alt: x.y.alt, lat: x.y.lat, lng: x.y.lng, tur: x.y.tur }; });
   }
   var km = function (a, b, c, d) { var r = Math.PI / 180, x = (d - b) * r * Math.cos((a + c) * r / 2), y = (c - a) * r; return Math.sqrt(x * x + y * y) * 6371; };
-  /* Örnek koridor (Beyar, 9 Kas): rota `rota-yol-agi.js` kara yolu ağı üstünden en kısa yol olarak çizilir; denizden düz geçmez.
+  /* Yedek koridor (Beyar, 9 Kas; 10 Kas'tan beri yalnız OSRM'e ulaşılamazsa): rota `rota-yol-agi.js` kara yolu ağı üstünden en kısa yol; denizden düz geçmez.
      İl merkezi olmayan durak (ilçe, mekân, ürün durağı) en yakın iki il düğümüne bağlanır; kıyıda dolanan ilçeler ağdaki ara noktayla.
-     Çizgi ve il kartı aynı kaynaktan: geçilen il düğümleri ve bağların içinden geçtiği iller (`dgRotaIller`). Hesaplanmış yol değildir */
+     Çizgi ve il kartı aynı kaynaktan: geçilen il düğümleri ve bağların içinden geçtiği iller (`dgRotaIller`). Hesaplanmış yol değildir; haritada "Örnek koridor" etiketi taşır */
   var AG = window.DG_YOL_AGI || { bag: [], ilce: {} }, DUGUM = {}, KOMSU = {};
   ILLER.forEach(function (y) { DUGUM[y.ad] = y; KOMSU[y.ad] = []; });
   var hatUzun = function (n) { var t = 0; for (var i = 1; i < n.length; i++) { t += km(n[i - 1][0], n[i - 1][1], n[i][0], n[i][1]); } return t; };
@@ -75,24 +76,109 @@
     return { n: n, il: il };
   }
   window.dgRotaIller = function () { return gecilenIller.slice(); };
-  function rotaKur(duraklar) {
-    var p = [], il = [];
-    for (var i = 0; i < duraklar.length - 1; i++) {
-      var k = koridor(duraklar[i], duraklar[i + 1]);
-      k.n.forEach(function (c, j) { if (p.length && !j) { return; } p.push([c[1], c[0]]); });
+  /* Rota (10 Kas, D2): çizgi yolu izler. Sıra: (1) gömülü örnek rota (`rota-osrm-gomulu.js`: pilotlar ve Ankara – Trabzon, ağ olmadan da),
+     (2) OSRM açık demo sunucusuna GET, giden yalnız durak koordinatları, (3) yanıt yoksa ya da 7 sn geçerse sessizce yol ağı koridoru (yedek).
+     Canlıda bu çağrı sunucudadır (`/dada-route/rota`, `config/dadaroute.php`); demo sunucu üretim için değildir. Mesafe ve süre OSRM'in
+     (trafiksiz). Geometri 25 m toleransla sadeleşir: çizilen çizgi, `dgRotaGeometri` ve uzaklık hesapları aynı dizi.
+     İl kartları (`dgRotaIller`): çizgi 2 km'de bir örneklenir, her örnek en yakın il ya da ilçe merkezinin iline yazılır; 5 km'den kısa geçiş sayılmaz */
+  var OSRM = 'https://router.project-osrm.org/route/v1/driving/', ZAMAN_ASIMI = 7000, once = window.fetch;
+  var polyCoz = function (s) {
+    var i = 0, la = 0, ln = 0, o = [];
+    while (i < s.length) {
+      for (var j = 0; j < 2; j++) { var sh = 0, r = 0, b; do { b = s.charCodeAt(i++) - 63; r |= (b & 31) << sh; sh += 5; } while (b >= 32); var d = r & 1 ? ~(r >> 1) : r >> 1; if (j) { ln += d; } else { la += d; } }
+      o.push([la / 1e5, ln / 1e5]);
+    }
+    return o;
+  };
+  var sadele = function (p, tol) {
+    if (p.length < 3) { return p; }
+    var c = Math.cos(p[0][0] * Math.PI / 180), xy = p.map(function (n) { return [n[1] * 111320 * c, n[0] * 110540]; }), tut = p.map(function () { return 0; }), y = [[0, p.length - 1]];
+    tut[0] = tut[p.length - 1] = 1;
+    while (y.length) {
+      var ab = y.pop(), a = xy[ab[0]], b = xy[ab[1]], dx = b[0] - a[0], dy = b[1] - a[1], L = dx * dx + dy * dy, en = -1, ei = -1;
+      for (var i = ab[0] + 1; i < ab[1]; i++) { var q = xy[i], t = L ? Math.max(0, Math.min(1, ((q[0] - a[0]) * dx + (q[1] - a[1]) * dy) / L)) : 0, d = Math.hypot(q[0] - a[0] - t * dx, q[1] - a[1] - t * dy); if (d > en) { en = d; ei = i; } }
+      if (en > tol) { tut[ei] = 1; y.push([ab[0], ei], [ei, ab[1]]); }
+    }
+    return p.filter(function (n, i) { return tut[i]; });
+  };
+  var GOMULU = window.DG_ROTA_GOMULU || [], onbellek = {};
+  /* Gömülü rota: duraklar sırayla 0,5 km içinde eşleşirse. `ters` true ise ters yön de kabul (yalnız OSRM'e ulaşılamazsa) */
+  function gomulu(z, ters) {
+    var es = function (d) { return d.length === z.length && d.every(function (c, i) { return km(c[0], c[1], +z[i].lat, +z[i].lng) < 0.5; }); };
+    for (var i = 0; i < GOMULU.length; i++) {
+      var r = GOMULU[i];
+      if (es(r.d)) { return { n: polyCoz(r.p), km: r.km, dk: r.dk }; }
+      if (ters && es(r.d.slice().reverse())) { return { n: polyCoz(r.p).reverse(), km: r.km, dk: r.dk }; }
+    }
+    return null;
+  }
+  function osrm(z) {
+    if (navigator.onLine === false) { return Promise.reject(new Error('çevrimdışı')); }
+    var kes = window.AbortController ? new AbortController() : null, sayac;
+    var adres = OSRM + z.map(function (d) { return (+d.lng).toFixed(5) + ',' + (+d.lat).toFixed(5); }).join(';') + '?overview=full&geometries=polyline&steps=false&alternatives=false';
+    var istek = once(adres, { credentials: 'omit', signal: kes ? kes.signal : undefined }).then(function (r) { if (!r.ok) { throw new Error('OSRM ' + r.status); } return r.json(); })
+      .then(function (j) { if (!j || j.code !== 'Ok' || !j.routes || !j.routes.length) { throw new Error('rota yok'); } var r = j.routes[0]; return { n: sadele(polyCoz(r.geometry), 25), km: r.distance / 1000, dk: r.duration / 60 }; });
+    var sure = new Promise(function (h, red) { sayac = setTimeout(function () { if (kes) { kes.abort(); } red(new Error('zaman aşımı')); }, ZAMAN_ASIMI); });
+    return Promise.race([istek, sure]).then(function (x) { clearTimeout(sayac); return x; }, function (e) { clearTimeout(sayac); throw e; });
+  }
+  /* Yol ağı koridoru (yedek): duraklar arası en kısa yol, iller ağdan; mesafe kuş uçuşu çizginin 1,12 katı, süre 85 km/sa */
+  function yedek(z) {
+    var n = [], il = [];
+    for (var i = 0; i < z.length - 1; i++) {
+      var k = koridor(z[i], z[i + 1]);
+      k.n.forEach(function (c, j) { if (n.length && !j) { return; } n.push([c[0], c[1]]); });
       il = il.concat(k.il);
       /* ilçe durağı kendi ilini de karta taşır (İzmir–Bodrum: Muğla) */
-      var ilce = YERLER.filter(function (y) { return y.tur === 'district' && y.ad === duraklar[i + 1].ad; })[0]; if (ilce) { il.push(ilce.alt); }
+      var ilce = YERLER.filter(function (y) { return y.tur === 'district' && y.ad === z[i + 1].ad; })[0]; if (ilce) { il.push(ilce.alt); }
     }
-    gecilenIller = il.filter(function (x, j) { return il.indexOf(x) === j; });
-    var top = 0; for (var j = 1; j < p.length; j++) { top += km(p[j - 1][1], p[j - 1][0], p[j][1], p[j][0]); }
-    hat = p; var metre = Math.round(top * 1.12 * 1000);
-    window.dispatchEvent(new Event('dg-rota'));
-    return { rotalar: [{ geometry: { coordinates: p }, distance: metre, duration: Math.round(metre / 1000 / 85 * 3600), tahmini: false }], token: 'prototip-' + Date.now(), saglayici: { ad: 'Prototip örneği' } };
+    var top = 0; for (var j = 1; j < n.length; j++) { top += km(n[j - 1][0], n[j - 1][1], n[j][0], n[j][1]); }
+    return { n: n, km: top * 1.12, dk: top * 1.12 / 85 * 60, il: il };
   }
+  /* İl ve ilçe merkezleri, iliyle etiketli: noktanın ili en yakın merkezin ili (il sınırı verisi yok; yaklaşık) */
+  var TOHUM = ILLER.map(function (y) { return [y.lat, y.lng, y.ad]; }).concat(YERLER.filter(function (y) { return y.tur === 'district' && DUGUM[y.alt]; }).map(function (y) { return [y.lat, y.lng, y.alt]; }));
+  var ilNe = function (la, ln) { var en = 1e9, ad = null; TOHUM.forEach(function (t) { var d = km(la, ln, t[0], t[1]); if (d < en) { en = d; ad = t[2]; } }); return ad; };
+  function ilBul(n, z) {
+    var uzun = {}, sira = [], ekle = function (ad, d) { if (!ad) { return; } if (!(ad in uzun)) { uzun[ad] = 0; sira.push(ad); } uzun[ad] += d; };
+    ekle(ilNe(n[0][0], n[0][1]), 99);
+    for (var i = 1; i < n.length; i++) {
+      var a = n[i - 1], b = n[i], d = km(a[0], a[1], b[0], b[1]), adim = Math.max(1, Math.ceil(d / 2));
+      for (var k = 1; k <= adim; k++) { var u = k / adim; ekle(ilNe(a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u), d / adim); }
+    }
+    ekle(ilNe(n[n.length - 1][0], n[n.length - 1][1]), 99);
+    /* her durak kendi ilini taşır */
+    z.forEach(function (s) { var ad = ilNe(+s.lat, +s.lng); if (ad) { ekle(ad, 0); uzun[ad] = Math.max(uzun[ad], 5); } });
+    return sira.filter(function (ad) { return uzun[ad] >= 5; });
+  }
+  var rotaSayac = 0;
+  function rotaKur(z) {
+    var no = ++rotaSayac, anahtar = z.map(function (d) { return (+d.lat).toFixed(5) + ',' + (+d.lng).toFixed(5); }).join(';');
+    var hazir = onbellek[anahtar] || gomulu(z);
+    var is = hazir ? Promise.resolve(hazir) : osrm(z).then(function (x) { onbellek[anahtar] = x; return x; }, function () { return gomulu(z, true); });
+    return is.then(function (x) {
+      var kaynak = x ? 'osrm' : 'yedek'; x = x || yedek(z);
+      var il = kaynak === 'osrm' ? ilBul(x.n, z) : x.il.filter(function (a, j) { return x.il.indexOf(a) === j; });
+      var p = x.n.map(function (c) { return [c[1], c[0]]; }), metre = Math.round(x.km * 1000), saniye = Math.round(x.dk * 60);
+      /* Bayat yanıt (bu arada yeni rota istendi): canlı betik `buildSeq` ile yoksayar; burada da ortak durum ezilmez */
+      if (no === rotaSayac) {
+        hat = p; gecilenIller = il;
+        window.dgRotaGeometri = x.n.map(function (c) { return [c[0], c[1]]; }); window.dgRotaKaynak = kaynak;
+        if (harita) { harita.setAttribute('data-rota-kaynak', kaynak); }
+        window.dispatchEvent(new Event('dg-rota'));
+        document.dispatchEvent(new CustomEvent('dg:rota', { detail: { geometri: window.dgRotaGeometri, km: Math.round(x.km * 10) / 10, dk: Math.round(x.dk), kaynak: kaynak } }));
+      }
+      return { rotalar: [{ geometry: { coordinates: p }, distance: metre, duration: saniye, tahmini: kaynak === 'yedek' }], token: 'prototip-' + Date.now(), saglayici: { ad: kaynak === 'osrm' ? 'OSRM · OpenStreetMap' : 'Prototip örneği' } };
+    });
+  }
+  /* Noktanın çizgiye en kısa uzaklığı (km) ve çizgideki sırası (parça no + oran): yerel düzlemde parçaya dik izdüşüm */
   function hataUzak(m) {
-    var en = 1e9, sira = 0; for (var i = 0; i < hat.length - 1; i++) { var a = hat[i], b = hat[i + 1]; for (var t = 0; t <= 6; t++) { var u = t / 6, d = km(m.lat, m.lng, a[1] + (b[1] - a[1]) * u, a[0] + (b[0] - a[0]) * u); if (d < en) { en = d; sira = i + u; } } }
-    return { d: en, sira: sira };
+    var en = 1e18, sira = 0, c = Math.cos(m.lat * Math.PI / 180);
+    if (hat.length === 1) { en = Math.pow((hat[0][0] - m.lng) * c, 2) + Math.pow(hat[0][1] - m.lat, 2); }
+    for (var i = 0; i < hat.length - 1; i++) {
+      var a = hat[i], b = hat[i + 1], ax = (a[0] - m.lng) * c, ay = a[1] - m.lat, dx = (b[0] - a[0]) * c, dy = b[1] - a[1], L = dx * dx + dy * dy;
+      var t = L ? Math.max(0, Math.min(1, -(ax * dx + ay * dy) / L)) : 0, x = ax + t * dx, y = ay + t * dy, d = x * x + y * y;
+      if (d < en) { en = d; sira = i + t; }
+    }
+    return { d: Math.sqrt(en) * 111.195, sira: sira };
   }
   window.dgRotaUzak = function (lat, lng) { return hat.length ? hataUzak({ lat: lat, lng: lng }).d : 1e9; };
   /* İl kartı sırası ve koridor etiketi için: noktanın rotadaki sırası ve çizginin kendisi */
@@ -145,14 +231,13 @@
     return { istasyonlar: l, veri_hazir: true, toplam: l.length };
   }
   var yanit = function (v) { return Promise.resolve(new Response(JSON.stringify(v), { status: 200, headers: { 'Content-Type': 'application/json' } })); };
-  var once = window.fetch;
   window.fetch = function (girdi, ayar) {
     var adres = typeof girdi === 'string' ? girdi : girdi.url, m = /dada-route\/api\/([a-z-]+)(.*)$/.exec(adres);
     if (!m) { return once(girdi, ayar); }
     var q = new URLSearchParams(m[2].split('?')[1] || ''), uc = m[1], yontem = ((ayar && ayar.method) || 'GET').toUpperCase();
     if (uc === 'yerler') { return yanit({ yerler: yerAra(q.get('q') || '') }); }
     if (uc === 'en-yakin') { var la = +q.get('lat'), ln = +q.get('lng'), s = ILLER.slice().sort(function (x, y) { return km(la, ln, x.lat, x.lng) - km(la, ln, y.lat, y.lng); })[0]; return yanit({ yer: s, uzaklikKm: Math.round(km(la, ln, s.lat, s.lng)) }); }
-    if (uc === 'rota') { return yanit(rotaKur(JSON.parse(ayar.body).duraklar)); }
+    if (uc === 'rota') { return rotaKur(JSON.parse(ayar.body).duraklar).then(yanit); }
     if (uc === 'mekanlar' && yontem === 'GET') { return yanit(mekanlar(q)); }
     if (uc === 'sarj') { return yanit(sarj(q)); }
     if (uc === 'guzergahlarim' && yontem === 'GET') { return yanit({ guzergahlar: [] }); }

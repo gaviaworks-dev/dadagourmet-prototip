@@ -1,4 +1,5 @@
-/* Dada Route örnek kara yolu ağı: il merkezleri arası ana karayolu bağları. Rota çizgisi bu ağ üstünden çizilir, denizden düz geçmez
+/* Dada Route örnek kara yolu ağı: il merkezleri arası ana karayolu bağları. 10 Kas'tan beri yedek: rota OSRM'den gelir (`rota-sahte.js`),
+   OSRM'e ulaşılamazsa çizgi bu ağ üstünden çizilir, denizden düz geçmez
    (Beyar, 9 Kas: İstanbul–Balıkesir Marmara'nın üstünden düz geçiyordu). Köprüler ağdadır: Osmangazi (İzmit Körfezi), 1915 Çanakkale.
    Biçim: [il A, il B, ara noktalar [[enlem, boylam], ...], içinden geçilen iller]. Ara noktalar yaklaşık; hesaplanmış yol değildir, "prototip örneği". */
 window.DG_YOL_AGI = {

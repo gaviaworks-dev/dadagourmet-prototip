@@ -309,6 +309,8 @@ body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .page-main p{tex
 .yg-il-harita-rozet i{font-size:10px;color:var(--marka)}
 .yg-il-harita-rozet:hover{border-color:var(--marka);background:var(--marka-yikama)}
 .yg-koridor-etiket span{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+/* D2 · Gerçek rota (10 Kas): çizgi OSRM'den geldiyse "Örnek koridor" etiketi görünmez; yalnız yol ağı yedeğinde (`data-rota-kaynak="yedek"`) kalır */
+#routeMap[data-rota-kaynak="osrm"] .yg-koridor-etiket{display:none}
 /* Hızlı süzgeç ve sapma toleransı sağda kesiliyordu: kaydırma yerine sarar, kayan solgunluk kalkar. Pilot şerit canlıdaki gibi kayar */
 .yg-corr .yg-tol-chips,.yg-quick #ygQuickFilters{flex-wrap:wrap;overflow:visible}
 .yg-corr .yg-tol-chips::after,.yg-quick #ygQuickFilters::after{content:none}
