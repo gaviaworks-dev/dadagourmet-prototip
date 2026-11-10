@@ -150,13 +150,38 @@
   "duzen": "uye"
  },
  {
+  "yol": "hesabim/listeler/bodrumda-sef-restoranlari",
+  "baslik": "Bodrum’da şef restoranları · Listelerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/listeler/bogazda-aksam-yemegi",
+  "baslik": "Boğaz’da akşam yemeği · Listelerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/listeler/kapadokyada-yoresel-sofralar",
+  "baslik": "Kapadokya’da yöresel sofralar · Listelerim",
+  "duzen": "uye"
+ },
+ {
   "yol": "hesabim/listeler/paylasilan",
   "baslik": "Listelerim",
   "duzen": "uye"
  },
  {
+  "yol": "hesabim/listeler/rotalar",
+  "baslik": "Gastronomi Rotalarım · Listelerim",
+  "duzen": "uye"
+ },
+ {
   "yol": "hesabim/listeler/taslak",
   "baslik": "Listelerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/listeler/urlada-bag-ve-sofra",
+  "baslik": "Urla’da bağ ve sofra · Listelerim",
   "duzen": "uye"
  },
  {
@@ -207,6 +232,11 @@
  {
   "yol": "hesabim/paketlerim/karsilastir",
   "baslik": "Paketlerim",
+  "duzen": "uye"
+ },
+ {
+  "yol": "hesabim/rozetlerim",
+  "baslik": "Rozetlerim",
   "duzen": "uye"
  },
  {

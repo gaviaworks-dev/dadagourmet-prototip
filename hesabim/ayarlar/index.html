@@ -6,7 +6,7 @@
 <title>Hesap Ayarları · Dada Gourmet</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="dg-ornek-uye" content="Örnek Üye|ornekuye">
-<!-- donör: yerel Gastro 6700538df4 /hesabim/ayarlar (demo tohum); Bildirim, Dil, Bağlı, Veri, Dondurma: go-hesabim.html?auth=1 · canlı Gastro release 20261107-mentor-6700538df4 -->
+<!-- donör: yerel Gastro /hesabim/ayarlar (resources/views/turetilmis/uye/g-hesabim.blade.php, demo tohum render; 10 Kas Gastro hizası: bildirim, güvenlik) · canlı Gastro release 20261107-mentor-6700538df4 -->
 <link rel="icon" href="../../assets/img/favicon.ico">
 <link rel="stylesheet" href="../../assets/g/kabuk/kabuk-kimlik.css">
 <link rel="stylesheet" href="../../assets/g/kabuk/zil-sayaci.css">
@@ -37,6 +37,7 @@
 <link rel="stylesheet" href="../../assets/g/varliklar/reference/shared/dm-p3.css">
 <link rel="stylesheet" href="../../assets/g/alan/mega-serit.css">
 <link rel="stylesheet" href="../../assets/g/revize/tur7/p-pencere.css">
+<link rel="stylesheet" href="../../assets/o/assets/gourmet-public/css/shared/scroll-affordance.css">
 <link rel="stylesheet" href="../../assets/css/gourmet-sapma.css">
 <link rel="stylesheet" href="../../assets/o/assets/gourmet-public/css/konum.css">
 <link rel="stylesheet" href="../../assets/css/prototip.css">
@@ -65,6 +66,7 @@
 <script defer src="../../assets/g/alan/mega-serit.js"></script>
 <script defer src="../../assets/g/varliklar/reference/shared/dm-gorus.js"></script>
 <script defer src="../../assets/g/varliklar/reference/shared/dm-kabuk.js"></script>
+<script defer src="../../assets/o/assets/gourmet-public/js/shared/scroll-affordance.js"></script>
 <script defer src="../../assets/js/sayfa/sekmeler.js"></script>
 <script defer src="../../assets/js/sayfa/ayarlar-profil.js"></script>
 <script defer src="../../assets/js/mentor-fab.js"></script>
@@ -132,7 +134,7 @@
                         
                         
                         
-                    <div class="acct-div"></div><a href="../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils" aria-hidden="true"></i> <span>Gurme Panelim</span></a><a href="../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <span>Mekânlarım</span></a><a href="../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> <span>Etkinliklerim</span></a><a href="../../hesabim/listeler/"><i class="fa-solid fa-list-ul" aria-hidden="true"></i> <span>Listelerim</span></a><a href="../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass" aria-hidden="true"></i> <span>Keşif Tercihlerim</span></a><a href="../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> <span>İşletmelerim</span></a><div class="acct-div"></div><a href="../../hesabim/gurme-panelim/puan-durumu/"><i class="fa-solid fa-medal" aria-hidden="true"></i> <span>Rozetlerim</span></a><div class="acct-div"></div><a href="../../hesabim/paketlerim/"><i class="fa-solid fa-crown" aria-hidden="true"></i> <span>Paketlerim</span></a><a href="../../hesabim/odemelerim/"><i class="fa-solid fa-receipt" aria-hidden="true"></i> <span>Ödemelerim</span></a><a href="../../hesabim/ayarlar/"><i class="fa-solid fa-sliders" aria-hidden="true"></i> <span>Hesap Ayarları</span></a><a href="../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset" aria-hidden="true"></i> <span>Çözüm Merkezi</span></a><div class="acct-div"></div><a href="../../" class="acct-logout" data-cikis=""><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Çıkış</span></a></div>
+                    <div class="acct-div"></div><a href="../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils" aria-hidden="true"></i> <span>Gurme Panelim</span></a><a href="../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <span>Mekânlarım</span></a><a href="../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> <span>Etkinliklerim</span></a><a href="../../hesabim/listeler/"><i class="fa-solid fa-list-ul" aria-hidden="true"></i> <span>Listelerim</span></a><a href="../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass" aria-hidden="true"></i> <span>Keşif Tercihlerim</span></a><a href="../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> <span>İşletmelerim</span></a><div class="acct-div"></div><a href="../../hesabim/rozetlerim/"><i class="fa-solid fa-medal" aria-hidden="true"></i> <span>Rozetlerim</span></a><div class="acct-div"></div><a href="../../hesabim/paketlerim/"><i class="fa-solid fa-crown" aria-hidden="true"></i> <span>Paketlerim</span></a><a href="../../hesabim/odemelerim/"><i class="fa-solid fa-receipt" aria-hidden="true"></i> <span>Ödemelerim</span></a><a href="../../hesabim/ayarlar/"><i class="fa-solid fa-sliders" aria-hidden="true"></i> <span>Hesap Ayarları</span></a><a href="../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset" aria-hidden="true"></i> <span>Çözüm Merkezi</span></a><div class="acct-div"></div><a href="../../" class="acct-logout" data-cikis=""><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Çıkış</span></a></div>
         </div>
         <button class="icon-btn ikon-dugme hamburger" id="hamburger" aria-label="Menü"><i class="fa-solid fa-bars"></i></button>
       </div>
@@ -146,7 +148,7 @@
     <button class="drawer-close" id="drawerClose" aria-label="Menüyü kapat"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <nav class="drawer-nav"><div class="d-item"><a class="d-link" href="../../mekanlar/"><i class="fa-solid fa-compass"></i> Mekânlar</a></div><div class="d-item"><a class="d-link" href="../../mekan-bul/"><i class="fa-solid fa-wand-magic-sparkles"></i> Mekân Bul</a></div><div class="d-item"><a class="d-link" href="../../gurme-lezzetler/"><i class="fa-solid fa-book-open"></i> Gurme Lezzetler</a></div><div class="d-item"><a class="d-link" href="../../dada-route/"><i class="fa-solid fa-route"></i> Dada Route</a></div><div class="d-item"><a class="d-link" href="../../etkinlikler/"><i class="fa-solid fa-calendar-days"></i> Etkinlikler</a></div><div class="d-item"><a class="d-link" href="../../giris/?fb=1" data-gorus-giris="menu"><i class="fa-solid fa-comment-dots"></i> Görüş Bildir</a></div><div class="d-item d-acct-block">
-      <div class="d-sub d-acct-sub"><div class="d-sub-group">Modüllerim</div><a href="../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils"></i> Gurme Panelim</a><a href="../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot"></i> Mekânlarım</a><a href="../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days"></i> Etkinliklerim</a><a href="../../hesabim/listeler/"><i class="fa-solid fa-list-ul"></i> Listelerim</a><a href="../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass"></i> Keşif Tercihlerim</a><a href="../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> İşletmelerim</a><div class="d-sub-group">Gelişimim</div><a href="../../hesabim/gurme-panelim/puan-durumu/"><i class="fa-solid fa-medal"></i> Rozetlerim</a><div class="d-sub-group">Hesabım</div><a href="../../hesabim/paketlerim/"><i class="fa-solid fa-crown"></i> Paketlerim</a><a href="../../hesabim/odemelerim/"><i class="fa-solid fa-receipt"></i> Ödemelerim</a><a href="../../hesabim/ayarlar/"><i class="fa-solid fa-sliders"></i> Hesap Ayarları</a><a href="../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset"></i> Çözüm Merkezi</a><div class="d-sub-group">Oturum</div><a href="../../" data-cikis=""><i class="fa-solid fa-right-from-bracket"></i> Çıkış</a></div>
+      <div class="d-sub d-acct-sub"><div class="d-sub-group">Modüllerim</div><a href="../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils"></i> Gurme Panelim</a><a href="../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot"></i> Mekânlarım</a><a href="../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days"></i> Etkinliklerim</a><a href="../../hesabim/listeler/"><i class="fa-solid fa-list-ul"></i> Listelerim</a><a href="../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass"></i> Keşif Tercihlerim</a><a href="../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> İşletmelerim</a><div class="d-sub-group">Gelişimim</div><a href="../../hesabim/rozetlerim/"><i class="fa-solid fa-medal"></i> Rozetlerim</a><div class="d-sub-group">Hesabım</div><a href="../../hesabim/paketlerim/"><i class="fa-solid fa-crown"></i> Paketlerim</a><a href="../../hesabim/odemelerim/"><i class="fa-solid fa-receipt"></i> Ödemelerim</a><a href="../../hesabim/ayarlar/"><i class="fa-solid fa-sliders"></i> Hesap Ayarları</a><a href="../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset"></i> Çözüm Merkezi</a><div class="d-sub-group">Oturum</div><a href="../../" data-cikis=""><i class="fa-solid fa-right-from-bracket"></i> Çıkış</a></div>
     </div></nav>
   <div class="drawer-foot">
     <button class="btn btn-primary drawer-login" style="width:100%" data-git="../../giris/"><i class="fa-solid fa-user"></i> Giriş Yap</button>
@@ -208,9 +210,9 @@
 
 <div class="pf-tabbar sekme-ray">
   <div class="wrap kap">
-    <nav class="sekmeler ortali" role="tablist" data-fit-tabs="hs" aria-label="Hesap ayarları bölümleri">
+    <nav class="sekmeler ortali" role="tablist" data-fit-tabs="hs" data-scroll-fade="" aria-label="Hesap ayarları bölümleri">
       <button class="sekme aktif" type="button" role="tab" id="hs-tab-profil" data-tab="profil" aria-controls="hs-pane-profil" aria-selected="true" tabindex="0"><i class="fa-solid fa-id-card" aria-hidden="true"></i> Profil</button>
-      <button class="sekme" type="button" role="tab" id="hs-tab-bildirim" data-tab="bildirim" aria-controls="hs-pane-bildirim" aria-selected="false" tabindex="-1"><i class="fa-regular fa-bell" aria-hidden="true"></i> Bildirim Tercihleri</button>
+      <button class="sekme" type="button" role="tab" id="hs-tab-bildirim" data-tab="bildirim" aria-controls="hs-pane-bildirim" aria-selected="false" tabindex="-1"><i class="fa-solid fa-bell" aria-hidden="true"></i> Bildirim Tercihleri</button>
       <button class="sekme" type="button" role="tab" id="hs-tab-guvenlik" data-tab="guvenlik" aria-controls="hs-pane-guvenlik" aria-selected="false" tabindex="-1"><i class="fa-solid fa-lock" aria-hidden="true"></i> Güvenlik</button>
       <button class="sekme" type="button" role="tab" id="hs-tab-dil" data-tab="dil" aria-controls="hs-pane-dil" aria-selected="false" tabindex="-1"><i class="fa-solid fa-globe" aria-hidden="true"></i> Dil ve Bölge</button>
       <button class="sekme" type="button" role="tab" id="hs-tab-bagli" data-tab="bagli" aria-controls="hs-pane-bagli" aria-selected="false" tabindex="-1"><i class="fa-solid fa-plug-circle-check" aria-hidden="true"></i> Bağlı Uygulamalar</button>
@@ -250,7 +252,7 @@
           <div class="alan">
             <label class="alan-etiket" for="hsHandle">Kullanıcı adı <span class="zorunlu">*</span></label>
             <input class="alan-girdi" id="hsHandle" name="kullanici-adi" type="text" autocomplete="username" value="ornekuye" required="" maxlength="30" aria-describedby="hsHandleHelp">
-            <span class="alan-yardim" id="hsHandleHelp"><i class="fa-solid fa-link" aria-hidden="true"></i> <span>Herkese açık profil adresin: <b>/uye/ornekuye</b> — <a href="../../hesabim/gurme-panelim/puan-durumu/">profilim başkalarına nasıl görünüyor?</a></span></span>
+            <span class="alan-yardim" id="hsHandleHelp"><i class="fa-solid fa-link" aria-hidden="true"></i> <span>Herkese açık profil adresin: <b>/uye/ornekuye</b> — <a href="../../hesabim/rozetlerim/">profilim başkalarına nasıl görünüyor?</a></span></span>
           </div>
           <div class="alan-izgara c2">
             <div class="alan">
@@ -360,13 +362,13 @@
             </div>
             <div class="ayar-satir">
               <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-medal"></i></span>
-              <div class="as-metin"><b>Rozetlerim ve keşif özetim profilimde görünsün</b><span>Kapatırsan rozetleri yalnız sen görürsün; <a href="../../hesabim/gurme-panelim/puan-durumu/#kademe" style="color:var(--fit-deep);font-weight:700">Keşif Özetim</a> sayfası etkilenmez.</span></div>
+              <div class="as-metin"><b>Rozetlerim ve keşif özetim profilimde görünsün</b><span>Kapatırsan rozetleri yalnız sen görürsün; <a href="../../hesabim/rozetlerim/#kademe" style="color:var(--fit-deep);font-weight:700">Keşif Özetim</a> sayfası etkilenmez.</span></div>
               <label class="anahtar" for="vsRozet"><input type="checkbox" id="vsRozet" name="rozetler_profilde" value="1" checked=""><span class="anahtar-ray"></span><span class="sr-only">Rozetlerim ve keşif özetim profilimde görünsün</span></label>
             </div>
 
             <div class="ayar-satir">
               <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-ranking-star"></i></span>
-              <div class="as-metin"><b>Liderlik tablosunda adım görünsün</b><span>Kapatırsan sıralamada "anonim kaşif" olarak yer alırsın. Sıralamayı <a href="../../hesabim/gurme-panelim/puan-durumu/#liderlik" style="color:var(--fit-deep);font-weight:700">Rozetlerim › Liderlik</a> sekmesinde görürsün.</span></div>
+              <div class="as-metin"><b>Liderlik tablosunda adım görünsün</b><span>Kapatırsan sıralamada "anonim kaşif" olarak yer alırsın. Sıralamayı <a href="../../hesabim/rozetlerim/#liderlik" style="color:var(--fit-deep);font-weight:700">Rozetlerim › Liderlik</a> sekmesinde görürsün.</span></div>
               <label class="anahtar" for="vsSira"><input type="checkbox" id="vsSira" name="liderlikte_ad" value="1" checked=""><span class="anahtar-ray"></span><span class="sr-only">Liderlik tablosunda adım görünsün</span></label>
             </div>
             <div class="ayar-satir">
@@ -440,25 +442,8 @@
           <div class="ayar-liste">
             <div class="ayar-satir">
               <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
-              <div class="as-metin"><b>Güvenlik uyarıları</b><span>Yeni cihazdan giriş, şifre değişikliği işlemleri her zaman e-posta ile bildirilir. Bu bildirim kapatılamaz.</span></div>
+              <div class="as-metin"><b>Güvenlik uyarıları</b><span>Yeni cihazdan giriş, şifre değişikliği ve iki adımlı doğrulama işlemleri her zaman e-posta ile bildirilir. Bu bildirim kapatılamaz.</span></div>
               <span class="as-acik"><i class="fa-solid fa-lock" aria-hidden="true"></i> Her zaman açık</span>
-            </div>
-            <div class="ayar-satir">
-              <span class="as-ikon" aria-hidden="true"><i class="fa-regular fa-clock"></i></span>
-              <div class="as-metin"><b>Hatırlatma saati</b><span>Günlük keşif hatırlatmasının varsayılan saati.</span></div>
-              <label class="sr-only" for="ntfSaat">Hatırlatma saati</label>
-              <input class="alan-girdi" id="ntfSaat" type="time" value="18:30">
-            </div>
-            <div class="ayar-satir">
-              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-moon"></i></span>
-              <div class="as-metin"><b>Sessiz saatler</b><span>Bu aralıkta push bildirimi gönderilmez; e-posta etkilenmez.</span></div>
-              <label class="sr-only" for="ntfSessiz">Sessiz saatler</label>
-              <select class="alan-secim" id="ntfSessiz">
-                <option selected="">22:00 – 07:00</option>
-                <option>23:00 – 08:00</option>
-                <option>00:00 – 06:00</option>
-                <option>Kapalı</option>
-              </select>
             </div>
           </div>
 
@@ -489,8 +474,15 @@
         <span class="fp-sw-lbl">Açık</span><button class="fp-sw" data-izin-key="bild-randevu" role="switch" aria-checked="true" aria-label="Rezervasyon talebi hatırlatması"></button>
       </div>
       <div class="fp-toggle">
-        <span class="txt"><b>Ödeme ve belge yenileme</b><small>Yalnız işlem gerektiğinde</small></span>
-        <span class="fp-sw-lbl">Açık</span><button class="fp-sw" data-izin-key="bild-odeme" role="switch" aria-checked="true" aria-label="Ödeme ve belge bildirimi"></button>
+        <span class="txt"><b>Ödeme ve fatura</b><small>Makbuz, yenileme hatırlatması ve abonelik değişikliği</small></span>
+        <span class="fp-sw-lbl">Açık</span><button class="fp-sw" type="button" data-izin-key="bild-odeme" role="switch" aria-checked="true" aria-label="Ödeme ve fatura bildirimi"></button>
+      </div>
+      <div class="ayar-liste" style="margin-top:8px;border-top:1px solid var(--line)">
+        <div class="ayar-satir">
+          <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-credit-card"></i></span>
+          <div class="as-metin"><b>Ödeme başarısız</b><span>Tahsilat alınamadığında her zaman bildirilir; duymazsan aboneliğin sessizce düşerdi. Bu bildirim kapatılamaz.</span></div>
+          <span class="as-acik"><i class="fa-solid fa-lock" aria-hidden="true"></i> Her zaman açık</span>
+        </div>
       </div>
     </div>
       </section>
@@ -502,7 +494,7 @@
           <div class="kart-bas">
             <div>
               <h2 id="guvenlikH" class="kart-baslik"><i class="fa-solid fa-lock"></i> Güvenlik</h2>
-              <p>Şifreni değiştir, açık oturumlarını gör.</p>
+              <p>Şifreni değiştir, iki adımlı doğrulamayı yönet, açık oturumlarını gör.</p>
             </div>
           </div>
           <div class="kart-govde">
@@ -549,6 +541,17 @@
           </div>
           <div class="kart-govde">
           <div class="ayar-liste">
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
+              <div class="as-metin"><b>İki adımlı doğrulama</b><span id="gv2faDurum">Kapalı: açtığında girişte <b>telefonuna gelen 6 haneli kod</b> istenir. Yöntemi değiştirmek için kurulumu yeniden çalıştır.</span></div>
+              <div class="as-eylem"><button class="satir-dugme" type="button" id="gv2faKur" data-prototip-not="İki adımlı doğrulama kurulumu prototipte bağlı değil; kod gönderilmez."><i class="fa-solid fa-sliders" aria-hidden="true"></i> Kurulumu Aç</button></div>
+              <label class="anahtar" for="gv2fa"><input type="checkbox" id="gv2fa"><span class="anahtar-ray"></span><span class="sr-only">İki adımlı doğrulama</span></label>
+            </div>
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-key"></i></span>
+              <div class="as-metin"><b>Kurtarma kodların</b><span>Telefonuna erişemezsen bu tek kullanımlık kodlarla giriş yaparsın. Kodlar iki adımlı doğrulama açıldığında üretilir.</span></div>
+              <div class="as-eylem"><button class="satir-dugme" type="button" data-prototip-not="Kurtarma kodu iki adımlı doğrulama açıldığında üretilir; prototipte kod üretilmez.">Kodları Göster</button></div>
+            </div>
             <div class="ayar-satir">
               <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-envelope"></i></span>
               <div class="as-metin"><b>E-posta ile giriş</b><span>ornek@eposta.com — birincil giriş yöntemin.</span></div>

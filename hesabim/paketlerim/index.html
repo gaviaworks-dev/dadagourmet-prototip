@@ -6,7 +6,7 @@
 <title>Paketlerim · Dada Gourmet</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="dg-ornek-uye" content="Örnek Üye|ornekuye">
-<!-- donör: canlı dadagourmet.com/hesabim/paketlerim, DadaGourmet-acil 4eb638c resources/views/hesap/ticaret.blade.php · app/Ticaret/Enums/PaketKademesi.php · app/Ticaret/Servisler/PaketOzellikMatrisi.php · canlı Gastro release 20261107-mentor-6700538df4 -->
+<!-- donör: yerel Gastro /hesabim/paketlerim (resources/views/turetilmis/uye/g-paketlerim.blade.php, demo tohum render); kademe ve özellik verisi canlı dadagourmet.com, DadaGourmet-acil 4eb638c app/Ticaret/Enums/PaketKademesi.php · app/Ticaret/Servisler/PaketOzellikMatrisi.php · canlı Gastro release 20261107-mentor-6700538df4 -->
 <link rel="icon" href="../../assets/img/favicon.ico">
 <link rel="stylesheet" href="../../assets/g/kabuk/kabuk-kimlik.css">
 <link rel="stylesheet" href="../../assets/g/kabuk/zil-sayaci.css">
@@ -37,6 +37,8 @@
 <link rel="stylesheet" href="../../assets/g/varliklar/reference/shared/dm-p3.css">
 <link rel="stylesheet" href="../../assets/g/alan/mega-serit.css">
 <link rel="stylesheet" href="../../assets/g/revize/tur7/p-pencere.css">
+<link rel="stylesheet" href="../../assets/g/kanon/gomulu/paketlerim-fark.css">
+<link rel="stylesheet" href="../../assets/o/assets/gourmet-public/css/shared/scroll-affordance.css">
 <link rel="stylesheet" href="../../assets/css/gourmet-sapma.css">
 <link rel="stylesheet" href="../../assets/o/assets/gourmet-public/css/konum.css">
 <link rel="stylesheet" href="../../assets/css/prototip.css">
@@ -65,7 +67,10 @@
 <script defer src="../../assets/g/alan/mega-serit.js"></script>
 <script defer src="../../assets/g/varliklar/reference/shared/dm-gorus.js"></script>
 <script defer src="../../assets/g/varliklar/reference/shared/dm-kabuk.js"></script>
+<script defer src="../../assets/o/assets/gourmet-public/js/shared/scroll-affordance.js"></script>
 <script defer src="../../assets/js/sayfa/uye-alan.js"></script>
+<script defer src="../../assets/o/assets/gourmet-public/js/shared/scroll-affordance.js"></script>
+<script defer src="../../assets/js/sayfa/sekmeler.js"></script>
 <script defer src="../../assets/js/mentor-fab.js"></script>
 </head>
 <body data-brand="gourmet" data-fit-hero-kind="profil" class="is-auth">
@@ -131,7 +136,7 @@
                         
                         
                         
-                    <div class="acct-div"></div><a href="../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils" aria-hidden="true"></i> <span>Gurme Panelim</span></a><a href="../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <span>Mekânlarım</span></a><a href="../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> <span>Etkinliklerim</span></a><a href="../../hesabim/listeler/"><i class="fa-solid fa-list-ul" aria-hidden="true"></i> <span>Listelerim</span></a><a href="../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass" aria-hidden="true"></i> <span>Keşif Tercihlerim</span></a><a href="../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> <span>İşletmelerim</span></a><div class="acct-div"></div><a href="../../hesabim/gurme-panelim/puan-durumu/"><i class="fa-solid fa-medal" aria-hidden="true"></i> <span>Rozetlerim</span></a><div class="acct-div"></div><a href="../../hesabim/paketlerim/"><i class="fa-solid fa-crown" aria-hidden="true"></i> <span>Paketlerim</span></a><a href="../../hesabim/odemelerim/"><i class="fa-solid fa-receipt" aria-hidden="true"></i> <span>Ödemelerim</span></a><a href="../../hesabim/ayarlar/"><i class="fa-solid fa-sliders" aria-hidden="true"></i> <span>Hesap Ayarları</span></a><a href="../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset" aria-hidden="true"></i> <span>Çözüm Merkezi</span></a><div class="acct-div"></div><a href="../../" class="acct-logout" data-cikis=""><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Çıkış</span></a></div>
+                    <div class="acct-div"></div><a href="../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils" aria-hidden="true"></i> <span>Gurme Panelim</span></a><a href="../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <span>Mekânlarım</span></a><a href="../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> <span>Etkinliklerim</span></a><a href="../../hesabim/listeler/"><i class="fa-solid fa-list-ul" aria-hidden="true"></i> <span>Listelerim</span></a><a href="../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass" aria-hidden="true"></i> <span>Keşif Tercihlerim</span></a><a href="../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> <span>İşletmelerim</span></a><div class="acct-div"></div><a href="../../hesabim/rozetlerim/"><i class="fa-solid fa-medal" aria-hidden="true"></i> <span>Rozetlerim</span></a><div class="acct-div"></div><a href="../../hesabim/paketlerim/"><i class="fa-solid fa-crown" aria-hidden="true"></i> <span>Paketlerim</span></a><a href="../../hesabim/odemelerim/"><i class="fa-solid fa-receipt" aria-hidden="true"></i> <span>Ödemelerim</span></a><a href="../../hesabim/ayarlar/"><i class="fa-solid fa-sliders" aria-hidden="true"></i> <span>Hesap Ayarları</span></a><a href="../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset" aria-hidden="true"></i> <span>Çözüm Merkezi</span></a><div class="acct-div"></div><a href="../../" class="acct-logout" data-cikis=""><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Çıkış</span></a></div>
         </div>
         <button class="icon-btn ikon-dugme hamburger" id="hamburger" aria-label="Menü"><i class="fa-solid fa-bars"></i></button>
       </div>
@@ -145,7 +150,7 @@
     <button class="drawer-close" id="drawerClose" aria-label="Menüyü kapat"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <nav class="drawer-nav"><div class="d-item"><a class="d-link" href="../../mekanlar/"><i class="fa-solid fa-compass"></i> Mekânlar</a></div><div class="d-item"><a class="d-link" href="../../mekan-bul/"><i class="fa-solid fa-wand-magic-sparkles"></i> Mekân Bul</a></div><div class="d-item"><a class="d-link" href="../../gurme-lezzetler/"><i class="fa-solid fa-book-open"></i> Gurme Lezzetler</a></div><div class="d-item"><a class="d-link" href="../../dada-route/"><i class="fa-solid fa-route"></i> Dada Route</a></div><div class="d-item"><a class="d-link" href="../../etkinlikler/"><i class="fa-solid fa-calendar-days"></i> Etkinlikler</a></div><div class="d-item"><a class="d-link" href="../../giris/?fb=1" data-gorus-giris="menu"><i class="fa-solid fa-comment-dots"></i> Görüş Bildir</a></div><div class="d-item d-acct-block">
-      <div class="d-sub d-acct-sub"><div class="d-sub-group">Modüllerim</div><a href="../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils"></i> Gurme Panelim</a><a href="../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot"></i> Mekânlarım</a><a href="../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days"></i> Etkinliklerim</a><a href="../../hesabim/listeler/"><i class="fa-solid fa-list-ul"></i> Listelerim</a><a href="../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass"></i> Keşif Tercihlerim</a><a href="../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> İşletmelerim</a><div class="d-sub-group">Gelişimim</div><a href="../../hesabim/gurme-panelim/puan-durumu/"><i class="fa-solid fa-medal"></i> Rozetlerim</a><div class="d-sub-group">Hesabım</div><a href="../../hesabim/paketlerim/"><i class="fa-solid fa-crown"></i> Paketlerim</a><a href="../../hesabim/odemelerim/"><i class="fa-solid fa-receipt"></i> Ödemelerim</a><a href="../../hesabim/ayarlar/"><i class="fa-solid fa-sliders"></i> Hesap Ayarları</a><a href="../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset"></i> Çözüm Merkezi</a><div class="d-sub-group">Oturum</div><a href="../../" data-cikis=""><i class="fa-solid fa-right-from-bracket"></i> Çıkış</a></div>
+      <div class="d-sub d-acct-sub"><div class="d-sub-group">Modüllerim</div><a href="../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils"></i> Gurme Panelim</a><a href="../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot"></i> Mekânlarım</a><a href="../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days"></i> Etkinliklerim</a><a href="../../hesabim/listeler/"><i class="fa-solid fa-list-ul"></i> Listelerim</a><a href="../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass"></i> Keşif Tercihlerim</a><a href="../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> İşletmelerim</a><div class="d-sub-group">Gelişimim</div><a href="../../hesabim/rozetlerim/"><i class="fa-solid fa-medal"></i> Rozetlerim</a><div class="d-sub-group">Hesabım</div><a href="../../hesabim/paketlerim/"><i class="fa-solid fa-crown"></i> Paketlerim</a><a href="../../hesabim/odemelerim/"><i class="fa-solid fa-receipt"></i> Ödemelerim</a><a href="../../hesabim/ayarlar/"><i class="fa-solid fa-sliders"></i> Hesap Ayarları</a><a href="../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset"></i> Çözüm Merkezi</a><div class="d-sub-group">Oturum</div><a href="../../" data-cikis=""><i class="fa-solid fa-right-from-bracket"></i> Çıkış</a></div>
     </div></nav>
   <div class="drawer-foot">
     <button class="btn btn-primary drawer-login" style="width:100%" data-git="../../giris/"><i class="fa-solid fa-user"></i> Giriş Yap</button>
@@ -207,35 +212,35 @@
   </div>
 </section><div class="pf-tabbar sekme-ray">
   <div class="wrap kap">
-    <nav class="sekmeler ortali" aria-label="Paketlerim bölümleri">
-      <a class="sekme aktif" href="../../hesabim/paketlerim/" id="pk-tab-paketim" aria-current="page"><i class="fa-solid fa-crown" aria-hidden="true"></i> Mevcut Paketim</a>
-      <a class="sekme" href="../../hesabim/paketlerim/kademeler/" id="pk-tab-kademeler"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Paket Kademeleri</a>
-      <a class="sekme" href="../../hesabim/paketlerim/karsilastir/" id="pk-tab-karsilastir"><i class="fa-solid fa-table-list" aria-hidden="true"></i> Paket Karşılaştırma</a>
+    <nav class="sekmeler ortali" role="tablist" data-fit-tabs="pk" data-scroll-fade="" aria-label="Paketlerim bölümleri">
+      <button class="sekme aktif" type="button" role="tab" id="pk-tab-paketim" data-tab="paketim" aria-controls="pk-pane-paketim" aria-selected="true" tabindex="0"><i class="fa-solid fa-crown" aria-hidden="true"></i> Mevcut Paketim</button>
+      <button class="sekme" type="button" role="tab" id="pk-tab-kademeler" data-tab="kademeler" aria-controls="pk-pane-kademeler" aria-selected="false" tabindex="-1"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Paket Kademeleri</button>
+      <button class="sekme" type="button" role="tab" id="pk-tab-karsilastir" data-tab="karsilastir" aria-controls="pk-pane-karsilastir" aria-selected="false" tabindex="-1"><i class="fa-solid fa-table-list" aria-hidden="true"></i> Paket Karşılaştırma</button>
     </nav>
   </div>
 </div><div class="modul-govde">
-  <div class="fit-pane aktif" data-pane="paketim" id="pk-pane-paketim" role="region" aria-labelledby="pk-tab-paketim" tabindex="0">
-    <section class="bolum">
+<div class="fit-pane aktif" data-pane="paketim" id="pk-pane-paketim" role="tabpanel" aria-labelledby="pk-tab-paketim" tabindex="0">
+<section class="bolum">
       <div class="wrap kap">
         <div class="okuma-kolonu">
           <div class="pk-sec" id="pkAktifSec">
             <div class="sec-head"><div>
               <span class="ust-etiket"><i class="fa-solid fa-crown" aria-hidden="true"></i> Aktif kademe</span>
               <h2>Bugün hangi paketteysen</h2>
-              <p class="lead">Kademen, dönem tarihlerin ve yenileme durumun. Yükseltme buradan başlar.</p>
+              <p class="lead">Kademen, dönem tarihlerin ve yenileme durumun. Yükseltme, düşürme ve iptal buradan başlar.</p>
             </div></div>
             <div id="pkAktif">
               <div class="paket-karti">
                 <div class="paket-bas">
                   <span class="paket-rozet"><i class="fa-solid fa-user" aria-hidden="true"></i> Ücretsiz</span>
                   <div class="paket-bilgi">
-                    <b>Dada Gourmet Ücretsiz <span class="durum-hapi kapali"><i class="fa-solid fa-infinity" aria-hidden="true"></i> Süresiz</span></b>
-                    <span class="paket-yenileme"><i class="fa-solid fa-infinity" aria-hidden="true"></i> Süresi dolmaz, tahsilat yapılmaz, iptal edilecek bir abonelik yok.</span>
+                    <b>Dada Gourmet Ücretsiz <span class="durum-hapi acik"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Etkin</span></b>
+                    <span class="paket-yenileme"><i class="fa-solid fa-rotate" aria-hidden="true"></i> Ücretsiz kademe süresizdir, tahsilat alınmaz.</span>
                   </div>
                   <div class="paket-fiyat"><b>₺0</b><span>/ ay</span></div>
                 </div>
                 <div class="paket-govde">
-                  <p class="durum-satir"><i class="fa-solid fa-infinity" aria-hidden="true"></i> <span>Ücretsiz kademede abonelik kaydı tutulmaz: dönem tarihi, yenileme ve iptal yoktur. Açık olan 30 özelliği aşağıda görürsün.</span></p>
+                  <p class="durum-satir"><i class="fa-solid fa-tag" aria-hidden="true"></i> <span>Şu an <b>Ücretsiz</b> kademesindesin. Kademeler arası fiyat ve kapsam farkının tamamı Paket Kademeleri sekmesinde.</span></p>
                   <div class="paket-ozellikler">
                     <span><i class="fa-solid fa-check" aria-hidden="true"></i> Mekân dizini ve detay sayfaları</span>
                     <span><i class="fa-solid fa-check" aria-hidden="true"></i> Mutfak, semt, fiyat ve konsept süzgeçleri</span>
@@ -245,8 +250,30 @@
                     <span><i class="fa-solid fa-check" aria-hidden="true"></i> Mekân, etkinlik ve gurme lezzet kaydetme</span>
                     <span><i class="fa-solid fa-check" aria-hidden="true"></i> Listelerim — 3 liste</span>
                     <span><i class="fa-solid fa-check" aria-hidden="true"></i> Ziyaret Ettiklerim defteri — Son 30 gün</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Keşif tercihleri — Temel</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Değerlendirme yazma ve puanlama</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Değerlendirmeye fotoğraf ekleme</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Mekân önerme ve bilgi hatası bildirme</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Rozetler — Temel</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Gurme Lezzetler yazıları</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Gurme lezzet kaydetme ve kategori süzgeçleri</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Şehir rehberleri</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinlik takvimi, haritası ve süzgeçleri</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinliğe kayıt ve katılım işareti</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinlik değerlendirme</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinlik önerme</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Masa rezervasyonu</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Hazır rotalar ve durak listeleri</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> En yakın rota</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> DadaGastro tarif bağlantıları</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> DadaDiet ve DadaFit geçişi</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Hesap verilerini dışa aktarma</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Reklam — Reklam var</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Destek — Standart</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> Çözüm merkezi talepleri</span>
+                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> İki adımlı doğrulama ve oturum yönetimi</span>
                   </div>
-                  <p class="durum-satir"><i class="fa-solid fa-list" aria-hidden="true"></i> <span>Bu kademede toplam <b>30 özellik</b> açık. Tam döküm <a href="../../hesabim/paketlerim/karsilastir/">Karşılaştırma</a> sekmesinde.</span></p>
+                  <p class="durum-satir" style="margin-top:12px"><i class="fa-solid fa-list" aria-hidden="true"></i> <span>Bu kademede toplam <b>30 özellik</b> açık. Tam döküm <a href="../../hesabim/paketlerim/karsilastir/">Karşılaştırma</a> sekmesinde.</span></p>
                 </div>
                 <div class="paket-eylemler">
                   <button class="dugme birincil" type="button" data-dm-panel="pkYukseltPnl" aria-haspopup="dialog" aria-expanded="false" aria-controls="pkYukseltPnl"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i> Pro'a Yükselt</button>
@@ -262,7 +289,248 @@
         </div>
       </div>
     </section>
-  </div>
+</div>
+<div class="fit-pane" data-pane="kademeler" id="pk-pane-kademeler" role="tabpanel" aria-labelledby="pk-tab-kademeler" tabindex="-1" hidden="">
+<section class="bolum">
+      <div class="wrap kap">
+        <div class="okuma-kolonu">
+          <div class="pk-sec">
+            <div class="sec-head"><div>
+              <span class="ust-etiket"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Üç kademe</span>
+              <h2>Ücretsiz, Pro ve Pro Max</h2>
+              <p class="lead">Ücretsiz kalıcıdır, süresi dolmaz. Pro ve Pro Max aylık aboneliktir; istediğin an yükseltir ya da bırakırsın.</p>
+            </div></div>
+            <div class="kademe-izgara" id="pkKartlar">
+                <div class="pro-card kademe-karti t0 is-aktif aktif">
+                  <span class="pro-flag kademe-bayrak simdi"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Mevcut paketin</span>
+                  <div class="kademe-bas"><i class="fa-solid fa-user" aria-hidden="true"></i><b>Ücretsiz</b></div>
+                  <p class="kademe-ozet">Gourmet'i keşfetmeye bugün başlamak için yeterli. Süresi dolmaz, tahsilat alınmaz.</p>
+                  <div class="kademe-fiyat">
+                    <b>₺0</b><span>/ her zaman</span>
+                  </div>
+                  <ul class="kademe-ozellikler">
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mekân dizini ve detay sayfaları</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mutfak, semt, fiyat ve konsept süzgeçleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Harita görünümü, mesafe yarıçapı ve yakınımdakiler</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mekân Bul sihirbazı — Günde 3 tur</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Şube, menü ve çalışma saati bilgisi</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mekân, etkinlik ve gurme lezzet kaydetme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Listelerim — 3 liste</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Ziyaret Ettiklerim defteri — Son 30 gün</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Keşif tercihleri — Temel</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Değerlendirme yazma ve puanlama</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Değerlendirmeye fotoğraf ekleme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mekân önerme ve bilgi hatası bildirme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Rozetler — Temel</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Gurme Lezzetler yazıları</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Gurme lezzet kaydetme ve kategori süzgeçleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Şehir rehberleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinlik takvimi, haritası ve süzgeçleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinliğe kayıt ve katılım işareti</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinlik değerlendirme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinlik önerme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Masa rezervasyonu</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Hazır rotalar ve durak listeleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> En yakın rota</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> DadaGastro tarif bağlantıları</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> DadaDiet ve DadaFit geçişi</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Hesap verilerini dışa aktarma</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Reklam — Reklam var</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Destek — Standart</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Çözüm merkezi talepleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> İki adımlı doğrulama ve oturum yönetimi</li>
+                  </ul>
+                  <details class="kademe-kapali">
+                    <summary>4 özellik bu kademede kapalı</summary>
+                    <ul class="kademe-ozellikler">
+                      <li class="no"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Kendi rotanı oluşturma</li>
+                      <li class="no"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Durak ziyaret işaretleme ve ilerleme</li>
+                      <li class="no"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Rotanı bağlantıyla paylaşma</li>
+                      <li class="no"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Rotanı herkese açık yayınlama</li>
+                    </ul>
+                  </details>
+                  <button class="dugme hayalet" type="button" disabled="">Mevcut paketin</button>
+                </div>
+                <div class="pro-card kademe-karti t2 featured one-cikan">
+                  <span class="pro-flag kademe-bayrak">En popüler</span>
+                  <div class="kademe-bas"><i class="fa-solid fa-bolt" aria-hidden="true"></i><b>Pro</b></div>
+                  <p class="kademe-ozet">Mekân keşfinin, listelerin ve Dada Route'un tamamı — düzenli dışarıda yiyen biri için.</p>
+                  <div class="kademe-fiyat">
+                    <b>₺99</b><span>/ ay</span>
+                    <span class="fiyat-bayrak"><i class="fa-solid fa-clock" aria-hidden="true"></i> Fiyat onay bekliyor</span>
+                  </div>
+                  <ul class="kademe-ozellikler">
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mekân dizini ve detay sayfaları</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mutfak, semt, fiyat ve konsept süzgeçleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Harita görünümü, mesafe yarıçapı ve yakınımdakiler</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mekân Bul sihirbazı — Günde 25 tur</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Şube, menü ve çalışma saati bilgisi</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mekân, etkinlik ve gurme lezzet kaydetme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Listelerim — 25 liste</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Ziyaret Ettiklerim defteri — Son 12 ay</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Keşif tercihleri — Gelişmiş</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Değerlendirme yazma ve puanlama</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Değerlendirmeye fotoğraf ekleme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mekân önerme ve bilgi hatası bildirme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Rozetler — Gelişmiş</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Gurme Lezzetler yazıları</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Gurme lezzet kaydetme ve kategori süzgeçleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Şehir rehberleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinlik takvimi, haritası ve süzgeçleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinliğe kayıt ve katılım işareti</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinlik değerlendirme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinlik önerme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Masa rezervasyonu</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Hazır rotalar ve durak listeleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> En yakın rota</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Kendi rotanı oluşturma — 5 rota</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Durak ziyaret işaretleme ve ilerleme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Rotanı bağlantıyla paylaşma</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> DadaGastro tarif bağlantıları</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> DadaDiet ve DadaFit geçişi</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Hesap verilerini dışa aktarma</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Reklam — Reklamsız</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Destek — Öncelikli</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Çözüm merkezi talepleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> İki adımlı doğrulama ve oturum yönetimi</li>
+                  </ul>
+                  <details class="kademe-kapali">
+                    <summary>1 özellik bu kademede kapalı</summary>
+                    <ul class="kademe-ozellikler">
+                      <li class="no"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Rotanı herkese açık yayınlama</li>
+                    </ul>
+                  </details>
+                  <button class="dugme birincil" type="button" data-dm-panel="pkYukseltPnl" aria-haspopup="dialog" aria-expanded="false" aria-controls="pkYukseltPnl"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i> Pro'a Yükselt</button>
+                </div>
+                <div class="pro-card kademe-karti t3">
+                  
+                  <div class="kademe-bas"><i class="fa-solid fa-gem" aria-hidden="true"></i><b>Pro Max</b></div>
+                  <p class="kademe-ozet">Pro'nun tamamı, üstüne sınırsız liste, sınırsız rota ve rotanı herkese açık yayınlama.</p>
+                  <div class="kademe-fiyat">
+                    <b aria-hidden="true">—</b><span>Fiyat onay bekliyor</span>
+                  </div>
+                  <ul class="kademe-ozellikler">
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mekân dizini ve detay sayfaları</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mutfak, semt, fiyat ve konsept süzgeçleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Harita görünümü, mesafe yarıçapı ve yakınımdakiler</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mekân Bul sihirbazı — Sınırsız</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Şube, menü ve çalışma saati bilgisi</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mekân, etkinlik ve gurme lezzet kaydetme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Listelerim — Sınırsız</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Ziyaret Ettiklerim defteri — Sınırsız</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Keşif tercihleri — Gelişmiş</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Değerlendirme yazma ve puanlama</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Değerlendirmeye fotoğraf ekleme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Mekân önerme ve bilgi hatası bildirme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Rozetler — Gelişmiş</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Gurme Lezzetler yazıları</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Gurme lezzet kaydetme ve kategori süzgeçleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Şehir rehberleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinlik takvimi, haritası ve süzgeçleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinliğe kayıt ve katılım işareti</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinlik değerlendirme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Etkinlik önerme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Masa rezervasyonu</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Hazır rotalar ve durak listeleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> En yakın rota</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Kendi rotanı oluşturma — Sınırsız</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Durak ziyaret işaretleme ve ilerleme</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Rotanı bağlantıyla paylaşma</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Rotanı herkese açık yayınlama</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> DadaGastro tarif bağlantıları</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> DadaDiet ve DadaFit geçişi</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Hesap verilerini dışa aktarma</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Reklam — Reklamsız</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Destek — Öncelikli</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> Çözüm merkezi talepleri</li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> İki adımlı doğrulama ve oturum yönetimi</li>
+                  </ul>
+                  
+                  <button class="dugme hayalet" type="button" disabled=""><i class="fa-solid fa-clock" aria-hidden="true"></i> Fiyat onay bekliyor</button>
+                </div>
+            </div>
+            <div class="alt-not">
+              <i class="fa-solid fa-clock" aria-hidden="true"></i>
+              <span><b>Fiyatlar onay bekliyor.</b> Buradaki tutarlar temsilîdir ve tek bir yerden (kademe verisi) okunur; ekrana sabit metin olarak yazılmaz. Pro Max için bir tutar henüz belirlenmedi, o yüzden sayı yerine durumu yazıyor.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
+<div class="fit-pane" data-pane="karsilastir" id="pk-pane-karsilastir" role="tabpanel" aria-labelledby="pk-tab-karsilastir" tabindex="-1" hidden="">
+<section class="bolum">
+      <div class="wrap kap">
+        <div class="okuma-kolonu">
+          <div class="pk-sec">
+            <div class="sec-head"><div>
+              <span class="ust-etiket"><i class="fa-solid fa-table-list" aria-hidden="true"></i> Satır satır</span>
+              <h2>Hangi modül hangi kademede açık</h2>
+              <p class="lead">Tablo, kademe kartlarıyla aynı veriden üretilir; iki yerde iki farklı liste olmaz. 34 satır, 8 başlık.</p>
+            </div></div>
+            <div class="tablo-kap cerceveli" role="region" aria-label="Paket karşılaştırma tablosu" tabindex="0" id="pkTablo">
+              <table class="tablo karsilastirma">
+                <caption class="sr-only">Ücretsiz, Pro ve Pro Max kademelerinin özellik karşılaştırması</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Özellik</th>
+                    <th scope="col"><span class="kademe-ad"><i class="fa-solid fa-user" aria-hidden="true"></i> Ücretsiz</span><span class="kademe-fiyat-not">₺0 / her zaman</span></th>
+                    <th scope="col" class="one-cikan"><span class="kademe-ad"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Pro</span><span class="kademe-fiyat-not">₺99 / ay</span></th>
+                    <th scope="col"><span class="kademe-ad"><i class="fa-solid fa-gem" aria-hidden="true"></i> Pro Max</span><span class="kademe-fiyat-not">Fiyat onay bekliyor</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="tablo-grup"><th colspan="4" scope="colgroup"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Mekân keşfi</th></tr>
+                  <tr><th scope="row">Mekân dizini ve detay sayfaları</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Mutfak, semt, fiyat ve konsept süzgeçleri</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Harita görünümü, mesafe yarıçapı ve yakınımdakiler</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Mekân Bul sihirbazı</th><td>Günde 3 tur</td><td class="one-cikan">Günde 25 tur</td><td>Sınırsız</td></tr>
+                  <tr><th scope="row">Şube, menü ve çalışma saati bilgisi</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr class="tablo-grup"><th colspan="4" scope="colgroup"><i class="fa-solid fa-bookmark" aria-hidden="true"></i> Kaydedilenler ve listeler</th></tr>
+                  <tr><th scope="row">Mekân, etkinlik ve gurme lezzet kaydetme</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Listelerim</th><td>3 liste</td><td class="one-cikan">25 liste</td><td>Sınırsız</td></tr>
+                  <tr><th scope="row">Ziyaret Ettiklerim defteri</th><td>Son 30 gün</td><td class="one-cikan">Son 12 ay</td><td>Sınırsız</td></tr>
+                  <tr><th scope="row">Keşif tercihleri</th><td>Temel</td><td class="one-cikan">Gelişmiş</td><td>Gelişmiş</td></tr>
+                  <tr class="tablo-grup"><th colspan="4" scope="colgroup"><i class="fa-solid fa-star" aria-hidden="true"></i> Değerlendirme ve katkı</th></tr>
+                  <tr><th scope="row">Değerlendirme yazma ve puanlama</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Değerlendirmeye fotoğraf ekleme</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Mekân önerme ve bilgi hatası bildirme</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Rozetler</th><td>Temel</td><td class="one-cikan">Gelişmiş</td><td>Gelişmiş</td></tr>
+                  <tr class="tablo-grup"><th colspan="4" scope="colgroup"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Gurme Lezzetler ve şehir rehberleri</th></tr>
+                  <tr><th scope="row">Gurme Lezzetler yazıları</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Gurme lezzet kaydetme ve kategori süzgeçleri</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Şehir rehberleri</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr class="tablo-grup"><th colspan="4" scope="colgroup"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Etkinlikler ve rezervasyon</th></tr>
+                  <tr><th scope="row">Etkinlik takvimi, haritası ve süzgeçleri</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Etkinliğe kayıt ve katılım işareti</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Etkinlik değerlendirme</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Etkinlik önerme</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Masa rezervasyonu</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr class="tablo-grup"><th colspan="4" scope="colgroup"><i class="fa-solid fa-route" aria-hidden="true"></i> Dada Route</th></tr>
+                  <tr><th scope="row">Hazır rotalar ve durak listeleri</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">En yakın rota</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Kendi rotanı oluşturma</th><td><i class="fa-solid fa-xmark yok" aria-hidden="true"></i><span class="sr-only">yok</span></td><td class="one-cikan">5 rota</td><td>Sınırsız</td></tr>
+                  <tr><th scope="row">Durak ziyaret işaretleme ve ilerleme</th><td><i class="fa-solid fa-xmark yok" aria-hidden="true"></i><span class="sr-only">yok</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Rotanı bağlantıyla paylaşma</th><td><i class="fa-solid fa-xmark yok" aria-hidden="true"></i><span class="sr-only">yok</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Rotanı herkese açık yayınlama</th><td><i class="fa-solid fa-xmark yok" aria-hidden="true"></i><span class="sr-only">yok</span></td><td class="one-cikan"><i class="fa-solid fa-xmark yok" aria-hidden="true"></i><span class="sr-only">yok</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr class="tablo-grup"><th colspan="4" scope="colgroup"><i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i> Bağlantılar</th></tr>
+                  <tr><th scope="row">DadaGastro tarif bağlantıları</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">DadaDiet ve DadaFit geçişi</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">Hesap verilerini dışa aktarma</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr class="tablo-grup"><th colspan="4" scope="colgroup"><i class="fa-solid fa-headset" aria-hidden="true"></i> Deneyim ve destek</th></tr>
+                  <tr><th scope="row">Reklam</th><td>Reklam var</td><td class="one-cikan">Reklamsız</td><td>Reklamsız</td></tr>
+                  <tr><th scope="row">Destek</th><td>Standart</td><td class="one-cikan">Öncelikli</td><td>Öncelikli</td></tr>
+                  <tr><th scope="row">Çözüm merkezi talepleri</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                  <tr><th scope="row">İki adımlı doğrulama ve oturum yönetimi</th><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td class="one-cikan"><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td><td><i class="fa-solid fa-check var" aria-hidden="true"></i><span class="sr-only">var</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="tablo-ipucu"><i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> Dar ekranda tabloyu yana kaydırarak üç kademeyi karşılaştırabilirsin.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+</div>
 </div></div>
 </main>
 <footer class="footer orange">

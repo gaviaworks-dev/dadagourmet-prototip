@@ -6,7 +6,7 @@
 <title>Ödemelerim · Dada Gourmet</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="dg-ornek-uye" content="Örnek Üye|ornekuye">
-<!-- donör: canlı dadagourmet.com/hesabim/odemelerim, DadaGourmet-acil 4eb638c resources/views/hesap/odemeler.blade.php · odemeler-belge.blade.php · canlı Gastro release 20261107-mentor-6700538df4 -->
+<!-- donör: yerel Gastro /hesabim/odemelerim (resources/views/turetilmis/uye/g-odemelerim.blade.php, demo tohum render); içerik canlı dadagourmet.com/hesabim/odemelerim, DadaGourmet-acil 4eb638c resources/views/hesap/odemeler.blade.php · canlı Gastro release 20261107-mentor-6700538df4 -->
 <link rel="icon" href="../../../../assets/img/favicon.ico">
 <link rel="stylesheet" href="../../../../assets/g/kabuk/kabuk-kimlik.css">
 <link rel="stylesheet" href="../../../../assets/g/kabuk/zil-sayaci.css">
@@ -37,6 +37,8 @@
 <link rel="stylesheet" href="../../../../assets/g/varliklar/reference/shared/dm-p3.css">
 <link rel="stylesheet" href="../../../../assets/g/alan/mega-serit.css">
 <link rel="stylesheet" href="../../../../assets/g/revize/tur7/p-pencere.css">
+<link rel="stylesheet" href="../../../../assets/g/kanon/gomulu/odemelerim-fark.css">
+<link rel="stylesheet" href="../../../../assets/o/assets/gourmet-public/css/shared/scroll-affordance.css">
 <link rel="stylesheet" href="../../../../assets/css/gourmet-sapma.css">
 <link rel="stylesheet" href="../../../../assets/o/assets/gourmet-public/css/konum.css">
 <link rel="stylesheet" href="../../../../assets/css/prototip.css">
@@ -65,7 +67,10 @@
 <script defer src="../../../../assets/g/alan/mega-serit.js"></script>
 <script defer src="../../../../assets/g/varliklar/reference/shared/dm-gorus.js"></script>
 <script defer src="../../../../assets/g/varliklar/reference/shared/dm-kabuk.js"></script>
+<script defer src="../../../../assets/o/assets/gourmet-public/js/shared/scroll-affordance.js"></script>
 <script defer src="../../../../assets/js/sayfa/uye-alan.js"></script>
+<script defer src="../../../../assets/o/assets/gourmet-public/js/shared/scroll-affordance.js"></script>
+<script defer src="../../../../assets/js/sayfa/sekmeler.js"></script>
 <script defer src="../../../../assets/js/mentor-fab.js"></script>
 </head>
 <body data-brand="gourmet" data-fit-hero-kind="profil" class="is-auth">
@@ -131,7 +136,7 @@
                         
                         
                         
-                    <div class="acct-div"></div><a href="../../../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils" aria-hidden="true"></i> <span>Gurme Panelim</span></a><a href="../../../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <span>Mekânlarım</span></a><a href="../../../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> <span>Etkinliklerim</span></a><a href="../../../../hesabim/listeler/"><i class="fa-solid fa-list-ul" aria-hidden="true"></i> <span>Listelerim</span></a><a href="../../../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass" aria-hidden="true"></i> <span>Keşif Tercihlerim</span></a><a href="../../../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> <span>İşletmelerim</span></a><div class="acct-div"></div><a href="../../../../hesabim/gurme-panelim/puan-durumu/"><i class="fa-solid fa-medal" aria-hidden="true"></i> <span>Rozetlerim</span></a><div class="acct-div"></div><a href="../../../../hesabim/paketlerim/"><i class="fa-solid fa-crown" aria-hidden="true"></i> <span>Paketlerim</span></a><a href="../../../../hesabim/odemelerim/"><i class="fa-solid fa-receipt" aria-hidden="true"></i> <span>Ödemelerim</span></a><a href="../../../../hesabim/ayarlar/"><i class="fa-solid fa-sliders" aria-hidden="true"></i> <span>Hesap Ayarları</span></a><a href="../../../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset" aria-hidden="true"></i> <span>Çözüm Merkezi</span></a><div class="acct-div"></div><a href="../../../../" class="acct-logout" data-cikis=""><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Çıkış</span></a></div>
+                    <div class="acct-div"></div><a href="../../../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils" aria-hidden="true"></i> <span>Gurme Panelim</span></a><a href="../../../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <span>Mekânlarım</span></a><a href="../../../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> <span>Etkinliklerim</span></a><a href="../../../../hesabim/listeler/"><i class="fa-solid fa-list-ul" aria-hidden="true"></i> <span>Listelerim</span></a><a href="../../../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass" aria-hidden="true"></i> <span>Keşif Tercihlerim</span></a><a href="../../../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> <span>İşletmelerim</span></a><div class="acct-div"></div><a href="../../../../hesabim/rozetlerim/"><i class="fa-solid fa-medal" aria-hidden="true"></i> <span>Rozetlerim</span></a><div class="acct-div"></div><a href="../../../../hesabim/paketlerim/"><i class="fa-solid fa-crown" aria-hidden="true"></i> <span>Paketlerim</span></a><a href="../../../../hesabim/odemelerim/"><i class="fa-solid fa-receipt" aria-hidden="true"></i> <span>Ödemelerim</span></a><a href="../../../../hesabim/ayarlar/"><i class="fa-solid fa-sliders" aria-hidden="true"></i> <span>Hesap Ayarları</span></a><a href="../../../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset" aria-hidden="true"></i> <span>Çözüm Merkezi</span></a><div class="acct-div"></div><a href="../../../../" class="acct-logout" data-cikis=""><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Çıkış</span></a></div>
         </div>
         <button class="icon-btn ikon-dugme hamburger" id="hamburger" aria-label="Menü"><i class="fa-solid fa-bars"></i></button>
       </div>
@@ -145,7 +150,7 @@
     <button class="drawer-close" id="drawerClose" aria-label="Menüyü kapat"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <nav class="drawer-nav"><div class="d-item"><a class="d-link" href="../../../../mekanlar/"><i class="fa-solid fa-compass"></i> Mekânlar</a></div><div class="d-item"><a class="d-link" href="../../../../mekan-bul/"><i class="fa-solid fa-wand-magic-sparkles"></i> Mekân Bul</a></div><div class="d-item"><a class="d-link" href="../../../../gurme-lezzetler/"><i class="fa-solid fa-book-open"></i> Gurme Lezzetler</a></div><div class="d-item"><a class="d-link" href="../../../../dada-route/"><i class="fa-solid fa-route"></i> Dada Route</a></div><div class="d-item"><a class="d-link" href="../../../../etkinlikler/"><i class="fa-solid fa-calendar-days"></i> Etkinlikler</a></div><div class="d-item"><a class="d-link" href="../../../../giris/?fb=1" data-gorus-giris="menu"><i class="fa-solid fa-comment-dots"></i> Görüş Bildir</a></div><div class="d-item d-acct-block">
-      <div class="d-sub d-acct-sub"><div class="d-sub-group">Modüllerim</div><a href="../../../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils"></i> Gurme Panelim</a><a href="../../../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot"></i> Mekânlarım</a><a href="../../../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days"></i> Etkinliklerim</a><a href="../../../../hesabim/listeler/"><i class="fa-solid fa-list-ul"></i> Listelerim</a><a href="../../../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass"></i> Keşif Tercihlerim</a><a href="../../../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> İşletmelerim</a><div class="d-sub-group">Gelişimim</div><a href="../../../../hesabim/gurme-panelim/puan-durumu/"><i class="fa-solid fa-medal"></i> Rozetlerim</a><div class="d-sub-group">Hesabım</div><a href="../../../../hesabim/paketlerim/"><i class="fa-solid fa-crown"></i> Paketlerim</a><a href="../../../../hesabim/odemelerim/"><i class="fa-solid fa-receipt"></i> Ödemelerim</a><a href="../../../../hesabim/ayarlar/"><i class="fa-solid fa-sliders"></i> Hesap Ayarları</a><a href="../../../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset"></i> Çözüm Merkezi</a><div class="d-sub-group">Oturum</div><a href="../../../../" data-cikis=""><i class="fa-solid fa-right-from-bracket"></i> Çıkış</a></div>
+      <div class="d-sub d-acct-sub"><div class="d-sub-group">Modüllerim</div><a href="../../../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils"></i> Gurme Panelim</a><a href="../../../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot"></i> Mekânlarım</a><a href="../../../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days"></i> Etkinliklerim</a><a href="../../../../hesabim/listeler/"><i class="fa-solid fa-list-ul"></i> Listelerim</a><a href="../../../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass"></i> Keşif Tercihlerim</a><a href="../../../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> İşletmelerim</a><div class="d-sub-group">Gelişimim</div><a href="../../../../hesabim/rozetlerim/"><i class="fa-solid fa-medal"></i> Rozetlerim</a><div class="d-sub-group">Hesabım</div><a href="../../../../hesabim/paketlerim/"><i class="fa-solid fa-crown"></i> Paketlerim</a><a href="../../../../hesabim/odemelerim/"><i class="fa-solid fa-receipt"></i> Ödemelerim</a><a href="../../../../hesabim/ayarlar/"><i class="fa-solid fa-sliders"></i> Hesap Ayarları</a><a href="../../../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset"></i> Çözüm Merkezi</a><div class="d-sub-group">Oturum</div><a href="../../../../" data-cikis=""><i class="fa-solid fa-right-from-bracket"></i> Çıkış</a></div>
     </div></nav>
   <div class="drawer-foot">
     <button class="btn btn-primary drawer-login" style="width:100%" data-git="../../../../giris/"><i class="fa-solid fa-user"></i> Giriş Yap</button>
@@ -194,7 +199,7 @@
           <span data-rozet-sayi=""><i class="fa-solid fa-award" aria-hidden="true"></i> Rozet 0</span>
           <span class="ornek-etiket">prototip örneği</span>
         </div>
-        <p class="kimlik-giris">Aboneliğin, faturaların, kayıtlı kartların ve iade taleplerin. Sekme değişir, kimlik kartın yerinde kalır.</p>
+        <p class="kimlik-giris">Abonelik, faturalar, kayıtlı kartlar ve iade talepleri tek adreste. Sekme değişir, kimlik kartın yerinde kalır.</p>
       </div>
     </div>
     <div class="cp-stats sayac-serit" role="group" aria-label="Gourmet özetin">
@@ -207,15 +212,34 @@
   </div>
 </section><div class="pf-tabbar sekme-ray">
   <div class="wrap kap">
-    <nav class="sekmeler ortali" aria-label="Ödemelerim bölümleri">
-      <a class="sekme" href="../../../../hesabim/odemelerim/" id="od-tab-abonelik"><i class="fa-solid fa-crown" aria-hidden="true"></i> Abonelik Ödemeleri</a>
-      <a class="sekme aktif" href="../../../../hesabim/odemelerim/faturalar/" id="od-tab-faturalar" aria-current="page"><i class="fa-solid fa-file-invoice" aria-hidden="true"></i> Faturalar</a>
-      <a class="sekme" href="../../../../hesabim/odemelerim/kartlar/" id="od-tab-kartlar"><i class="fa-regular fa-credit-card" aria-hidden="true"></i> Kayıtlı Kartlar</a>
-      <a class="sekme" href="../../../../hesabim/odemelerim/iade/" id="od-tab-iade"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> İade Talepleri</a>
+    <nav class="sekmeler ortali" role="tablist" data-fit-tabs="od" data-scroll-fade="" aria-label="Ödemelerim bölümleri">
+      <button class="sekme" type="button" role="tab" id="od-tab-abonelik" data-tab="abonelik" aria-controls="od-pane-abonelik" aria-selected="false" tabindex="-1"><i class="fa-solid fa-crown" aria-hidden="true"></i> Abonelik Ödemeleri</button>
+      <button class="sekme aktif" type="button" role="tab" id="od-tab-faturalar" data-tab="faturalar" aria-controls="od-pane-faturalar" aria-selected="true" tabindex="0"><i class="fa-solid fa-file-invoice" aria-hidden="true"></i> Faturalar</button>
+      <button class="sekme" type="button" role="tab" id="od-tab-kartlar" data-tab="kartlar" aria-controls="od-pane-kartlar" aria-selected="false" tabindex="-1"><i class="fa-solid fa-credit-card" aria-hidden="true"></i> Kayıtlı Kartlar</button>
+      <button class="sekme" type="button" role="tab" id="od-tab-iade" data-tab="iade" aria-controls="od-pane-iade" aria-selected="false" tabindex="-1"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> İade Talepleri</button>
     </nav>
   </div>
 </div><div class="modul-govde">
-<div class="fit-pane aktif" data-pane="faturalar" id="od-pane-faturalar" role="region" aria-labelledby="od-tab-faturalar" tabindex="0">
+<div class="fit-pane" data-pane="abonelik" id="od-pane-abonelik" role="tabpanel" aria-labelledby="od-tab-abonelik" tabindex="-1" hidden="">
+<section class="bolum">
+  <div class="wrap kap">
+    <div class="okuma-kolonu">
+      <div class="od-sec">
+        <div class="sec-head"><div>
+          <span class="ust-etiket"><i class="fa-solid fa-crown" aria-hidden="true"></i> Paket aboneliği</span>
+          <h2>Aktif aboneliğin</h2>
+          <p class="lead">Kademen, dönem tarihlerin, yenileme durumu ve iptal. Kademelerin içeriği Paketlerim'de.</p>
+        </div></div>
+        <div id="odAbone">
+<div class="paket-karti"><div class="paket-bas"><span class="paket-rozet"><i class="fa-solid fa-user" aria-hidden="true"></i> Ücretsiz</span><div class="paket-bilgi"><b>Dada Gourmet Ücretsiz <span class="durum-hapi acik"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Etkin</span></b><span class="paket-yenileme"><i class="fa-solid fa-calendar-day" aria-hidden="true"></i>
+ Ücretsiz kademe süresizdir, tahsilat alınmaz.
+</span></div><div class="paket-fiyat"><b>₺0</b><span>/ ay</span></div></div><div class="paket-govde"><p class="durum-satir"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> <span>Gourmet'i keşfetmeye bugün başlamak için yeterli. Süresi dolmaz, tahsilat alınmaz. Bu kademede toplam 30 özellik açık. Tam döküm <a href="../../../../hesabim/paketlerim/karsilastir/">Paketlerim</a>'de.</span></p></div><div class="paket-eylemler"><a class="dugme birincil" href="../../../../hesabim/paketlerim/kademeler/"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i> Kademeleri İncele</a><a class="dugme hayalet" href="../../../../hesabim/paketlerim/karsilastir/"><i class="fa-solid fa-table-list" aria-hidden="true"></i> Kademeleri Karşılaştır</a></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+<div class="fit-pane aktif" data-pane="faturalar" id="od-pane-faturalar" role="tabpanel" aria-labelledby="od-tab-faturalar" tabindex="0">
 <section class="bolum">
   <div class="wrap kap">
     <div class="okuma-kolonu">
@@ -223,7 +247,7 @@
         <div class="sec-head"><div>
           <span class="ust-etiket"><i class="fa-solid fa-file-invoice" aria-hidden="true"></i> Belgeler</span>
           <h2>Faturaların</h2>
-          <p class="lead">Tamamlanan paket alımlarının tamamı tek defterde. Tutarlar kuruş tamsayısı olarak tutulur, ekranda biçimlenir; KDV ara toplamdan ayrıştırılır, üstüne eklenmez.</p>
+          <p class="lead">Paket alımlarının ve iadelerin tamamı tek defterde. Bir türe tıklayınca liste süzülür, sayfa yeniden yüklenir.</p>
         </div></div>
         <div class="kart odeme" id="fatura-bilgilerim">
           <div class="kart-bas">
@@ -231,11 +255,6 @@
               <h3><i class="fa-solid fa-receipt" aria-hidden="true"></i> Fatura defteri <span class="ornek-etiket">prototip örneği</span></h3>
               <p>Fatura numarası, tarih, tutar, durum ve belge. Her satırın hangi pakete ait olduğu numaranın altında yazar.</p>
             </div>
-            <button class="dugme hayalet" type="button" data-dm-panel="odFtBilgiPnl" aria-haspopup="dialog" aria-expanded="false" aria-controls="odFtBilgiPnl"><i class="fa-solid fa-building-columns" aria-hidden="true"></i> Fatura Bilgilerim</button>
-          </div>
-          <div class="uyari-kutu" style="margin:0 22px 18px">
-            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-            <span>Defterdeki her satır gerçek bir tahsilattır; belge sunucuda kesilir ve numarası bir daha değişmez. İade edilen bir tahsilatın satırı defterden KALKMAZ, durumu "İade edildi" olur.</span>
           </div>
           <div class="kart-suzgec">
             <div class="cipler" role="group" aria-label="Fatura türü süzgeci" id="odFtChips">
@@ -271,11 +290,126 @@
                 </table>
               </div>
           </div>
-          <div class="kart-govde">
-            <div class="alt-not">
-              <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-              <span><b>Belge indirilebilir, PDF üretilmez.</b> "Detay" faturanın dökümünü, vergi ayrımını ve tahsilat bilgisini gösterir; oradan belgeyi HTML dosyası olarak indirebilir ya da yazdırabilirsin. PDF'i yazdırma penceresinden sen kaydedersin.</span>
+          <div class="kart-govde" style="padding-top:0">
+            <div class="alt-not" style="border-top:none;padding-top:0;margin-top:14px"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> <span><b>Belge indirilebilir, PDF üretilmez.</b> "Detay" faturanın dökümünü, vergi ayrımını ve tahsilat bilgisini gösterir; oradan belgeyi HTML dosyası olarak indirebilir ya da yazdırabilirsin. PDF'i yazdırma penceresinden sen kaydedersin. Faturalar aynı zamanda e-posta adresine gönderilir.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+<div class="fit-pane" data-pane="kartlar" id="od-pane-kartlar" role="tabpanel" aria-labelledby="od-tab-kartlar" tabindex="-1" hidden="">
+<section class="bolum">
+  <div class="wrap kap">
+    <div class="okuma-kolonu">
+      <div class="od-sec">
+        <div class="sec-head"><div>
+          <span class="ust-etiket"><i class="fa-solid fa-credit-card" aria-hidden="true"></i> Ödeme yöntemleri</span>
+          <h2>Kayıtlı kartların</h2>
+          <p class="lead">Yenilemede kullanılacak kartı buradan seçer, yeni kart ekler veya kaldırırsın. Bu bölüm Hesap Ayarları'ndan buraya taşındı.</p>
+        </div></div>
+        <div class="kart odeme">
+          <div class="kart-bas">
+            <div>
+              <h3><i class="fa-solid fa-credit-card" aria-hidden="true"></i> Kartların</h3>
+              <p>Varsayılan kart yenilemede ve yeni satın almalarda ilk sırada denenir. Reddedilirse diğer kart denenir; ikisi de reddedilirse tahsilat başarısız olur ve sana bildirilir.</p>
             </div>
+            <span class="durum-hapi kapali" id="odKartSay">0 kart</span>
+          </div>
+          <div class="kart-govde">
+            <div class="odeme-liste">
+              <div class="bos-durum kart-ici">
+                <span class="bos-ikon"><i class="fa-solid fa-credit-card" aria-hidden="true"></i></span>
+                <h4>Kayıtlı kartın yok</h4>
+                <p>Bir tahsilat yapıldığında kullandığın kart bu listeye düşer ve yenilemelerde tekrar kullanılır.</p>
+              </div>
+            </div>
+            <p class="od-sonuc" id="odKartSonuc" role="status">
+              <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+              <span class="od-sonuc-txt"></span>
+            </p>
+            <div class="alt-not"><i class="fa-solid fa-lock" aria-hidden="true"></i> <span><b>Tam kart numarası Dada Gourmet'te tutulmaz.</b> Kart kayıtları ödeme sağlayıcısında saklanır; burada yalnız marka, son dört hane ve son kullanma tarihi görünür. Yenilemede ve yeni satın almalarda <b>varsayılan</b> işaretli kart kullanılır.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+<div class="fit-pane" data-pane="iade" id="od-pane-iade" role="tabpanel" aria-labelledby="od-tab-iade" tabindex="-1" hidden="">
+<section class="bolum">
+  <div class="wrap kap">
+    <div class="okuma-kolonu">
+      <div class="od-sec">
+        <div class="sec-head"><div>
+          <span class="ust-etiket"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> İade</span>
+          <h2>İade talepleri</h2>
+          <p class="lead">Yanlış tahsilat, kullanılmayan tur hakkı veya cayma hakkı için talep açarsın. Açtığın talepler burada durumuyla listelenir.</p>
+        </div></div>
+        <div class="kart odeme">
+          <div class="kart-bas">
+            <div>
+              <h3><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i> Taleplerin <span class="ornek-etiket">prototip örneği</span></h3>
+              <p>Her talep bir tahsilata bağlıdır. Durum değiştiğinde e-posta ve bildirim alırsın.</p>
+            </div>
+            <span class="durum-hapi kapali" id="odIadeSay">1 talep</span>
+          </div>
+          <div class="kart-govde bosluksuz">
+            <div class="tablo-kap gomulu" tabindex="0" role="region" aria-label="İade talepleri">
+              <table class="tablo">
+                <thead>
+                  <tr><th scope="col">Talep ve tahsilat</th><th scope="col">Tarih</th><th scope="col">Tutar</th><th scope="col">Durum</th><th scope="col">Belge</th></tr>
+                </thead>
+                <tbody id="odIadeBody">
+                  <tr>
+                    <td><span class="no">IAD-2026-0003<small>Pro · Cayma hakkı (14 gün)</small></span></td>
+                    <td class="tarih">05 Tem 2026</td>
+                    <td class="tutar">₺99,00</td>
+                    <td><span class="od-pill ok durum-hapi ikonlu cozulen"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> İade edildi</span></td>
+                    <td><button class="dugme satir" type="button" data-dm-panel="odFt000009" aria-haspopup="dialog" aria-expanded="false" aria-controls="odFt000009"><i class="fa-solid fa-file-invoice" aria-hidden="true"></i> Tahsilat</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="kart odeme">
+          <div class="kart-bas"><div>
+            <h3><i class="fa-solid fa-file-circle-plus" aria-hidden="true"></i> Yeni iade talebi</h3>
+            <p>Hangi tahsilat için, neden. Tutar seçtiğin tahsilattan gelir; elle girilmez.</p>
+          </div></div>
+          <div class="kart-govde">
+            <form id="odIadeForm" autocomplete="off" data-dm-form="odIade" data-dm-mesaj="İade talebin bu tarayıcıda not edildi. Prototipte yönetime iletilmez, tahsilat değişmez.">
+              <div class="alan">
+                <label class="alan-etiket" for="odIadeTahsilat">İade istediğin tahsilat <span class="zorunlu" aria-hidden="true">*</span></label>
+                <select class="alan-secim" id="odIadeTahsilat" name="alim" required>
+                  <option value="">Bir tahsilat seç</option>
+                  <option value="000014" data-tutar="₺99,00">DGO-2026-000014 — Pro · ₺99,00</option>
+                </select>
+                <p class="alan-yardim" id="odIadeTutar"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> İade tutarı seçtiğin tahsilattan okunur.</p>
+              </div>
+              <div class="alan">
+                <label class="alan-etiket" for="odIadeNeden">İade nedeni <span class="zorunlu" aria-hidden="true">*</span></label>
+                <select class="alan-secim" id="odIadeNeden" name="neden" required>
+                  <option value="">Bir neden seç</option>
+                  <option value="yanlis">Yanlış veya mükerrer tahsilat</option>
+                  <option value="kullanilmadi">Kullanılmayan tur hakkı</option>
+                  <option value="cayma">Cayma hakkı (14 gün)</option>
+                  <option value="hizmet">Hizmet alınamadı</option>
+                  <option value="baska">Başka bir neden</option>
+                </select>
+              </div>
+              <div class="alan">
+                <label class="alan-etiket" for="odIadeAciklama">Açıklama <span class="zorunlu" aria-hidden="true">*</span><span class="alan-sayac" id="odIadeSayac">0 / 600</span></label>
+                <textarea class="alan-metin" id="odIadeAciklama" name="aciklama" maxlength="600" minlength="20" placeholder="Ne oldu? Tarih, tutar ve varsa işlem numarasını yazarsan talep daha hızlı sonuçlanır." required></textarea>
+              </div>
+              <div class="onay-eylemler">
+                <button class="dugme birincil" type="submit"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Talebi Gönder</button>
+                <p class="durum-satir" role="status"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> <span>Cayma ve iade koşulları <a href="../../../../yasal/kvkk/">yasal metinde</a> yazılı.</span></p>
+              </div>
+            </form>
+            <div class="alt-not"><i class="fa-solid fa-headset" aria-hidden="true"></i> <span>Rehber turu iadeleri rehberle anlaştığın koşullara bağlıdır; anlaşmazlık olursa <a href="../../../../hesabim/cozum-merkezi/#taleplerim">destek talebi</a> açarsın. Abonelik iadesi komisyon ve dönem kurallarına tabidir.</span></div>
           </div>
         </div>
       </div>
@@ -542,95 +676,6 @@
 </aside>
 
 <div class="fb-overlay" data-dm-ortu=""></div>
-<div class="fb-modal" id="odFtBilgiPnl" role="dialog" aria-modal="true" aria-labelledby="odFtBilgiPnl-bas" inert="">
-  <div class="fb-panel">
-    <div class="fb-head">
-      <div>
-        <h3 id="odFtBilgiPnl-bas">Fatura Bilgilerim</h3>
-        <p>Faturaların kime, hangi kimlikle ve hangi adrese düzenleneceğini belirler.</p>
-      </div>
-      <button class="fb-close" type="button" data-dm-kapat="" aria-label="Kapat"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
-    </div>
-    <div class="fb-body">
-      <form data-dm-form="odFtBilgiPnl" data-dm-mesaj="Fatura bilgilerin bu tarayıcıda kaydedildi. Prototipte hesabına yazılmaz.">
-        <div class="bilgi-notu" role="note">
-          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-          <p><b>Bu bilgiler hesabına kaydedilir.</b> Bundan sonra kesilen belgelerin alıcı bölümü buradan okunur; kesilmiş belgeler geriye dönük değişmez.</p>
-        </div>
-        <div class="alan">
-          <label class="alan-etiket" for="ft-tip">Fatura tipi</label>
-          <select class="alan-secim" id="ft-tip" name="tip">
-            <option value="bireysel" selected>Bireysel</option>
-            <option value="kurumsal">Kurumsal</option>
-          </select>
-        </div>
-        <div class="alan">
-          <label class="alan-etiket" for="ft-ad">Ad soyad / Firma unvanı <span class="zorunlu" aria-hidden="true">*</span></label>
-          <input class="alan-girdi" type="text" id="ft-ad" name="ad" autocomplete="name" placeholder="Adın ve soyadın ya da ticaret sicilindeki tam unvan" value="Örnek Üye" required>
-        </div>
-        <div class="alan-izgara c2">
-          <div class="alan">
-            <label class="alan-etiket" for="ft-kimlik">T.C. Kimlik No / VKN <span class="istege-bagli">(isteğe bağlı)</span></label>
-            <input class="alan-girdi" type="text" id="ft-kimlik" name="kimlik" inputmode="numeric" maxlength="11" placeholder="11 ya da 10 hane">
-          </div>
-          <div class="alan">
-            <label class="alan-etiket" for="ft-daire">Vergi dairesi <span class="istege-bagli">(kurumsal)</span></label>
-            <input class="alan-girdi" type="text" id="ft-daire" name="vergi_dairesi" placeholder="Örneğin Kadıköy">
-          </div>
-        </div>
-        <div class="alan-izgara c2">
-          <div class="alan">
-            <label class="alan-etiket" for="ft-tel">Telefon <span class="zorunlu" aria-hidden="true">*</span></label>
-            <input class="alan-girdi" type="tel" id="ft-tel" name="telefon" autocomplete="tel-national" placeholder="555 555 55 55" minlength="7" required>
-          </div>
-          <div class="alan">
-            <label class="alan-etiket" for="ft-eposta">E-posta <span class="zorunlu" aria-hidden="true">*</span></label>
-            <input class="alan-girdi" type="email" id="ft-eposta" name="eposta" autocomplete="email" placeholder="ornek@eposta.com" value="ornek@eposta.com" required>
-            <span class="alan-yardim"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Fatura bu adrese gönderilir.</span>
-          </div>
-        </div>
-        <div class="alan-izgara c2">
-          <div class="alan">
-            <label class="alan-etiket" for="ft-il">İl <span class="zorunlu" aria-hidden="true">*</span></label>
-            <select class="alan-secim" id="ft-il" name="il" required>
-              <option value="">İl seç</option>
-              <option>Adana</option>
-              <option>Ankara</option>
-              <option>Antalya</option>
-              <option>Aydın</option>
-              <option>Bursa</option>
-              <option>Eskişehir</option>
-              <option>Gaziantep</option>
-              <option>Hatay</option>
-              <option>İstanbul</option>
-              <option>İzmir</option>
-              <option>Kayseri</option>
-              <option>Kocaeli</option>
-              <option>Konya</option>
-              <option>Mardin</option>
-              <option>Muğla</option>
-              <option>Samsun</option>
-              <option>Trabzon</option>
-            </select>
-          </div>
-          <div class="alan">
-            <label class="alan-etiket" for="ft-ilce">İlçe <span class="zorunlu" aria-hidden="true">*</span></label>
-            <input class="alan-girdi" type="text" id="ft-ilce" name="ilce" placeholder="İlçe" required>
-          </div>
-        </div>
-        <div class="alan">
-          <label class="alan-etiket" for="ft-adres">Adres <span class="zorunlu" aria-hidden="true">*</span></label>
-          <textarea class="alan-metin" id="ft-adres" name="adres" maxlength="240" minlength="10" placeholder="Mahalle, cadde, sokak, kapı ve daire numarası" required></textarea>
-        </div>
-        <p class="alan-yardim">Değişiklik bir sonraki faturadan itibaren geçerli olur. Kesilmiş faturalar geriye dönük düzenlenmez.</p>
-        <div class="onay-eylemler ustlu">
-          <button class="dugme birincil" type="submit"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Bilgileri Kaydet</button>
-          <button class="dugme hayalet" type="button" data-dm-kapat="">Vazgeç</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
 <div class="fb-modal" id="odFt000014" role="dialog" aria-modal="true" aria-labelledby="odFt000014-bas" inert="">
   <div class="fb-panel belge-pencere">
     <div class="fb-head">

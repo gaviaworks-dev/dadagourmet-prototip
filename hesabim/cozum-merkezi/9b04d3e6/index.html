@@ -6,7 +6,7 @@
 <title>Çözüm Merkezi · Dada Gourmet</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="dg-ornek-uye" content="Örnek Üye|ornekuye">
-<!-- donör: canlı dadagourmet.com, DadaGourmet-acil 4eb638c resources/views/hesap · canlı Gastro release 20261107-mentor-6700538df4 -->
+<!-- donör: yerel Gastro /hesabim/cozum-merkezi (resources/views/turetilmis/uye/g-cozum-merkezi.blade.php, demo tohum render); içerik canlı dadagourmet.com/hesabim/cozum-merkezi, DadaGourmet-acil 4eb638c resources/views/hesap/cozum-merkezi.blade.php · canlı Gastro release 20261107-mentor-6700538df4 -->
 <link rel="icon" href="../../../assets/img/favicon.ico">
 <link rel="stylesheet" href="../../../assets/g/kabuk/kabuk-kimlik.css">
 <link rel="stylesheet" href="../../../assets/g/kabuk/zil-sayaci.css">
@@ -37,6 +37,8 @@
 <link rel="stylesheet" href="../../../assets/g/varliklar/reference/shared/dm-p3.css">
 <link rel="stylesheet" href="../../../assets/g/alan/mega-serit.css">
 <link rel="stylesheet" href="../../../assets/g/revize/tur7/p-pencere.css">
+<link rel="stylesheet" href="../../../assets/g/kanon/gomulu/cozum-merkezi-fark.css">
+<link rel="stylesheet" href="../../../assets/o/assets/gourmet-public/css/shared/scroll-affordance.css">
 <link rel="stylesheet" href="../../../assets/css/gourmet-sapma.css">
 <link rel="stylesheet" href="../../../assets/o/assets/gourmet-public/css/konum.css">
 <link rel="stylesheet" href="../../../assets/css/prototip.css">
@@ -65,7 +67,10 @@
 <script defer src="../../../assets/g/alan/mega-serit.js"></script>
 <script defer src="../../../assets/g/varliklar/reference/shared/dm-gorus.js"></script>
 <script defer src="../../../assets/g/varliklar/reference/shared/dm-kabuk.js"></script>
+<script defer src="../../../assets/o/assets/gourmet-public/js/shared/scroll-affordance.js"></script>
 <script defer src="../../../assets/js/sayfa/uye-alan.js"></script>
+<script defer src="../../../assets/o/assets/gourmet-public/js/shared/scroll-affordance.js"></script>
+<script defer src="../../../assets/js/sayfa/sekmeler.js"></script>
 <script defer src="../../../assets/js/sayfa/cozum-merkezi.js"></script>
 <script defer src="../../../assets/js/mentor-fab.js"></script>
 </head>
@@ -132,7 +137,7 @@
                         
                         
                         
-                    <div class="acct-div"></div><a href="../../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils" aria-hidden="true"></i> <span>Gurme Panelim</span></a><a href="../../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <span>Mekânlarım</span></a><a href="../../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> <span>Etkinliklerim</span></a><a href="../../../hesabim/listeler/"><i class="fa-solid fa-list-ul" aria-hidden="true"></i> <span>Listelerim</span></a><a href="../../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass" aria-hidden="true"></i> <span>Keşif Tercihlerim</span></a><a href="../../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> <span>İşletmelerim</span></a><div class="acct-div"></div><a href="../../../hesabim/gurme-panelim/puan-durumu/"><i class="fa-solid fa-medal" aria-hidden="true"></i> <span>Rozetlerim</span></a><div class="acct-div"></div><a href="../../../hesabim/paketlerim/"><i class="fa-solid fa-crown" aria-hidden="true"></i> <span>Paketlerim</span></a><a href="../../../hesabim/odemelerim/"><i class="fa-solid fa-receipt" aria-hidden="true"></i> <span>Ödemelerim</span></a><a href="../../../hesabim/ayarlar/"><i class="fa-solid fa-sliders" aria-hidden="true"></i> <span>Hesap Ayarları</span></a><a href="../../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset" aria-hidden="true"></i> <span>Çözüm Merkezi</span></a><div class="acct-div"></div><a href="../../../" class="acct-logout" data-cikis=""><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Çıkış</span></a></div>
+                    <div class="acct-div"></div><a href="../../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils" aria-hidden="true"></i> <span>Gurme Panelim</span></a><a href="../../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> <span>Mekânlarım</span></a><a href="../../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> <span>Etkinliklerim</span></a><a href="../../../hesabim/listeler/"><i class="fa-solid fa-list-ul" aria-hidden="true"></i> <span>Listelerim</span></a><a href="../../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass" aria-hidden="true"></i> <span>Keşif Tercihlerim</span></a><a href="../../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> <span>İşletmelerim</span></a><div class="acct-div"></div><a href="../../../hesabim/rozetlerim/"><i class="fa-solid fa-medal" aria-hidden="true"></i> <span>Rozetlerim</span></a><div class="acct-div"></div><a href="../../../hesabim/paketlerim/"><i class="fa-solid fa-crown" aria-hidden="true"></i> <span>Paketlerim</span></a><a href="../../../hesabim/odemelerim/"><i class="fa-solid fa-receipt" aria-hidden="true"></i> <span>Ödemelerim</span></a><a href="../../../hesabim/ayarlar/"><i class="fa-solid fa-sliders" aria-hidden="true"></i> <span>Hesap Ayarları</span></a><a href="../../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset" aria-hidden="true"></i> <span>Çözüm Merkezi</span></a><div class="acct-div"></div><a href="../../../" class="acct-logout" data-cikis=""><i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i> <span>Çıkış</span></a></div>
         </div>
         <button class="icon-btn ikon-dugme hamburger" id="hamburger" aria-label="Menü"><i class="fa-solid fa-bars"></i></button>
       </div>
@@ -146,7 +151,7 @@
     <button class="drawer-close" id="drawerClose" aria-label="Menüyü kapat"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <nav class="drawer-nav"><div class="d-item"><a class="d-link" href="../../../mekanlar/"><i class="fa-solid fa-compass"></i> Mekânlar</a></div><div class="d-item"><a class="d-link" href="../../../mekan-bul/"><i class="fa-solid fa-wand-magic-sparkles"></i> Mekân Bul</a></div><div class="d-item"><a class="d-link" href="../../../gurme-lezzetler/"><i class="fa-solid fa-book-open"></i> Gurme Lezzetler</a></div><div class="d-item"><a class="d-link" href="../../../dada-route/"><i class="fa-solid fa-route"></i> Dada Route</a></div><div class="d-item"><a class="d-link" href="../../../etkinlikler/"><i class="fa-solid fa-calendar-days"></i> Etkinlikler</a></div><div class="d-item"><a class="d-link" href="../../../giris/?fb=1" data-gorus-giris="menu"><i class="fa-solid fa-comment-dots"></i> Görüş Bildir</a></div><div class="d-item d-acct-block">
-      <div class="d-sub d-acct-sub"><div class="d-sub-group">Modüllerim</div><a href="../../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils"></i> Gurme Panelim</a><a href="../../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot"></i> Mekânlarım</a><a href="../../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days"></i> Etkinliklerim</a><a href="../../../hesabim/listeler/"><i class="fa-solid fa-list-ul"></i> Listelerim</a><a href="../../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass"></i> Keşif Tercihlerim</a><a href="../../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> İşletmelerim</a><div class="d-sub-group">Gelişimim</div><a href="../../../hesabim/gurme-panelim/puan-durumu/"><i class="fa-solid fa-medal"></i> Rozetlerim</a><div class="d-sub-group">Hesabım</div><a href="../../../hesabim/paketlerim/"><i class="fa-solid fa-crown"></i> Paketlerim</a><a href="../../../hesabim/odemelerim/"><i class="fa-solid fa-receipt"></i> Ödemelerim</a><a href="../../../hesabim/ayarlar/"><i class="fa-solid fa-sliders"></i> Hesap Ayarları</a><a href="../../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset"></i> Çözüm Merkezi</a><div class="d-sub-group">Oturum</div><a href="../../../" data-cikis=""><i class="fa-solid fa-right-from-bracket"></i> Çıkış</a></div>
+      <div class="d-sub d-acct-sub"><div class="d-sub-group">Modüllerim</div><a href="../../../hesabim/gurme-panelim/"><i class="fa-solid fa-utensils"></i> Gurme Panelim</a><a href="../../../hesabim/gurme-panelim/gurme-favorilerim/"><i class="fa-solid fa-location-dot"></i> Mekânlarım</a><a href="../../../hesabim/etkinlikler/"><i class="fa-solid fa-calendar-days"></i> Etkinliklerim</a><a href="../../../hesabim/listeler/"><i class="fa-solid fa-list-ul"></i> Listelerim</a><a href="../../../hesabim/kesif-tercihleri/"><i class="fa-solid fa-compass"></i> Keşif Tercihlerim</a><a href="../../../isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> İşletmelerim</a><div class="d-sub-group">Gelişimim</div><a href="../../../hesabim/rozetlerim/"><i class="fa-solid fa-medal"></i> Rozetlerim</a><div class="d-sub-group">Hesabım</div><a href="../../../hesabim/paketlerim/"><i class="fa-solid fa-crown"></i> Paketlerim</a><a href="../../../hesabim/odemelerim/"><i class="fa-solid fa-receipt"></i> Ödemelerim</a><a href="../../../hesabim/ayarlar/"><i class="fa-solid fa-sliders"></i> Hesap Ayarları</a><a href="../../../hesabim/cozum-merkezi/"><i class="fa-solid fa-headset"></i> Çözüm Merkezi</a><div class="d-sub-group">Oturum</div><a href="../../../" data-cikis=""><i class="fa-solid fa-right-from-bracket"></i> Çıkış</a></div>
     </div></nav>
   <div class="drawer-foot">
     <button class="btn btn-primary drawer-login" style="width:100%" data-git="../../../giris/"><i class="fa-solid fa-user"></i> Giriş Yap</button>
@@ -208,16 +213,15 @@
   </div>
 </section><div class="pf-tabbar sekme-ray">
   <div class="wrap kap">
-    <nav class="sekmeler ortali" aria-label="Çözüm Merkezi bölümleri">
-      <a class="sekme aktif" href="../../../hesabim/cozum-merkezi/" id="destek-tab-taleplerim" aria-current="page"><i class="fa-solid fa-inbox" aria-hidden="true"></i> Destek Taleplerim</a>
-      <a class="sekme" href="../../../hesabim/cozum-merkezi/yeni/" id="destek-tab-yeni"><i class="fa-solid fa-plus" aria-hidden="true"></i> Yeni Destek Talebi</a>
-      <a class="sekme" href="../../../hesabim/cozum-merkezi/cozum/" id="destek-tab-cozum"><i class="fa-solid fa-circle-question" aria-hidden="true"></i> Sıkça Sorulan Sorular</a>
-      <a class="sekme" href="../../../hesabim/cozum-merkezi/oneri/" id="destek-tab-oneri"><i class="fa-solid fa-comment-dots" aria-hidden="true"></i> Öneri ve Şikâyet</a>
+    <nav class="sekmeler ortali" role="tablist" data-fit-tabs="destek" data-scroll-fade="" aria-label="Çözüm Merkezi bölümleri">
+      <button class="sekme aktif" type="button" role="tab" id="destek-tab-taleplerim" data-tab="taleplerim" aria-controls="destek-pane-taleplerim" aria-selected="true" tabindex="0"><i class="fa-solid fa-inbox" aria-hidden="true"></i> Destek Taleplerim</button>
+      <button class="sekme" type="button" role="tab" id="destek-tab-yeni" data-tab="yeni" aria-controls="destek-pane-yeni" aria-selected="false" tabindex="-1"><i class="fa-solid fa-plus" aria-hidden="true"></i> Yeni Destek Talebi</button>
+      <button class="sekme" type="button" role="tab" id="destek-tab-cozum" data-tab="cozum" aria-controls="destek-pane-cozum" aria-selected="false" tabindex="-1"><i class="fa-solid fa-circle-question" aria-hidden="true"></i> Sıkça Sorulan Sorular</button>
+      <button class="sekme" type="button" role="tab" id="destek-tab-oneri" data-tab="oneri" aria-controls="destek-pane-oneri" aria-selected="false" tabindex="-1"><i class="fa-solid fa-comment-dots" aria-hidden="true"></i> Öneri ve Şikâyet</button>
     </nav>
   </div>
 </div><div class="modul-govde">
-
-<div class="fit-pane aktif" data-pane="taleplerim" id="destek-pane-taleplerim" role="region" aria-labelledby="destek-tab-taleplerim" tabindex="0">
+<div class="fit-pane aktif" data-pane="taleplerim" id="destek-pane-taleplerim" role="tabpanel" aria-labelledby="destek-tab-taleplerim" tabindex="0">
 
 <section class="bolum">
   <div class="wrap kap">
@@ -395,7 +399,432 @@
   </div>
 </section>
 </div>
+<div class="fit-pane" data-pane="yeni" id="destek-pane-yeni" role="tabpanel" aria-labelledby="destek-tab-yeni" tabindex="-1" hidden="">
 
+<section class="tk-form-sec" id="yeni-talep">
+  <div class="wrap kap">
+    <div class="okuma-kolonu">
+
+      <form class="kart form" id="tkForm" novalidate="">
+        <div class="fc-head form-bas">
+          <h2 id="yeniH"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> Yeni destek talebi</h2>
+          <p>Yıldız (*) ile işaretli alanlar zorunludur. Gönderdiğinde satır <b>Destek Taleplerim</b> sekmesinin en üstüne, <b>Açık talep</b> durumuyla düşer.</p>
+        </div>
+
+        <p class="fk-summary" id="tkErrSum" role="alert" hidden="">
+          <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+          <span>Lütfen işaretli alanları kontrol et.</span>
+        </p>
+
+        <div class="alan">
+          <label class="alan-etiket" for="tkKategori">Talebin konusu <span class="zorunlu" aria-hidden="true">*</span></label>
+          <select class="alan-secim" id="tkKategori" name="konu" required="" aria-required="true" aria-describedby="tkKategoriHelp tkKategoriErr" data-hata="Bir konu seç — talebin doğru ekibe düşsün.">
+            <option value="" disabled="" selected="">Konu seç</option>
+            <option value="genel">Genel soru</option>
+            <option value="oneri">Öneri</option>
+            <option value="sikayet">Şikâyet</option>
+            <option value="icerik-istegi">İçerik isteği</option>
+            <option value="is-birligi">İş birliği &amp; proje</option>
+            <option value="basin">Basın</option>
+            <option value="teknik-sorun">Teknik sorun</option>
+          </select>
+          <p class="alan-yardim" id="tkKategoriHelp"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Konu seçimi talebi yönlendirir; yanlış seçersen destek ekibi taşır.</p>
+          <p class="alan-hata" id="tkKategoriErr" hidden=""><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span></span></p>
+        </div>
+
+        <div class="alan">
+          <label class="alan-etiket" for="tkBaslik">Başlık <span class="zorunlu" aria-hidden="true">*</span></label>
+          <input type="text" class="alan-girdi" id="tkBaslik" name="baslik" minlength="3" maxlength="160" required="" aria-required="true" placeholder="Sorunu tek cümlede özetle" aria-describedby="tkBaslikErr" data-hata="Talebin için bir başlık yaz." data-hata-kisa="Başlık en az 3 karakter olsun — listede bu satırı sen tanıyacaksın.">
+          <p class="alan-hata" id="tkBaslikErr" hidden=""><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span></span></p>
+        </div>
+
+        <div class="alan">
+          <label class="alan-etiket" for="tkMesaj">Talebin <span class="zorunlu" aria-hidden="true">*</span>
+            <span class="alan-sayac"><span id="tkMsgCount">0</span>/5000</span></label>
+          <textarea class="alan-metin" id="tkMesaj" name="mesaj" minlength="10" maxlength="5000" required="" aria-required="true" placeholder="Ne olduğunu, ne zaman olduğunu ve hangi ekranda gördüğünü yazabilirsin." aria-describedby="tkMesajHelp tkMesajErr" data-hata="Ne olduğunu birkaç cümleyle anlat." data-hata-kisa="Talebin en az 10 karakter olsun."></textarea>
+          <p class="alan-yardim" id="tkMesajHelp"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Hangi mekânı, hangi tarihi ve hangi ekranı kastettiğini yazarsan talep daha hızlı çözülür.</p>
+          <p class="alan-hata" id="tkMesajErr" hidden=""><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span></span></p>
+        </div>
+
+        <div class="alan">
+              <label class="alan-etiket" for="tkEk">Ek dosya <span class="istege-bagli">(isteğe bağlı)</span></label>
+              <div class="alan-dosya">
+                <input class="sr-only" type="file" id="tkEk" name="ek" accept="image/jpeg,image/png,image/webp,application/pdf" aria-describedby="tkEkHelp tkEkErr">
+                <label class="alan-dosya-dugme" for="tkEk"><i class="fa-solid fa-paperclip" aria-hidden="true"></i> Dosya seç</label>
+                <span class="alan-dosya-ad" id="tkEkName">Dosya seçilmedi</span>
+                <button type="button" class="alan-dosya-sil" id="tkEkClear" hidden="">Kaldır</button>
+              </div>
+              <p class="alan-yardim" id="tkEkHelp"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Ekran görüntüsü ya da belge: JPG, PNG, WebP veya PDF · en çok 5 MB · mesaj başına tek dosya.</p>
+              <p class="alan-hata" id="tkEkErr" hidden=""><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span></span></p>
+            </div>
+
+        <div class="alan-gonder">
+          <p class="not">Talebini gönderdikten sonra yazışmayı talebin detay sayfasından sürdürebilir, çözüldüyse talebi kapatabilirsin.</p>
+          <button class="dugme btn-fit" type="submit"><i class="fa-solid fa-paper-plane"></i> Talebi gönder</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<section class="ds-body">
+  <div class="wrap kap">
+    <p class="okuma-notu"><b id="dsBaslik">Konuya göre hızlı çözümler</b> — bir konuya dokun, adımlar açılsın. Her konu, sorun sürerse formu hangi konuyla dolduracağını da söylüyor.</p>
+
+    <div class="ds-list" id="dsList" role="group" aria-labelledby="dsBaslik">
+      <div class="akordeon-kalem" id="konu-uyelik">
+        <button class="akordeon-bas" type="button" aria-expanded="false" id="dsHead0" aria-controls="dsBody0">
+          <span class="akordeon-ikon"><i class="fa-solid fa-crown" aria-hidden="true"></i></span>
+          Üyelik, Dada Gourmet Pro ve ödeme
+          <i class="fa-solid fa-chevron-down akordeon-ok" aria-hidden="true"></i>
+        </button>
+        <div class="akordeon-govde" id="dsBody0" role="region" aria-labelledby="dsHead0">
+          <p>Paketini, yenileme tarihini ve ödeme kayıtlarını <a href="../../../hesabim/paketlerim/">Paketlerim</a> ekranından görürsün; geçmiş tahsilatlar <a href="../../../hesabim/odemelerim/">Ödemelerim</a>de tarih ve tutarla listelenir.</p>
+          <p>Pro’ya geçtiğin hâlde kilitli görünen bir bölüm varsa önce çıkış yapıp tekrar gir — üyelik durumu girişte tazelenir. Kilit sürüyorsa talebi <b>Öneri</b> ya da <b>Teknik sorun</b> konusuyla aç, hangi ekranda kilit gördüğünü yaz.</p>
+        </div>
+      </div>
+      <div class="akordeon-kalem" id="konu-program">
+        <button class="akordeon-bas" type="button" aria-expanded="false" id="dsHead1" aria-controls="dsBody1">
+          <span class="akordeon-ikon"><i class="fa-solid fa-list-check" aria-hidden="true"></i></span>
+          Rotalar, listelerim ve keşif
+          <i class="fa-solid fa-chevron-down akordeon-ok" aria-hidden="true"></i>
+        </button>
+        <div class="akordeon-govde" id="dsBody1" role="region" aria-labelledby="dsHead1">
+          <p>Kaydettiğin rota <a href="../../../hesabim/listeler/">Listelerim</a>de durur; kaydettiğin mekânlar <a href="../../../hesabim/gurme-panelim/gurme-favorilerim/">Mekânlarım</a>da toplanır. Henüz bir rotan yoksa <a href="../../../mekan-bul/">Mekân Bul</a> birkaç soruyla seni uygun mekâna yönlendirir.</p>
+          <p>Seçtiğin mekân listene düşmediyse mekânın kendi sayfasındaki kaydetme düğmesini kullandığından emin ol. Eklendiği hâlde görünmüyorsa talebi <b>Teknik sorun</b> konusuyla aç, mekânın adını yaz.</p>
+        </div>
+      </div>
+      <div class="akordeon-kalem" id="konu-etkinlik">
+        <button class="akordeon-bas" type="button" aria-expanded="false" id="dsHead2" aria-controls="dsBody2">
+          <span class="akordeon-ikon"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i></span>
+          Etkinlikler, rezervasyon ve bilet
+          <i class="fa-solid fa-chevron-down akordeon-ok" aria-hidden="true"></i>
+        </button>
+        <div class="akordeon-govde" id="dsBody2" role="region" aria-labelledby="dsHead2">
+          <p>Katılacağın ve katıldığın etkinlikler <a href="../../../hesabim/etkinlikler/">Etkinliklerim</a>de; masa rezervasyonların aynı ekranın <a href="../../../hesabim/gurme-panelim/">Rezervasyonlarım</a> panosunda durur.</p>
+          <p>Bilet satışı Dada Gourmet üzerinden yapılmıyor; biletli etkinliklerde etkinliğin sayfasındaki satış bağı seni satıcıya götürür. Rezervasyon onayın gelmediyse talebi <b>Genel soru</b> konusuyla aç ve onay kodunu yaz.</p>
+        </div>
+      </div>
+      <div class="akordeon-kalem" id="konu-hesap">
+        <button class="akordeon-bas" type="button" aria-expanded="false" id="dsHead3" aria-controls="dsBody3">
+          <span class="akordeon-ikon"><i class="fa-regular fa-user" aria-hidden="true"></i></span>
+          Hesap, giriş ve bildirimler
+          <i class="fa-solid fa-chevron-down akordeon-ok" aria-hidden="true"></i>
+        </button>
+        <div class="akordeon-govde" id="dsBody3" role="region" aria-labelledby="dsHead3">
+          <p>Ad, e-posta ve şifre <a href="../../../hesabim/ayarlar/">Hesap Ayarları</a>nda; uygulama içi akışın <a href="../../../hesabim/bildirimler/">Bildirimler</a> ekranında. Şifreni hatırlamıyorsan <a href="../../../giris/">giriş sayfasındaki</a> sıfırlama bağlantısını kullan.</p>
+          <p>Giriş yaptığın hâlde oturumun düşüyorsa tarayıcının site verilerini temizlemesi sebep olabilir. Temizlemeyi kapattığın hâlde sürerse talebi <b>Teknik sorun</b> konusuyla aç.</p>
+        </div>
+      </div>
+      <div class="akordeon-kalem" id="konu-veri">
+        <button class="akordeon-bas" type="button" aria-expanded="false" id="dsHead4" aria-controls="dsBody4">
+          <span class="akordeon-ikon"><i class="fa-solid fa-shield-heart" aria-hidden="true"></i></span>
+          Veri, konum ve izinler
+          <i class="fa-solid fa-chevron-down akordeon-ok" aria-hidden="true"></i>
+        </button>
+        <div class="akordeon-govde" id="dsBody4" role="region" aria-labelledby="dsHead4">
+          <p>Hukuki çerçeve <a href="../../../yasal/kvkk/">Yasal Metinler</a> altındaki KVKK Aydınlatma Metni’nde yazılı; konum tercihini üst bardaki konum düğmesinden istediğin an değiştirirsin.</p>
+          <p>Bir mekânın adresi, çalışma saati ya da menüsü hatalıysa veya kapanmışsa talebi <b>İçerik isteği</b> konusuyla aç; mekân önerisi için kabuğun alt menüsündeki <b>Mekân Öner</b> penceresini kullanabilirsin.</p>
+        </div>
+      </div>
+    </div>
+
+    <aside class="ipucu-kap" aria-labelledby="yardimH">
+      <div class="kart ipucu">
+        <h2 class="ipucu-bas" id="yardimH"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i> Yanıt buralarda da olabilir</h2>
+        <p class="ipucu-metin">Aynı konuda açık bir talebin varsa yenisini açma — yazışmayı oradan sürdür. Destek ekibi hafta içi 09:00–18:00 arasında bakıyor.</p>
+        <div class="ipucu-baglantilar">
+          <a class="ipucu-baglanti" href="../../../hesabim/cozum-merkezi/cozum/"><i class="fa-solid fa-circle-question" aria-hidden="true"></i> Sık Sorulan Sorular <i class="fa-solid fa-arrow-right ok" aria-hidden="true"></i></a>
+          <a class="ipucu-baglanti" href="../../../hesabim/odemelerim/"><i class="fa-solid fa-receipt" aria-hidden="true"></i> Ödeme ve fatura kayıtların <i class="fa-solid fa-arrow-right ok" aria-hidden="true"></i></a>
+          <a class="ipucu-baglanti" href="../../../iletisim/"><i class="fa-solid fa-envelope" aria-hidden="true"></i> İletişim kanalları <i class="fa-solid fa-arrow-right ok" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </aside>
+
+    <div class="bilgi-notu">
+      <i class="fa-solid fa-circle-info"></i>
+      <p>Destek ekibi uygulamayla ilgili konularda yardımcı olur; <b>mekân sahibi adına rezervasyon onayı veremez ve fiyat taahhüdünde bulunamaz.</b>
+      Rezervasyon, ödeme ve iptal koşulları için mekânın kendisiyle iletişime geçmen gerekir.
+      Ayrıntı: <a href="../../../yasal/kvkk/">Yasal Metinler</a>.</p>
+    </div>
+  </div>
+</section>
+</div>
+<div class="fit-pane" data-pane="cozum" id="destek-pane-cozum" role="tabpanel" aria-labelledby="destek-tab-cozum" tabindex="-1" hidden="">
+
+<section class="bolum">
+<div class="faq-searchbar">
+  <div class="wrap kap">
+    <form class="arama faq-search" role="search" data-gonderme-yok="" aria-label="Soru ara">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input id="faqSearch" type="text" placeholder="Soru ara: örn. program, rehber, Pro, izin…" aria-label="Soru ara" autocomplete="off">
+      <button class="sx arama-temizle" id="faqClear" type="button" aria-label="Aramayı temizle"><i class="fa-solid fa-xmark"></i></button>
+    </form>
+  </div>
+</div>
+
+<div class="pf-tabbar">
+  <div class="wrap kap">
+    <div class="sekmeler" id="faqTabs" role="group" aria-label="Soru kategorileri">
+      <button class="sekme aktif" type="button" data-kat="mekanlar" aria-pressed="true"><i class="fa-solid fa-store"></i> Mekânlar &amp; Keşif <span class="cnt">3</span></button>
+      <button class="sekme" type="button" data-kat="rota" aria-pressed="false"><i class="fa-solid fa-route"></i> Rota &amp; Planlama <span class="cnt">2</span></button>
+      <button class="sekme" type="button" data-kat="degerlendirme" aria-pressed="false"><i class="fa-solid fa-comments"></i> Değerlendirme &amp; Editör <span class="cnt">2</span></button>
+      <button class="sekme" type="button" data-kat="isletme" aria-pressed="false"><i class="fa-solid fa-square-plus"></i> İşletme Sahipleri <span class="cnt">2</span></button>
+    </div>
+  </div>
+</div>
+
+</section>
+
+<section class="faq-sec">
+  <div class="wrap kap">
+    <p class="okuma-notu" id="faqNote"><b>Mekânlar &amp; Keşif</b> — 3 soru</p>
+    <div class="akordeon" id="faqList">
+      <div class="akordeon-kalem" data-kat="mekanlar">
+        <button class="akordeon-bas" type="button" aria-expanded="false" id="qaHead0" aria-controls="qaBody0">
+          <span class="akordeon-ikon"><i class="fa-solid fa-store" aria-hidden="true"></i></span>
+          Bir mekân listeye nasıl giriyor?
+          <i class="fa-solid fa-chevron-down akordeon-ok" aria-hidden="true"></i>
+        </button>
+        <div class="akordeon-govde" id="qaBody0" role="region" aria-labelledby="qaHead0">
+          <p>Mekânı önce editör ekibimiz inceler: mutfağın tutarlılığı, ortam ve fiyat-değer dengesi değerlendirilir. Ücret karşılığı listeye giriş yoktur; sponsorlu yerleşimler ayrıca işaretlenir.</p>
+        </div>
+      </div>
+      <div class="akordeon-kalem" data-kat="mekanlar">
+        <button class="akordeon-bas" type="button" aria-expanded="false" id="qaHead1" aria-controls="qaBody1">
+          <span class="akordeon-ikon"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i></span>
+          Mekân bilgileri ne sıklıkla güncelleniyor?
+          <i class="fa-solid fa-chevron-down akordeon-ok" aria-hidden="true"></i>
+        </button>
+        <div class="akordeon-govde" id="qaBody1" role="region" aria-labelledby="qaHead1">
+          <p>Adres, çalışma saati ve iletişim bilgisi kaynağından doğrulanır. Kapanan ya da taşınan mekânları kullanıcı bildirimleri ve düzenli kontrollerle güncelliyoruz.</p>
+        </div>
+      </div>
+      <div class="akordeon-kalem" data-kat="mekanlar">
+        <button class="akordeon-bas" type="button" aria-expanded="false" id="qaHead2" aria-controls="qaBody2">
+          <span class="akordeon-ikon"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i></span>
+          Yanlış bilgi gördüm, nasıl bildiririm?
+          <i class="fa-solid fa-chevron-down akordeon-ok" aria-hidden="true"></i>
+        </button>
+        <div class="akordeon-govde" id="qaBody2" role="region" aria-labelledby="qaHead2">
+          <p>Mekân sayfasındaki bilgi bildirim bağlantısını kullanabilir ya da iletişim formundan konu olarak bilgi düzeltmeyi seçebilirsin. Bildirimler doğrulama sırasına alınır.</p>
+        </div>
+      </div>
+      <div class="akordeon-kalem" data-kat="rota" hidden="">
+        <button class="akordeon-bas" type="button" aria-expanded="false" id="qaHead3" aria-controls="qaBody3">
+          <span class="akordeon-ikon"><i class="fa-solid fa-route" aria-hidden="true"></i></span>
+          Rota nasıl oluşturuluyor?
+          <i class="fa-solid fa-chevron-down akordeon-ok" aria-hidden="true"></i>
+        </button>
+        <div class="akordeon-govde" id="qaBody3" role="region" aria-labelledby="qaHead3">
+          <p>Başlangıç ve varış noktanı seçtiğinde güzergâh üzerindeki mekânları koridor eşleştirmesiyle çıkarıyoruz. Rotaya durak ekleyip çıkarabilir, sıralamayı değiştirebilirsin.</p>
+        </div>
+      </div>
+      <div class="akordeon-kalem" data-kat="rota" hidden="">
+        <button class="akordeon-bas" type="button" aria-expanded="false" id="qaHead4" aria-controls="qaBody4">
+          <span class="akordeon-ikon"><i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i></span>
+          Neden bazı mekânlar rotada çıkmıyor?
+          <i class="fa-solid fa-chevron-down akordeon-ok" aria-hidden="true"></i>
+        </button>
+        <div class="akordeon-govde" id="qaBody4" role="region" aria-labelledby="qaHead4">
+          <p>Rota eşleştirmesi mekânın koordinat bilgisine dayanır. Koordinatı henüz girilmemiş bir mekân güzergâha aday olamaz; bu bilgiyi tamamladıkça kapsam genişliyor.</p>
+        </div>
+      </div>
+      <div class="akordeon-kalem" data-kat="degerlendirme" hidden="">
+        <button class="akordeon-bas" type="button" aria-expanded="false" id="qaHead5" aria-controls="qaBody5">
+          <span class="akordeon-ikon"><i class="fa-solid fa-comments" aria-hidden="true"></i></span>
+          Kullanıcı yorumları ile editör notu aynı şey mi?
+          <i class="fa-solid fa-chevron-down akordeon-ok" aria-hidden="true"></i>
+        </button>
+        <div class="akordeon-govde" id="qaBody5" role="region" aria-labelledby="qaHead5">
+          <p>Hayır. Editör değerlendirmesi ekibimizin incelemesidir; kullanıcı yorumları ziyaretçilerden gelir ve ayrı gösterilir. İkisi birbirinin yerine geçmez.</p>
+        </div>
+      </div>
+      <div class="akordeon-kalem" data-kat="degerlendirme" hidden="">
+        <button class="akordeon-bas" type="button" aria-expanded="false" id="qaHead6" aria-controls="qaBody6">
+          <span class="akordeon-ikon"><i class="fa-solid fa-rectangle-ad" aria-hidden="true"></i></span>
+          Sponsorlu içerik nasıl anlaşılıyor?
+          <i class="fa-solid fa-chevron-down akordeon-ok" aria-hidden="true"></i>
+        </button>
+        <div class="akordeon-govde" id="qaBody6" role="region" aria-labelledby="qaHead6">
+          <p>Sponsorlu mekân, rota ve etkinlikler kullanıcıya açıkça belirtilir. Sponsorluk, editör değerlendirmesinin sonucunu değiştirmez.</p>
+        </div>
+      </div>
+      <div class="akordeon-kalem" data-kat="isletme" hidden="">
+        <button class="akordeon-bas" type="button" aria-expanded="false" id="qaHead7" aria-controls="qaBody7">
+          <span class="akordeon-ikon"><i class="fa-solid fa-square-plus" aria-hidden="true"></i></span>
+          İşletmemi nasıl eklerim?
+          <i class="fa-solid fa-chevron-down akordeon-ok" aria-hidden="true"></i>
+        </button>
+        <div class="akordeon-govde" id="qaBody7" role="region" aria-labelledby="qaHead7">
+          <p>İşletmeni Ekle sayfasından başvuru gönderebilirsin. Restoran, kafe, otel, yerel üretici ve etkinlik işletmeleri başvurabilir; başvurular editör değerlendirmesine alınır.</p>
+        </div>
+      </div>
+      <div class="akordeon-kalem" data-kat="isletme" hidden="">
+        <button class="akordeon-bas" type="button" aria-expanded="false" id="qaHead8" aria-controls="qaBody8">
+          <span class="akordeon-ikon"><i class="fa-solid fa-circle-info" aria-hidden="true"></i></span>
+          Başvuru ücretli mi?
+          <i class="fa-solid fa-chevron-down akordeon-ok" aria-hidden="true"></i>
+        </button>
+        <div class="akordeon-govde" id="qaBody8" role="region" aria-labelledby="qaHead8">
+          <p>Listeye giriş ücretli değildir. Reklam ve marka iş birlikleri ayrı bir süreçtir ve editoryal listelemeden bağımsız yürütülür.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-none" id="faqNone" role="status" hidden="">
+      <span class="bos-ikon"><i class="fa-solid fa-magnifying-glass"></i></span>
+      <h3>Bu aramayla eşleşen soru yok</h3>
+      <p>Farklı bir kelime dene — ya da sorunu doğrudan bize ilet, cevabı SSS'ye de ekleyelim.</p>
+      <button class="dugme btn-fit" type="button" data-feedback-open=""><i class="fa-solid fa-comment-dots"></i> Soru Sor</button>
+    </div>
+  </div>
+</section>
+
+<section class="faq-cta-sec">
+  <div class="wrap kap">
+    <div class="kapanis">
+      <span class="kapanis-ikon"><i class="fa-solid fa-headset"></i></span>
+      <h3>Cevap bulamadın mı?</h3>
+      <p>Ekibimiz hafta içi 09:00–18:00 arasında yanında. Soru, öneri ya da sorun — hangisi olursa olsun bize yaz.</p>
+      <div class="cc-btns">
+        <a class="dugme btn-fit" href="../../../iletisim/"><i class="fa-solid fa-envelope"></i> İletişime Geç</a>
+        <button class="dugme hayalet" type="button" data-feedback-open=""><i class="fa-solid fa-comment-dots"></i> Görüş Bildir</button>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+<div class="fit-pane" data-pane="oneri" id="destek-pane-oneri" role="tabpanel" aria-labelledby="destek-tab-oneri" tabindex="-1" hidden="">
+
+<section class="tk-form-sec" id="oneri-sikayet">
+  <div class="wrap kap">
+    <div class="okuma-kolonu">
+      <div class="tk-ok" id="conOk" role="status" hidden="">
+        <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+        <div><b>Mesajın alındı.</b> <span></span></div>
+      </div>
+
+      <form class="kart form" id="conForm" novalidate="">
+        <div class="fc-head form-bas">
+          <div>
+            <h2 id="oneriH"><i class="fa-solid fa-comment-dots" aria-hidden="true"></i> Öneri ve Şikâyet</h2>
+            <p>Yıldız (*) ile işaretli alanlar zorunludur. Cevabımız e-posta adresine gelir.</p>
+          </div>
+        </div>
+
+        <!-- Kanonun .kart > .alan-izgara girintisi panel kartı içindir; form kartında alanlar kartın kendi dolgusunda kalsın diye ızgaralar sınıfsız bir kapta -->
+        <div>
+        <p class="fk-summary" id="conErrSum" role="alert" hidden=""><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span>Lütfen işaretli alanları kontrol et.</span></p>
+
+        <div class="alan-izgara c2">
+          <div class="alan">
+            <label class="alan-etiket" for="fAd">Ad <span class="zorunlu" aria-hidden="true">*</span></label>
+            <input type="text" id="fAd" name="ad" class="alan-girdi" placeholder="Adın" autocomplete="given-name" maxlength="80" required="" aria-required="true" aria-describedby="eAd" value="Örnek" data-hata="Ad alanı zorunludur.">
+            <p class="alan-hata" id="eAd" hidden=""><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span></span></p>
+          </div>
+          <div class="alan">
+            <label class="alan-etiket" for="fSoyad">Soyad <span class="zorunlu" aria-hidden="true">*</span></label>
+            <input type="text" id="fSoyad" name="soyad" class="alan-girdi" placeholder="Soyadın" autocomplete="family-name" maxlength="80" required="" aria-required="true" aria-describedby="eSoyad" value="Üye" data-hata="Soyad alanı zorunludur.">
+            <p class="alan-hata" id="eSoyad" hidden=""><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span></span></p>
+          </div>
+        </div>
+
+        <div class="alan-izgara c2">
+          <div class="alan">
+            <label class="alan-etiket" for="fMail">E-posta <span class="zorunlu" aria-hidden="true">*</span></label>
+            <input type="email" id="fMail" name="eposta" class="alan-girdi" placeholder="ornek@eposta.com" autocomplete="email" maxlength="254" required="" aria-required="true" aria-describedby="eMail" value="ornek@eposta.com" data-hata="E-posta alanı zorunludur." data-hata-bicim="E-posta geçerli bir e-posta adresi olmalıdır.">
+            <p class="alan-hata" id="eMail" hidden=""><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span></span></p>
+          </div>
+          <div class="alan">
+            <label class="alan-etiket" for="fTel">Telefon <span class="istege-bagli">(opsiyonel)</span></label>
+            <div class="alan-telefon" data-cc-kok="" data-ulke-kok="">
+              <button class="alan-ulke" type="button" id="conCc" aria-haspopup="listbox" aria-expanded="false" aria-label="Ülke kodu — şu an Türkiye +90">
+                <span class="alan-ulke-bayrak" aria-hidden="true">🇹🇷</span><span class="alan-ulke-kod">+90</span><i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+              </button>
+              <input class="alan-girdi" id="fTel" name="telefon" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="30" placeholder="5__ ___ __ __" data-tel-mask="" aria-describedby="eTel">
+              <input type="hidden" name="telefon_ulke" value="TR">
+              <div class="alan-ulke-katman" role="dialog" aria-label="Ülke seç" hidden="">
+                <div class="alan-ulke-arama">
+                  <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                  <input type="text" placeholder="Ülke veya kod ara" aria-label="Ülke veya kod ara" autocomplete="off">
+                </div>
+                <ul class="alan-ulke-liste" role="listbox" aria-label="Ülkeler" tabindex="-1"><li role="option" data-iso="TR" data-kod="+90" aria-selected="true" class="secili" tabindex="-1"><span class="bayrak" aria-hidden="true">🇹🇷</span><span class="ad">Türkiye</span><span class="kod">+90</span></li></ul>
+                <p class="alan-ulke-bos" hidden="">Eşleşen ülke yok.</p>
+              </div>
+            </div>
+            <p class="alan-hata" id="eTel" hidden=""><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span></span></p>
+          </div>
+        </div>
+
+        <div class="alan-izgara c2">
+          <div class="alan">
+            <label class="alan-etiket" for="conTur">Türü <span class="zorunlu" aria-hidden="true">*</span></label>
+            <select class="alan-secim" id="conTur" name="konu" required="" aria-required="true" aria-describedby="eTur" data-hata="Öneri mi şikâyet mi — birini seç.">
+              <option value="" disabled="" selected="">Seç</option>
+              <option value="oneri">Öneri</option>
+              <option value="sikayet">Şikâyet</option>
+            </select>
+            <p class="alan-hata" id="eTur" hidden=""><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span></span></p>
+          </div>
+          <div class="alan">
+            <label class="alan-etiket" for="conAlan">İlgili alan <span class="zorunlu" aria-hidden="true">*</span></label>
+            <select class="alan-secim" id="conAlan" name="ilgili_alan" required="" aria-required="true" aria-describedby="hAlan eAlan" data-hata="Hangi alanla ilgili — seç ki doğru ekibe düşsün.">
+              <option value="" disabled="" selected="">Seç</option>
+              <option value="mekanlar">Mekânlar</option>
+              <option value="rotalar">Rotalar</option>
+              <option value="etkinlikler">Etkinlikler</option>
+              <option value="rehberler">Rehberler</option>
+              <option value="degerlendirmeler">Değerlendirmeler</option>
+              <option value="diger">Diğer</option>
+            </select>
+            <div class="alan-yardim" id="hAlan"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>Alan seçimi mesajı ilgili ekibe yönlendirir.</span></div>
+            <p class="alan-hata" id="eAlan" hidden=""><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span></span></p>
+          </div>
+        </div>
+
+        <div class="alan">
+          <label class="alan-etiket" for="msgText">Mesajın <span class="zorunlu" aria-hidden="true">*</span> <span class="alan-sayac"><span id="msgCount">0</span>/1000</span></label>
+          <textarea class="alan-metin" id="msgText" name="mesaj" minlength="10" maxlength="1000" placeholder="Önerini ya da şikâyetini buraya yazabilirsin" required="" aria-required="true" aria-describedby="eMsg" data-hata="Mesaj alanı zorunludur." data-hata-kisa="Mesaj en az 10 karakter olmalıdır."></textarea>
+          <p class="alan-hata" id="eMsg" hidden=""><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span></span></p>
+        </div>
+
+        <label class="onay-kutusu" for="fKvkk">
+          <input type="checkbox" id="fKvkk" name="kvkk_onay" value="1" required="" aria-required="true" aria-describedby="eKvkk" data-hata="Devam etmek için aydınlatma metnini ve gizlilik politikasını onaylamalısınız.">
+          <span><a href="../../../yasal/kvkk/" target="_blank" rel="noopener">KVKK Aydınlatma Metni</a>'ni ve <a href="../../../yasal/kvkk/" target="_blank" rel="noopener">Gizlilik Politikası</a>'nı okudum, onaylıyorum.</span>
+        </label>
+        <p class="alan-hata" id="eKvkk" hidden=""><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span></span></p>
+
+        <p class="alan-yardim" id="conCaptcha"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i><span>Bu form istismara karşı hız sınırlamasıyla korunur.</span></p>
+
+        <div class="alan-gonder">
+          <p class="not">Mesajlara genellikle <b>1 iş günü</b> içinde dönüyoruz.</p>
+          <button class="dugme btn-fit" id="conSubmit" type="submit"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Gönder</button>
+        </div>
+        </div>
+      </form>
+
+      <div class="yonlendirme">
+        <a class="yonlendirme-kalem" href="../../../iletisim/">
+          <span class="yonlendirme-ikon" aria-hidden="true"><i class="fa-solid fa-envelope-open-text"></i></span>
+          <span class="yonlendirme-metin">
+            <b>Genel iletişim konuları <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></b>
+            <span>Basın, iş birliği ve reklam, üyelik, ödeme ve genel sorular için iletişim formu.</span>
+          </span>
+        </a>
+        <button class="yonlendirme-kalem" type="button" id="fbRouteBtn" data-feedback-open="">
+          <span class="yonlendirme-ikon" aria-hidden="true"><i class="fa-solid fa-comment-dots"></i></span>
+          <span class="yonlendirme-metin">
+            <b>Hızlı öneri ya da şikâyet <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></b>
+            <span>Form doldurmadan, Görüş Bildir penceresinden iki tıkla iletebilirsin.</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
 </div></div></main>
 <footer class="footer orange">
     <div class="wrap">
