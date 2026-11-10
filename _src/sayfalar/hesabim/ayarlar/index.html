@@ -1,4 +1,4 @@
-<!--{"yol":"hesabim/ayarlar","baslik":"Hesap Ayarları","duzen":"uye","zincir":"hesabim","css":["gourmet-sapma"],"js":["assets/js/sayfa/sekmeler.js","assets/js/sayfa/ayarlar-profil.js"],"donor":"yerel Gastro 6700538df4 /hesabim/ayarlar (demo tohum); Bildirim, Dil, Bağlı, Veri, Dondurma: go-hesabim.html?auth=1"}-->
+<!--{"yol":"hesabim/ayarlar","baslik":"Hesap Ayarları","duzen":"uye","zincir":"hesabim","css":["shared/scroll-affordance.css","gourmet-sapma"],"js":["assets/o/assets/gourmet-public/js/shared/scroll-affordance.js","assets/js/sayfa/sekmeler.js","assets/js/sayfa/ayarlar-profil.js"],"donor":"yerel Gastro /hesabim/ayarlar (resources/views/turetilmis/uye/g-hesabim.blade.php, demo tohum render; 10 Kas Gastro hizası: bildirim, güvenlik)"}-->
 
 <div class="zebra">
 <section class="bolum kimlik-bant is-editable kabuk-alti" data-hero-band="">
@@ -33,9 +33,9 @@
 
 <div class="pf-tabbar sekme-ray">
   <div class="wrap kap">
-    <nav class="sekmeler ortali" role="tablist" data-fit-tabs="hs" aria-label="Hesap ayarları bölümleri">
+    <nav class="sekmeler ortali" role="tablist" data-fit-tabs="hs" data-scroll-fade="" aria-label="Hesap ayarları bölümleri">
       <button class="sekme aktif" type="button" role="tab" id="hs-tab-profil" data-tab="profil" aria-controls="hs-pane-profil" aria-selected="true" tabindex="0"><i class="fa-solid fa-id-card" aria-hidden="true"></i> Profil</button>
-      <button class="sekme" type="button" role="tab" id="hs-tab-bildirim" data-tab="bildirim" aria-controls="hs-pane-bildirim" aria-selected="false" tabindex="-1"><i class="fa-regular fa-bell" aria-hidden="true"></i> Bildirim Tercihleri</button>
+      <button class="sekme" type="button" role="tab" id="hs-tab-bildirim" data-tab="bildirim" aria-controls="hs-pane-bildirim" aria-selected="false" tabindex="-1"><i class="fa-solid fa-bell" aria-hidden="true"></i> Bildirim Tercihleri</button>
       <button class="sekme" type="button" role="tab" id="hs-tab-guvenlik" data-tab="guvenlik" aria-controls="hs-pane-guvenlik" aria-selected="false" tabindex="-1"><i class="fa-solid fa-lock" aria-hidden="true"></i> Güvenlik</button>
       <button class="sekme" type="button" role="tab" id="hs-tab-dil" data-tab="dil" aria-controls="hs-pane-dil" aria-selected="false" tabindex="-1"><i class="fa-solid fa-globe" aria-hidden="true"></i> Dil ve Bölge</button>
       <button class="sekme" type="button" role="tab" id="hs-tab-bagli" data-tab="bagli" aria-controls="hs-pane-bagli" aria-selected="false" tabindex="-1"><i class="fa-solid fa-plug-circle-check" aria-hidden="true"></i> Bağlı Uygulamalar</button>
@@ -265,25 +265,8 @@
           <div class="ayar-liste">
             <div class="ayar-satir">
               <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
-              <div class="as-metin"><b>Güvenlik uyarıları</b><span>Yeni cihazdan giriş, şifre değişikliği işlemleri her zaman e-posta ile bildirilir. Bu bildirim kapatılamaz.</span></div>
+              <div class="as-metin"><b>Güvenlik uyarıları</b><span>Yeni cihazdan giriş, şifre değişikliği ve iki adımlı doğrulama işlemleri her zaman e-posta ile bildirilir. Bu bildirim kapatılamaz.</span></div>
               <span class="as-acik"><i class="fa-solid fa-lock" aria-hidden="true"></i> Her zaman açık</span>
-            </div>
-            <div class="ayar-satir">
-              <span class="as-ikon" aria-hidden="true"><i class="fa-regular fa-clock"></i></span>
-              <div class="as-metin"><b>Hatırlatma saati</b><span>Günlük keşif hatırlatmasının varsayılan saati.</span></div>
-              <label class="sr-only" for="ntfSaat">Hatırlatma saati</label>
-              <input class="alan-girdi" id="ntfSaat" type="time" value="18:30">
-            </div>
-            <div class="ayar-satir">
-              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-moon"></i></span>
-              <div class="as-metin"><b>Sessiz saatler</b><span>Bu aralıkta push bildirimi gönderilmez; e-posta etkilenmez.</span></div>
-              <label class="sr-only" for="ntfSessiz">Sessiz saatler</label>
-              <select class="alan-secim" id="ntfSessiz">
-                <option selected="">22:00 – 07:00</option>
-                <option>23:00 – 08:00</option>
-                <option>00:00 – 06:00</option>
-                <option>Kapalı</option>
-              </select>
             </div>
           </div>
 
@@ -314,8 +297,15 @@
         <span class="fp-sw-lbl">Açık</span><button class="fp-sw" data-izin-key="bild-randevu" role="switch" aria-checked="true" aria-label="Rezervasyon talebi hatırlatması"></button>
       </div>
       <div class="fp-toggle">
-        <span class="txt"><b>Ödeme ve belge yenileme</b><small>Yalnız işlem gerektiğinde</small></span>
-        <span class="fp-sw-lbl">Açık</span><button class="fp-sw" data-izin-key="bild-odeme" role="switch" aria-checked="true" aria-label="Ödeme ve belge bildirimi"></button>
+        <span class="txt"><b>Ödeme ve fatura</b><small>Makbuz, yenileme hatırlatması ve abonelik değişikliği</small></span>
+        <span class="fp-sw-lbl">Açık</span><button class="fp-sw" type="button" data-izin-key="bild-odeme" role="switch" aria-checked="true" aria-label="Ödeme ve fatura bildirimi"></button>
+      </div>
+      <div class="ayar-liste" style="margin-top:8px;border-top:1px solid var(--line)">
+        <div class="ayar-satir">
+          <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-credit-card"></i></span>
+          <div class="as-metin"><b>Ödeme başarısız</b><span>Tahsilat alınamadığında her zaman bildirilir; duymazsan aboneliğin sessizce düşerdi. Bu bildirim kapatılamaz.</span></div>
+          <span class="as-acik"><i class="fa-solid fa-lock" aria-hidden="true"></i> Her zaman açık</span>
+        </div>
       </div>
     </div>
       </section>
@@ -327,7 +317,7 @@
           <div class="kart-bas">
             <div>
               <h2 id="guvenlikH" class="kart-baslik"><i class="fa-solid fa-lock"></i> Güvenlik</h2>
-              <p>Şifreni değiştir, açık oturumlarını gör.</p>
+              <p>Şifreni değiştir, iki adımlı doğrulamayı yönet, açık oturumlarını gör.</p>
             </div>
           </div>
           <div class="kart-govde">
@@ -374,6 +364,17 @@
           </div>
           <div class="kart-govde">
           <div class="ayar-liste">
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-shield-halved"></i></span>
+              <div class="as-metin"><b>İki adımlı doğrulama</b><span id="gv2faDurum">Kapalı: açtığında girişte <b>telefonuna gelen 6 haneli kod</b> istenir. Yöntemi değiştirmek için kurulumu yeniden çalıştır.</span></div>
+              <div class="as-eylem"><button class="satir-dugme" type="button" id="gv2faKur" data-prototip-not="İki adımlı doğrulama kurulumu prototipte bağlı değil; kod gönderilmez."><i class="fa-solid fa-sliders" aria-hidden="true"></i> Kurulumu Aç</button></div>
+              <label class="anahtar" for="gv2fa"><input type="checkbox" id="gv2fa"><span class="anahtar-ray"></span><span class="sr-only">İki adımlı doğrulama</span></label>
+            </div>
+            <div class="ayar-satir">
+              <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-key"></i></span>
+              <div class="as-metin"><b>Kurtarma kodların</b><span>Telefonuna erişemezsen bu tek kullanımlık kodlarla giriş yaparsın. Kodlar iki adımlı doğrulama açıldığında üretilir.</span></div>
+              <div class="as-eylem"><button class="satir-dugme" type="button" data-prototip-not="Kurtarma kodu iki adımlı doğrulama açıldığında üretilir; prototipte kod üretilmez.">Kodları Göster</button></div>
+            </div>
             <div class="ayar-satir">
               <span class="as-ikon" aria-hidden="true"><i class="fa-solid fa-envelope"></i></span>
               <div class="as-metin"><b>E-posta ile giriş</b><span>{{uye.eposta}} — birincil giriş yöntemin.</span></div>

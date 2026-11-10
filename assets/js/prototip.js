@@ -60,15 +60,14 @@
     m.textContent = metin; t.classList.add('show', 'on');
     clearTimeout(bildir.z); bildir.z = setTimeout(function () { t.classList.remove('show', 'on'); }, 2800);
   };
-  /* Altbilgi perdesi: portal betiği yüklenmeyen üye zincirinde de ana içeriğin alt boşluğu altbilgi boyuna eşitlenir,
-     yoksa sabit altbilgi ana içeriğin altında kalır ve hiç açılmaz (ölçüldü: 7 üye sayfası, margin-bottom 0). */
-  var perdeAyarla = function () {
-    var f = document.querySelector('.footer.orange'), m = document.getElementById('pageMain'); if (!f || !m) { return; }
-    var sigmaz = window.matchMedia('(min-width:641px)').matches && f.offsetHeight > window.innerHeight;
-    document.documentElement.classList.toggle('altbilgi-akista', sigmaz);
-    m.style.marginBottom = !sigmaz && getComputedStyle(f).position === 'fixed' ? f.offsetHeight + 'px' : '';
+  /* Altbilgi perdesi kaldırıldı (H4, Beyar 10 Kas): altbilgi normal akışta, kural prototip.css'te. Ana içeriğe alt boşluk yazılmaz */
+  /* Taşan sekme rayında etkin sekme görünür alana alınır (yalnız rayın kendisi kayar, sayfa kaymaz); sekme değişince de */
+  var rayOrtala = function (s) {
+    var r = s && s.closest('.sekmeler[data-scroll-fade]'); if (!r || r.scrollWidth <= r.clientWidth) { return; }
+    r.scrollLeft += s.getBoundingClientRect().left - r.getBoundingClientRect().left - (r.clientWidth - s.offsetWidth) / 2;
   };
-  window.addEventListener('load', perdeAyarla); window.addEventListener('resize', perdeAyarla); document.addEventListener('DOMContentLoaded', perdeAyarla);
+  document.addEventListener('DOMContentLoaded', function () { [].forEach.call(document.querySelectorAll('.sekmeler[data-scroll-fade] .sekme.aktif'), rayOrtala); });
+  document.addEventListener('click', function (e) { var s = e.target.closest && e.target.closest('.sekmeler[data-scroll-fade] .sekme'); if (s) { setTimeout(function () { rayOrtala(s); }, 0); } });
   /* Mobil menü: üye zincirinde `portal` yüklenmez, çekmeceyi açan kod da onunla gider. Davranış aynen burada */
   document.addEventListener('DOMContentLoaded', function () {
     if (!document.documentElement.dataset.uyeSayfa) { return; }
@@ -123,6 +122,39 @@
     kesinlestir: function (id) { window.dgKayit.guncelle('puan', id, { durum: 'kesin' }); },
     dusur: function (id) { window.dgKayit.guncelle('puan', id, { durum: 'dustu' }); },
     toplam: function (durum) { return window.dgKayit.oku('puan').reduce(function (t, k) { return t + ((k.durum || 'bekliyor') === durum ? k.tutar : 0); }, 0); }
+  };
+  /* Kayıtlı güzergâhlar: Listelerim › Gastronomi Rotalarım ve Dada Route › Güzergâhlarım için TEK depo (H5, 10 Kas).
+     Biçim canlı `GET dada-route/api/guzergahlarim` yanıtının `guzergahlar[]` kalemi (dada-route.js `planToRec` bunu okur).
+     Örnekler sabit, `ornek:true`; kullanıcının kaydettikleri `dgKayit('rota')`ya yazılır ve örneklerin önünde durur.
+     Mekân durakları DG_MEKANLAR kayıtlarından (ad, il, koordinat); mesafe ve süre örnek değerdir */
+  var mekanDurak = function (id, ad, il, lat, lng, molaDk) { return { rol: 'venue', mekan_id: id, ad: ad, il: il, lat: lat, lng: lng, mola_dk: molaDk, sapma_dk: null, sapma_km: null, ziyaret: false, id: id }; };
+  var ROTA_ORNEK = [
+    { id: 'ornek-istanbul-izmir', ornek: true, ad: 'İstanbul – İzmir lezzet rotası', favori: true, yolculuk_tarihi: null, guncellendi: '2026-11-02T10:00:00+03:00',
+      kalkis: { ad: 'İstanbul', il: 'İstanbul', lat: 41.0082, lng: 28.9784 }, varis: { ad: 'İzmir', il: 'İzmir', lat: 38.4237, lng: 27.1428 },
+      tolerans_dk: 15, tolerans_km: null, mesafe_m: 478000, sure_sn: 19800, geometri: null, alternatif: 0, filtreler: null, saglayici: null,
+      duraklar: [mekanDurak('kitap-evi-hotel-restaurant-bursa', 'Kitap Evi Hotel Restaurant', 'Bursa', 40.18496, 29.05808, 60), mekanDurak('esca-restaurant-izmir', 'ESCA Restaurant', 'İzmir', 38.40006, 27.06842, 90)] },
+    { id: 'ornek-urla-bag-yolu', ornek: true, ad: 'Urla bağ yolu', favori: false, yolculuk_tarihi: null, guncellendi: '2026-10-26T10:00:00+03:00',
+      kalkis: { ad: 'İzmir, Konak', il: 'İzmir', lat: 38.4189, lng: 27.1287 }, varis: { ad: 'Urla', il: 'İzmir', lat: 38.3227, lng: 26.7642 },
+      tolerans_dk: 10, tolerans_km: null, mesafe_m: 52000, sure_sn: 3300, geometri: null, alternatif: 0, filtreler: null, saglayici: null,
+      duraklar: [mekanDurak('hus-sarapcilik', 'HUS Şarapçılık', 'İzmir', 38.27442, 26.73343, 60), mekanDurak('od-urla', 'OD Urla', 'İzmir', 38.34473, 26.76101, 90), mekanDurak('levan-urla', 'Levan', 'İzmir', 38.30094, 26.75114, 90)] },
+    { id: 'ornek-ankara-kapadokya', ornek: true, ad: 'Ankara – Kapadokya hafta sonu', favori: false, yolculuk_tarihi: null, guncellendi: '2026-10-12T10:00:00+03:00',
+      kalkis: { ad: 'Ankara', il: 'Ankara', lat: 39.9334, lng: 32.8597 }, varis: { ad: 'Ürgüp', il: 'Nevşehir', lat: 38.6318, lng: 34.9128 },
+      tolerans_dk: 15, tolerans_km: null, mesafe_m: 296000, sure_sn: 12300, geometri: null, alternatif: 0, filtreler: null, saglayici: null,
+      duraklar: [mekanDurak('alma-table', 'alma table', 'Ankara', 39.81054, 32.70608, 60), mekanDurak('prokopi-restaurant', 'Prokopi Restaurant', 'Nevşehir', 38.63312, 34.90486, 90), mekanDurak('revithia', 'Revithia', 'Nevşehir', 38.63629, 34.90602, 90)] }
+  ];
+  window.dgRota = {
+    ORNEK: ROTA_ORNEK,
+    /* Güzergâhlarım listesi: önce kullanıcının kayıtları, sonra örnekler (silinen örnek `rota-silinen`de tutulur) */
+    oku: function () {
+      var silinen = window.dgKayit.oku('rota-silinen').map(function (k) { return k.id; });
+      return window.dgKayit.oku('rota').concat(ROTA_ORNEK).filter(function (r) { return silinen.indexOf(r.id) < 0; });
+    },
+    kaydet: function (plan) {
+      plan = JSON.parse(JSON.stringify(plan)); plan.id = plan.id || ('rota-' + Date.now()); plan.guncellendi = new Date().toISOString();
+      if (window.dgKayit.var('rota', plan.id)) { window.dgKayit.sil('rota', plan.id); }
+      return window.dgKayit.ekle('rota', plan);
+    },
+    sil: function (id) { if (window.dgKayit.var('rota', id)) { window.dgKayit.sil('rota', id); } else { window.dgKayit.ekle('rota-silinen', { id: id }); } }
   };
   /* Örnek kayıtlar: döngü ilk açılışta görünsün diye bir kez yazılır, hepsi `ornek` işaretli. Tarih bugüne göre kurulur */
   (function () {
