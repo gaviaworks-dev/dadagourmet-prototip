@@ -1,0 +1,70 @@
+/* İşletme Paneli eki: kanonda (tokenlar · bilesenler · admin · ek-bilesenler) karşılığı olmayan birkaç düzen.
+   Yeni renk, radyus ya da ölçü yok; yalnız kanon tokenleri okunur. Bileşenin kendisi kanondan (ayar-satir, medya-kart, olcer, cip, segment). */
+
+/* Saat kutusu: Diet Genel Bakış'taki randevu saat kutusunun kanon karşılığı (as-ikon içinde saat) */
+.ayar-satir .as-ikon.saat-ikon{width:auto;min-width:52px;padding:0 var(--bosluk-8)}
+.ayar-satir .as-ikon.saat-ikon b{font-size:var(--yazi-13);font-weight:var(--agirlik-kalin);color:var(--aksan-koyu)}
+.ayar-satir .as-metin .olcer{margin-top:var(--bosluk-8)}
+
+/* Rezervasyon: gün çipleri ve saat slotları */
+.gun-sec{margin-bottom:var(--bosluk-16)}
+.slot-izgara{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:var(--bosluk-8)}
+.slot-kutu{display:flex;flex-direction:column;align-items:flex-start;gap:var(--bosluk-4);min-height:44px;padding:var(--bosluk-12);background:var(--kagit);border:1px solid var(--cizgi);border-radius:var(--yuvarlak-md);color:var(--murekkep);text-align:start;cursor:pointer;font:inherit}
+.slot-kutu b{font-size:var(--yazi-15);font-weight:var(--agirlik-kalin)}
+.slot-kutu span{font-size:var(--yazi-12);color:var(--metin-ikincil)}
+.slot-kutu .olcer{width:100%}
+.slot-kutu:hover{border-color:var(--aksan-koyu)}
+.slot-kutu[aria-pressed="true"]{border-color:var(--aksan-koyu);background:var(--aksan-yikama)}
+.slot-izgara .alan-yardim{grid-column:1/-1}
+.rez-eylem{flex-wrap:wrap;justify-content:flex-end}
+.tablo td .rozet + small,.tablo td .durum-hapi + small{display:block;margin-top:var(--bosluk-4)}
+.tablo td .olcer{margin-top:var(--bosluk-6);min-width:72px}
+
+/* Çalışma saatleri satırı: gün · aralıklar · anahtar */
+.saat-satir{flex-wrap:wrap}
+.saat-satir .as-metin{min-width:160px}
+.saat-eylem{flex-wrap:wrap;justify-content:flex-end;gap:var(--bosluk-8)}
+.saat-araliklar{display:flex;flex-direction:column;gap:var(--bosluk-8)}
+.saat-aralik{display:inline-flex;align-items:center;gap:var(--bosluk-6)}
+.saat-aralik .alan-girdi{width:118px}
+
+/* Fotoğraflar: kanon medya kartı galeride (hover kalkışı yok; kart bir bağ değil) */
+.foto-izgara .medya-kart:hover{transform:none}
+.foto-izgara .medya-kart-gorsel{height:180px}
+.foto-izgara .medya-kart-gorsel::after{display:none}
+.foto-izgara .medya-kart-govde{gap:var(--bosluk-12)}
+.foto-eylem{justify-content:space-between;flex-wrap:wrap}
+
+/* Değerlendirme kartı: üç kriter ve yıldız */
+.kriter-sira{display:flex;flex-wrap:wrap;gap:var(--bosluk-6) var(--bosluk-16)}
+.kriter-sira > span{display:inline-flex;align-items:center;gap:var(--bosluk-6)}
+.yildiz-sira{display:inline-flex;gap:2px;color:var(--uyari)}
+.yildiz-sira .yildiz-bos{color:var(--cizgi)}
+.deg-metin{margin-bottom:var(--bosluk-16);line-height:1.6;color:var(--murekkep)}
+.yanit-form .eylem-satiri{justify-content:flex-end}
+
+/* Profil kart önizlemesi */
+.onizleme-kart:hover{transform:none}
+.kart-nitelik-onizleme{display:flex;flex-wrap:wrap;gap:var(--bosluk-6);margin-bottom:var(--bosluk-8)}
+.kart-nitelik-onizleme:empty{display:none}
+
+/* Başvuru hata notu: kanon bilgi notu, hata ailesinin renkleriyle */
+.bilgi-notu.hata-notu{background:var(--tehlike-yikama);border-color:var(--tehlike-cizgi);color:var(--tehlike-koyu)}
+
+@media (max-width:640px){
+  .saat-satir .as-eylem{width:100%;justify-content:flex-start}
+  .saat-aralik .alan-girdi{width:104px}
+  .slot-izgara{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .foto-izgara{grid-template-columns:minmax(0,1fr)}
+}
+@media (min-width:641px) and (max-width:1100px){
+  .foto-izgara{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* İstatistik grafiği: dönem ve seri seçimi kart başında; dar ekranda seçim satırı yatay kayar */
+.grafik-secim{flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:640px){
+  .grafik-secim{width:100%;justify-content:flex-start}
+  .grafik-secim .segment{max-width:100%;overflow-x:auto;scrollbar-width:none}
+  .grafik-secim .segment button{flex:none}
+}
