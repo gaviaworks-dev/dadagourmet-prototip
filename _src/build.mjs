@@ -77,9 +77,11 @@ for (const s of sayfalar) {
 }
 // Ekran haritası: onay turu için tüm sayfaların gezilebilir listesi
 if (!alan) {
-  const gruplar = [['Public', (u) => !u.yol.startsWith('hesabim')], ['Üye hesabı', (u) => u.yol.startsWith('hesabim')]];
+  // İşletme Paneli ayrı grup; giriş bağı İşletme rolü seçili giriş ekranına gider (e-posta ve şifre örnekle dolu)
+  const panelde = (u) => /^isletme(\/|$)/.test(u.yol);
+  const gruplar = [['Public', (u) => !u.yol.startsWith('hesabim') && !panelde(u)], ['Üye hesabı', (u) => u.yol.startsWith('hesabim')], ['İşletme Paneli', panelde]];
   const liste = [...uretilen].sort((a, b) => a.yol.localeCompare(b.yol, 'tr'));
-  const govde = `<section class="ekran-haritasi"><div class="wrap kap"><h1>Ekran haritası</h1><p>Prototipteki ${liste.length} ekran. Yayın kararı verilmedi; arama motorlarına kapalıdır.</p>${gruplar.map(([ad, f]) => { const l = liste.filter(f); return `<h2>${ad} <small>${l.length}</small></h2><ul>${l.map((u) => `<li><a href="{{kok}}${u.yol ? u.yol + '/' : ''}"><b>${u.baslik || 'Ana sayfa'}</b> <small>/${u.yol}</small></a></li>`).join('')}</ul>`; }).join('')}</div></section>`;
+  const govde = `<section class="ekran-haritasi"><div class="wrap kap"><h1>Ekran haritası</h1><p>Prototipteki ${liste.length} ekran. Yayın kararı verilmedi; arama motorlarına kapalıdır.</p><p><a href="{{kok}}giris/?rol=isletme&amp;donus=isletme%2F"><b>İşletme Paneli girişi</b> <small>mekân sahibi demo hesabı</small></a></p>${gruplar.map(([ad, f]) => { const l = liste.filter(f); return `<h2>${ad} <small>${l.length}</small></h2><ul>${l.map((u) => `<li><a href="{{kok}}${u.yol ? u.yol + '/' : ''}"><b>${u.baslik || 'Ana sayfa'}</b> <small>/${u.yol}</small></a></li>`).join('')}</ul>`; }).join('')}</div></section>`;
   const s = { yol: 'ekranlar', meta: { baslik: 'Ekran haritası', zincir: 'yasal' }, govde };
   fs.mkdirSync(path.join(KOK, 'ekranlar'), { recursive: true });
   fs.writeFileSync(path.join(KOK, 'ekranlar/index.html'), uyeYaz(parcalariAc(kabukla(s, { veri }))).replaceAll('{{kok}}', '../'));
@@ -102,7 +104,9 @@ const YEDEK = [
   [/^sss$/, ['hesabim/cozum-merkezi/cozum']],
   [/^hesabim\/.+/, ['hesabim/ayarlar']],
   [/^yasal(\/.+)?$/, ['yasal/kvkk']],
-  [/^(isletme(\/.+)?|sss)$/, ['iletisim']],
+  // İşletme Paneli'nde karşılığı olmayan alt yol panelin ana ekranına gider (eski portal yolları panelde aynı adreste)
+  [/^isletme\/.+/, ['isletme', 'iletisim']],
+  [/^(isletme|sss)$/, ['iletisim']],
   [/^basin-medya$/, ['hakkimizda']],
   [/^dada-route\/.+/, ['dada-route']],
   [/^gurme-lezzetler\/.+/, ['gurme-lezzetler']],

@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { panelKabuk, PANEL_CSS, PANEL_JS } from './panel.mjs';
 
 const BU = path.dirname(fileURLToPath(import.meta.url));
 const SRC = path.join(BU, '..');
@@ -21,9 +22,34 @@ function aktifle(html, aktif) {
   return html.replace(new RegExp(`(<div class="nav-item"><a )(href="[^"]*${aktif}/")`), '$1class="active" $2');
 }
 
+// İşletme Paneli: Gastro/Diet panel kanonunun kendi kabuğu (public başlık, altbilgi, Mentör yok). Ayrıntı `panel.mjs`
+function panelSayfa(s, m) {
+  const css = [...PANEL_CSS, ...(m.css ?? []).map(gourmetCss)].map((c) => `<link rel="stylesheet" href="${K}${c}">`).join('\n');
+  const js = [`<script src="${K}${PANEL_JS[0]}"></script>`, ...[...PANEL_JS.slice(1), ...(m.js ?? [])].map((j) => `<script defer src="${K}${j}"></script>`)].join('\n');
+  return `<!doctype html>
+<html lang="tr" data-kok="${K}" data-yol="${s.yol ?? ''}" data-uye-sayfa="1" data-panel="isletme">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>${kacis(m.baslik ?? 'İşletme Paneli')} · İşletme Paneli · Dada Gourmet</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="dg-ornek-uye" content="{{uye.ad}}|{{uye.kullanici}}">
+<!-- donör: ${kacis(m.donor ?? 'Gastro/Diet panel kanonu')} -->
+<link rel="icon" href="${K}assets/img/favicon.ico">
+${css}
+${js}
+</head>
+<body class="yetkili" data-marka="gourmet">
+${panelKabuk(m, s.govde, m.sayaclar ?? {})}
+</body>
+</html>
+`;
+}
+
 export function kabukla(s) {
   const m = s.meta ?? {};
   const duzen = m.duzen ?? 'public';
+  if (duzen === 'panel') return panelSayfa(s, m);
   const z = zincir[m.zincir ?? 'yasal'] ?? zincir.rota;
   const once = m.gourmet ? GOURMET_ONCE : [];
   const harita = (m.js ?? []).some((j) => j.includes('maplibre')) && !(m.css ?? []).some((c) => c.includes('maplibre')) ? ['assets/vendor/maplibre/maplibre-gl.css'] : [];
