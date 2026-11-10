@@ -1,4 +1,4 @@
-<!--{"yol":"","baslik":"Lezzetin rotasını keşfet","zincir":"hakkimizda","gourmet":true,"css":["anasayfa.css","gourmet-sapma"],"js":["assets/js/etkinlik-veri.js","assets/js/sayfa/ana.js"],"govdeSinif":"pg-anasayfa","donor":"https://dadagourmet.com/ (gövde) + https://dadagastro.com/ (kabuk)"}-->
+<!--{"yol":"","baslik":"Lezzetin rotasını keşfet","zincir":"hakkimizda","gourmet":true,"css":["anasayfa.css","gourmet-sapma"],"js":["assets/js/etkinlik-veri.js","assets/js/lezzet-veri.js","assets/js/sayfa/lezzetler.js","assets/js/sayfa/ana.js"],"govdeSinif":"pg-anasayfa","donor":"https://dadagourmet.com/ (gövde) + https://dadagastro.com/ (kabuk)"}-->
 
                                 <div class="ke-grid-view" id="keBrowse">
 
@@ -170,7 +170,7 @@
             <b>Şef Restoranı</b><span>51 mekân</span>
           </a></div>
     </div>
-  </section><section class="gm-vitrin gm-sec--light"><div class="wrap"><div class="gm-ev-head"><span class="eyebrow">Vitrin</span></div><h2 class="vt-baslik">Şef masasından esnaf durağına, üreticiye</h2><div class="vt-izgara"><div class="vt-sutun"><div class="vt-bas"><span class="vt-ikon"><i class="fa-solid fa-gem" aria-hidden="true"></i></span><div><h3>Lüks Restoranlar</h3><p>Şef masaları ve manzaralı sofralar</p></div></div><div class="vt-liste"><a class="vt-kart" href="{{kok}}mekan/narimor-urla/"><span class="vt-gorsel" style="background-image:url('{{kok}}assets/o/medya/1083-400.webp')"></span><span class="vt-metin"><b>Narımor Urla</b><small>Urla / İzmir</small></span></a><a class="vt-kart" href="{{kok}}mekan/red-balloon-istanbul/"><span class="vt-gorsel" style="background-image:url('{{kok}}assets/o/medya/1047-400.webp')"></span><span class="vt-metin"><b>The Red Balloon Restoran &amp; Bar</b><small>Beyoğlu / İstanbul</small></span></a></div><a class="see-all" href="{{kok}}mekanlar/?konsept=luks">Tümünü Gör <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div><div class="vt-sutun"><div class="vt-bas"><span class="vt-ikon"><i class="fa-solid fa-store" aria-hidden="true"></i></span><div><h3>Tarihi Esnaf Durakları</h3><p>Ustadan çırağa geçen lezzetler</p></div></div><div class="vt-liste"><a class="vt-kart" href="{{kok}}mekan-bul/?amac=esnaf"><span class="vt-gorsel" style="background-image:url('{{kok}}assets/o/assets/gourmet-public/medya/konsept-geleneksel.webp')"></span><span class="vt-metin"><b>Örnek esnaf lokantası</b><small>Şehir ve semt burada görünür</small><span class="ornek-etiket">prototip örneği</span></span></a><a class="vt-kart" href="{{kok}}mekan-bul/?amac=esnaf"><span class="vt-gorsel" style="background-image:url('{{kok}}assets/o/assets/gourmet-public/medya/konsept-tarihi.webp')"></span><span class="vt-metin"><b>Örnek tarihi durak</b><small>Şehir ve semt burada görünür</small><span class="ornek-etiket">prototip örneği</span></span></a></div><a class="see-all" href="{{kok}}mekan-bul/?amac=esnaf">Esnaf Ara <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div><div class="vt-sutun"><div class="vt-bas"><span class="vt-ikon"><i class="fa-solid fa-basket-shopping" aria-hidden="true"></i></span><div><h3>Yerel Üreticiler</h3><p>Paketli yerel ürünler ve kooperatifler</p></div></div><div class="vt-liste"><a class="vt-kart" href="{{kok}}dada-route/"><span class="vt-gorsel" style="background-image:url('{{kok}}assets/o/assets/gourmet-public/medya/9741.webp')"></span><span class="vt-metin"><b>Örnek yerel üretici</b><small>Ürün ve bölge burada görünür</small><span class="ornek-etiket">prototip örneği</span></span></a><a class="vt-kart" href="{{kok}}dada-route/"><span class="vt-gorsel" style="background-image:url('{{kok}}assets/o/assets/gourmet-public/medya/konsept-doga-icinde.webp')"></span><span class="vt-metin"><b>Örnek kooperatif</b><small>Ürün ve bölge burada görünür</small><span class="ornek-etiket">prototip örneği</span></span></a></div><a class="see-all" href="{{kok}}dada-route/">Rotada Gör <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div></div></section>
+  </section>
 
   
   <section class="gm-modules gm-sec--tint" id="gmModules">
@@ -352,6 +352,22 @@
   
   
   
+        <section class="gm-concept gm-concept-teaser gm-sec--tint">
+      <div class="wrap">
+        <div class="gm-ev-head">
+          <span class="eyebrow">Gurme Lezzetler</span>
+          <div class="sec-tools">
+            <a class="see-all" href="{{kok}}gurme-lezzetler/">Tamamını Gör <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            <div class="cat-nav">
+              <button type="button" id="glPrev" aria-label="Önceki"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+              <button type="button" id="glNext" aria-label="Sonraki"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="gl-teaser-grid" id="glTrack" data-adet="8"></div>
+      </div>
+    </section>
+
   <section class="gm-teaser px-band" data-px-band="1"><div class="px-clip" style="--px-x: 50%; --px-y: 50%; --px-r: 0px; --px-shift: 0.0px;"><div class="px-media" style="background-image: url(&quot;{{kok}}assets/o/assets/gourmet-public/img/gourmet-kesfet-teaser-bg.webp&quot;);"></div></div>
     <div class="gm-teaser-media" aria-hidden="true" style="background-image: none; background-color: transparent;"></div>
     <div class="wrap">

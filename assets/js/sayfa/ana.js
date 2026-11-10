@@ -1,6 +1,15 @@
 /* Ana sayfa: kaydırma rayı (donör `kesfet.js` davranışı yerine dar kopya) */
 (function () { 'use strict'; document.querySelectorAll('[data-scroll-to]').forEach(function (b) { b.addEventListener('click', function () { var h = document.querySelector(b.getAttribute('data-scroll-to')); if (h) { h.scrollIntoView({ behavior: 'smooth' }); } }); }); })();
 
+/* Ray okları: donör `kesfet.js` `wireTrackNav`, adımlar aynı (modül 460, etkinlik 400, Gurme Lezzetler 380) */
+(function () {
+  'use strict';
+  [['gmModTrack', 'modPrev', 'modNext', 460], ['evTrack', 'evPrev', 'evNext', 400], ['glTrack', 'glPrev', 'glNext', 380]].forEach(function (r) {
+    var ray = document.getElementById(r[0]); if (!ray) { return; }
+    [[r[1], -1], [r[2], 1]].forEach(function (d) { var b = document.getElementById(d[0]); if (b) { b.addEventListener('click', function () { ray.scrollBy({ left: d[1] * r[3], behavior: 'smooth' }); }); } });
+  });
+})();
+
 /* Konuma göre vitrin (şartname akış 1, W3.1a-b). İlk ziyarette "Neredesin?" bir kez açılır; canlıda yalnız düğmeyle açılıyor.
    Konum alınınca Yaklaşan Etkinlikler en yakın, bitmemiş Türkiye etkinlikleriyle yeniden dizilir. Kart DOM'u sayfadaki ilk karttan. Konum yalnız bu tarayıcıda kalır. */
 (function () {

@@ -1,4 +1,4 @@
-/* Gurme Lezzetler ve yazı detayı. Veri `lezzet-veri.js`, canlı `/gurme-lezzetler` kayıtlarının kopyası.
+/* Gurme Lezzetler, yazı detayı ve ana sayfadaki Gurme Lezzetler rayı. Veri `lezzet-veri.js`, canlı `/gurme-lezzetler` kayıtlarının kopyası.
    Kategori ve sıralama canlıdaki gibi sayfa yenilemeden değişir; sayfa numarası gerçek bağdır. Kart kaydı yalnız bu tarayıcıda durur. */
 (function () {
   'use strict';
@@ -17,11 +17,19 @@
   };
   var kalpBoya = function (b, on) { var i = $('i', b); if (i) { i.className = (on ? 'fa-solid' : 'fa-regular') + ' fa-heart'; } b.setAttribute('aria-pressed', on ? 'true' : 'false'); };
   document.addEventListener('click', function (ev) {
-    var s = ev.target.closest && ev.target.closest('.disc-save'); if (!s) { return; }
+    var s = ev.target.closest && ev.target.closest('.ke-stop[data-slug] .disc-save'); if (!s) { return; }
     ev.preventDefault(); ev.stopPropagation(); if (!window.dgUye()) { return; }
     var slug = s.closest('[data-slug]').dataset.slug, id = 'lezzet-' + slug, x = bul(slug);
     if (K.var('favori', id)) { K.sil('favori', id); kalpBoya(s, false); } else { K.ekle('favori', { id: id, tur: 'Lezzet', ad: x.ad, mekan: x.katAd }); kalpBoya(s, true); bildir('Gurme Favorilerim\'e eklendi.'); }
   }, true);
+
+  /* Ana sayfa rayı: liste sayfasının kartı, canlı "En Yeni" sırası. Kendi kapağı olan yazılar: canlıda kapaksız yazılar ortak yedek görseli taşır, rayda yan yana tekrar etmesin */
+  var ray = $('#glTrack');
+  if (ray) {
+    var say = {}; V.lezzetler.forEach(function (e) { say[e.gorsel] = (say[e.gorsel] || 0) + 1; });
+    ray.innerHTML = V.lezzetler.filter(function (e) { return say[e.gorsel] === 1; }).slice(0, +ray.dataset.adet || 8).map(kart).join('');
+    return;
+  }
 
   /* Detay sayfası */
   var kolon = $('.art-col');
