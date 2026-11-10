@@ -71,6 +71,13 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 .yg-katman-pin--ibadet,.yg-katman-pin--tarihi{background:#2f6fb0}.yg-katman-pin--dinlenme{background:#8a6410}.yg-katman-pin--neyenir{background:var(--marka)}.yg-katman-pin--nealinir{background:var(--marka-koyu)}
 .yg-brand .gourmet-word-mark{display:block;height:26px;width:auto;color:var(--marka)}
 .yg-brand .dg-word{display:block}
+/* D1 · Alt marka kilidi (10 Kas). Kanon: dadagastro.com/kids ve /health başlığı (`.pg-kids .header .brand::after`): akış dışı mutlak
+   konumlu alt kelime, GilroyXB 800, 16px (≤640: 15px), satır 1, logo kutusuna 4px biner. Fark (Beyar): "Route" logonun altında değil,
+   sağ üst çaprazında, üst simge gibi: alt kenarı logonun üst kenarından 9px aşağıda (logonun ortasından 4px yukarıda; telefonda bağın
+   44px dolgusu ortayı değiştirmez). Renk logonun rengi (--marka). Kilit başlık bandında dikeyde ortalansın diye bütünü 6px aşağıda */
+.yg-kilit{position:relative;transform:translateY(6px)}
+.yg-kilit-alt{position:absolute;left:calc(100% + 2px);bottom:calc(50% + 4px);font-family:"GilroyXB","Gilroy",sans-serif;font-size:16px;font-weight:800;line-height:1;letter-spacing:0;color:var(--marka);white-space:nowrap;pointer-events:none}
+@media (max-width:640px){.yg-kilit-alt{font-size:15px}}
 .gastronomi-kapali .yg-vpin,.gastronomi-kapali .yg-vcluster{display:none}
 
 /* İl kartı yerleşimi: Ne Yenir ve Ne Alınır yan yana, iç boşluk sıkı; dar ekranda alt alta. */
@@ -307,6 +314,8 @@ body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .page-main p{tex
 .yg-il-harita-rozet i{font-size:10px;color:var(--marka)}
 .yg-il-harita-rozet:hover{border-color:var(--marka);background:var(--marka-yikama)}
 .yg-koridor-etiket span{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+/* D2 · Gerçek rota (10 Kas): çizgi OSRM'den geldiyse "Örnek koridor" etiketi görünmez; yalnız yol ağı yedeğinde (`data-rota-kaynak="yedek"`) kalır */
+#routeMap[data-rota-kaynak="osrm"] .yg-koridor-etiket{display:none}
 /* Hızlı süzgeç ve sapma toleransı sağda kesiliyordu: kaydırma yerine sarar, kayan solgunluk kalkar. Pilot şerit canlıdaki gibi kayar */
 .yg-corr .yg-tol-chips,.yg-quick #ygQuickFilters{flex-wrap:wrap;overflow:visible}
 .yg-corr .yg-tol-chips::after,.yg-quick #ygQuickFilters::after{content:none}

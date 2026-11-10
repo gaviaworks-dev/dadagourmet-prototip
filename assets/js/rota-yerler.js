@@ -1,5 +1,5 @@
 /* Dada Route yer arama verisi: 81 il merkezi ve başlıca ilçe ve semtler. Koordinatlar yaklaşık (il merkezi ya da ilçe merkezi),
-   "prototip örneği"dir; canlıda yer araması sunucudan gelir. `rota-sahte.js` aramayı ve örnek koridoru buradan kurar.
+   "prototip örneği"dir; canlıda yer araması sunucudan gelir. `rota-sahte.js` aramayı, il kartı eşlemesini ve yedek koridoru buradan kurar.
    il: [plaka, ad, bölge, enlem, boylam] · ilce: [ad, il, enlem, boylam] */
 window.DG_YERLER = {
   il: [
