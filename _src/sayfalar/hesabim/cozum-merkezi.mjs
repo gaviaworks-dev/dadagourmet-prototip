@@ -8,7 +8,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { bant, gourmetSayac, ray, sayfa, et, kac } from './_kalip.mjs';
+import { bant, gourmetSayac, sayfa, et, kac } from './_kalip.mjs';
+import { gastroRay, gastroPano, SEKME_CSS, SEKME_JS } from './_gastro-sekme.mjs';
 
 const KOK = 'hesabim/cozum-merkezi';
 const DURUM = {
@@ -71,21 +72,16 @@ const talepSatiri = (t) => {
 const sayaclar = Object.fromEntries(SUZGEC.map(([k]) => [k, k === 'tumu' ? T.length : T.filter((t) => t.durum === k).length]));
 const akistakiler = T.filter((t) => t.durum === 'acik' || t.durum === 'yanit-bekleyen');
 
-const RAY = [
-  ['taleplerim', `${KOK}/`, 'fa-solid fa-inbox', 'Destek Taleplerim'],
-  ['yeni', `${KOK}/yeni/`, 'fa-solid fa-plus', 'Yeni Destek Talebi'],
-  ['cozum', `${KOK}/cozum/`, 'fa-solid fa-circle-question', 'Sıkça Sorulan Sorular'],
-  ['oneri', `${KOK}/oneri/`, 'fa-solid fa-comment-dots', 'Öneri ve Şikâyet'],
+// Gastro'daki gibi dört pano aynı belgede (sayfa içi sekme); canlı Gourmet'in alt yolları o panoyu açık basar
+const SEKMELER = [
+  ['taleplerim', 'fa-solid fa-inbox', 'Destek Taleplerim'],
+  ['yeni', 'fa-solid fa-plus', 'Yeni Destek Talebi'],
+  ['cozum', 'fa-solid fa-circle-question', 'Sıkça Sorulan Sorular'],
+  ['oneri', 'fa-solid fa-comment-dots', 'Öneri ve Şikâyet'],
 ];
 
 const ust = bant({ cur: 'Çözüm Merkezi', ikon: 'fa-solid fa-utensils', giris: 'Destek taleplerin, yeni talep açma, sıkça sorulan sorular ve öneri/şikâyet. Sekme değişir, kimlik kartın yerinde kalır.', serit: gourmetSayac() });
-const pane = (anahtar, icerik) => `<div class="modul-govde">
 
-<div class="fit-pane aktif" data-pane="${anahtar}" id="destek-pane-${anahtar}" role="region" aria-labelledby="destek-tab-${anahtar}" tabindex="0">
-${icerik}
-</div>
-
-</div>`;
 const hata = (id) => `<p class="alan-hata" id="${id}" hidden=""><i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i><span></span></p>`;
 const yardim = (id, metin) => `<p class="alan-yardim" id="${id}"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> ${metin}</p>`;
 const ekAlani = (on) => `<div class="alan">
@@ -526,15 +522,22 @@ const hedef = (h) => h
   .replaceAll('@ODEMELER@', varMi('hesabim/odemelerim') ? 'hesabim/odemelerim/' : 'hesabim/paketlerim/')
   .replaceAll('@MEKANLARIM@', varMi('hesabim/kaydedilenler') ? 'hesabim/kaydedilenler/' : 'hesabim/gurme-panelim/gurme-favorilerim/');
 
-const JS = { js: ['assets/js/sayfa/cozum-merkezi.js'] };
-const ekran = (anahtar, icerik) => hedef(ust + ray('Çözüm Merkezi bölümleri', RAY, anahtar, 'destek') + pane(anahtar, icerik));
+const DONOR = 'yerel Gastro /hesabim/cozum-merkezi (resources/views/turetilmis/uye/g-cozum-merkezi.blade.php, demo tohum render); içerik canlı dadagourmet.com/hesabim/cozum-merkezi, DadaGourmet-acil 4eb638c resources/views/hesap/cozum-merkezi.blade.php';
+const ekran = (yol, anahtar, talep = null) => {
+  const pano = { taleplerim: taleplerim(talep), yeni, cozum, oneri };
+  const govde = hedef(ust + gastroRay('destek', 'Çözüm Merkezi bölümleri', SEKMELER, anahtar)
+    + `<div class="modul-govde">\n${SEKMELER.map(([a]) => gastroPano('destek', a, anahtar, pano[a])).join('\n')}\n</div>`);
+  const s = sayfa(yol, 'Çözüm Merkezi', govde, { js: [...SEKME_JS, 'assets/js/sayfa/cozum-merkezi.js'], donor: DONOR });
+  s.meta.css = ['assets/g/kanon/gomulu/cozum-merkezi-fark.css', ...SEKME_CSS, ...s.meta.css];
+  return s;
+};
 
 export default function () {
   return [
-    sayfa(KOK, 'Çözüm Merkezi', ekran('taleplerim', taleplerim()), JS),
-    ...T.map((t) => sayfa(`${KOK}/${kisa(t)}`, 'Çözüm Merkezi', ekran('taleplerim', taleplerim(t)), JS)),
-    sayfa(`${KOK}/yeni`, 'Çözüm Merkezi', ekran('yeni', yeni), JS),
-    sayfa(`${KOK}/cozum`, 'Çözüm Merkezi', ekran('cozum', cozum), JS),
-    sayfa(`${KOK}/oneri`, 'Çözüm Merkezi', ekran('oneri', oneri), JS),
+    ekran(KOK, 'taleplerim'),
+    ...T.map((t) => ekran(`${KOK}/${kisa(t)}`, 'taleplerim', t)),
+    ekran(`${KOK}/yeni`, 'yeni'),
+    ekran(`${KOK}/cozum`, 'cozum'),
+    ekran(`${KOK}/oneri`, 'oneri'),
   ];
 }

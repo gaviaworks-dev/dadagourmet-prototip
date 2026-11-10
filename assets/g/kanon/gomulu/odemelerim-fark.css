@@ -1,0 +1,3 @@
+/* Gastro /hesabim/odemelerim sayfa paketinin (kanon/gomulu/s-ff27496b3767.css) Hesabım paketinden (s-87b1c5be9aa3.css,
+   bu zincirde yüklü) farkı: Ödemelerim render'ında kullanılıp zincirde kuralı olmayan tek sınıf `od-sec`. Kural aynen. */
+.od-sec+.od-sec{margin-top:44px}

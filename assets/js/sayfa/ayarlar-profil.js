@@ -133,8 +133,25 @@
     if(!v){ hataYaz(''); return; }                       /* alan opsiyonel */
     var d = coz(v);
     if(!d){ hataYaz('Tarihi gg.aa.yyyy biçiminde yaz — örneğin 14.03.1992.'); return; }
-    if(d > UST){ hataYaz('DadaGastro 13 yaş ve üzeri içindir. En yeni seçilebilen tarih: '+bicimle(UST)+'.'); return; }
+    if(d > UST){ hataYaz('Dada Gourmet 13 yaş ve üzeri içindir. En yeni seçilebilen tarih: '+bicimle(UST)+'.'); return; }
     if(d < ALT){ hataYaz(ALT.getFullYear()+' öncesi bir tarih seçilemez.'); return; }
     secili = d; alan.value = bicimle(d); hataYaz('');
+  });
+})();
+
+/* Hesap Ayarları · Güvenlik — Gastro'daki iki adımlı doğrulama satırları. Gastro'da kurulum ve kurtarma kodu penceresi
+   kanonun gömülü betiğinden (`#tfaModal`) gelir; o betik bu sayfada yüklenmez. Prototipte anahtar yalnız satır metnini
+   değiştirir, düğmeler ne olacağını söyler; kod gönderilmez, hiçbir şey kaydedilmez. */
+(function(){
+  var bildir = window.prototipBildir || function(){};
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('[data-prototip-not]');
+    if(b){ e.preventDefault(); bildir(b.getAttribute('data-prototip-not')); }
+  });
+  var t = document.getElementById('gv2fa'), d = document.getElementById('gv2faDurum');
+  if(!t || !d) return;
+  t.addEventListener('change', function(){
+    d.innerHTML = (t.checked ? 'Açık: girişte' : 'Kapalı: açtığında girişte') + ' <b>telefonuna gelen 6 haneli kod</b> istenir. Yöntemi değiştirmek için kurulumu yeniden çalıştır.';
+    bildir(t.checked ? 'İki adımlı doğrulama bu tarayıcıda açık görünüyor; prototipte kod gönderilmez.' : 'İki adımlı doğrulama kapatıldı.');
   });
 })();

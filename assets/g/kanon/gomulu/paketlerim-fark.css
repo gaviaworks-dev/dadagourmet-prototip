@@ -1,0 +1,5 @@
+/* Gastro /hesabim/paketlerim sayfa paketinin (kanon/gomulu/s-59b958aea15c.css) Hesabım paketinden (s-87b1c5be9aa3.css,
+   bu zincirde yüklü) farkı: Paketlerim render'ında kullanılıp zincirde kuralı olmayan bölüm aralığı `pk-sec`. Kural aynen.
+   Kademe kartının `pro-card`/`pro-flag`/`t0…t3` kuralları kanonda `kademe-karti`/`kademe-bayrak` adıyla çiziliyor; aynı
+   elemanı iki kez boyamamak için alınmadı. */
+.pk-sec+.pk-sec{margin-top:44px}

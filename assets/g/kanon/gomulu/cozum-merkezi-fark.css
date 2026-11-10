@@ -1,0 +1,7 @@
+/* Gastro /hesabim/cozum-merkezi sayfa paketinin (kanon/gomulu/s-0a5a60aef305.css) Hesabım paketinden (s-87b1c5be9aa3.css,
+   bu zincirde yüklü) farkı: Çözüm Merkezi render'ında kullanılıp zincirde kuralı olmayan sınıflar. `faq-sec`,
+   `faq-cta-sec`, `tk-form-sec` Gastro'da da boş kural; kuralı olan tek sınıf gönderim onayı `tk-ok`. Kurallar aynen. */
+.tk-ok{display:flex;align-items:flex-start;gap:10px;margin:0 0 20px;padding:13px 15px;border-radius:var(--radius-md); background:var(--bg);border:1px dashed var(--line);color:var(--slate-2);font-size:13px;font-weight:600;line-height:1.5}
+.tk-ok i{font-size:14px;margin-top:1px;flex:none;color:var(--slate-2)}
+.tk-ok a{color:var(--fit-deep);text-decoration:underline;text-underline-offset:2px}
+.tk-ok[hidden]{display:none}

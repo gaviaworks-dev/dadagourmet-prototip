@@ -1,0 +1,11 @@
+/* Gastro /hesabim/rozetlerim sayfa paketinin (kanon/gomulu/s-5388db24d4cd.css) Hesabım paketinden (s-87b1c5be9aa3.css,
+   bu zincirde yüklü) farkı: Rozetlerim render'ında kullanılıp zincirde kuralı olmayan tek sınıf `pd-grid`. Kurallar aynen. */
+.pd-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(216px,1fr));gap:12px}
+@media (max-width:640px){
+  .pd-grid{grid-template-columns:1fr}
+}
+/* Gourmet sapması: Gastro merdiveni sekiz kademe (`.merdiven` 8 sütun); Gourmet'te beş rütbe var, sütun sayısı kademe
+   sayısına eşitlenir. ≤640 kanonun iki sütunu kalır. */
+@media (min-width:641px){
+  #rzLadder{grid-template-columns:repeat(5,1fr)}
+}

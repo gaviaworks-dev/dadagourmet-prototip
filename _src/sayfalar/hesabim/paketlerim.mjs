@@ -4,7 +4,8 @@
 // app/Ticaret/Servisler/PaketOzellikMatrisi.php (8 kategori × 34 satır). Örnek üye Ücretsiz kademede.
 // "Pro'a Yükselt": canlıda satış defterinde Pro satırı varsa gerçek alım formu (hesap.ticaret.store); prototipte
 // aynı yerde onay penceresi açılır, ödeme bağlı değildir, yalnız bu tarayıcıya not düşer.
-import { bant, gourmetSayac, ray, panelDugme, altNot, sayfa } from './_kalip.mjs';
+import { bant, gourmetSayac, panelDugme, altNot, sayfa } from './_kalip.mjs';
+import { gastroRay, gastroPano, SEKME_CSS, SEKME_JS } from './_gastro-sekme.mjs';
 
 // PaketKademesi::merdiven()
 const KADEME = [
@@ -72,7 +73,6 @@ const SATIRLAR = G.flatMap(([, , s]) => s);
 const etiket = (s, d) => (typeof d === 'string' ? `${s[0]} — ${d}` : s[0]);
 const acik = (i) => SATIRLAR.filter((s) => s[i + 1] !== false).map((s) => etiket(s, s[i + 1]));
 const kapali = (i) => SATIRLAR.filter((s) => s[i + 1] === false).map((s) => s[0]);
-const kazanim = (i) => (i === 0 ? acik(0) : SATIRLAR.filter((s) => s[i + 1] !== false && s[i + 1] !== s[i]).map((s) => etiket(s, s[i + 1])));
 const para = (kurus) => '₺' + (kurus / 100).toLocaleString('tr-TR', { minimumFractionDigits: kurus % 100 ? 2 : 0, maximumFractionDigits: 2 });
 
 const A = KADEME[AKTIF];
@@ -86,24 +86,24 @@ const paketim = `<div class="pk-sec" id="pkAktifSec">
             <div class="sec-head"><div>
               <span class="ust-etiket"><i class="fa-solid fa-crown" aria-hidden="true"></i> Aktif kademe</span>
               <h2>Bugün hangi paketteysen</h2>
-              <p class="lead">Kademen, dönem tarihlerin ve yenileme durumun. Yükseltme buradan başlar.</p>
+              <p class="lead">Kademen, dönem tarihlerin ve yenileme durumun. Yükseltme, düşürme ve iptal buradan başlar.</p>
             </div></div>
             <div id="pkAktif">
               <div class="paket-karti">
                 <div class="paket-bas">
                   <span class="paket-rozet"><i class="fa-solid fa-${A.ikon}" aria-hidden="true"></i> ${A.ad}</span>
                   <div class="paket-bilgi">
-                    <b>Dada Gourmet Ücretsiz <span class="durum-hapi kapali"><i class="fa-solid fa-infinity" aria-hidden="true"></i> Süresiz</span></b>
-                    <span class="paket-yenileme"><i class="fa-solid fa-infinity" aria-hidden="true"></i> Süresi dolmaz, tahsilat yapılmaz, iptal edilecek bir abonelik yok.</span>
+                    <b>Dada Gourmet ${A.ad} <span class="durum-hapi acik"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Etkin</span></b>
+                    <span class="paket-yenileme"><i class="fa-solid fa-rotate" aria-hidden="true"></i> Ücretsiz kademe süresizdir, tahsilat alınmaz.</span>
                   </div>
                   <div class="paket-fiyat"><b>₺0</b><span>/ ay</span></div>
                 </div>
                 <div class="paket-govde">
-                  <p class="durum-satir"><i class="fa-solid fa-infinity" aria-hidden="true"></i> <span>Ücretsiz kademede abonelik kaydı tutulmaz: dönem tarihi, yenileme ve iptal yoktur. Açık olan ${aktifAcik.length} özelliği aşağıda görürsün.</span></p>
+                  <p class="durum-satir"><i class="fa-solid fa-tag" aria-hidden="true"></i> <span>Şu an <b>${A.ad}</b> kademesindesin. Kademeler arası fiyat ve kapsam farkının tamamı Paket Kademeleri sekmesinde.</span></p>
                   <div class="paket-ozellikler">
-${aktifAcik.slice(0, 8).map((o) => `                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> ${o}</span>`).join('\n')}
+${aktifAcik.map((o) => `                    <span><i class="fa-solid fa-check" aria-hidden="true"></i> ${o}</span>`).join('\n')}
                   </div>
-                  <p class="durum-satir"><i class="fa-solid fa-list" aria-hidden="true"></i> <span>Bu kademede toplam <b>${aktifAcik.length} özellik</b> açık. Tam döküm <a href="{{kok}}${P}karsilastir/">Karşılaştırma</a> sekmesinde.</span></p>
+                  <p class="durum-satir" style="margin-top:12px"><i class="fa-solid fa-list" aria-hidden="true"></i> <span>Bu kademede toplam <b>${aktifAcik.length} özellik</b> açık. Tam döküm <a href="{{kok}}${P}karsilastir/">Karşılaştırma</a> sekmesinde.</span></p>
                 </div>
                 <div class="paket-eylemler">
                   ${SATISTA.has(SONRAKI.k) ? yukselt(SONRAKI) : `<a class="dugme birincil" href="{{kok}}${P}kademeler/"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i> ${SONRAKI.ad}'a Yükselt</a>`}
@@ -118,7 +118,7 @@ ${aktifAcik.slice(0, 8).map((o) => `                    <span><i class="fa-solid
           </div>`;
 
 const kademeKart = (k, i) => {
-  const kaz = kazanim(i), gos = kaz.slice(0, 8), kalan = kaz.length - gos.length, kap = kapali(i);
+  const gos = acik(i), kap = kapali(i);
   const aktif = i === AKTIF;
   let dugme;
   if (aktif) dugme = '<button class="dugme hayalet" type="button" disabled="">Mevcut paketin</button>';
@@ -130,12 +130,11 @@ const kademeKart = (k, i) => {
                   <div class="kademe-bas"><i class="fa-solid fa-${k.ikon}" aria-hidden="true"></i><b>${k.ad}</b></div>
                   <p class="kademe-ozet">${k.ozet}</p>
                   <div class="kademe-fiyat">
-                    ${k.tutar !== null ? `<b>${para(k.tutar)}</b><span>/ ay</span>` : `<b aria-hidden="true">—</b><span>${k.not}</span>`}${k.tutar !== null && k.not ? `\n                    <span class="fiyat-bayrak"><i class="fa-solid fa-clock" aria-hidden="true"></i> ${k.not}</span>` : ''}
+                    ${k.tutar !== null ? `<b>${para(k.tutar)}</b><span>${k.tutar === 0 ? '/ her zaman' : '/ ay'}</span>` : `<b aria-hidden="true">—</b><span>${k.not}</span>`}${k.tutar !== null && k.not ? `\n                    <span class="fiyat-bayrak"><i class="fa-solid fa-clock" aria-hidden="true"></i> ${k.not}</span>` : ''}
                   </div>
                   <ul class="kademe-ozellikler">
-${i > 0 ? `                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> <b>${KADEME[i - 1].ad}'in tamamı</b></li>\n` : ''}${gos.map((o) => `                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> ${o}</li>`).join('\n')}
+${gos.map((o) => `                    <li><i class="fa-solid fa-check" aria-hidden="true"></i> ${o}</li>`).join('\n')}
                   </ul>
-                  ${kalan > 0 ? `<a class="pro-daha" href="{{kok}}${P}karsilastir/">ve ${kalan} özellik daha <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>` : ''}
                   ${kap.length ? `<details class="kademe-kapali">
                     <summary>${kap.length} özellik bu kademede kapalı</summary>
                     <ul class="kademe-ozellikler">
@@ -166,7 +165,7 @@ const karsilastir = `<div class="pk-sec">
             <div class="sec-head"><div>
               <span class="ust-etiket"><i class="fa-solid fa-table-list" aria-hidden="true"></i> Satır satır</span>
               <h2>Hangi modül hangi kademede açık</h2>
-              <p class="lead">Tablo, kademe kartlarıyla aynı veriden üretilir — iki yerde iki farklı liste olmaz.</p>
+              <p class="lead">Tablo, kademe kartlarıyla aynı veriden üretilir; iki yerde iki farklı liste olmaz. ${SATIRLAR.length} satır, ${G.length} başlık.</p>
             </div></div>
             <div class="tablo-kap cerceveli" role="region" aria-label="Paket karşılaştırma tablosu" tabindex="0" id="pkTablo">
               <table class="tablo karsilastirma">
@@ -174,7 +173,7 @@ const karsilastir = `<div class="pk-sec">
                 <thead>
                   <tr>
                     <th scope="col">Özellik</th>
-${KADEME.map((k) => `                    <th scope="col"${k.one ? ' class="one-cikan"' : ''}><span class="kademe-ad"><i class="fa-solid fa-${k.ikon}" aria-hidden="true"></i> ${k.ad}</span><span class="kademe-fiyat-not">${k.tutar !== null ? para(k.tutar) + ' / ay' : k.not}</span></th>`).join('\n')}
+${KADEME.map((k) => `                    <th scope="col"${k.one ? ' class="one-cikan"' : ''}><span class="kademe-ad"><i class="fa-solid fa-${k.ikon}" aria-hidden="true"></i> ${k.ad}</span><span class="kademe-fiyat-not">${k.tutar !== null ? para(k.tutar) + (k.tutar === 0 ? ' / her zaman' : ' / ay') : k.not}</span></th>`).join('\n')}
                   </tr>
                 </thead>
                 <tbody>
@@ -185,10 +184,11 @@ ${G.map(([b, i, s]) => `                  <tr class="tablo-grup"><th colspan="${
             <p class="tablo-ipucu"><i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i> Dar ekranda tabloyu yana kaydırarak üç kademeyi karşılaştırabilirsin.</p>
           </div>`;
 
-const RAY = [
-  ['paketim', P, 'fa-solid fa-crown', 'Mevcut Paketim'],
-  ['kademeler', P + 'kademeler/', 'fa-solid fa-layer-group', 'Paket Kademeleri'],
-  ['karsilastir', P + 'karsilastir/', 'fa-solid fa-table-list', 'Paket Karşılaştırma'],
+// Gastro sırası; her alt yol aynı belgeyi o panosu açık basar
+const SEKMELER = [
+  ['paketim', 'fa-solid fa-crown', 'Mevcut Paketim'],
+  ['kademeler', 'fa-solid fa-layer-group', 'Paket Kademeleri'],
+  ['karsilastir', 'fa-solid fa-table-list', 'Paket Karşılaştırma'],
 ];
 const SEKME = { paketim: [P.slice(0, -1), paketim], kademeler: [P + 'kademeler', kademeler], karsilastir: [P + 'karsilastir', karsilastir] };
 
@@ -233,24 +233,26 @@ const yukseltPnl = formPencere('pkYukseltPnl', `${p.ad}'a yükselt`, `Dada Gourm
         </label>
         ${altNot('<b>Prototip: ödeme bağlı değil.</b> Kart bilgisi istenmez, tahsilat yapılmaz; isteğin yalnız bu tarayıcıda not edilir, kademen Ücretsiz kalır.')}`, 'fa-solid fa-arrow-up', 'Yükseltmeyi onayla', `data-dm-mesaj="${p.ad}'a yükseltme isteğin bu tarayıcıda not edildi. Prototipte ödeme bağlı değil; kademen değişmez."`);
 
-export default function () {
-  return RAY.map(([k]) => {
-    const [yol, icerik] = SEKME[k];
-    const govde = bant({ cur: 'Paketlerim', ikon: 'fa-solid fa-utensils', giris: 'Hangi kademedesin, üç kademe neyi açıyor, nasıl yükseltirsin. Sekme değişir, kimlik kartın yerinde kalır.', serit: gourmetSayac() })
-      // canlıda kimlik rozetinin ikonu kademenin ikonu (PaketKademesi::ikonAdi)
-      .replace('<i class="fa-solid fa-crown" aria-hidden="true"></i> {{uye.paket}}', `<i class="fa-solid fa-${A.ikon}" aria-hidden="true"></i> {{uye.paket}}`)
-      + ray('Paketlerim bölümleri', RAY, k, 'pk')
-      + `<div class="modul-govde">
-  <div class="fit-pane aktif" data-pane="${k}" id="pk-pane-${k}" role="region" aria-labelledby="pk-tab-${k}" tabindex="0">
-    <section class="bolum">
+const kabuk = (icerik) => `<section class="bolum">
       <div class="wrap kap">
         <div class="okuma-kolonu">
           ${icerik}
         </div>
       </div>
-    </section>
-  </div>
+    </section>`;
+
+export default function () {
+  return SEKMELER.map(([k]) => {
+    const [yol] = SEKME[k];
+    const govde = bant({ cur: 'Paketlerim', ikon: 'fa-solid fa-utensils', giris: 'Hangi kademedesin, üç kademe neyi açıyor, nasıl yükseltirsin. Sekme değişir, kimlik kartın yerinde kalır.', serit: gourmetSayac() })
+      // canlıda kimlik rozetinin ikonu kademenin ikonu (PaketKademesi::ikonAdi)
+      .replace('<i class="fa-solid fa-crown" aria-hidden="true"></i> {{uye.paket}}', `<i class="fa-solid fa-${A.ikon}" aria-hidden="true"></i> {{uye.paket}}`)
+      + gastroRay('pk', 'Paketlerim bölümleri', SEKMELER, k)
+      + `<div class="modul-govde">
+${SEKMELER.map(([a]) => gastroPano('pk', a, k, kabuk(SEKME[a][1]))).join('\n')}
 </div>`;
-    return sayfa(yol, 'Paketlerim', govde, { disi: yukseltPnl, donor: 'canlı dadagourmet.com/hesabim/paketlerim, DadaGourmet-acil 4eb638c resources/views/hesap/ticaret.blade.php · app/Ticaret/Enums/PaketKademesi.php · app/Ticaret/Servisler/PaketOzellikMatrisi.php' });
+    const s = sayfa(yol, 'Paketlerim', govde, { disi: yukseltPnl, js: SEKME_JS, donor: 'yerel Gastro /hesabim/paketlerim (resources/views/turetilmis/uye/g-paketlerim.blade.php, demo tohum render); kademe ve özellik verisi canlı dadagourmet.com, DadaGourmet-acil 4eb638c app/Ticaret/Enums/PaketKademesi.php · app/Ticaret/Servisler/PaketOzellikMatrisi.php' });
+    s.meta.css = ['assets/g/kanon/gomulu/paketlerim-fark.css', ...SEKME_CSS, ...s.meta.css];
+    return s;
   });
 }
