@@ -1,15 +1,21 @@
 /* Dada Route statik örnek veri. Rota çizgisi yaklaşık; hesaplanmış güzergâh değildir. "prototip örneği" etiketiyle gösterilir.
-   Katman noktaları üç pilot güzergâh üstündedir: [boylam, enlem, ad, nitelik]. Gerçek tesis değildir; §8 #9 dili: "Dinlenme alanı", "güvenli" yok.
+   Katman noktaları pilot güzergâhlar üstündedir: [boylam, enlem, ad, nitelik]. Gerçek tesis değildir; §8 #9 dili: "Dinlenme alanı", "güvenli" yok.
+   Nitelik metni ülkeye bağlı değildir; tür adı (Cami, Kilise, Karavan parkı) ve hizmetler yazılır.
    Şarj noktasının 4. alanı örnek yemek eşi [ad, yürüme metresi]: rotada 1 km içinde Dada mekânı yoksa şarj + yemek molası bununla eşleşir (R2.5b). */
 window.DG_ROTA = {
   ad: 'İstanbul – İzmir', kalkis: 'İstanbul', varis: 'İzmir', km: 480, sure: '5 sa 40 dk',
   cizgi: [[28.98, 41.03], [29.28, 40.87], [29.52, 40.76], [29.1, 40.5], [29.06, 40.2], [28.7, 40.05], [28.3, 39.95], [27.9, 39.65], [27.8, 39.2], [27.6, 38.95], [27.43, 38.62], [27.3, 38.5], [27.14, 38.42]],
   katman: {
     sarj: [[29.3, 40.84, 'Örnek DC hızlı şarj', ['Örnek esnaf lokantası', 300]], [29.0625, 40.1835, 'Örnek DC hızlı şarj', ['Örnek kebapçı', 450]], [28.72, 40.06, 'Örnek DC hızlı şarj', ['Örnek köfteci', 250]], [27.85, 39.4, 'Örnek AC şarj', ['Örnek ev yemekleri lokantası', 400]], [31.47, 40.1, 'Örnek DC hızlı şarj', ['Örnek esnaf lokantası', 350]], [31.6, 38.54, 'Örnek DC hızlı şarj', ['Örnek pideci', 500]]],
-    ibadet: [[29.08, 40.3, 'Örnek cami', 'Cami'], [27.85, 39.6, 'Örnek mescit', 'Mescit'], [30.2, 40.45, 'Örnek cami', 'Cami'], [31.98, 39.04, 'Örnek mescit', 'Mescit']],
+    /* İbadethane (R2.3a, Beyar 10 Kas D8): ana dinler; cami, mescit, cemevi. Kilise, sinagog ve manastır `tarihi` dizisinde, İhtiyaçlar sekmesinde aynı grupta */
+    ibadet: [[29.08, 40.3, 'Örnek cami', 'Cami'], [27.85, 39.6, 'Örnek mescit', 'Mescit'], [30.2, 40.45, 'Örnek cami', 'Cami'], [31.98, 39.04, 'Örnek mescit', 'Mescit'],
+      [29.4, 40.72, 'Örnek cemevi', 'Cemevi'], [27.5, 38.66, 'Örnek cemevi', 'Cemevi'], [32.7, 39.93, 'Örnek cemevi', 'Cemevi']],
     /* Tarihi inanç yapıları (R2.3b): ibadethaneden ayrı alt katman, varsayılan kapalı (Beyar, 9 Kas; K22 cami ve mescit önde). Noktalar örnek */
     tarihi: [[29.07, 40.19, 'Örnek tarihi kilise', 'Kilise · 19. yüzyıl'], [27.9, 39.63, 'Örnek tarihi sinagog', 'Sinagog'], [27.44, 38.6, 'Örnek manastır kalıntısı', 'Manastır · ören yeri'], [27.13, 38.41, 'Örnek tarihi sinagog', 'Sinagog'], [30.4, 40.5, 'Örnek tarihi kilise', 'Kilise']],
-    dinlenme: [[29.05, 40.45, 'Örnek dinlenme cebi', 'Aydınlatma, tuvalet · araç içi kısa mola'], [27.7, 39.05, 'Örnek dinlenme cebi', 'Aydınlatma, kafeterya · araç içi kısa mola'], [30.85, 40.24, 'Örnek dinlenme cebi', 'Aydınlatma, tuvalet · araç içi kısa mola'], [31.27, 38.04, 'Örnek dinlenme cebi', 'Tuvalet, kafeterya · araç içi kısa mola'], [28.95, 40.33, 'Örnek bağ evi', 'Konaklamalı · bağ evi lokantası, 6 oda'], [27.98, 39.42, 'Örnek yeme-içme çiftliği', 'Konaklamalı · bungalov, çiftlik kahvaltısı'], [27.55, 38.72, 'Örnek köy lokantası', 'Konaklamalı · köy evi, akşam yemeği'], [32.4, 39.5, 'Örnek yeme-içme çiftliği', 'Konaklamalı · bungalov']]
+    dinlenme: [[29.05, 40.45, 'Örnek dinlenme cebi', 'Aydınlatma, tuvalet · araç içi kısa mola'], [27.7, 39.05, 'Örnek dinlenme cebi', 'Aydınlatma, kafeterya · araç içi kısa mola'], [30.85, 40.24, 'Örnek dinlenme cebi', 'Aydınlatma, tuvalet · araç içi kısa mola'], [31.27, 38.04, 'Örnek dinlenme cebi', 'Tuvalet, kafeterya · araç içi kısa mola'], [28.95, 40.33, 'Örnek bağ evi', 'Konaklamalı · bağ evi lokantası, 6 oda'], [27.98, 39.42, 'Örnek yeme-içme çiftliği', 'Konaklamalı · bungalov, çiftlik kahvaltısı'], [27.55, 38.72, 'Örnek köy lokantası', 'Konaklamalı · köy evi, akşam yemeği'], [32.4, 39.5, 'Örnek yeme-içme çiftliği', 'Konaklamalı · bungalov']],
+    /* Karavan parkı ve karavan konaklama alanı (Beyar 10 Kas D8). Nitelik: hizmetler. Noktalar örnek */
+    karavan: [[29.0, 40.27, 'Örnek karavan parkı', 'Elektrik, su, atık boşaltma'], [27.82, 39.48, 'Örnek karavan konaklama alanı', 'Çiftlik içi · duş, elektrik'], [27.36, 38.55, 'Örnek karavan parkı', 'Elektrik, su · 24 saat'],
+      [30.95, 40.3, 'Örnek karavan parkı', 'Elektrik, su, atık boşaltma'], [31.2, 38.4, 'Örnek karavan konaklama alanı', 'Bağ evi bahçesi · duş'], [26.55, 38.33, 'Örnek karavan parkı', 'Elektrik, su · sahile yakın']]
   },
   /* İl/Bölge Kimlik Motoru (R2.1, R2.2): il başına tescilli coğrafi işaretler, [ad, ilçe, tescil no]. Adlar TÜRKPATENT sicilindeki tescil adıdır
      (ci.turkpatent.gov.tr, Durum: Tescilli; 9 Kas 2026 denetimi). Başvuru aşamasındakiler yok. Ne Yenir? masada tüketilen, Ne Alınır? paketli götürülen.

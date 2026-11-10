@@ -325,6 +325,53 @@ body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .page-main p{tex
 body.gastronomi-kapali .yg-dash.yg-dash--katmanli:not([hidden]){display:block!important}
 .yg-dash--katman-sekme #ygDashCount,.yg-dash--katman-sekme #ygDashAll{display:none}
 
+/* ==== Dada Route panel revizesi (Beyar, 10 Kas · D3–D9) · yalnız /dada-route. Ölçü ve renk kanon jetonu (tokenlar.css), yeni değer yok ==== */
+/* D3 · Araç: kanon §11 `.sekmeler.esit` segmenti tam genişlikte (bilesenler.css bu sayfanın zincirinde yok; kurallar jetonlarla aynısı) */
+.yg-katman .sekmeler{display:flex;flex-wrap:nowrap;gap:var(--bosluk-4);width:100%;box-sizing:border-box;padding:var(--bosluk-4);background:var(--kagit);border:var(--cizgi-1) solid var(--cizgi);border-radius:var(--yuvarlak-md)}
+.yg-katman .sekme{flex:1;justify-content:center;display:inline-flex;align-items:center;gap:var(--bosluk-7);min-height:44px;padding:var(--bosluk-9) var(--bosluk-16);border:none;border-radius:var(--yuvarlak-sm);background:transparent;color:var(--metin-ikincil);font-family:inherit;font-size:var(--yazi-13);font-weight:var(--agirlik-kalin);white-space:nowrap;cursor:pointer;transition:var(--sure) var(--yumusama)}
+.yg-katman .sekme i{font-size:var(--yazi-12-5);opacity:.85}
+.yg-katman .sekme:hover{color:var(--aksan-koyu);background:var(--aksan-yikama)}
+.yg-katman .sekme.aktif{background:var(--aksan-koyu);color:var(--kagit)}
+.yg-katman .sekme.aktif i{opacity:1}
+.yg-katman .sekme:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
+/* Segmentin altında canlı "Şarj istasyonları" kartı (Elektrikli) ya da aynı kalıpta "Yakıt istasyonları" kartı (Yakıtlı) */
+.yg-katman .yg-sarj{margin:var(--bosluk-8) 0 0}
+.yg-yakit[hidden]{display:none}
+.yg-sarj-credit:empty{display:none}
+/* D4 · "{İl}’in meşhurları": Ne Yenir? ve Ne Alınır? alt alta; her bölümün başlığı yapışkan zemin bandı, bölümler arası marka çizgisi.
+   En çok 5 ürün satırı görünür (yükseklik rota-katman.js ölçer), fazlası kart içinde kayar: altta solgunluk ve "Kaydır" ipucu */
+.yg-il-liste .yg-il-kart{display:block}
+.yg-il-kayar{position:relative}
+.yg-il-govde{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--marka-cizgi) transparent}
+.yg-il-govde:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:calc(var(--odak-kalinlik) * -1)}
+.yg-il-govde .yg-il-bolum,.yg-il-govde .yg-il-bolum+.yg-il-bolum{padding:0;border-left:0}
+.yg-il-govde .yg-il-bolum+.yg-il-bolum{border-top:var(--cizgi-1) solid var(--marka-cizgi)}
+.yg-il-govde .yg-il-bolum-bas{position:sticky;top:0;z-index:2;margin:0;padding:var(--bosluk-6) var(--bosluk-12);background:var(--zemin-2);border-bottom:var(--cizgi-1) solid var(--cizgi)}
+.yg-il-bolum-sayi{margin-left:auto;font-size:var(--yazi-11);font-weight:var(--agirlik-kalin);color:var(--metin-ikincil)}
+.yg-il-govde .yg-il-urunler{gap:0}
+.yg-il-govde .yg-il-urun{flex-direction:row;align-items:center;justify-content:space-between;gap:var(--bosluk-10);padding:var(--bosluk-8) var(--bosluk-12)}
+.yg-il-govde .yg-il-urun+.yg-il-urun{border-top:var(--cizgi-1) solid var(--cizgi)}
+.yg-il-govde .yg-il-urun-ad{flex:1;min-width:0}
+.yg-il-govde .yg-kl-bos{padding:var(--bosluk-8) var(--bosluk-12)}
+.yg-il-kayar.has-scroll-b::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--bosluk-32);background:linear-gradient(to bottom,transparent,var(--kagit));pointer-events:none;z-index:3}
+.yg-il-kaydir{display:flex;align-items:center;gap:var(--bosluk-6);margin:0;padding:var(--bosluk-6) var(--bosluk-12);border-top:var(--cizgi-1) solid var(--cizgi);color:var(--marka-koyu);font-size:var(--yazi-11-5);font-weight:var(--agirlik-kalin)}
+.yg-il-kaydir i{font-size:var(--yazi-11)}
+/* D7 + D8 · Alt şeritte "İhtiyaçlar" sekmesi: alt başlıklı üç grup (İbadethane, Dinlenme alanı, Karavan parkları), kart canlı `.yg-dcard` */
+.yg-dash-title .ornek-etiket{text-transform:none;letter-spacing:normal}
+.yg-dash-title .ornek-etiket[hidden]{display:none}
+.yg-dash-katman{gap:var(--bosluk-16)}
+.yg-ih-grup{flex:none;display:flex;flex-direction:column;gap:var(--bosluk-8)}
+.yg-ih-grup+.yg-ih-grup{padding-left:var(--bosluk-16);border-left:var(--cizgi-1) solid var(--cizgi)}
+.yg-ih-bas{position:sticky;left:0;align-self:flex-start;display:inline-flex;align-items:center;gap:var(--bosluk-7);margin:0;font-size:var(--yazi-13);font-weight:var(--agirlik-kalin);color:var(--murekkep)}
+.yg-ih-sayi{font-size:var(--yazi-11);font-weight:var(--agirlik-kalin);color:var(--metin-ikincil)}
+.yg-ih-kartlar{display:flex;gap:11px;flex:1}
+.yg-ih-kartlar>.yg-kl-bos{align-self:center;width:200px}
+.yg-dash .yg-dash-katman .yg-dcard{flex:0 0 304px}
+.yg-ih-satir{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--bosluk-4) var(--bosluk-8)}
+.yg-dcard--katman .yg-kl-durak{padding:var(--bosluk-4) var(--bosluk-10)}
+.yg-katman-pin--karavan{background:var(--durum-acik-metin)}
+@media (max-width:860px){.yg-dash .yg-dash-katman .yg-dcard{flex-basis:280px}.yg-sarj-toggle{min-height:44px}}
+
 /* ==== Duyarlı hizalama: Gastro ve Diet kuralları (Beyar, 9 Kas). Ölçüm: scratchpad/responsive/esleme.md ==== */
 /* Masaüstü süzgeç sütunu Gastro'daki gibi sayfayla akar (static); canlı Gourmet gövdesindeki sticky + iç kaydırma kalkar */
 @media(min-width:1025px){body .lst-side{position:static;top:auto;max-height:none;overflow:visible}}

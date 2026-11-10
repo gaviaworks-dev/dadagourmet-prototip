@@ -140,6 +140,8 @@
     var l = window.dgRotaSarjNoktalari().map(function (n, i) {
       var u = hataUzak({ lat: n[1], lng: n[0] }), dc = /DC/.test(n[2]);
       var yakin = M.map(function (m) { var mm = Math.round(km(n[1], n[0], m.lat, m.lng) * 1000); return { id: m.slug, slug: m.slug, ad: m.name + ' · yürüyerek ' + Math.max(1, Math.round(mm / 80)) + ' dk', mesafe_m: mm, url: kok + 'mekan/mikla/' }; }).filter(function (m) { return m.mesafe_m <= 1000; }).sort(function (a, b) { return a.mesafe_m - b.mesafe_m; });
+      /* Şarj + yemek molası (R2.5b) canlı şarj kartının "Yakındaki mekânlar" satırında: 1 km içinde Dada mekânı yoksa örnek yemek eşi */
+      if (!yakin.length && n[3]) { yakin = [{ id: 'ornek-yemek-' + i, slug: null, ad: n[3][0] + ' (prototip örneği) · yürüyerek ' + Math.max(1, Math.round(n[3][1] / 80)) + ' dk', mesafe_m: n[3][1], url: kok + 'mekanlar/' }]; }
       return { id: 'ornek-' + i, ad: n[2] + ' (prototip örneği)', tur: dc ? 'DC' : 'AC', kw: dc ? 120 : 22, lat: n[1], lng: n[0], rotadan_km: Math.round(u.d * 10) / 10, sahiplik: null, operator: 'Prototip örneği · %20→%80 şarj tahmini ' + (dc ? '~26' : '~100') + ' dk (60 kWh batarya)', veri_saglayici: 'Prototip örneği', lisans: 'örnek veri', mekanlar: yakin };
     }).filter(function (s) { return s.rotadan_km <= 20 && (tur === 'tum' || s.tur === tur) && s.kw >= min; });
     return { istasyonlar: l, veri_hazir: true, toplam: l.length };
