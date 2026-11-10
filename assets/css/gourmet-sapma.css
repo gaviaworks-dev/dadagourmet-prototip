@@ -54,6 +54,21 @@
   .kalem-satiri .ks-uc:not(:empty){flex:1 1 100%;justify-content:flex-start;padding-left:calc(38px + var(--bosluk-14))}
   .kalem-satiri .ks-uc:empty{display:none}
 }
+/* Listelerim (H5): satırın tamamı detaya açılır (başlık bağı satırı kaplar); sıra numarası ikon kutusunda; paylaşım bağlantısı satırı */
+.kalem-satiri.tiklanir{position:relative}
+.kalem-satiri.tiklanir .ks-metin a::after{content:"";position:absolute;inset:0}
+.kalem-satiri.tiklanir:hover .ks-metin a{color:var(--aksan-koyu)}
+.kalem-satiri.tiklanir .ks-metin a:focus-visible{outline:none}
+.kalem-satiri.tiklanir:has(.ks-metin a:focus-visible){outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
+.kalem-satiri .ks-ok{color:var(--metin-ikincil);font-size:var(--yazi-12)}
+.kalem-satiri .ks-metin small+small{display:block;margin-top:2px}
+.kalem-satiri .ks-sira{font-size:var(--yazi-14);font-weight:var(--agirlik-kalin)}
+.kalem-satiri .satir-dugme:disabled{opacity:.4;cursor:default;pointer-events:none}
+.liste-bag-satir{display:flex;gap:var(--bosluk-8);align-items:stretch}
+.liste-bag-satir .alan-girdi{flex:1;min-width:0}
+.liste-bag[hidden]{display:none}
+.kart[data-liste-paylasim]{margin-top:var(--bosluk-16)}
+@media (max-width:640px){.liste-bag-satir{flex-direction:column}}
 .mke-birincil{white-space:nowrap;font-size:12.5px;padding:9px 6px}
 /* Gourmet katmanları Gastro başlığının altında kalıyordu: rezervasyon ve ışık kutusu başlığın üstüne alınır */
 .rsv-overlay{z-index:1400}.rsv-modal{z-index:1401}.lightbox{z-index:1402}
