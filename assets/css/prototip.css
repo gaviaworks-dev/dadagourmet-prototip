@@ -12,9 +12,12 @@
 .foot-lockup .gastro-word-mark{display:block;height:33.8px;width:auto;color:#fff}
 html[data-baslik-zemin="acik"] .header .gourmet-word-mark{color:var(--marka,#742982)}
 .giris-pano[data-pano="gourmet"]{background-image:linear-gradient(180deg,rgba(29,19,33,.3) 0%,rgba(29,19,33,.58) 55%,rgba(20,13,23,.88) 100%),url('../o/assets/gourmet-public/img/about-dining.avif');background-size:cover;background-position:center}
-/* Gastro altbilgi-perde.css ile aynı kural; üye zinciri o dosyayı yüklemiyor */
-html.altbilgi-akista .footer.orange{position:static}
-html.altbilgi-akista #pageMain{margin-bottom:0!important}
+/* Altbilgi normal akışta (Beyar 10 Kas, H4). Gastro `portal-*.css` ≥641'de altbilgiyi `position:fixed` perde yapıyor, portal betiği ve
+   Gastro `altbilgi-perde.js` `#pageMain`e altbilgi boyunda alt boşluk yazıyor; ana içerik z-index 2 ile altbilginin üstünden kayıyordu.
+   Perde kaldırıldı: altbilgi her genişlikte akışta, ana içerik ne boşluk ne yığın katmanı taşır (betiğin satır içi boşluğu !important ile ezilir) */
+.footer.orange{position:static!important}
+#pageMain{margin-bottom:0!important}
+.page-main{z-index:auto}
 /* Altbilgideki düğme bağları Gourmet'ten; Gastro zincirinde kuralı yok, bağ görünümü verilir */
 .foot-linkbtn{display:block;background:none;border:0;padding:0;margin:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
 .foot-col .foot-linkbtn{width:100%;margin-bottom:var(--foot-link-gap,12px)}

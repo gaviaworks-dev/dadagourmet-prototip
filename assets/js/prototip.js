@@ -58,15 +58,7 @@
     m.textContent = metin; t.classList.add('show', 'on');
     clearTimeout(bildir.z); bildir.z = setTimeout(function () { t.classList.remove('show', 'on'); }, 2800);
   };
-  /* Altbilgi perdesi: portal betiği yüklenmeyen üye zincirinde de ana içeriğin alt boşluğu altbilgi boyuna eşitlenir,
-     yoksa sabit altbilgi ana içeriğin altında kalır ve hiç açılmaz (ölçüldü: 7 üye sayfası, margin-bottom 0). */
-  var perdeAyarla = function () {
-    var f = document.querySelector('.footer.orange'), m = document.getElementById('pageMain'); if (!f || !m) { return; }
-    var sigmaz = window.matchMedia('(min-width:641px)').matches && f.offsetHeight > window.innerHeight;
-    document.documentElement.classList.toggle('altbilgi-akista', sigmaz);
-    m.style.marginBottom = !sigmaz && getComputedStyle(f).position === 'fixed' ? f.offsetHeight + 'px' : '';
-  };
-  window.addEventListener('load', perdeAyarla); window.addEventListener('resize', perdeAyarla); document.addEventListener('DOMContentLoaded', perdeAyarla);
+  /* Altbilgi perdesi kaldırıldı (H4, Beyar 10 Kas): altbilgi normal akışta, kural prototip.css'te. Ana içeriğe alt boşluk yazılmaz */
   /* Mobil menü: üye zincirinde `portal` yüklenmez, çekmeceyi açan kod da onunla gider. Davranış aynen burada */
   document.addEventListener('DOMContentLoaded', function () {
     if (!document.documentElement.dataset.uyeSayfa) { return; }
