@@ -216,58 +216,103 @@
  },
  {
   "yol": "isletme",
-  "baslik": "İşletme Paneli",
-  "duzen": "uye"
+  "baslik": "Genel Bakış",
+  "duzen": "panel"
+ },
+ {
+  "yol": "isletme/ayarlar",
+  "baslik": "Ayarlar",
+  "duzen": "panel"
+ },
+ {
+  "yol": "isletme/basvurular",
+  "baslik": "Başvurular",
+  "duzen": "panel"
  },
  {
   "yol": "isletme/basvurular/1042/duzenle",
   "baslik": "Başvuruyu düzenle",
-  "duzen": "uye"
+  "duzen": "panel"
  },
  {
   "yol": "isletme/basvurular/987/duzenle",
   "baslik": "Başvuruyu düzenle",
-  "duzen": "uye"
+  "duzen": "panel"
  },
  {
   "yol": "isletme/basvurular/yeni",
   "baslik": "İşletme ekle",
-  "duzen": "uye"
+  "duzen": "panel"
+ },
+ {
+  "yol": "isletme/calisma-saatleri",
+  "baslik": "Çalışma Saatleri",
+  "duzen": "panel"
  },
  {
   "yol": "isletme/degerlendirmeler",
-  "baslik": "İşletmene gelen değerlendirmeler",
-  "duzen": "uye"
+  "baslik": "Değerlendirmeler",
+  "duzen": "panel"
  },
  {
   "yol": "isletme/degisiklik-talepleri",
-  "baslik": "Değişiklik taleplerim",
-  "duzen": "uye"
+  "baslik": "Değişiklik Talepleri",
+  "duzen": "panel"
  },
  {
   "yol": "isletme/degisiklik-talepleri/318",
-  "baslik": "Değişiklik talebi",
-  "duzen": "uye"
+  "baslik": "Değişiklik talebi #318",
+  "duzen": "panel"
  },
  {
   "yol": "isletme/degisiklik-talepleri/331",
-  "baslik": "Değişiklik talebi",
-  "duzen": "uye"
+  "baslik": "Değişiklik talebi #331",
+  "duzen": "panel"
  },
  {
   "yol": "isletme/degisiklik-talepleri/347",
-  "baslik": "Değişiklik talebi",
-  "duzen": "uye"
+  "baslik": "Değişiklik talebi #347",
+  "duzen": "panel"
  },
  {
   "yol": "isletme/degisiklik-talepleri/gonderilen",
   "baslik": "Değişiklik talebi",
-  "duzen": "uye"
+  "duzen": "panel"
  },
  {
   "yol": "isletme/degisiklik-talepleri/yeni",
   "baslik": "Değişiklik talebi oluştur",
-  "duzen": "uye"
+  "duzen": "panel"
+ },
+ {
+  "yol": "isletme/etkinlikler",
+  "baslik": "Etkinlikler",
+  "duzen": "panel"
+ },
+ {
+  "yol": "isletme/fotograflar",
+  "baslik": "Fotoğraflar",
+  "duzen": "panel"
+ },
+ {
+  "yol": "isletme/istatistikler",
+  "baslik": "İstatistikler",
+  "duzen": "panel"
+ },
+ {
+  "yol": "isletme/menu",
+  "baslik": "Menü",
+  "duzen": "panel"
+ },
+ {
+  "yol": "isletme/profil",
+  "baslik": "Mekân Profili",
+  "duzen": "panel"
+ },
+ {
+  "yol": "isletme/rezervasyonlar",
+  "baslik": "Rezervasyonlar",
+  "duzen": "panel"
  },
  {
   "yol": "kayit",
