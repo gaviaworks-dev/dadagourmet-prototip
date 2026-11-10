@@ -1,5 +1,5 @@
 // Gurme Lezzetler: `node sayfa-lezzet.mjs <cekim>/dom`. Gövde canlı `/gurme-lezzetler` ve bir yazı detayı render'ı.
-// Liste, kategori, sıralama ve sayfalama `assets/js/sayfa/lezzetler.js` ile çalışır; veri `lezzet-veri.mjs` çıktısı. Kart kalıbı `_src/parcalar/lezzet-kart.html`.
+// Liste, kategori, sıralama, arama ve sayfalama `assets/js/sayfa/lezzetler.js` ile çalışır; veri `lezzet-veri.mjs` çıktısı. Kart kalıbı `_src/parcalar/lezzet-kart.html`.
 import fs from 'node:fs'; import path from 'node:path'; import { fileURLToPath } from 'node:url';
 import { ac, kapat } from './dom.mjs';
 const SRC = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'); const D = process.argv[2];
@@ -22,6 +22,8 @@ const { liste, kalip } = await p.evaluate(() => { kok(document.body); const m = 
   $$('.ke-filter .chip').forEach((a) => { a.dataset.kategori = /kategori=([a-z0-9-]+)/.exec(a.getAttribute('href') || '')?.[1] ?? ''; });
   $$('.disc-tabs .dt').forEach((a) => { a.dataset.sira = /siralama=(yeni|populer)/.exec(a.getAttribute('href') || '')?.[1] ?? 'yeni'; });
   $('.disc-grid').id = 'lzGrid'; $('#lzGrid').innerHTML = ''; $('#pagi').innerHTML = '';
+  // Arama (`?q=`, canlı liste tanır; etiket bağları buraya gelir): canlı boş sonuç bloğu `.lst-empty` ve etkin arama satırı (canlıda yok, sapma)
+  $('#lzGrid').insertAdjacentHTML('afterend', '<div class="lst-empty" id="lzBos"><span class="le-ico"><i class="fa-solid fa-book-open" aria-hidden="true"></i></span><h3>Bu aramayla eşleşen keşif yok</h3><p>Başka bir kelime ya da kategori deneyin.</p></div>'); $('#lzGrid').insertAdjacentHTML('beforebegin', '<p class="lz-arama" id="lzArama" hidden></p>');
   return { liste: m.innerHTML, kalip: k.outerHTML.replace(/\s+/g, ' ') }; });
 fs.writeFileSync(path.join(SRC, 'parcalar/lezzet-kart.html'), kalip + '\n');
 yaz('gurme-lezzetler', { baslik: 'Gurme Lezzetler', aktif: 'gurme-lezzetler', zincir: 'hakkimizda', gourmet: true, css: [...css, 'banner-uyarlama.css', 'gourmet-sapma'], js: ['assets/js/lezzet-veri.js', 'assets/js/sayfa/lezzetler.js'], govdeSinif: 'pg-gurme-lezzetler has-dark-hero', donor: 'https://dadagourmet.com/gurme-lezzetler' }, liste);
