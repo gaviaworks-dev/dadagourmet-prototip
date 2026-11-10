@@ -1,5 +1,5 @@
 /* Etkinlikler ve etkinlik detayı. Veri `etkinlik-veri.js`, canlı `/etkinlikler` kayıtlarının kopyası.
-   Türkiye önde, Uluslararası ayrı sekme. Randevu kaydı yalnız bu tarayıcıda durur ve Rezervasyonlarım sekmesinde görünür. */
+   Kullanıcının ülkesi önde (`ulke.js`, Türkiye varsayılan), Uluslararası ayrı sekme. Randevu kaydı yalnız bu tarayıcıda durur ve Rezervasyonlarım sekmesinde görünür. */
 (function () {
   'use strict';
   var V = window.DG_ETKINLIK; if (!V) { return; }
@@ -85,8 +85,9 @@
     return;
   }
 
-  /* Liste */
-  var bolge = 'tr', kategori = '', aranan = '', sira = 'onerilen', sayfa = 1, SAYFA = 12, gorunum = 'liste', ay = null;
+  /* Liste. Bölge: `yerel` kullanıcının ülkesi, `dunya` geri kalanı */
+  var U = window.dgUlke || { ad: 'Türkiye', yerel: function (e) { return !!e.tr; } };
+  var bolge = 'yerel', kategori = '', aranan = '', sira = 'onerilen', sayfa = 1, SAYFA = 12, gorunum = 'liste', ay = null;
   var secili = function (n) { return $$('input[name="' + n + '[]"]:checked').map(function (i) { return i.value; }); };
   var tarihUy = function (e, d) {
     if (!d) { return true; }
@@ -102,7 +103,7 @@
     return true;
   };
   var uyar = function (e, haric) {
-    if (!!e.tr !== (bolge === 'tr')) { return false; }
+    if (U.yerel(e) !== (bolge === 'yerel')) { return false; }
     if (kategori && (e.f.kategori || []).indexOf(kategori) < 0) { return false; }
     if (aranan && tr(e.ad + ' ' + e.yer).indexOf(aranan) < 0) { return false; }
     var d = ($('input[name="tarih"]:checked') || {}).value;
@@ -143,7 +144,7 @@
     $$('input[name="tarih"]').forEach(function (i) { var n = taban.filter(function (e) { return tarihUy(e, i.value); }).length, l = i.closest('label'); $('.fcnt', l).textContent = n; l.style.display = n === 0 && !i.checked ? 'none' : ''; });
     $$('.ke-filter .chip').forEach(function (c) {
       var k = c.dataset.kategori; c.classList.toggle('active', (k || '') === kategori); if (!k) { return; }
-      c.style.display = V.etkinlikler.some(function (e) { return !!e.tr === (bolge === 'tr') && (e.f.kategori || []).indexOf(k) >= 0; }) ? '' : 'none';
+      c.style.display = V.etkinlikler.some(function (e) { return U.yerel(e) === (bolge === 'yerel') && (e.f.kategori || []).indexOf(k) >= 0; }) ? '' : 'none';
     });
     $$('.sheet-body > .fct').forEach(function (k) { var n = $$('input:checked', k).length, d = $('.fct-dot', k); if (d) { d.textContent = n; d.classList.toggle('on', n > 0); } });
   };
@@ -198,6 +199,7 @@
     $('#lstSum').innerHTML = '<b>' + l.length + ' etkinlik</b> listeleniyor';
     $('#evGrid').innerHTML = liste ? l.slice((sayfa - 1) * SAYFA, sayfa * SAYFA).map(kart).join('') : '';
     $('#evGrid').hidden = !liste; $('#evBos').hidden = !liste || !!l.length; if (!liste) { $('#pagi').style.display = 'none'; }
+    bosYaz();
     $('#evTakvim').hidden = gorunum !== 'takvim'; $('#evHarita').hidden = gorunum !== 'harita';
     if (gorunum === 'takvim') { takvimYaz(l); }
     if (gorunum === 'harita') { haritaYaz(l); }
@@ -207,8 +209,17 @@
     var u = new URL(location.href); if (v === 'liste') { u.searchParams.delete('gorunum'); } else { u.searchParams.set('gorunum', v); } history.replaceState(null, '', u);
     yenile(true);
   };
-  $('#evSayTr').textContent = V.etkinlikler.filter(function (e) { return e.tr; }).length;
-  $('#evSayDunya').textContent = V.etkinlikler.filter(function (e) { return !e.tr; }).length;
+  var yerelSay = V.etkinlikler.filter(U.yerel).length;
+  $('#evBolgeAd').textContent = U.ad; $('#evSayYerel').textContent = yerelSay;
+  $('#evSayDunya').textContent = V.etkinlikler.length - yerelSay;
+  /* Kullanıcının ülkesinde hiç etkinlik yoksa ilk sekmenin boş durumu: Uluslararası'ya geçiş ve Etkinlik Öner (şartname akış 6) */
+  var bos = $('#evBos'), bosIlk = bos.innerHTML;
+  function bosYaz() {
+    var ulkeBos = bolge === 'yerel' && !yerelSay;
+    if (ulkeBos === (bos.dataset.ulke === '1')) { return; }
+    bos.dataset.ulke = ulkeBos ? '1' : '';
+    bos.innerHTML = ulkeBos ? '<h3>' + kacis(U.ad) + ' için henüz etkinlik yok</h3><p>Dünyadaki gastronomi etkinlikleri Uluslararası sekmesinde. Bildiğin bir etkinlik varsa önerebilirsin.</p><div class="ev-bos-eylem"><button class="btn btn-primary" type="button" data-bolge-git="dunya"><i class="fa-solid fa-earth-europe" aria-hidden="true"></i> Uluslararası etkinlikler</button><button class="btn btn-ghost" type="button" data-etkinlik-oner=""><i class="fa-solid fa-calendar-plus" aria-hidden="true"></i> Etkinlik Öner</button></div>' : bosIlk;
+  }
   document.addEventListener('change', function (ev) { if (ev.target.closest('#filterForm')) { yenile(true); } });
   document.addEventListener('click', function (ev) {
     var t = ev.target; if (!t.closest) { return; }
@@ -222,6 +233,7 @@
       if (pano) { dl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
       return;
     }
+    var git = t.closest('[data-bolge-git]'); if (git) { var hedef = $('.ev-bolge-sekme[data-bolge="' + git.dataset.bolgeGit + '"]'); if (hedef) { hedef.click(); hedef.focus(); } return; }
     var b = t.closest('.ev-bolge-sekme');
     if (b) { bolge = b.dataset.bolge; kategori = ''; $$('#filterForm input:checked').forEach(function (i) { i.checked = false; }); $$('.ev-bolge-sekme').forEach(function (x) { var on = x === b; x.classList.toggle('aktif', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); }); yenile(true); return; }
     var c = t.closest('.ke-filter .chip'); if (c) { ev.preventDefault(); kategori = c.dataset.kategori || ''; yenile(true); return; }
