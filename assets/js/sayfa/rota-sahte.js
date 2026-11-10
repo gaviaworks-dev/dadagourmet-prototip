@@ -242,7 +242,21 @@
     if (uc === 'rota') { return rotaKur(JSON.parse(ayar.body).duraklar).then(yanit); }
     if (uc === 'mekanlar' && yontem === 'GET') { return yanit(mekanlar(q)); }
     if (uc === 'sarj') { return yanit(sarj(q)); }
-    if (uc === 'guzergahlarim' && yontem === 'GET') { return yanit({ guzergahlar: [] }); }
+    /* Güzergâhlarım: Listelerim › Gastronomi Rotalarım ile TEK depo (`prototip.js` `dgRota`; H5, 10 Kas). Kayıt yalnız bu tarayıcıda */
+    if (uc === 'guzergahlarim' && window.dgRota) {
+      var gp = (m[2].split('?')[0] || '').split('/').filter(Boolean), gid = gp[0] ? decodeURIComponent(gp[0]) : null;
+      var gbul = function () { return window.dgRota.oku().filter(function (r) { return String(r.id) === String(gid); })[0] || null; };
+      var govde = {}; try { govde = ayar && ayar.body ? JSON.parse(ayar.body) : {}; } catch (e) { govde = {}; }
+      if (yontem === 'GET') { return yanit({ guzergahlar: window.dgRota.oku() }); }
+      if (yontem === 'DELETE' && gid) { window.dgRota.sil(gid); return yanit({ ok: true }); }
+      if (gp.length > 1) { return yanit({ ok: true, prototip: true, guzergah: gbul() }); }
+      if (yontem === 'POST' || yontem === 'PATCH') {
+        var eski = gid ? gbul() : null, plan = {}, k;
+        for (k in (eski || {})) { plan[k] = eski[k]; } for (k in govde) { plan[k] = govde[k]; }
+        if (eski) { plan.id = eski.id; if (eski.ornek) { window.dgRota.sil(eski.id); plan.id = 'rota-' + Date.now(); } delete plan.ornek; }
+        return yanit({ guzergah: window.dgRota.kaydet(plan) || plan });
+      }
+    }
     return yanit({ ok: true, prototip: true });
   };
 })();
