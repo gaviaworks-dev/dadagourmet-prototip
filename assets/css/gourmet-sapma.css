@@ -100,6 +100,8 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 .mb-tabs .chip.mb-tab.active{background:var(--tomato-deep);border-color:var(--tomato-deep);color:#fff;font-weight:700}
 /* B4 nitelik akordiyonu: kabuğun `.fct-body` 240px iç kaydırması sihirbazda kapalı; zaman satırları ≥44px */
 .mb-acc .fct-body{max-height:none;overflow:visible}.mb-acc .fct-row{min-height:44px}
+/* Telefonda üç mutfak sekmesi sığmaz; kayan şerit üçüncü sekmeyi gizliyordu, alt satıra sarar */
+@media (max-width:640px){.mb-tabs{flex-wrap:wrap;overflow-x:visible}.mb-tabs .mb-tab{flex:1 1 auto;justify-content:center}}
 @media (max-width:640px),(pointer:coarse){.mb-tabs .mb-tab,#mbStepper .stp{min-height:44px}#mbStepper .stp{min-width:44px;justify-content:center}}
 .mb-alt-baslik{font-size:15px;margin:0 0 12px}.pick-grid+.mb-sub-field,.mb-sub-field+.mb-sub-field{margin-top:14px}
 .wstep .pick-grid+.mb-alt-baslik,.wstep .mb-sub-field+.mb-alt-baslik,.wstep .dist-bar+.mb-alt-baslik{margin-top:26px}
