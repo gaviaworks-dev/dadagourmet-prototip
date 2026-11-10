@@ -1,13 +1,22 @@
-/* Mekân Bul: 3 adım. Veri `mekan-liste-veri.js`, canlı 203 mekânın kopyası.
-   Oran: yalnız cevaplanan kriterler paydaya girer, ağırlıklar canlı `MekanBulEslestirmeServisi` ile aynı (amaç 40, bütçe 20, nitelik 15).
-   Konum eşleşme değil süzgeçtir: seçilen yerin dışındaki mekân listeye girmez. Hiçbir kriterde verisi olmayan seçim boş sonuç ve öneri verir. */
+/* Mekân Bul: 4 adım (Beyar revizesi 10 Kas). 1 Konum + Bütçe · 2 Ortam & Atmosfer (çoklu) · 3 Mutfak (aile sekmeleri, çoklu) · 4 Nitelikler + zaman.
+   Veri `mekan-liste-veri.js`, canlı 203 mekânın kopyası. Seçenek kutuları kendi süzme alanını ve kodlarını taşır (`data-f`, `data-kod`):
+   birleşik etikette kodlardan biri yeter (ör. Otopark / Vale = otopark, ozel-otopark ya da vale).
+   Oran: yalnız cevaplanan kriterler paydaya girer. Ağırlıklar canlı `MekanBulEslestirmeServisi::AGIRLIKLAR`:
+   ortam (canlıda ne_icin) 40, bütçe 20, mutfak 15, her nitelik 15, şimdi açık 15, rezervasyon 10.
+   Konum eşleşme değil süzgeçtir: seçilen yerin dışındaki mekân listeye girmez. Hiçbir mekânda verisi olmayan seçim boş sonuç ve öneri verir. */
 (function () {
   'use strict';
-  var V = window.DG_LISTE, R = window.DG_ROTA; if (!V) { return; }
+  var V = window.DG_LISTE; if (!V) { return; }
   var kok = document.documentElement.dataset.kok || './';
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
   var kac = function (t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
   var has = function (m, g, d) { return (m.f[g] || []).indexOf(d) >= 0; };
+  var N = $$('.wstep').length;
+  /* Seçenek kutusu: ad, süzme alanı, kodlar. Kodlardan biri yeter */
+  var kutu = function (i) {
+    var l = i.closest('label'), b = $('.pk-txt b', l) || $('.ft', l), f = i.dataset.f, kod = (i.dataset.kod || i.value).split(' ');
+    return { ad: b.textContent.trim(), ikon: (($('.pk-ico i', l) || {}).className || 'fa-solid fa-check').replace('fa-solid ', ''), uy: function (m) { return kod.some(function (k) { return has(m, f, k); }); } };
+  };
   /* Haritadan Seç tarifi: yazının içindeki il ve ilçe adları; ör. "İstanbul Havalimanı çevresi" İstanbul'u eşler */
   var tarif = '', tarifOnbellek = null;
   var tarifYer = function () {
@@ -17,37 +26,16 @@
     if (!l.length) { V.secenek.il.forEach(function (o) { if (t.indexOf(o.ad.toLocaleLowerCase('tr')) >= 0) { l.push(['il', o.deger]); } }); }
     tarifOnbellek = { t: tarif, l: l }; return l;
   };
-  document.addEventListener('input', function (e) { if (e.target.id === 'mbHaritaTxt') { tarif = e.target.value.trim(); } });
   var km = function (a, b, c, d) { var r = Math.PI / 180, x = (d - b) * r * Math.cos((a + c) * r / 2), y = (c - a) * r; return Math.sqrt(x * x + y * y) * 6371; };
-  /* İstanbul–İzmir örnek güzergâhına en yakın uzaklık */
-  var hatUzak = function (m) {
-    var en = 1e9, c = R ? R.cizgi : [];
-    for (var i = 0; i < c.length - 1; i++) { for (var t = 0; t <= 8; t++) { var u = t / 8, d = km(m.lat, m.lng, c[i][1] + (c[i + 1][1] - c[i][1]) * u, c[i][0] + (c[i + 1][0] - c[i][0]) * u); if (d < en) { en = d; } } }
-    return en;
-  };
-  var YOL_KM = 10;
-  var AMAC = {
-    esnaf: { ad: 'Hızlı esnaf', uy: function (m) { return has(m, 'kategori', 'esnaf-lokantasi') || has(m, 'kategori', 'lokanta'); }, yok: 'Esnaf lokantası kaydı henüz yok.', oneri: [['Yerel Lezzet Noktası', 'mekanlar/?konsept=yoresel-lezzet-noktasi', function (m) { return has(m, 'konsept', 'yoresel-lezzet-noktasi'); }], ['Geleneksel mekânlar', 'mekanlar/?konsept=geleneksel', function (m) { return has(m, 'konsept', 'geleneksel'); }]] },
-    sef: { ad: 'Şef masası', uy: function (m) { return has(m, 'konsept', 'sef-restorani'); } },
-    kahvalti: { ad: 'Pazar kahvaltısı', uy: function (m) { return has(m, 'vesile', 'kahvalti'); } },
-    yolustu: { ad: 'Yol üstü', uy: function (m) { return hatUzak(m) <= YOL_KM; }, neden: function (m) { return 'İstanbul–İzmir örnek güzergâhına ' + Math.max(1, Math.round(hatUzak(m))) + ' km'; } }
-  };
-  var NITELIK = {
-    glutensiz: { ad: 'Glütensiz', uy: function (m) { return has(m, 'beslenme', 'glutensiz'); } },
-    otopark: { ad: 'Otopark', uy: function (m) { return has(m, 'ulasim', 'otopark') || has(m, 'ulasim', 'vale'); } },
-    teras: { ad: 'Teras', uy: function (m) { return has(m, 'hizmet', 'teras'); } },
-    evcil: { ad: 'Evcil hayvan', uy: function (m) { return has(m, 'hizmet', 'evcil-hayvan-dostu'); } },
-    cocuk: { ad: 'Çocuk alanı', uy: function (m) { return has(m, 'hizmet', 'cocuk-alani'); }, yok: 'Çocuk alanı kaydı henüz yok.', oneri: [['Bebek sandalyesi olan mekânlar', 'mekanlar/?hizmet=bebek-sandalyesi', function (m) { return has(m, 'hizmet', 'bebek-sandalyesi'); }]] }
-  };
-  var BUTCE = { 1: '₺', 2: '₺₺', 3: '₺₺₺', 4: '₺₺₺₺' };
-  var AGIRLIK = { amac: 40, butce: 20, nitelik: 15 };
-  var durum = { amac: '', yontem: 'hepsi', il: '', ilce: '', lat: null, lng: null, mesafe: 25, butce: '', nitelik: [] };
+  var BUTCE = { 1: 'Ekonomik (₺)', 2: 'Orta (₺₺)', 3: 'Üst Orta (₺₺₺)', 4: 'Lüks (₺₺₺₺)' };
+  var AGIRLIK = { ortam: 40, butce: 20, mutfak: 15, nitelik: 15, simdi: 15, rez: 10 };
+  var durum = { yontem: 'hepsi', il: '', ilce: '', lat: null, lng: null, mesafe: 25, butce: '', ortam: [], mutfak: [], nitelik: [], simdi: false, rez: false };
   var adim = 1;
+  var secili = function (ad) { return $$('input[name="' + ad + '"]:checked').map(function (i) { return i.value; }); };
 
   /* Seçenek sayıları: her kutuda kayıtlı mekân sayısı görünür, 0 gizlenmez: boş seçim öneri verir */
   var yaz = function (i, n) { var l = i.closest('.pick'), s = $('.pk-txt small', l); if (!s) { s = document.createElement('small'); $('.pk-txt', l).appendChild(s); } s.textContent = n ? n + ' mekân' : 'Kayıt yok'; };
-  $$('input[name="amac"]').forEach(function (i) { yaz(i, V.mekanlar.filter(AMAC[i.value].uy).length); });
-  $$('input[name="nitelik"]').forEach(function (i) { yaz(i, V.mekanlar.filter(NITELIK[i.value].uy).length); });
+  $$('input[name="ortam"],input[name="mutfak"],input[name="nitelik"]').forEach(function (i) { yaz(i, V.mekanlar.filter(kutu(i).uy).length); });
   $$('input[name="butce"]').forEach(function (i) { if (!i.value) { return; } var n = V.mekanlar.filter(function (m) { return has(m, 'fiyat', i.value); }).length; var s = $('.pk-txt small', i.closest('.pick')); s.textContent = s.textContent + ' · ' + (n ? n + ' mekân' : 'kayıt yok'); });
   var ilSec = $('#mbSehir'), ilceSec = $('#mbIlce');
   V.secenek.il.forEach(function (o) { ilSec.insertAdjacentHTML('beforeend', '<option value="' + o.deger + '">' + kac(o.ad) + ' (' + o.sayi + ')</option>'); });
@@ -57,7 +45,7 @@
     $('#mbIlceField').hidden = !durum.il;
   };
 
-  /* Kutu görünümü ve alt alanlar */
+  /* Kutu görünümü, alt alanlar, sekme ve akordiyon sayaçları */
   var boya = function () {
     $$('.pick').forEach(function (l) { l.classList.toggle('sel', $('input', l).checked); });
     $('[data-sub="bolge"]').hidden = durum.yontem !== 'bolge';
@@ -65,6 +53,12 @@
     $('[data-sub="harita"]').hidden = durum.yontem !== 'harita';
     /* `.dist-bar{display:flex}` hidden özniteliğini ezer; görünürlük doğrudan yazılır */
     var db = $('#mbDistBar'); db.hidden = durum.yontem !== 'mevcut'; db.style.display = db.hidden ? 'none' : '';
+    $$('[data-tab-count]').forEach(function (d) { var n = $$('[data-panel="' + d.dataset.tabCount + '"] input:checked').length; d.textContent = n; d.hidden = !n; });
+    $$('.mb-acc .fct').forEach(function (g) { var n = $$('input:checked', g).length; $('.fct-dot', g).textContent = n; g.classList.toggle('has-active', n > 0); });
+  };
+  var sekme = function (k) {
+    $$('#mbMutfakSekme .mb-tab').forEach(function (t) { var a = t.dataset.tab === k; t.classList.toggle('active', a); t.setAttribute('aria-selected', a ? 'true' : 'false'); });
+    $$('.mb-tabpanel').forEach(function (p) { p.classList.toggle('active', p.dataset.panel === k); });
   };
   var goster = function (n) {
     adim = n;
@@ -82,11 +76,23 @@
     if (durum.yontem === 'harita' && tarifYer().length) { return tarifYer().some(function (y) { return has(m, y[0], y[1]); }); }
     return true;
   };
+  var TUMU = [['Tüm mekânlar', 'mekanlar/', function () { return true; }]];
+  /* Çoklu kriter (ortam, mutfak): seçilenlerden biri yeter; kartta tutanların adı yazılır */
+  var coklu = function (ad, tur, baslik, ikon) {
+    var k = $$('input[name="' + ad + '"]:checked').map(kutu); if (!k.length) { return null; }
+    var adlar = k.map(function (x) { return x.ad; });
+    return { tur: tur, ad: adlar.join(', '), cipler: k, agirlik: AGIRLIK[tur], ikon: ikon, eksik: baslik + ': ' + adlar.join(', ') + ' yok',
+      uy: function (m) { return k.some(function (x) { return x.uy(m); }); },
+      neden: function (m) { return k.filter(function (x) { return x.uy(m); }).map(function (x) { return x.ad; }).join(', '); },
+      yok: (k.length > 1 ? 'Seçtiğin ' + baslik.toLocaleLowerCase('tr') + ' seçeneklerinde' : adlar[0] + ' için') + ' kayıt henüz yok.', oneri: TUMU };
+  };
   var kriterler = function () {
-    var l = [];
-    if (durum.amac) { var a = AMAC[durum.amac]; l.push({ tur: 'amac', anahtar: durum.amac, ad: a.ad, agirlik: AGIRLIK.amac, uy: a.uy, neden: a.neden, yok: a.yok, oneri: a.oneri, ikon: 'fa-bullseye' }); }
-    if (durum.butce) { var b = durum.butce; l.push({ tur: 'butce', anahtar: b, ad: BUTCE[b], agirlik: AGIRLIK.butce, uy: function (m) { return has(m, 'fiyat', b); }, yok: BUTCE[b] + ' fiyat seviyesinde kayıt henüz yok.', oneri: [['₺₺₺ mekânlar', 'mekanlar/?fiyat=3', function (m) { return has(m, 'fiyat', '3'); }], ['₺₺₺₺ mekânlar', 'mekanlar/?fiyat=4', function (m) { return has(m, 'fiyat', '4'); }]], ikon: 'fa-coins' }); }
-    durum.nitelik.forEach(function (n) { var x = NITELIK[n]; l.push({ tur: 'nitelik', anahtar: n, ad: x.ad, agirlik: AGIRLIK.nitelik, uy: x.uy, yok: x.yok, oneri: x.oneri, ikon: 'fa-check' }); });
+    var l = [], o = coklu('ortam', 'ortam', 'Ortam', 'fa-layer-group'), mu = coklu('mutfak', 'mutfak', 'Mutfak', 'fa-utensils');
+    if (o) { l.push(o); }
+    if (durum.butce) { var b = durum.butce; l.push({ tur: 'butce', ad: BUTCE[b], agirlik: AGIRLIK.butce, uy: function (m) { return has(m, 'fiyat', b); }, yok: BUTCE[b] + ' fiyat seviyesinde kayıt henüz yok.', oneri: [['₺₺₺ mekânlar', 'mekanlar/?fiyat=3', function (m) { return has(m, 'fiyat', '3'); }], ['₺₺₺₺ mekânlar', 'mekanlar/?fiyat=4', function (m) { return has(m, 'fiyat', '4'); }]], ikon: 'fa-coins' }); }
+    if (mu) { l.push(mu); }
+    $$('input[name="nitelik"]:checked').forEach(function (i) { var x = kutu(i); l.push({ tur: 'nitelik', ad: x.ad, agirlik: AGIRLIK.nitelik, uy: x.uy, yok: x.ad + ' kaydı henüz yok.', oneri: TUMU, ikon: x.ikon }); });
+    ['simdi', 'rez'].forEach(function (a) { var i = $('input[name="' + a + '"]'); if (i.checked) { var x = kutu(i); l.push({ tur: a, ad: a === 'simdi' ? 'Şimdi açık' : 'Rezervasyon alıyor', agirlik: AGIRLIK[a], uy: x.uy, ikon: a === 'simdi' ? 'fa-door-open' : 'fa-calendar-check', oneri: TUMU }); } });
     return l;
   };
   var hesapla = function (k) {
@@ -102,7 +108,7 @@
   var kart = function (s) {
     var h = (V.kartlar[s.m.slug] || '').split('{{kok}}').join(kok).replace(/<p>[\s\S]*?<\/p>/, '');
     h = h.replace('<div class="disc-fig">', '<div class="disc-fig"><span class="disc-match"><i class="fa-solid fa-bolt" aria-hidden="true"></i> %' + s.yuzde + ' Sana Uygun</span>').replace(/<div class="disc-status">[\s\S]*?<\/div>/, '');
-    var neden = s.tut.map(function (c) { return '<li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> ' + kac(c.neden ? c.neden(s.m) : c.ad) + '</li>'; }).concat(s.kalan.map(function (c) { return '<li class="mb-eksik"><i class="fa-solid fa-circle-xmark" aria-hidden="true"></i> ' + kac(c.ad) + ' yok</li>'; })).join('');
+    var neden = s.tut.map(function (c) { return '<li><i class="fa-solid fa-circle-check" aria-hidden="true"></i> ' + kac(c.neden ? c.neden(s.m) : c.ad) + '</li>'; }).concat(s.kalan.map(function (c) { return '<li class="mb-eksik"><i class="fa-solid fa-circle-xmark" aria-hidden="true"></i> ' + kac(c.eksik || c.ad + ' yok') + '</li>'; })).join('');
     var rez = has(s.m, 'hizmet', 'rezervasyon-aliyor') ? '<span class="mb-rez"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i> Rezervasyon alıyor</span>' : '';
     return h.replace(/<\/article>\s*$/, '<ul class="mb-reasons">' + neden + '</ul><div class="mb-card-actions">' + rez + '<a class="btn btn-primary" href="' + kok + 'mekan/mikla/">Detay <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></article>').replace('<article ', '<article data-git="' + kok + 'mekan/mikla/" ');
   };
@@ -117,8 +123,9 @@
   };
   var adresYaz = function () {
     var q = new URLSearchParams();
-    ['amac', 'butce', 'il', 'ilce'].forEach(function (a) { if (durum[a]) { q.set(a, durum[a]); } });
-    if (durum.nitelik.length) { q.set('nitelik', durum.nitelik.join(',')); }
+    ['butce', 'il', 'ilce'].forEach(function (a) { if (durum[a]) { q.set(a, durum[a]); } });
+    ['ortam', 'mutfak', 'nitelik'].forEach(function (a) { var v = secili(a); if (v.length) { q.set(a, v.join(',')); } });
+    ['simdi', 'rez'].forEach(function (a) { if ($('input[name="' + a + '"]').checked) { q.set(a, '1'); } });
     history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : ''));
   };
   var sonuc = function () {
@@ -126,19 +133,19 @@
     if (durum.yontem === 'bolge' && durum.il) { cip += '<span class="res-chip"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> ' + kac($('#mbSehir option:checked').textContent.replace(/\s*\(\d+\)$/, '')) + (durum.ilce ? ' / ' + kac($('#mbIlce option:checked').textContent) : '') + '</span>'; }
     if (durum.yontem === 'mevcut' && durum.lat !== null) { cip += '<span class="res-chip"><i class="fa-solid fa-location-crosshairs" aria-hidden="true"></i> ' + durum.mesafe + ' km içinde</span>'; }
     if (durum.yontem === 'harita' && tarif) { cip += '<span class="res-chip"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> ' + kac(tarif) + (tarifYer().length ? '' : ' · konum eşleşmedi') + '</span>'; }
-    cip += k.map(function (c) { return '<span class="res-chip"><i class="fa-solid ' + c.ikon + '" aria-hidden="true"></i> ' + kac(c.ad) + '</span>'; }).join('');
+    cip += k.map(function (c) { return (c.cipler || [c]).map(function (x) { return '<span class="res-chip"><i class="fa-solid ' + x.ikon + '" aria-hidden="true"></i> ' + kac(x.ad) + '</span>'; }).join(''); }).join('');
     $('#mbCipler').innerHTML = cip;
     var veriYok = k.filter(function (c) { return !V.mekanlar.some(c.uy); })[0], l = hesapla(k), html;
-    var paySatir = k.map(function (c) { return kac(c.ad) + ' ' + c.agirlik; }).join(' + ');
+    var paySatir = k.map(function (c) { return kac(c.tur === 'ortam' ? 'Ortam' : c.tur === 'mutfak' ? 'Mutfak' : c.tur === 'butce' ? 'Bütçe' : c.ad) + ' ' + c.agirlik; }).join(' + ');
     $('#mbHesap').textContent = k.length && !veriYok && l.length ? 'Oran: tutan kriterlerin ağırlığı / seçtiğin kriterlerin toplamı (' + paySatir + ').' : '';
     if (veriYok) {
-      html = bos('Bu seçimde sonuç yok', veriYok.yok + ' Aşağıdaki seçeneklerden birine geç ya da mekânı bize öner.', veriYok.oneri || []);
+      html = bos('Bu seçimde sonuç yok', veriYok.yok + ' Seçimi değiştir ya da mekânı bize öner.', veriYok.oneri || []);
     } else if (!l.length) {
-      html = bos('Bu konumda mekân bulamadık', 'Konumu genişlet ya da başka bir bölge seç.', [['Tüm mekânlar', 'mekanlar/', function () { return true; }]]);
+      html = bos('Bu konumda mekân bulamadık', 'Konumu genişlet ya da başka bir bölge seç.', TUMU);
     } else {
       var uygun = l.filter(function (s) { return s.yuzde >= 85; }), yakin = l.filter(function (s) { return s.yuzde >= 40 && s.yuzde < 85; });
       html = grup('En Uygun Seçenekler', '%85 ve üzeri uyum.', uygun) + grup('Yakın Alternatifler', 'Bir veya iki kriteri karşılamayan seçenekler.', yakin);
-      if (!html) { html = bos('Seçimlerine yakın mekân bulamadık', 'Nitelikleri azaltmayı dene.', [['Tüm mekânlar', 'mekanlar/', function () { return true; }]]); }
+      if (!html) { html = bos('Seçimlerine yakın mekân bulamadık', 'Nitelikleri azaltmayı dene.', TUMU); }
     }
     $('#mbGruplar').innerHTML = html;
     $('.wiz-solo').hidden = true; $('#mbSonuc').hidden = false; adresYaz();
@@ -148,28 +155,30 @@
   /* Olaylar */
   document.addEventListener('change', function (e) {
     var t = e.target;
-    if (t.name === 'amac') { durum.amac = t.value; }
     if (t.name === 'butce') { durum.butce = t.value; }
     if (t.name === 'yontem') { durum.yontem = t.value; }
-    if (t.name === 'nitelik') { durum.nitelik = $$('input[name="nitelik"]:checked').map(function (i) { return i.value; }); }
     if (t.id === 'mbSehir') { durum.il = t.value; durum.ilce = ''; ilceDoldur(); }
     if (t.id === 'mbIlce') { durum.ilce = t.value; }
     boya();
   });
   document.addEventListener('input', function (e) {
+    if (e.target.id === 'mbHaritaTxt') { tarif = e.target.value.trim(); }
     if (e.target.id !== 'mbDist') { return; }
     durum.mesafe = +e.target.value; $('#mbDistVal').textContent = durum.mesafe + ' km'; $('#mbDistFill').style.width = (durum.mesafe - 1) / 49 * 100 + '%';
   });
   document.addEventListener('click', function (e) {
     var t = e.target.closest ? e.target : e.target.parentNode;
     if (t.closest('[data-ileri]')) {
-      if (adim === 1 && !durum.amac) { window.prototipBildir('Devam etmek için bir amaç seç.'); return; }
-      if (adim === 2 && durum.yontem === 'bolge' && !durum.il) { window.prototipBildir('Bir il seç ya da Fark Etmez\'i işaretle.'); return; }
-      if (adim === 2 && durum.yontem === 'mevcut' && durum.lat === null) { window.prototipBildir('Önce Konumumu Bul\'a bas.'); return; }
-      if (adim < 3) { goster(adim + 1); } else { sonuc(); } return;
+      if (adim === 1 && durum.yontem === 'bolge' && !durum.il) { window.prototipBildir('Bir il seç ya da Fark Etmez\'i işaretle.'); return; }
+      if (adim === 1 && durum.yontem === 'mevcut' && durum.lat === null) { window.prototipBildir('Önce Konumumu Bul\'a bas.'); return; }
+      if (adim === 2 && !secili('ortam').length) { window.prototipBildir('Devam etmek için en az bir ortam seç.'); return; }
+      if (adim < N) { goster(adim + 1); } else { sonuc(); } return;
     }
     if (t.closest('[data-geri]')) { goster(adim - 1); return; }
     var st = t.closest('#mbStepper .stp.done'); if (st) { goster(+st.dataset.adim); return; }
+    var sk = t.closest('#mbMutfakSekme .mb-tab'); if (sk) { sekme(sk.dataset.tab); return; }
+    /* Aç-kapa kabuğun ortak `.fct-head` bağında (app.js); burada yalnız aria-expanded izlenir */
+    var ah = t.closest('.mb-acc .fct-head'); if (ah) { ah.setAttribute('aria-expanded', ah.parentNode.classList.contains('open') ? 'true' : 'false'); return; }
     if (t.closest('#mbDuzenle,#mbSecimDegis')) { goster(1); return; }
     if (t.closest('#mbYeni')) { location.href = location.pathname; return; }
     var d = t.closest('[data-daha]');
@@ -183,14 +192,23 @@
       navigator.geolocation.getCurrentPosition(function (p) { durum.lat = p.coords.latitude; durum.lng = p.coords.longitude; n.lastChild.nodeValue = ' Konumun alındı. Yarıçapı aşağıdan ayarla.'; }, function () { n.lastChild.nodeValue = ' Konum alınamadı. Bölge Seç ile devam et.'; }, { timeout: 8000 });
     }
   });
+  /* Sekme çubuğunda ok tuşları (role="tablist") */
+  $('#mbMutfakSekme').addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') { return; }
+    var l = $$('#mbMutfakSekme .mb-tab'), i = l.indexOf(document.activeElement); if (i < 0) { return; }
+    var y = l[(i + (e.key === 'ArrowRight' ? 1 : l.length - 1)) % l.length]; y.focus(); sekme(y.dataset.tab); e.preventDefault();
+  });
 
-  /* Adres: seçimli bağ doğrudan sonucu açar */
+  /* Adres: seçimli bağ doğrudan sonucu açar (en az bir ortam gerekir, adım 2 kuralı) */
   var q = new URLSearchParams(location.search);
   var isaret = function (ad, deger) { var i = $('input[name="' + ad + '"][value="' + deger + '"]'); if (i) { i.checked = true; } return !!i; };
   isaret('yontem', 'hepsi'); isaret('butce', '');
   if (q.get('il')) { durum.yontem = 'bolge'; isaret('yontem', 'bolge'); ilSec.value = durum.il = q.get('il'); ilceDoldur(); if (q.get('ilce')) { ilceSec.value = durum.ilce = q.get('ilce'); } }
   if (q.get('butce') && isaret('butce', q.get('butce'))) { durum.butce = q.get('butce'); }
-  (q.get('nitelik') || '').split(',').forEach(function (n) { if (NITELIK[n] && isaret('nitelik', n)) { durum.nitelik.push(n); } });
+  ['ortam', 'mutfak', 'nitelik'].forEach(function (a) { (q.get(a) || '').split(',').forEach(function (v) { if (v) { isaret(a, v); } }); });
+  ['simdi', 'rez'].forEach(function (a) { if (q.get(a) === '1') { isaret(a, '1'); } });
+  var ilkSekme = $('.mb-tabpanel input:checked'); if (ilkSekme) { sekme(ilkSekme.closest('.mb-tabpanel').dataset.panel); }
+  $$('.mb-acc .fct').forEach(function (g) { if ($('input:checked', g)) { g.classList.add('open'); $('.fct-head', g).setAttribute('aria-expanded', 'true'); } });
   boya();
-  if (q.get('amac') && AMAC[q.get('amac')] && isaret('amac', q.get('amac'))) { durum.amac = q.get('amac'); boya(); sonuc(); }
+  if (secili('ortam').length) { sonuc(); }
 })();
