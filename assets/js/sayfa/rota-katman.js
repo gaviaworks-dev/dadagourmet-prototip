@@ -367,6 +367,8 @@
   new MutationObserver(hepsi).observe(ozet, { attributes: true, attributeFilter: ['hidden'] }); hepsi();
   /* Mekân sayısı canlı kadranda değişince sekme sayısı tazelenir */
   var dc = $('#ygDashCount'); if (dc) { new MutationObserver(function () { var s = $('#ygSerit [data-serit="mekan"] .yg-dash-cnt'); if (s) { s.textContent = dc.textContent; } }).observe(dc, { childList: true, characterData: true, subtree: true }); }
+  /* Canlı kadran yeniden çizilince başlığı "Yol üstü mekânlar"a döndürür; İhtiyaçlar açıksa başlık geri alınır */
+  var dtt = $('#ygDashTitleTxt'); if (dtt) { new MutationObserver(function () { if (seritAktif !== 'mekan' && dtt.textContent !== 'Yol üstü · İhtiyaçlar') { dtt.textContent = 'Yol üstü · İhtiyaçlar'; } }).observe(dtt, { childList: true, characterData: true, subtree: true }); }
 
   new MutationObserver(function () { durakBoya(); aktar(); if (yakitSonuc.length) { yakitCiz(); } }).observe($('#ygStopList'), { childList: true, subtree: true });
   var plan = $('#ygPlanList'); if (plan) { new MutationObserver(aktar).observe(plan, { childList: true, subtree: true }); }
