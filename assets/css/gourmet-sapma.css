@@ -356,6 +356,10 @@ body.gastronomi-kapali .yg-dash.yg-dash--katmanli:not([hidden]){display:block!im
 .yg-il-kayar.has-scroll-b::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--bosluk-32);background:linear-gradient(to bottom,transparent,var(--kagit));pointer-events:none;z-index:3}
 .yg-il-kaydir{display:flex;align-items:center;gap:var(--bosluk-6);margin:0;padding:var(--bosluk-6) var(--bosluk-12);border-top:var(--cizgi-1) solid var(--cizgi);color:var(--marka-koyu);font-size:var(--yazi-11-5);font-weight:var(--agirlik-kalin)}
 .yg-il-kaydir i{font-size:var(--yazi-11)}
+/* D5 · Satır içi "Ara durak ekle" / "Rotaya ekle": kanon `.dugme.satir` köşesi (--yuvarlak-sm), çip köşesi değil */
+.yg-il-cip,.yg-kl-durak{flex:none;border-radius:var(--yuvarlak-sm);white-space:nowrap}
+/* D6 · "Yola yakın" etiketi "Yol üstü" yeşilinden ayrı: kanon uyarı (kehribar) jetonu, beyazla 6,6:1. Sponsor kartının koyu zemin kuralı daha özgül, değişmez */
+.yd-tag.near,.yg-fl-tag.near,.yg-detail-tag.near,.yg-vtip-tier.near,.yg-cc.near b{color:var(--uyari)}
 /* D7 + D8 · Alt şeritte "İhtiyaçlar" sekmesi: alt başlıklı üç grup (İbadethane, Dinlenme alanı, Karavan parkları), kart canlı `.yg-dcard` */
 .yg-dash-title .ornek-etiket{text-transform:none;letter-spacing:normal}
 .yg-dash-title .ornek-etiket[hidden]{display:none}
