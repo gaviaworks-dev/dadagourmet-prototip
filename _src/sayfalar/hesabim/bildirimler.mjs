@@ -59,7 +59,7 @@ const govde = `<section class="bant nt-top">
     <div class="bildirim-kolonu" id="ntCol">
       ${akis}
 
-      <div class="alt-not ortali" id="ntFoot"><i class="fa-solid fa-gear"></i> Bildirim tercihlerini <a href="{{kok}}hesabim/ayarlar/#bildirim">Hesap Ayarları → Bildirimler</a>'den yönetebilirsin.</div>
+      <div class="alt-not ortali" id="ntFoot"><i class="fa-solid fa-gear" aria-hidden="true"></i> <span>Bildirim tercihlerini <a href="{{kok}}hesabim/ayarlar/#bildirim">Hesap Ayarları → Bildirimler</a>’den yönetebilirsin.</span></div>
     </div>
   </div>
 </section>`;

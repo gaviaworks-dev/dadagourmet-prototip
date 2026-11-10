@@ -18,6 +18,8 @@ html[data-baslik-zemin="acik"] .header .gourmet-word-mark{color:var(--marka,#742
 .footer.orange{position:static!important}
 #pageMain{margin-bottom:0!important}
 .page-main{z-index:auto}
+/* Başlık içindeki rozet başlığın eksi harf aralığını almasın ("3okunmamış" bitişik okunuyordu) */
+h1 .rozet,h2 .rozet,h1 .rozet.sayac{letter-spacing:normal}
 /* Taşan sekme rayı (H2): kanon `.sekmeler.ortali` kayar ama ipucu yoktu ("Etkinlik (" yarım kalıyordu). Canlı scroll-affordance.js
    kaydırılacak yer varken `.has-scroll-r`/`.has-scroll-l` koyar; solma rayın kendi zemininden maskeyle yapılır (yeni renk yok, kaymaz) */
 .sekmeler[data-scroll-fade].has-scroll-r::after,.sekmeler[data-scroll-fade].has-scroll-l::before{content:none}
