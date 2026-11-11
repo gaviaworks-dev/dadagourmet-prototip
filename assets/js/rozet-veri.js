@@ -14,7 +14,7 @@ window.DG_ROZET = {
   ],
   /* Onaylı sıra (Gurme Panelim listesi bu sırayı izler) */
   rozetler: [
-    { k: 'ilk-tadim', ikon: 'fa-star', ad: 'İlk Tadım', aile: 'degerlendirme', olcu: 'degerlendirme', esik: 1, durum: 'İlk değerlendirmen yayına girdi', nasil: 'İlk değerlendirmen yayına girsin. Lezzet, servis ve ambiyansı puanlaman yeter.' },
+    { k: 'ilk-tadim', ikon: 'fa-star', ad: 'İlk Tadım', aile: 'degerlendirme', olcu: 'degerlendirme', esik: 1, durum: 'İlk değerlendirmen yayına girdi', nasil: 'İlk değerlendirmen yayına girsin. Mekânı puanlaman yeter.' },
     { k: 'gurme-kalem', ikon: 'fa-pen-nib', ad: 'Gurme Kalem', aile: 'degerlendirme', olcu: 'degerlendirme', esik: 5, durum: '5 değerlendirmen yayına girdi', nasil: 'Beş değerlendirmen yayına girsin.' },
     { k: 'tabak-avcisi', ikon: 'fa-camera', ad: 'Tabak Avcısı', aile: 'degerlendirme', olcu: 'foto', esik: 3, durum: 'Fotoğraflı 3 değerlendirmen yayına girdi', nasil: 'Fotoğraflı üç değerlendirmen yayına girsin.' },
     { k: 'kasif', ikon: 'fa-location-dot', ad: 'Kâşif', aile: 'katki', olcu: 'oneriMekan', esik: 1, durum: 'İlk mekân önerin yayına girdi', nasil: 'İlk mekân önerin yayına girsin.' },

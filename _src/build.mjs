@@ -60,6 +60,22 @@ for (const f of dosyalar(path.join(SRC, 'sayfalar', alan))) {
   } catch (e) { hatalar.push(goreli + ': ' + e.message); }
 }
 
+// MD-11 · 5 (mekan-detay, 11 Kas): mekân detayı Tarifler sekmesi. Canlı `_tab-tarifler` rayına mutfak başına tek bağ basıyor; mekânın
+// "Tamamını Gör" bağındaki `mutfak` değeri için `_src/veri/gastro-tarif.json`da GERÇEK Gastro tarifi varsa ray kanon `.r-card`
+// kartlarıyla dolar (Gourmet `mekan-detay.css` "TARİFLER PANE'İ: r-card rayı"), oklar canlıdaki gibi birden çok kalemde basılır.
+// Veri yoksa canlının tek bağlı rayı olduğu gibi kalır
+const tarifRayi = (h) => {
+  const T = veri['gastro-tarif']?.mutfak; if (!T || !h.includes('id="mdRecTrack"')) return h;
+  const kod = (h.match(/<a class="see-all" href="https:\/\/dadagastro\.com\/tarifler\?mutfak=([a-z0-9-]+)"/) || [])[1]; const m = T[kod];
+  if (!m?.tarifler?.length) return h;
+  const k = (t) => String(t ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+  const olgu = (ikon, t, sinif = '') => (t ? `<span${sinif}><i class="fa-solid ${ikon}" aria-hidden="true"></i> <span class="rf-txt">${k(t)}</span></span>` : '');
+  const kart = (r) => `<article class="r-card"><div class="r-media-wrap"><div class="r-media" role="img" aria-label="${k(r.ad)}" style="background-image:url('{{kok}}${r.gorsel}')"><span class="r-chip">${k(r.kategori)}</span></div></div><div class="r-body"><h4><a href="${k(r.url)}" rel="noopener">${k(r.ad)}</a></h4><div class="r-facts">${olgu('fa-clock', r.sure)}${olgu('fa-gauge-simple', r.zorluk)}${olgu('fa-utensils', r.porsiyon, ' class="f-serv"')}</div><div class="r-foot"><span class="r-kaynak">DadaGastro tarifi <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></span></div></div></article>`;
+  const ok = '<div class="row-nav"><button type="button" data-slider-dir="prev" data-slider-for="mdRecTrack" aria-label="Geri"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button><button type="button" data-slider-dir="next" data-slider-for="mdRecTrack" aria-label="İleri"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button></div>';
+  return h.replace(/(<div class="md-tools">\s*)(<a class="see-all")/, (t, a, b) => (m.tarifler.length > 1 && !t.includes('row-nav') ? a + ok + b : t))
+    .replace(/(<div class="row-track[^"]*" id="mdRecTrack"[^>]*>)[\s\S]*?<\/div>/, (t, ac) => `${ac}${m.tarifler.map(kart).join('')}</div>`);
+};
+
 const gorulen = new Map();
 const uretilen = [];
 for (const s of sayfalar) {
@@ -67,7 +83,7 @@ for (const s of sayfalar) {
   gorulen.set(s.yol, s.kaynak);
   const derinlik = s.yol ? s.yol.split('/').length : 0;
   const kok = '../'.repeat(derinlik) || './';
-  const html = uyeYaz(parcalariAc(kabukla(s, { veri }))).replaceAll('{{kok}}', kok);
+  const html = tarifRayi(uyeYaz(parcalariAc(kabukla(s, { veri })))).replaceAll('{{kok}}', kok);
   const hedef = path.join(KOK, s.yol, 'index.html');
   fs.mkdirSync(path.dirname(hedef), { recursive: true });
   fs.writeFileSync(hedef, html);

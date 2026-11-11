@@ -36,7 +36,7 @@
       return K.oku('degerlendirme').map(function (k) {
         var d = k.durum || 'inceleniyor', uc = d === 'inceleniyor' ? dugme('degerlendirme', k.id, 'reddedildi', 'Reddet') + dugme('degerlendirme', k.id, 'yayinda', 'Yayına al', true) : '';
         var r = { inceleniyor: ['İnceleniyor', 'bekleme'], yayinda: ['Yayında', 'olumlu'], reddedildi: ['Yayınlanmadı', 'durdu'] }[d];
-        return satir('fa-star', kac(k.mekan + ' · Örnek Üye'), 'Lezzet ' + k.lezzet + ' · Servis ' + k.servis + ' · Ambiyans ' + k.ambiyans + (k.foto ? ' · Fotoğraflı' : '') + (k.metin ? ' · ' + k.metin.slice(0, 80) : ''), r[0], r[1], uc);
+        return satir('fa-star', kac(k.mekan + ' · Örnek Üye'), window.dgDegPuan.metin(k) + (k.foto ? ' · Fotoğraflı' : '') + (k.metin ? ' · ' + k.metin.slice(0, 80) : ''), r[0], r[1], uc);
       }).join('') || bos('Bekleyen değerlendirme yok');
     }
   };

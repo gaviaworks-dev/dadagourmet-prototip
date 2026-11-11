@@ -4,12 +4,32 @@
   var K = window.dgKayit, bildir = window.prototipBildir, MEKAN = 'Mikla';
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
 
-  /* Ne Yenir, Ne Alınır sekmeleri Genel Bakış içindeki bölüme kaydırır */
-  document.addEventListener('click', function (e) {
-    var t = e.target.closest && e.target.closest('[data-kaydir]'); if (!t) { return; }
-    var hedef = document.getElementById(t.dataset.kaydir), genel = $('#mdTabs .dt[data-pane="genel"]:not([data-kaydir])');
-    setTimeout(function () { t.classList.remove('active'); if (genel) { genel.classList.add('active'); } hedef.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 0);
-  });
+  /* Sekme rayı: Ne Yenir, Ne Alınır sekmeleri Genel Bakış içindeki bölüme kaydırır.
+     MD-11 · 3b (lider bulgusu, 11 Kas): canlı `mekan-detay.js` `showPane` sekmeleri `data-pane` değerine göre boyuyor; Ne Yenir? ve
+     Ne Alınır? de `data-pane="genel"` taşıdığı için Genel Bakış'a basınca üçü, Ne Yenir'e basınca ikisi birden etkin kalıyordu
+     (eski düzeltme yalnız tıklananı siliyordu). Tek etkin sekme: tıklanan; Genel Bakış bölmesinde kaydırırken görünüm ortasındaki
+     bölüm (Ne Yenir?, Ne Alınır?, değilse Genel Bakış). Canlı betik değişmedi; bu dinleyici ondan sonra koşar */
+  var sekmeler = $$('#mdTabs .dt'), kilit = 0, kare = 0;
+  var genelSekme = sekmeler.filter(function (t) { return t.dataset.pane === 'genel' && !t.dataset.kaydir; })[0];
+  var boya = function (s) { sekmeler.forEach(function (t) { var on = t === s; t.classList.toggle('active', on); if (on) { t.setAttribute('aria-current', 'true'); } else { t.removeAttribute('aria-current'); } }); };
+  var izle = function () {
+    kare = 0; if (Date.now() < kilit || !genelSekme) { return; }
+    var bolme = $('#pane-genel');
+    if (!bolme || !bolme.classList.contains('active')) { var etkin = sekmeler.filter(function (t) { return t.classList.contains('active'); }); if (etkin.length > 1) { boya(etkin[0]); } return; }
+    var cizgi = innerHeight / 2, sec = genelSekme;
+    sekmeler.forEach(function (t) { var h = t.dataset.kaydir && document.getElementById(t.dataset.kaydir); if (!h) { return; } var r = h.getBoundingClientRect(); if (r.top <= cizgi && r.bottom >= cizgi) { sec = t; } });
+    boya(sec);
+  };
+  if (sekmeler.length) {
+    window.addEventListener('scroll', function () { if (!kare) { kare = requestAnimationFrame(izle); } }, { passive: true });
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest && e.target.closest('#mdTabs .dt');
+      if (!t) { if (e.target.closest && e.target.closest('[data-pane-link]')) { setTimeout(izle, 0); } return; }
+      boya(t);
+      if (t.dataset.kaydir) { kilit = Date.now() + 1200; setTimeout(function () { boya(t); document.getElementById(t.dataset.kaydir).scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 0); }
+    });
+    izle();
+  }
 
   /* Tabak favorisi */
   var tabakBoya = function (b) {
@@ -44,28 +64,51 @@
     });
   }
 
-  /* Değerlendirme: lezzet, servis, ambiyans ve fotoğraf. Moderasyona gider; puan bekler, onayda kesinleşir */
-  var rev = $('#dgRev'), P = window.dgPuan.KURAL, oy = {};
+  /* Değerlendirme. MD-11 · 4 (Beyar 11 Kas, "Gastro'da nasılsa öyle olsun"): Gastro ve canlı Gourmet `#revForm` gibi tek yıldız
+     satırı, metin, en fazla 3 fotoğraf; form kapalı başlar, yıldız ya da metin odağıyla açılır. Kayıt tek puanla yazılır (canlı
+     `degerlendirmeler.puan`); eski üç kriterli kayıtları okuyan ekranlar `dgDegPuan` ile ortalamaya düşer (prototip.js).
+     Moderasyona gider; Dada Puan bekler, onayda kesinleşir */
+  var rev = $('#dgRev'), P = window.dgPuan.KURAL, foto = $('#dgRevFoto'), AZAMI = 3;
   if (rev) {
-    var foto = $('#dgRevFoto'), metin = $('#dgRevMetin');
-    var kazanc = function () { return P.puanlama + (metin.value.trim() || foto.files.length ? P.yorum : 0); };
-    var puanYaz = function () { var yorumlu = metin.value.trim() || foto.files.length; $('#dgRevPuan').innerHTML = '<i class="fa-solid fa-award" aria-hidden="true"></i> Puanlama +' + P.puanlama + (yorumlu ? ', yorum veya fotoğraf +' + P.yorum : '') + ' = <b>+' + kazanc() + ' bekleyen puan</b>' + (yorumlu ? '' : '. Yorum ya da fotoğraf eklersen +' + P.yorum); };
-    rev.addEventListener('click', function (e) {
+    var metin = $('#dgRevMetin'), yildiz = $('#dgRevYildiz'), ipucu = $('#dgRevIpucu'), onizleme = $('#dgRevFotolar'), puan = 0, dosyalar = [];
+    var ac = function () { rev.classList.add('open'); };
+    var yorumlu = function () { return !!(metin.value.trim() || dosyalar.length); };
+    var kazanc = function () { return P.puanlama + (yorumlu() ? P.yorum : 0); };
+    var puanYaz = function () { var y = yorumlu(); $('#dgRevPuan').innerHTML = '<i class="fa-solid fa-award" aria-hidden="true"></i> Puanlama +' + P.puanlama + (y ? ', yorum veya fotoğraf +' + P.yorum : '') + ' = <b>+' + kazanc() + ' bekleyen puan</b>' + (y ? '' : '. Yorum ya da fotoğraf eklersen +' + P.yorum); };
+    var onizle = function () {
+      [].forEach.call(onizleme.querySelectorAll('.rf-ph'), function (d) { URL.revokeObjectURL(d.dataset.url); });
+      onizleme.innerHTML = '';
+      dosyalar.forEach(function (f, i) {
+        var d = document.createElement('div'), u = URL.createObjectURL(f); d.className = 'rf-ph'; d.dataset.url = u; d.style.backgroundImage = 'url("' + u + '")';
+        d.innerHTML = '<button type="button" aria-label="Fotoğrafı kaldır"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>';
+        d.querySelector('button').addEventListener('click', function () { dosyalar.splice(i, 1); onizle(); puanYaz(); });
+        onizleme.appendChild(d);
+      });
+    };
+    metin.addEventListener('focus', ac);
+    yildiz.addEventListener('click', function (e) {
       var b = e.target.closest('[data-yildiz]'); if (!b) { return; }
-      var k = b.closest('[data-kriter]'), n = +b.dataset.yildiz; oy[k.dataset.kriter] = n;
-      $$('[data-yildiz]', k).forEach(function (y) { y.classList.toggle('on', +y.dataset.yildiz <= n); });
+      puan = +b.dataset.yildiz; ac();
+      $$('[data-yildiz]', yildiz).forEach(function (y) { var on = +y.dataset.yildiz <= puan; y.classList.toggle('on', on); y.setAttribute('aria-checked', +y.dataset.yildiz === puan ? 'true' : 'false'); });
+      ipucu.className = 'rf-hint ok'; ipucu.textContent = 'Puanın: ' + puan + '/5';
     });
     metin.addEventListener('input', puanYaz);
-    foto.addEventListener('change', function () { $('#dgRevFotoAd').textContent = foto.files.length ? foto.files[0].name : 'Fotoğraf Ekle'; puanYaz(); });
+    foto.addEventListener('change', function () {
+      var fazla = false;
+      [].forEach.call(foto.files, function (f) { if (dosyalar.length < AZAMI) { dosyalar.push(f); } else { fazla = true; } });
+      if (fazla) { bildir('En fazla ' + AZAMI + ' fotoğraf ekleyebilirsin.', 'uyari'); }
+      foto.value = ''; ac(); onizle(); puanYaz();
+    });
     rev.addEventListener('submit', function (e) {
       e.preventDefault(); e.stopImmediatePropagation();
-      var ipucu = $('#dgRevIpucu');
-      if (!oy.lezzet || !oy.servis || !oy.ambiyans) { ipucu.className = 'rf-hint err'; ipucu.textContent = 'Lezzet, servis ve ambiyansı puanla'; return; }
+      if (!puan) { ac(); ipucu.className = 'rf-hint err'; ipucu.textContent = 'Puan vermeden yorum gönderilemez'; yildiz.classList.add('shake'); setTimeout(function () { yildiz.classList.remove('shake'); }, 450); return; }
       var tutar = kazanc(), id = 'deg-' + Date.now();
-      K.ekle('degerlendirme', { id: id, mekan: MEKAN, lezzet: oy.lezzet, servis: oy.servis, ambiyans: oy.ambiyans, metin: metin.value.trim(), foto: foto.files.length > 0, tutar: tutar, durum: 'inceleniyor' });
+      K.ekle('degerlendirme', { id: id, mekan: MEKAN, puan: puan, metin: metin.value.trim(), foto: dosyalar.length > 0, fotoSayi: dosyalar.length, tutar: tutar, durum: 'inceleniyor' });
       window.dgPuan.ekle(id, MEKAN + ' değerlendirmesi', tutar);
-      rev.classList.add('sent'); var t = $('#dgRevTamam'); t.hidden = false; $('span', t).textContent = 'Değerlendirmen alındı. Denetim sonrası yayınlanır; +' + tutar + ' bekleyen puan onayda kesinleşir.';
+      rev.classList.add('sent'); var t = $('#dgRevTamam'); t.hidden = false; $('span', t).textContent = 'Yorumun alındı, denetim sonrası yayınlanacak. Teşekkürler! +' + tutar + ' bekleyen puan onayda kesinleşir.';
     }, true);
+    /* Eylem çubuğundaki Değerlendir ve Fotoğraf Ekle formu açar */
+    $$('.vd-actbar__act[data-pane-link="yorumlar"]').forEach(function (b) { b.addEventListener('click', function () { if (document.body.classList.contains('is-auth')) { ac(); } }); });
     puanYaz();
   }
   /* Fotoğraf Ekle kısayolu formdaki fotoğraf alanına götürür */

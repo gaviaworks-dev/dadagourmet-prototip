@@ -14,13 +14,13 @@
   var ONERI = { inceleniyor: ['İnceleniyor · +' + P.KURAL.oneri + ' bekleyen', 'bekleme'], yayinda: ['Yayında · +' + P.KURAL.oneri + ' kesinleşti', 'olumlu'], reddedildi: ['Yayınlanmadı', 'durdu'] };
   var degerlendirdi = function (mekan) { return K.oku('degerlendirme').some(function (d) { return d.mekan === mekan; }); };
   var yazicilar = {
-    'degerlendirmelerim': function () { return K.oku('degerlendirme').map(function (k) { var y = k.durum === 'yayinda'; return satir('fa-star', ad(k, k.mekan), 'Lezzet ' + k.lezzet + ' · Servis ' + k.servis + ' · Ambiyans ' + k.ambiyans + (k.foto ? ' · Fotoğraflı' : ''), y ? 'Yayında · +' + k.tutar + ' kesinleşti' : 'İnceleniyor · +' + k.tutar + ' bekleyen', y ? 'olumlu' : 'bekleme'); }).join(''); },
+    'degerlendirmelerim': function () { return K.oku('degerlendirme').map(function (k) { var y = k.durum === 'yayinda'; return satir('fa-star', ad(k, k.mekan), window.dgDegPuan.metin(k) + (k.foto ? ' · Fotoğraflı' : ''), y ? 'Yayında · +' + k.tutar + ' kesinleşti' : 'İnceleniyor · +' + k.tutar + ' bekleyen', y ? 'olumlu' : 'bekleme'); }).join(''); },
     'ziyaret-gecmisim': function () { return K.oku('ziyaret').map(function (k) { return satir('fa-circle-check', ad(k, k.mekan), k.yer + ' · ' + k.gun, 'Ziyaret edildi'); }).join(''); },
     'topluluk-katkilarim': function () { return K.oku('oneri').map(function (k) { var d = ONERI[k.durum] || ONERI.inceleniyor; return satir(k.tur === 'etkinlik' ? 'fa-calendar-days' : 'fa-location-dot', ad(k, k.ad), (k.tur === 'etkinlik' ? 'Etkinlik önerisi' : 'Mekân önerisi') + (k.yer ? ' · ' + k.yer : '') + (k.gun ? ' · ' + tarih(k.gun) : ''), d[0], d[1]); }).join(''); },
     'gurme-panelim': function () {
       /* Ziyaret saati geçen onaylı rezervasyon değerlendirmeye çağırır (şartname akış 5) */
       var cagri = K.oku('rezervasyon').filter(function (k) { return (k.durum === 'onaylandi' || k.durum === 'gerceklesti') && gecti(k) && !degerlendirdi(k.mekan); }).map(function (k) {
-        return '<div class="bilgi-notu"><i class="fa-solid fa-star" aria-hidden="true"></i><p><b>' + kac(k.mekan) + ' ziyaretin nasıldı?</b> ' + tarih(k.gun) + ' tarihli rezervasyonun geçti. Lezzet, servis ve ambiyansı puanla; tabak fotoğrafı eklersen +' + (P.KURAL.yorum + P.KURAL.puanlama) + ' bekleyen puan kazanırsın. <a href="' + kok + 'mekan/mikla/#yorumlar">Değerlendir</a></p></div>';
+        return '<div class="bilgi-notu"><i class="fa-solid fa-star" aria-hidden="true"></i><p><b>' + kac(k.mekan) + ' ziyaretin nasıldı?</b> ' + tarih(k.gun) + ' tarihli rezervasyonun geçti. Mekânı puanla; tabak fotoğrafı eklersen +' + (P.KURAL.yorum + P.KURAL.puanlama) + ' bekleyen puan kazanırsın. <a href="' + kok + 'mekan/mikla/#yorumlar">Değerlendir</a></p></div>';
       }).join('');
       if (cagri) { var bas = document.querySelector('.bolum-bas'); if (bas) { bas.insertAdjacentHTML('afterend', cagri); } }
       return K.oku('rezervasyon').map(function (k) { var d = REZ[k.durum] || REZ.talep; return satir('fa-utensils', ad(k, k.mekan), k.yer + ' · ' + k.kisi + ' kişi · ' + tarih(k.gun) + ' ' + k.saat + (k.alerjen ? ' · Alerjen notu var' : ''), d[0], d[1]); }).join('') +

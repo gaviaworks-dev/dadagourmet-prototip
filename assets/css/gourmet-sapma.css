@@ -1,7 +1,24 @@
 /* Gastro kabuğu altında Gourmet gövdesi için sapmalar. Her satırın gerekçesi _src/ekran-kaynaklari.md'de. */
 /* K2 ölçümü: kanon kapak boyu Gastro tarif detayında 1440, 1024 ve 390'da 480 px */
 .rd-stage{height:480px}
-@media(min-width:1025px){.rd-gallery{grid-template-rows:480px 88px auto}}
+/* MD-11 · 2 (Beyar 11 Kas, galeri altı boşluk). Kök neden: künye 1. satırdan 3. satıra uzanıyor (`grid-row:1/4`) ve rezervasyon
+   düğmesi + talep notu + İşletmeyi Ara yüzünden sol sütundan uzun (1440'ta 743 / 627 px); 480 px'e çivili sahne fazlalığı emmiyor,
+   3. satır uzuyor, açıklamanın altında 138 px boşluk kalıyordu. Kanon: Gastro tarif detayı `.rd-stage{height:100%;min-height:480px}` +
+   `align-items:stretch`, Gourmet `mekan-detay.css` M11 "fazlalığı YALNIZ SAHNE emer" (`1fr 88px`, `min-height`). Sahne en az 480,
+   künye uzunsa sahne uzar; thumb şeridi 88'de kalır */
+@media(min-width:1025px){.rd-gallery{grid-template-rows:minmax(480px,1fr) 88px auto}.rd-stage{height:auto;min-height:480px}}
+/* MD-11 · 1 (Beyar 11 Kas, "2 satırlı buton olmaz"). Künye 260 px, düğme alanı 226 px. "Rezervasyon Talebi Gönder" kanon `.btn`
+   ölçüsünde (14.5 px, yan boşluk 26 px) ikonla 204 px ister, 174 px'e sığmıyor, 3 satıra kırılıyordu (73 px). Aynı şablonun dar
+   düğme kalıbı: `.kc-lead .btn` ve `.ic-cta .btn` (yan boşluk 10 px, nowrap), yazı `.rl-acts .btn` 13.5 px. Metin kısaltılmadı.
+   İki künye düğmesi aynı ölçüde; birincile saydam 1 px çerçeve, hayalet düğmeyle eş yükseklik */
+.kc-card .kc-reserve{white-space:nowrap}
+.kc-card .kc-reserve.btn-primary{border:1px solid transparent}
+@media(min-width:1025px){.kc-card .kc-reserve{gap:8px;padding:14px 12px;font-size:13.5px}}
+/* MD-11 · 3 (Beyar 11 Kas, "tabın altında niye gri kısım var"). Kök neden: Gastro kitinin (tokens-*.css) profil sekme şeridi
+   `.pf-tabbar{margin-bottom:var(--sp-6)}` (32 px) canlı Gourmet'in aynı adlı rayına da düşüyor; marj saydam, arkadaki gri gövde
+   (#F9F9F9) beyaz `.md-top` ile beyaz `.md-sec` arasında 32 px şerit oluyordu. Canlıda bu kit yüklenmiyor, şerit yok.
+   Ray ile ilk bölüm arası canlıdaki gibi yalnız `.md-sec` üst boşluğu (34 px, telefonda 22). Hesabım rayları etkilenmez */
+body.pg-mekan-detay .pf-tabbar{margin-bottom:0}
 /* Gastro `.m-types` kuralı kart içindir; sahnedeki sayaç köşede kalır */
 .rd-stage .m-types{position:absolute;inset:auto 16px 16px auto;width:auto;height:auto;background:none;z-index:2}
 /* K2: rezervasyon notu ve Dada Route bandı; renkler kanon yuvası, satır içi #b14fc5 yerine */
@@ -387,9 +404,11 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 /* B9 (Beyar 11 Kas): tek açık grup (JS). Kapalı başlıkta seçim sayısı (canlı `.fct-dot`) ve seçilenlerin kısa adları tek satır */
 .mb-acc .mb-acc-ozet{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px;font-weight:500;color:var(--muted)}
 .mb-acc .fct.open .mb-acc-ozet{display:none}
-/* B10: odak alan özet çubuğu ve adım başlığı; fareyle gelince halka yok, klavyeyle kanon odak halkası */
-.mb-sonuc .res-summary:focus,.wstep .fc-head h2:focus{outline:none}
-.mb-sonuc .res-summary:focus-visible,.wstep .fc-head h2:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
+/* B10: odak alan özet çubuğu ve adım başlığı (`tabindex=-1`): halka kuralı kabukta, prototip.css "Programatik odak halkası" (mobil-altbilgi, 11 Kas).
+   Buradaki sayfa kuralı (`:focus` yok, `:focus-visible` kanon halka) iOS Safari'de dokunmayla da halka çiziyordu; kabuk kuralı işaretçi kipini izler */
+/* Adım başlığı ≤640 (mobil-altbilgi, 11 Kas): 390'da başlık iki satıra kırılıp "Adım 2 / 4" hapıyla dengesiz duruyordu (WebKit). Gastro tercih
+   sihirbazının ≤640 kuralı (`uye-sihirbaz.css`): sayaç üstte, başlık altta tam genişlik, 18px. Hap kendi genişliğinde kalır */
+@media (max-width:640px){.wstep .fc-head{flex-direction:column-reverse;align-items:stretch;gap:var(--bosluk-12,12px);padding-bottom:var(--bosluk-16,16px)}.wstep .fc-head h2{font-size:var(--yazi-18,18px)}.wstep .fc-head .fc-step{align-self:flex-start}}
 @media (max-width:640px),(pointer:coarse){.mb-tabs .mb-tab,#mbStepper .stp{min-height:44px}#mbStepper .stp{min-width:44px;justify-content:center}}
 .mb-alt-baslik{font-size:15px;margin:0 0 12px}.pick-grid+.mb-sub-field,.mb-sub-field+.mb-sub-field{margin-top:14px}
 .wstep .pick-grid+.mb-alt-baslik,.wstep .mb-sub-field+.mb-alt-baslik,.wstep .dist-bar+.mb-alt-baslik{margin-top:26px}
@@ -453,10 +472,18 @@ body.pg-anasayfa .ke-top>.wrap{margin-top:0;margin-bottom:0;align-self:auto}
 #rsvClientError[hidden]{display:none}
 .rsv-av{background:url("../o/medya/252-400.webp") center/cover no-repeat}
 
-/* Değerlendirme üç kriter ve Dada Puan */
-.rf-kriterler{display:grid;gap:6px;margin-bottom:12px}.rf-kriter{display:flex;align-items:center;gap:12px}.rf-kriter>span:first-child{width:76px;font-size:13.5px;font-weight:700}
+/* Değerlendirme ve Dada Puan. MD-11 · 4 (Beyar 11 Kas, "Gastro'da nasılsa öyle olsun"): üç kriter kalktı, Gastro/canlı `#revForm`
+   gibi tek yıldız satırı; form kapalı başlar, yıldız ya da metin odağıyla açılır. Fotoğraf önizlemesi Gastro `tarif-detay.css`
+   `.rf-chips`/`.rf-ph` değerleri (Gourmet `mekan-detay.css`te yok) */
 .rf-puan{margin:10px 0 0;font-size:13px;color:var(--slate)}.rf-puan i{color:var(--marka,#742982)}
-.rev-form.sent .rf-puan,.rev-form.sent .rf-kriterler{display:none}
+.rev-form.sent .rf-puan,.rev-form:not(.open) .rf-puan{display:none}
+.rf-chips{display:flex;gap:10px;margin-top:12px}.rf-chips:empty{display:none}
+.rf-ph{position:relative;width:56px;height:56px;border-radius:var(--radius-sm);background-size:cover;background-position:center;border:1px solid var(--line)}
+.rf-ph button{position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:var(--radius-circle);border:none;background:var(--slate);color:#fff;font-size:10px;cursor:pointer;display:grid;place-items:center}
+.rev-form.sent .rf-chips{display:none}
+/* MD-11 · 5 Tarifler sekmesi: gerçek Gastro tarif kartı (`build.mjs` `tarifRayi`). Kartın alt satırında yazar ve puan yerine kaynak;
+   ölçü Gastro `.r-author span` (12.5 px, ikincil metin) */
+.r-foot .r-kaynak{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;color:var(--muted)}.r-foot .r-kaynak i{font-size:11px}
 body:not(.is-auth) .rev-form{display:none}
 .mo-puan{margin:0 0 14px;font-size:12.5px;color:var(--muted,#6f6f6f)}.mo-puan i{color:var(--marka,#742982)}
 .kimlik-puan{margin:6px 0 0;font-size:13.5px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}@media (max-width:640px){.kimlik-puan{justify-content:center}}.kimlik-puan i{color:var(--marka,#742982)}
@@ -695,11 +722,28 @@ body:is(.pg-gourmet-sehir-rehberleri,.pg-gourmet-sehir-rehberi) .page-main p{tex
 .yg-corr .yg-tol-chips::after,.yg-quick #ygQuickFilters::after{content:none}
 /* Telefonda konum düğmesi başlığın altına kayıp kırpılıyordu: başlıkla çakışınca gizlenir (sınıfı rota-katman.js verir) */
 .yg-locate.yg-locate--ortu{opacity:0;pointer-events:none}
-/* Alt şerit mekân kartı canlıyla aynı (Beyar #11). Kaynak canlı `assets/gourmet-public/css/dada-route.css` 432–433 ve 963:
-   ad tek satır ve üç nokta, konum tek satır; telefonda kart 200px. Bu dosyanın üstteki iki satıra indiren kuralını geri alır */
-.yg-dash .yd-name{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;-webkit-line-clamp:none}
+/* Alt şerit mekân kartı: konum tek satır ve üç nokta (canlı `dada-route.css` 433). Ad ve kart genişliği aşağıdaki RK-11 bloğunda */
 .yg-dash .yd-loc{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media (max-width:860px){.yg-dash .yg-dcard:not(.sponsor){flex-basis:200px}}
+/* RK-11 (Beyar 11 Kas 13:13, iPhone) · Şerit kartı yeni düzen; yukarıdaki D7 "canlıyla parite" kararının yerine geçer (Beyar tasarım kararı).
+   Solda görsel kartın tam yüksekliğinde (74 px, canlı); sağda üstte ad (1–2 satır, üç nokta) ve konum, açık ayraç çizgi (`--cizgi`), altında
+   durum etiketi (D6 rengi), "Rotadan …" ve ek süre ikonlu kısa satırlarda (tam cümle ekran okuyucuda). Üst blok iki satırlık ad yerini hep
+   ayırır: kart ve şerit yüksekliği ad uzunluğuna, rotaya ve sekmeye göre değişmez, ayraçlar şeritte aynı hizada. Telefonda kart masaüstüyle
+   aynı 232 px: 200 px'te metin alanı 101 px'ti, kısa satırlar da sığmıyordu; 360'ta sonraki kartın 77 px'i görünür (kaydırma ipucu).
+   iOS Safari düğme metnini sistem mavisiyle boyuyordu (canlı `.yg-dcard` renk vermez): metin rengi kanon `--murekkep` */
+.yg-dash .yg-dcard{color:var(--murekkep)}
+@media (max-width:860px){.yg-dash .yg-dcard:not(.sponsor){flex-basis:232px}}
+.yg-dash .yd-body{justify-content:flex-start;gap:0}
+.yg-dash .yd-ust{display:flex;flex-direction:column;justify-content:center;gap:var(--bosluk-3);min-height:calc(var(--yazi-14) * 2.4 + var(--bosluk-3) + var(--yazi-13) * var(--satir-sik-2))}
+.yg-dash .yd-name{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;white-space:normal;overflow:hidden;overflow-wrap:anywhere;color:var(--murekkep)}
+.yg-dash .yd-loc{line-height:var(--satir-sik-2)}
+.yg-dash .yd-rota{display:flex;flex-direction:column;gap:var(--bosluk-2);margin-top:var(--bosluk-5);padding-top:var(--bosluk-5);border-top:var(--cizgi-1) solid var(--cizgi);min-width:0}
+.yg-dash .yd-rota .yd-tag{line-height:var(--satir-sik-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.yg-dash .yd-olcu{display:block;font-size:var(--yazi-12-5);line-height:1.2;color:var(--metin-ikincil);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.yg-dash .yd-olcu>i{width:var(--bosluk-14);margin-right:var(--bosluk-5);font-size:var(--yazi-11);text-align:center}
+.yg-dash .yd-rota .yd-detour{position:absolute;width:1px;height:1px;margin:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.yg-dash .yg-dcard.sel .yd-rota{border-top-color:var(--cizgi-vurgu)}
+.yg-dash .yg-dcard.sponsor .yd-rota{border-top-color:var(--koyu-cizgi)}
+.yg-dash .yg-dcard.sponsor .yd-olcu{color:rgba(255,255,255,.62)}
 /* Alt şerit sekmeleri: açık katman şeritte sekme olur (Beyar #9). Çip canlı `.yg-tol-chip` ölçüsünde */
 .yg-dash-sekmeler{display:flex;gap:var(--bosluk-6);margin:0 0 var(--bosluk-9);overflow-x:auto;scrollbar-width:thin}
 .yg-dash-sekmeler[hidden],.yg-dash-scroll[hidden]{display:none}
@@ -861,6 +905,8 @@ body.gastronomi-kapali .yg-dash.yg-dash--katmanli:not([hidden]){display:block!im
 @media (max-width:860px){.yg-sarj-toggle{min-height:44px}}
 /* K4 · Telefonda peek alt sayfası bu dosyada 102 px (tutamak 44 px); canlı betik şeridi 84 px üstüne koyuyordu, son satır 18 px sayfanın altında kalıyordu */
 @media (max-width:860px){.yg-app:has(.yg-panel.sheet-peek) .yg-dash:not(.collapsed){bottom:calc(var(--dashb,8px) + 18px)}}
+/* RK-11 · Aynı 18 px payı mekân detay kartına da: canlı `--dashh` şeridi 18 px aşağıda sanıyor, detay kartı şeridin üst kenarına 10 px biniyordu (390, önce de) */
+@media (max-width:860px){.yg-app:has(.yg-panel.sheet-peek):has(.yg-dash:not([hidden]):not(.collapsed)) .yg-detail{bottom:calc(8px + var(--dashh,140px) + 18px);max-height:calc(100dvh - 76px - var(--dashh,140px) - 18px)}}
 /* Dalga 2 mobil · rota (11 Kas): Leaflet atıf satırı (OpenStreetMap) telefonda haritanın en altında, alt sayfanın her kipinde onun arkasında
    kalıyordu (390: atıf 217–390 × 827–844, üstündeki öğe `.yg-tabs`; kesişim 2913 px²; canlıda da). Haritanın sağ üst köşesi boş: atıf oraya,
    yakınlaştırma düğmeleriyle aynı yüksekliğe (canlı `.leaflet-top{top:68px}`) çıkar; alt şerit, konum düğmesi ve alt sayfayla kesişmez */

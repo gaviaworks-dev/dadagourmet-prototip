@@ -63,6 +63,27 @@
     var dk = Math.max(0, Math.round(d * 2 / HIZ * 60)), km = d < 1 ? (Math.round(d * 100) * 10) + ' m' : (Math.round(d * 10) / 10).toString().replace('.', ',') + ' km';
     return 'Rotadan ' + km + (dk <= 0 ? ' · yolculuğa süre eklemez' : ' · yolculuğa yaklaşık ' + dk + ' dakika ekler');
   };
+  /* RK-11 (Beyar 11 Kas 13:13, iPhone) · Şerit kartının sağ yanı: üstte ad ve konum (`.yd-ust`), açık ayraç çizgi, altında rotaya uzaklık
+     derli toplu (`.yd-rota`): durum etiketi (D6 rengi), sapma mesafesi, ek süre. Veri aynı (`sapmaMetni`); tam cümle ekran okuyucuda ve
+     `title`da kalır, kısa satırlar `aria-hidden`. D7 "canlı kartla parite" kararının yerine geçer; Mekânlar ve İhtiyaçlar kartı aynı kalıp */
+  var rotaBlok = function (tier, durum, km, dk, tam) {
+    return '<span class="yd-rota" title="' + kac(tam) + '"><span class="yd-tag ' + tier + '">' + kac(durum) + '</span>' +
+      '<span class="yd-olcu" aria-hidden="true"><i class="fa-solid fa-arrows-left-right"></i>Rotadan ' + kac(km) + '</span>' +
+      '<span class="yd-olcu" aria-hidden="true"><i class="fa-regular fa-clock"></i>' + (dk > 0 ? 'Yaklaşık +' + dk + ' dk' : 'Süre eklemez') + '</span>' +
+      '<span class="yd-detour">' + kac(tam) + '</span></span>';
+  };
+  /* Mekânlar kartı canlı `renderDash`ten gelir (ad, konum, `proxLabel`, `sapmaMetni`); aynı metinden yeni düzene çevrilir, veri uydurulmaz */
+  var mekanKartDuzenle = function () {
+    $$('#ygDashScroll .yg-dcard:not([data-rk])').forEach(function (c) {
+      c.setAttribute('data-rk', '1');
+      var ad = c.querySelector('.yd-name'), yer = c.querySelector('.yd-loc'), t = c.querySelector('.yd-tag'), d = c.querySelector('.yd-detour');
+      if (!ad || !t || !d) { return; }
+      var tam = d.textContent, km = (/Rotadan (.+?) ·/.exec(tam) || [])[1] || '', dk = +((/yaklaşık (\d+) dakika/.exec(tam) || [])[1] || 0);
+      var ust = document.createElement('span'); ust.className = 'yd-ust'; ad.parentNode.insertBefore(ust, ad); ust.appendChild(ad); if (yer) { ust.appendChild(yer); }
+      ust.insertAdjacentHTML('afterend', rotaBlok(t.classList.contains('on') ? 'on' : 'near', t.textContent.split(' · ')[0], km, dk, tam));
+      t.remove(); d.remove();
+    });
+  };
   /* Rotaya ekle düğmesi: mevcut ara durak mekanizması (`dgRotaApi.durakYap`); etiket rotadaysa değişir */
   var durakDugme = function (ad, lat, lng, etiket, sinif) {
     return '<button type="button" class="' + (sinif || 'yg-kl-durak') + '" data-durak="' + kac(ad) + '" data-lat="' + lat + '" data-lng="' + lng + '" data-etiket="' + kac(etiket.join('|')) + '" aria-pressed="false">' +
@@ -156,16 +177,15 @@
       e.preventDefault(); y = (y + l.length) % l.length; ihtSec(l[y].dataset.ihGrup, true);
     });
   }
-  /* Kart: canlı alt kadran kartı (`.yg-dcard`) ölçü ve satır düzeniyle aynı: görsel kutusu, ad, konum, yakınlık etiketi, sapma metni
-     (canlı `sapmaMetni` biçimi). Görsel yerine tür ikonu; "Rotaya ekle" görsel kutusunun altında, canlı `.yd-badge` gibi kutuya oturur,
+  /* Kart: Mekânlar kartıyla aynı kalıp (`.yg-dcard`, RK-11): görsel kutusu, ad, konum, ayraç, durum, sapma, ek süre
+     (`sapmaMetni` verisi). Görsel yerine tür ikonu; "Rotaya ekle" görsel kutusunun altında, canlı `.yd-badge` gibi kutuya oturur,
      böylece canlıda olmayan düğme satırı kartı uzatmaz. Kart içinde eylem düğmesi olduğu için kök `article` (canlıda `button`) */
   var ihtKart = function (g, x) {
     var tam = x.d <= TAM_KM;
     return '<article class="yg-dcard yg-dcard--katman" data-kart-lat="' + x.n.lat + '" data-kart-lng="' + x.n.lng + '"><span class="yd-media yg-katman-pin--' + g.id + '"><i class="fa-solid ' + x.n.ikon + '" aria-hidden="true"></i>' +
       durakDugme(x.n.ad, x.n.lat, x.n.lng, ['Rotaya ekle', 'Rotada'], 'yg-kl-durak yg-ih-ekle') + '</span>' +
-      '<span class="yd-body"><span class="yd-name" title="' + kac(x.n.ad) + '">' + kac(x.n.ad) + '</span><span class="yd-loc" title="' + kac(x.n.alt || '') + '">' + kac(x.n.alt || g.ad) + '</span>' +
-      '<span class="yd-tag ' + (tam ? 'on' : 'near') + '">' + yakinlik(x.d) + '</span>' +
-      '<span class="yd-detour">' + sapmaMetni(x.d) + '</span></span></article>';
+      '<span class="yd-body"><span class="yd-ust"><span class="yd-name" title="' + kac(x.n.ad) + '">' + kac(x.n.ad) + '</span><span class="yd-loc" title="' + kac(x.n.alt || '') + '">' + kac(x.n.alt || g.ad) + '</span></span>' +
+      rotaBlok(tam ? 'on' : 'near', yakinlik(x.d).split(' · ')[0], sapmaMetni(x.d).split(' · ')[0].replace('Rotadan ', ''), Math.max(0, Math.round(x.d * 2 / HIZ * 60)), sapmaMetni(x.d)) + '</span></article>';
   };
   var seritYenile = function () {
     if (!dash) { return; }
@@ -511,6 +531,8 @@
   new MutationObserver(hepsi).observe(ozet, { attributes: true, attributeFilter: ['hidden'] }); hepsi();
   /* Mekân sayısı canlı kadranda değişince sekme sayısı tazelenir */
   var dc = $('#ygDashCount'); if (dc) { new MutationObserver(function () { var s = $('#ygSerit [data-serit="mekan"] .yg-dash-cnt'); if (s) { s.textContent = dc.textContent; } }).observe(dc, { childList: true, characterData: true, subtree: true }); }
+  /* RK-11 · Canlı kadran her çizimde kartları yeniden basar: yeni düzene çevrilir, şerit yüksekliği değiştiği için konum düğmesi ve detay payı yeniden ölçülür */
+  var dsc = $('#ygDashScroll'); if (dsc) { new MutationObserver(function () { if (dsc.querySelector('.yg-dcard:not([data-rk])')) { mekanKartDuzenle(); window.dispatchEvent(new Event('resize')); } }).observe(dsc, { childList: true }); mekanKartDuzenle(); }
   /* Canlı kadran yeniden çizilince başlığı "Yol üstü mekânlar"a döndürür; İhtiyaçlar açıksa başlık geri alınır */
   var dtt = $('#ygDashTitleTxt'); if (dtt) { new MutationObserver(function () { if (seritAktif !== 'mekan' && dtt.textContent !== 'Yol üstü · İhtiyaçlar') { dtt.textContent = 'Yol üstü · İhtiyaçlar'; } }).observe(dtt, { childList: true, characterData: true, subtree: true }); }
 

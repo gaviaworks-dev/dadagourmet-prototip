@@ -86,6 +86,49 @@
     if (document.fonts && document.fonts.ready) { document.fonts.ready.then(perdeAyarla); }
   });
   window.addEventListener('load', perdeAyarla); window.addEventListener('resize', perdeAyarla);
+  /* ==== Altbilgi akordeonu (Beyar 11 Kas, bilinçli kanon sapması: Gastro ve Diet'te bağ grupları telefonda da açık) ====
+     Yalnız ≤640: üç bağ grubunun (`.foot-col`) başlığı akordeon tetiği olur (başlığın içinde düğme, `aria-expanded`, `aria-controls`),
+     bağlar varsayılan kapalı. Çoklu açılır (kanon §21'in tek açık kalem kuralı burada uygulanmaz; karar notu raporda): altbilgi bir gezinme
+     haritası, kullanıcı birkaç grubu birlikte açıp karşılaştırabilir. Aşamalı: kapalı hâl yalnız betiğin koyduğu `.dip-akordeon` sınıfıyla,
+     betik yoksa bağlar açık. ≥641'e geçince düğme sökülür, başlık düz metne döner (sütunlar bugünkü gibi). Yükseklik değişimini perde
+     ResizeObserver'ı ölçer (≤640'ta altbilgi zaten akışta). Kurallar prototip.css "Altbilgi akordeonu" bloğunda */
+  var dipAkordeon = function () {
+    var f = document.querySelector('.footer.orange'); if (!f || !window.matchMedia) { return; }
+    var dar = window.matchMedia('(max-width:640px)');
+    var gruplar = [].slice.call(f.querySelectorAll('.foot-col')).filter(function (c) { return c.querySelector(':scope > h5') && c.querySelector(':scope > .foot-col-baglar[id]'); });
+    if (!gruplar.length) { return; }
+    var uygula = function () {
+      gruplar.forEach(function (c) {
+        var h = c.querySelector(':scope > h5'), g = c.querySelector(':scope > .foot-col-baglar'), b = h.querySelector('.foot-acc');
+        if (dar.matches && !b) {
+          b = document.createElement('button'); b.type = 'button'; b.className = 'foot-acc';
+          b.setAttribute('aria-controls', g.id); b.setAttribute('aria-expanded', c.classList.contains('acik') ? 'true' : 'false');
+          var t = document.createElement('span'); t.textContent = h.textContent.trim(); b.appendChild(t);
+          b.insertAdjacentHTML('beforeend', '<i class="fa-solid fa-chevron-down" aria-hidden="true"></i>');
+          h.textContent = ''; h.appendChild(b);
+        } else if (!dar.matches && b) { h.textContent = b.textContent.trim(); }
+      });
+      f.classList.toggle('dip-akordeon', dar.matches);
+    };
+    f.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('.foot-acc'); if (!b || !f.contains(b)) { return; }
+      var c = b.closest('.foot-col'), acik = c.classList.toggle('acik');
+      b.setAttribute('aria-expanded', acik ? 'true' : 'false');
+    });
+    uygula();
+    if (dar.addEventListener) { dar.addEventListener('change', uygula); } else if (dar.addListener) { dar.addListener(uygula); }
+  };
+  document.addEventListener('DOMContentLoaded', dipAkordeon);
+  /* ==== /Altbilgi akordeonu ==== */
+  /* ==== Programatik odak halkası (Beyar 11 Kas, Mekân Bul adım başlığı) ====
+     Betik odağı başlığa, sonuç özetine ya da pencerenin ilk öğesine taşıyınca iOS Safari (ve masaüstü Safari) dokunulan/tıklanan düğmeye odak
+     vermediği için önceki odak gövdede kalır; WebKit bu durumda betikle verilen odağı `:focus-visible` sayar ve klavye halkası çizilir. Son
+     etkileşim işaretçiyse (dokunma, fare, kalem) köke `dg-isaretci`; gezinme tuşu (Tab, oklar, Enter, Boşluk, Esc, Home/End, PageUp/Down)
+     sınıfı kaldırır. Kural prototip.css "Programatik odak halkası" bloğunda. Betik yoksa sınıf yok, halka klavye kuralıyla kalır */
+  var GEZINME_TUSU = /^(Tab|Arrow(Up|Down|Left|Right)|Enter| |Spacebar|Escape|Esc|Home|End|PageUp|PageDown)$/;
+  document.addEventListener('pointerdown', function () { document.documentElement.classList.add('dg-isaretci'); }, true);
+  document.addEventListener('keydown', function (e) { if (GEZINME_TUSU.test(e.key)) { document.documentElement.classList.remove('dg-isaretci'); } }, true);
+  /* ==== /Programatik odak halkası ==== */
   /* Başlığın saydam (tepede) kipi (K-KIRINTI, 11 Kas). Gastro kopyası `dm-kabuk.js`, `app` ve `parallax` betikleri hero'lu sayfada başlığı
      scrollY < 60 boyunca saydam tutuyor; kırıntı 15px kaydırmada saydam başlığın altına girip logonun üstünden geçiyordu (60px'e kadar).
      Canlı Gastro'nun yeni kuralı (`/tarifler` <head> satır içi betiği, ölçüldü 11 Kas): başlık yalnız scrollY <= 0'da saydam, eski üç bağlayıcı
@@ -355,6 +398,14 @@
     dusur: function (id) { window.dgKayit.guncelle('puan', id, { durum: 'dustu' }); },
     toplam: function (durum) { return window.dgKayit.oku('puan').reduce(function (t, k) { return t + ((k.durum || 'bekliyor') === durum ? k.tutar : 0); }, 0); }
   };
+  /* MD-11 (mekan-detay, 11 Kas): mekân değerlendirmesi tek puan (Gastro formu, canlı `degerlendirmeler.puan`). Eski üç kriterli kayıt
+     (lezzet, servis, ambiyans) bozulmadan okunur: ortalaması, bir ondalık. `dgDegPuan.metin` satır özeti: "Puan 4/5" ya da "Puan 4,3/5" */
+  window.dgDegPuan = function (k) {
+    if (k && +k.puan) { return +k.puan; }
+    var l = k ? [k.lezzet, k.servis, k.ambiyans].map(Number).filter(function (n) { return n > 0; }) : [];
+    return l.length ? Math.round(l.reduce(function (t, n) { return t + n; }, 0) / l.length * 10) / 10 : 0;
+  };
+  window.dgDegPuan.metin = function (k) { return 'Puan ' + String(window.dgDegPuan(k)).replace('.', ',') + '/5'; };
   /* Kayıtlı güzergâhlar: Listelerim › Gastronomi Rotalarım ve Dada Route › Güzergâhlarım için TEK depo (H5, 10 Kas).
      Biçim canlı `GET dada-route/api/guzergahlarim` yanıtının `guzergahlar[]` kalemi (dada-route.js `planToRec` bunu okur).
      Örnekler sabit, `ornek:true`; kullanıcının kaydettikleri `dgKayit('rota')`ya yazılır ve örneklerin önünde durur.

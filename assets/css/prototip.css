@@ -36,6 +36,13 @@ html.altbilgi-akista #pageMain{margin-bottom:0!important}
 /* ==== Dalga 2 mobil · kabuk (11 Kas) ==== Arka plan kilidi ve yazım kipi; sınıfları prototip.js "kabuk katmanları" bloğu koyar.
    Kilit: `html,body{overflow-x:clip}` yüzünden gövde kilidi görüntü alanına geçmiyordu; kök kilitlenir (pencere denetleyicisi de kökü kilitler) */
 html.dg-kilit{overflow:hidden}
+/* Programatik odak halkası (mobil-altbilgi, 11 Kas; davranış prototip.js aynı adlı blok). Betikle odak alan hedefler (`tabindex=-1`: Mekân Bul
+   adım başlığı ve sonuç özeti, sekme panelleri, Görüş Bildir başarı kutusu) fareyle/dokunmayla gelince halkasız, klavyeyle kanon odak halkası.
+   iOS Safari dokunulan düğmeye odak vermez; WebKit sonraki betik odağını `:focus-visible` sayıyordu (Mekân Bul adım 2'de mor çerçeve).
+   Bu yüzden işaretçi kipinde (`dg-isaretci`) yazı alanı dışındaki her odakta çerçeve kalkar: pencere açılınca kapat düğmesine giden odak dahil */
+:where([tabindex="-1"]):focus:not(:focus-visible){outline:none}
+:where([tabindex="-1"]):focus-visible{outline:var(--odak-kalinlik,3px) solid var(--odak-renk,var(--tomato));outline-offset:var(--odak-ofset,2px)}
+html.dg-isaretci :focus:not(input,textarea,select,[contenteditable]){outline:none!important}
 /* Yazım kipi (telefon ve dokunmatik tablet; form alanı odakta ya da klavye görüntü alanını daraltmış): alt çubuk ve yüzen düğmeler
    (küçük Mentör, Route, başa dön) odaktaki alanı ve açık tarih seçiciyi örtmesin. Kaydırma (`transform`) değil görünmezlik:
    `bottom-clearance.js` alt çubuğu yerinde ölçmeye devam eder, kapalı süzgeç sayfası kalkmaz. Kapsam sorgusu prototip.js ile aynı */
@@ -115,6 +122,23 @@ header a i.fa-route, nav a i.fa-route { opacity: 1 !important; }
 .footer.orange .foot-col .foot-linkbtn { font-size: 14px; font-weight: 500; }
 .footer.orange .foot-corp a, .footer.orange .foot-corp .foot-linkbtn { font-size: 13px; font-weight: 600; }
 .footer.orange .foot-app-lead { font-size: 13.5px; }
+/* ==== Altbilgi akordeonu (Beyar 11 Kas; bilinçli kanon sapması, davranış prototip.js "Altbilgi akordeonu") ====
+   Yalnız ≤640 ve betik `.dip-akordeon` koyduysa: grup başlığı 44px satır, ok kanon FA `fa-chevron-down` (12px, kanon §21 `.akordeon-ok`).
+   Aç-kapa kanon çekmece alt menüsünün mekanizması (`.d-sub`: `max-height` 0 → 760px, .3s `--ease`); kapalı bağlar `visibility:hidden` ile
+   sekme sırasından çıkar. Gruplar arası ızgara boşluğu (≤640 30px, portal) üç başlık arasında kalkar, başlıklar tek blok okunur.
+   Bağ kabının 5px payı açıkken bağların klavye halkasını (3px + 2px ofset) kırpmasın diye; dış payla sıfırlanır */
+.dip-akordeon .foot-col h5{margin:0}
+.dip-akordeon .foot-col+.foot-col{margin-top:-30px}
+.dip-akordeon .foot-acc{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;padding:0;margin:0;background:none;border:0;color:inherit;font:inherit;letter-spacing:inherit;text-align:left;cursor:pointer}
+.dip-akordeon .foot-acc i{flex:none;font-size:12px;transition:transform .3s var(--ease)}
+.dip-akordeon .foot-acc[aria-expanded="true"] i{transform:rotate(180deg)}
+.footer .foot-acc:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.dip-akordeon .foot-col-baglar{max-height:0;overflow:hidden;visibility:hidden;margin:-5px;padding:5px;transition:max-height .3s var(--ease),visibility 0s linear .3s}
+.dip-akordeon .foot-col.acik .foot-col-baglar{max-height:760px;visibility:visible;transition:max-height .3s var(--ease),visibility 0s}
+/* Bağın kendi geçişi `transition:.2s` (all): miras görünürlüğü de .2s geciktirip kapanan grubun bağlarını sekme sırasında tutuyordu */
+.dip-akordeon .foot-col-baglar>*{transition-property:color,padding-left}
+@media (prefers-reduced-motion:reduce){.dip-akordeon :is(.foot-col-baglar,.foot-acc i){transition:none}}
+/* ==== /Altbilgi akordeonu ==== */
 
 /* Üye zinciri `gourmet.css` yüklemiyor: Route düğmesi ve başa dön kuralları oradan aynen. Yoksa ikisi altbilginin altında düz metin kalıyor */
 .yg-fab{position:fixed;right:22px;bottom:calc(26px + var(--bc-lift,0px));z-index:56;display:inline-flex;align-items:center;height:54px;padding:0;overflow:hidden;background:var(--tomato);color:#fff;text-decoration:none;font-size:14px;font-weight:700;letter-spacing:.01em;white-space:nowrap;border-radius:var(--radius-lg);box-shadow:0 8px 22px #7429826b,0 2px 8px #211e161f;transition:transform .22s var(--ease),box-shadow .22s var(--ease),background .2s var(--ease)}.yg-fab i{flex:0 0 54px;width:54px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}.yg-fab .yg-fab-tx{max-width:0;opacity:0;overflow:hidden;white-space:nowrap;padding-right:0;transition:max-width .3s var(--ease),opacity .22s var(--ease),padding-right .3s var(--ease)}.yg-fab:hover .yg-fab-tx,.yg-fab:focus-visible .yg-fab-tx{max-width:220px;opacity:1;padding-right:22px}.yg-fab:hover{background:var(--tomato-dark);transform:translateY(-3px);box-shadow:0 14px 30px #74298280,0 4px 12px #211e1629}.yg-fab:active{transform:translateY(-1px)}.yg-fab:focus-visible{outline:3px solid var(--tomato-tint);outline-offset:2px}

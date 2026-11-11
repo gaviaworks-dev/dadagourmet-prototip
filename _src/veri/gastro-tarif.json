@@ -1,0 +1,92 @@
+{
+ "_aciklama": "MD-11 · 5 (mekan-detay, 11 Kas). Mekân detayı Tarifler sekmesi (`#mdRecTrack`), derlemede `build.mjs` basar. Kaynak: canlı dadagastro.com tarif dizini, mutfak süzgeci (GET 11 Kas 2026, sıralama 'önerilen', ilk sayfanın ilk 8 tarifi). Alanlar Gastro tarif kartının kendi alanları; puan, görüntülenme ve yazar alınmadı. Görseller aynı adreslerden indirilip 640 px'e küçültüldü (`kaynakGorsel`). Anahtar, mekân sayfasındaki 'Tamamını Gör' bağının `mutfak` değeri (canlı `MekanOkumaServisi::GASTRO_MUTFAK_ESLEMESI`); eşleşmeyen mutfakta canlının tek bağlı rayı kalır.",
+ "alinma": "2026-11-11",
+ "mutfak": {
+  "turk-mutfagi": {
+   "etiket": "Türk Mutfağı",
+   "liste": "https://dadagastro.com/tarifler?mutfak=turk-mutfagi",
+   "tarifler": [
+    {
+     "ad": "Sebzeli Tavuk Sote | Tavada Pratik",
+     "url": "https://dadagastro.com/tarif/sebzeli-tavuk-sote-tavada-pratik",
+     "gorsel": "assets/g/medya/tarif/sebzeli-tavuk-sote-tavada-pratik.webp",
+     "kaynakGorsel": "https://dadagastro.com/storage/reklam/canli-20260923-v3/tavuk-sote.webp",
+     "kategori": "Tavuk ve Hindi",
+     "sure": "35 dk",
+     "zorluk": "Kolay",
+     "porsiyon": "4 kişilik"
+    },
+    {
+     "ad": "Vişneli Islak Kek | Türk Usulü Şerbetli Parti Keki",
+     "url": "https://dadagastro.com/tarif/visneli-islak-kek-turk-usulu-serbetli-parti-keki",
+     "gorsel": "assets/g/medya/tarif/visneli-islak-kek-turk-usulu-serbetli-parti-keki.webp",
+     "kaynakGorsel": "https://dadagastro.com/varliklar/media/8834.webp",
+     "kategori": "Kek ve Pasta",
+     "sure": "60 dk",
+     "zorluk": "Orta",
+     "porsiyon": "8 dilim"
+    },
+    {
+     "ad": "Kepekli Elmalı Kek Lokması | Küçük Kalıplarda Tarçınlı Fırın Keki",
+     "url": "https://dadagastro.com/tarif/kepekli-elmali-kek-lokmasi-kucuk-kaliplarda-tarcinli-firin-keki",
+     "gorsel": "assets/g/medya/tarif/kepekli-elmali-kek-lokmasi-kucuk-kaliplarda-tarcinli-firin-keki.webp",
+     "kaynakGorsel": "https://dadagastro.com/varliklar/media/5345.webp",
+     "kategori": "Kek ve Pasta",
+     "sure": "40 dk",
+     "zorluk": "Orta",
+     "porsiyon": "8 kişilik"
+    },
+    {
+     "ad": "Yeşil Mercimek Salatası | Naneli Zeytinyağlı Meze",
+     "url": "https://dadagastro.com/tarif/yesil-mercimek-salatasi-naneli-zeytinyagli-meze",
+     "gorsel": "assets/g/medya/tarif/yesil-mercimek-salatasi-naneli-zeytinyagli-meze.webp",
+     "kaynakGorsel": "https://dadagastro.com/varliklar/media/1784.webp",
+     "kategori": "Meze",
+     "sure": "35 dk",
+     "zorluk": "Çok Kolay",
+     "porsiyon": "4 kişilik"
+    },
+    {
+     "ad": "Sebzeli Pide | Zeytinyağlı Yazlık Sebze Pidesi",
+     "url": "https://dadagastro.com/tarif/sebzeli-pide-zeytinyagli-yazlik-sebze-pidesi",
+     "gorsel": "assets/g/medya/tarif/sebzeli-pide-zeytinyagli-yazlik-sebze-pidesi.webp",
+     "kaynakGorsel": "https://dadagastro.com/varliklar/media/9006.webp",
+     "kategori": "Pizza ve Pide",
+     "sure": "45 dk",
+     "zorluk": "Kolay",
+     "porsiyon": "6 dilim"
+    },
+    {
+     "ad": "Adana Kebabı | Ev Yapımı Zırh Kıymalı",
+     "url": "https://dadagastro.com/tarif/adana-kebabi-ev-yapimi-zirh-kiymali",
+     "gorsel": "assets/g/medya/tarif/adana-kebabi-ev-yapimi-zirh-kiymali.webp",
+     "kaynakGorsel": "https://dadagastro.com/varliklar/media/1284.webp",
+     "kategori": "Köfte ve Kebap",
+     "sure": "50 dk",
+     "zorluk": "Orta",
+     "porsiyon": "4 kişilik"
+    },
+    {
+     "ad": "Fırında Dana İliği | Anadolu Ocakbaşı Usulü Kemik İliği",
+     "url": "https://dadagastro.com/tarif/firinda-dana-iligi-anadolu-ocakbasi-usulu-kemik-iligi",
+     "gorsel": "assets/g/medya/tarif/firinda-dana-iligi-anadolu-ocakbasi-usulu-kemik-iligi.webp",
+     "kaynakGorsel": "https://dadagastro.com/varliklar/media/8038.webp",
+     "kategori": "Sakatat",
+     "sure": "25 dk",
+     "zorluk": "Kolay",
+     "porsiyon": "2 kişilik"
+    },
+    {
+     "ad": "Kuş Mantısı | El Açması Minicik Kuş Şeklinde Mantı",
+     "url": "https://dadagastro.com/tarif/kus-mantisi-el-acmasi-minicik-kus-seklinde-manti",
+     "gorsel": "assets/g/medya/tarif/kus-mantisi-el-acmasi-minicik-kus-seklinde-manti.webp",
+     "kaynakGorsel": "https://dadagastro.com/varliklar/media/8111.webp",
+     "kategori": "Mantı ve Dolgulu Hamurlar",
+     "sure": "65 dk",
+     "zorluk": "Zor",
+     "porsiyon": "6 kişilik"
+    }
+   ]
+  }
+ }
+}
