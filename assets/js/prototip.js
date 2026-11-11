@@ -445,7 +445,9 @@
       if (!uye) { window.dgUye(); return; }
       var kip = f.dataset.kip === 'etkinlik' ? 'etkinlik' : 'mekan';
       var ad = f.elements.name.value.trim() || (kip === 'etkinlik' ? 'Etkinlik önerisi' : 'Mekân önerisi'), id = 'oneri-' + Date.now();
-      window.dgKayit.ekle('oneri', { id: id, tur: kip, ad: ad, yer: f.elements.location.value.trim(), gun: kip === 'etkinlik' && f.elements.tarih ? f.elements.tarih.value : '', durum: 'inceleniyor' });
+      /* Mekân kipinde yer il + ilçeden (il-ilce ajanı, 11 Kas; sitenin "ilçe, il" sırası), etkinlik kipinde serbest metin */
+      var il = kip === 'mekan' && f.elements.il ? f.elements.il.value : '', ilce = il && f.elements.ilce ? f.elements.ilce.value : '';
+      window.dgKayit.ekle('oneri', { id: id, tur: kip, ad: ad, yer: il ? [ilce, il].filter(Boolean).join(', ') : f.elements.location.value.trim(), il: il, ilce: ilce, gun: kip === 'etkinlik' && f.elements.tarih ? f.elements.tarih.value : '', durum: 'inceleniyor' });
       window.dgPuan.ekle(id, ad + ' önerisi', window.dgPuan.KURAL.oneri);
       f.reset(); var mf = document.getElementById('moFile'); if (mf) { mf.dispatchEvent(new Event('change', { bubbles: true })); } document.getElementById('moClose').click();
       bildir('Önerin Topluluk Katkılarım\'a işlendi. +' + window.dgPuan.KURAL.oneri + ' bekleyen puan.');
@@ -467,6 +469,24 @@
     /* Tarih alanı satırda Mekân tipinin yerini alır: Şehir / yer ile yan yana */
     if (!tarih) { mo.querySelector('#moCity').closest('.mo-field').insertAdjacentHTML('afterend', '<div class="mo-field" id="moTarihAlan"><label for="moTarih">Tarih</label><input type="date" name="tarih" id="moTarih"></div>'); tarih = mo.querySelector('#moTarih'); }
     mo.querySelector('#moTarihAlan').hidden = !etk; tarih.required = etk; f.dataset.kip = kip;
+    /* İl ve ilçe (il-ilce ajanı, 11 Kas; Beyar): mekân kipinde "Şehir / konum" serbest metni yerine aranabilir, bağımlı il + ilçe seçimi
+       (`assets/js/il-ilce.js`, liste `il-ilce-veri.js`; ilk açılışta yüklenir). Etkinlik kipinde "Şehir / yer" serbest metin kalır: etkinlikler
+       çok ülkeli (`ulke.js`). Gizli kipin alanları `disabled`: zorunlu sayılmaz, gönderilmez. Mekân kipinde Mekân tipi satırda tek kalır, tam genişlik */
+    var sehir = mo.querySelector('#moCity'), adres = mo.querySelector('#moIlIlce');
+    if (!adres) {
+      sehir.closest('.mo-row').insertAdjacentHTML('beforebegin', '<div class="mo-row" id="moIlIlce"><div class="mo-field"><label for="moIl">İl</label><select name="il" id="moIl" required data-ara-secim data-il-secim><option value="">İl seç</option></select></div><div class="mo-field"><label for="moIlce">İlçe</label><select name="ilce" id="moIlce" required data-ara-secim data-ilce-icin="moIl"><option value="">Önce il seç</option></select><p class="alan-yardim"><i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>İl seçilince açılır.</span></p></div></div>');
+      adres = mo.querySelector('#moIlIlce'); ilIlceYukle(adres);
+    }
+    adres.hidden = etk; [].forEach.call(adres.querySelectorAll('select'), function (s) { s.disabled = etk; });
+    sehir.closest('.mo-field').hidden = !etk; sehir.disabled = !etk; sehir.closest('.mo-row').classList.toggle('tek', !etk);
+  };
+  /* Aranabilir il / ilçe bileşenini (CSS, liste, betik) bir kez yükler, sonra verilen kabı kurar */
+  var ilIlceYukle = function (kap) {
+    var kur = function () { if (window.dgAraSecim) { window.dgAraSecim.kur(kap); } };
+    if (window.dgAraSecim && window.DG_IL_ILCE) { kur(); return; }
+    if (!document.querySelector('link[href$="assets/css/il-ilce.css"]')) { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = kok + 'assets/css/il-ilce.css'; document.head.appendChild(l); }
+    var yukle = function (y, sonra) { var b = document.createElement('script'); b.src = kok + y; b.onload = sonra; document.head.appendChild(b); };
+    yukle('assets/js/il-ilce-veri.js', function () { yukle('assets/js/il-ilce.js', kur); });
   };
   /* Pencere denetleyicisi (K6, 11 Kas): canlı `site.js` `createDialogController`. Açılınca ilk öğeye odak, Esc kapatır, Tab pencerede döner,
      sayfa kaymaz, kapanınca odak açan öğeye döner. Öneri (`#moModal`, Mekân/Etkinlik Öner) ve konum (`#lkModal`) pencereleri kullanır */

@@ -3,6 +3,8 @@
 // (canlı /isletme: başvurular, değişiklik talepleri, değerlendirmeler, rezervasyon talepleri) bu panelin bölümlerine taşındı, yollar aynı kaldı.
 // Listeler istemcide bu tarayıcının demo durumundan çizilir (`assets/js/sayfa/isletme-panel.js`); hiçbir veri gönderilmez.
 import * as V from './_veri.mjs';
+import fs from 'node:fs';
+import vm from 'node:vm';
 
 const K = '{{kok}}';
 const JS = ['assets/js/sayfa/isletme-panel.js'];
@@ -15,8 +17,20 @@ const yardim = (m, i = 'fa-circle-info') => `<p class="alan-yardim">${ikon(i)}<s
 const SAYAC = { rez: V.REZ.filter((r) => r.durum === 'talep').length, yanit: V.DEGERLENDIRME.filter((d) => d.durum === 'yayinda' && !d.yanit).length };
 const tohum = `<script type="application/json" id="isletmeTohum">${JSON.stringify(V.TOHUM)}</script>`;
 
-function sayfa(yol, aktif, baslik, govde, { donor = DONOR } = {}) {
-  return { yol, meta: { baslik, duzen: 'panel', aktif, js: JS, donor, sayaclar: SAYAC }, govde: `<div class="bilgi-notu" data-rol-notu hidden>${ikon('fa-circle-info')}<p>Bu panel mekân sahibi hesabına açıktır. Demo için <a href="${K}giris/?rol=isletme">Giriş Yap</a> ekranında İşletme'yi seç.</p></div>\n${govde}\n${tohum}` };
+// Adres formları (il-ilce ajanı, 11 Kas): il ve ilçe aranabilir, bağımlı seçim. Liste tek kaynaktan (`assets/js/il-ilce-veri.js`,
+// 81 il 973 ilçe, Türkçe sırada); bileşen `assets/js/il-ilce.js` + `assets/css/il-ilce.css`, sayfa betiğinden ÖNCE yüklenir
+// (betik `el.value = …` ile doldururken bileşenin değer yazıcısı ilçe listesini kurar). Dil Gastro g-odemelerim ftIl/ftIlce.
+const IL_ILCE = (() => { const k = {}; vm.runInNewContext(fs.readFileSync(new URL('../../../assets/js/il-ilce-veri.js', import.meta.url), 'utf8'), { window: k }); return k.DG_IL_ILCE; })();
+const IL_EK = { js: ['assets/js/il-ilce-veri.js', 'assets/js/il-ilce.js'], css: ['assets/css/il-ilce.css'] };
+const secenek = (liste, secili) => liste.map((x) => `<option${x === secili ? ' selected' : ''}>${kac(x)}</option>`).join('');
+const ilIlce = (idIl, idIlce, il = '', ilce = '') => {
+  const ilceler = (IL_ILCE.find(([ad]) => ad === il) ?? [, []])[1];
+  return `<div class="alan">${etiket(idIl, 'İl', true)}<select class="alan-secim" id="${idIl}" name="il" required data-ara-secim data-il-secim><option value="">İl seç</option>${secenek(IL_ILCE.map(([ad]) => ad), il)}</select></div>`
+    + `<div class="alan">${etiket(idIlce, 'İlçe', true)}<select class="alan-secim" id="${idIlce}" name="ilce" required data-ara-secim data-ilce-icin="${idIl}"><option value="">${il ? 'İlçe seç' : 'Önce il seç'}</option>${secenek(ilceler, ilce)}</select>${yardim('İl seçilince açılır.')}</div>`;
+};
+
+function sayfa(yol, aktif, baslik, govde, { donor = DONOR, ilIlce: adres = false } = {}) {
+  return { yol, meta: { baslik, duzen: 'panel', aktif, js: adres ? [...IL_EK.js, ...JS] : JS, ...(adres ? { css: IL_EK.css } : {}), donor, sayaclar: SAYAC }, govde: `<div class="bilgi-notu" data-rol-notu hidden>${ikon('fa-circle-info')}<p>Bu panel mekân sahibi hesabına açıktır. Demo için <a href="${K}giris/?rol=isletme">Giriş Yap</a> ekranında İşletme'yi seç.</p></div>\n${govde}\n${tohum}` };
 }
 const bas = (h1, p, eylem = '', ek = '') => `${ek}<div class="panel-bas">
   <div><h1>${h1}</h1><p>${p}</p></div>${eylem ? `\n  <div class="eylem-satiri">${eylem}</div>` : ''}
@@ -96,7 +110,7 @@ function profil() {
     ${bolum('fa-tags', 'Mutfak ve Konsept', `<div class="alan"><span class="alan-etiket">Mutfak</span>${cipler('mutfak', V.MUTFAK, m.mutfak)}</div><div class="alan"><span class="alan-etiket">Konsept</span>${cipler('konsept', V.KONSEPT, m.konsept)}</div><div class="alan"><span class="alan-etiket">Ne için uygun</span>${cipler('vesile', V.VESILE, m.vesile)}</div>`)}`;
   const nitelik = `${bolum('fa-shield-halved', 'Doğrulanmış Nitelik Rozetleri', `<div class="bilgi-notu">${ikon('fa-circle-info')}<p>Bu dört bilgi mekân kartında mikro ikonla görünür. Açtığın rozet editör doğrulamasından sonra yayına girer; doğrulama için fotoğraf ya da belge isteyebiliriz.</p></div><div class="ayar-liste" id="rozetListe">${V.ROZET.map(rozetSatir).join('')}</div>`)}
     ${Object.entries(V.NITELIK).map(([g, [ad, tablo]]) => bolum(g === 'hizmet' ? 'fa-bell-concierge' : g === 'beslenme' ? 'fa-leaf' : 'fa-car', ad, `<div class="alan">${cipler(g, tablo, m[g], ad)}${yardim(g === 'beslenme' ? '"Alerjen bilgisi" açıkken mekân sayfasındaki alerjen uyarısı menüdeki alerjenlerle dolar.' : 'Mekânlar süzgecinde ve Mekân Bul sihirbazında kullanılır.')}</div>`)).join('')}`;
-  const konum = `${bolum('fa-location-dot', 'Adres', `<div class="alan-izgara c3">${girdi('pIl', 'İl', { ad2: 'il', zorunlu: true, max: 80, deger: m.il })}${girdi('pIlce', 'İlçe', { ad2: 'ilce', zorunlu: true, max: 80, deger: m.ilce })}${girdi('pMahalle', 'Mahalle / semt', { ad2: 'mahalle', max: 80, deger: m.mahalle })}</div>
+  const konum = `${bolum('fa-location-dot', 'Adres', `<div class="alan-izgara c3">${ilIlce('pIl', 'pIlce', m.il, m.ilce)}${girdi('pMahalle', 'Mahalle / semt', { ad2: 'mahalle', max: 80, deger: m.mahalle })}</div>
     <div class="alan-izgara c2">${girdi('pAdres', 'Açık adres', { ad2: 'acikAdres', zorunlu: true, max: 255, deger: m.acikAdres })}${girdi('pPosta', 'Posta kodu', { ad2: 'postaKodu', max: 10, deger: m.postaKodu })}</div>
     <div class="alan-izgara c2">${girdi('pEnlem', 'Enlem', { ad2: 'enlem', max: 20, deger: m.enlem })}${girdi('pBoylam', 'Boylam', { ad2: 'boylam', max: 20, deger: m.boylam })}</div>
     ${yardim('Adres ve konum değişikliği değişiklik talebi olarak editöre gider; onaylanınca haritaya ve Dada Route\'a yansır.')}
@@ -124,7 +138,7 @@ function profil() {
   </aside>
 </form>
 ${cubuk('Kaydedilmiş bilgiler', `${dugme('Vazgeç', { ek: ' data-profil="vazgec"' })}${dugme('Kaydet', { tur: 'birincil', i: 'fa-floppy-disk', ek: ' data-profil="kaydet"' })}`)}`;
-  return sayfa('isletme/profil', 'profil', 'Mekân Profili', govde);
+  return sayfa('isletme/profil', 'profil', 'Mekân Profili', govde, { ilIlce: true });
 }
 
 // ── 3 · Menü: Ne Yenir · Ne Alınır · Menü ───────────────────────────────────
@@ -333,7 +347,7 @@ function basvuruFormu(b) {
   const form = `<form class="kart panel" data-basvuru-form${b ? ` data-basvuru-no="${b.no}" data-basvuru-durum="${b.durum}"` : ''} novalidate data-yerel>
     ${bolum('fa-store', 'İşletme Bilgileri', `${girdi('vaGorunenAd', 'İşletme adı', { ad2: 'gorunen_ad', zorunlu: true, max: 160, yer: 'Örn. Nalia Karadeniz Mutfağı', deger: v('gorunen_ad') })}${girdi('vaTicariUnvan', 'Ticari unvan', { ad2: 'ticari_unvan', zorunlu: true, max: 200, deger: v('ticari_unvan') })}
       <div class="alan-izgara c2">${sec('vaMekanTuru', 'İşletme türü', 'mekan_turu', V.MEKAN_TURU, v('mekan_turu'), 'İşletme türü seç')}${sec('vaFiyatSeviyesi', 'Fiyat aralığı', 'fiyat_seviyesi', V.FIYAT_BASVURU, v('fiyat_seviyesi'), 'Seç')}</div>
-      <div class="alan-izgara c2">${girdi('vaIl', 'İl', { ad2: 'il', zorunlu: true, max: 80, yer: 'Örn. İstanbul', deger: v('il') })}${girdi('vaIlce', 'İlçe', { ad2: 'ilce', zorunlu: true, max: 80, yer: 'Örn. Kadıköy', deger: v('ilce') })}</div>
+      <div class="alan-izgara c2">${ilIlce('vaIl', 'vaIlce', v('il'), v('ilce'))}</div>
       ${girdi('vaAcikAdres', 'Açık adres', { ad2: 'acik_adres', zorunlu: true, max: 500, yer: 'Mahalle, cadde, no', deger: v('acik_adres') })}`)}
     ${bolum('fa-address-card', 'İletişim ve Yetkili', `<div class="alan-izgara c2">${girdi('vaYetkiliAd', 'Yetkili ad soyad', { ad2: 'yetkili_ad', zorunlu: true, max: 160, deger: v('yetkili_ad') || '{{uye.ad}}' })}${girdi('vaYetkiliTelefon', 'Yetkili telefon', { ad2: 'yetkili_telefon', zorunlu: true, max: 40, yer: '0(5__) ___ __ __', deger: v('yetkili_telefon'), ek: ' inputmode="tel"' })}</div>
       <div class="alan-izgara c2">${girdi('vaIsletmeEposta', 'E-posta', { ad2: 'isletme_eposta', zorunlu: true, tur: 'email', max: 255, yer: 'rezervasyon@isletmen.com', deger: v('isletme_eposta') })}${girdi('vaIsletmeTelefon', 'İşletme telefonu', { ad2: 'isletme_telefon', zorunlu: true, max: 40, yer: '0(2__) ___ __ __', deger: v('isletme_telefon'), ek: ' inputmode="tel"' })}</div>
@@ -364,7 +378,7 @@ ${bas(`<span data-basvuru-baslik>${duzenle ? `Başvuru #${b.no} · ${b.gorunen_a
 <div class="form-duzen">${form}${yan}</div>
 ${cubuk(duzenle ? (gonderilebilir ? 'Düzenlenebilir' : 'İncelemedeki başvuru düzenlenemez') : 'Kaydedilmedi', `<button class="dugme hayalet" type="submit" form="vaForm" data-basvuru-kaydet${gonderilebilir ? '' : ' disabled'}>${ikon('fa-floppy-disk')} Taslağı kaydet</button><button class="dugme birincil" type="button" data-basvuru-gonder${duzenle && gonderilebilir ? '' : ' disabled'}>${ikon('fa-paper-plane')} İncelemeye gönder</button>`)}`.replace('<form class="kart panel" data-basvuru-form', '<form class="kart panel" id="vaForm" data-basvuru-form');
   const yol = b ? `isletme/basvurular/${b.no}/duzenle` : 'isletme/basvurular/yeni';
-  return sayfa(yol, 'basvurular', b ? 'Başvuruyu düzenle' : 'İşletme ekle', govde, { donor: DONOR + '; canlı /isletme/basvurular form (IsletmeBasvuruKaydetIstegi)' });
+  return sayfa(yol, 'basvurular', b ? 'Başvuruyu düzenle' : 'İşletme ekle', govde, { donor: DONOR + '; canlı /isletme/basvurular form (IsletmeBasvuruKaydetIstegi)', ilIlce: true });
 }
 
 // ── 11 · Değişiklik talepleri (portaldan) ───────────────────────────────────

@@ -1,0 +1,68 @@
+/* Aranabilir seçim (il-ilce ajanı, 11 Kas) · betik `assets/js/il-ilce.js`.
+   Kanon bileşenleri: `.acilir-kap`, `.acilir-yuzey`, `.acilir-kalem`, `.alan-hata` (bilesenler.css §3, §75b), `.acilir-bos` (admin.css),
+   girdi panelde `.alan-secim` (ok glifi `--secim-ok`, kapalı durum ek-bilesenler.css). İşletme Paneli kanonu yükler; site kabuğu
+   (Mekân Öner penceresi) yüklemez. Bu yüzden aynı kurallar burada `:where()` ile sıfır özgüllükte ve kanon tokeniyle tekrar yazılı,
+   yedek değer site kabuğunun canlı Gastro tokenı (`tokens-*.css`: --paper, --line, --radius-md, --sh-lg, --tomato-tint …) ya da
+   kanon tokenının kendi değeri. Yeni renk, radyus, ölçü yok. Panelde kanon kuralı (`.yetkili .acilir-yuzey` …) önde kalır. */
+
+/* Kap: yerel select değer taşıyıcı, görünmez ama odaklanabilir (doğrulama odağı girdiye aktarılır) */
+.ara-secim{ position:relative; }
+.ara-secim > select{
+  position:absolute; inset:0; width:100%; height:100%;
+  margin:0; opacity:0; pointer-events:none;
+}
+.ara-secim > .ara-secim-girdi{ position:relative; width:100%; text-overflow:ellipsis; }
+
+/* Site kabuğu: `.mo-field input` kuralı kutuyu çizer; seçim oku kanon `.alan-secim` ölçüsüyle (sağ 15px, girdi sağ payı 40px) */
+.mo-field .ara-secim-girdi{
+  background-image:var(--secim-ok, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237E7E7E' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"));
+  background-repeat:no-repeat; background-position:right 15px center; padding-right:40px; cursor:pointer;
+}
+.mo-field .ara-secim-girdi:focus{ cursor:text; }
+.mo-field .ara-secim-girdi:disabled{ opacity:.45; cursor:not-allowed; }
+.mo-field .alan-yardim{
+  display:flex; align-items:flex-start; gap:7px; margin:8px 0 0;
+  font-size:12.5px; font-weight:500; line-height:1.45; color:var(--metin-ikincil, var(--muted));
+}
+.mo-field .alan-yardim i{ margin-top:2px; font-size:12px; color:var(--aksan-koyu, var(--tomato-dark)); flex:none; }
+
+/* Yüzey ve kalem: kanon §75b değerleri */
+:where(.ara-secim) .acilir-yuzey{
+  position:absolute; z-index:var(--kat-menu, 80);
+  top:calc(100% + 6px); left:0;
+  min-width:100%; max-height:420px; overflow-y:auto; overscroll-behavior:contain;
+  margin:0; padding:6px; list-style:none;
+  background:var(--kagit, var(--paper));
+  border:1px solid var(--cizgi, var(--line));
+  border-radius:var(--yuvarlak-md, var(--radius-md));
+  box-shadow:var(--golge-lg, var(--sh-lg));
+}
+:where(.ara-secim) .acilir-yuzey[hidden]{ display:none; }
+.ara-secim .acilir-yuzey.yukari{ top:auto; bottom:calc(100% + 6px); }
+:where(.ara-secim) .acilir-kalem{
+  display:flex; align-items:center; width:100%;
+  min-height:44px; padding:8px 11px;
+  border-radius:var(--yuvarlak-sm, var(--radius-sm));
+  font-size:13.5px; font-weight:500; line-height:1.3;
+  color:var(--murekkep-yumusak, var(--slate-2)); cursor:pointer;
+}
+:where(.ara-secim) .acilir-kalem:hover,
+.ara-secim .acilir-kalem.vurgu{ background:var(--zemin, var(--bg)); color:var(--murekkep, var(--slate)); }
+.ara-secim .acilir-kalem.aktif{ background:var(--aksan-yikama, var(--tomato-tint)); color:var(--aksan-koyu, var(--tomato-dark)); font-weight:700; }
+/* Klavye vurgusu seçili kalemin üstündeyse kanon `.acilir-kalem:focus-visible` halkası */
+.ara-secim .acilir-kalem.aktif.vurgu{ outline:var(--odak-kalinlik, 3px) solid var(--odak-renk, var(--tomato)); outline-offset:calc(var(--odak-ofset, 2px) * -1); }
+:where(.ara-secim) .acilir-bos{ padding:12px 16px; font-size:13px; color:var(--metin-ikincil, var(--muted)); }
+
+/* Satır içi hata: kanon `.alan-hata`, admin kipi gibi `hidden` ile (site kabuğunda kanon yok) */
+:where(.mo-field) .alan-hata{
+  display:flex; align-items:flex-start; gap:7px; margin:8px 0 0;
+  font-size:12.5px; font-weight:600; line-height:1.45; color:var(--tehlike, var(--danger));
+}
+:where(.mo-field) .alan-hata[hidden]{ display:none; }
+:where(.mo-field) .alan-hata i{ margin-top:2px; font-size:12px; flex:none; }
+.mo-field .ara-secim-girdi.hatali{ border-color:var(--tehlike, var(--danger)); }
+
+/* Mekân Öner: kipte gizlenen satır (`.mo-row{display:grid}` `hidden`ı eziyordu) ve satırda tek görünen alan kalınca tam genişlik
+   (mekân kipinde Mekân tipi) */
+.mo-row[hidden]{ display:none; }
+.mo-row.tek{ grid-template-columns:1fr; }
