@@ -517,17 +517,68 @@
     var o = p[Math.floor(p.length / 2)];
     etiket = L.marker([o[1], o[0]], { interactive: false, keyboard: false, icon: L.divIcon({ className: 'yg-koridor-etiket', html: '<span class="ornek-etiket">Örnek koridor · prototip örneği</span>', iconSize: [0, 0] }) }).addTo(h);
   };
-  /* Sapma toleransı kanon segmentinde (Beyar 10 Kas D9): canlı çip adı uzun ("En Fazla 10 Dakika Sapma"); segmentte kısa ad,
-     tam ad `title` ve `aria-label`da. Canlı betik çipleri her değişimde yeniden yazar, kısaltma her seferinde uygulanır */
-  var tolKisa = function () {
-    var tanim = {}; (BOOT.tolerans || []).forEach(function (t) { tanim[t.id] = t; });
-    $$('#ygTolChips .yg-tol-chip').forEach(function (b) {
-      if (b.dataset.kisa) { return; } var t = tanim[b.dataset.tol]; if (!t) { return; }
-      var tam = b.textContent.trim(); b.dataset.kisa = '1'; b.title = tam; b.setAttribute('aria-label', tam);
-      b.textContent = t.dk === 0 ? 'Tam yol üstü' : t.dk ? t.dk + ' dk' : 'Özel km';
+  /* Sapma toleransı kaydırıcısı (Beyar 11 Kas; 10 Kas D9 segmentinin yerine). Değer modeli canlı: `BOOT.tolerans` dakika kalemleri
+     (canlı `tolId` yalnız tanımlı kalemi seçer, ara değer yok) eşit aralıklı duraklar olur; "Özel km" canlı `ozel` kalemi, canlı km
+     kaydırıcısını (`#ygTolCustom`) açar. Seçim canlı çipe tıklanarak yapılır (gizli `#ygTolChips`): koridor, sayaç, pin, şerit ve
+     ölçüm olayı canlı `refreshThreshold` + `spawnVenues` yolundan geçer. Canlı çipleri her değişimde yeniden yazar; kaydırıcı onları
+     izler (boş durumdaki "Sapma toleransını artır", kayıtlı güzergâh). Görünüm Mekânlar "Yakınımdaki mekânlar" kaydırıcısı.
+     Sürükleme kaydırıcının kendi işaretçi kodunda: dokunma alanı rayın tamamı (telefonda 44 px), `touch-action:none`, işaretçi
+     yakalanır; alt sayfanın içerik çekmesi bu alanda başlamaz (`rota-sahte.js` `altSayfaKur`). Durak değişince anında uygulanır */
+  (function () {
+    var kutu = $('#ygCorr'), cipler = $('#ygTolChips'); if (!kutu || !cipler) { return; }
+    var tanim = BOOT.tolerans || [], duraklar = tanim.filter(function (t) { return t.dk != null; }).sort(function (a, b) { return a.dk - b.dk; });
+    var ozelVar = tanim.some(function (t) { return t.id === 'ozel'; }), n = duraklar.length; if (n < 2) { return; }
+    var kisa = function (t) { return t.dk === 0 ? 'Tam yol üstü' : t.dk + ' dk'; };
+    var sesli = function (t) { return t.dk === 0 ? 'Tam yol üstü, sapma yok' : t.dk + ' dakika sapma'; };
+    var etiketi = function (t, i) { return t.dk === 0 ? 'Tam yol üstü' : i === n - 1 ? t.dk + ' dk' : String(t.dk); };
+    var ust = kutu.querySelector('.yg-corr-top');
+    ust.insertAdjacentHTML('beforeend', '<span class="yg-tol-deger-kap"><span class="yg-tol-ayrac" aria-hidden="true">·</span><b class="yg-tol-deger" id="ygTolDeger"></b></span>');
+    cipler.insertAdjacentHTML('afterend', '<div class="yg-tol-kutu">' +
+      '<div class="yg-tol-ray" id="ygTolRay"><input type="range" id="ygTolRange" min="0" max="' + (n - 1) + '" step="1" value="0" aria-label="Sapma toleransı"></div>' +
+      (ozelVar ? '<button type="button" class="yg-tol-ozel" id="ygTolOzel" aria-pressed="false" aria-controls="ygTolCustom"><i class="fa-solid fa-arrows-left-right" aria-hidden="true"></i><span>Özel km</span></button>' : '') +
+      '<div class="yg-tol-duraklar" aria-hidden="true">' + duraklar.map(function (t, i) { return '<span data-i="' + i + '" style="--i:' + i + '">' + etiketi(t, i) + '</span>'; }).join('') + '</div></div>');
+    kutu.classList.add('yg-tol-kaydirici'); kutu.style.setProperty('--tol-n', n - 1);
+    var ray = $('#ygTolRay'), gir = $('#ygTolRange'), ozel = $('#ygTolOzel'), deger = $('#ygTolDeger'), km = $('#ygCorrSlider'), kmDeger = $('#ygCorrVal'), sonDk = 0;
+    var aktifId = function () { var c = cipler.querySelector('.yg-tol-chip.is-active'); return c ? c.getAttribute('data-tol') : null; };
+    /* Kaydırıcı canlı durumu okur ve gösterir; seçimi değiştirmez */
+    var yansit = function () {
+      var id = aktifId(), oz = id === 'ozel', i = duraklar.findIndex(function (t) { return t.id === id; });
+      if (i >= 0) { sonDk = i; } gir.value = sonDk;
+      kutu.style.setProperty('--tol-i', sonDk); ray.classList.toggle('is-pasif', oz);
+      gir.setAttribute('aria-valuetext', oz ? 'Özel mesafe seçili, ' + (kmDeger ? kmDeger.textContent : '') : sesli(duraklar[sonDk]));
+      deger.textContent = oz ? (kmDeger ? kmDeger.textContent : 'Özel km') : kisa(duraklar[sonDk]);
+      $$('.yg-tol-duraklar span').forEach(function (s) { s.classList.toggle('is-on', !oz && +s.dataset.i === sonDk); });
+      if (ozel) { ozel.setAttribute('aria-pressed', String(oz)); }
+      if (km) { km.style.setProperty('--dolu', (km.value - km.min) / (km.max - km.min)); }
+      sar();
+    };
+    /* Dar ekranda değer başlığın altına inince ayraç noktası gizlenir */
+    var bas = ust.querySelector('.yg-corr-h'), kap = ust.querySelector('.yg-tol-deger-kap');
+    var sar = function () { kap.classList.remove('is-sarili'); if (kap.offsetTop > bas.offsetTop + 4) { kap.classList.add('is-sarili'); } };
+    window.addEventListener('resize', sar); new MutationObserver(sar).observe(kutu, { attributes: true, attributeFilter: ['hidden'] });
+    var sec = function (id) { if (id !== aktifId()) { var c = cipler.querySelector('.yg-tol-chip[data-tol="' + id + '"]'); if (c) { c.click(); } } yansit(); };
+    var durakSec = function (i) { i = Math.max(0, Math.min(n - 1, i)); sonDk = i; sec(duraklar[i].id); };
+    new MutationObserver(yansit).observe(cipler, { childList: true });
+    if (km) { km.addEventListener('input', yansit); }
+    gir.addEventListener('input', function () { durakSec(+gir.value); });
+    /* Özel km seçiliyken uçtaki durakta ok/Home/End değeri değiştirmez (`input` gelmez): tuş yine dakika durağına döndürür */
+    gir.addEventListener('keydown', function (e) { if (/^(Arrow|Home$|End$|Page)/.test(e.key) && aktifId() === 'ozel') { setTimeout(function () { if (aktifId() === 'ozel') { durakSec(+gir.value); } }, 0); } });
+    if (ozel) { ozel.addEventListener('click', function () { if (aktifId() === 'ozel') { durakSec(sonDk); } else { sec('ozel'); } }); }
+    $$('.yg-tol-duraklar span').forEach(function (s) { s.addEventListener('click', function () { durakSec(+s.dataset.i); gir.focus({ preventScroll: true }); }); });
+    /* İşaretçi: fare, kalem ve dokunma aynı yoldan. Başparmak yarıçapı 10 px (kalıptaki 20 px tutamak) */
+    var surukleId = null;
+    var konum = function (x) { var r = ray.getBoundingClientRect(); return Math.round(Math.max(0, Math.min(1, (x - r.left - 10) / Math.max(1, r.width - 20))) * (n - 1)); };
+    ray.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) { return; }
+      e.preventDefault(); e.stopPropagation(); surukleId = e.pointerId; ray.classList.add('is-surukle');
+      try { ray.setPointerCapture(e.pointerId); } catch (x) { /* yakalama yok */ }
+      gir.focus({ preventScroll: true }); var i = konum(e.clientX); if (i !== sonDk || aktifId() === 'ozel') { durakSec(i); }
     });
-  };
-  var tc = $('#ygTolChips'); if (tc) { new MutationObserver(tolKisa).observe(tc, { childList: true }); tolKisa(); }
+    ray.addEventListener('pointermove', function (e) { if (e.pointerId !== surukleId) { return; } var i = konum(e.clientX); if (i !== sonDk) { durakSec(i); } });
+    var birak = function (e) { if (e.pointerId !== surukleId) { return; } surukleId = null; ray.classList.remove('is-surukle'); };
+    ray.addEventListener('pointerup', birak); ray.addEventListener('pointercancel', birak); ray.addEventListener('lostpointercapture', birak);
+    yansit();
+  })();
   /* Navigasyona aktarım. Sınırlar `mobil-arastirma.md` §4.1: Google 9 ara durak, mobil tarayıcıda 3; Apple iOS 18.4 ve macOS 15.4 sonrası çok durak;
      Yandex web `rtext` çok durak taşır, uygulamada yalnız kalkış ve varış belgeli. Sınır aşılırsa rota etaplara bölünür. */
   var mobil = function () { return window.matchMedia('(max-width: 767px), (pointer: coarse)').matches; };

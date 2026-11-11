@@ -332,7 +332,7 @@
     var ic = null;
     panel.addEventListener('touchstart', function (e) {
       ic = null;
-      if (!TEL.matches || e.touches.length !== 1 || e.target.closest('.yg-sheet-grip,#ygSheetCtx,.yg-stop .yg-grip,input,select,textarea')) { return; }
+      if (!TEL.matches || e.touches.length !== 1 || e.target.closest('.yg-sheet-grip,#ygSheetCtx,.yg-stop .yg-grip,.yg-tol-ray,input,select,textarea')) { return; } /* .yg-tol-ray: sapma kaydırıcısı yatay sürüklenir, alt sayfayı çekmez */
       var k = kip(); if (k !== 'yarim' && k !== 'tam') { return; }
       ic = { x: e.touches[0].clientX, y: e.touches[0].clientY, ust: kaydiranUst(e.target), surer: false };
     }, { passive: true });

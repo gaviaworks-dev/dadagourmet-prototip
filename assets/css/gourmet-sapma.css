@@ -1075,6 +1075,48 @@ body.gastronomi-kapali .yg-dash.yg-dash--katmanli:not([hidden]){display:block!im
 .yg-corr .yg-tol-chip:hover:not(.is-active){background:var(--aksan-yikama);color:var(--aksan-koyu)}
 /* Dalga 2 mobil · rota: 360'ta "5 dk" 43 px genişliğe iniyordu; parça en az 44 px */
 @media (max-width:860px){.yg-corr .yg-tol-chip{min-width:44px}}
+/* Sapma kaydırıcısı (Beyar 11 Kas; D9 segmentinin yerine, `rota-katman.js`). Ray, dolgu ve tutamak Mekânlar "Yakınımdaki mekânlar"
+   kaydırıcısının değerleri (`gourmet-mekan-liste.css` `.dist-*`: 6 px ray `--line`, dolgu `--tomato`, 20 px beyaz tutamak 2 px kenar);
+   canlı km kaydırıcısı ("Özel km") aynı görünüme çekilir. Duraklar eşit aralıklı, etiketleri rayın altında; "Özel km" yanında
+   Katmanlar çipinin kalıbında. Canlı çipler gizli kalır, seçim onlardan geçer. Telefonda ray 44 px dokunma alanı, `touch-action:none` */
+.yg-corr.yg-tol-kaydirici>.yg-tol-chips{display:none}
+/* Başlık satırı: sayaçlar kendi genişliğinde, başlık kalan yerde; dar ekranda değer ("· Tam yol üstü") başlığın altına iner (360'ta sayaç 28 px taşıyordu) */
+.yg-corr.yg-tol-kaydirici{grid-template-columns:minmax(0,1fr) auto}
+.yg-corr.yg-tol-kaydirici>.yg-corr-top{flex-wrap:wrap;justify-content:flex-start;align-items:baseline;column-gap:var(--bosluk-6);row-gap:var(--bosluk-2);min-width:0}
+.yg-corr .yg-tol-deger-kap{display:inline-flex;align-items:baseline;gap:var(--bosluk-6);white-space:nowrap}
+.yg-corr .yg-tol-ayrac{font-size:var(--yazi-12);color:var(--muted)}
+.yg-corr .yg-tol-deger-kap.is-sarili .yg-tol-ayrac{display:none}
+.yg-corr .yg-tol-deger{font-size:var(--yazi-13);font-weight:700;color:var(--tomato)}
+.yg-corr>.yg-tol-kutu{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:var(--bosluk-12);row-gap:var(--bosluk-2);align-items:center}
+.yg-tol-ray{position:relative;height:22px;display:flex;align-items:center;touch-action:none;cursor:pointer;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.yg-corr .yg-tol-ray input[type=range]{pointer-events:none;--dolu:calc(var(--tol-i,0) / var(--tol-n,1))}
+.yg-corr :is(.yg-tol-ray,.yg-tol-custom) input[type=range]{display:block;width:100%;height:22px;margin:0;-webkit-appearance:none;appearance:none;background:transparent;cursor:pointer}
+.yg-corr :is(.yg-tol-ray,.yg-tol-custom) input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:var(--radius-pill);background:linear-gradient(90deg,var(--tomato) 0 calc(10px + (100% - 20px) * var(--dolu,0)),var(--line) calc(10px + (100% - 20px) * var(--dolu,0)) 100%)}
+.yg-corr :is(.yg-tol-ray,.yg-tol-custom) input[type=range]::-moz-range-track{height:6px;border-radius:var(--radius-pill);background:linear-gradient(90deg,var(--tomato) 0 calc(10px + (100% - 20px) * var(--dolu,0)),var(--line) calc(10px + (100% - 20px) * var(--dolu,0)) 100%)}
+.yg-corr :is(.yg-tol-ray,.yg-tol-custom) input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;margin-top:-7px;border-radius:50%;background:#fff;border:2px solid var(--tomato);box-shadow:0 2px 6px rgba(33,30,22,.2);cursor:grab;transition:transform .12s var(--ease)}
+.yg-corr :is(.yg-tol-ray,.yg-tol-custom) input[type=range]::-moz-range-thumb{box-sizing:border-box;width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--tomato);box-shadow:0 2px 6px rgba(33,30,22,.2);cursor:grab}
+.yg-corr .yg-tol-ray.is-surukle input[type=range]::-webkit-slider-thumb,.yg-corr .yg-tol-custom input[type=range]:active::-webkit-slider-thumb{cursor:grabbing;transform:scale(1.1)}
+.yg-corr :is(.yg-tol-ray,.yg-tol-custom) input[type=range]:focus-visible{outline:none}
+.yg-corr :is(.yg-tol-ray,.yg-tol-custom) input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px var(--tomato-tint),0 2px 6px rgba(33,30,22,.2)}
+.yg-corr :is(.yg-tol-ray,.yg-tol-custom) input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 3px var(--tomato-tint),0 2px 6px rgba(33,30,22,.2)}
+.yg-corr .yg-tol-ray.is-pasif input[type=range]::-webkit-slider-runnable-track{background:var(--line)}
+.yg-corr .yg-tol-ray.is-pasif input[type=range]::-moz-range-track{background:var(--line)}
+.yg-corr .yg-tol-ray.is-pasif input[type=range]::-webkit-slider-thumb{border-color:var(--line-2)}
+.yg-corr .yg-tol-ray.is-pasif input[type=range]::-moz-range-thumb{border-color:var(--line-2)}
+.yg-tol-duraklar{grid-column:1;grid-row:2;position:relative;height:16px}
+.yg-tol-duraklar span{position:absolute;top:0;left:calc(10px + (100% - 20px) * var(--i) / var(--tol-n,1));transform:translateX(-50%);font-size:11px;font-weight:600;line-height:16px;color:var(--muted);white-space:nowrap;cursor:pointer}
+.yg-tol-duraklar span:first-child{left:0;transform:none}
+.yg-tol-duraklar span:last-child{left:auto;right:0;transform:none}
+.yg-tol-duraklar span.is-on{color:var(--tomato);font-weight:700}
+.yg-tol-ozel{grid-column:2;grid-row:1;display:inline-flex;align-items:center;gap:var(--bosluk-7);position:relative;padding:var(--bosluk-6) var(--bosluk-12);border:var(--cizgi-1) solid var(--cizgi);border-radius:var(--yuvarlak-cip);background:var(--kagit);color:var(--murekkep-yumusak);font-family:inherit;font-size:var(--yazi-12-5);font-weight:var(--agirlik-govde);line-height:1.2;white-space:nowrap;cursor:pointer;transition:var(--sure) var(--yumusama)}
+.yg-tol-ozel::before{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.yg-tol-ozel i{font-size:var(--yazi-11)}
+.yg-tol-ozel:hover{border-color:var(--aksan);background:var(--aksan-yikama);color:var(--aksan-koyu)}
+.yg-tol-ozel[aria-pressed="true"]{border-color:var(--aksan-koyu);background:var(--aksan-koyu);color:var(--kagit);font-weight:var(--agirlik-kalin)}
+.yg-tol-ozel:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
+.yg-corr.yg-tol-kaydirici>.yg-tol-custom{padding-top:var(--bosluk-4)}
+.yg-corr .yg-tol-custom input[type=range]{touch-action:none}
+@media (max-width:860px),(pointer:coarse){.yg-tol-ray,.yg-corr .yg-tol-custom input[type=range]{height:44px}.yg-tol-duraklar{margin-top:calc(var(--bosluk-8) * -1)}}
 .yg-quick{margin-top:var(--bosluk-12)}
 .yg-quick .yg-quick-h{margin-bottom:var(--bosluk-6)}
 #ygQuickWrap #ygQuickFilters{flex-wrap:nowrap;overflow-x:auto;gap:var(--bosluk-6);margin-bottom:0}
