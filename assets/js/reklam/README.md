@@ -212,7 +212,15 @@ Dada Route hiçbir yerde Türkiye varsaymaz. Kaynak `assets/js/rota-ulke.js` (`w
 - Rakip restoran yok (Beyar kararı): sayfa satırında `rakipRestoranYok` → restoran markalı ya da mekân hedefli kreatif basılmaz (yukarıda).
 - Aynı görünüm grubu: sayfa satırında `ardArda: [["MB-T1", "MB-FILTER"]]` gruptan yalnız önceliği yüksek olanı basar (ilk sonuçtan önce tek reklam).
 - Mobil (≤767): reklam yükseklikleri toplamı `main`in %30'unu aşarsa sondan başa `data-rk-yogunluk-gizli`.
-- Yapışkan en çok 1: ≥1600 px'te side çifti (hero ve altbilgide gizli, Görüş Bildir sekmesinden uzak), altında alt bar. Marka seçimi
+- Yapışkan en çok 1: side çifti ya da alt bar (reklam-yapiskan, 12 Kas: geometri ve görünürlük Gastro `public/reklam/standart.js` birebir).
+  Side: 1280 altında yok, 1366 üstünde iki taraf (arada yalnız sağ), 120 px, ekran kenarından 8 px, üst başlık altı + 24, yükseklik başlık
+  altında ortalanmış 600'lük kutunun altına kadar (360 altında yok); hero varken en üstte yok, hero başlık çizgisini geçince çıkar, altbilgi
+  (sabit altbilgide içeriğin sonu) ekrana girince çekilir; çerez bandı açıkken yok. Gourmet farkı: içerik kolonunun iç kenarına en az
+  `sideIcerikPay` (4 px) kalmıyorsa basılmaz (1240/32 kolonda iki taraf 1440'tan itibaren; 1280–1439 alt bar), alt köşedeki yüzen
+  düğmelerin 12 px üstünde biter. Görüş Bildir sekmesiyle kesişme Gastro ve Diet'teki gibi kabul (kart üstte). Alt bar: başlık kolonunun
+  iç kenarları (`header .h-top .wrap`), 80 px (≤600: 64 px, 12 px kenar), telefonun alt çubuğu varsa onun 12 px üstü; eylem çubuğu
+  olan sayfada yok. Kapat (×) 24 px daire, 44 px dokunma alanı. Kurallar `reklam-yerlesim.json` `kurallar.side*`.
+- Yapışkan marka (lider, 12 Kas; aşağıdaki eski seçimin yerine): STD-SIDE/LEFT/ALTBAR/POPUP sayfadaki gövde birimlerinin (hero dahil; birimin `data-rk-govde-marka`sı) markasını asla tekrar etmez, iki yan farklı marka; önce sayfada olmayan ana marka, sonra benzer marka (havuzlarda Pegasus, Starbucks, Visa, Mastercard, Mado, Simit Sarayı; restoran süzgeci geçerli), yoksa o yapışkan basılmaz. Eski kural: Marka seçimi
   (reklam-duzeltici): tavan izin veriyorsa sayfada basılmamış marka, yoksa akışta en az birimi olan marka (hero rozeti sayılmaz; eşitlikte ilk
   birimi en aşağıda olan); side çiftinin iki yanı farklı marka
   (eylem çubuğu ya da telefon alt çubuğu varsa yok). Kapatılan yapışkan 24 saat gelmez.

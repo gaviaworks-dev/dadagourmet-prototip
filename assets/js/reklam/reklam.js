@@ -160,6 +160,8 @@
       el = sar;
     }
     birim(el, kod);
+    /* reklam-yapiskan: kreatifin markası birimde (çizici logosunu geç basabilir); yapışkan seçimi bunu hariç tutar */
+    el.setAttribute('data-rk-govde-marka', [k.marka].concat(k.markalar || []).filter(Boolean).join(' '));
     t.before(el);
     /* Hero sponsorluğu: rozetin bulunduğu hero'ya marka perdesi (hero'nun ilk çocuğu) */
     if (k.bicim === 'eslik') {
@@ -392,44 +394,93 @@
     }
   }
 
-  /* ── Standart katman (bütçe dışı; REKLAM-YERLESIM "Standart katmanın uygulandığı yollar"): yapışkan side çifti (≥1600 px, hero ve
+  /* ── Standart katman (bütçe dışı; REKLAM-YERLESIM "Standart katmanın uygulandığı yollar"): yapışkan side çifti (Gastro geometrisi, aşağıda reklam-yapiskan; hero ve
      altbilgide görünmez) ya da alt bar; sayfada en çok bir yapışkan. Pop-up ilk sayfada yok, oturumda bir, 10 dakikada bir.
      Kreatif, sayfada zaten görünen markadan seçilir (marka tavanı korunur). Kapatılan yapışkan 24 saat görünmez ── */
-  /* reklam-duzeltici (11 Kas): aynı görünümde aynı marka iki kez olmasın. Yapışkan sayfanın her yerinde görünür (hero rozeti hariç: yapışkan
-     hero geçilince çıkar). Tavan izin veriyorsa sayfada basılmamış marka; vermiyorsa akıştaki birimi en az olan marka, eşitlikte akıştaki
-     ilk birimi sayfada en aşağıda kalan (ilk görünümden uzak), sonra havuz sırası. `haric`: öbür yapışkanın markası */
-  function markaKonum() {
-    var b = {};
+  /* reklam-yapiskan (12 Kas, lider): yapışkan (STD-SIDE, STD-SIDE-LEFT, STD-ALTBAR, STD-POPUP) sayfadaki gövde birimlerinin (hero dahil)
+     markasını ASLA tekrar etmez; iki yan da birbirinden farklı. Aday sırası: kendi havuzu + aynı biçimin öbür havuzu (yanlar), önce ana
+     markalar sonra benzer markalar; restoran ve alkol süzgeci `alan()`dan. Uygun aday yoksa o yapışkan basılmaz (yalnız öbür yan kalabilir).
+     Yapışkan marka tavanına (3) bağlı değil: tekrar yasağı tavandan önce gelir. Gövde geç basılırsa `stdSonra` seçimi yeniler. */
+  function govdeMarkalari() {
+    var m = [];
     [].forEach.call(document.querySelectorAll('[data-rk-birim]'), function (e) {
-      if (/^STD-/.test(e.getAttribute('data-rk-birim')) || !e.getClientRects().length || e.matches('.rk-eslik') || e.querySelector('.rk-eslik')) { return; }
-      var ic = e.hasAttribute('data-rk-marka') ? e : e.querySelector('[data-rk-marka]'), m = ic && ic.getAttribute('data-rk-marka');
-      if (!m) { return; }
-      var o = b[m] || (b[m] = { n: 0, ust: Infinity });
-      o.n++; o.ust = Math.min(o.ust, e.getBoundingClientRect().top + window.scrollY);
+      if (/^STD-/.test(e.getAttribute('data-rk-birim')) || e.closest('.rk-std, [data-rk-side-pair]')) { return; }
+      var ek = (e.getAttribute('data-rk-govde-marka') || '').split(' ');
+      [e].concat([].slice.call(e.querySelectorAll('[data-rk-marka]'))).map(function (x) { return x.getAttribute('data-rk-marka'); }).concat(ek).forEach(function (k) { if (k && m.indexOf(k) < 0) { m.push(k); } });
     });
-    return b;
+    return m;
   }
   function secStd(kod, haric) {
-    var V = window.DG_REKLAM_VERI, h = [].concat(alan(kod, sayfaBul()) || []).filter(function (x) { return !haric || x.marka !== haric; });
-    var b = markaKonum(), n = function (m) { return b[m] ? b[m].n : 0; }, ust = function (m) { return b[m] ? b[m].ust : Infinity; };
-    var yeni = h.filter(function (x) { return durum.markalar.indexOf(x.marka) < 0; });
-    if (yeni.length && durum.markalar.length < V.kurallar.markaTavani) { return yeni[0]; }
-    var ayni = h.filter(function (x) { return durum.markalar.indexOf(x.marka) >= 0; });
-    ayni.sort(function (a, c) { return n(a.marka) - n(c.marka) || ust(c.marka) - ust(a.marka) || h.indexOf(a) - h.indexOf(c); });
-    return ayni[0] || null;
+    var V = window.DG_REKLAM_VERI, s = sayfaBul(), es = { 'STD-SIDE': 'STD-SIDE-LEFT', 'STD-SIDE-LEFT': 'STD-SIDE' }[kod];
+    var yasak = govdeMarkalari().concat([].concat(haric || []));
+    var h = [].concat(alan(kod, s) || [], es ? alan(es, s) || [] : []).filter(function (x) { return yasak.indexOf(x.marka) < 0; });
+    var ana = function (x) { var m = V.markalar[x.marka]; return m && m.grup === 'ana' ? 0 : 1; };
+    var sira = h.map(function (x, i) { return { x: x, i: i, a: ana(x) }; }).sort(function (a, c) { return a.a - c.a || a.i - c.i; });
+    return sira.length ? sira[0].x : null;
   }
   var kapaliMi = function (kod) { var t = +depoOku('dg-rk-kapali-' + kod) || 0; return Date.now() - t < window.DG_REKLAM_VERI.kurallar.kapatmaSaat * 3600 * 1000; };
   var kapatKaydet = function (kod) { depoYaz('dg-rk-kapali-' + kod, String(Date.now())); };
   var stdKatman = [];
   function standart(s) {
     var V = window.DG_REKLAM_VERI, B = window.dgReklamBilesen;
-    var genis = function () { return document.documentElement.clientWidth >= V.kurallar.sideEsik; };
-    var cubukGorunur = function () { var c = document.querySelector('.bottom-nav'); return !!c && getComputedStyle(c).display !== 'none'; };
+    /* ==== reklam-yapiskan (12 Kas) · yan ve alt yapışkan, Gastro `public/reklam/standart.js` birebir ====
+       Yan (sidePairGeometry + sideLayout): 1280 altında yok; 1366 üstünde iki taraf, arada yalnız sağ; 120 px, ekran kenarından 8 px;
+       üst = başlık altı + 24; yükseklik = başlık altındaki alanda ortalanmış 600'lük kutunun altına kadar (360 altında yok).
+       Görünürlük kapısı (sideContentVisible): hero varken sayfanın en üstünde yok, hero (ya da üstüne binen sonraki bölüm) başlık
+       çizgisinin altına inince çıkar, altbilgi ekrana girince çekilir. Gourmet farkı (Beyar 12 Kas, REKLAM-YERLESIM "içerikle arasında
+       pay"): yan, içerik kolonunun iç kenarına `sideIcerikPay` (4 px, Gastro'nun 1440'taki kendi payı) kadar yaklaşamıyorsa basılmaz
+       (Gastro 1280-1439'da içeriğin üstüne biniyordu); alt köşedeki yüzen düğmelerin (Route, başa dön, Mentör) 12 px üstünde biter.
+       "Görüş Bildir" sekmesiyle kesişme Gastro ve Diet'teki gibi kabul (kart üstte, kanon z 73 > 72).
+       Alt bar (alignAltbar): başlık kolonunun iç kenarları (`header .h-top .wrap`), alt çubuk varsa onun 12 px üstü, yoksa 12 px;
+       ölçü kanon `standart.css` (masaüstü 80, ≤600 64 px, 12 px kenar). Kapatma 24 saat (StandartSiklik `sunum_kapatma`, en az 24). */
+    var K = V.kurallar;
+    var kolon = function () {
+      var L = Infinity, R = 0;
+      [].forEach.call(document.querySelectorAll('main .wrap, main .kap, main > .container'), function (n) {
+        var r = n.getBoundingClientRect(), s = getComputedStyle(n);
+        if (r.width > 600) { L = Math.min(L, r.left + parseFloat(s.paddingLeft || 0)); R = Math.max(R, r.right - parseFloat(s.paddingRight || 0)); }
+      });
+      return R ? { L: L, R: R } : null;
+    };
+    /* Yan yer: yatay (Gastro sideLayout + içerik payı). null = yan basılmaz, alt bar adayı */
+    var yanYer = function () {
+      var W = document.documentElement.clientWidth, k = kolon();
+      if (W < K.sideEsik || !k) { return null; }
+      var gen = K.sideGenislik, ic = K.sideKenar, n = W > K.sideIkiTaraf ? 2 : 1;
+      var pay = Math.min(W - ic - gen - k.R, n === 2 ? k.L - ic - gen : Infinity);
+      return pay >= K.sideIcerikPay ? { n: n, pay: Math.round(pay), gen: gen, ic: ic } : null;
+    };
+    var genis = function () { return !!yanYer(); };
+    /* Gastro cookieBannerVisible: çerez bandı görünürken yapışkan yok; bant kapanınca (sınıf/hidden/stil değişimi) yeniden bakılır */
+    var CEREZ = '#cookieBanner, .cookie-banner';
+    var cerezVar = function () {
+      return [].some.call(document.querySelectorAll(CEREZ), function (n) { var r = n.getBoundingClientRect(), st = getComputedStyle(n); return !n.hidden && st.display !== 'none' && st.visibility !== 'hidden' && +st.opacity > 0 && r.width > 0 && r.height > 0 && r.bottom > 0 && r.top < window.innerHeight; });
+    };
+    var cerezIzle = function (f) {
+      if (!window.MutationObserver) { return null; }
+      var o = new MutationObserver(function () { f(); setTimeout(f, 600); });
+      [].forEach.call(document.querySelectorAll(CEREZ), function (n) { o.observe(n, { attributes: true, attributeFilter: ['class', 'hidden', 'style', 'aria-hidden'] }); });
+      return o;
+    };
+    /* Gastro setStandardVisible: giriş 200 ms, çıkış 120 ms; azaltılmış hareket tercihinde anında */
+    var hareket = typeof WeakMap === 'function' ? new WeakMap() : null;
+    var gorunsun = function (n, ac) {
+      var eski = hareket && hareket.get(n);
+      if (eski && eski.ac === ac) { return; }
+      if (eski && eski.a) { eski.a.cancel(); }
+      var d = { ac: ac, a: null }; if (hareket) { hareket.set(n, d); }
+      if (!n.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) { n.hidden = !ac; return; }
+      if (!ac && n.hidden) { return; }
+      n.hidden = false;
+      var k = ac ? [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }] : [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(8px)' }];
+      d.a = n.animate(k, { duration: ac ? 200 : 120, easing: 'ease-out', fill: 'both' });
+      d.a.finished.then(function () { if (hareket && hareket.get(n) !== d) { return; } n.hidden = !ac; d.a.cancel(); d.a = null; }, function () {});
+    };
     var kur = function () {
       stdKatman.forEach(function (f) { f(); }); stdKatman = [];
       durum.yapiskan = null;
-      /* Alt bar: eylem çubuğu olan sayfada yok (REKLAM-YERLESIM); telefonun sabit alt çubuğu (.bottom-nav) da eylem çubuğu sayılır */
-      if (genis() && !kapaliMi('STD-SIDE')) { sideKur(); } else if (!genis() && !cubukGorunur() && !kapaliMi('STD-ALTBAR') && !document.querySelector('.vd-actbar, .rd-actbar, .evd-actbar, .actbar, .tercih-kaydet')) { altbarKur(); }
+      /* Alt bar: eylem çubuğu olan sayfada yok (REKLAM-YERLESIM; Gastro `.rd-actbar`). Telefonun alt çubuğu engel değil: bar onun üstünde */
+      if (genis() && !kapaliMi('STD-SIDE')) { sideKur(); } else if (!genis() && !kapaliMi('STD-ALTBAR') && !document.querySelector('.vd-actbar, .rd-actbar, .evd-actbar, .actbar, .tercih-kaydet')) { altbarKur(); }
     };
     function sideKur() {
       var sag = secStd('STD-SIDE');
@@ -444,40 +495,62 @@
       document.body.appendChild(cift);
       durum.yapiskan = 'STD-SIDE';
       [sol, sag].forEach(function (x) { if (x && durum.markalar.indexOf(x.marka) < 0) { durum.markalar.push(x.marka); } });
-      var kare = 0;
+      var yanlar = [].slice.call(cift.children), kare = 0;
+      yanlar.forEach(function (y) { y.hidden = true; });
+      var hero = document.querySelector('#pageMain .below-header, #pageMain > .ke-top, main [data-rk-hero], .below-header');
+      var altbilgi = document.querySelector('footer.footer, body > footer');
+      var red = function (neden) { cift.setAttribute('data-rk-side-reason', neden); yanlar.forEach(function (y) { gorunsun(y, false); }); };
       var konum = function () {
         kare = 0;
-        var W = document.documentElement.clientWidth, H = window.innerHeight;
-        var kapG = parseFloat(getComputedStyle(kok).getPropertyValue('--kap-genislik')) || 1240;
-        var bos = (W - Math.min(kapG, W)) / 2, gen = 120;
-        var bas = document.querySelector('header.header'), ust = (bas ? bas.getBoundingClientRect().bottom : 96) + 16;
-        var yuk = Math.min(600, H - ust - 170);
-        /* Sağ kenardaki Görüş Bildir sekmesi: sağ yan onun solunda kalır */
-        var sekme = document.querySelector('.feedback-tab'), sekmeG = sekme && getComputedStyle(sekme).display !== 'none' ? W - sekme.getBoundingClientRect().left : 0;
-        var solPay = Math.round((bos - gen) / 2), sagPay = Math.max(solPay, Math.round(sekmeG + 12));
-        var gorunur = bos - Math.max(solPay, sagPay) >= gen + 8 && yuk >= 400;
-        if (gorunur) {
-          var hero = document.querySelector('#pageMain .below-header, #pageMain > .ke-top, .below-header');
-          if (hero && hero.getBoundingClientRect().bottom > ust) { gorunur = false; }
-          var ana = document.getElementById('pageMain');
-          if (ana && ana.getBoundingClientRect().bottom < ust + yuk + 16) { gorunur = false; }
-        }
+        var H = window.innerHeight, yer = yanYer();
+        if (!yer) { return red('içerikle arasında pay yok'); }
+        if (cerezVar()) { return red('çerez bandı'); }
+        var bas = 0;
+        [].forEach.call(document.querySelectorAll('header, .header, .topbar'), function (n) { var r = n.getBoundingClientRect(); if (r.height && r.top < 160) { bas = Math.max(bas, r.bottom); } });
+        /* Gastro sideHeroBottom: hero'nun üstüne yuvarlak kenarıyla binen sonraki bölüm hero'nun sonu sayılır */
+        var heroAlt = null;
+        if (hero) { heroAlt = hero.getBoundingClientRect().bottom; var sonra = hero.nextElementSibling; if (sonra && sonra.tagName === 'SECTION') { heroAlt = Math.min(heroAlt, sonra.getBoundingClientRect().top); } }
+        /* Gastro visibleFooterTop (Diet prototipi gibi `sticky` de): içeriğin altından açılan altbilgide sınır içeriğin sonu */
+        var altUst = altbilgi ? altbilgi.getBoundingClientRect().top : Infinity;
+        if (altbilgi && /^(fixed|sticky)$/.test(getComputedStyle(altbilgi).position)) { var ic = document.querySelector('main'); altUst = Math.max(altUst, ic ? ic.getBoundingClientRect().bottom : Infinity); }
+        if (heroAlt !== null && window.scrollY === 0) { return red('hero görünür'); }
+        if (altUst < H) { return red('altbilgi görünür'); }
+        if (heroAlt !== null && heroAlt > bas) { return red('hero başlık çizgisini geçmedi'); }
+        var ust = bas + 24, alt = bas + (H - bas - 600) / 2 + 600;
+        /* Gourmet: köşedeki yüzen düğmeler (Route, başa dön, Mentör) yanın kutusuna giriyorsa yan onların 12 px üstünde biter */
+        var W = document.documentElement.clientWidth;
+        var kutu = [[W - yer.ic - yer.gen, W - yer.ic]].concat(yer.n === 2 && yanlar.length === 2 ? [[yer.ic, yer.ic + yer.gen]] : []);
+        [].forEach.call(document.querySelectorAll('.to-top, .yg-fab, #dadaMentor'), function (d) {
+          var r = d.getBoundingClientRect();
+          if (r.width && r.top < H && kutu.some(function (x) { return r.left < x[1] && r.right > x[0]; })) { alt = Math.min(alt, r.top - 12); }
+        });
+        var yuk = Math.round(alt - ust);
+        if (yuk < 360) { return red('yan için dikey alan yok'); }
+        cift.style.setProperty('--rk-side-inset', yer.ic + 'px');
         cift.style.setProperty('--rk-side-top', Math.round(ust) + 'px');
-        cift.style.setProperty('--rk-side-height', Math.round(yuk) + 'px');
-        cift.style.setProperty('--rk-side-width', gen + 'px');
-        var yanlar = [].slice.call(cift.children);
-        if (yanlar.length === 2) { yanlar[0].style.left = solPay + 'px'; yanlar[1].style.right = sagPay + 'px'; yanlar[1].style.left = 'auto'; } else if (yanlar[0]) { yanlar[0].style.right = sagPay + 'px'; yanlar[0].style.left = 'auto'; }
-        cift.setAttribute('data-rk-side-count', gorunur ? String(yanlar.length) : '0');
-        yanlar.forEach(function (y) { y.hidden = !gorunur; });
+        cift.style.setProperty('--rk-side-width', yer.gen + 'px');
+        cift.style.setProperty('--rk-side-height', yuk + 'px');
+        var n = yanlar.length === 1 ? 1 : yer.n;
+        cift.setAttribute('data-rk-side-count', String(n));
+        cift.setAttribute('data-rk-side-gap', String(yer.pay));
+        cift.setAttribute('data-rk-side-reason', n === 2 ? 'iki taraf ' + yer.gen + '×' + yuk : 'sağ ' + yer.gen + '×' + yuk);
+        yanlar.forEach(function (y, i) { gorunsun(y, n === 2 || i === yanlar.length - 1); });
       };
       var kaydir = function () { if (!kare) { kare = requestAnimationFrame(konum); } };
       window.addEventListener('scroll', kaydir, { passive: true });
+      window.addEventListener('resize', kaydir);
+      /* Gastro observeSideVisibility: hero ve altbilgi kesişimi kaydırmasız değişimde de kapıyı yeniden değerlendirir */
+      var gozcu = window.IntersectionObserver ? new IntersectionObserver(kaydir, { threshold: 0 }) : null;
+      if (gozcu) { if (hero) { gozcu.observe(hero); } if (altbilgi) { gozcu.observe(altbilgi); } }
+      var cerezG = cerezIzle(kaydir);
+      var bitir = function () { window.removeEventListener('scroll', kaydir); window.removeEventListener('resize', kaydir); if (gozcu) { gozcu.disconnect(); } if (cerezG) { cerezG.disconnect(); } if (kare) { cancelAnimationFrame(kare); kare = 0; } cift.remove(); };
+      /* Kapat (×): iki yan birlikte kapanır (Gastro dismiss('side')), 24 saat gelmez */
       cift.addEventListener('click', function (e) {
         if (!e.target.closest('.rk-std-kapat')) { return; }
-        kapatKaydet('STD-SIDE'); cift.remove(); durum.yapiskan = null;
+        kapatKaydet('STD-SIDE'); bitir(); durum.yapiskan = null;
       });
       konum();
-      stdKatman.push(function () { window.removeEventListener('scroll', kaydir); cift.remove(); });
+      stdKatman.push(bitir);
     }
     function altbarKur() {
       var k = secStd('STD-ALTBAR');
@@ -491,21 +564,37 @@
       if (durum.markalar.indexOf(k.marka) < 0) { durum.markalar.push(k.marka); }
       /* Hero geçilince belirir, altbilgide çekilir; görünürken yüzen düğmeler (data-bc-clear) üstüne kalkar */
       var kare = 0;
+      /* Gastro alignAltbar: başlık kolonunun iç kenarları; telefonun alt çubuğu görünürse onun 12 px üstü, yoksa 12 px */
+      var hizala = function () {
+        var w = document.querySelector('header .h-top .wrap') || [].slice.call(document.querySelectorAll('main .wrap')).filter(function (n) { return n.getBoundingClientRect().width > 250; }).sort(function (a, c) { return c.getBoundingClientRect().width - a.getBoundingClientRect().width; })[0];
+        if (w) { var r = w.getBoundingClientRect(), s = getComputedStyle(w), sol = parseFloat(s.paddingLeft) || 0; el.style.setProperty('--rk-alt-left', Math.round(r.left + sol) + 'px'); el.style.setProperty('--rk-alt-width', Math.round(r.width - sol - (parseFloat(s.paddingRight) || 0)) + 'px'); }
+        var H = window.innerHeight, nav = document.querySelector('.bottom-nav'), pay = 12;
+        if (nav && getComputedStyle(nav).display !== 'none') {
+          var ustler = [nav].concat([].slice.call(nav.querySelectorAll('*'))).map(function (n) { return n.getBoundingClientRect(); }).filter(function (r) { return r.width && r.height; }).map(function (r) { return r.top; });
+          if (ustler.length) { pay = Math.max(12, H - Math.min.apply(null, ustler) + 12); }
+        }
+        el.style.bottom = Math.round(pay) + 'px';
+      };
       var konum = function () {
         kare = 0;
+        hizala();
         var hero = document.querySelector('.below-header'), ana = document.getElementById('pageMain');
-        var goster = !(hero && hero.getBoundingClientRect().bottom > window.innerHeight * 0.5) && !(ana && ana.getBoundingClientRect().bottom < window.innerHeight - 40);
+        var goster = !cerezVar() && !(hero && hero.getBoundingClientRect().bottom > window.innerHeight * 0.5) && !(ana && ana.getBoundingClientRect().bottom < window.innerHeight - 40);
         if (el.hidden === goster) { el.hidden = !goster; el.classList.toggle('show', goster); if (window.BottomClearance) { window.BottomClearance.apply(); } }
       };
       var kaydir = function () { if (!kare) { kare = requestAnimationFrame(konum); } };
       window.addEventListener('scroll', kaydir, { passive: true });
+      window.addEventListener('resize', kaydir);
+      /* Alt çubuk kaydırınca gizlenip geri gelir (geçiş): bitince bar yeniden hizalanır */
+      document.addEventListener('transitionend', kaydir);
+      var cerezG = cerezIzle(kaydir);
+      var bitir = function () { window.removeEventListener('scroll', kaydir); window.removeEventListener('resize', kaydir); document.removeEventListener('transitionend', kaydir); if (cerezG) { cerezG.disconnect(); } if (kare) { cancelAnimationFrame(kare); kare = 0; } el.remove(); if (window.BottomClearance) { window.BottomClearance.apply(); } };
       el.addEventListener('click', function (e) {
         if (!e.target.closest('.rk-std-kapat')) { return; }
-        kapatKaydet('STD-ALTBAR'); el.remove(); durum.yapiskan = null;
-        if (window.BottomClearance) { window.BottomClearance.apply(); }
+        kapatKaydet('STD-ALTBAR'); bitir(); durum.yapiskan = null;
       });
       konum();
-      stdKatman.push(function () { window.removeEventListener('scroll', kaydir); el.remove(); if (window.BottomClearance) { window.BottomClearance.apply(); } });
+      stdKatman.push(bitir);
     }
     /* Pop-up: oturumun ilk reklamlı sayfasında yok; oturumda bir kez ve 10 dakikada en çok bir (SunumKurallari popup.*) */
     function popup() {
@@ -515,7 +604,7 @@
       if (say < 2 || oturumOku('dg-rk-popup-oturum') || Date.now() - son < V.kurallar.popupAralikDk * 60000) { return; }
       sonra(function () {
         if (!acik || document.querySelector('.rk-std-popup')) { return; }
-        var k = secStd('STD-POPUP');
+        var k = secStd('STD-POPUP', [].map.call(document.querySelectorAll('.rk-std[data-rk-marka]'), function (e) { return e.getAttribute('data-rk-marka'); }));
         if (!k) { return; }
         var el = dugum(B.standart('popup', k, { kod: 'STD-POPUP' }));
         el.setAttribute('data-rk-birim', 'STD-POPUP');
@@ -535,8 +624,7 @@
     stdKur = kur;
     sokulecek.push(function () { stdKur = null; });
     var gen0 = genis();
-    var cubuk0 = cubukGorunur();
-    dinle(window, 'resize', function () { if (genis() !== gen0 || cubukGorunur() !== cubuk0) { gen0 = genis(); cubuk0 = cubukGorunur(); kur(); yogunlukSonra(); } });
+    dinle(window, 'resize', function () { if (genis() !== gen0) { gen0 = genis(); kur(); yogunlukSonra(); } });
     sokulecek.push(function () { stdKatman.forEach(function (f) { f(); }); stdKatman = []; });
     popup();
   }
