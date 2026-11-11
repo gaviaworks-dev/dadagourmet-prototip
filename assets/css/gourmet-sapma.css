@@ -37,6 +37,8 @@ body.pg-mekan-detay .pf-tabbar{margin-bottom:0}
 .ny-eylem{width:100%}
 .ny-bolum{margin:32px 0}.ny-bas h3{margin:0;font-size:20px;display:flex;align-items:center;gap:9px}.ny-bas h3 i{color:var(--marka,#742982);font-size:16px}
 .ny-kaynak{display:block;font-size:12px;color:var(--muted,#6f6f6f)}
+/* MD-12 (Beyar 11 Kas, sekme bölmeleri): Ne Yenir, Ne Alınır kendi bölmesinde tek bölüm; öbür bölmelerin başlığı gibi üst boşluk `.md-sec` dolgusundan gelir */
+.md-pane > .ny-bolum{margin:0}
 .ny-eylem[aria-pressed="true"]{border-color:var(--marka,#742982);color:var(--marka,#742982)}
 /* Mekânlar: canlı düzen. Gastro zinciri satır yüksekliğini büyütüyordu; ölçüler canlıyla aynı */
 .pg-mekanlar .search-input input,.pg-mekanlar .sort-btn,.pg-mekanlar .btn-filter{line-height:normal}

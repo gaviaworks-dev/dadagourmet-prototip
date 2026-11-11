@@ -25,9 +25,9 @@
 
   /* ---- Liste ---- */
   var sonra = function (id, on) { return id.indexOf(on) === 0 ? id.slice(on.length) : ''; };
-  /* Prototipte tek mekân detayı Mikla (mekân kartları da oraya açılır); tabak satırı detaydaki Ne Yenir bölümüne gider */
+  /* Prototipte tek mekân detayı Mikla (mekân kartları da oraya açılır); tabak satırı detaydaki Ne Yenir sekmesini açar (MD-12) */
   var bag = function (k) {
-    if (k.tur === 'Tabak') { return kok + 'mekan/mikla/#mdNeYenir'; }
+    if (k.tur === 'Tabak') { return kok + 'mekan/mikla/?tab=ne-yenir'; }
     if (k.tur === 'Etkinlik') { return kok + 'etkinlik-detay/?e=' + encodeURIComponent(sonra(k.id, 'etkinlik-')); }
     if (k.tur === 'Lezzet') { return kok + 'gurme-lezzet-detay/?l=' + encodeURIComponent(sonra(k.id, 'lezzet-')); }
     return kok + 'mekan/mikla/';

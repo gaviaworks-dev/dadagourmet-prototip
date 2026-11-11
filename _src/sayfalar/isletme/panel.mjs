@@ -166,7 +166,7 @@ function menu() {
     <div class="alan"><span class="alan-etiket">Alerjenler</span>${cipler('alerjen', Object.fromEntries(V.ALERJEN.map((a) => [a, a])), [], 'Alerjenler')}</div>
   </form>`;
   const ayak = (f, m) => `${dugme('Vazgeç', { ek: ' data-kapat' })}<button class="dugme birincil" type="submit" form="${f}">${m}</button>`;
-  const govde = `${bas('Menü', 'Mekân sayfanın "Ne Yenir?", "Ne Alınır?" ve Tam Menü bölümleri. Kaydedince yayına girer.', `${dugme('Mekân sayfasında gör', { i: 'fa-eye', href: 'mekan/mikla/#mdNeYenir' })}${dugme('Ekle', { tur: 'birincil', i: 'fa-plus', ek: ' data-menu-ekle' })}`)}
+  const govde = `${bas('Menü', 'Mekân sayfanın "Ne Yenir?", "Ne Alınır?" ve Tam Menü bölümleri. Kaydedince yayına girer.', `${dugme('Mekân sayfasında gör', { i: 'fa-eye', href: 'mekan/mikla/?tab=ne-yenir' })}${dugme('Ekle', { tur: 'birincil', i: 'fa-plus', ek: ' data-menu-ekle' })}`)}
 <div class="sekmeler" role="tablist" aria-label="Menü bölümleri" id="menuSekme">
   <button class="sekme aktif" type="button" role="tab" id="t-ny" aria-controls="p-ny" aria-selected="true" data-sekme="ny">${ikon('fa-utensils')} Ne Yenir <span class="sekme-sayi" data-sayi="ny">${V.NE_YENIR.length}</span></button>
   <button class="sekme" type="button" role="tab" id="t-na" aria-controls="p-na" aria-selected="false" data-sekme="na">${ikon('fa-basket-shopping')} Ne Alınır <span class="sekme-sayi" data-sayi="na">${V.NE_ALINIR.length}</span></button>

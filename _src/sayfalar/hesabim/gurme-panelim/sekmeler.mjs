@@ -27,7 +27,7 @@ const ICERIK = {
 // kaydet, mekân detayındaki kaydet ve Ne Yenir tabak favorisi aynı kayıtları yazar. Betiksiz görünüm iki örnek tohum kaydıdır
 // (`prototip.js` aynı iki kaydı `ornek` işaretiyle bir kez yazar; tabak adı Mikla Ne Yenir örneğinden). Satır ucu kanon `.satir-dugme` "Çıkar"
 // (Etkinliklerim "Kaldır" kalıbı); satırın tamamı detaya açılır (`.tiklanir`, Listelerim kalıbı). Süzgeç kanon `.kart-suzgec > .cip.suzgec`.
-const FAV_ORNEK = [['mekan-mikla', 'fa-utensils', 'Mikla', 'Mekân · Beyoğlu, İstanbul', 'Mekân', 'mekan/mikla/'], ['tabak-otlu-kuzu', 'fa-bowl-food', 'Otlu kuzu', 'Tabak · Mikla', 'Tabak', 'mekan/mikla/#mdNeYenir']];
+const FAV_ORNEK = [['mekan-mikla', 'fa-utensils', 'Mikla', 'Mekân · Beyoğlu, İstanbul', 'Mekân', 'mekan/mikla/'], ['tabak-otlu-kuzu', 'fa-bowl-food', 'Otlu kuzu', 'Tabak · Mikla', 'Tabak', 'mekan/mikla/?tab=ne-yenir']];
 const favSatir = ([id, ikon, ad, alt, tur, href]) => `<div class="kalem-satiri tiklanir" data-favori="${id}"><span class="ks-ikon"><i class="fa-solid ${ikon}" aria-hidden="true"></i></span><span class="ks-metin"><b>${et} <a href="{{kok}}${href}">${ad}</a></b><small>${alt}</small></span><span class="ks-uc"><span class="rozet pasif">${tur}</span><button class="satir-dugme" type="button" data-favori-cikar="${id}" aria-label="${ad}: favorilerden çıkar"><i class="fa-solid fa-xmark" aria-hidden="true"></i> Çıkar</button></span></div>`;
 const FAV_CIP = [['tumu', 'Tümü', 2], ['mekan', 'Mekânlar', 1], ['tabak', 'Tabaklar', 1]];
 // Listenin başlığı: solda tür çipleri, sağda "Favori ekle" (pencereyi `favori.js` kurar)

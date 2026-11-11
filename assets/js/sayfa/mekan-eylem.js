@@ -4,31 +4,82 @@
   var K = window.dgKayit, bildir = window.prototipBildir, MEKAN = 'Mikla';
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
 
-  /* Sekme rayı: Ne Yenir, Ne Alınır sekmeleri Genel Bakış içindeki bölüme kaydırır.
-     MD-11 · 3b (lider bulgusu, 11 Kas): canlı `mekan-detay.js` `showPane` sekmeleri `data-pane` değerine göre boyuyor; Ne Yenir? ve
-     Ne Alınır? de `data-pane="genel"` taşıdığı için Genel Bakış'a basınca üçü, Ne Yenir'e basınca ikisi birden etkin kalıyordu
-     (eski düzeltme yalnız tıklananı siliyordu). Tek etkin sekme: tıklanan; Genel Bakış bölmesinde kaydırırken görünüm ortasındaki
-     bölüm (Ne Yenir?, Ne Alınır?, değilse Genel Bakış). Canlı betik değişmedi; bu dinleyici ondan sonra koşar */
-  var sekmeler = $$('#mdTabs .dt'), kilit = 0, kare = 0;
-  var genelSekme = sekmeler.filter(function (t) { return t.dataset.pane === 'genel' && !t.dataset.kaydir; })[0];
-  var boya = function (s) { sekmeler.forEach(function (t) { var on = t === s; t.classList.toggle('active', on); if (on) { t.setAttribute('aria-current', 'true'); } else { t.removeAttribute('aria-current'); } }); };
-  var izle = function () {
-    kare = 0; if (Date.now() < kilit || !genelSekme) { return; }
-    var bolme = $('#pane-genel');
-    if (!bolme || !bolme.classList.contains('active')) { var etkin = sekmeler.filter(function (t) { return t.classList.contains('active'); }); if (etkin.length > 1) { boya(etkin[0]); } return; }
-    var cizgi = innerHeight / 2, sec = genelSekme;
-    sekmeler.forEach(function (t) { var h = t.dataset.kaydir && document.getElementById(t.dataset.kaydir); if (!h) { return; } var r = h.getBoundingClientRect(); if (r.top <= cizgi && r.bottom >= cizgi) { sec = t; } });
-    boya(sec);
+  /* Sekme rayı. MD-12 (Beyar 11 Kas, "onepage gibi olmuş; tab tab, altı render olacak şekilde olsun"): her sekme kendi bölmesi
+     (`#pane-<anahtar>`), rayın altında yalnız etkin bölme görünür. Eski karar (Ne Yenir, Ne Alınır Genel Bakış içinde bölüm, sekme
+     bölüme kaydırır; MD-11 · 3b kaydırma izleyicisi) kalktı. Canlı `mekan-detay.js` `showPane` aynen çalışır (sınıf + `?tab=`); bu
+     katman onun üstüne şunları ekler:
+     - ARIA sekme kalıbı: `tablist`/`tab`/`tabpanel`, `aria-selected`, `aria-controls`, gezici `tabindex`; ok, Home, End tuşları.
+     - Adres: `?tab=<anahtar>` `pushState` ile (Hesabım sekme geçişi H8 gibi); geri/ileri `popstate` ile önceki sekmeye döner,
+       sayfa yeniden yüklenmez. Genel Bakış'ta `tab` silinir (canlı gibi). Eski `#mdNeYenir`, `#yorumlar` gibi çapalar da bölmeyi açar.
+     - Kaydırma: ray yapışkan değil (R2, `mekan-detay-uyarlama.css`), sayfayla akar. Sekmeye basınca sayfa başa zıplamaz: ray tam
+       görünürse kaydırma yok; sabit başlığın altında kalmışsa ray başlığın hemen altına gelir, içerik onun altından başlar.
+       `data-pane-link` (eylem çubuğu Değerlendir, Fotoğraf Ekle) her durumda rayı başlığın altına, bölmenin başını görünüme getirir.
+     Yakalama evresinde koşar: adres canlı dinleyicinin `replaceState`inden önce yazılır, yığına çift kayıt düşmez */
+  var nav = $('#mdTabs'), sekmeler = $$('#mdTabs .dt'), ray = nav && nav.closest('.pf-tabbar');
+  var anahtar = function (t) { return t.dataset.pane; };
+  var bolme = function (k) { return document.getElementById('pane-' + k); };
+  var sekme = function (k) { return sekmeler.filter(function (t) { return anahtar(t) === k; })[0]; };
+  var adrestenAl = function () {
+    var q = new URLSearchParams(location.search).get('tab');
+    if (q && sekme(q) && bolme(q)) { return q; }
+    var h = decodeURIComponent(location.hash.slice(1));
+    if (h && sekme(h) && bolme(h)) { return h; }
+    var e = h && document.getElementById(h), p = e && e.closest('.md-pane');
+    return p ? p.id.replace(/^pane-/, '') : 'genel';
   };
-  if (sekmeler.length) {
-    window.addEventListener('scroll', function () { if (!kare) { kare = requestAnimationFrame(izle); } }, { passive: true });
+  var adresYap = function (k) { var u = new URL(location.href); u.hash = ''; if (k === 'genel') { u.searchParams.delete('tab'); } else { u.searchParams.set('tab', k); } return u.href; };
+  /* Sabit başlığın (üst bant + `header.header`) alt kenarı */
+  var ustKenar = function () { return $$('header.header, .topbar').reduce(function (m, e) { var p = getComputedStyle(e).position, b = e.getBoundingClientRect().bottom; return (p === 'fixed' || p === 'sticky') && b > m && b < innerHeight / 2 ? b : m; }, 0); };
+  /* Hedef: ray sabit başlığın hemen altında, içerik alanı rayın altından başlar */
+  var hedefY = function () { return Math.max(0, Math.round(ray.getBoundingClientRect().top + scrollY - ustKenar())); };
+  var rayGorunur = function () { var r = nav.getBoundingClientRect(); return r.top >= ustKenar() - 1 && r.bottom <= innerHeight; };
+  /* Etkin sekme rayda görünür kalır (canlı satır içi betik gibi). Dar ekranda yatay kayan kutu `.pf-tabbar` (Gastro kiti `display:flex`), `nav` değil */
+  var kaydiran = function () { for (var e = nav; e && e !== ray.parentElement; e = e.parentElement) { if (e.scrollWidth > e.clientWidth + 1 && /auto|scroll/.test(getComputedStyle(e).overflowX)) { return e; } } return null; };
+  var raydaGoster = function (t) { var k = kaydiran(); if (!k) { return; } var r = k.getBoundingClientRect(), b = t.getBoundingClientRect(); if (b.left < r.left || b.right > r.right) { k.scrollLeft += b.left - r.left - (r.width - b.width) / 2; } };
+  var goster = function (k) {
+    sekmeler.forEach(function (t) {
+      var on = anahtar(t) === k, p = bolme(anahtar(t));
+      t.classList.toggle('active', on); t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1;
+      if (p) { p.classList.toggle('active', on); }
+    });
+    var s = sekme(k); if (s) { raydaGoster(s); }
+  };
+  if (nav && sekmeler.length && ray) {
+    nav.setAttribute('role', 'tablist');
+    sekmeler.forEach(function (t) {
+      var k = anahtar(t), p = bolme(k);
+      t.id = t.id || 'mdTab-' + k; t.setAttribute('role', 'tab'); t.removeAttribute('aria-current');
+      if (p) { t.setAttribute('aria-controls', p.id); p.setAttribute('role', 'tabpanel'); p.setAttribute('aria-labelledby', t.id); p.tabIndex = 0; }
+    });
+    var sekmeAc = function (k, kaydir, gecmis) {
+      if (!sekme(k)) { return; }
+      var gorunur = rayGorunur();
+      goster(k);
+      if (gecmis) { var u = adresYap(k); if (u !== location.href) { history.pushState({ mdTab: k }, '', u); } }
+      if (kaydir === 'her' || (kaydir && !gorunur)) { var y = hedefY(); if (Math.abs(y - scrollY) > 1) { setTimeout(function () { window.scrollTo({ top: y, behavior: kaydir === 'her' ? 'smooth' : 'instant' }); }, 0); } }
+    };
     document.addEventListener('click', function (e) {
       var t = e.target.closest && e.target.closest('#mdTabs .dt');
-      if (!t) { if (e.target.closest && e.target.closest('[data-pane-link]')) { setTimeout(izle, 0); } return; }
-      boya(t);
-      if (t.dataset.kaydir) { kilit = Date.now() + 1200; setTimeout(function () { boya(t); document.getElementById(t.dataset.kaydir).scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 0); }
+      if (t) { sekmeAc(anahtar(t), true, true); return; }
+      var l = e.target.closest && e.target.closest('[data-pane-link]');
+      if (l) { sekmeAc(l.getAttribute('data-pane-link'), 'her', true); }
+    }, true);
+    nav.addEventListener('keydown', function (e) {
+      var i = sekmeler.indexOf(e.target), n = sekmeler.length, j;
+      if (i < 0) { return; }
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { j = (i + 1) % n; } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { j = (i - 1 + n) % n; } else if (e.key === 'Home') { j = 0; } else if (e.key === 'End') { j = n - 1; } else { return; }
+      e.preventDefault(); sekmeler[j].focus(); sekmeler[j].click();
     });
-    izle();
+    window.addEventListener('popstate', function () { goster(adrestenAl()); });
+    /* Çapa (eski bağlar: `#mdNeYenir`, `#yorumlar`): bölmeyi açar, adresi `?tab=` biçimine çevirir, bölmenin başına götürür */
+    var capa = function () {
+      if (!location.hash || new URLSearchParams(location.search).get('tab')) { return; }
+      var k = adrestenAl(); if (k === 'genel') { return; }
+      goster(k); history.replaceState(history.state, '', adresYap(k));
+      setTimeout(function () { window.scrollTo({ top: hedefY(), behavior: 'instant' }); }, 0);
+    };
+    window.addEventListener('hashchange', capa);
+    goster(adrestenAl()); capa();
   }
 
   /* Tabak favorisi */

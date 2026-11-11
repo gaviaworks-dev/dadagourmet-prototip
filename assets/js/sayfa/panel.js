@@ -20,7 +20,7 @@
     'gurme-panelim': function () {
       /* Ziyaret saati geçen onaylı rezervasyon değerlendirmeye çağırır (şartname akış 5) */
       var cagri = K.oku('rezervasyon').filter(function (k) { return (k.durum === 'onaylandi' || k.durum === 'gerceklesti') && gecti(k) && !degerlendirdi(k.mekan); }).map(function (k) {
-        return '<div class="bilgi-notu"><i class="fa-solid fa-star" aria-hidden="true"></i><p><b>' + kac(k.mekan) + ' ziyaretin nasıldı?</b> ' + tarih(k.gun) + ' tarihli rezervasyonun geçti. Mekânı puanla; tabak fotoğrafı eklersen +' + (P.KURAL.yorum + P.KURAL.puanlama) + ' bekleyen puan kazanırsın. <a href="' + kok + 'mekan/mikla/#yorumlar">Değerlendir</a></p></div>';
+        return '<div class="bilgi-notu"><i class="fa-solid fa-star" aria-hidden="true"></i><p><b>' + kac(k.mekan) + ' ziyaretin nasıldı?</b> ' + tarih(k.gun) + ' tarihli rezervasyonun geçti. Mekânı puanla; tabak fotoğrafı eklersen +' + (P.KURAL.yorum + P.KURAL.puanlama) + ' bekleyen puan kazanırsın. <a href="' + kok + 'mekan/mikla/?tab=yorumlar">Değerlendir</a></p></div>';
       }).join('');
       if (cagri) { var bas = document.querySelector('.bolum-bas'); if (bas) { bas.insertAdjacentHTML('afterend', cagri); } }
       return K.oku('rezervasyon').map(function (k) { var d = REZ[k.durum] || REZ.talep; return satir('fa-utensils', ad(k, k.mekan), k.yer + ' · ' + k.kisi + ' kişi · ' + tarih(k.gun) + ' ' + k.saat + (k.alerjen ? ' · Alerjen notu var' : ''), d[0], d[1]); }).join('') +

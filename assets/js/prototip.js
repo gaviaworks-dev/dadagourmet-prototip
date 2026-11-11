@@ -25,9 +25,12 @@
   var uyeOl = function (rol) {
     rol = ROL_EV[rol] ? rol : 'uye';
     var kaydedildi = oturumYaz(true), d = adres.get('donus') || '';
+    /* MD-12 (mekan-sekme, 11 Kas): dönüşte baştaki `/` düşer, sayfa sekmesi (`?tab=<ad>`) korunur; mekân Yorumlar sekmesinden girişe giden aynı sekmeye döner (canlı bağ `donus=%2Fmekan%2Fmikla%3Ftab%3Dyorumlar`) */
+    var sekme = (d.match(/\?tab=[a-z-]+$/) || [''])[0]; d = d.slice(0, d.length - sekme.length).replace(/^\//, ''); if (sekme && d && !/\/$/.test(d)) { d += '/'; }
     try { localStorage.setItem('dg-rol', rol); } catch (e) { /* depo kapalı */ }
     var hedef = /^[a-z0-9/-]+$/.test(d) && (rol === 'uye' ? !/^(isletme|yonetim)(\/|$)/.test(d) : d.indexOf(ROL_EV[rol]) === 0) ? d : ROL_EV[rol];
-    location.href = kok + hedef + (kaydedildi ? '' : '?auth=1');
+    var ek = hedef === d ? sekme : '';
+    location.href = kok + hedef + ek + (kaydedildi ? '' : (ek ? '&' : '?') + 'auth=1');
   };
   /* Rol seçici: rol değişince o hesabın demo e-postası dolar; şifre aynı kalır */
   document.addEventListener('click', function (e) {
@@ -461,7 +464,7 @@
     v.favoriTohum = 1; sakla(v);
   })();
   /* Giriş isteyen eylem: misafiri girişe götürür, sonra aynı sayfaya döner */
-  window.dgUye = function () { if (uye) { return true; } location.href = kok + 'giris/?donus=' + encodeURIComponent((document.documentElement.dataset.yol || '') + '/'); return false; };
+  window.dgUye = function () { if (uye) { return true; } location.href = kok + 'giris/?donus=' + encodeURIComponent((document.documentElement.dataset.yol || '') + '/' + (location.search.match(/^\?tab=[a-z-]+$/) || [''])[0]); return false; };
   document.addEventListener('DOMContentLoaded', function () {
     if (uye) { document.body.classList.add('is-auth'); document.body.setAttribute('data-roles', 'kullanici'); }
     /* Giriş ekranı `?rol=isletme`: rol seçici o hesapla açılır (e-posta ve şifre örnekle dolu) */
