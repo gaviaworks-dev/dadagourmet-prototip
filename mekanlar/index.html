@@ -188,7 +188,7 @@
   </div>
 </aside>
 
-<main class="page-main" id="pageMain"><section class="ke-top below-header px-band" data-px-band="1"><div class="px-clip" style="--px-x: 50%; --px-y: 50%; background-color: rgb(30, 20, 34); --px-r: 0px; --px-shift: -142.3px;"><div class="px-media" style="background-image: url(&quot;../assets/o/assets/gourmet-public/img/gourmet-mekan-bul/banner-g3-pilot.webp&quot;);"></div></div>
+<main class="page-main" id="pageMain"><section class="ke-top below-header px-band" data-px-band="1"><div class="px-clip" style="--px-x: 50%; --px-y: 50%; background-color: rgb(30, 20, 34); --px-r: 0px; --px-shift: -142.3px;"><div class="px-media" style="background-image: url(&quot;../assets/o/assets/gourmet-public/medya/konsept-geleneksel.webp&quot;);"></div></div>
     <div class="ke-hero-media" aria-hidden="true" style="background-image: none; background-color: transparent;"></div>
     <div class="wrap">
         
@@ -197,6 +197,8 @@
             <div class="ke-head">
                 <span class="eyebrow"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Dada Gourmet · Mekânlar</span>
                 <h1><span class="accent">Mekânları</span> Keşfet</h1>
+                <!-- Reklam (REKLAM-YERLESIM ML-HERO): hero rozeti "X sponsorluğunda"; önizleme kapalıyken boyanmaz -->
+                <template data-rk-yer="ML-HERO"></template>
                 <p class="lead">Restoran, kafe, kahvaltı mekânı ve daha fazlasını konumuna ve tercihlerine göre incele.</p>
 
                 <form method="GET" class="searchcard mkl-hero-search" id="mklHeroSearch" data-prototip-form="">
@@ -957,6 +959,8 @@
 </div>
                                                                                     </div>
                                     </div>
+                                    <!-- Reklam ML-FILTER: filtre panelinde ilk grubun altı (panel Blade `$loop->first`) -->
+                                    <template data-rk-yer="ML-FILTER"></template>
                                                                                                                                 <div class="fct open" data-group="Kategori">
     <button class="fct-head" type="button"><i class="fa-solid fa-store fct-head-ico" aria-hidden="true"></i> Mekân Kategorisi <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
     <div class="fct-body">
@@ -1642,7 +1646,9 @@
                     </div><div class="mkl-secili" id="mklSecili" hidden=""></div>
 
                     
-                                                                    <div class="mkl-map-wrap" id="mklMapWrap" hidden><div id="mklMapKolon" class="mkl-map" data-harita="liste"></div></div><p class="mkl-harita-not" id="mklHaritaNot" hidden><span class="ornek-etiket">prototip örneği</span> MapLibre; konumlar canlı mekân verisinden, statik kopya.</p><p class="mkl-harita-not" id="mklRozetNot"><span class="ornek-etiket">prototip örneği</span> Kartlardaki doğrulanmış nitelik rozetleri örnektir.</p><div class="mkl-grid" id="mklGrid">
+                                                                    <!-- Reklam ML-T1: liste üstü (boş durumda da; harita görünümünde yok) · ML-FEED: #mklGrid içinde en üst, her 2 satır, en alt -->
+                    <template data-rk-yer="ML-T1"></template><template data-rk-yer="ML-FEED" data-rk-liste="#mklGrid"></template>
+                    <div class="mkl-map-wrap" id="mklMapWrap" hidden><div id="mklMapKolon" class="mkl-map" data-harita="liste"></div></div><p class="mkl-harita-not" id="mklHaritaNot" hidden><span class="ornek-etiket">prototip örneği</span> MapLibre; konumlar canlı mekân verisinden, statik kopya.</p><p class="mkl-harita-not" id="mklRozetNot"><span class="ornek-etiket">prototip örneği</span> Kartlardaki doğrulanmış nitelik rozetleri örnektir.</p><div class="mkl-grid" id="mklGrid">
                             
                                                                                             <article class="disc-card mkl-card is-closed" data-git="../mekan/mikla/" data-slug="levan-urla">
     <div class="disc-fig">
