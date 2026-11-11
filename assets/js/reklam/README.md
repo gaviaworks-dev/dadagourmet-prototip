@@ -10,6 +10,9 @@ Referans uygulama: **Mekânlar** (`/mekanlar/?reklam=1`).
 - Üstteki "Reklam önizlemesi açık" bilgi şeridi **Beyar kararıyla kalktı** (11 Kas). Şerit ya da benzeri bir not EKLEMEYİN.
   Reklamın kendi "Sponsorlu" etiketi kalır.
 - Kapalıyken: hiçbir reklam dosyası yüklenmez, köke sınıf yazılmaz (anahtarın `rk-acik`ı hariç), işaretler `<template>` olduğu için boyanmaz ve yer tutmaz.
+- Canlı kapatmada (reklam-son-duzelt, 11 Kas) `assets/css/reklam/**` bağları devre dışı kalır, açınca geri gelir: sayfa `?reklam=0` ile birebir
+  (81 sayfa × 1440/390 sayfa boyu ve hero üst boşluğu ölçüldü). Belirteç köprüsü `gourmet-tokenlar.css` `<head>`in başına bağlanır: yalnız sayfada
+  tanımsız belirteçleri doldurur, sayfanınkini (ör. `--header-offset`) ezmez.
 
 ## Dosyalar
 

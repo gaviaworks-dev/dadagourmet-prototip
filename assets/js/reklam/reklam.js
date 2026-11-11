@@ -84,11 +84,18 @@
   }
   /* Kanon stil zinciri: tokenlar → reklam → standart; Gourmet uyarlamaları (assets/css/reklam.css) kabukta zaten yüklü ama kanondan
      SONRA uygulanmalı: kanon bağları reklam.css bağından önce konur */
+  /* reklam-son-duzelt (11 Kas): belirteç köprüsü (`gourmet-tokenlar.css`, panel kopyası, `:root`ta --header-offset 112px, --sp-*, --font…)
+     yalnız sayfada TANIMSIZ adları doldurmalı. Sayfa CSS'inden sonra bağlanınca sayfanın kendi değerini eziyordu: Mikla'da `.below-header`
+     üst boşluğu (`var(--header-offset)`, prototip.css'te `--kabuk-h`) 390'da 63 → 112 px, 1440'ta 113 → 112 px; reklam açıkken hero
+     49 px uzuyor, canlı kapatınca da (bağ yüklü kaldığı için) öyle kalıyordu. Köprü <head>'in BAŞINA konur (sayfa belirteçleri kazanır);
+     kanon reklam.css ve standart.css eskisi gibi Gourmet uyarlamasından (assets/css/reklam.css) önce */
   function yukle() {
     var ilk = document.querySelector('link[href*="assets/css/reklam.css"]');
     ['gourmet-tokenlar', 'reklam', 'standart'].forEach(function (ad) { stil(ad); });
     var linkler = [].slice.call(document.querySelectorAll('link[data-rk-stil]'));
     if (ilk) { linkler.forEach(function (l) { ilk.parentNode.insertBefore(l, ilk); }); }
+    var kopru = document.querySelector('link[data-rk-stil][href*="reklam/gourmet-tokenlar.css"]'), bas = document.head.querySelector('link[rel="stylesheet"], style');
+    if (kopru && bas && bas !== kopru) { document.head.insertBefore(kopru, bas); }
     return Promise.all([betik('veri'), sozler['gourmet-tokenlar'], sozler.reklam, sozler.standart]).then(function () {
       if (!window.DG_REKLAM_VERI) { return; }
       if (!document.getElementById('rkRenk')) {
@@ -542,9 +549,13 @@
     if (hepsi) { dinleyici.forEach(function (d) { d[0].removeEventListener(d[1], d[2], d[3]); }); dinleyici = []; }
   }
 
+  /* reklam-son-duzelt (11 Kas, Beyar: reklam kapalıyken sayfa reklamsız hâlle birebir): canlı kapatmada reklam stilleri (kanon, köprü ve
+     ek/*) devre dışı kalır, açınca geri gelir. İlk yüklemede kapalıysa zaten hiçbiri bağlanmaz */
+  function stillerAcik(on) { [].forEach.call(document.querySelectorAll('link[rel="stylesheet"][href*="assets/css/reklam/"]'), function (l) { l.disabled = !on; }); }
   function ac() {
     if (acik) { return; }
     acik = true;
+    stillerAcik(true);
     var bu = ++kusak;
     yukle().then(function () {
       if (!acik || bu !== kusak) { return; }
@@ -561,6 +572,7 @@
     acik = false;
     kusak++;
     sok(true);
+    stillerAcik(false);
     durum = { acik: false, sayfa: null, butce: 0, basilan: [], markalar: [], dusen: [], gizlenen: [], yapiskan: null };
     bildir();
   }
