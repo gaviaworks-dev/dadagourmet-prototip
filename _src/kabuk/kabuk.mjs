@@ -72,9 +72,11 @@ export function kabukla(s) {
   const harita = (m.js ?? []).some((j) => j.includes('maplibre')) && !(m.css ?? []).some((c) => c.includes('maplibre')) ? ['assets/vendor/maplibre/maplibre-gl.css'] : [];
   const ek = [...harita, ...(m.css ?? [])].map(gourmetCss);
   const mentorVar = duzen !== 'tam' && !MENTOR_HARIC.test(s.yol ?? '');
-  const css = [...once.map((c) => K + c), ...z.css.map((c) => `${K}assets/g/${c}`), ...ek.map((c) => K + c), `${K}assets/o/assets/gourmet-public/css/konum.css`, `${K}assets/css/prototip.css`, ...(mentorVar ? [`${K}assets/css/mentor-fab.css`] : [])];
+  // Reklam önizlemesi (reklam-onizleme, 11 Kas): anahtar, şerit ve yerleşimler public ve üye kabuğunda; tam ekranda (Dada Route) yok
+  const reklamVar = duzen !== 'tam';
+  const css = [...once.map((c) => K + c), ...z.css.map((c) => `${K}assets/g/${c}`), ...ek.map((c) => K + c), `${K}assets/o/assets/gourmet-public/css/konum.css`, `${K}assets/css/prototip.css`, ...(mentorVar ? [`${K}assets/css/mentor-fab.css`] : []), ...(reklamVar ? [`${K}assets/css/reklam.css`] : [])];
   const link = css.map((c) => `<link rel="stylesheet" href="${c}">`).join('\n');
-  const js = [`<script src="${K}assets/js/prototip.js"></script>`,
+  const js = [`<script src="${K}assets/js/prototip.js"></script>`, ...(reklamVar ? [`<script defer src="${K}assets/js/reklam/reklam.js"></script>`] : []),
     ...z.js.map((j) => `<script${j.modul ? ' type="module"' : ' defer'} src="${K}assets/g/${j.y}"></script>`),
     ...(m.js ?? []).map((j) => `<script defer src="${K}${j}"></script>`),
     ...(mentorVar ? [`<script defer src="${K}assets/js/mentor-fab.js"></script>`] : [])].join('\n');

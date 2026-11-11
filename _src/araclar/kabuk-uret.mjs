@@ -39,6 +39,8 @@ const k = await p.evaluate(({ go, logo }) => {
   aksiyon.querySelector('button.icon-btn').setAttribute('onclick', "location.href='/gourmet-ara'");
   const ara = aksiyon.querySelector('button.icon-btn');
   const konum = document.createElement('button'); konum.className = 'icon-btn ikon-dugme'; konum.type = 'button'; konum.setAttribute('data-location-trigger', ''); konum.setAttribute('aria-label', 'Konum seç'); konum.title = 'Konum seç'; konum.innerHTML = '<i class="fa-solid fa-location-dot" aria-hidden="true"></i>'; ara.after(konum);
+  // Reklam önizlemesi anahtarı (reklam-onizleme, Beyar 11 Kas): arama düğmesinin solunda; telefonda (≤640) çekmecede. Bağlayan betik assets/js/reklam/reklam.js
+  ara.insertAdjacentHTML('beforebegin', '<label class="anahtar rk-anahtar rk-anahtar-bas" title="Reklam önizlemesi"><input type="checkbox" role="switch" data-rk-anahtar aria-label="Reklamlar"><span class="anahtar-ray" aria-hidden="true"></span><span class="rk-anahtar-ad" aria-hidden="true">Reklamlar</span></label>');
   // İşletmelerim: canlı layouts/site.blade.php, yalnız işletme yetkisinde (`data-rol="isletme"`; prototip.js başka rolde kaldırır)
   const isletmeKalem = `<a href="${K}isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> <span>İşletmelerim</span></a>`;
   const isletmeDk = `<a href="${K}isletme/" data-rol="isletme"><i class="fa-solid fa-store" aria-hidden="true"></i> İşletmelerim</a>`;
@@ -60,6 +62,7 @@ const k = await p.evaluate(({ go, logo }) => {
   const dacct = hesapBlok.outerHTML;
   dn.innerHTML = sat('fa-compass', 'Mekânlar', 'mekanlar/') + sat('fa-wand-magic-sparkles', 'Mekân Bul', 'mekan-bul/') + sat('fa-book-open', 'Gurme Lezzetler', 'gurme-lezzetler/') + sat('fa-route', 'Dada Route', 'dada-route/') + sat('fa-calendar-days', 'Etkinlikler', 'etkinlikler/') + `<div class="d-item"><a class="d-link" href="${K}giris/?fb=1" data-gorus-giris="menu"><i class="fa-solid fa-comment-dots"></i> Görüş Bildir</a></div>` + dacct;
   $$('.drawer-lang-list [data-lang="de"],.drawer-lang-list [data-lang="ru"]', dr).forEach((e) => e.remove());
+  $('.drawer-lang', dr).insertAdjacentHTML('beforebegin', '<label class="anahtar rk-anahtar rk-cekmece-anahtar"><span class="rk-cekmece-ad"><i class="fa-solid fa-rectangle-ad" aria-hidden="true"></i> Reklamlar</span><input type="checkbox" role="switch" data-rk-anahtar aria-label="Reklamlar"><span class="anahtar-ray" aria-hidden="true"></span></label>');
   // 4. Altbilgi: sütun içeriği Gourmet, şeritler Gourmet kanon listesi, kabuk Gastro
   const f = $('footer.footer'); $('.foot-lockup .fl-word', f).innerHTML = logo; $('.foot-tag', f).textContent = go.tag; $('.foot-soc', f)?.remove();
   const kols = $$('.foot-col', f); go.kolonlar.slice(0, kols.length).forEach((c, i) => { kols[i].innerHTML = `<h5>${c.ad}</h5>` + c.hedef; });

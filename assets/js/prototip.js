@@ -13,6 +13,31 @@
   var ornek = (document.querySelector('meta[name="dg-ornek-uye"]') || { content: '|' }).content.split('|');
   kimlik.content = JSON.stringify(uye ? { auth: true, roles: ['kullanici'], ad: ornek[0], kullaniciAdi: ornek[1] } : { auth: false });
   document.head.appendChild(kimlik);
+  /* ==== Reklam önizlemesi (reklam-onizleme, Beyar 11 Kas) ====
+     Prototipte reklam alanlarını göster/gizle. Seçim localStorage `dg-reklam` ('1' açık, '0' kapalı); depo kapalıysa bu sayfanın
+     değişkeninde. `?reklam=1` / `?reklam=0` seçimi yazar (patrona bağ); yazılabildiyse parametre adresten düşer. Varsayılan KAPALI.
+     Durum burada, <head>'de, boyamadan önce okunur: açıkken köke `rk-acik` yazılır, anahtar ilk karede doğru görünür.
+     Anahtarları bağlayan, şeridi ve yerleşimleri basan betik `assets/js/reklam/reklam.js` (yalnız public ve üye kabuğunda) */
+  (function () {
+    var A = 'dg-reklam', bellek = null;
+    var oku = function () { try { var v = localStorage.getItem(A); return v === null ? bellek : v; } catch (e) { return bellek; } };
+    var yaz = function (v) { bellek = v; try { localStorage.setItem(A, v); return true; } catch (e) { return false; } };
+    var p = adres.get('reklam');
+    if ((p === '1' || p === '0') && yaz(p) && window.history && history.replaceState) {
+      var u = new URL(location.href); u.searchParams.delete('reklam');
+      history.replaceState(history.state, '', u.pathname + u.search + u.hash);
+    }
+    window.dgReklam = {
+      acik: function () { return oku() === '1'; },
+      ayarla: function (on) {
+        yaz(on ? '1' : '0');
+        document.documentElement.classList.toggle('rk-acik', !!on);
+        document.dispatchEvent(new CustomEvent('dg-reklam', { detail: !!on }));
+      }
+    };
+    if (window.dgReklam.acik()) { document.documentElement.classList.add('rk-acik'); }
+  })();
+  /* ==== /Reklam önizlemesi ==== */
   /* İşletme Paneli (`data-panel="isletme"`) girişi mekân sahibi rolü seçili açılır */
   if (document.documentElement.dataset.uyeSayfa && !uye) { location.replace(kok + 'giris/?' + (document.documentElement.dataset.panel === 'isletme' ? 'rol=isletme&' : '') + 'donus=' + encodeURIComponent(document.documentElement.dataset.yol + '/')); }
   /* Demo rolleri (canlı giriş: Kullanıcı | İşletme): üye Gurme Panelim'e, mekân sahibi İşletme Paneli'ne iner. Yönetici rolü yok (Beyar, 11 Kas); eski oturumdaki `yonetici` üyeye düşer */
