@@ -54,11 +54,17 @@ yaz('sifre-yenile/index', { ...kimlik, baslik: 'Yeni Şifre', donor: 'https://da
 p = await ac(dom('o-hakkimizda'));
 yaz('hakkimizda/index', { baslik: 'Hakkımızda', zincir: 'hakkimizda', donor: 'https://dadagourmet.com/hakkimizda + https://dadagastro.com/hakkimizda' }, await p.evaluate(() => { kok(document.body); const m = document.querySelector('main');
   m.querySelectorAll('.st b,.lst-stats b,.lst-stats strong,.st strong').forEach((b) => { if (b.textContent.trim() === '81') b.textContent = '15'; });
-  metin(m, /\b81 il\b/g, '15 il'); /* "küçük bir esnaf lokantası" canlıdaki gibi kalır (Beyar 9 Kas) */ return m.innerHTML; }));
+  metin(m, /\b81 il\b/g, '15 il'); /* "küçük bir esnaf lokantası" canlıdaki gibi kalır (Beyar 9 Kas) */
+  /* reklam-son-duzelt (11 Kas, Beyar): canlıdaki about-* görselleri kadehli ya da barlı; yerine prototipin kadehsiz gerçek fotoğrafları
+     (hero, galeri üç kare, istatistik bandı; kaynak sayfa _src/sayfalar/hakkimizda/index.html ile aynı) */
+  const kadehsiz = (e) => e.closest('.below-header') ? 'assets/o/assets/gourmet-public/medya/konsept-doga-icinde.webp' : e.closest('.statband') ? 'assets/o/assets/gourmet-public/medya/9736.webp'
+    : { 'about-restaurant': 'assets/o/medya/1077-800.webp', 'about-table': 'assets/o/medya/1074-800.webp', 'about-dining': 'assets/o/medya/1068-800.webp' }[/about-(restaurant|table|dining)/.exec(e.getAttribute('style'))[0]];
+  m.querySelectorAll('[style*="about-"]').forEach((e) => { e.style.backgroundImage = 'url("{{kok}}' + kadehsiz(e) + '")'; });
+  return m.innerHTML; }));
 // Künye: satırlar Gastro'dan; değerler K5 yer tutucusu
 p = await ac(dom('g-kunye'));
 yaz('kunye/index', { baslik: 'Künye', zincir: 'kunye', donor: 'https://dadagastro.com/kunye' }, await p.evaluate(({ }) => { kok(document.body); const m = document.querySelector('main');
-  metin(m, /DadaGastro/g, 'Dada Gourmet'); m.querySelectorAll('.px-media').forEach((e) => { e.setAttribute('style', "background-image:url('https://dadagourmet.com/assets/gourmet-public/img/legal-restaurant.avif')"); e.innerHTML = ''; }); return m.innerHTML; }, {}));
+  metin(m, /DadaGastro/g, 'Dada Gourmet'); m.querySelectorAll('.px-media').forEach((e) => { e.setAttribute('style', "background-image:url('{{kok}}assets/o/assets/gourmet-public/medya/konsept-sanat-ve-kultur.webp')"); e.innerHTML = ''; }); /* reklam-son-duzelt: kadehsiz hero */ m.querySelectorAll('.lg-top').forEach((e) => e.setAttribute('style', "background-image:linear-gradient(90deg,rgba(28,25,18,.93),rgba(33,30,22,.72)),url('{{kok}}assets/o/assets/gourmet-public/medya/konsept-sanat-ve-kultur.webp')")); return m.innerHTML; }, {}));
 // İletişim: canlı Gourmet sayfası eksik (MB 0.20), Gastro sayfası marka değiştirilerek alınır
 p = await ac(dom('g-iletisim'));
 yaz('iletisim/index', { baslik: 'İletişim', zincir: 'iletisim', donor: 'https://dadagastro.com/iletisim' }, await p.evaluate(() => { kok(document.body); const m = document.querySelector('main');
@@ -81,5 +87,6 @@ yaz('yasal/kvkk/index', { baslik: 'KVKK Aydınlatma Metni', zincir: 'kvkk', dono
   yaprak(/\[(MERSİS no|vergi dairesi \/ vergi no|KEP adresi)\]/).forEach(sil);
   yaprak(/Durum: Taslak/).forEach(sil); yaprak(/taslak olarak hazırl/).forEach(sil);
   metin(m, /\[unvan\]/g, 'Dada İst Ajans Hizmetleri Ticaret Limited Şirketi'); metin(m, /\[adres\]/g, 'Yavuz Sultan Selim Mah. No:52/B, Fatih/İstanbul 34083'); metin(m, /\[e-posta\]/g, 'dadamentorcom@gmail.com');
+  /* reklam-son-duzelt (11 Kas, Beyar): kadehsiz hero (canlı legal-restaurant kadehli) */ m.querySelectorAll('.lg-top').forEach((e) => e.setAttribute('style', "background-image:linear-gradient(90deg,rgba(28,25,18,.93),rgba(33,30,22,.72)),url('{{kok}}assets/o/assets/gourmet-public/medya/konsept-sanat-ve-kultur.webp')")); m.querySelectorAll('.lg-top .px-media').forEach((e) => e.setAttribute('style', "background-image:url('{{kok}}assets/o/assets/gourmet-public/medya/konsept-sanat-ve-kultur.webp')"));
   return m.innerHTML; }));
 await kapat(); console.log('kurumsal tamam');

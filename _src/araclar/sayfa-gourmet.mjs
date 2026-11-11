@@ -24,6 +24,10 @@ yaz('index', { yol: '', baslik: 'Lezzetin rotasını keşfet', zincir: 'hakkimiz
   // W1.3a: vitrinde önce Türkiye'deki etkinlikler
   if (trKart.length) m.querySelector('#evTrack').innerHTML = trKart.join('');
   m.querySelector('.gm-events').insertAdjacentHTML('afterend', lezzetRay);
+  // Reklam işaretleri (reklam-detay, 11 Kas; panel site/anasayfa.blade.php sırası, hepsi kendi bandında). AS-T1 hero'nun hemen altına
+  // değil ilk bölümden (konseptler) sonra; AS-INT etkinliklerin ardında, Gurme Lezzetler rayından önce
+  const rk = (s, kod, ek = '') => m.querySelector(s).insertAdjacentHTML('afterend', `<template data-rk-yer="${kod}" data-rk-sar${ek}></template>`);
+  rk('.catstrip', 'AS-T1'); rk('.gm-modules', 'AS-M1'); rk('.gm-events', 'AS-INT'); rk('.gm-teaser', 'AS-B1', ' data-rk-son');
   return m.innerHTML; }, { trKart, lezzetRay }));
 
 // --- Mekânlar ---
@@ -91,6 +95,11 @@ const detay = await p.evaluate(({ ref }) => { kok(document.body); document.query
   const yildiz = [1, 2, 3, 4, 5].map((i) => `<button type="button" role="radio" aria-checked="false" data-yildiz="${i}" aria-label="${i} yıldız"><i class="fa-solid fa-star" aria-hidden="true"></i></button>`).join('');
   m.querySelector('#revLogin').insertAdjacentHTML('afterend', `<form class="rev-form" id="dgRev" data-yerel=""><div class="av av-init">Ö</div><div class="rf-body"><div class="rf-top"><span class="t">Mekânı değerlendir</span><span class="rf-stars" id="dgRevYildiz" role="radiogroup" aria-label="Yıldız puanı">${yildiz}</span><span class="rf-hint" id="dgRevIpucu" role="status">Puan zorunlu</span></div><textarea class="rf-text" id="dgRevMetin" maxlength="5000" aria-label="Yorumun" placeholder="Bu mekâna gittin mi? Ne yedin, nasıldı? Deneyimini yaz..."></textarea><div class="rf-chips" id="dgRevFotolar"></div><div class="rf-foot"><label class="rf-photo" for="dgRevFoto"><i class="fa-solid fa-camera" aria-hidden="true"></i> Fotoğraf Ekle <small>· en fazla 3</small></label><input class="sr-only" type="file" id="dgRevFoto" accept="image/jpeg,image/png,image/webp" multiple><button class="btn btn-primary" type="submit"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Yorumu Paylaş</button></div><p class="rf-puan" id="dgRevPuan"></p><p class="rf-disc">Yorumlar denetim sonrası yayınlanır. Bekleyen puan onayda kesinleşir. Yazılan yorumlar yayıncının görüş ve düşüncelerini yansıtmaz.</p><div class="rf-success" id="dgRevTamam" hidden><i class="fa-solid fa-circle-check" aria-hidden="true"></i> <span></span></div></div></form>`);
   m.querySelectorAll('.map-mock').forEach((e) => { e.innerHTML = ''; e.className = 'map-mock'; e.removeAttribute('style'); e.removeAttribute('tabindex'); });
+  // Reklam işaretleri (reklam-detay, 11 Kas; panel site/mekanlar/show.blade.php): MD-INT içerik sütununun sonu, MD-SB1 kenar
+  // sütununda bilgi kartının altı (rezervasyon/ödeme kampanya kartı), MD-END içerik bölümünden sonra kendi bandında
+  m.querySelector('.md-main').insertAdjacentHTML('beforeend', '<template data-rk-yer="MD-INT"></template>');
+  m.querySelector('.md-side').insertAdjacentHTML('beforeend', '<template data-rk-yer="MD-SB1"></template>');
+  m.querySelector('section.md-sec').insertAdjacentHTML('afterend', '<template data-rk-yer="MD-END" data-rk-sar></template>');
   metin(m, /Mekan/g, 'Mekân');
   return m.innerHTML; }, { ref });
 const katman = await p.evaluate(() => { kok(document.body); return ['#vdActbar', '#lightbox'].map((s) => document.querySelector(s)?.outerHTML ?? '').join('\n'); });
@@ -147,7 +156,7 @@ const hesap = await p.evaluate(({ oh, tohum }) => {
   $$('[title],[placeholder],[aria-label],[data-eposta]').forEach((e) => { ['title', 'placeholder', 'aria-label', 'data-eposta'].forEach((a) => { const v = e.getAttribute(a); if (v && (v.includes(tohum.k) || /Gastro/.test(v))) e.setAttribute(a, v.replace(EPOSTA, '{{uye.eposta}}').replaceAll(tohum.k, '{{uye.kullanici}}').replace(/Dada ?Gastro/g, 'Dada Gourmet')); }); });
   const foto = ['#fotoOverlay', '#fotoModal'].map((s) => document.querySelector(s)?.outerHTML ?? '').join('\n');
   return { gov: m.innerHTML, foto }; }, { oh, tohum });
-yaz('hesabim/ayarlar/index', { baslik: 'Hesap Ayarları', duzen: 'uye', zincir: 'hesabim', css: ['gourmet-sapma'], js: ['assets/js/sayfa/sekmeler.js'], donor: 'yerel Gastro 6700538df4 /hesabim/ayarlar (demo tohum); Bildirim, Dil, Bağlı, Veri, Dondurma: go-hesabim.html?auth=1' }, hesap.gov.replace(/"\/varliklar\/flags\//g, '"{{kok}}assets/g/varliklar/flags/').replace(/\/varliklar\/_dis\/images\.unsplash\.com\/photo-1466637574441-749b8f19452f\.avif/g, 'https://dadagourmet.com/assets/gourmet-public/img/about-dining.avif') + '\n<!--@main-disi-->\n' + hesap.foto);
+yaz('hesabim/ayarlar/index', { baslik: 'Hesap Ayarları', duzen: 'uye', zincir: 'hesabim', css: ['gourmet-sapma'], js: ['assets/js/sayfa/sekmeler.js'], donor: 'yerel Gastro 6700538df4 /hesabim/ayarlar (demo tohum); Bildirim, Dil, Bağlı, Veri, Dondurma: go-hesabim.html?auth=1' }, hesap.gov.replace(/"\/varliklar\/flags\//g, '"{{kok}}assets/g/varliklar/flags/').replace(/\/varliklar\/_dis\/images\.unsplash\.com\/photo-1466637574441-749b8f19452f\.avif/g, '{{kok}}assets/o/medya/1006-800.webp') /* reklam-son-duzelt: kadehsiz kapak */ + '\n<!--@main-disi-->\n' + hesap.foto);
 
 // --- Gurme Panelim: K3, ayrı alan, 6 sekme ---
 p = await ac(dom('op-mekanlarim'));

@@ -303,8 +303,8 @@ form[data-kesif-tercihleri]:has(.tercih-kaydet.kirli) .modul-govde{padding-botto
 .mke-birincil{white-space:nowrap;font-size:12.5px;padding:9px 6px}
 /* Gourmet katmanları Gastro başlığının altında kalıyordu: rezervasyon ve ışık kutusu başlığın üstüne alınır */
 .rsv-overlay{z-index:1400}.rsv-modal{z-index:1401}.lightbox{z-index:1402}
-/* Hesabım kapağı: Gastro tohum görseli yerine canlı Gourmet görseli */
-.kimlik-bant .kapak{background:#1d1321 url("../o/assets/gourmet-public/img/about-dining.avif") center/cover no-repeat}
+/* Hesabım kapağı: Gastro tohum görseli yerine prototipin gerçek fotoğrafı (reklam-son-duzelt 11 Kas, Beyar: kadehli hero görseli yok; canlıdaki about-dining kadehli) */
+.kimlik-bant .kapak{background:#1d1321 url("../o/medya/1006-800.webp") center/cover no-repeat}
 .kimlik-bant .kimlik-avatar:not(:empty){display:grid;place-items:center;background:var(--marka,#742982);color:#fff;font-size:34px;font-weight:700}
 /* Seçili filtre etiketleri (FU.5) ve sonuç yok önerisi (FU.7) */
 .mkl-secili{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}.mkl-secili[hidden]{display:none}

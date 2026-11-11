@@ -1,6 +1,8 @@
 /* Dada Route yer arama verisi: 81 il merkezi ve başlıca ilçe ve semtler. Koordinatlar yaklaşık (il merkezi ya da ilçe merkezi),
    "prototip örneği"dir; canlıda yer araması sunucudan gelir. `rota-sahte.js` aramayı, il kartı eşlemesini ve yedek koridoru buradan kurar.
-   il: [plaka, ad, bölge, enlem, boylam] · ilce: [ad, il, enlem, boylam] */
+   il: [plaka, ad, bölge, enlem, boylam] · ilce: [ad, il, enlem, boylam]
+   dis (rota-global, 11 Kas): yurt dışı yerler [kimlik, ad (özgün yazım), bölge · ülke, ülke (ISO 3166-1 alfa-2), enlem, boylam]; şehir merkezi, yaklaşık.
+   Aramada çıkar, il ağına (yedek koridor, il kartları) girmez. İlk örnek Paris – Lyon koridoru (A6) */
 window.DG_YERLER = {
   il: [
     [1, 'Adana', 'Akdeniz', 37.0, 35.3213], [2, 'Adıyaman', 'Güneydoğu Anadolu', 37.7648, 38.2786], [3, 'Afyonkarahisar', 'Ege', 38.7507, 30.5567],
@@ -80,5 +82,11 @@ window.DG_YERLER = {
     ['Erbaa', 'Tokat', 40.67, 36.57], ['Turhal', 'Tokat', 40.39, 36.08], ['Bozkır', 'Konya', 37.19, 32.25], ['Geyve', 'Sakarya', 40.51, 30.29], ['Kırkağaç', 'Manisa', 39.1, 27.67],
     ['Uluborlu', 'Isparta', 38.08, 30.45], ['Yalvaç', 'Isparta', 38.3, 31.18], ['Senirkent', 'Isparta', 38.1, 30.55], ['Karamanlı', 'Burdur', 37.37, 29.82], ['Finike', 'Antalya', 36.3, 30.15], ['Ayaş', 'Ankara', 40.02, 32.34],
     ['Kâhta', 'Adıyaman', 37.786, 38.622], ['Ahlat', 'Bitlis', 38.753, 42.493], ['Tatvan', 'Bitlis', 38.504, 42.281], ['Erciş', 'Van', 39.028, 43.358], ['Sarıkamış', 'Kars', 40.333, 42.59]
+  ],
+  dis: [
+    [9001, 'Paris', 'Île-de-France · Fransa', 'FR', 48.8566, 2.3522], [9002, 'Lyon', 'Auvergne-Rhône-Alpes · Fransa', 'FR', 45.764, 4.8357],
+    [9003, 'Fontainebleau', 'Île-de-France · Fransa', 'FR', 48.4047, 2.7016], [9004, 'Auxerre', 'Bourgogne-Franche-Comté · Fransa', 'FR', 47.7982, 3.5673],
+    [9005, 'Beaune', 'Bourgogne-Franche-Comté · Fransa', 'FR', 47.026, 4.84], [9006, 'Dijon', 'Bourgogne-Franche-Comté · Fransa', 'FR', 47.322, 5.0415],
+    [9007, 'Chalon-sur-Saône', 'Bourgogne-Franche-Comté · Fransa', 'FR', 46.7808, 4.8539], [9008, 'Mâcon', 'Bourgogne-Franche-Comté · Fransa', 'FR', 46.3069, 4.8287]
   ]
 };

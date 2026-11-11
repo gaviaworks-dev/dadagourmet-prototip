@@ -360,6 +360,15 @@
   $$('.yg-katman .cipler').forEach(function (c) { c.setAttribute('data-scroll-fade', ''); if (window.ScrollAffordance) { window.ScrollAffordance.wire(c); } if (seritRO) { seritRO.observe(c); } });
   /* Noktalar örnek olduğu için canlı Open Charge Map atfı yerine örnek kaynağı yazılır */
   var atif = $('.yg-sarj-credit:not(#ygYakitKaynak)'); if (atif) { atif.textContent = 'Kaynak: prototip örneği. Canlıda Open Charge Map verisi kullanılır.'; }
+  /* ==== Ülke (rota-global, 11 Kas) ==== Rota gerçek şarj verisi olan bir ülkeden geçiyorsa (`rota-ulke.js` sarjOrganik: Fransa) kart o noktaları
+     gösterir (`rota-sahte.js` `dgRotaSarjNoktalari`); atıf OSM'ye döner, ülke adıyla */
+  var atifYaz = function () {
+    var U = window.dgRotaUlke, ul = U ? U.sarjOrganik() : [];
+    var ad = function (u) { return U.ULKE[u] ? U.ULKE[u].ad : u; }, ornek = ul.length ? U.rotaUlkeleri().filter(function (u) { return ul.indexOf(u) < 0; }) : [];
+    if (atif) { atif.textContent = ul.length ? 'Kaynak: OpenStreetMap katkıcıları · ODbL (' + ul.map(ad).join(', ') + (ornek.length ? '; ' + ornek.map(ad).join(', ') + ' noktaları prototip örneği' : '') + '). Canlıda Open Charge Map verisi kullanılır.' : 'Kaynak: prototip örneği. Canlıda Open Charge Map verisi kullanılır.'; }
+  };
+  document.addEventListener('dg:rota', function () { setTimeout(atifYaz, 0); });
+  /* ==== /Ülke ==== */
   var demoBas = $('#ygDemo .yg-demo-h'); if (demoBas) { demoBas.innerHTML = '<span class="ornek-etiket">prototip örneği</span>'; }
 
   /* İl kartları yalnız güzergâhın geçtiği iller için, yolculuk sırasıyla.
@@ -651,4 +660,11 @@
   new MutationObserver(fabSirala).observe($('.yg-panel'), { attributes: true, attributeFilter: ['class', 'style'] });
   /* Açılış canlıdaki gibi boş karşılama (Beyar, 9 Kas). `?ornek=1` inceleme için örnek güzergâhı yükler */
   if (/[?&]ornek=1/.test(location.search)) { setTimeout(function () { var p = $('#ygPilots button, #ygPilots a'); if (p) { p.click(); } }, 300); }
+  /* ==== Reklam bağlantısı (reklam-rota, 11 Kas) ==== Tam ekran kabuk (Dada Route) reklam çekirdeğini yüklemez; önizleme durumu
+     (`prototip.js` `dgReklam`, `?reklam=1|0`) burada okunur ve çekirdek yüklenir. Kapalıyken çekirdek hiçbir reklam dosyası yüklemez,
+     sayfaya düğüm eklemez. Rota öğeleri `assets/js/reklam/sayfa/rota.js` (sayfa satırı `betik: rota`) */
+  if (window.dgReklam && !document.querySelector('script[src*="assets/js/reklam/reklam.js"]')) {
+    var rkb = document.createElement('script'); rkb.src = (document.documentElement.dataset.kok || './') + 'assets/js/reklam/reklam.js'; document.body.appendChild(rkb);
+  }
+  /* ==== /Reklam bağlantısı ==== */
 })();

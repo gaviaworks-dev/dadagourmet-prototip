@@ -1,0 +1,177 @@
+/* Dada Route sponsorlu öğeleri + ana sayfa AS-INT EV önizlemesi (reklam-rota, 11 Kas). Yalnız reklam önizlemesi açıkken yüklenir
+   (`assets/js/reklam/sayfa/rota.js`, `sayfa/anasayfa.js`). Kanon stilin (`assets/css/reklam/*.css`) ÜSTÜNE; kanon dosyalarına dokunmaz.
+   Yalnız kanon tokenları (assets/g/kanon/tokenlar.css) ve kanon reklam değişkenleri (--rk-marka, --rk-dugme, --rk-yazi; MarkaRengi).
+   Dokunma hedefi 44 px; hareket `--sure`/`--yumusama`, `prefers-reduced-motion`da yok. */
+
+/* ── Ortak ── */
+.rk-rt-logo{display:grid;place-items:center;flex:none;width:56px;height:40px;padding:6px;box-sizing:border-box;border-radius:var(--yuvarlak-sm);background:var(--kagit);border:var(--cizgi-1) solid var(--cizgi)}
+.rk-rt-logo .rk-logo{width:100%;height:100%;max-height:none;object-fit:contain}
+.rk-rt-logo:has(.rk-logo-koyu){background:var(--rk-marka);border-color:var(--rk-marka)}
+.rk-rt-kapat{display:inline-grid;place-items:center;flex:none;width:44px;height:44px;margin:-10px -10px -10px auto;padding:0;border:0;border-radius:var(--yuvarlak-sm);background:transparent;color:var(--metin-ikincil);font-size:var(--yazi-14);cursor:pointer;transition:background var(--sure) var(--yumusama),color var(--sure) var(--yumusama)}
+.rk-rt-kapat:hover{background:var(--zemin-2);color:var(--murekkep)}
+.rk-rt-kapat:focus-visible,.rk-rt-ekle:focus-visible,.rk-rt-ikincil:focus-visible,.rk-ev-arac:focus-visible,.rk-ev-yemek a:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
+.rk-rt-teklif{display:flex;align-items:flex-start;gap:6px;font-size:var(--yazi-12);font-weight:var(--agirlik-orta);line-height:1.35;color:var(--rk-dugme)}
+.rk-rt-teklif i{margin-top:2px}
+.rk-rt-eylem{display:flex;flex-wrap:wrap;gap:8px}
+.rk-rt-ekle,.rk-rt-ikincil{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 14px;border-radius:var(--yuvarlak-sm);font:inherit;font-size:var(--yazi-13);font-weight:var(--agirlik-kalin);line-height:1.2;cursor:pointer;
+  transition:background var(--sure) var(--yumusama),color var(--sure) var(--yumusama),transform var(--sure-hizli) var(--yumusama)}
+.rk-rt-ekle{flex:1 1 auto;border:0;background:var(--rk-dugme);color:var(--kagit)}
+.rk-rt-ekle:hover{filter:brightness(1.06)}
+.rk-rt-ekle:active,.rk-rt-ikincil:active{transform:scale(.98)}
+.rk-rt-ekle[aria-pressed="true"]{background:var(--zemin-2);color:var(--murekkep);cursor:default}
+.rk-rt-ikincil{border:var(--cizgi-1) solid var(--cizgi);background:var(--kagit);color:var(--murekkep)}
+.rk-rt-ikincil:hover{background:var(--zemin)}
+
+/* ── RT-TANITIM · rota başı şerit (kanon `.rk-pisirme`), özet kartının üstünde. Panel genişliğinde iki satır: logo + etiket/başlık,
+   sağda çağrı ve kapat (44 px) ── */
+.yg-summary .rk-rt-serit{max-height:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"logo metin kapat" "logo cta cta";align-items:center;column-gap:12px;row-gap:2px;height:auto;max-height:none;min-height:64px;margin:0 0 12px;padding:10px 6px 10px 12px;
+  border:var(--cizgi-1) solid var(--cizgi);border-left:4px solid var(--rk-marka);border-radius:var(--yuvarlak-md);background:var(--kagit);box-shadow:var(--golge-sm);animation:rk-rt-gir var(--sure) var(--yumusama)}
+.yg-summary .rk-rt-serit .rk-pisirme-logo{grid-area:logo;width:88px;height:40px}
+.yg-summary .rk-rt-serit .rk-pisirme-logo .rk-logo{width:100%;height:100%}
+.yg-summary .rk-rt-serit .rk-pisirme-metin{grid-area:metin;display:flex;flex-direction:column;gap:2px}
+.yg-summary .rk-rt-serit .rk-pisirme-metin b{white-space:normal;font-size:var(--yazi-13);line-height:1.3;color:var(--murekkep)}
+.yg-summary .rk-rt-serit .rk-etiket{font-size:var(--yazi-11);font-weight:var(--agirlik-kalin);letter-spacing:.06em;text-transform:uppercase;color:var(--metin-ikincil);white-space:normal;overflow-wrap:anywhere}
+/* Doğrulayıcı bulgu #7 (rota-global): "Sponsorlu" yasal etiket, asla kesilmez: etiket "Sponsorlu · Rota destekçisi" sırasıyla ve satıra sığmazsa alta iner (kesme yok) */
+.yg-summary .rk-rt-serit a{max-width:none;white-space:nowrap;grid-area:cta;justify-self:start;display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;padding:0 12px;border-radius:var(--yuvarlak-sm);background:transparent;color:var(--rk-dugme);font-size:var(--yazi-12);font-weight:var(--agirlik-kalin);text-decoration:none;margin-left:-12px}
+.yg-summary .rk-rt-serit a:hover{text-decoration:underline}
+.yg-summary .rk-rt-serit .rk-rt-kapat{grid-area:kapat;align-self:start;margin:-4px 0 0;width:44px;height:44px;border:0}
+
+/* Canlı sponsor pininin ve kartının Dada amblemi (`assets/img/logo-mark-white.png`) canlıda da yok (404, 11 Kas GET): reklam açıkken
+   konsol hatası olmasın diye arka plan kaldırılır, pinde megafon simgesi (canlı "Sponsorlu" rozetinin simgesi) */
+.yg-dcard.sponsor::before,.yg-detail.is-sponsor .yg-detail-body::before{background-image:none!important}
+.yg-vpin.sponsor .vp-logo{display:grid;place-items:center;background:none!important}
+.yg-vpin.sponsor .vp-logo::before{content:"\f0a1";font-family:"Font Awesome 6 Free";font-weight:900;font-size:11px;line-height:1;color:var(--kagit)}
+
+/* ── RT-OZET · yol üstü yakıt / şarj molası (özetin altında) ── */
+.rk-rt-ozet{display:flex;flex-direction:column;gap:10px;margin:12px 0 0;padding:12px 14px 14px;border:var(--cizgi-1) solid var(--cizgi);border-left:4px solid var(--rk-marka);border-radius:var(--yuvarlak-md);background:var(--kagit);box-shadow:var(--golge-sm);color:var(--murekkep);animation:rk-rt-gir var(--sure) var(--yumusama)}
+.rk-rt-ozet-bas{display:flex;align-items:center;gap:8px;min-height:24px}
+.rk-rt-ozet-bas .rk-etiket,.rk-rt-mini-bas .rk-etiket,.rk-ev-bas .rk-etiket{font-size:var(--yazi-11);font-weight:var(--agirlik-kalin);letter-spacing:.06em;text-transform:uppercase;color:var(--metin-ikincil)}
+.rk-rt-ozet-govde{display:flex;align-items:center;gap:12px;min-width:0}
+.rk-rt-ozet-metin{display:flex;flex-direction:column;gap:3px;min-width:0}
+.rk-rt-ozet-metin b{font-size:var(--yazi-15);line-height:1.25}
+.rk-rt-ozet-metin>span:not(.rk-rt-teklif){font-size:var(--yazi-12);line-height:1.35;color:var(--metin-ikincil)}
+
+/* ── Harita pinleri (RT-PIN yakıt, şarj durağı, yemek) ── */
+.rk-rt-pin-kap{display:grid;place-items:center;background:none;border:0;transition:opacity var(--sure) var(--yumusama)}
+.rk-rt-pin-kap--ortu{opacity:0;pointer-events:none}
+.rk-rt-pin{position:relative;display:grid;place-items:center;width:40px;height:40px;box-sizing:border-box;border-radius:var(--yuvarlak-daire);background:var(--kagit);border:3px solid var(--rk-marka,var(--murekkep));box-shadow:0 3px 10px rgba(33,30,22,.28);transition:transform var(--sure) var(--yumusama);animation:rk-rt-pin-gir .35s var(--yumusama)}
+.rk-rt-pin .rk-logo{width:26px;height:22px;max-height:none;object-fit:contain}
+/* rota-global (11 Kas): Leaflet'in `.leaflet-container .leaflet-marker-pane img{width:auto}` kuralı (özgüllük 0,3,1) üsttekini eziyordu; geniş
+   kelime logoları (TotalEnergies 4,1:1, Shell 4,5:1) 40 px pinden taşıyordu. Aynı ölçü, Leaflet seçicisinden güçlü */
+.leaflet-container .leaflet-marker-pane .rk-rt-pin img.rk-logo{width:26px;height:22px}
+.rk-rt-pin:has(.rk-logo-koyu){background:var(--rk-marka)}
+.leaflet-marker-icon:hover .rk-rt-pin,.leaflet-marker-icon:focus-visible .rk-rt-pin{transform:scale(1.08)}
+.rk-rt-pin-spon{position:absolute;right:-6px;top:-6px;display:grid;place-items:center;width:18px;height:18px;border-radius:var(--yuvarlak-daire);background:var(--rk-dugme);color:var(--kagit);font-size:9px;box-shadow:0 0 0 2px var(--kagit)}
+.rk-rt-pin--organik,.rk-rt-pin--yemek{border-color:var(--murekkep)}
+.rk-rt-pin--organik i{font-size:15px;color:var(--murekkep)}
+.rk-rt-pin-no{position:absolute;left:-5px;bottom:-5px;display:grid;place-items:center;min-width:18px;height:18px;padding:0 4px;box-sizing:border-box;border-radius:var(--yuvarlak-hap);background:var(--murekkep);color:var(--kagit);font-size:var(--yazi-11);font-weight:var(--agirlik-kalin);line-height:1;box-shadow:0 0 0 2px var(--kagit)}
+.rk-rt-pin--yemek{width:30px;height:30px;border-width:2px;background:var(--aksan);border-color:var(--kagit)}
+.rk-rt-pin--yemek i{font-size:12px;color:var(--kagit)}
+
+/* ── RT-PIN mini kart (Leaflet balonu) ── */
+.rk-rt-balon .leaflet-popup-content-wrapper{padding:0;border-radius:var(--yuvarlak-md);box-shadow:var(--golge-md);overflow:hidden}
+.rk-rt-balon .leaflet-popup-content{margin:0;width:auto!important;min-width:220px;max-width:100%}
+.rk-rt-mini{display:flex;flex-direction:column;gap:6px;padding:12px 14px 14px;border-top:4px solid var(--rk-marka);font-family:inherit;color:var(--murekkep)}
+.rk-rt-mini-bas{display:flex;align-items:center;gap:10px}
+.rk-rt-mini-bas .rk-rt-logo{width:48px;height:32px;padding:4px}
+/* Doğrulayıcı bulgu #17 (rota-global): başlık tek satır "Sponsorlu" (marka adı ölçü satırında), logo 40 px kare plaka, yazıyla arası açık */
+.rk-rt-mini-bas .rk-rt-logo{width:40px;height:40px;padding:5px}
+.rk-rt-mini-bas .rk-etiket{flex:1 1 auto;min-width:0;white-space:nowrap}
+.rk-rt-mini-ad{margin-top:2px}
+.rk-rt-mini-ad{font-size:var(--yazi-14);line-height:1.25}
+.rk-rt-mini-olcu,.rk-rt-mini-yemek{font-size:var(--yazi-12);line-height:1.35;color:var(--metin-ikincil)}
+.rk-rt-mini-yemek{color:var(--murekkep)}
+.rk-rt-mini-yemek i{color:var(--aksan)}
+.rk-rt-mini .rk-rt-eylem{margin-top:4px}
+/* Kısa ekran (yatay telefon): mini kart sığsın, kampanya satırı ve yemek notu kısalır */
+@media (max-height:500px){.rk-rt-mini{gap:4px;padding:10px 12px 12px}.rk-rt-mini-bas .rk-rt-logo{width:40px;height:28px}.rk-rt-mini .rk-rt-teklif{display:none}.rk-rt-mini-olcu,.rk-rt-mini-yemek{font-size:var(--yazi-11)}}
+
+/* ── RT-SARJ · EV şarj planlayıcı (şarj kartının başında) ── */
+.rk-ev{display:flex;flex-direction:column;gap:12px;margin:0 0 12px;padding:12px 14px 14px;border:var(--cizgi-1) solid var(--cizgi);border-left:4px solid var(--rk-marka);border-radius:var(--yuvarlak-md);background:var(--kagit);box-shadow:var(--golge-sm);color:var(--murekkep);animation:rk-rt-gir var(--sure) var(--yumusama)}
+.rk-ev-bas{display:flex;align-items:center;gap:12px;min-width:0}
+.rk-ev-bas-metin{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rk-ev-bas-metin b{font-size:var(--yazi-15);line-height:1.25}
+.rk-ev-araclar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.rk-ev-arac{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;min-height:52px;padding:8px 12px;border:var(--cizgi-1) solid var(--cizgi);border-radius:var(--yuvarlak-sm);background:var(--kagit);color:var(--murekkep);font:inherit;text-align:left;cursor:pointer;
+  transition:border-color var(--sure) var(--yumusama),background var(--sure) var(--yumusama),box-shadow var(--sure) var(--yumusama)}
+.rk-ev-arac b{font-size:var(--yazi-13);line-height:1.2}
+.rk-ev-arac small{font-size:var(--yazi-11);color:var(--metin-ikincil)}
+.rk-ev-arac:hover{border-color:var(--rk-marka)}
+.rk-ev-arac[aria-checked="true"]{border-color:var(--rk-marka);background:color-mix(in srgb,var(--rk-marka) 8%,var(--kagit));box-shadow:inset 0 0 0 1px var(--rk-marka)}
+.rk-ev-not,.rk-ev-ozet{margin:0;font-size:var(--yazi-13);line-height:1.45;color:var(--metin-ikincil)}
+.rk-ev-ozet{color:var(--murekkep);font-weight:var(--agirlik-orta)}
+.rk-ev-sorun{color:var(--murekkep)}
+.rk-ev-sorun i{color:var(--uyari,var(--aksan))}
+.rk-ev-liste{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.rk-ev-durak{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;padding:10px;border-radius:var(--yuvarlak-sm);background:var(--zemin)}
+.rk-ev-durak.is-sponsor{background:color-mix(in srgb,var(--rk-marka,var(--aksan)) 6%,var(--kagit))}
+.rk-ev-no{display:grid;place-items:center;width:28px;height:28px;border-radius:var(--yuvarlak-daire);background:var(--murekkep);color:var(--kagit);font-size:var(--yazi-13);font-weight:var(--agirlik-kalin)}
+.rk-ev-no[class*="rk-renk-"]{background:var(--rk-dugme)}
+.rk-ev-no i{font-size:12px}
+.rk-ev-alt-bas{font-size:var(--yazi-11);font-weight:var(--agirlik-kalin);letter-spacing:.06em;text-transform:uppercase;color:var(--rk-dugme)}
+.rk-ev-durak-govde{display:flex;flex-direction:column;gap:3px;min-width:0}
+.rk-ev-durak-bas{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.rk-ev-durak-bas b{font-size:var(--yazi-14);line-height:1.25;overflow-wrap:anywhere}
+.rk-ev-durak-govde>small{font-size:var(--yazi-12);line-height:1.4;color:var(--metin-ikincil)}
+.rk-ev-hap{white-space:nowrap}
+.rk-ev-yemek{margin:6px 0 4px;padding:8px 10px;border-radius:var(--yuvarlak-sm);background:var(--kagit);border:var(--cizgi-1) solid var(--cizgi)}
+.rk-ev-yemek-bas{display:flex;align-items:center;gap:6px;font-size:var(--yazi-12);font-weight:var(--agirlik-kalin);color:var(--murekkep)}
+.rk-ev-yemek-bas i{color:var(--aksan)}
+.rk-ev-yemek--uzak .rk-ev-yemek-bas{color:var(--metin-ikincil)}
+.rk-ev-yemek ul{display:flex;flex-direction:column;margin:4px 0 0;padding:0;list-style:none}
+.rk-ev-yemek li{display:flex;flex-wrap:wrap;align-items:center;gap:0 8px;min-height:44px}
+.rk-ev-yemek a{display:inline-flex;align-items:center;min-height:44px;font-size:var(--yazi-13);font-weight:var(--agirlik-kalin);color:var(--murekkep);text-decoration:underline;text-decoration-color:var(--cizgi);text-underline-offset:3px}
+.rk-ev-yemek small{font-size:var(--yazi-12);color:var(--metin-ikincil)}
+/* Doğrulayıcı bulgu #15 (rota-global): mekân bağı dokunma hedefi 44 px (önce 32). Bulgu #23: RT-DURAK marka adı vitrin kartının gövdesinde */
+.rk-rt-durak-marka{display:block;margin-top:2px;font-size:var(--yazi-12);font-weight:var(--agirlik-orta);line-height:1.3;color:inherit;opacity:.82}
+.rk-ev .rk-rt-eylem{margin-top:6px}
+.rk-ev-kaynak{margin:0;font-size:var(--yazi-11);line-height:1.4;color:var(--metin-ikincil)}
+
+@keyframes rk-rt-gir{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes rk-rt-pin-gir{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.rk-rt-serit,.rk-rt-ozet,.rk-ev,.rk-rt-pin,.rk-asi-panel{animation:none!important;transition:none!important}}
+
+/* ══ AS-INT · ana sayfa EV rota önizlemesi (kanon `.rk-pisirme` şeridi + açılır pano) ══ */
+[data-rk-interaktif] .rk-asi-serit{max-height:none;border:var(--cizgi-1) solid var(--cizgi);border-left:4px solid var(--rk-marka);border-radius:var(--yuvarlak-md);background:var(--kagit);height:auto;min-height:72px;padding:10px 8px 10px 14px}
+.rk-asi-serit .rk-pisirme-logo{width:84px;height:36px}
+.rk-asi-serit .rk-pisirme-metin b{white-space:normal}
+.rk-asi-serit [data-rk-ac]{display:inline-flex;align-items:center;gap:6px;width:auto;height:auto;min-height:44px;padding:0;border:0;border-radius:0;background:none;color:var(--murekkep);font:inherit;font-size:var(--yazi-15);font-weight:var(--agirlik-kalin);text-align:left;cursor:pointer}
+.rk-asi-serit [data-rk-ac] i{transition:transform var(--sure) var(--yumusama);color:var(--rk-dugme)}
+.rk-int-acik .rk-asi-serit [data-rk-ac] i{transform:rotate(180deg)}
+.rk-asi-serit>a{max-width:none;white-space:nowrap;display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;padding:0 16px;font-size:var(--yazi-13);font-weight:var(--agirlik-kalin)}
+.rk-asi-serit>button[data-rk-kapat]{width:44px;height:44px;border:0}
+.rk-asi-panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;margin-top:8px;padding:18px;border:var(--cizgi-1) solid var(--cizgi);border-radius:var(--yuvarlak-md);background:var(--kagit);color:var(--murekkep);animation:rk-rt-gir var(--sure) var(--yumusama)}
+.rk-asi-panel[hidden]{display:none}
+.rk-asi-harita{position:relative;margin:0;border-radius:var(--yuvarlak-sm);background:var(--zemin);overflow:hidden}
+.rk-asi-harita{display:grid;place-items:center;min-height:220px}
+.rk-asi-harita svg{display:block;width:100%;height:auto;max-height:300px}
+.rk-asi-harita figcaption{position:absolute;left:10px;bottom:8px;font-size:var(--yazi-11);color:var(--metin-ikincil)}
+.rk-asi-cizgi{fill:none;stroke:var(--aksan);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.rk-asi-cizgi-alt{fill:none;stroke:var(--kagit);stroke-width:8;stroke-linecap:round;stroke-linejoin:round}
+.rk-asi-uc{fill:var(--murekkep);stroke:var(--kagit);stroke-width:3}
+.rk-asi-sarj{fill:var(--rk-dugme);stroke:var(--kagit);stroke-width:3}
+.rk-asi-etiket{font-size:12px;font-weight:700;fill:var(--murekkep);paint-order:stroke;stroke:var(--kagit);stroke-width:4px;stroke-linejoin:round}
+.rk-asi-no{font-size:11px;font-weight:700;fill:var(--kagit)}
+.rk-asi-sag{display:flex;flex-direction:column;gap:12px;min-width:0}
+.rk-asi-sag .rk-ev-araclar{grid-template-columns:repeat(2,minmax(0,1fr))}
+.rk-asi-ozet{margin:0;font-size:var(--yazi-14);font-weight:var(--agirlik-orta);line-height:1.4}
+.rk-asi-liste{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.rk-asi-liste li{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:start;font-size:var(--yazi-13);line-height:1.4}
+.rk-asi-liste li>i{display:grid;place-items:center;width:24px;height:24px;border-radius:var(--yuvarlak-daire);background:var(--zemin-2);font-size:11px;color:var(--murekkep)}
+.rk-asi-liste li.is-sarj>i{background:var(--rk-dugme);color:var(--kagit)}
+.rk-asi-liste b{display:block;font-size:var(--yazi-13)}
+.rk-asi-liste small{display:block;font-size:var(--yazi-12);color:var(--metin-ikincil)}
+.rk-asi-ac{display:inline-flex;align-items:center;justify-content:center;gap:8px;align-self:flex-start;min-height:48px;padding:0 20px;border-radius:var(--yuvarlak-sm);background:var(--rk-dugme);color:var(--kagit);font-size:var(--yazi-14);font-weight:var(--agirlik-kalin);text-decoration:none;transition:transform var(--sure-hizli) var(--yumusama)}
+.rk-asi-ac:hover{transform:translateX(2px)}
+.rk-asi-ac:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
+.rk-asi-kaynak{margin:0;font-size:var(--yazi-11);line-height:1.4;color:var(--metin-ikincil)}
+@media (max-width:760px){
+  .rk-asi-panel{grid-template-columns:minmax(0,1fr);gap:14px;padding:14px}
+  [data-rk-interaktif] .rk-asi-serit{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"logo metin kapat" "logo cta cta";column-gap:10px;row-gap:0;padding:8px 4px 8px 10px}
+  .rk-asi-serit .rk-pisirme-logo{grid-area:logo;width:56px}
+  .rk-asi-serit .rk-pisirme-metin{grid-area:metin}
+  .rk-asi-serit [data-rk-ac]{font-size:var(--yazi-14);line-height:1.3}
+  .rk-asi-serit>a{grid-area:cta;justify-self:start;padding:0 12px;margin-left:-12px;background:transparent;color:var(--rk-dugme);font-size:var(--yazi-12)}
+  .rk-asi-serit>button[data-rk-kapat]{grid-area:kapat;align-self:start}
+  .rk-asi-ac{align-self:stretch}
+}

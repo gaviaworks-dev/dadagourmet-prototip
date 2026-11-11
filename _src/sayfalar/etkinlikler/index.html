@@ -1,6 +1,6 @@
 <!--{"yol":"etkinlikler","baslik":"Etkinlikler","aktif":"etkinlikler","zincir":"hakkimizda","gourmet":true,"css":["etkinlikler.css","banner-uyarlama.css","etkinlikler-uyarlama.css","gourmet-sapma"],"js":["assets/vendor/maplibre/maplibre-gl.js","assets/js/etkinlik-veri.js","assets/js/harita.js","assets/js/ulke.js","assets/js/sayfa/etkinlikler.js"],"govdeSinif":"pg-etkinlikler has-dark-hero","donor":"https://dadagourmet.com/etkinlikler"}-->
 
-                        <section class="ke-top below-header px-band" data-px-band="1"><div class="px-clip" style="--px-x: 50%; --px-y: 50%; background-color: rgb(30, 20, 34); --px-r: 0px; --px-shift: 0.0px;"><div class="px-media" style="background-image: url(&quot;{{kok}}assets/o/assets/gourmet-public/img/banner-g3-pilot.webp&quot;);"></div></div>
+                        <section class="ke-top below-header px-band" data-px-band="1" style="background-image:linear-gradient(90deg,rgba(30,20,34,.94),rgba(28,22,36,.74)),url(&quot;{{kok}}assets/o/assets/gourmet-public/medya/9744.webp&quot;)"><div class="px-clip" style="--px-x: 50%; --px-y: 50%; background-color: rgb(30, 20, 34); --px-r: 0px; --px-shift: 0.0px;"><div class="px-media" style="background-image: url(&quot;{{kok}}assets/o/assets/gourmet-public/medya/9744.webp&quot;);"></div></div>
     <div class="ke-hero-media" aria-hidden="true" style="background-image: none; background-color: transparent;"></div>
     <div class="wrap">
         <nav class="rd-crumb" aria-label="Sayfa yolu"><a href="{{kok}}"><i class="fa-solid fa-house" aria-hidden="true"></i></a><i class="fa-solid fa-chevron-right" aria-hidden="true"></i><b>Etkinlikler</b></nav>
@@ -8,6 +8,8 @@
             <div class="ke-head">
                 <span class="eyebrow"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i> Lezzet Takvimi</span>
                 <h1>Gastronomi Etkinliklerini <span class="accent">Keşfet</span></h1>
+                <!-- Reklam (REKLAM-YERLESIM EL-HERO): hero rozeti "X sponsorluğunda"; önizleme kapalıyken boyanmaz -->
+                <template data-rk-yer="EL-HERO"></template>
                 <p class="lead">Tadım etkinliklerinden gastronomi festivallerine, şef buluşmalarından mutfak atölyelerine kadar şehirdeki güncel deneyimleri keşfedin.</p>
                 <form method="GET" class="searchcard ke-hero-search" data-prototip-form="" data-yerel="" id="evArama">
                     <div class="search-row">
@@ -72,6 +74,8 @@
                                                                     <label class="fct-row"><input type="radio" name="tarih" value="gecmis" data-count="76"><span class="cbx"></span><span class="ft" title="Geçmiş etkinlikler">Geçmiş etkinlikler</span><span class="fcnt">76</span></label>
                                                             </div>
                         </div>
+                        <!-- Reklam EL-FILTER: filtre panelinde ilk grubun (Tarih) altı -->
+                        <template data-rk-yer="EL-FILTER"></template>
                         
                         <div class="fct fct-konum open" data-group="konum">
                             <button class="fct-head" type="button"><i class="fa-solid fa-location-dot fct-head-ico" aria-hidden="true"></i> Konum <span class="fct-dot">0</span><i class="fa-solid fa-chevron-down fct-car" aria-hidden="true"></i></button>
@@ -643,6 +647,8 @@
                 </div>
                 
                                     
+                    <!-- Reklam EL-T1: liste üstü (boş durumda da; takvim ve harita görünümünde yok) · EL-FEED: #evGrid içinde en üst, her 2 satır, en alt -->
+                    <template data-rk-yer="EL-T1"></template><template data-rk-yer="EL-FEED" data-rk-liste="#evGrid"></template>
                     <div class="disc-grid" id="evGrid"></div><div id="evTakvim" hidden=""></div><div id="evHarita" hidden=""><div class="mkl-map-wrap" id="evMapWrap"><div id="evMap" class="mkl-map"></div></div><p class="ev-empty" id="evHaritaBos" hidden="">Bu filtrelerde haritada gösterilecek etkinlik yok.</p><p class="ev-map-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Çevrim içi etkinlikler ve tek bir konumu olmayan kayıtlar (ör. Türkiye geneli yarışmalar) haritada gösterilmez. Haritadaki işaretlerin bir kısmı şehir merkezine yerleştirilmiş yaklaşık konumlardır, etkinliğin tam adresi değildir.</p></div><div class="lst-empty" id="evBos" hidden=""><h3>Bu seçimle etkinlik bulunamadı</h3><p>Filtre azaltmayı dene ya da diğer sekmeye bak.</p></div>
                                             
                         <nav class="pagi" id="pagi" aria-label="Sayfalama"></nav>

@@ -27,7 +27,7 @@ export const bant = ({ cur, ikon, giris, serit = '' }) => `<section class="bolum
       <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
       <span class="cur">${cur}</span>
     </nav>
-    <div class="kapak px-band" data-fit-px="" data-kayitli-kapak=""><div class="px-clip" aria-hidden="true" style="--px-r: 24px;"><div class="px-media" style="background-image:url('{{kok}}assets/o/assets/gourmet-public/img/about-dining.avif')"></div></div>
+    <div class="kapak px-band" data-fit-px="" data-kayitli-kapak=""><div class="px-clip" aria-hidden="true" style="--px-r: 24px;"><div class="px-media" style="background-image:url('{{kok}}assets/o/medya/1006-800.webp')"></div></div>
       <span class="kapak-muhur"><i class="${ikon}" aria-hidden="true"></i> Dada Gourmet · kişisel alanın</span>
     </div>
     <div class="kimlik">
@@ -137,8 +137,13 @@ export const panelDugme = (id, ikon, metin, sinif = 'dugme birincil') => `<butto
 
 // Sayfa kaydı: build.mjs'in beklediği {yol, meta, govde}. Sekme rayı (`ray()`) olan sayfaya sekme geçişi betiği eklenir (H8)
 export const SEKME_GECIS_JS = 'assets/js/sayfa/sekme-gecis.js';
+// Reklam HS-SB1 (reklam-detay, 11 Kas; REKLAM-YERLESIM "Hesabım, Kaydedilenler"): yalnız üye İÇERİK sayfalarında, içerik sonunda
+// şerit. Yol listesi `_src/veri/reklam-yerlesim.json` `hesap` satırıyla aynı; hesap yönetimi sayfaları (ayarlar, bildirimler, çözüm
+// merkezi, ödemeler, paketler, keşif tercihleri) reklamsız, işaret almaz. İşaret <template>: kapalıyken boyanmaz, yer tutmaz
+export const HS_REKLAM_YOL = /^hesabim\/(gurme-panelim|listeler|etkinlikler|rozetlerim)(\/|$)/;
+export const hsIsaret = (yol) => (HS_REKLAM_YOL.test(yol) ? '<template data-rk-yer="HS-SB1" data-rk-sar></template>' : '');
 export const sayfa = (yol, baslik, icerik, { js = [], donor = '', disi = '' } = {}) => ({
   yol,
   meta: { baslik, duzen: 'uye', zincir: 'hesabim', css: ['gourmet-sapma'], js: ['assets/o/assets/gourmet-public/js/shared/scroll-affordance.js', 'assets/js/sayfa/uye-alan.js', ...js, ...(icerik.includes('data-sekme-gecis=') ? [SEKME_GECIS_JS] : [])], donor: donor || 'canlı dadagourmet.com, DadaGourmet-acil 4eb638c resources/views/hesap' },
-  govde: `<div class="zebra">${icerik}</div>${disi ? `\n<!--@main-disi-->\n<div class="fb-overlay" data-dm-ortu=""></div>\n${disi}` : ''}`,
+  govde: `<div class="zebra">${icerik}${hsIsaret(yol)}</div>${disi ? `\n<!--@main-disi-->\n<div class="fb-overlay" data-dm-ortu=""></div>\n${disi}` : ''}`,
 });

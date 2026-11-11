@@ -381,6 +381,29 @@
   document.addEventListener('click', function () { setTimeout(haritaIste, 350); });
   /* Görünüm değişimi, çerez bandının açılıp kapanması ve `--bc-lift` geçişi kaydırmasız olur: harita varken yarım saniyede bir yeniden bakılır */
   setInterval(haritaIste, 500);
+  /* ==== Yüzen düğme × reklam çağrısı (reklam-duzeltici, 11 Kas; doğrulama #25) ====
+     Harita kuralının eşi, kabukta tek yer: yüzen düğme (başa dön, Route, küçük Mentör) görünür bir reklam bağı ya da düğmesiyle
+     (`[data-rk-birim]` içindeki a/button: şerit çağrısı, noktalı kartın ürün satırı, native kart düğmesi) kesişirken çekilir
+     (`.dg-reklam-ortusu`, kural prototip.css); kaydırınca kesişme bitince geri gelir. Yalnız reklam önizlemesi açıkken ve sayfada reklam varken koşar */
+  var REKLAM_HEDEF = '[data-rk-birim] a[href], [data-rk-birim] button, a[data-rk-birim][href]';
+  var reklamKare = 0;
+  var reklamBak = function () {
+    reklamKare = 0;
+    var H = window.innerHeight, acikMi = document.documentElement.classList.contains('rk-acik');
+    var d = acikMi ? [].filter.call(document.querySelectorAll(REKLAM_HEDEF), function (c) { if (c.closest('.rk-std-popup')) { return false; } var r = c.getBoundingClientRect(); return r.width > 0 && r.bottom > H - 260 && r.top < H && (!c.checkVisibility || c.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true })); }) : [];
+    YUZEN.forEach(function (s) {
+      var e = document.querySelector(s); if (!e) { return; }
+      var a = e.getBoundingClientRect(), kes = a.width > 0 && (e.id !== 'dadaMentor' || e.classList.contains('mini')) && d.some(function (c) { var r = c.getBoundingClientRect(); return a.left < r.right + 4 && a.right > r.left - 4 && a.top < r.bottom + 4 && a.bottom > r.top - 4; });
+      e.classList.toggle('dg-reklam-ortusu', kes);
+    });
+  };
+  var reklamIste = function () { if (!reklamKare && (document.querySelector('[data-rk-birim]') || document.querySelector('.dg-reklam-ortusu'))) { reklamKare = window.requestAnimationFrame(reklamBak); } };
+  window.addEventListener('scroll', reklamIste, { passive: true }); window.addEventListener('resize', reklamIste);
+  document.addEventListener('dg-reklam-degisti', reklamIste);
+  document.addEventListener('click', function () { setTimeout(reklamIste, 350); });
+  /* Kaydırmasız değişimler (Mentör'ün küçülmesi, şeridin açılıp kapanması, `--bc-lift`): reklamlı sayfada yarım saniyede bir yeniden bakılır */
+  setInterval(reklamIste, 500);
+  /* ==== /Yüzen düğme × reklam çağrısı ==== */
   /* ==== /Dalga 2 mobil · kabuk katmanları ==== */
   /* Süzgeç sayfası (≤1024 alt sayfa, Mekânlar ve Etkinlikler): Gastro `liste.js` davranışı tek yerde.
      Aç: #btnFilter. Kapa: #sheetClose, #sheetApply, örtü, Esc. Açıkken gövde kaymaz, odak sayfaya geçer; kapanınca açan düğmeye döner */

@@ -1,0 +1,27 @@
+{
+ "_not": "Sayfa → reklam kuralları. Kaynak: DadaGourmet-panel tasks/REKLAM-YERLESIM.md ve config/reklam-yogunluk.php (butceler, oncelikler), YerlesimKurali (SUTUN, native_satir), SunumKurallari. yol: <html data-yol> düzenli ifadesi. butce: sayfadaki en çok yüzey (FEED tek birim). oncelik: bütçe ve marka tavanı bu sırayla uygulanır; listede olmayan yüzey düşer (liste boşsa sayfadaki işaret sırası). standart: STD-SIDE, STD-SIDE-LEFT, STD-POPUP, STD-ALTBAR katmanı (bütçe dışı). eylemCubugu: alt bar basılmaz. ardArda: aynı görünümde art arda düşen alan grupları, gruptan yalnız önceliği yüksek olan basılır (reklam-duzeltici; G1 genellemesi). betik: assets/js/reklam/sayfa/<betik>.js (sayfaya özel çiziciler). rakipRestoranYok (reklam-son-duzelt, Beyar kararı 11 Kas): sayfada restoran markalı (marka restoran: true) ya da bir mekânı hedefleyen (mekan alanı) kreatif basılmaz; alan havuzları, standart katman ve araç yüklemesi süzülür. Bir sayfa bir satır.",
+ "kurallar": {"nativeSatir": 2, "sutun": 3, "mobilYuzde": 30, "mobilEsik": 767, "yapiskanSiniri": 1, "markaTavani": 3, "popupGecikmeSn": 9, "popupAralikDk": 10, "sideEsik": 1600, "kapatmaSaat": 24},
+ "politika": {"_not": "Yayın politikası ÜLKE BAZLI, panel modeli (YayinPolitikasi; Beyar onaylı, lider 11 Kas). alkol: ülke → serbest | kapali; ara düzey yok. TR kilitli kapali (değiştirilemez); öbür ülkeler ülke ayarıyla açılır, VARSAYILAN kapali ('*'). Kapalı ülkede engellenen: alkol bayraklı kreatif (kadeh, şişe, bar, alkollü teklif; kreatif alkol alanı ya da metni), alkollü içki markası (marka alkol bayrağı ya da sektörü 'Alkollü içki'), alkol bayraklı lezzet ya da etkinliği hedefleyen kreatif. Mekânın alkol_servisi bayrağı yayını ENGELLEMEZ (bilgi ve hedefleme). Prototipte HİÇBİR ülkede alkol kreatifi yok; derleme denetler (alkolKreatif false).", "alkol": {"TR": "kapali", "FR": "kapali", "*": "kapali"}, "kilitli": ["TR"], "alkolKreatif": false},
+ "sayfalar": [
+  {"ad": "anasayfa", "yol": "^$", "butce": 4, "oncelik": ["AS-T1", "AS-M1", "AS-INT", "AS-B1"], "standart": true, "betik": "anasayfa"},
+  {"ad": "mekanlar", "yol": "^mekanlar$", "butce": 4, "oncelik": ["ML-FEED", "ML-T1", "ML-HERO", "ML-FILTER"], "standart": true, "betik": "mekanlar"},
+  {"ad": "mekan_detayi", "yol": "^(mekan|sube)/", "butce": 3, "oncelik": ["MD-SB1", "MD-INT", "MD-END"], "rakipRestoranYok": true, "standart": true, "betik": "mekan-detay"},
+  {"ad": "etkinlikler", "yol": "^etkinlikler$", "butce": 4, "oncelik": ["EL-FEED", "EL-T1", "EL-HERO", "EL-FILTER"], "standart": true, "betik": "etkinlikler"},
+  {"ad": "etkinlik_detayi", "yol": "^etkinlik-detay$", "butce": 1, "oncelik": ["ED-SB1"], "betik": "etkinlik-detay"},
+  {"ad": "lezzetler", "yol": "^gurme-lezzetler$", "butce": 4, "oncelik": ["LL-FEED", "LL-T1", "LL-HERO", "LL-FILTER"], "standart": true, "betik": "gurme-lezzetler"},
+  {"ad": "lezzet_detayi", "yol": "^gurme-lezzet-detay$", "butce": 1, "oncelik": ["LD-SB1"], "betik": "lezzet-detay"},
+  {"ad": "sehir_rehberleri", "yol": "^sehir-rehberleri$", "butce": 3, "oncelik": ["SR-FEED", "SR-T1", "SR-HERO"], "standart": true, "betik": "sehir-rehberleri"},
+  {"ad": "sehir_rehberi", "yol": "^sehir-rehberi-detay$", "butce": 1, "oncelik": ["SR-SB1"], "betik": "rehber-detay"},
+  {"ad": "mekan_bul", "yol": "^mekan-bul$", "butce": 4, "oncelik": ["MB-FEED", "MB-T1", "MB-HERO", "MB-FILTER"], "ardArda": [["MB-T1", "MB-FILTER"]], "standart": true, "betik": "mekan-bul"},
+  {"ad": "arama", "yol": "^gourmet-ara$", "butce": 2, "oncelik": ["AR-FEED", "AR-T1"], "standart": true},
+  {"ad": "hesap", "yol": "^hesabim/(gurme-panelim|listeler|etkinlikler|rozetlerim)(/|$)", "butce": 1, "oncelik": ["HS-SB1"], "betik": "hesabim"},
+  {"ad": "dada_route", "yol": "^dada-route$", "butce": 3, "oncelik": ["RT-TANITIM", "RT-DURAK", "RT-PIN", "RT-SARJ", "RT-OZET"], "betik": "rota"}
+ ],
+ "reklamsiz": [
+  {"yol": "^(giris|kayit|sifremi-unuttum|sifre-yenile)$", "neden": "Kimlik akışı"},
+  {"yol": "^hesabim/(ayarlar|bildirimler|cozum-merkezi|odemelerim|paketlerim|kesif-tercihleri)(/|$)", "neden": "Hesap yönetimi, ödeme ve destek"},
+  {"yol": "^(yasal/.*|kunye|hakkimizda|iletisim)$", "neden": "Kurumsal ve yasal içerik"},
+  {"yol": "^(yonetim|isletme|ekranlar)(/|$)", "neden": "Panel ve ekran haritası"},
+  {"yol": "^pro$", "neden": "Üyelik ve ödeme vitrini (yerleşim listesinde alanı yok)"}
+ ]
+}

@@ -1,0 +1,39 @@
+# Reklam marka logoları · kaynaklar
+
+Prototip reklam önizlemesinde (`?reklam=1`) kullanılan bütün marka logoları bu klasörde. Markalar Sponsorluk Dokümanı'nın aday listesi
+ve modüle uygun gerçek markalardır; hiçbiri iş birliği teyidi değildir. Logolar markaların tescilli ticari işaretidir; yalnız iç
+önizleme için kullanılır, yayına çıkmadan önce marka izni gerekir. İndirmeler yalnız GET, genel User-Agent, 11 Kasım 2026.
+SVG'ler temizlendi: `script`, `foreignObject`, `a`, `metadata` öğeleri, `on*` öznitelikleri, dış `href` ve dış `url()` kaldırıldı
+(temizleyici reklam-cekirdek ajanının scratchpad'inde; Commons dosyalarında yalnız `metadata` öğesi vardı).
+
+| Marka | Dosya | Kaynak URL | Kaynak türü | Lisans / not | İndirme |
+|---|---|---|---|---|---|
+| BigChefs | `bigchefs.png` | `Sponsorluk Dokümanı/05-dada-gourmet-sponsorluk-v2.html` (gömülü base64; özgün kaynak notu https://bigchefs.com.tr/) | Sponsorluk Dokümanı | Ticari işaret; dokümandan birebir çıkarıldı | 11 Kas 2026 |
+| Divan | `divan.png` | aynı belge (özgün kaynak notu https://www.divan.com.tr/) | Sponsorluk Dokümanı | Ticari işaret | 11 Kas 2026 |
+| Kahve Dünyası | `kahve-dunyasi.png` | aynı belge (özgün kaynak notu iconape.com) | Sponsorluk Dokümanı | Ticari işaret | 11 Kas 2026 |
+| The House Café | `the-house-cafe.png` | aynı belge | Sponsorluk Dokümanı | Ticari işaret | 11 Kas 2026 |
+| Türk Hava Yolları | `thy.png` | aynı belge (özgün kaynak notu https://commons.wikimedia.org/wiki/File:Turkish_Airlines_logo_2019.svg) | Sponsorluk Dokümanı | Ticari işaret | 11 Kas 2026 |
+| Mastercard | `mastercard.svg` | https://commons.wikimedia.org/wiki/File:Mastercard-logo.svg (dosya: https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg) | Wikimedia Commons | Public domain, "trademarked". Not: 2016 kelime markalı sürüm (iki daire + "mastercard"); reklam-detay ekledi, temizlikte yalnız Inkscape/Illustrator öznitelikleri ve yorum vardı | 11 Kas 2026 |
+| Shell | `shell.svg` | https://commons.wikimedia.org/wiki/File:Shell_1994_wordmark.svg | Wikimedia Commons | Public domain (eşik altı), "trademarked". Not: Shell'in kelime markası; deniz kabuğu (Pecten) amblemi Commons'ta yok, resmi medya kiti girişsiz indirilemedi | 11 Kas 2026 |
+| Opet | `opet.svg` | https://commons.wikimedia.org/wiki/File:Opet_logo.svg | Wikimedia Commons | Public domain, "trademarked" | 11 Kas 2026 |
+| Petrol Ofisi | `petrol-ofisi.png` | https://www.petrolofisi.com.tr/_assets/images/logos/petrol-ofisi.png (sayfa: https://www.petrolofisi.com.tr/medya-merkezi/logolar) | Resmi medya kiti (Medya Merkezi · Logolar) | Ticari işaret; markanın kendi logo indirme sayfası | 11 Kas 2026 |
+| BP | `bp.svg` | https://www.bp.com/ (sitenin başlığındaki satır içi `bp-logo-helios` SVG'si, birebir) | Resmi site (medya kiti indirmesi bulunamadı; Commons'ta yok) | Ticari işaret | 11 Kas 2026 |
+| Togg | `togg.svg` | https://commons.wikimedia.org/wiki/File:Togg_Official_Logo.svg | Wikimedia Commons | Public domain, "trademarked" | 11 Kas 2026 |
+| Tesla | `tesla.svg` | https://commons.wikimedia.org/wiki/File:Tesla_Motors_Logo.svg | Wikimedia Commons | Public domain, "trademarked" | 11 Kas 2026 |
+| Tesla Supercharger | `tesla-supercharger.svg` | https://commons.wikimedia.org/wiki/File:Tesla_T_symbol.svg | Wikimedia Commons | Public domain, "trademarked". Not: Supercharger ayrı logo taşımaz; Tesla "T" amblemi | 11 Kas 2026 |
+| Trugo | `trugo.svg` | https://commons.wikimedia.org/wiki/File:Trugo-logo.svg | Wikimedia Commons | Public domain, "trademarked" | 11 Kas 2026 |
+| Eşarj | `esarj.svg` | https://commons.wikimedia.org/wiki/File:Esarj-logo.svg | Wikimedia Commons | Public domain, "trademarked" | 11 Kas 2026 |
+| ZES | `zes.svg` | https://zes.net/assets/img/icons/zes-logo-white.svg | Resmi site (medya kiti yok; Commons'ta yok) | Ticari işaret. Beyaz sürüm: koyu levhada basılır (`logoZemin: "koyu"`) | 11 Kas 2026 |
+| Biletix | `biletix.svg` | https://www.biletix.com/assets/images/logo.svg (sitenin başlığındaki logo; sayfa: https://www.biletix.com/anasayfa/TURKIYE/tr) | Resmi site (medya kiti yok; Commons'ta yok, tr.wikipedia'daki 2015 PNG adil kullanım) | Ticari işaret (Ticketmaster Türkiye). Beyaz sürüm: koyu levhada basılır (`logoZemin: "koyu"`). Tek `path`, temizlenecek öğe yoktu. reklam-liste ekledi | 11 Kas 2026 |
+| TotalEnergies | `totalenergies.png` | https://commons.wikimedia.org/wiki/File:Logo_TotalEnergies_(2021).png (dosya: https://upload.wikimedia.org/wikipedia/commons/f/f0/Logo_TotalEnergies_%282021%29.png) | Wikimedia Commons | Public domain, "trademarked". PNG 1797×441, birebir. rota-global ekledi (Fransa yakıt ve şarj sponsoru) | 11 Kas 2026 |
+| Esso | `esso.svg` | https://commons.wikimedia.org/wiki/File:Esso_textlogo.svg | Wikimedia Commons | Public domain (eşik altı), "trademarked". Temizlikte XML bildirimi, DOCTYPE ve Illustrator yorumu kaldırıldı. rota-global ekledi | 11 Kas 2026 |
+| Ionity | `ionity.svg` | https://commons.wikimedia.org/wiki/File:Ionity_logo_cmyk.svg | Wikimedia Commons | Public domain, "trademarked". Temizlikte DOCTYPE, Inkscape yorumu ve öznitelikleri kaldırıldı (iç `url(#…)` geçişleri kaldı). rota-global ekledi | 11 Kas 2026 |
+| Fastned | `fastned.svg` | https://commons.wikimedia.org/wiki/File:Fastned_logo_2025.svg | Wikimedia Commons | Public domain, "trademarked". Temizlenecek öğe yoktu (iç `clip-path` kaldı). rota-global ekledi | 11 Kas 2026 |
+| Electra | (yok) | Commons'ta ve medya kitinde bulunamadı | - | Logo uydurulmadı: tipografik kimlik (marka adı). Renk resmi sitenin baskın rengi (https://www.go-electra.com/fr/, 11 Kas GET). rota-global ekledi | 11 Kas 2026 |
+| Pegasus | `pegasus.svg` | https://commons.wikimedia.org/wiki/File:Pegasus_Airlines_logo.svg (dosya: https://upload.wikimedia.org/wikipedia/commons/e/ed/Pegasus_Airlines_logo.svg) | Wikimedia Commons | Public domain. Temizlikte XML bildirimi, Inkscape yorumu, `metadata`, `sodipodi:namedview` ve Inkscape/Sodipodi öznitelikleri kaldırıldı. reklam-marka ekledi (benzer marka, seyahat) | 11 Kas 2026 |
+| Starbucks | `starbucks.svg` | https://commons.wikimedia.org/wiki/File:Starbucks-wordmark-green.svg (dosya: https://upload.wikimedia.org/wikipedia/commons/f/f6/Starbucks-wordmark-green.svg) | Wikimedia Commons | Public domain (kelime markası; deniz kızı amblemi alınmadı). Temizlikte `title` ve `data-name` kaldırıldı. reklam-marka ekledi (benzer marka, kahve) | 11 Kas 2026 |
+| Visa | `visa.svg` | https://commons.wikimedia.org/wiki/File:Visa_Inc._logo_(2021%E2%80%93present).svg (dosya: https://upload.wikimedia.org/wikipedia/commons/5/5c/Visa_Inc._logo_%282021%E2%80%93present%29.svg) | Wikimedia Commons | Public domain, "trademarked". Tek `path`, temizlenecek öğe yoktu. reklam-marka ekledi (benzer marka, ödeme ve rezervasyon) | 11 Kas 2026 |
+| Mado | `mado.png` | https://mado.com.tr/wp-content/uploads/2022/08/Mado-Logo.png (sayfa: https://mado.com.tr/, başlıktaki logo) | Resmi site (medya kiti yok; Commons'ta yalnız beyaz zeminli JPG var) | Ticari işaret. PNG 400×156, saydam, birebir. reklam-marka ekledi (benzer marka, restoran ve pastane) | 11 Kas 2026 |
+| Simit Sarayı | `simit-sarayi.png` | https://commons.wikimedia.org/wiki/File:Simit_Saray%C4%B1_logo.png (dosya: https://upload.wikimedia.org/wikipedia/commons/b/b7/Simit_Saray%C4%B1_logo.png) | Wikimedia Commons (SVG yok) | Public domain, "trademarked". PNG 190×190, birebir. reklam-marka ekledi (benzer marka, kafe ve kısa mola) | 11 Kas 2026 |
+
+Marka grupları (reklam-marka, 11 Kas): `reklam-markalar.json` `grup`. **Ana** = Sponsorluk Dokümanı'nın beş Gourmet markası (BigChefs, Divan, Kahve Dünyası, The House Café, Türk Hava Yolları). **Benzer** = aynı kategoride gerçek marka; ana markaların önüne geçmez. SVG temizleyicisi reklam-marka ajanının scratchpad'inde (`betik/svg-temizle.py`: `script`, `foreignObject`, `a`, `metadata`, `title`, `desc`, yabancı ad alanlı öğe ve öznitelikler, `on*`, dış `href`, dış `url()`).

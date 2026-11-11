@@ -1,8 +1,8 @@
-/* Reklam önizlemesi (reklam-onizleme, Beyar 11 Kas). Tek dosya: anahtar, bilgi şeridi, yerleşim biçimleri, Dada Route bileşen hazırlığı.
-   Yalnız kanon tokenları; yeni renk, radyus, ölçü yok. Anahtar dışındaki her kural `.rk-*` düğümlerine ya da önizleme açıkken yazılan
-   sınıflara bağlı: önizleme kapalıyken bu dosya sayfada anahtardan başka hiçbir şeyi değiştirmez.
-   Biçimler: banner (ince banner, kolon × 120 / 96 px), native (listenin kendi kartı + "Sponsorlu"), kare (300×250, yalnız detay),
-   yan (160×600 yapışkan dikey, geniş ekran), hero (rozet + markalı perde). */
+/* Reklam önizlemesi · Gourmet katmanı (reklam-onizleme anahtarı; reklam-cekirdek 11 Kas). Kabukta her sayfada yüklü.
+   1) Anahtar (başlık + çekmece): her zaman. 2) Gourmet uyarlamaları: yalnız `.rk-*` birimlerine ve reklam açıkken yazılan
+   sınıflara bağlı; kanon stilin (assets/css/reklam/{gourmet-tokenlar,reklam,standart}.css, panel public/reklam/ kopyası) ÜSTÜNE.
+   Önizleme kapalıyken bu dosya sayfada anahtardan başka hiçbir şeyi değiştirmez (kanon dosyaları hiç yüklenmez).
+   Yalnız kanon tokenları ve kanon reklam değişkenleri (--rk-marka, --rk-dugme, --rk-katman, --rk-yazi; MarkaRengi). */
 
 /* ── Anahtar: kanon `.anahtar` (bilesenler.css §10) birebir. Kanon dosyası her zincirde yüklü değil, ölçüler buraya kopyalı ── */
 .rk-anahtar{position:relative;display:inline-flex;align-items:center;gap:var(--bosluk-8);min-height:44px;min-width:44px;flex:none;cursor:pointer;
@@ -32,122 +32,195 @@ html.rk-acik .rk-anahtar input:not(:checked)+.anahtar-ray::after{transform:none}
 .drawer-foot .rk-cekmece-anahtar{display:flex;justify-content:space-between;width:100%;min-height:44px;padding:var(--bosluk-4) 0}
 .rk-cekmece-ad{display:flex;align-items:center;gap:var(--bosluk-8);font-size:var(--yazi-13);font-weight:var(--agirlik-orta);color:var(--metin-ikincil)}
 
-/* ── Bilgi şeridi: sayfanın en üstünde akışta; sabit üst bant ve başlık şeridin kalan yüksekliği kadar aşağıda (`--rk-ust`, betik) ── */
-.rk-serit{position:relative;z-index:1;background:var(--marka);color:var(--kagit);font-size:var(--yazi-13);line-height:var(--satir-sik)}
-.rk-serit-kap{display:flex;align-items:center;gap:var(--bosluk-12);box-sizing:border-box;max-width:var(--kap-genislik);min-height:44px;margin:0 auto;padding:0 var(--kap-yan)}
-.rk-serit-kap>i{flex:none;opacity:.85}
-.rk-serit-metin{font-weight:var(--agirlik-kalin);min-width:0}
-.rk-serit-not{opacity:.8;min-width:0}
-.rk-serit-kapat{margin-left:auto;flex:none;min-height:44px;padding:0 var(--bosluk-12);border:0;background:none;color:inherit;font:inherit;
-  font-weight:var(--agirlik-kalin);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
-.rk-serit-kapat:focus-visible{outline:var(--odak-kalinlik) solid var(--kagit);outline-offset:-4px;border-radius:var(--yuvarlak-sm)}
-html.rk-serit-var .topbar.ust-bant,html.rk-serit-var header.header.kabuk-basi{margin-top:var(--rk-ust,0px)}
-@media (max-width:640px){.rk-serit-kap{padding:0 var(--kap-yan-dar);gap:var(--bosluk-8)}.rk-serit-not{display:none}}
 
-/* ── Ortak ── */
-.rk-reklam{box-sizing:border-box}
-.rk-reklam a,.rk-reklam.rk-native{-webkit-tap-highlight-color:transparent}
-.rk-svg{display:block;width:100%;height:100%}
-.rk-etiket{display:inline-flex;align-items:center;gap:var(--bosluk-4);align-self:flex-start;max-width:100%;padding:var(--bosluk-3) var(--bosluk-8);border-radius:var(--yuvarlak-hap);
-  background:rgba(255,255,255,.16);color:var(--kagit);font-size:var(--yazi-11);font-weight:var(--agirlik-kalin);line-height:1.3;white-space:nowrap;letter-spacing:.02em}
-.rk-ornek{font-weight:var(--agirlik-govde);opacity:.82}
-.rk-etiket-ust{position:absolute;top:var(--bosluk-10);left:var(--bosluk-10);background:var(--marka-koyu-zemin-2)}
-.rk-hap{position:absolute;top:var(--bosluk-12);left:var(--bosluk-12);z-index:2;display:inline-flex;align-items:center;min-height:26px;padding:0 var(--bosluk-10);
-  border-radius:var(--yuvarlak-hap);background:var(--kagit);color:var(--marka);font-size:var(--yazi-11-5);font-weight:var(--agirlik-kalin);box-shadow:var(--golge-sm)}
-.rk-ornek-not{font-size:var(--yazi-11-5);color:var(--metin-ikincil);white-space:nowrap}
-.rk-bolum{padding:var(--bosluk-32) 0}
-.rk-kap{box-sizing:border-box;max-width:var(--kap-genislik);margin:0 auto;padding:0 var(--kap-yan)}
-@media (max-width:640px){.rk-kap{padding:0 var(--kap-yan-dar)}.rk-bolum{padding:var(--bosluk-24) 0}}
 
-/* ── Banner (ince banner): kolon genişliği × 120 px; telefonda 96 px'ten başlar ── */
-.rk-banner{margin:var(--bosluk-24) 0;border-radius:var(--yuvarlak-lg)}
-.rk-bolum .rk-banner{margin:0}
-.rk-banner[hidden]{display:none}
-.rk-banner-bag{display:grid;grid-template-columns:200px minmax(0,1fr) auto;align-items:center;gap:var(--bosluk-24);min-height:120px;padding-right:var(--bosluk-24);
-  border-radius:var(--yuvarlak-lg);overflow:hidden;color:var(--kagit);text-decoration:none;
-  background:linear-gradient(100deg,var(--marka-koyu-zemin-2) 0%,var(--marka-koyu-2) 48%,var(--marka) 100%);box-shadow:var(--golge-sm)}
-.rk-banner-gorsel{align-self:stretch;min-height:120px}
-.rk-banner-metin{display:flex;flex-direction:column;gap:var(--bosluk-4);min-width:0;padding:var(--bosluk-14) 0}
-.rk-banner-metin b{font-size:var(--yazi-19);font-weight:var(--agirlik-kalin);line-height:var(--satir-baslik);color:var(--kagit)}
-.rk-banner-alt{font-size:var(--yazi-14);opacity:.86;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rk-banner-marka{font-size:var(--yazi-12);font-weight:var(--agirlik-kalin);opacity:.72}
-.rk-banner-cta{display:inline-flex;align-items:center;gap:var(--bosluk-8);min-height:44px;padding:0 var(--bosluk-20);border-radius:var(--yuvarlak-md);
-  background:var(--kagit);color:var(--marka);font-size:var(--yazi-14);font-weight:var(--agirlik-kalin);white-space:nowrap;transition:transform var(--sure-hizli) var(--yumusama)}
-.rk-banner-bag:hover .rk-banner-cta{transform:translateX(2px)}
-.rk-banner-bag:focus-visible,.rk-kare-bag:focus-visible,.rk-yan-bag:focus-visible,.rk-hero-rozet:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
-@media (max-width:860px){.rk-banner-bag{grid-template-columns:132px minmax(0,1fr)}.rk-banner-cta{display:none}}
-@media (max-width:640px){
-  .rk-banner-bag{grid-template-columns:96px minmax(0,1fr);gap:var(--bosluk-14);min-height:96px;padding-right:var(--bosluk-14)}
-  .rk-banner-gorsel{min-height:96px}
-  .rk-banner-metin{padding:var(--bosluk-10) 0;gap:var(--bosluk-3)}
-  .rk-banner-metin b{font-size:var(--yazi-15)}
-  .rk-banner-alt{display:none}
-}
+/* ══ Gourmet uyarlamaları (reklam-cekirdek) ══════════════════════════════════════════════════════════════════════════════ */
+/* Logo: yalnız açık (beyaz) sürümü olan marka koyu levhada (logoZemin: koyu) */
+:is(.rk-eslik-logo,.rk-serit-kimlik,.rk-pano-logo,.rk-std-logo,.rk-t1-logo,.rk-rectangle-logo,.rk-nk-logo,.rk-pisirme-logo):has(.rk-logo-koyu){background:var(--rk-marka)}
+.rk-native-wordmark:has(.rk-logo-koyu){padding:2px 4px;border-radius:var(--yuvarlak-sm);background:var(--rk-marka)}
+/* reklam-duzeltici (11 Kas) · kare logo (`rk-logo-kare`, logoOran ≤ 1,15: Kahve Dünyası) en az 32 px, kimlik satırında 24 px. Yatay logo
+   plakaları (72×36 rozet, 18 px kimlik satırı) kare logoyu 18–24 px'e indiriyordu: plaka kareye döner, logo `contain` ile iç alanı doldurur */
+.rk-eslik-logo:has(.rk-logo-kare){width:44px;height:44px;padding:4px;box-sizing:border-box}
+.rk-eslik-logo .rk-logo.rk-logo-kare{width:100%;height:100%;max-height:none}
+.rk-pisirme-logo:has(.rk-logo-kare){width:32px;height:32px}
+.rk-pisirme-logo .rk-logo.rk-logo-kare{width:32px;height:32px;max-height:none}
+.rk-pano-logo:has(.rk-logo-kare){min-width:44px;min-height:44px;box-sizing:border-box}
+.rk-pano-logo .rk-logo.rk-logo-kare{width:100%;height:100%;max-width:100%;max-height:100%;min-height:32px}
+.rk-native-wordmark:has(.rk-logo-kare){height:24px}
+.rk-native-wordmark img.rk-logo-kare{width:24px;height:24px}
+.rk-nk-logo:has(.rk-logo-kare){width:36px;height:36px}
+.rk-nk-logo .rk-logo.rk-logo-kare{width:36px;height:36px}
+/* Logosu bulunamayan marka: tipografik kimlik (marka adı, marka renginde; logo taklidi değil) */
+.rk-kimlik-yazi{font-size:var(--yazi-14);font-weight:var(--agirlik-kalin);line-height:1.1;color:var(--rk-dugme);text-align:center}
 
-/* ── Kare (300×250): yalnız detay sayfaları, yan sütunda; okuma kolonunda sağa yüzer ── */
-.rk-kare{width:100%;max-width:300px;margin:var(--bosluk-24) auto 0}
-.rk-kare-bag{display:flex;flex-direction:column;height:250px;border:1px solid var(--cizgi);border-radius:var(--yuvarlak-lg);overflow:hidden;background:var(--kagit);
-  color:var(--murekkep);text-decoration:none;box-shadow:var(--golge-sm)}
-.rk-kare-gorsel{position:relative;flex:none;height:132px}
-.rk-kare-govde{display:flex;flex-direction:column;justify-content:space-between;flex:1;gap:var(--bosluk-8);padding:var(--bosluk-14) var(--bosluk-16)}
-.rk-kare-govde b{font-size:var(--yazi-16);font-weight:var(--agirlik-kalin);line-height:var(--satir-baslik);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.rk-kare-alt{display:flex;align-items:center;justify-content:space-between;gap:var(--bosluk-8)}
-.rk-kare-marka{font-size:var(--yazi-12);color:var(--metin-ikincil);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rk-kare-cta{flex:none;font-size:var(--yazi-13);font-weight:var(--agirlik-kalin);color:var(--marka)}
-/* Yüzen kare: kabı yüzeni sarar; kardeş bloklar kendi biçimlendirme bağlamında yüzenin yanında daralır (kutular üst üste binmez, G5) */
-.rk-akis{display:flow-root}
-.rk-akis>:not(.rk-reklam){display:flow-root}
-.rk-kare.rk-yuzen{float:right;margin:var(--bosluk-4) 0 var(--bosluk-16) var(--bosluk-24)}
-@media (max-width:860px){.rk-kare.rk-yuzen{float:none;margin:var(--bosluk-24) auto}}
-
-/* ── Yan (160×600 yapışkan dikey): yalnız içerik kabı dışında yeterli boşluk varken (betik ölçer); hero ve altbilgi bandında görünmez ── */
-.rk-yan{position:fixed;z-index:var(--kat-icerik,1);width:160px;height:600px;opacity:0;visibility:hidden;transition:opacity var(--sure) var(--yumusama),visibility 0s linear var(--sure)}
-.rk-yan.rk-yan-gorunur{opacity:1;visibility:visible;transition:opacity var(--sure) var(--yumusama)}
-.rk-yan-bag{position:relative;display:flex;flex-direction:column;height:100%;border-radius:var(--yuvarlak-lg);overflow:hidden;color:var(--kagit);text-decoration:none;
-  background:linear-gradient(180deg,var(--marka-koyu-zemin-2) 0%,var(--marka-koyu-2) 55%,var(--marka) 100%);box-shadow:var(--golge-md)}
-.rk-yan .rk-etiket-ust{right:var(--bosluk-10);flex-wrap:wrap;white-space:normal;z-index:1}
-.rk-yan-gorsel{flex:none;height:250px}
-.rk-yan-gorsel .rk-svg{height:100%}
-.rk-yan-govde{display:flex;flex-direction:column;flex:1;gap:var(--bosluk-8);padding:var(--bosluk-16) var(--bosluk-14) var(--bosluk-20)}
-.rk-yan-govde b{font-size:var(--yazi-18);line-height:var(--satir-baslik);font-weight:var(--agirlik-kalin)}
-.rk-yan-govde>span{font-size:var(--yazi-13);opacity:.86;line-height:var(--satir-govde)}
-.rk-yan-govde .rk-yan-marka{margin-top:auto;font-size:var(--yazi-12);font-weight:var(--agirlik-kalin);opacity:.72}
-.rk-yan-govde .rk-yan-cta{display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:var(--yuvarlak-md);background:var(--kagit);color:var(--marka);
-  font-size:var(--yazi-13);font-weight:var(--agirlik-kalin);opacity:1}
-@media (max-width:1023px){.rk-yan{display:none}}
-
-/* ── Native: organik kartın sınıflarını taşır; görsel SVG, "Sponsorlu" hap görselde ve kategori satırında ── */
-.rk-native .rk-gorsel{background:none!important;overflow:hidden}
-.rk-native .rk-gorsel .rk-svg{position:absolute;inset:0}
-.rk-native .disc-fig{position:relative}
-.rk-native .disc-meta{display:flex;align-items:center;justify-content:space-between;gap:var(--bosluk-8)}
-.rk-native .disc-loc,.rk-native .disc-where,.rk-native .disc-author{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rk-native.bridge-card{position:relative}
-.rk-native.bridge-card .rk-hap-satir{position:absolute;top:var(--bosluk-20);right:var(--bosluk-20);left:auto;background:var(--aksan-yikama);box-shadow:none}
-
-/* ── Hero sponsorluğu (G8): sağ üstte rozet + marka moru perde; metin okunabilirliği artar, azalmaz ── */
+/* ── HERO (eslik) · hero başlığının altında; marka perdesi hero görselinin üstünde soldan söner ── */
 .rk-hero{position:relative}
 .rk-hero-perde{position:absolute;inset:0;z-index:0;pointer-events:none;
-  background:linear-gradient(100deg,color-mix(in srgb,var(--marka) 58%,transparent) 0%,color-mix(in srgb,var(--marka-koyu-2) 36%,transparent) 46%,transparent 78%)}
-.rk-hero>.wrap,.rk-hero>.gm-hero-route{position:relative;z-index:1}
-.rk-hero-rozet{position:absolute;z-index:3;top:calc(var(--kabuk-h) + var(--bosluk-8));right:max(var(--kap-yan),calc((100% - var(--kap-genislik)) / 2 + var(--kap-yan)));
-  display:inline-flex;align-items:center;gap:var(--bosluk-6);min-height:32px;padding:0 var(--bosluk-12);border-radius:var(--yuvarlak-hap);
-  background:var(--perde);border:1px solid rgba(255,255,255,.3);color:var(--kagit);font-size:var(--yazi-12);font-weight:var(--agirlik-kalin);
-  text-decoration:none;white-space:nowrap;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.rk-hero-rozet .rk-ornek{font-weight:var(--agirlik-govde)}
+  background:linear-gradient(100deg,color-mix(in srgb,var(--rk-marka) 46%,transparent) 0%,color-mix(in srgb,var(--rk-marka) 18%,transparent) 45%,transparent 75%)}
+.rk-hero>.wrap{position:relative;z-index:1}
+.ke-head>.rk-eslik{margin:var(--bosluk-4) 0 var(--bosluk-14);box-shadow:var(--golge-sm)}
+.rk-eslik-logo{width:72px;height:36px}
+.rk-eslik:focus-visible{outline:var(--odak-kalinlik) solid var(--kagit);outline-offset:3px}
+
+/* ── T1 · liste üstü görsel kreatif (kanon kap `rk-bant rk-leaderboard`; içinde HTML sahnesi) ── */
+.rk-t1{align-items:stretch;max-width:none;margin:0 0 var(--bosluk-24)}
+.rk-t1.rk-t1-728x90{max-width:728px;margin-inline:auto}
+.rk-t1[hidden]{display:none}
+.rk-t1 .rk-t1-bag{position:relative;isolation:isolate;display:block;overflow:hidden;border:0;border-radius:var(--yuvarlak-lg);background:var(--rk-marka);color:var(--rk-yazi);text-decoration:none}
+.rk-t1-1200x240 .rk-t1-bag{aspect-ratio:1200/240}
+.rk-t1-728x90 .rk-t1-bag{aspect-ratio:728/90}
+.rk-t1-sahne{position:absolute;top:0;right:0;bottom:0;width:54%;z-index:-1}
+.rk-t1-728x90 .rk-t1-sahne{width:34%}
+.rk-t1-foto{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--yumusama)}
+.rk-t1-sahne::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--rk-marka) 0%,color-mix(in srgb,var(--rk-marka) 55%,transparent) 30%,transparent 62%)}
+.rk-t1-bag:hover .rk-t1-foto{transform:scale(1.04)}
+.rk-t1-panel{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:var(--bosluk-24);height:100%;box-sizing:border-box;padding:var(--bosluk-24) var(--bosluk-32)}
+.rk-t1-logo{display:grid;place-items:center;width:120px;height:72px;padding:var(--bosluk-10);box-sizing:border-box;background:var(--kagit);border-radius:var(--yuvarlak-md)}
+.rk-t1-logo .rk-logo{width:100%;height:100%;max-height:none;object-fit:contain}
+.rk-t1-metin{display:flex;flex-direction:column;align-items:flex-start;gap:var(--bosluk-6);min-width:0;max-width:440px}
+.rk-t1-metin b{font-size:28px;line-height:1.1;letter-spacing:-.01em;font-weight:var(--agirlik-kalin)}
+.rk-t1-alt{font-size:var(--yazi-14);line-height:1.4;opacity:.9}
+.rk-t1-teklif{display:inline-flex;align-items:center;gap:var(--bosluk-6);margin-top:var(--bosluk-4);padding:var(--bosluk-4) var(--bosluk-10);border-radius:var(--yuvarlak-hap);
+  background:color-mix(in srgb,var(--kagit) 16%,transparent);border:1px solid color-mix(in srgb,var(--kagit) 30%,transparent);font-size:var(--yazi-12);font-weight:var(--agirlik-kalin)}
+.rk-t1-cta{display:inline-flex;align-items:center;gap:var(--bosluk-8);min-height:48px;padding:0 var(--bosluk-20);border-radius:var(--yuvarlak-md);background:var(--kagit);color:var(--murekkep);
+  font-size:var(--yazi-15);font-weight:var(--agirlik-kalin);white-space:nowrap;box-shadow:var(--golge-md);transition:transform var(--sure-hizli) var(--yumusama)}
+.rk-t1-bag:hover .rk-t1-cta{transform:translateX(3px)}
+.rk-t1-bag:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:var(--odak-ofset)}
+/* 728×90: tek satır */
+.rk-t1-728x90 .rk-t1-panel{gap:var(--bosluk-16);padding:var(--bosluk-12) var(--bosluk-20)}
+.rk-t1-728x90 .rk-t1-logo{width:84px;height:52px;padding:var(--bosluk-6)}
+.rk-t1-728x90 .rk-t1-metin{gap:2px}
+.rk-t1-728x90 .rk-t1-metin b{font-size:var(--yazi-18);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.rk-t1-728x90 .rk-t1-alt{font-size:var(--yazi-13);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.rk-t1-728x90 .rk-t1-teklif{display:none}
+.rk-t1-728x90 .rk-t1-cta{min-height:44px;padding:0 var(--bosluk-16);font-size:var(--yazi-14)}
+@media (max-width:1100px){.rk-t1-1200x240 .rk-t1-metin b{font-size:22px}.rk-t1-1200x240 .rk-t1-alt{display:none}}
+/* Telefon: 390×180 (ML) ve 320×50 (öbür listeler) */
 @media (max-width:640px){
-  .rk-hero-rozet{right:var(--kap-yan-dar);min-height:28px;font-size:var(--yazi-11)}
-  .rk-hero-rozet .rk-ornek{display:none}
+  .rk-t1-1200x240 .rk-t1-bag{aspect-ratio:390/180}
+  .rk-t1-1200x240 .rk-t1-sahne{width:58%}
+  .rk-t1-1200x240 .rk-t1-panel{grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr auto;align-items:start;gap:var(--bosluk-8);padding:var(--bosluk-14) var(--bosluk-16)}
+  .rk-t1-1200x240 .rk-t1-logo{width:76px;height:40px;padding:var(--bosluk-6)}
+  .rk-t1-1200x240 .rk-t1-metin{max-width:62%}
+  .rk-t1-1200x240 .rk-t1-metin b{font-size:var(--yazi-18)}
+  .rk-t1-1200x240 .rk-t1-teklif{display:none}
+  .rk-t1-1200x240 .rk-t1-cta{min-height:36px;padding:0 var(--bosluk-12);font-size:var(--yazi-13);justify-self:start}
+  .rk-t1-728x90 .rk-t1-bag{aspect-ratio:320/50}
+  .rk-t1-728x90 .rk-t1-panel{grid-template-columns:auto minmax(0,1fr) auto;gap:var(--bosluk-8);padding:0 var(--bosluk-8)}
+  .rk-t1-728x90 .rk-t1-logo{width:52px;height:32px;padding:var(--bosluk-4)}
+  .rk-t1-728x90 .rk-t1-metin b{font-size:var(--yazi-13)}
+  .rk-t1-728x90 .rk-t1-alt{display:none}
+  .rk-t1-728x90 .rk-t1-cta{min-height:32px;padding:0 var(--bosluk-10);font-size:var(--yazi-12)}
 }
 
-/* ── G10 hazırlığı (bu tur basılmaz): Dada Route sponsorlu pin mini kartı ve yol üstü fırsat kartı ── */
-.rk-rota-pin,.rk-rota-firsat{display:flex;gap:var(--bosluk-12);box-sizing:border-box;background:var(--kagit);border:1px solid var(--cizgi);border-radius:var(--yuvarlak-lg);
-  box-shadow:var(--golge-md);overflow:hidden;color:var(--murekkep);font-size:var(--yazi-13)}
-.rk-rota-pin{width:280px}
-.rk-rota-pin-gorsel,.rk-rota-firsat-gorsel{flex:none;width:88px;align-self:stretch}
-.rk-rota-pin-govde,.rk-rota-firsat-govde{display:flex;flex-direction:column;gap:var(--bosluk-4);padding:var(--bosluk-12) var(--bosluk-12) var(--bosluk-12) 0;min-width:0}
-.rk-rota-pin .rk-etiket,.rk-rota-firsat .rk-etiket{background:var(--aksan-yikama);color:var(--marka)}
-.rk-rota-pin b,.rk-rota-firsat b{font-size:var(--yazi-14);font-weight:var(--agirlik-kalin)}
-.rk-rota-firsat-sapma{color:var(--metin-ikincil);font-size:var(--yazi-12)}
-.rk-rota-ekle{align-self:flex-start;display:inline-flex;align-items:center;gap:var(--bosluk-6);min-height:44px;padding:0 var(--bosluk-14);margin-top:var(--bosluk-4);
-  border:0;border-radius:var(--yuvarlak-md);background:var(--marka);color:var(--kagit);font:inherit;font-weight:var(--agirlik-kalin);cursor:pointer}
+/* ── FILTER · filtre panelinin içinde, gruplarla aynı hizada ── */
+.lst-side .rk-filtre{margin:0;border-bottom:1px solid var(--cizgi)}
+.lst-side .rk-filtre .rk-serit-bag{border-radius:var(--yuvarlak-md)}
+/* reklam-duzeltici (11 Kas) · fotoğraflı filtre kartı: tam kat marka perdesi fotoğrafı yutuyordu. Perde alttan yükselen gradyan; üst
+   bölümde fotoğraf net, metin perdenin koyu yarısında (başlığın başladığı yerde perde kanonun AA katmanı %80) */
+.lst-side .rk-filtre.rk-gorsel-sahne .rk-zemin-perde{opacity:1;background:linear-gradient(180deg,transparent 0%,transparent 16%,color-mix(in srgb,var(--rk-katman) 80%,transparent) 44%,color-mix(in srgb,var(--rk-katman) 92%,transparent) 100%)}
+.lst-side .rk-filtre.rk-gorsel-sahne .rk-serit-kimlik{margin-bottom:var(--bosluk-48)}
+
+/* ── Native · Gourmet mekân kartı kenarsız; kanonun sol marka şeridi (4 px) metne binmesin diye sponsorlu kartın içeriği şeridin
+   sağından (4 + 10 px) başlar (Gastro VD-N1 kalıbı). Organik kart değişmez ── */
+.mkl-grid>[data-native-sponsor]{padding-left:14px;box-sizing:border-box}
+.mkl-grid>[data-native-sponsor]::before{border-radius:var(--yuvarlak-sm)}
+/* reklam-duzeltici (11 Kas) · kanonun "hilal" kalıbı (Gourmet etkinlik, lezzet ve seçki native'leri, Diet/Gastro): kart 16 px köşeli ve kendi
+   köşesinde kırpar, sol marka şeridi köşe kavsini izler; masaüstünde altta etkinlik kartıyla aynı iç pay. Telefonda organik kart zaten köşeli */
+.mkl-grid>[data-native-sponsor]{border-radius:var(--radius-lg,16px);overflow:hidden}
+@media (min-width:768px){.mkl-grid>[data-native-sponsor]{padding-bottom:var(--bosluk-16)}}
+[data-native-sponsor] .rk-native-kimlik{margin-top:var(--bosluk-10);min-width:0;max-width:100%;overflow:hidden}
+[data-native-sponsor] .rk-native-kesfet{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:640px){[data-native-sponsor] .rk-native-prefix{display:none}}
+[data-native-sponsor].mkl-card .rk-native-hap{top:var(--bosluk-10);right:var(--bosluk-10);z-index:4}
+[data-native-sponsor] .rk-native-wordmark .rk-wordmark{font-size:var(--yazi-12);color:var(--rk-dugme)}
+.bridge-card[data-native-sponsor]{position:relative}
+.bridge-card .rk-bi-logo{background:var(--kagit);border:1px solid var(--cizgi)}
+.bridge-card .rk-bi-logo .rk-logo{width:80%;height:80%;object-fit:contain}
+
+/* ── SB1 (rectangle) · sahne: kanonun tam marka perdesi beyaz logolu markaya göre; Gourmet'te fotoğraf görünür kalır, marka rengi
+   alttan yükselir, logo beyaz levhada (siyah logolu markalar perdede kaybolmasın) ── */
+.rk-rectangle-tip-sahne .rk-rectangle-marka-perde{opacity:1;background:linear-gradient(180deg,transparent 30%,color-mix(in srgb,var(--rk-marka) 88%,transparent) 100%)}
+.rk-rectangle-tip-sahne .rk-rectangle-buyuk-logo{inset:auto auto var(--bosluk-14) var(--bosluk-14);width:104px;height:52px;padding:var(--bosluk-8);box-sizing:border-box;background:var(--kagit);border-radius:var(--yuvarlak-sm);box-shadow:var(--golge-sm)}
+/* ── SB1 (rectangle) teklif satırı ── */
+.rk-rectangle-teklif{display:inline-flex;align-items:center;gap:var(--bosluk-6);font-size:var(--yazi-12);font-weight:var(--agirlik-kalin);color:var(--rk-dugme)}
+
+/* ── reklam-duzeltici (11 Kas) · dokunma hedefleri en az 44 px (masaüstünde de): native kart çağrıları, alt bar kapat ve çağrı,
+   Gastro kapatılabilir şeridi (rk-pisirme: başlık düğmesi kanonda 32×32 kutuya sıkışıyordu). Görünüm aynı, yalnız yükseklik ── */
+[data-native-sponsor] :is(.mke-birincil,.disc-card-foot .btn,.mb-card-actions .btn,.rk-takvim-ac){min-height:44px;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center}
+.rk-std-altbar .rk-std-cta{min-height:44px;height:44px}
+.rk-std-altbar .rk-std-kapat{width:44px;height:44px;top:14px;right:10px;border:0;background:transparent}
+.rk-std-altbar .rk-std-kapat::before{content:"";position:absolute;inset:6px;border:1px solid #dedede;border-radius:50%;background:#fff;z-index:-1}
+.rk-std-altbar .rk-std-kapat{isolation:isolate}
+.rk-std-popup .rk-std-kapat{width:44px;height:44px}
+.rk-pisirme b>button[data-rk-ac]{width:auto;height:auto;min-height:44px;padding:0;border:0;text-align:left;color:inherit;font:inherit;white-space:normal;line-height:1.25}
+.rk-pisirme-metin b{white-space:normal;overflow:visible;text-overflow:clip} /* başlık kesilmez, iki satıra iner */
+.rk-pisirme>a{min-height:44px;display:inline-flex;align-items:center;box-sizing:border-box}
+.rk-pisirme>button[data-rk-kapat]{width:44px;height:44px}
+/* reklam-son-duzelt (11 Kas) · kanon interaktif panosu (`[data-rk-panel]`) kapalı başlar: kanon `.rk-pano{display:flex}` `hidden`ı eziyordu,
+   şerit açılmadan pano da görünüyordu (MD-INT kanon kreatifleri). Açınca interaktif.js `hidden`ı kaldırır */
+[data-rk-interaktif] .rk-pano[data-rk-panel][hidden]{display:none}
+
+/* reklam-duzeltici (11 Kas) · pop-up sahne fotoğrafı kutuyu doldurur (kanonun 20 px payı ve `contain`u paket fotoğrafı içindir;
+   sahne fotoğrafında iki yanda krem bant kalıyordu) */
+.rk-std-popup .rk-std-medya.rk-std-sahne{padding:0;background:var(--rk-marka)}
+.rk-std-popup .rk-std-medya.rk-std-sahne img{object-fit:cover}
+
+/* ── Standart katman: odak halkası Gourmet tokenıyla ── */
+.rk-std :is(a,button):focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:2px}
+
+/* ── Noktalı görsel (hotspot) · nokta.js ── */
+.rk-nk-sahne{position:relative;margin:0;border-radius:var(--yuvarlak-lg);aspect-ratio:16/9;background:var(--rk-marka);isolation:isolate}
+.rk-nk-gorsel{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.rk-nk-etiket{position:absolute;top:var(--bosluk-12);left:var(--bosluk-12);z-index:2;padding:var(--bosluk-4) var(--bosluk-10);border-radius:var(--yuvarlak-hap);background:color-mix(in srgb,var(--murekkep) 72%,transparent);color:var(--kagit);letter-spacing:.04em}
+.rk-nk-ipucu{position:absolute;right:var(--bosluk-12);bottom:var(--bosluk-12);z-index:2;display:inline-flex;align-items:center;gap:var(--bosluk-6);padding:var(--bosluk-6) var(--bosluk-10);
+  border-radius:var(--yuvarlak-hap);background:color-mix(in srgb,var(--murekkep) 64%,transparent);color:var(--kagit);font-size:var(--yazi-12);font-weight:var(--agirlik-kalin);transition:opacity var(--sure) var(--yumusama)}
+.rk-nk-kart-var .rk-nk-ipucu{opacity:0}
+.rk-nk-nokta{position:absolute;z-index:3;width:0;height:0}
+.rk-nk-nokta[hidden]{display:none}
+.rk-nk-nokta.rk-nk-acik{z-index:5}
+.rk-nk-dugme{position:absolute;left:-22px;top:-22px;display:flex;align-items:center;min-width:44px;height:44px;padding:0;border:0;background:none;cursor:pointer;color:var(--kagit);font:inherit}
+.rk-nk-halka{position:absolute;left:4px;top:4px;width:36px;height:36px;border-radius:50%;background:color-mix(in srgb,var(--rk-marka) 45%,transparent);animation:rk-nk-nabiz 2.2s var(--yumusama) infinite}
+.rk-nk-cekirdek{position:relative;z-index:1;display:grid;place-items:center;flex:none;width:28px;height:28px;margin:8px;border-radius:50%;background:var(--rk-dugme);border:2px solid var(--kagit);
+  box-shadow:0 4px 14px rgba(0,0,0,.35);font-size:12px;transition:transform var(--sure) var(--yumusama)}
+.rk-nk-ad{position:relative;max-width:0;overflow:hidden;white-space:nowrap;margin-left:-22px;padding:0;border-radius:0 var(--yuvarlak-hap) var(--yuvarlak-hap) 0;background:var(--rk-dugme);
+  font-size:var(--yazi-13);font-weight:var(--agirlik-kalin);line-height:28px;opacity:0;transition:max-width .3s var(--yumusama),opacity .2s var(--yumusama),padding .3s var(--yumusama)}
+.rk-nk-dugme:is(:hover,:focus-visible) .rk-nk-ad,.rk-nk-acik .rk-nk-ad{max-width:220px;opacity:1;padding:0 var(--bosluk-12) 0 var(--bosluk-20)}
+.rk-nk-acik .rk-nk-cekirdek{transform:rotate(45deg)}
+.rk-nk-dugme:focus-visible{outline:none}
+.rk-nk-dugme:focus-visible .rk-nk-cekirdek{outline:var(--odak-kalinlik) solid var(--kagit);outline-offset:3px}
+.rk-nk-sag .rk-nk-dugme{left:auto;right:-22px;flex-direction:row-reverse}
+.rk-nk-sag .rk-nk-halka{left:auto;right:4px}
+.rk-nk-sag .rk-nk-ad{margin:0 -22px 0 0;border-radius:var(--yuvarlak-hap) 0 0 var(--yuvarlak-hap)}
+.rk-nk-sag .rk-nk-dugme:is(:hover,:focus-visible) .rk-nk-ad,.rk-nk-sag.rk-nk-acik .rk-nk-ad{padding:0 var(--bosluk-20) 0 var(--bosluk-12)}
+@keyframes rk-nk-nabiz{0%{transform:scale(.7);opacity:.9}70%{transform:scale(1.35);opacity:0}100%{transform:scale(1.35);opacity:0}}
+.rk-nk-kart{position:absolute;z-index:2;left:-22px;top:30px;width:280px;box-sizing:border-box;padding:var(--bosluk-14) var(--bosluk-14) var(--bosluk-14) var(--bosluk-18);border-radius:var(--yuvarlak-lg);overflow:hidden;
+  background:var(--kagit);color:var(--murekkep);box-shadow:0 18px 44px rgba(0,0,0,.28);transform-origin:top left;transform:scale(.92);opacity:0;transition:transform .22s var(--yumusama),opacity .18s var(--yumusama)}
+.rk-nk-acik .rk-nk-kart{transform:none;opacity:1}
+.rk-nk-sag .rk-nk-kart{left:auto;right:-22px;transform-origin:top right}
+.rk-nk-alt .rk-nk-kart{top:auto;bottom:30px;transform-origin:bottom left}
+.rk-nk-sag.rk-nk-alt .rk-nk-kart{transform-origin:bottom right}
+.rk-nk-kart::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--rk-dugme)}
+.rk-nk-kart-ust{display:flex;align-items:center;gap:var(--bosluk-8);margin-bottom:var(--bosluk-10)}
+.rk-nk-logo{display:grid;place-items:center;width:64px;height:28px;flex:none;border-radius:var(--yuvarlak-sm)}
+.rk-nk-logo .rk-logo{width:64px;height:28px;max-height:none;object-fit:contain}
+.rk-nk-kapat{margin:-10px -10px -10px auto;display:grid;place-items:center;width:44px;height:44px;border:0;background:none;color:var(--metin-ikincil);cursor:pointer;border-radius:50%}
+.rk-nk-kapat:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk)}
+.rk-nk-kart-govde{display:flex;gap:var(--bosluk-12);align-items:center}
+.rk-nk-urun{flex:none;width:64px;height:64px;border-radius:var(--yuvarlak-md);overflow:hidden;background:var(--krem-2)}
+.rk-nk-urun img{width:100%;height:100%;object-fit:cover}
+.rk-nk-metin{display:flex;flex-direction:column;gap:2px;min-width:0}
+.rk-nk-metin b{font-size:var(--yazi-15);line-height:1.25}
+.rk-nk-metin span{font-size:var(--yazi-13);line-height:1.4;color:var(--metin-ikincil)}
+.rk-nk-teklif{display:flex;align-items:center;gap:var(--bosluk-6);margin-top:var(--bosluk-10);padding:var(--bosluk-6) var(--bosluk-10);border-radius:var(--yuvarlak-md);
+  background:color-mix(in srgb,var(--rk-marka) 9%,var(--kagit));color:var(--rk-dugme);font-size:var(--yazi-13);font-weight:var(--agirlik-kalin)}
+.rk-nk-cta{display:flex;align-items:center;justify-content:center;gap:var(--bosluk-8);min-height:44px;margin-top:var(--bosluk-10);border-radius:var(--yuvarlak-md);background:var(--rk-dugme);color:var(--kagit);
+  font-size:var(--yazi-14);font-weight:var(--agirlik-kalin);text-decoration:none}
+.rk-nk-cta:focus-visible{outline:var(--odak-kalinlik) solid var(--odak-renk);outline-offset:2px}
+/* Telefon: kart görselin altında alt pencere; konumu ve genişliği nokta.js yazar (görselin iç kenarlarına yaslı) */
+@media (max-width:640px){
+  .rk-nk-sahne{aspect-ratio:4/5}
+  .rk-nk-sahne .rk-nk-kart{transform:translateY(24px);transform-origin:bottom center}
+  .rk-nk-sahne .rk-nk-acik .rk-nk-kart{transform:none}
+}
+@media (prefers-reduced-motion:reduce){.rk-nk-halka{animation:none}.rk-nk-kart,.rk-nk-ad,.rk-nk-cekirdek,.rk-t1-foto,.rk-t1-cta{transition:none}}

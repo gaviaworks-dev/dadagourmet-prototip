@@ -74,7 +74,7 @@ const PERKS = [
 if (pd('Reklam') !== 'Reklamsız' || pd('Durak ziyaret işaretleme ve ilerleme') !== true || pd('Rotanı bağlantıyla paylaşma') !== true) throw new Error('pro: tanıtım metni matrisle uyuşmuyor');
 
 const govde = `
-    <section class="below-header tb-top px-band" aria-label="Sayfa başlığı" data-px-band="1" data-hero-band=""><div class="px-clip" style="--px-x: 50%; --px-y: 50%; background-color: rgb(58, 53, 44); --px-r: 0px;"><div class="px-media" style="background-image:url('{{kok}}assets/o/assets/gourmet-public/img/about-table.avif')"></div></div>
+    <section class="below-header tb-top px-band" aria-label="Sayfa başlığı" data-px-band="1" data-hero-band=""><div class="px-clip" style="--px-x: 50%; --px-y: 50%; background-color: rgb(58, 53, 44); --px-r: 0px;"><div class="px-media" style="background-image:url('{{kok}}assets/o/assets/gourmet-public/medya/konsept-tas-konak.webp')"></div></div>
         <div class="tb-hero-img" aria-hidden="true" style="background-image: none; background-color: transparent;"></div>
         <div class="wrap">
             <nav class="rd-crumb" aria-label="Sayfa yolu">

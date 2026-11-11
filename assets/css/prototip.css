@@ -24,7 +24,8 @@
 .drawer-brand .gastro-word-mark{display:block;height:22.9px;width:auto}
 .foot-lockup .gastro-word-mark{display:block;height:33.8px;width:auto;color:#fff}
 html[data-baslik-zemin="acik"] .header .gourmet-word-mark{color:var(--marka,#742982)}
-.giris-pano[data-pano="gourmet"]{background-image:linear-gradient(180deg,rgba(29,19,33,.3) 0%,rgba(29,19,33,.58) 55%,rgba(20,13,23,.88) 100%),url('../o/assets/gourmet-public/img/about-dining.avif');background-size:cover;background-position:center}
+/* reklam-son-duzelt (11 Kas, Beyar: kadehli hero görseli yok): pano görseli canlıdaki kadehli about-dining yerine konsept-terasli */
+.giris-pano[data-pano="gourmet"]{background-image:linear-gradient(180deg,rgba(29,19,33,.3) 0%,rgba(29,19,33,.58) 55%,rgba(20,13,23,.88) 100%),url('../o/assets/gourmet-public/medya/konsept-terasli.webp');background-size:cover;background-position:center}
 /* Altbilgi perdesi (H4, Beyar 11 Kas; 10 Kas'taki normal akış kararı geri alındı). Canlı Gastro ile birebir, ölçüldü 11 Kas (1440, 1280, 1024, 768, 390 × 900):
    ≥641'de altbilgi `position:fixed;left:0;right:0;bottom:0;z-index:1`, ana içerik `position:relative;z-index:2` ve opak zemin (`--bg`), `#pageMain`
    alt boşluğu altbilgi boyu (prototip.js `perdeAyarla`); içerik kayınca altbilgi altından açılır, sayfa sonunda tamamı görünür. Altbilgi pencereden
@@ -58,6 +59,8 @@ html.dg-isaretci :focus:not(input,textarea,select,[contenteditable]){outline:non
 @media(min-width:641px) and (max-width:1024px){html.dg-sonda .yg-fab{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s var(--ease),visibility .25s}}
 /* Harita denetimiyle kesişen yüzen düğme çekilir (prototip.js `haritaBak`) */
 :is(.to-top,.yg-fab,#dadaMentor).dg-harita-ortusu{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+/* reklam-duzeltici (11 Kas): reklam çağrısıyla kesişen yüzen düğme de aynı biçimde çekilir (prototip.js `reklamBak`); yumuşak geçiş */
+:is(.to-top,.yg-fab,#dadaMentor).dg-reklam-ortusu{opacity:0!important;visibility:hidden!important;pointer-events:none!important;transition:opacity .2s var(--ease),visibility .2s}
 /* ==== /Dalga 2 mobil · kabuk ==== */
 /* Süzgeç sayfası (641–1024, Mekânlar ve Etkinlikler) ana içeriğin içinde; Gourmet sayfası başlığın üstünden açılıyor (canlı Gastro'da başlığın
    altından başlar). Ana içeriğin z-index 2 yığını sayfayı başlığın (60) ve üst bandın (70) altında bırakıp üst şeridini örtüyordu: açıkken yığın

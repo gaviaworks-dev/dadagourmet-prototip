@@ -509,8 +509,12 @@
   var Y = window.DG_YERLER || { il: [], ilce: [] };
   var YERLER = Y.il.map(function (y) { return { id: y[0], ad: y[1], alt: y[2], lat: y[3], lng: y[4], tur: 'city' }; })
     .concat(Y.ilce.map(function (y, i) { return { id: 1000 + i, ad: y[0], alt: y[1], lat: y[2], lng: y[3], tur: 'district' }; }));
+  /* ==== Ülke (rota-global, 11 Kas) ==== Yurt dışı yerler (`rota-yerler.js` `dis`) aramada çıkar; il ağına (yedek koridor, il kartları) girmez */
+  var DIS = (Y.dis || []).map(function (y) { return { id: y[0], ad: y[1], alt: y[2], lat: y[4], lng: y[5], tur: 'city', ulke: y[3] }; });
   var ILLER = YERLER.filter(function (y) { return y.tur === 'city'; });
-  var katla = function (s) { return String(s).toLocaleLowerCase('tr').replace(/[ıİI]/g, 'i').replace(/i̇/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[âà]/g, 'a').replace(/[îì]/g, 'i').replace(/[ûù]/g, 'u').replace(/\s+/g, ' ').trim(); };
+  YERLER = YERLER.concat(DIS);
+  /* ==== /Ülke ==== */
+  var katla = function (s) { return String(s).toLocaleLowerCase('tr').replace(/[ıİI]/g, 'i').replace(/i̇/g, 'i').replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[âà]/g, 'a').replace(/[îì]/g, 'i').replace(/[ûù]/g, 'u').replace(/[éèêë]/g, 'e').replace(/ô/g, 'o').replace(/ï/g, 'i').replace(/\s+/g, ' ').trim(); };
   YERLER.forEach(function (y) { y.k = katla(y.ad); y.ka = katla(y.alt); });
   window.dgKatla = katla;
   function yerAra(q) {
@@ -618,8 +622,10 @@
   /* Yol ağı koridoru (yedek): duraklar arası en kısa yol, iller ağdan; mesafe kuş uçuşu çizginin 1,12 katı, süre 85 km/sa */
   function yedek(z) {
     var n = [], il = [];
+    /* Ülke (rota-global): il ağının dışındaki bacak (ör. Paris – Lyon, ağa ulaşılamazsa) düz çizgi; Türkiye ağına sapmaz */
+    var agda = function (d) { return ILLER.some(function (y) { return km(y.lat, y.lng, +d.lat, +d.lng) < 250; }); };
     for (var i = 0; i < z.length - 1; i++) {
-      var k = koridor(z[i], z[i + 1]);
+      var k = agda(z[i]) && agda(z[i + 1]) ? koridor(z[i], z[i + 1]) : { n: [[+z[i].lat, +z[i].lng], [+z[i + 1].lat, +z[i + 1].lng]], il: [] };
       k.n.forEach(function (c, j) { if (n.length && !j) { return; } n.push([c[0], c[1]]); });
       il = il.concat(k.il);
       /* ilçe durağı kendi ilini de karta taşır (İzmir–Bodrum: Muğla) */
@@ -630,7 +636,8 @@
   }
   /* İl ve ilçe merkezleri, iliyle etiketli: noktanın ili en yakın merkezin ili (il sınırı verisi yok; yaklaşık) */
   var TOHUM = ILLER.map(function (y) { return [y.lat, y.lng, y.ad]; }).concat(YERLER.filter(function (y) { return y.tur === 'district' && DUGUM[y.alt]; }).map(function (y) { return [y.lat, y.lng, y.alt]; }));
-  var ilNe = function (la, ln) { var en = 1e9, ad = null; TOHUM.forEach(function (t) { var d = km(la, ln, t[0], t[1]); if (d < en) { en = d; ad = t[2]; } }); return ad; };
+  /* Ülke (rota-global): il ağının dışında (en yakın il/ilçe merkezi 250 km'den uzak, ör. Fransa) il yok; Türkiye içinde en uzak nokta ~100 km */
+  var ilNe = function (la, ln) { var en = 1e9, ad = null; TOHUM.forEach(function (t) { var d = km(la, ln, t[0], t[1]); if (d < en) { en = d; ad = t[2]; } }); return en <= 250 ? ad : null; };
   window.dgIlNe = ilNe;
   function ilBul(n, z) {
     var uzun = {}, sira = [], ekle = function (ad, d) { if (!ad) { return; } if (!(ad in uzun)) { uzun[ad] = 0; sira.push(ad); } uzun[ad] += d; };
@@ -650,7 +657,12 @@
     var hazir = onbellek[anahtar] || gomulu(z);
     var is = hazir ? Promise.resolve(hazir) : osrm(z).then(function (x) { onbellek[anahtar] = x; return x; }, function () { return gomulu(z, true); });
     return is.then(function (x) {
-      var kaynak = x ? 'osrm' : 'yedek'; x = x || yedek(z);
+      x = x ? { n: x.n, km: x.km, dk: x.dk, osrm: true } : null;
+      /* Ülke (rota-global): rotanın geçtiği ülkelerin istasyon verisi yüklenmeden rota yayımlanmaz (yalnız eksik dosya varsa beklenir) */
+      var y = x || yedek(z), bekle = window.dgRotaUlke ? window.dgRotaUlke.hazirla(y.n) : null;
+      return bekle ? bekle.then(function () { return x ? x : y; }) : (x || y);
+    }).then(function (x) {
+      var kaynak = x.osrm ? 'osrm' : 'yedek';
       var il = kaynak === 'osrm' ? ilBul(x.n, z) : x.il.filter(function (a, j) { return x.il.indexOf(a) === j; });
       var p = x.n.map(function (c) { return [c[1], c[0]]; }), metre = Math.round(x.km * 1000), saniye = Math.round(x.dk * 60);
       /* Bayat yanıt (bu arada yeni rota istendi): canlı betik `buildSeq` ile yoksayar; burada da ortak durum ezilmez */
@@ -694,7 +706,27 @@
     return l;
   };
   /* Şarj noktaları: rotaya 20 km içindeki sabit örnekler; yoksa her 150 km'de bir üretilen örnek DC nokta, yanında örnek yemek eşi */
+  /* Ülke (rota-global, 11 Kas): rota, kayıtta `sarjOrganik` olan bir ülkeden (Fransa) geçiyorsa o ülkenin GERÇEK OSM şarj noktaları
+     (`rota-sarj-veri-fr.js`): rotaya 5 km içinde, DC ya da soketi bilinmeyen. Şehir içi sokak şarjı listeyi doldurmasın diye rota 15 km'lik
+     dilimlere bölünür, her dilimden en çok 2 (DC ve rotaya yakın olan önce), yolculuk sırasıyla en çok 60. Yanlarına örnek yemek eşi
+     uydurulmaz; 1 km içinde Dada mekânı varsa o yazılır. Türkiye'de kart örnek verisiyle kalır (Route sahibinin açık kararı) */
+  var SARJ_GERCEK_KM = 5, SARJ_GERCEK_DILIM = 15, SARJ_GERCEK_EN_COK = 60;
+  function sarjGercek() {
+    var U = window.dgRotaUlke, ul = U && hat.length ? U.sarjOrganik() : []; if (!ul.length) { return null; }
+    var bas = [0], t = 0; for (var i = 1; i < hat.length; i++) { t += km(hat[i - 1][1], hat[i - 1][0], hat[i][1], hat[i][0]); bas.push(t); }
+    var kmde = function (sira) { var j = Math.min(hat.length - 2, Math.floor(sira)); return j < 0 ? 0 : bas[j] + (bas[j + 1] - bas[j]) * (sira - j); };
+    var dilim = {};
+    (window.DG_EV_SARJ || []).forEach(function (v) {
+      if (ul.indexOf(v[7]) < 0 || v[6] === 0) { return; }
+      var u = hataUzak({ lat: v[3], lng: v[4] }); if (u.d > SARJ_GERCEK_KM) { return; }
+      var k = Math.floor(kmde(u.sira) / SARJ_GERCEK_DILIM); (dilim[k] = dilim[k] || []).push({ v: v, d: u.d, s: u.sira });
+    });
+    var l = [];
+    Object.keys(dilim).forEach(function (k) { l = l.concat(dilim[k].sort(function (a, b) { return (b.v[6] === 1) - (a.v[6] === 1) || a.d - b.d; }).slice(0, 2)); });
+    return l.sort(function (a, b) { return a.s - b.s; }).slice(0, SARJ_GERCEK_EN_COK).map(function (x) { return [x.v[4], x.v[3], x.v[0], null, x.v]; });
+  }
   window.dgRotaSarjNoktalari = function () {
+    var g = sarjGercek(); if (g) { return g; }
     var l = R.katman.sarj.filter(function (n) { return hataUzak({ lat: n[1], lng: n[0] }).d <= 20; });
     if (!l.length && hat.length) { l = window.dgRotaOrnek(150, 1.5).map(function (o, i) { return [o.lng, o.lat, i % 3 === 2 ? 'Örnek AC şarj' : 'Örnek DC hızlı şarj', [['Örnek esnaf lokantası', 'Örnek pideci', 'Örnek köfteci'][i % 3], 300 + (i % 3) * 100]]; }); }
     return l;
@@ -713,17 +745,24 @@
     l.sort(function (a, b) { return a.sira - b.sira; });
     sonMekan = l.slice(0, 60);
     var ust = l.filter(function (m) { return m.sapmaKm <= 1; }).length;
-    return { mekanlar: l.slice(0, 60), sayac: { yolUstu: ust, yolaYakin: l.length - ust, toplam: l.length }, kirpildi: l.length > 60 };
+    var sonuc = { mekanlar: l.slice(0, 60), sayac: { yolUstu: ust, yolaYakin: l.length - ust, toplam: l.length }, kirpildi: l.length > 60 };
+    /* ==== Reklam: RT-DURAK (reklam-rota, 11 Kas) ==== Sunucunun `RotaReklamlari::koridor` adımı: reklam önizlemesi açıkken koridorda
+       ZATEN olan bir mekân `sponsor` işaretlenir (canlı betik pin, vitrin ilk slotu ve detayı "Sponsorlu" basar). Kapalıyken iz yok */
+    if (window.dgRotaReklam && window.dgRotaReklam.koridor) { sonuc = window.dgRotaReklam.koridor(sonuc, sinir) || sonuc; }
+    /* ==== /Reklam ==== */
+    return sonuc;
   }
   /* Şarj: yalnız rotaya 20 km içindeki örnek noktalar; eşleşen mekân gerçek konumdan, 1 km yürüme mesafesi (§8 #10).
      Şarj süresi (R2.5b) tahmin: 60 kWh batarya %20→%80, DC 120 kW verimle ~26 dk, AC 22 kW ~100 dk; yürüme 80 m/dk */
   function sarj(q) {
     var tur = q.get('tur') || 'tum', min = +q.get('min_kw') || 0;
     var l = window.dgRotaSarjNoktalari().map(function (n, i) {
-      var u = hataUzak({ lat: n[1], lng: n[0] }), dc = /DC/.test(n[2]);
+      var u = hataUzak({ lat: n[1], lng: n[0] }), dc = /DC/.test(n[2]), o = n[4];
       var yakin = M.map(function (m) { var mm = Math.round(km(n[1], n[0], m.lat, m.lng) * 1000); return { id: m.slug, slug: m.slug, ad: m.name + ' · yürüyerek ' + Math.max(1, Math.round(mm / 80)) + ' dk', mesafe_m: mm, url: kok + 'mekan/mikla/' }; }).filter(function (m) { return m.mesafe_m <= 1000; }).sort(function (a, b) { return a.mesafe_m - b.mesafe_m; });
       /* Şarj + yemek molası (R2.5b) canlı şarj kartının "Yakındaki mekânlar" satırında: 1 km içinde Dada mekânı yoksa örnek yemek eşi */
       if (!yakin.length && n[3]) { yakin = [{ id: 'ornek-yemek-' + i, slug: null, ad: n[3][0] + ' (prototip örneği) · yürüyerek ' + Math.max(1, Math.round(n[3][1] / 80)) + ' dk', mesafe_m: n[3][1], url: kok + 'mekanlar/' }]; }
+      /* Gerçek OSM noktası: ad, ağ, güç ve kaynak kendi etiketinden; şarj süresi tahmini aynı 60 kWh varsayımıyla */
+      if (o) { var odc = o[6] === 1; return { id: 'osm-' + i, ad: o[0], tur: odc ? 'DC' : 'AC', kw: o[5] || (odc ? 50 : 22), lat: n[1], lng: n[0], rotadan_km: Math.round(u.d * 10) / 10, sahiplik: null, operator: (o[2] && o[2] !== o[0] ? o[2] + ' · ' : '') + (o[5] ? o[5] + ' kW · ' : '') + (odc ? '%20→%80 şarj tahmini ~26 dk' : 'soket bilgisi OSM\'de yok · AC ise %20→%80 ~100 dk') + ' (60 kWh batarya)', veri_saglayici: 'OpenStreetMap katkıcıları', lisans: 'ODbL', mekanlar: yakin }; }
       return { id: 'ornek-' + i, ad: n[2] + ' (prototip örneği)', tur: dc ? 'DC' : 'AC', kw: dc ? 120 : 22, lat: n[1], lng: n[0], rotadan_km: Math.round(u.d * 10) / 10, sahiplik: null, operator: 'Prototip örneği · %20→%80 şarj tahmini ' + (dc ? '~26' : '~100') + ' dk (60 kWh batarya)', veri_saglayici: 'Prototip örneği', lisans: 'örnek veri', mekanlar: yakin };
     }).filter(function (s) { return s.rotadan_km <= 20 && (tur === 'tum' || s.tur === tur) && s.kw >= min; });
     return { istasyonlar: l, veri_hazir: true, toplam: l.length };
@@ -734,7 +773,7 @@
     if (!m) { return once(girdi, ayar); }
     var q = new URLSearchParams(m[2].split('?')[1] || ''), uc = m[1], yontem = ((ayar && ayar.method) || 'GET').toUpperCase();
     if (uc === 'yerler') { return yanit({ yerler: yerAra(q.get('q') || '') }); }
-    if (uc === 'en-yakin') { var la = +q.get('lat'), ln = +q.get('lng'), s = ILLER.slice().sort(function (x, y) { return km(la, ln, x.lat, x.lng) - km(la, ln, y.lat, y.lng); })[0]; return yanit({ yer: s, uzaklikKm: Math.round(km(la, ln, s.lat, s.lng)) }); }
+    if (uc === 'en-yakin') { var la = +q.get('lat'), ln = +q.get('lng'), s = ILLER.concat(DIS).sort(function (x, y) { return km(la, ln, x.lat, x.lng) - km(la, ln, y.lat, y.lng); })[0]; return yanit({ yer: s, uzaklikKm: Math.round(km(la, ln, s.lat, s.lng)) }); }
     if (uc === 'rota') { return rotaKur(JSON.parse(ayar.body).duraklar).then(yanit); }
     if (uc === 'mekanlar' && yontem === 'GET') { return yanit(mekanlar(q)); }
     if (uc === 'sarj') { return yanit(sarj(q)); }

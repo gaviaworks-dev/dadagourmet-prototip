@@ -1,6 +1,6 @@
 <!--{"yol":"mekan-bul","baslik":"Mekân Bul","aktif":"mekan-bul","zincir":"hakkimizda","gourmet":true,"css":["mekan-bul.css","banner-uyarlama.css","mekan-karti-uyarlama.css","gourmet-sapma"],"js":["assets/js/mekan-liste-veri.js","assets/js/sayfa/mekan-bul.js"],"govdeSinif":"pg-mekan-bul has-dark-hero","donor":"https://dadagourmet.com/mekan-bul + resources/views/site/mekan-bul/sonuclar.blade.php"}-->
 
-                            <section class="ke-top below-header px-band" data-px-band="1"><div class="px-clip" style="--px-x: 50%; --px-y: 50%; background-color: rgb(30, 20, 34); --px-r: 0px; --px-shift: -174.0px;"><div class="px-media" style="background-image: url(&quot;{{kok}}assets/o/assets/gourmet-public/img/gourmet-mekan-bul/banner-g3-pilot.webp&quot;);"></div></div>
+                            <section class="ke-top below-header px-band" data-px-band="1"><div class="px-clip" style="--px-x: 50%; --px-y: 50%; background-color: rgb(30, 20, 34); --px-r: 0px; --px-shift: -174.0px;"><div class="px-media" style="background-image: url(&quot;{{kok}}assets/o/assets/gourmet-public/medya/konsept-modern.webp&quot;);"></div></div>
         <div class="ke-hero-media" aria-hidden="true" style="background-image: none; background-color: transparent;"></div>
         <div class="wrap">
             
@@ -9,6 +9,8 @@
                 <div class="ke-head">
                     <span class="eyebrow"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Dada Gourmet · Mekan Bul</span>
                     <h1>Sana göre <span class="accent">mekanı</span> bulalım</h1>
+                    <!-- Reklam (REKLAM-YERLESIM MB-HERO): hero rozeti; yalnız sonuç görünürken (sihirbaz adımlarında gövde reklamı yok) -->
+                    <template data-rk-yer="MB-HERO"></template>
                     <p class="lead">4 kısa adım: konum ve bütçe, ortam, mutfak, senin için önemli olanlar. Sonunda mekânları seçimlerine uyma oranıyla sıralayalım.</p>
                 </div>
             </div>
@@ -430,7 +432,7 @@
                                     <span class="wf-note"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> 4 / 4 adım: istediğin an geri dönebilirsin.</span>
                                     <div class="wf-actions"><button class="btn btn-ghost" type="button" data-geri=""><i class="fa-solid fa-chevron-left" aria-hidden="true"></i> Geri</button><button class="btn btn-primary" type="button" data-ileri="">Sonuçları Gör <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button></div>
                                 </div></div></div>
-                </div><div class="mb-sonuc" id="mbSonuc" hidden=""><p class="sr-only" id="mbDuyuru" role="status" aria-live="polite"></p><div class="res-summary" tabindex="-1"><span class="rs-lbl"><i class="fa-solid fa-sliders" aria-hidden="true"></i> Seçimlerin:</span><span id="mbCipler"></span><button class="res-edit" type="button" id="mbDuzenle">Düzenle</button></div><p class="mb-hesap" id="mbHesap"></p><div id="mbGruplar"></div><div class="wiz-foot"><span class="wf-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Oran yalnız senin seçtiğin kriterlerden hesaplanır; mekân verisi canlı kayıtların kopyasıdır.</span><div class="wf-actions"><button class="btn btn-ghost" type="button" id="mbYeni"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Yeni Arama</button></div></div></div>
+                </div><div class="mb-sonuc" id="mbSonuc" hidden=""><p class="sr-only" id="mbDuyuru" role="status" aria-live="polite"></p><div class="res-summary" tabindex="-1"><span class="rs-lbl"><i class="fa-solid fa-sliders" aria-hidden="true"></i> Seçimlerin:</span><span id="mbCipler"></span><button class="res-edit" type="button" id="mbDuzenle">Düzenle</button></div><!-- Reklam MB-FILTER: "Hızlı Düzenle" (seçim özeti) altı · MB-T1: sonuç üstü (boş sonuçta da) · MB-FEED: ilk dolu grubun listesi (#mbGruplar yeniden çizilince yeniden yerleşir). Yalnız sonuç bölümünde --><template data-rk-yer="MB-FILTER"></template><p class="mb-hesap" id="mbHesap"></p><template data-rk-yer="MB-T1"></template><template data-rk-yer="MB-FEED" data-rk-liste-kok="#mbGruplar" data-rk-liste=".mb-res-group .mkl-grid"></template><div id="mbGruplar"></div><div class="wiz-foot"><span class="wf-note"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> Oran yalnız senin seçtiğin kriterlerden hesaplanır; mekân verisi canlı kayıtların kopyasıdır.</span><div class="wf-actions"><button class="btn btn-ghost" type="button" id="mbYeni"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Yeni Arama</button></div></div></div>
             </div>
         </section>
     </div>

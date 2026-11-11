@@ -2,6 +2,7 @@
 // Puan Durumu: şartname değerleri (`dgPuan.KURAL`), kural satırları ile rozet ve rütbe kümesi `assets/js/rozet-veri.js` (K3 tek kaynak); puan önce bekleyen görünür, onayda kesinleşir (§8 kararı). Tutar örnekleri etiketli.
 import fs from 'node:fs'; import path from 'node:path'; import { fileURLToPath } from 'node:url';
 import { ROZET, KURAL } from '../_rozet.mjs';
+import { hsIsaret } from '../_kalip.mjs'; // reklam HS-SB1 işareti (reklam-detay)
 const SRC = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const s = JSON.parse(fs.readFileSync(path.join(SRC, 'parcalar/gurme-panel-iskelet.json'), 'utf8'));
 const et = '<span class="ornek-etiket">prototip örneği</span>';
@@ -41,7 +42,7 @@ const sayfalar = function () {
   return SEKME.map(([yol, ikon, ad, ust, baslik, alt]) => {
     const nav = `<nav class="sekmeler ortali" aria-label="Gurme Panelim bölümleri" data-scroll-fade="" data-sekme-gecis="">${SEKME.map(([y, i, a]) => `<a class="sekme${y === yol ? ' aktif' : ''}" href="{{kok}}hesabim/gurme-panelim/${y === 'rezervasyonlarim' ? '' : y + '/'}"${y === yol ? ' aria-current="page"' : ''}><i class="fa-solid ${i}" aria-hidden="true"></i> ${a}</a>`).join('')}</nav>`;
     const fav = yol === 'gurme-favorilerim';
-    const govde = `<div class="zebra">${BANT}<div class="pf-tabbar sekme-ray"><div class="wrap kap">${nav}</div></div><div class="modul-govde"><div class="fit-pane aktif"><div class="bolum kap">${bas(ust, baslik, alt, fav ? FAV_ARAC : et)}${fav ? FAVORI : `<div class="kart"><div class="kart-govde"><div class="fp-list">${ICERIK[yol]}</div></div></div>`}</div></div></div></div>`;
+    const govde = `<div class="zebra">${BANT}<div class="pf-tabbar sekme-ray"><div class="wrap kap">${nav}</div></div><div class="modul-govde"><div class="fit-pane aktif"><div class="bolum kap">${bas(ust, baslik, alt, fav ? FAV_ARAC : et)}${fav ? FAVORI : `<div class="kart"><div class="kart-govde"><div class="fp-list">${ICERIK[yol]}</div></div></div>`}</div></div></div>${hsIsaret('hesabim/gurme-panelim')}</div>`;
     return { yol: 'hesabim/gurme-panelim' + (yol === 'rezervasyonlarim' ? '' : '/' + yol), meta: { baslik: `${ad} · Gurme Panelim`, duzen: 'uye', zincir: 'hesabim', css: ['gourmet-sapma'], js: ['assets/o/assets/gourmet-public/js/shared/scroll-affordance.js', 'assets/js/rozet-veri.js', 'assets/js/sayfa/panel.js', 'assets/js/sayfa/favori.js'], donor: 'https://gaviaworks-dev.github.io/DadaMentor/Gourmet/go-mekanlarim.html?auth=1' }, govde };
   });
 }

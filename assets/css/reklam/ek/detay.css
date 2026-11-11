@@ -1,0 +1,165 @@
+/* Detay ve içerik sayfalarının zengin reklam biçimleri (reklam-detay, 11 Kas). Yalnız reklam önizlemesi açıkken,
+   assets/js/reklam/sayfa/detay-ortak.js yükler; kanon (assets/css/reklam/{gourmet-tokenlar,reklam,standart}.css) DEĞİŞMEDİ.
+   Bütün kurallar `.rk-dt` köküne bağlı. Renk yalnız MarkaRengi değişkenleri (--rk-marka, --rk-dugme, --rk-marka-metin) ve
+   kanon belirteçleri (--sp-*, --radius-*, --ink, --line, --paper, --font). Ölçüler REKLAM-YERLESIM: şerit kolon × 120 / 96 px,
+   kenar kutusu kolon genişliği + 4:3 medya, içerik sonu görsel 4:3 + metin. */
+
+.rk-dt { --rk-dt-r: var(--radius-lg, 16px); --rk-dt-golge: 0 1px 2px rgba(17, 12, 20, .06), 0 6px 18px rgba(17, 12, 20, .08);
+  --rk-dt-golge-ust: 0 2px 4px rgba(17, 12, 20, .08), 0 12px 28px rgba(17, 12, 20, .14); font-family: var(--font); }
+.rk-dt a, .rk-dt button { -webkit-tap-highlight-color: transparent; }
+.rk-dt :is(a, button):focus-visible { outline: 3px solid var(--rk-dugme); outline-offset: 3px; }
+.rk-dt-logo { display: grid; place-items: center; flex: none; box-sizing: border-box; background: #fff; border-radius: var(--radius-md, 12px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .12); }
+.rk-dt-logo .rk-logo { display: block; width: 100%; height: 100%; max-height: none; object-fit: contain; }
+/* reklam-duzeltici (11 Kas) · logo plakası oran-duyarlı: tek hücreli ızgara (yüzde boy satırda çözülür, kare logo plakadan taşmaz);
+   kare logo (`rk-logo-kare`) plakayı kareye çevirir, iç payla en az 32 px */
+.rk-dt-logo { grid-template: minmax(0, 1fr) / minmax(0, 1fr); }
+.rk-dt-logo .rk-logo { min-width: 0; min-height: 0; }
+.rk-dt .rk-dt-logo:has(.rk-logo-kare) { width: auto; aspect-ratio: 1 / 1; justify-self: start; }
+.rk-dt-son .rk-dt-logo:has(.rk-logo-kare) { width: 44px; height: 44px; padding: 4px; }
+.rk-dt-logo:has(.rk-logo-koyu) { background: var(--rk-marka); }
+.rk-dt-ust { font-size: 11px; font-weight: 700; line-height: 1.4; letter-spacing: .08em; text-transform: uppercase; }
+.rk-dt-teklif { display: inline-flex; align-items: center; gap: 8px; min-width: 0; font-size: 13px; font-weight: 700; line-height: 1.3; }
+.rk-dt-teklif > span { min-width: 0; }
+.rk-dt-cta { display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex: none; box-sizing: border-box; min-height: 44px;
+  padding: 10px 18px; border: 0; border-radius: var(--radius-pill, 999px); font: inherit; font-size: 14px; font-weight: 700; line-height: 1.2;
+  white-space: nowrap; cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; }
+.rk-dt-cta .fa-arrow-right { transition: transform .15s ease; }
+.rk-dt-etiket { position: absolute; top: 12px; right: 12px; z-index: 2; padding: 4px 9px; border-radius: var(--radius-pill, 999px);
+  background: rgba(255, 255, 255, .92); color: #333; font-size: 10px; font-weight: 700; line-height: 16px; letter-spacing: .06em; text-transform: uppercase; }
+
+/* ── zengin şerit · kolon × 120 / 96 px ────────────────────────────────────────────────────────────────────────────── */
+.rk-dt-serit { display: flex; flex-direction: column; gap: var(--sp-2, 8px); }
+.rk-dt-serit-bag { position: relative; isolation: isolate; display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto;
+  grid-template-areas: "logo metin teklif cta"; align-items: center; gap: 20px; box-sizing: border-box; height: 120px; padding: 0 24px;
+  overflow: hidden; border-radius: var(--rk-dt-r); background: var(--rk-marka); color: var(--rk-marka-metin); text-decoration: none;
+  box-shadow: var(--rk-dt-golge); transition: box-shadow .2s ease, transform .2s ease; }
+.rk-dt-serit-bag:hover { color: var(--rk-marka-metin); box-shadow: var(--rk-dt-golge-ust); transform: translateY(-1px); }
+.rk-dt-serit-foto { position: absolute; inset: 0 0 0 auto; z-index: -1; width: 44%; overflow: hidden; }
+.rk-dt-serit-foto img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+.rk-dt-serit-foto::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--rk-marka) 0%, color-mix(in srgb, var(--rk-marka) 72%, transparent) 26%, color-mix(in srgb, var(--rk-marka) 18%, transparent) 62%, transparent 100%); }
+.rk-dt-serit-bag:hover .rk-dt-serit-foto img { transform: scale(1.04); }
+.rk-dt-serit .rk-dt-logo { grid-area: logo; width: 104px; height: 72px; padding: 10px 12px; }
+.rk-dt-serit-metin { grid-area: metin; display: flex; flex-direction: column; gap: 3px; min-width: 0; max-width: 560px; }
+.rk-dt-serit-metin .rk-dt-ust { opacity: .78; }
+.rk-dt-serit-metin b { overflow: hidden; font-size: 21px; font-weight: 700; line-height: 1.15; letter-spacing: var(--ls-head, -.02em); text-overflow: ellipsis; white-space: nowrap; }
+.rk-dt-serit-metin .rk-dt-alt { overflow: hidden; font-size: 14px; line-height: 1.4; opacity: .9; text-overflow: ellipsis; white-space: nowrap; }
+.rk-dt-serit .rk-dt-teklif { grid-area: teklif; max-width: 280px; padding: 9px 14px; border: 1px solid rgba(255, 255, 255, .5); border-radius: var(--radius-pill, 999px);
+  background: color-mix(in srgb, var(--rk-marka) 70%, transparent); color: var(--rk-marka-metin); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.rk-dt-serit .rk-dt-teklif > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rk-dt-serit .rk-dt-cta { grid-area: cta; background: #fff; color: var(--rk-dugme); box-shadow: 0 2px 8px rgba(0, 0, 0, .18); }
+.rk-dt-serit-bag:hover .rk-dt-cta .fa-arrow-right { transform: translateX(3px); }
+/* Kolon genişliğine göre (kap sorgusu: aynı şerit ana sayfada 1176, lezzet gövdesinde 880, telefonda 358 px):
+   dar kolonda teklif başlığın altına iner (yükseklik 120 kalır); telefon kolonunda 96 px, çağrı yuvarlak düğme */
+.rk-dt-serit { container-type: inline-size; }
+.rk-dt-serit:not(.rk-sar > .rk-dt-serit) { margin-block: 28px 32px; }
+@container (max-width: 960px) {
+  .rk-dt-serit-bag { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto auto; grid-template-areas: "logo metin cta" "logo teklif cta";
+    align-content: center; row-gap: 6px; }
+  .rk-dt-serit-metin { align-self: end; }
+  .rk-dt-serit-metin .rk-dt-alt { display: none; }
+  .rk-dt-serit .rk-dt-teklif { align-self: start; max-width: none; padding: 0; border: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none;
+    font-weight: 600; opacity: .94; }
+  .rk-dt-serit-foto { width: 50%; }
+  .rk-dt-serit-foto::after { background: linear-gradient(90deg, var(--rk-marka) 0%, color-mix(in srgb, var(--rk-marka) 80%, transparent) 40%, color-mix(in srgb, var(--rk-marka) 25%, transparent) 100%); }
+}
+@container (max-width: 600px) {
+  .rk-dt-serit-bag { gap: 4px 12px; height: 96px; padding: 0 12px; }
+  .rk-dt-serit-foto { width: 46%; }
+  .rk-dt-serit .rk-dt-logo { width: 64px; height: 52px; padding: 6px 8px; }
+  .rk-dt-serit-metin .rk-dt-ust { display: none; }
+  .rk-dt-serit-metin b { display: -webkit-box; font-size: 16px; white-space: normal; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .rk-dt-serit .rk-dt-teklif { font-size: 12px; }
+  /* reklam-duzeltici (11 Kas): telefon kolonunda teklif kesilmez, iki satıra iner (96 px şerit içinde) */
+  .rk-dt-serit .rk-dt-teklif { align-items: flex-start; line-height: 1.25; }
+  .rk-dt-serit .rk-dt-teklif > span { white-space: normal; overflow: visible; text-overflow: clip; }
+  .rk-dt-serit .rk-dt-cta { width: 44px; min-height: 44px; height: 44px; padding: 0; }
+  .rk-dt-serit .rk-dt-cta-ad { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+
+/* ── kenar kutusu · 4:3 medya ─────────────────────────────────────────────────────────────────────────────────────── */
+.rk-dt-kare { display: block; width: 100%; min-width: 0; }
+.rk-dt-kare-bag { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--rk-dt-r); background: var(--rk-marka); color: var(--rk-marka-metin);
+  text-decoration: none; box-shadow: var(--rk-dt-golge); transition: box-shadow .2s ease, transform .2s ease; }
+.rk-dt-kare-bag:hover { color: var(--rk-marka-metin); box-shadow: var(--rk-dt-golge-ust); transform: translateY(-2px); }
+.rk-dt-kare-medya { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; }
+.rk-dt-kare-medya img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+.rk-dt-kare-bag:hover .rk-dt-kare-medya img { transform: scale(1.04); }
+.rk-dt-kare-medya::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 52%, var(--rk-marka) 100%); }
+.rk-dt-kare .rk-dt-logo { position: absolute; top: 12px; left: 12px; z-index: 2; width: 88px; height: 52px; padding: 8px 10px; }
+.rk-dt-kare-govde { display: flex; flex-direction: column; gap: 8px; padding: 2px 18px 18px; }
+.rk-dt-kare-govde .rk-dt-ust { opacity: .78; }
+.rk-dt-kare-govde b { font-size: 20px; font-weight: 700; line-height: 1.18; letter-spacing: var(--ls-head, -.02em); }
+.rk-dt-kare-govde .rk-dt-alt { font-size: 14px; line-height: 1.45; opacity: .9; }
+.rk-dt-kare .rk-dt-teklif { align-self: flex-start; margin-top: 2px; padding: 8px 12px; border: 1px dashed rgba(255, 255, 255, .55); border-radius: var(--radius-md, 12px);
+  background: rgba(255, 255, 255, .1); }
+.rk-dt-kare .rk-dt-cta { margin-top: 6px; width: 100%; background: #fff; color: var(--rk-dugme); }
+.rk-dt-kare-bag:hover .rk-dt-cta .fa-arrow-right { transform: translateX(3px); }
+
+/* ── rezervasyon / ödeme kampanyası kartı ─────────────────────────────────────────────────────────────────────────── */
+.rk-dt-kampanya { display: block; width: 100%; min-width: 0; }
+.rk-dt-kampanya-kart { position: relative; overflow: hidden; border: 1px solid var(--line, #ececec); border-radius: var(--rk-dt-r); background: var(--paper, #fff);
+  color: var(--ink, #211e16); box-shadow: var(--rk-dt-golge); }
+/* Kart şemasının iki rengi (logodaki daireler): üst kenar çizgisi */
+.rk-dt-kampanya-kart::before { content: ""; position: absolute; inset: 0 0 auto; z-index: 3; height: 4px; background: linear-gradient(90deg, #eb001b 0 50%, #f79e1b 50% 100%); }
+.rk-dt-kampanya:not([data-rk-marka="mastercard"]) .rk-dt-kampanya-kart::before { background: var(--rk-marka); }
+.rk-dt-kampanya-medya { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #111; }
+.rk-dt-kampanya-medya img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.rk-dt-kampanya-medya::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 8, 12, .1) 30%, rgba(10, 8, 12, .78) 100%); }
+.rk-dt-kampanya .rk-dt-logo { position: absolute; top: 14px; left: 14px; z-index: 2; width: 64px; height: 50px; padding: 7px 9px; }
+.rk-dt-rozet { position: absolute; left: 16px; right: 16px; bottom: 14px; z-index: 2; display: flex; align-items: flex-end; gap: 10px; color: #fff; }
+.rk-dt-rozet b { font-size: 56px; font-weight: 800; line-height: .9; letter-spacing: -.04em; }
+.rk-dt-rozet > span { display: flex; flex-direction: column; padding-bottom: 4px; font-size: 18px; font-weight: 700; line-height: 1.1; }
+.rk-dt-rozet small { margin-top: 3px; font-size: 12px; font-weight: 600; opacity: .88; }
+.rk-dt-kampanya-govde { display: flex; flex-direction: column; gap: 10px; padding: 16px 18px 18px; }
+.rk-dt-kampanya-govde .rk-dt-ust { color: var(--rk-dugme); }
+.rk-dt-kampanya .rk-dt-baslik { font-size: 19px; font-weight: 700; line-height: 1.2; letter-spacing: var(--ls-head, -.02em); }
+.rk-dt-kampanya .rk-dt-alt { margin: 0; color: var(--muted, #6b6b6b); font-size: 14px; line-height: 1.45; }
+.rk-dt-adim { display: flex; flex-direction: column; gap: 8px; margin: 2px 0 4px; padding: 12px; list-style: none; border-radius: var(--radius-md, 12px);
+  background: color-mix(in srgb, var(--rk-marka) 6%, var(--paper, #fff)); font-size: 13px; font-weight: 600; line-height: 1.3; }
+.rk-dt-adim li { display: flex; align-items: center; gap: 10px; }
+.rk-dt-adim-no { display: grid; place-items: center; flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--rk-dugme); color: #fff; font-size: 12px; font-weight: 800; }
+.rk-dt-kampanya .rk-dt-cta { width: 100%; min-height: var(--ctl-h, 48px); background: var(--rk-dugme); color: #fff; }
+.rk-dt-kampanya .rk-dt-cta:hover { box-shadow: 0 6px 16px color-mix(in srgb, var(--rk-dugme) 35%, transparent); transform: translateY(-1px); }
+.rk-dt-kosul { align-self: center; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; /* reklam-duzeltici: dokunma hedefi 44 px */ color: var(--muted, #6b6b6b); font-size: 12px; font-weight: 600;
+  text-decoration: underline; text-underline-offset: 3px; }
+.rk-dt-kosul i { font-size: 10px; }
+
+/* ── içerik sonu native öneri · görsel 4:3 + metin ────────────────────────────────────────────────────────────────── */
+.rk-dt-son { display: flex; flex-direction: column; gap: var(--sp-2, 8px); }
+.rk-dt-son-bag { position: relative; display: grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); overflow: hidden; border: 1px solid var(--line, #ececec);
+  border-radius: var(--rk-dt-r); background: var(--paper, #fff); color: var(--ink, #211e16); text-decoration: none; box-shadow: var(--rk-dt-golge);
+  transition: box-shadow .2s ease, transform .2s ease; }
+.rk-dt-son-bag::before { content: ""; position: absolute; inset: 0 auto 0 0; z-index: 2; width: 4px; background: var(--rk-marka); }
+.rk-dt-son-bag:hover { color: var(--ink, #211e16); box-shadow: var(--rk-dt-golge-ust); transform: translateY(-2px); }
+.rk-dt-son-medya { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; }
+.rk-dt-son-medya img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+.rk-dt-son-bag:hover .rk-dt-son-medya img { transform: scale(1.04); }
+.rk-dt-son-govde { display: flex; flex-direction: column; justify-content: center; gap: 10px; min-width: 0; padding: 28px 32px; }
+.rk-dt-son-kimlik { display: flex; align-items: center; gap: 10px; color: var(--muted, #6b6b6b); font-size: 12px; font-weight: 600; }
+.rk-dt-son .rk-dt-logo { width: 72px; height: 36px; padding: 5px 8px; box-shadow: inset 0 0 0 1px var(--line, #ececec); }
+.rk-dt-son-govde .rk-dt-ust { color: var(--rk-dugme); }
+.rk-dt-son-govde b { font-size: 26px; font-weight: 700; line-height: 1.15; letter-spacing: var(--ls-head, -.02em); }
+.rk-dt-son-govde .rk-dt-alt { color: var(--muted, #6b6b6b); font-size: 15px; line-height: 1.5; }
+.rk-dt-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.rk-dt-meta span { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: var(--radius-pill, 999px); background: color-mix(in srgb, var(--ink, #211e16) 5%, transparent);
+  font-size: 12px; font-weight: 600; }
+.rk-dt-meta i { color: var(--rk-dugme); }
+.rk-dt-son-alt { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--line, #ececec); }
+.rk-dt-son .rk-dt-teklif { color: var(--rk-dugme); }
+.rk-dt-son .rk-dt-cta { background: var(--rk-dugme); color: #fff; }
+.rk-dt-son-bag:hover .rk-dt-cta .fa-arrow-right { transform: translateX(3px); }
+
+/* ── Telefon (≤767): kutular tam genişlik; içerik sonu üstte görsel (şerit kap sorgusuyla, yukarıda) ─────────────── */
+.evd-side > .rk-dt-kare { margin-top: 16px; }
+@media (max-width: 767px) {
+  .rk-dt-son-bag { grid-template-columns: minmax(0, 1fr); }
+  .rk-dt-son-govde { padding: 18px 18px 20px; }
+  .rk-dt-son-govde b { font-size: 21px; }
+  .rk-dt-son-govde .rk-dt-alt { font-size: 14px; }
+  .rk-dt-son .rk-dt-cta { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rk-dt :is(.rk-dt-serit-bag, .rk-dt-kare-bag, .rk-dt-son-bag, .rk-dt-cta, img, .fa-arrow-right) { transition: none; }
+}
