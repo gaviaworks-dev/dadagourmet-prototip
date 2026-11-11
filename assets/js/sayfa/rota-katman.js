@@ -144,11 +144,19 @@
   };
 
   /* ---- Haritada göster/gizle (Katmanlar): yalnız pin; liste İhtiyaçlar sekmesinde ve il kartlarında ---- */
+  var telefon = function () { return window.matchMedia('(max-width:860px)').matches; };
   var grup = { ibadet: L.layerGroup(), dinlenme: L.layerGroup(), karavan: L.layerGroup(), neyenir: L.layerGroup(), nealinir: L.layerGroup() };
   var acik = {};
   var pin = function (k, n) {
     var i = L.divIcon({ className: 'yg-katman-pin yg-katman-pin--' + k, html: '<i class="fa-solid ' + n.ikon + '" aria-hidden="true"></i>', iconSize: [30, 30], iconAnchor: [15, 15] });
-    return L.marker([n.lat, n.lng], { icon: i, title: n.ad }).bindPopup(kac(n.ad + (n.alt ? ' · ' + n.alt : '') + ' (prototip örneği)'));
+    var metin = kac(n.ad + (n.alt ? ' · ' + n.alt : '') + ' (prototip örneği)');
+    if (!telefon()) { return L.marker([n.lat, n.lng], { icon: i, title: n.ad }).bindPopup(metin); }
+    /* RM-11 · Bulgu #13: telefonda balon dar ve güvenli dolgulu (canlı küme balonu `autoPanPaddingTopLeft:[20,70]`; altta görünür alt yığın
+       `--rm-alt` + 16); dolgu dokunuş anında ölçülür (alt sayfa kipi değişmiş olabilir) */
+    return L.marker([n.lat, n.lng], { icon: i, title: n.ad }).on('click', function () {
+      var p = this.getPopup(), alt = parseFloat(getComputedStyle($('.yg-app')).getPropertyValue('--rm-alt')) || 0; if (!p) { return; }
+      p.options.maxWidth = Math.min(260, window.innerWidth - 90); p.options.autoPanPaddingBottomRight = L.point(20, Math.round(alt) + 16);
+    }).bindPopup(metin, { maxWidth: Math.min(260, window.innerWidth - 90), autoPanPaddingTopLeft: L.point(20, 70) });
   };
   var pinleriCiz = function () {
     Object.keys(grup).forEach(function (k) {
@@ -440,7 +448,16 @@
     var urun = function (b) { var i = ilListe.filter(function (x) { return x.il === b.dataset.ilOn; })[0]; return i ? ilUrun(i) : 0; };
     var sira = bs.map(function (b, n) { return { b: b, n: n, o: (b.classList.contains('is-secili') ? 1000 : 0) + urun(b) }; }).sort(function (a, c) { return c.o - a.o || a.n - c.n; });
     var pinler = $$('#routeMap .yg-pin.stop').map(function (p) { return rozetPay(p.getBoundingClientRect(), 2); });
-    var dolu = pinler.slice(), alan = rozetAlan();
+    /* RM-11 · Bulgu #12: telefonda (≤860) katman pinleri, mekân pinleri, kümeler ve harita denetimleri (+/−, konum, atıf) de engel (rozet
+       onları örtüp dokunulmaz yapıyordu). Masaüstü bu turda aynen kalır (piksel kıyası); aynı kural masaüstüne Beyar onayıyla genişler */
+    var engel = !telefon() ? [] : $$('#routeMap .yg-katman-pin, #routeMap .yg-vpin, #routeMap .yg-vcluster, #routeMap .yg-yakit-pin, #routeMap .leaflet-control-zoom, #routeMap .rm-atif, #ygLocate').filter(function (p) { return p.offsetParent; }).map(function (p) { return rozetPay(p.getBoundingClientRect(), 2); });
+    var dolu = pinler.concat(engel), alan = rozetAlan();
+    /* RM-11 · Bulgu #12 (Beyar): telefonda (≤640) yalnız durak illeri (kalkış, varış, ara duraklar) ve seçili il; öbürleri il meşhurları
+       bölümü alt sayfada görünürken ya da yakınlık ≥ 8'de (D15/D18 sırası ve yerleşimi aynı) */
+    var sadeIl = null;
+    if (window.matchMedia('(max-width:640px)').matches && h.getZoom() < 8 && !ilBolumuGorunur()) {
+      sadeIl = {}; (window.dgRotaApi ? window.dgRotaApi.duraklar() : []).forEach(function (d) { var a = d && window.dgIlNe ? window.dgIlNe(+d.lat, +d.lng) : null; if (a) { sadeIl[a] = 1; } });
+    }
     var icinde = function (q) { return q.left >= alan.left && q.right <= alan.right && q.top >= alan.top && q.bottom <= alan.bottom; };
     sira.forEach(function (x) {
       var nokta = x.b.parentElement.getBoundingClientRect();
@@ -449,6 +466,7 @@
     sira.sort(function (a, c) { return c.o - a.o || a.n - c.n; });
     sira.forEach(function (x) {
       var b = x.b, r = null; b.classList.remove('is-gizli');
+      if (sadeIl && !sadeIl[b.dataset.ilOn] && !b.classList.contains('is-secili')) { b.classList.add('is-gizli'); return; }
       for (var k = 0; k < ROZET_YER.length && !r; k++) {
         b.dataset.yer = ROZET_YER[k]; var q = b.getBoundingClientRect();
         if (icinde(q) && !dolu.some(function (d) { return rozetKes(q, d); })) { r = q; }
@@ -461,9 +479,17 @@
     var k = h.getContainer().getBoundingClientRect(), a = { left: k.left, top: k.top, right: k.right, bottom: k.bottom };
     var ust = $('.yg-top'), pn = $('.yg-panel'), sr = $('#ygDash');
     if (ust) { a.top = Math.max(a.top, ust.getBoundingClientRect().bottom); }
-    if (pn) { var r = pn.getBoundingClientRect(); if (window.matchMedia('(max-width:860px)').matches) { a.bottom = Math.min(a.bottom, r.top); } else if (r.right < k.right) { a.left = Math.max(a.left, r.right); } }
+    /* RM-11: yan sütunda (panel solda, başlığın altından dibe) masaüstü gibi; telefonda açık detay alt sayfası da sınır */
+    if (pn) { var r = pn.getBoundingClientRect(), yanP = r.top <= a.top + 1 && r.bottom >= k.bottom - 1 && r.right < k.right; if (window.matchMedia('(max-width:860px)').matches && !yanP) { a.bottom = Math.min(a.bottom, r.top); } else if (r.right < k.right) { a.left = Math.max(a.left, r.right); } }
+    var dt = $('#ygDetail'); if (dt && !dt.hidden && window.matchMedia('(max-width:860px)').matches) { var q = dt.getBoundingClientRect(); if (q.left <= k.left + 1 && q.top < a.bottom) { a.bottom = Math.max(a.top, q.top); } }
     if (sr && !sr.hidden && !sr.classList.contains('collapsed') && !sr.classList.contains('full-hidden')) { var d = sr.getBoundingClientRect(); if (d.height && d.top > a.top && d.top < a.bottom) { a.bottom = d.top; } }
     return a;
+  };
+  /* İl meşhurları bölümü alt sayfanın görünür parçasında mı (yarım/tam kip ya da yan sütun) */
+  var ilBolumuGorunur = function () {
+    var v = $('#viewRoute'), pn = $('.yg-panel'); if (!iller || iller.hidden || !v || v.hidden || !pn || pn.classList.contains('sheet-peek')) { return false; }
+    var b = iller.getBoundingClientRect(), vb = v.getBoundingClientRect(), alt = Math.min(vb.bottom, window.innerHeight);
+    return b.bottom > vb.top + 8 && b.top < alt - 8;
   };
   var rozetZaman = 0;
   var rozetSonra = function (ms) { clearTimeout(rozetZaman); rozetZaman = setTimeout(function () { requestAnimationFrame(rozetDuzen); }, ms); };
@@ -472,6 +498,8 @@
   window.addEventListener('resize', function () { rozetSonra(300); });
   if (window.MutationObserver && $('.yg-panel')) { new MutationObserver(function () { rozetSonra(450); }).observe($('.yg-panel'), { attributes: true, attributeFilter: ['class'] }); }
   document.addEventListener('dg:rota', function () { rozetSonra(400); });
+  if ($('#viewRoute')) { $('#viewRoute').addEventListener('scroll', function () { if (window.matchMedia('(max-width:640px)').matches) { rozetSonra(150); } }, { passive: true }); }
+  if ($('#ygDetail')) { new MutationObserver(function () { rozetSonra(450); }).observe($('#ygDetail'), { attributes: true, attributeFilter: ['hidden', 'class'] }); }
   var ilOne = function (ad) {
     var k = ad ? $('.yg-il-kart[data-il="' + ad + '"]') : iller; if (!k || iller.hidden) { return; }
     var gor = $('#ygViewToggle [data-v="list"]'); if (gor && window.matchMedia('(max-width:860px)').matches && !$('.yg-panel').classList.contains('sheet-full')) { gor.click(); }

@@ -12,45 +12,84 @@
 
   /* K5 (Beyar, 11 Kas) · Telefonda (≤860) rota görünür harita alanına sığar. Canlı `fitPad` alt sayfa TAM açıkken görünür şeridi
      ~58px bırakır, harita zoom 3'e düşer ve merkez Afrika'da kalır; haritaya dönünce yeniden sığdırılmaz. Girdiye odaklanınca tarayıcı
-     `overflow:hidden` `.yg-app` kabını kaydırır (alt sayfa yarımken 34dvh), harita kabı ekranın üstüne kayar. Burada: rota kurulunca ve
-     alt sayfa kipi ya da pencere boyu değişince kap kaydırması sıfırlanır, `invalidateSize`, rota görünür alana (başlığın altı, alt
-     sayfa ve görünür alt şeridin üstü) sığdırılır. Kullanıcı haritayı kendisi oynattıysa kip değişince sığdırılmaz, yalnız kap kaymışsa.
-     Masaüstü: yalnız `invalidateSize` ve kap kaymışsa canlı `fitPad` dolgusuyla sığdırma; canlı sığdırma aynen kalır */
+     `overflow:hidden` `.yg-app` kabını kaydırır (alt sayfa yarımken 34dvh), harita kabı ekranın üstüne kayar. Burada kap kaydırması
+     sıfırlanır, `invalidateSize`, rota görünür alana (başlığın altı, alt sayfa ve görünür alt şeridin üstü) sığdırılır.
+     Masaüstü: yalnız `invalidateSize` ve kap kaymışsa canlı `fitPad` dolgusuyla sığdırma; canlı sığdırma aynen kalır.
+     RM-11 · yeniden sığdırma (Beyar 11 Kas, tek kaynak burası; `dolgu()` bütün sığdırma ve odaklamaların dolgusu):
+     - Görünür alan: başlığın altı; dikey telefonda alt sayfanın, açık şeridin ve detayın üstü; yan sütunda panelin sağı, açık şeridin üstü;
+       dokunmatikte sağda +/− ve konum sütunu.
+     - Ne zaman: görünüm anahtarı (düzen: telefon / yan sütun, kip: Harita / Keşif / Plan yarım / Plan tam, yan sütunda şerit açık/kapalı)
+       değişince HER ZAMAN; rota değişince HER ZAMAN; yalnız ölçü değişince (pencere boyu, tarayıcı çubuğu, klavye kapanması) kullanıcı
+       haritayı oynatmadıysa. Kullanıcının sürüklemesi, yakınlaştırması, mekâna ya da kümeye uçuş "elle" sayılır ve bir sonraki kip
+       değişimine kadar korunur. Plan tamda ve klavye açıkken harita görünmez: sığdırılmaz, dönüşte bakılır.
+     - Geçiş bitince ölçülür: alt sayfa, şerit ve detayın CSS geçişleri (`getAnimations().finished`, transitionend karşılığı) beklenir.
+       Hedef görünümle şimdiki aynıysa hareket yok (titreme yok).
+     - Canlı betiğin kendi rota sığdırması (`fitActive`, canlı `fitPad` dolgusuyla, kip oturmadan) telefonda/yan sütunda yapılmaz; yerine
+       buradaki sığdırma kip oturunca bir kez çalışır (rota kurulunca iki ayrı kayma olmasın).
+     - Mekân detayı açıkken rota sığdırılmaz; seçili mekân pini görünür alanda tutulur (detay odağı rotaya üstün). */
   function haritaSigdirKur(m) {
     var L = window.L, app = document.querySelector('.yg-app'), panel = document.querySelector('.yg-panel');
-    var ust = document.querySelector('.yg-top'), serit = document.getElementById('ygDash'), dar = window.matchMedia('(max-width:860px)');
+    var ust = document.querySelector('.yg-top'), serit = document.getElementById('ygDash'), detay = document.getElementById('ygDetail');
+    var dar = window.matchMedia('(max-width:860px)');
+    var yan = window.matchMedia('(min-width:641px) and (max-width:860px) and (max-height:500px),(min-width:700px) and (max-width:860px)');
+    var kaba = window.matchMedia('(pointer:coarse)');
     if (!app || !panel || !m.getContainer) { return; }
-    var elle = false, bizim = 0, zamanlayici = 0, sonKip = kip();
-    function kip() { return ['peek', 'half', 'full'].filter(function (d) { return panel.classList.contains('sheet-' + d); })[0] || 'dok'; }
-    function sinir() { var g = window.dgRotaGeometri; return g && g.length > 1 ? L.latLngBounds(g) : null; }
+    var elle = false, bizim = false, hareketli = false, yeniBekliyor = false, sira = 0, zaman = 0, sonAnahtar = null;
+    var canliKip = function () { return ['peek', 'half', 'full'].filter(function (d) { return panel.classList.contains('sheet-' + d); })[0] || 'half'; };
+    function seritAcik() { return !!serit && !serit.hidden && !serit.classList.contains('collapsed') && !serit.classList.contains('full-hidden'); }
+    var detayAcik = function () { return !!detay && !detay.hidden; };
+    /* Görünüm anahtarı: değişmesi kullanıcının görünümü değiştirmesidir */
+    function anahtar() {
+      if (!dar.matches) { return 'genis'; }
+      if (yan.matches) { return 'yan:' + (seritAcik() ? 'kesif' : 'harita'); }
+      var k = canliKip(); return 'tel:' + (k === 'full' ? 'tam' : k === 'half' ? 'yarim' : seritAcik() ? 'kesif' : 'harita');
+    }
+    /* Rota: canlının çizdiği ana rota çizgisi (`routeLine`, 5,5 px, tam opak). Temizlenince yok (eski geometriye sığdırılmaz) */
+    function sinir() {
+      var c = null; m.eachLayer(function (l) { if (l instanceof L.Polyline && !(l instanceof L.Polygon) && l.options && l.options.weight === 5.5 && l.options.opacity === 1) { c = l; } });
+      var b = c && c.getBounds(); return b && b.isValid() ? b : null;
+    }
     function kapDuzelt() { if (!app.scrollTop && !app.scrollLeft) { return false; } app.scrollTop = 0; app.scrollLeft = 0; return true; }
-    function seritAcik() { return serit && !serit.hidden && !serit.classList.contains('collapsed') && !serit.classList.contains('full-hidden'); }
-    function dolgu() {
-      var k = m.getContainer().getBoundingClientRect(), p = panel.getBoundingClientRect();
+    /* Dolgu (harita kabına göre). `detayli`: açık detayın kapladığı yer de düşülür (pin odağı, küme) */
+    function dolgu(detayli) {
+      var k = m.getContainer().getBoundingClientRect(), p = panel.getBoundingClientRect(), sag = kaba.matches ? 66 : 22;
       if (!dar.matches) { return { paddingTopLeft: [Math.round(p.width) + 28, 84], paddingBottomRight: [40, 40] }; }
-      var ustY = ust ? ust.getBoundingClientRect().bottom : k.top, altY = Math.min(window.innerHeight, p.top);
-      if (seritAcik()) { var s = serit.getBoundingClientRect(); if (s.height && s.top > ustY && s.top < altY) { altY = s.top; } }
-      var ustD = Math.max(0, Math.round(ustY - k.top)) + 12, altD = Math.max(0, Math.round(k.bottom - altY)) + 16;
-      if (k.height - ustD - altD < 40) { altD = Math.max(0, Math.round(k.height - ustD - 40)); }
-      return { paddingTopLeft: [22, ustD], paddingBottomRight: [22, altD] };
+      var uY = ust ? ust.getBoundingClientRect().bottom : k.top, ustD = Math.max(0, Math.round(uY - k.top)) + 12, d = detayli && detayAcik() ? detay.getBoundingClientRect() : null;
+      /* RM-11 · yan sütun (yatay/kısa ekran, tablet): panel solda, şerit haritanın altında (masaüstü kalıbı), detay haritanın sol üstünde */
+      if (yan.matches) {
+        var sol = Math.max(0, Math.round(p.right - k.left)), sAlt = 40;
+        if (seritAcik()) { var ss = serit.getBoundingClientRect(); if (ss.height && ss.top < k.bottom) { sAlt = Math.round(k.bottom - ss.top) + 16; } }
+        /* Detay haritanın sol üstünde: pin için detayın sağı ya da altı, hangisi genişse (dar kalırsa sağdaki denetim payı düşülmez) */
+        if (d && d.height) {
+          var sagG = k.width - (d.right - k.left) - 22 - sag, altG = k.height - (d.bottom - k.top) - 12 - sAlt;
+          if (altG > 40 && altG * (k.width - sol - 22 - sag) > sagG * (k.height - ustD - sAlt)) { ustD = Math.round(d.bottom - k.top) + 12; }
+          else { sol = Math.round(d.right - k.left); if (sagG < 40) { sag = 22; } }
+        }
+        return { paddingTopLeft: [sol + 22, ustD], paddingBottomRight: [sag, sAlt] };
+      }
+      var altY = Math.min(window.innerHeight, p.top);
+      if (seritAcik()) { var s = serit.getBoundingClientRect(); if (s.height && s.top > uY && s.top < altY) { altY = s.top; } }
+      if (d && d.height) { altY = Math.min(altY, d.top); }
+      var altD = Math.max(0, Math.round(k.bottom - altY)) + 16;
+      if (!detayli && k.height - ustD - altD < 40) { altD = Math.max(0, Math.round(k.height - ustD - 40)); }
+      /* RM-11: dokunmatik telefonda +/− ve konum düğmesi sağ altta: sağ pay o sütun kadar (44 + kenar 14 + 8) */
+      return { paddingTopLeft: [22, ustD], paddingBottomRight: [sag, altD] };
     }
-    function icerde(b, d) {
-      var k = m.getSize(), a = m.latLngToContainerPoint(b.getNorthWest()), c = m.latLngToContainerPoint(b.getSouthEast());
-      return a.x >= d.paddingTopLeft[0] - 22 && c.x <= k.x - d.paddingBottomRight[0] + 22 && a.y >= d.paddingTopLeft[1] - 12 && c.y <= k.y - d.paddingBottomRight[1] + 16;
+    var ozFit = m.fitBounds;
+    /* Kendi hareketimiz: `movestart` zoom animasyonunda bir kare sonra gelir; iki kare sonra hâlâ sürüyorsa `moveend` beklenir */
+    function bizimle(f) {
+      bizim = true; var basladi = false, bas = function () { basladi = true; }, yedek = setTimeout(function () { bizim = false; }, 1500);
+      m.on('movestart', bas); f();
+      requestAnimationFrame(function () { requestAnimationFrame(function () {
+        m.off('movestart', bas);
+        if (basladi && hareketli) { m.once('moveend', function () { clearTimeout(yedek); bizim = false; }); } else { clearTimeout(yedek); bizim = false; }
+      }); });
     }
-    function sigdir(yeniRota) {
-      /* Dalga 2 mobil · rota: canlı `fitActive` yakınlaşma animasyonu sürerken Leaflet yeni `fitBounds`u sessizce yutar (`_tryAnimatedZoom`);
-         peek'te rota z3'te kalıyordu. Animasyon bitince yeniden denenir */
-      if (m._animatingZoom) { m.once('zoomend', function () { setTimeout(function () { sigdir(yeniRota); }, 0); }); return; }
-      bizim = true;
-      var kaydi = kapDuzelt(); m.invalidateSize(false);
-      var b = sinir(), d = dolgu(), gerek = b && (kaydi || (dar.matches && (yeniRota ? !icerde(b, d) : !elle)));
-      if (yeniRota || gerek) { elle = false; }
-      /* Leaflet yakınlaşma animasyonu `movestart`ı bir kare sonra atar; bizim sığdırmamız `moveend`e kadar elle sayılmaz */
-      var bitti = function () { bizim = false; }, yedek = setTimeout(bitti, 1200);
-      /* Dalga 2 mobil · rota: `fitBounds` önce süren kaydırmayı durdurup eşzamanlı `moveend` atar; dinleyici çağrıdan ÖNCE kurulunca o
-         olay "bitti" sayılıyor, kendi kaydırmamızın `movestart`ı elle işaretleniyordu (yarımda kur → Haritayı Gör sığmıyordu). Sonra kurulur */
-      if (gerek) { m.fitBounds(b.pad(0.04), d); m.once('moveend', function () { clearTimeout(yedek); bitti(); }); } else { if (!b && dar.matches && !elle) { bosOrtala(d); } clearTimeout(yedek); bitti(); }
+    function sigdir(b, d) {
+      var h = b.pad(0.04);
+      /* Hedef şimdiki görünümse hareket yok */
+      if (m._getBoundsCenterZoom) { var t = m._getBoundsCenterZoom(h, d); if (t && t.zoom === m.getZoom() && m.latLngToContainerPoint(t.center).distanceTo(m.getSize().divideBy(2)) < 8) { return; } }
+      bizimle(function () { ozFit.call(m, h, d); });
     }
     /* Dalga 2 mobil · rota: rota yokken canlı başlangıç merkezi (Türkiye, `L.map` `center`) haritanın geometrik ortasında, yani telefonda alt
        sayfanın arkasında kalıyordu; yarım kipte görünür alanda Karadeniz ve Kırım görünüyordu. Aynı merkez ve yakınlık görünür alanın ortasına
@@ -58,22 +97,70 @@
     var ilkMerkez = m.getCenter();
     function bosOrtala(d) {
       var z = m.getZoom(), k = m.getSize(), hedefY = (d.paddingTopLeft[1] + k.y - d.paddingBottomRight[1]) / 2;
-      m.setView(m.unproject(m.project(ilkMerkez, z).add([0, k.y / 2 - hedefY]), z), z, { animate: false });
+      bizimle(function () { m.setView(m.unproject(m.project(ilkMerkez, z).add([0, k.y / 2 - hedefY]), z), z, { animate: false }); });
     }
-    /* Dalga 2 mobil · rota: yeni rota bekleyen bir sığdırmayı ezilmez. `dg:rota`dan sonraki 350 ms içinde panel sınıfı değişince (ilk kip
-       ataması, rota çizimi) kip zamanlayıcısı yeni rota bilgisini siliyordu; canlı `fitActive` hareketi "elle" sayılıp kalıyor, "Haritayı Gör"de
-       harita z3'te kalıyordu (birleşik hâlde 390/360/768 ölçüldü) */
-    var yeniBekliyor = false;
-    function sonra(yeniRota, ms) { yeniBekliyor = yeniBekliyor || yeniRota; clearTimeout(zamanlayici); zamanlayici = setTimeout(function () { var y = yeniBekliyor; yeniBekliyor = false; sigdir(y); }, ms); }
-    /* Elle: sürükleme, dokunma, tekerlek her zaman; programla gelen hareket (canlı betiğin mekâna uçuşu) bizim değilse */
+    /* Bulgu #9 + RM-11: detay açıkken seçili pin görünür alanda (detayın üstü; yan sütunda detayın sağı) */
+    function pinGoster() {
+      var p = document.querySelector('#routeMap .yg-vpin.is-active, #routeMap .yg-vcluster.is-active');
+      if (!p || !detayAcik() || !dar.matches) { return; }
+      if (hareketli) { m.once('moveend', function () { setTimeout(pinGoster, 0); }); return; }
+      var d = dolgu(true), k = m.getSize(), c = m.getContainer().getBoundingClientRect(), r = p.getBoundingClientRect();
+      var x = r.left + r.width / 2 - c.left, y = r.top + r.height / 2 - c.top, x0 = d.paddingTopLeft[0], y0 = d.paddingTopLeft[1], x1 = k.x - d.paddingBottomRight[0], y1 = k.y - d.paddingBottomRight[1];
+      if (y1 - y0 < 40 || x1 - x0 < 40) { return; }
+      var dx = x < x0 || x > x1 ? Math.round(x - (x0 + x1) / 2) : 0, dy = y < y0 || y > y1 ? Math.round(y - (y0 + y1) / 2) : 0;
+      if (dx || dy) { m.panBy([dx, dy], { duration: 0.4 }); }
+    }
+    function degerlendir() {
+      if (panel.classList.contains('sheet-dragging') || (serit && serit.classList.contains('rm-surukle'))) { return; }
+      var kaydi = kapDuzelt(); m.invalidateSize(false);
+      var a = anahtar(), kipDegisti = a !== sonAnahtar, b = sinir();
+      if (!dar.matches) { sonAnahtar = a; if (b && kaydi) { bizimle(function () { ozFit.call(m, b.pad(0.04), dolgu()); }); } return; }
+      /* Klavye: alan geçici; kapanınca yeniden bakılır (anahtar güncellenmez, bekleyen rota korunur) */
+      if (panel.classList.contains('yg-klavye')) { return; }
+      sonAnahtar = a;
+      if (detayAcik()) { pinGoster(); return; }
+      if (a === 'tel:tam') { return; }
+      var d = dolgu();
+      if (!b) { if (!elle) { bosOrtala(d); } return; }
+      if (!(kipDegisti || yeniBekliyor || kaydi) && elle) { return; }
+      yeniBekliyor = false; elle = false;
+      sigdir(b, d);
+    }
+    /* Geçişler bitince değerlendir (alt sayfa .34s, şerit, detay yüksekliği); art arda tetiklemelerden yalnız sonuncusu */
+    function oturunca(f) {
+      var bitti = false, son = function () { if (!bitti) { bitti = true; f(); } };
+      requestAnimationFrame(function () { requestAnimationFrame(function () {
+        var a = [];
+        [panel, serit, detay].forEach(function (el) { if (el && el.getAnimations) { a = a.concat(el.getAnimations().filter(function (x) { return typeof x.transitionProperty === 'string'; })); } });
+        if (!a.length) { son(); return; }
+        Promise.all(a.map(function (x) { return x.finished.catch(function () { /* iptal: yeni geçiş */ }); })).then(function () { setTimeout(son, 0); });
+        setTimeout(son, 900);
+      }); });
+    }
+    /* Yeni rota beklerken (rota çizildi, yeni kip birazdan atanacak) araya giren tetikleme değerlendirmeyi öne çekmez: tek kayma */
+    var hedef = 0;
+    function sonra(yeni, ms) {
+      if (yeni) { yeniBekliyor = true; }
+      var t = Date.now() + (ms || 0); if (yeniBekliyor && hedef > t) { t = hedef; } hedef = t;
+      var no = ++sira; clearTimeout(zaman);
+      zaman = setTimeout(function () { oturunca(function () { if (no === sira) { degerlendir(); } }); }, t - Date.now());
+    }
+    /* Canlı `fitActive` (rota çizgisinin .04 paylı sınırı): telefonda ve yan sütunda yerine bizim sığdırmamız, kip oturunca */
+    m.fitBounds = function (b, o) {
+      if (!bizim && dar.matches && b && b.equals) { var r = sinir(); if (r && b.equals(r.pad(0.04), 1e-9)) { sonra(true, 200); return m; } }
+      return ozFit.apply(m, arguments);
+    };
+    /* Elle: sürükleme her zaman; bizim olmayan her hareket (iki parmak, tekerlek, +/−, mekâna ya da kümeye uçuş) */
+    m.on('movestart', function () { hareketli = true; if (!bizim) { elle = true; } });
+    m.on('moveend', function () { hareketli = false; });
     m.on('dragstart', function () { elle = true; });
-    ['pointerdown', 'wheel'].forEach(function (o) { m.getContainer().addEventListener(o, function () { elle = true; }, { passive: true }); });
-    m.on('movestart', function () { if (!bizim) { elle = true; } });
-    /* Canlı betik rotayı `dg:rota`dan sonra çizip kendisi sığdırır; onun animasyonu bitince bakılır */
-    document.addEventListener('dg:rota', function () { sonra(true, 350); });
-    /* Alt sayfa kipi: geçiş .34s; sürükleme sırasında değil, kip oturunca */
-    new MutationObserver(function () { var y = kip(); if (y !== sonKip && !panel.classList.contains('sheet-dragging')) { sonKip = y; sonra(false, 420); } }).observe(panel, { attributes: true, attributeFilter: ['class'] });
-    window.addEventListener('resize', function () { sonra(false, 250); });
+    /* Canlı betik rotayı `dg:rota`dan sonra çizer; yeni kip (Keşif) 150 ms'de atanır: ondan sonra, geçiş bitince */
+    document.addEventListener('dg:rota', function () { sonra(true, 200); });
+    var izle = function (el, at) { if (el) { new MutationObserver(function () { sonra(false, 0); }).observe(el, { attributes: true, attributeFilter: at }); } };
+    izle(panel, ['class']); izle(serit, ['class', 'hidden']); izle(detay, ['class', 'hidden']);
+    window.addEventListener('resize', function () { sonra(false, 120); });
+    if (window.visualViewport) { window.visualViewport.addEventListener('resize', function () { sonra(false, 120); }); }
+    window.dgRotaDolgu = function () { return dolgu(true); };
     sonra(false, 60);
   }
 
@@ -102,6 +189,240 @@
     });
     var vv = window.visualViewport || window;
     vv.addEventListener('resize', function () { if (panel.classList.contains('yg-klavye') && metin(document.activeElement)) { clearTimeout(zaman); zaman = setTimeout(function () { yerlestir(document.activeElement); }, 120); } });
+  })();
+
+  /* RM-11 (Beyar 11 Kas) · Telefon alt sayfası dört kip: harita (yalnız özet satırı) · kesif (özet + şerit; rota kurulunca varsayılan) ·
+     yarim · tam. Canlı betik değişmez: onun kipi (peek/half/full) ve şerit açık/kapalı tercihi kendi düğmeleriyle sürülür (gizli "Haritayı
+     Gör / Listeyi Gör" düğmeleri, şerit tutamağı; tam kip için tutamağa canlının beklediği sürükleme dizisi). Sürükleme burada: tutamak,
+     özet satırı, şerit (dikey) ve içerik en üstteyken aşağı çekme; dokunma ve fare aynı işaretçi olaylarıyla, içerik çekmesi dokunma
+     olaylarıyla. `.yg-app[data-rm-kip]`, `--rm-alt` (alt yığın yüksekliği: konum ve +/− düğmesi), `--rm-serit-h` CSS'e yazılır.
+     Detay alt sayfada (Keşif yüksekliği; yukarı çekince tam, aşağı çekince kapanır); listeden açılan detay kapanınca listeye dönülür.
+     Yan sütunda (yatay/kısa ekran, ≥700 tablet) canlı kip peek'te tutulur, görünüm CSS'te */
+  (function altSayfaKur() {
+    var app = document.querySelector('.yg-app'), panel = document.querySelector('.yg-panel');
+    if (!app || !panel || !window.PointerEvent) { return; }
+    var TEL = window.matchMedia('(max-width:640px),(max-width:699px) and (min-height:501px)');
+    var YAN = window.matchMedia('(min-width:641px) and (max-width:860px) and (max-height:500px),(min-width:700px) and (max-width:860px)');
+    var $ = function (s) { return document.querySelector(s); };
+    var grip = $('.yg-sheet-grip'), ctx = $('#ygSheetCtx'), serit = $('#ygDash'), detay = $('#ygDetail'), tum = $('#viewAll'), ozet = $('#ygSummary');
+    var prob = document.createElement('div');
+    prob.style.cssText = 'position:fixed;left:0;bottom:0;width:0;visibility:hidden;pointer-events:none;height:env(safe-area-inset-bottom,0px)';
+    document.body.appendChild(prob);
+    var sa = function () { return prob.offsetHeight || 0; };
+    var canliKip = function () { return ['peek', 'half', 'full'].filter(function (d) { return panel.classList.contains('sheet-' + d); })[0] || 'half'; };
+    var seritVar = function () { return !!serit && !serit.hidden && !serit.classList.contains('full-hidden') && getComputedStyle(serit).display !== 'none'; };
+    var seritAcik = function () { return seritVar() && !serit.classList.contains('collapsed'); };
+    var detayAcik = function () { return !!detay && !detay.hidden; };
+    var kip = function () { var k = canliKip(); return k === 'full' ? 'tam' : k === 'half' ? 'yarim' : (seritAcik() ? 'kesif' : 'harita'); };
+    var seritH = 217;
+    /* Kip ve alt yığın: CSS değişkenleri */
+    function yaz() {
+      bekleyen = 0;
+      if (!TEL.matches && !YAN.matches) { delete app.dataset.rmKip; delete app.dataset.rmKlavye; delete app.dataset.rmZoomYok; app.style.removeProperty('--rm-alt'); return; }
+      var k = kip(), vh = window.innerHeight, alt = 0, kl = panel.classList.contains('yg-klavye');
+      app.dataset.rmKip = k;
+      if (kl) { app.dataset.rmKlavye = ''; } else { delete app.dataset.rmKlavye; }
+      if (TEL.matches) {
+        if (k === 'kesif' && serit.offsetHeight) { seritH = serit.offsetHeight; }
+        if (kl) { alt = vh - 60; } else if (detayAcik()) { alt = detay.offsetHeight; } else { alt = k === 'tam' ? vh - 60 : k === 'yarim' ? Math.round(vh * 0.52) : k === 'kesif' ? 56 + sa() + seritH : 76 + sa(); }
+      } else if (seritAcik()) { alt = serit.offsetHeight + 16; }
+      /* +/− konum düğmesinin üstünde yer bulamazsa (yatay ekranda şerit açık) gizlenir; iki parmakla yakınlaştırma kalır */
+      if (vh - alt - 16 - 44 - 8 - 90 < 68) { app.dataset.rmZoomYok = ''; } else { delete app.dataset.rmZoomYok; }
+      app.style.setProperty('--rm-alt', alt + 'px');
+      app.style.setProperty('--rm-serit-h', seritH + 'px');
+    }
+    var bekleyen = 0;
+    var yazSonra = function () { if (!bekleyen) { bekleyen = requestAnimationFrame(yaz); } };
+    var izle = function (el, at) { if (el) { new MutationObserver(yazSonra).observe(el, { attributes: true, attributeFilter: at }); } };
+    izle(panel, ['class']); izle(serit, ['class', 'hidden']); izle(document.body, ['class']);
+    window.addEventListener('resize', yazSonra);
+    /* Canlı kipi sür */
+    var gecis = false;
+    var tikla = function (s) { var e = $(s); if (e) { gecis = true; try { e.click(); } finally { gecis = false; } } };
+    function canliTam() {
+      if (!grip) { return; }
+      gecis = true;
+      try {
+        grip.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, cancelable: true, clientY: 10000, pointerId: 77, pointerType: 'touch' }));
+        window.dispatchEvent(new PointerEvent('pointermove', { bubbles: true, cancelable: true, clientY: 0, pointerId: 77, pointerType: 'touch' }));
+        window.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, pointerId: 77, pointerType: 'touch' }));
+      } finally { gecis = false; }
+    }
+    function kipAta(h) {
+      /* "Haritayı Gör" canlıda peek'e iner ve şeridi kullanıcının açık/kapalı tercihine döndürür (peek'teyken de: şerit gizliyken
+         kurulan rota şeridi kapalı bırakabiliyor). Tercih ancak gerekirse şerit tutamağıyla değişir */
+      if (YAN.matches) { h = h === 'kesif' ? 'kesif' : 'harita'; }
+      if (h === 'tam') { if (canliKip() !== 'full') { canliTam(); } return; }
+      if (h === 'yarim') { if (canliKip() !== 'half') { tikla('#ygViewToggle [data-v="list"]'); } return; }
+      tikla('#ygViewToggle [data-v="map"]');
+      if (!seritVar()) { return; }
+      if ((h === 'kesif') === serit.classList.contains('collapsed')) { tikla('#ygDashHandle'); }
+    }
+    window.dgRotaKip = { ata: kipAta, oku: kip };
+    /* Sürükleme: yığının üst kenarı parmağı izler, bırakınca en yakın kip (hızlı fiske ya da 40 px'ten uzun çekme bir kip ilerletir) */
+    var adaylar = function () {
+      var vh = window.innerHeight, s = sa(), l = [['harita', vh - 76 - s]];
+      if (seritVar()) { l.push(['kesif', vh - 56 - s - seritH]); }
+      l.push(['yarim', Math.round(vh * 0.48)], ['tam', 60]);
+      return l;
+    };
+    var g = null, sonSurukle = 0;
+    function basla(x, y, kaynak, id) {
+      if (!TEL.matches || detayAcik() || panel.classList.contains('yg-klavye')) { return false; }
+      var k = kip(), l = adaylar(), a = l.filter(function (q) { return q[0] === k; })[0];
+      var T0 = panel.getBoundingClientRect().top - (window.innerHeight - panel.offsetHeight);
+      g = { x0: x, y0: y, k0: k, ust0: a ? a[1] : l[0][1], T0: T0, eksen: null, kaynak: kaynak, id: id, iz: [[Date.now(), y]] };
+      return true;
+    }
+    function hareket(x, y) {
+      if (!g) { return false; }
+      var dy = y - g.y0, dx = x - g.x0;
+      if (!g.eksen) {
+        if (Math.abs(dy) < 6 && Math.abs(dx) < 6) { return false; }
+        g.eksen = Math.abs(dy) > Math.abs(dx) ? 'y' : 'x';
+        if (g.eksen === 'x') { g = null; return false; }
+      }
+      var vh = window.innerHeight, H = panel.offsetHeight, enAlt = H - 76 - sa();
+      if (g.k0 === 'kesif' && dy > 0) {
+        serit.classList.add('rm-surukle'); serit.style.transform = 'translateY(' + dy + 'px)';
+      } else {
+        panel.classList.add('sheet-dragging');
+        panel.style.transform = 'translateY(' + Math.max(0, Math.min(enAlt, g.T0 + dy)) + 'px)';
+        if (g.k0 === 'kesif') { serit.classList.add('rm-surukle'); serit.style.transform = 'translateY(' + Math.max(dy, 60 - (vh - 56 - sa() - seritH)) + 'px)'; }
+      }
+      g.iz.push([Date.now(), y]); if (g.iz.length > 6) { g.iz.shift(); }
+      return true;
+    }
+    function bitir(y) {
+      var s = g; g = null; if (!s) { return; }
+      if (!s.eksen) { if (s.kaynak === 'tutamak') { dokun(); } return; }
+      var dy = y - s.y0, ilk = s.iz[0], hiz = (y - ilk[1]) / Math.max(1, Date.now() - ilk[0]);
+      var l = adaylar(), sira = l.map(function (q) { return q[0]; }), i0 = sira.indexOf(s.k0), ust = s.ust0 + dy;
+      var h = l.slice().sort(function (a, b) { return Math.abs(a[1] - ust) - Math.abs(b[1] - ust); })[0][0];
+      var adim = function (yon) { return sira[Math.max(0, Math.min(sira.length - 1, (i0 < 0 ? 0 : i0) + yon))]; };
+      if (Math.abs(hiz) > 0.6) { h = adim(hiz < 0 ? 1 : -1); } else if (h === s.k0 && Math.abs(dy) > 40) { h = adim(dy < 0 ? 1 : -1); }
+      sonSurukle = Date.now();
+      panel.classList.remove('sheet-dragging'); panel.style.transform = '';
+      serit.classList.remove('rm-surukle'); serit.style.transform = '';
+      kipAta(h); yazSonra();
+    }
+    function dokun() {
+      var k = kip();
+      kipAta(k === 'harita' ? (seritVar() ? 'kesif' : 'yarim') : k === 'yarim' ? (seritVar() ? 'kesif' : 'harita') : k === 'tam' ? 'yarim' : 'yarim');
+    }
+    var isaretci = function (el, kaynak, sart) {
+      if (!el) { return; }
+      el.addEventListener('pointerdown', function (e) {
+        if (gecis || (e.pointerType === 'mouse' && e.button !== 0)) { return; }
+        if (!TEL.matches || (sart && !sart(e))) { return; }
+        if (kaynak === 'tutamak') { e.stopImmediatePropagation(); }
+        if (basla(e.clientX, e.clientY, kaynak, e.pointerId) && kaynak !== 'serit') { try { el.setPointerCapture(e.pointerId); } catch (x) { /* yakalama yok */ } }
+      }, true);
+    };
+    isaretci(grip, 'tutamak');
+    isaretci(ctx, 'ozet');
+    isaretci(serit, 'serit', function () { return kip() === 'kesif'; });
+    window.addEventListener('pointermove', function (e) { if (g && g.id === e.pointerId && hareket(e.clientX, e.clientY) && e.cancelable) { e.preventDefault(); } }, { passive: false });
+    window.addEventListener('pointerup', function (e) { if (g && g.id === e.pointerId) { bitir(e.clientY); } });
+    window.addEventListener('pointercancel', function (e) { if (g && g.id === e.pointerId) { if (g.eksen === 'y') { bitir(g.iz[g.iz.length - 1][1]); } else { g = null; } } });
+    /* Sürüklemeden sonra gelen tıklama (fare) kip değiştirmez, kart açmaz */
+    [ctx, serit].forEach(function (el) { if (el) { el.addEventListener('click', function (e) { if (!gecis && Date.now() - sonSurukle < 400) { e.preventDefault(); e.stopImmediatePropagation(); } }, true); } });
+    /* İçerik en üstteyken aşağı çekme alt sayfayı bir kip indirir (yarım/tam); tarayıcı kaydırması dokunma olaylarıyla durdurulur */
+    var kaydiranUst = function (t) { for (var a = t; a && a !== panel; a = a.parentElement) { if (a.scrollTop > 0 && /auto|scroll/.test(getComputedStyle(a).overflowY)) { return false; } } return true; };
+    var ic = null;
+    panel.addEventListener('touchstart', function (e) {
+      ic = null;
+      if (!TEL.matches || e.touches.length !== 1 || e.target.closest('.yg-sheet-grip,#ygSheetCtx,.yg-stop .yg-grip,input,select,textarea')) { return; }
+      var k = kip(); if (k !== 'yarim' && k !== 'tam') { return; }
+      ic = { x: e.touches[0].clientX, y: e.touches[0].clientY, ust: kaydiranUst(e.target), surer: false };
+    }, { passive: true });
+    panel.addEventListener('touchmove', function (e) {
+      if (!ic) { return; }
+      var t = e.touches[0], dy = t.clientY - ic.y, dx = t.clientX - ic.x;
+      if (!ic.surer) {
+        if (Math.abs(dy) < 6 && Math.abs(dx) < 6) { return; }
+        if (!ic.ust || dy <= 0 || Math.abs(dx) > Math.abs(dy) || !basla(ic.x, ic.y, 'icerik', 'dokunma')) { ic = null; return; }
+        ic.surer = true;
+      }
+      hareket(t.clientX, t.clientY); if (e.cancelable) { e.preventDefault(); }
+    }, { passive: false });
+    var icBitir = function (e) { if (ic && ic.surer && g && g.id === 'dokunma') { var t = e.changedTouches[0]; bitir(t ? t.clientY : ic.y); } ic = null; };
+    panel.addEventListener('touchend', icBitir); panel.addEventListener('touchcancel', icBitir);
+    /* Detay alt sayfası: yukarı çekme tam, tamda en üstteyken aşağı çekme Keşif yüksekliği, kısa hâlde aşağı çekme kapatır */
+    var dt = null;
+    if (detay) {
+      detay.addEventListener('touchstart', function (e) { dt = TEL.matches && e.touches.length === 1 ? { y: e.touches[0].clientY, x: e.touches[0].clientX, ust: detay.scrollTop <= 0, bitti: false } : null; }, { passive: true });
+      detay.addEventListener('touchmove', function (e) {
+        if (!dt || dt.bitti) { if (dt && dt.bitti && e.cancelable) { e.preventDefault(); } return; }
+        var t = e.touches[0], dy = t.clientY - dt.y, dx = t.clientX - dt.x, tam = detay.classList.contains('rm-detay-tam');
+        if (Math.abs(dx) > Math.abs(dy)) { return; }
+        if (!tam && dy < -12) { detay.classList.add('rm-detay-tam'); dt.bitti = true; }
+        else if (dt.ust && dy > 12 && tam) { detay.classList.remove('rm-detay-tam'); dt.bitti = true; }
+        else if (dt.ust && dy > 60 && !tam) { dt.bitti = true; tikla('#ygDetailClose'); }
+        else if (!dt.ust || (tam && dy < 0)) { dt = null; return; }
+        if (e.cancelable) { e.preventDefault(); }
+      }, { passive: false });
+      new MutationObserver(function () { yazSonra(); }).observe(detay, { attributes: true, attributeFilter: ['class'] });
+      detay.addEventListener('transitionend', yazSonra);
+    }
+    /* Detay: açılınca kısa hâl (seçili pin görünür alana: `haritaSigdirKur` `pinGoster`); listeden açıldıysa kapanınca liste (tam kip) geri gelir */
+    var listeden = false;
+    if (detay) {
+      new MutationObserver(function () {
+        if (detayAcik()) {
+          listeden = !!tum && !tum.hidden; detay.classList.remove('rm-detay-tam'); detay.scrollTop = 0;
+        } else if (listeden) { listeden = false; if (TEL.matches && tum && !tum.hidden) { canliTam(); } }
+        yazSonra();
+      }).observe(detay, { attributes: true, attributeFilter: ['hidden'] });
+    }
+    /* Rota kurulunca Keşif (yeni rota: pilot seçimi ya da rotasızdan rotalıya geçiş; sonraki yeniden hesaplamalar kipi değiştirmez) */
+    var rotaVardi = false, pilot = false;
+    document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.yg-pilot')) { pilot = true; } }, true);
+    if (ozet) { new MutationObserver(function () { if (ozet.hidden) { rotaVardi = false; } }).observe(ozet, { attributes: true, attributeFilter: ['hidden'] }); }
+    document.addEventListener('dg:rota', function () {
+      var yeni = pilot || !rotaVardi; pilot = false;
+      /* Yan sütunda yeni rota: kısa ekranda (≤500) Harita (şerit 330 px haritanın üçte ikisini örterdi; "Yol üstü mekânlar" tutamağı açar),
+         tablette Keşif; yeniden hesaplamada kullanıcının şerit tercihi geri gelir */
+      var dene = function () {
+        rotaVardi = rotaVardi || !ozet.hidden;
+        if (detayAcik() || panel.classList.contains('yg-klavye') || (tum && !tum.hidden)) { return; }
+        if (YAN.matches) { kipAta(yeni ? (window.innerHeight <= 500 ? 'harita' : 'kesif') : kip()); } else if (yeni && TEL.matches) { kipAta('kesif'); }
+      };
+      setTimeout(dene, 150); setTimeout(function () { if (yeni && TEL.matches && kip() === 'harita' && seritVar()) { dene(); } }, 1100);
+    });
+    /* Özet satırındaki "Haritada gör" (yarım kipteki mekân sayısı) Keşif'e götürür */
+    var bc = $('#ygBrowseCta'); if (bc) { bc.addEventListener('click', function () { setTimeout(function () { if (TEL.matches) { kipAta('kesif'); } }, 0); }); }
+    /* Yan sütun: canlı kip peek'te kalır (şerit canlıda yalnız peek'te görünür); liste açıkken dokunulmaz */
+    new MutationObserver(function () {
+      if (YAN.matches && canliKip() !== 'peek' && !(tum && !tum.hidden) && !panel.classList.contains('sheet-dragging')) { setTimeout(function () { if (YAN.matches && canliKip() !== 'peek' && !(tum && !tum.hidden)) { tikla('#ygViewToggle [data-v="map"]'); } }, 0); }
+    }).observe(panel, { attributes: true, attributeFilter: ['class'] });
+    var mq = function () { yazSonra(); if (YAN.matches && canliKip() !== 'peek') { setTimeout(function () { tikla('#ygViewToggle [data-v="map"]'); }, 0); } };
+    [TEL, YAN].forEach(function (q) { if (q.addEventListener) { q.addEventListener('change', mq); } });
+    /* Bulgu #11 · Kümeye dokununca (yakınlık < 13) kümedeki mekânların sınırına, görünür harita alanına sığdırılır (canlı: hücre ortasına uçuş).
+       Üyeler canlının ızgarasıyla (48 px) aynı hücrede kalan mekânlar */
+    document.addEventListener('click', function (e) {
+      var c = e.target.closest && e.target.closest('#routeMap .yg-vcluster'), m = window.dgRotaHarita;
+      if (!c || !m || !window.matchMedia('(max-width:860px)').matches || m.getZoom() >= 13 || !sonMekan.length) { return; }
+      var r = c.getBoundingClientRect(), k = m.getContainer().getBoundingClientRect(), z = m.getZoom();
+      var pc = m.project(m.containerPointToLatLng([r.left + r.width / 2 - k.left, r.top + r.height / 2 - k.top]), z), col = Math.floor(pc.x / 48), row = Math.floor(pc.y / 48);
+      var uye = sonMekan.filter(function (x) { var p = m.project([x.lat, x.lng], z); return Math.floor(p.x / 48) === col && Math.floor(p.y / 48) === row; });
+      if (uye.length < 2) { return; }
+      e.stopPropagation(); e.preventDefault();
+      var d = window.dgRotaDolgu ? window.dgRotaDolgu() : {}, o = { maxZoom: 13, duration: 0.7 }; for (var a in d) { o[a] = d[a]; }
+      m.flyToBounds(window.L.latLngBounds(uye.map(function (x) { return [x.lat, x.lng]; })), o);
+    }, true);
+    /* Bulgu #16 · Atıf telefonda (i) düğmesiyle kapalı başlar (Mekânlar/Etkinlikler MapLibre kalıbı) */
+    var atifKur = function () {
+      var kap = document.querySelector('#routeMap .leaflet-bottom.leaflet-right'); if (!kap || kap.querySelector('.rm-atif')) { return; }
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'rm-atif leaflet-control'; b.setAttribute('aria-label', 'Harita kaynaklarını göster'); b.setAttribute('aria-expanded', 'false');
+      b.innerHTML = '<i class="fa-solid fa-circle-info" aria-hidden="true"></i>';
+      if (window.L && window.L.DomEvent) { window.L.DomEvent.disableClickPropagation(b); }
+      b.addEventListener('click', function () { var ac = kap.classList.toggle('rm-atif-acik'); b.setAttribute('aria-expanded', String(ac)); b.setAttribute('aria-label', ac ? 'Harita kaynaklarını gizle' : 'Harita kaynaklarını göster'); });
+      kap.insertBefore(b, kap.firstChild);
+    };
+    var hazir = function () { atifKur(); yaz(); };
+    if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', hazir); } else { setTimeout(hazir, 0); }
+    window.addEventListener('load', hazir);
   })();
 
   /* Dalga 2 mobil · rota (11 Kas) · Dokunarak durak sıralama. Canlı liste yalnız HTML sürükle-bırak (`draggable`, `dragstart`/`drop`) dinler;
@@ -137,6 +458,50 @@
     });
     liste.addEventListener('pointerup', function (e) { if (e.pointerId === no) { bitir(false); } });
     liste.addEventListener('pointercancel', function (e) { if (e.pointerId === no) { bitir(true); } });
+  })();
+
+  /* RM-11 · Bulgu #6 (Beyar 11 Kas) · Rota varken "Nereden / Ara duraklar / Nereye" girdileri tek satıra katlanır: "İstanbul → Ankara";
+     sığmazsa "İstanbul → … → Antalya · 2 ara durak". Satır akordeon başlığıdır (`button`, `aria-expanded`, `aria-controls` durak bölümü):
+     dokununca girdiler, sürükle-sırala, sil, Ara Durak Ekle, Konumumu kullan, Başlangıç ve Varışı Değiştir eskisi gibi açılır; tekrar katlanır.
+     Yeni rotada (rotasızdan rotalıya ya da pilot seçimi) katlı; kullanıcı açtıysa yeniden hesaplamada açık kalır; rota temizlenince ve
+     Yeni Rota Oluştur'da açık (satır gizli). Görünüm ve sıra yalnız ≤860 (telefon ve yan sütun, `gourmet-sapma.css` RM-11); masaüstü aynen */
+  (function durakKatlaKur() {
+    var vr = document.getElementById('viewRoute'), rota = vr && vr.querySelector('.yg-route'), liste = document.getElementById('ygStopList'), ozet = document.getElementById('ygSummary');
+    if (!rota || !liste || !ozet) { return; }
+    if (!rota.id) { rota.id = 'ygRouteStops'; }
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'rm-durak-ozet'; b.hidden = true; b.setAttribute('aria-controls', rota.id); b.setAttribute('aria-expanded', 'true');
+    b.innerHTML = '<i class="fa-solid fa-route" aria-hidden="true"></i><span class="rm-durak-metin"></span><span class="rm-durak-ek"></span><i class="fa-solid fa-chevron-down rm-durak-ok" aria-hidden="true"></i>';
+    rota.parentNode.insertBefore(b, rota);
+    var metin = b.querySelector('.rm-durak-metin'), ek = b.querySelector('.rm-durak-ek'), katli = false, acik = false, pilot = false;
+    /* Girdide "İstanbul, Marmara" / "Kadıköy, İstanbul": özette yalnız yer adı */
+    var adlar = function () { return [].map.call(liste.querySelectorAll('.yg-stop-input'), function (i) { return (i.value || '').split(',')[0].trim(); }).filter(Boolean); };
+    function yaz() {
+      var a = adlar(), n = a.length;
+      b.setAttribute('aria-label', 'Güzergâh durakları: ' + a.join(', ') + (katli ? '. Durakları düzenlemek için aç' : ''));
+      metin.textContent = a.join(' → '); ek.textContent = '';
+      /* Tam zincir sığmazsa kısa biçim (görünürken ölçülür) */
+      if (n > 2 && b.offsetWidth && metin.scrollWidth > metin.clientWidth + 1) {
+        metin.textContent = a[0] + ' → … → ' + a[n - 1]; ek.textContent = '· ' + (n - 2) + ' ara durak';
+      }
+    }
+    /* `acik`: kullanıcı satırı açtı. Durak düzenlerken rota bir an düşse de (bir girdi temizlendi) açık kalır; bütün girdiler boşalınca
+       (rota temizlendi, Yeni Rota Oluştur) ve pilot seçiminde tercih sıfırlanır */
+    function uygula() {
+      var var_ = !ozet.hidden;
+      if (pilot || !adlar().length) { acik = false; }
+      pilot = false; katli = var_ && !acik;
+      b.hidden = !var_;
+      vr.classList.toggle('rm-durak-katli', katli);
+      b.setAttribute('aria-expanded', String(!katli));
+      if (var_) { yaz(); }
+    }
+    b.addEventListener('click', function () { acik = katli; uygula(); });
+    document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('.yg-pilot')) { pilot = true; } }, true);
+    new MutationObserver(uygula).observe(ozet, { attributes: true, attributeFilter: ['hidden'] });
+    document.addEventListener('dg:rota', function () { setTimeout(uygula, 0); });
+    window.addEventListener('resize', function () { if (!b.hidden) { yaz(); } });
+    uygula();
   })();
 
   /* Yer araması (Beyar, 9 Kas: "trabzon" eşleşmiyordu): 81 il ve başlıca ilçe/semt `rota-yerler.js`ten.
@@ -266,6 +631,7 @@
   /* İl ve ilçe merkezleri, iliyle etiketli: noktanın ili en yakın merkezin ili (il sınırı verisi yok; yaklaşık) */
   var TOHUM = ILLER.map(function (y) { return [y.lat, y.lng, y.ad]; }).concat(YERLER.filter(function (y) { return y.tur === 'district' && DUGUM[y.alt]; }).map(function (y) { return [y.lat, y.lng, y.alt]; }));
   var ilNe = function (la, ln) { var en = 1e9, ad = null; TOHUM.forEach(function (t) { var d = km(la, ln, t[0], t[1]); if (d < en) { en = d; ad = t[2]; } }); return ad; };
+  window.dgIlNe = ilNe;
   function ilBul(n, z) {
     var uzun = {}, sira = [], ekle = function (ad, d) { if (!ad) { return; } if (!(ad in uzun)) { uzun[ad] = 0; sira.push(ad); } uzun[ad] += d; };
     ekle(ilNe(n[0][0], n[0][1]), 99);
@@ -333,7 +699,7 @@
     if (!l.length && hat.length) { l = window.dgRotaOrnek(150, 1.5).map(function (o, i) { return [o.lng, o.lat, i % 3 === 2 ? 'Örnek AC şarj' : 'Örnek DC hızlı şarj', [['Örnek esnaf lokantası', 'Örnek pideci', 'Örnek köfteci'][i % 3], 300 + (i % 3) * 100]]; }); }
     return l;
   };
-  var detay = {}; V.mekanlar.forEach(function (m) { detay[m.slug] = m; });
+  var detay = {}, sonMekan = []; V.mekanlar.forEach(function (m) { detay[m.slug] = m; });
   var ilAd = {}; (V.secenek.il || []).forEach(function (o) { ilAd[o.deger] = o.ad; });
   function mekanlar(q) {
     var sinir = q.get('km') ? +q.get('km') : Math.max(1, (+q.get('dk') || 0) * 55 / 60 / 2);
@@ -345,6 +711,7 @@
       l.push({ id: i + 1, slug: m.slug, ad: m.name, lat: m.lat, lng: m.lng, cat: (/disc-cat">([^<]+)</.exec(k) || [])[1] || m.type || null, puan: null, konum: [m.district, il].filter(Boolean).join(' · '), sehir: il, il: il, ilce: m.district, mutfak: null, mutfakId: null, tur: m.type || null, editor: false, sponsor: false, sponsorCta: null, img: gorsel ? new URL(gorsel.split('{{kok}}').join(kok), location.href).href : null, url: kok + 'mekan/mikla/', ogunler: ves.indexOf('kahvalti') >= 0 ? ['kahvalti'] : [], aileyeUygun: false, yoresel: (d.f.konsept || []).indexOf('yerel-lezzet-noktasi') >= 0, ozellikler: [], acik: /st-closed/.test(k) ? 'closed' : 'open', acikEtiket: /st-closed/.test(k) ? 'Kapalı' : 'Açık', calismaSaatleri: null, sonDogrulama: null, fiyatSeviyesi: m.price || null, sapmaKm: Math.round(u.d * 100) / 100, sapmaDk: Math.round(u.d / 55 * 60 * 2), sira: u.sira });
     });
     l.sort(function (a, b) { return a.sira - b.sira; });
+    sonMekan = l.slice(0, 60);
     var ust = l.filter(function (m) { return m.sapmaKm <= 1; }).length;
     return { mekanlar: l.slice(0, 60), sayac: { yolUstu: ust, yolaYakin: l.length - ust, toplam: l.length }, kirpildi: l.length > 60 };
   }

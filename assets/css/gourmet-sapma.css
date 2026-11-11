@@ -546,6 +546,152 @@ button.yg-il-cip{display:inline-flex;align-items:center;gap:5px;font-family:inhe
   .yg-detail-add,.yg-detail-stop,.yg-detail-more,.yg-bc-back,.yg-fl-add{height:44px}
   .yg-detail-sbtn{min-height:44px}
 }
+/* ==== RM-11 (Beyar 11 Kas) · Dada Route telefon düzeni: tek alt sayfa, dört kip. Canlı `dada-route.js`/`.css` aynen; kip ve sürükleme
+   `rota-sahte.js` `altSayfaKur` (canlının peek/half/full kipini ve şerit açık/kapalı tercihini sürer, `.yg-app[data-rm-kip]` yazar).
+   Kipler: harita (yalnız özet satırı, şerit kapalı) · kesif (özet + şerit tek yüzey, rota kurulunca varsayılan) · yarim (52dvh) · tam
+   (başlığın altına kadar). Kanon `.sheet` dili: üst köşe `--yuvarlak-xl`, `env(safe-area-inset-bottom)` payı, 44 px dokunma. Yeni renk ve
+   ölçü yok: yükseklikler var olan parçaların toplamı (tutamak bandı 20, özet satırı 56, şerit canlı yükseklik). Masaüstü (≥861) değişmez.
+   TEL = dikey telefon; YAN = yatay/kısa ekran ve ≥700 tablet (alt sayfa sol sütun, aşağıdaki blok). Sorgular `rota-sahte.js` ile aynı ==== */
+@media (max-width:640px),(max-width:699px) and (min-height:501px){
+  .yg-app{--rm-sa:env(safe-area-inset-bottom,0px);--rm-ozet:56px;--rm-bant:20px}
+  .yg-app .yg-panel{height:calc(100dvh - 60px);border-radius:var(--yuvarlak-xl) var(--yuvarlak-xl) 0 0}
+  .yg-app .yg-panel.sheet-full{transform:translateY(0)}
+  .yg-app .yg-panel.sheet-half{transform:translateY(calc(48dvh - 60px))}
+  .yg-app .yg-panel.sheet-peek{transform:translateY(calc(100% - var(--rm-bant) - var(--rm-ozet) - var(--rm-sa)))}
+  .yg-app .yg-panel.yg-klavye{transform:translateY(0)}
+  /* Keşif: şerit alt sayfanın üst bölümü; alt sayfa yalnız özet satırı, köşe ve gölge şeritte (tek yüzey) */
+  .yg-app[data-rm-kip="kesif"] .yg-panel.sheet-peek{transform:translateY(calc(100% - var(--rm-ozet) - var(--rm-sa)));border-radius:0;box-shadow:none}
+  .yg-app[data-rm-kip="kesif"] .yg-panel.sheet-peek .yg-sheet-grip{display:none}
+  .yg-app[data-rm-kip="kesif"] #ygDash:not(.collapsed){left:0;right:0;bottom:calc(var(--rm-ozet) + var(--rm-sa));padding-top:var(--rm-bant);border:0;border-radius:var(--yuvarlak-xl) var(--yuvarlak-xl) 0 0;background:rgba(252,250,246,.82);box-shadow:0 -12px 38px rgba(33,30,22,.17);touch-action:pan-x}
+  .yg-app[data-rm-kip="kesif"] #ygDash::before{content:"";position:absolute;top:8px;left:50%;width:38px;height:4px;border-radius:99px;background:var(--line-2);transform:translateX(-50%)}
+  /* dikey sürükleme şeritte bizim; yatay kaydırma tarayıcıda (iç kaydırma kapları da dahil) */
+  .yg-app[data-rm-kip="kesif"] #ygDash *{touch-action:pan-x}
+  .yg-app #ygDash.rm-surukle{transition:none}
+  /* Tutamak: peek'te 20 px bant (vuruş alanı özet satırıyla birlikte), yarım/tam kipte 28 px + üstte 16 px görünmez pay = 44 */
+  .yg-app .yg-sheet-grip{height:28px;touch-action:none}
+  .yg-app .yg-sheet-grip::before{top:10px}
+  .yg-app .yg-sheet-grip::after{content:"";position:absolute;left:0;right:0;bottom:100%;height:16px}
+  .yg-app .yg-panel.sheet-peek .yg-sheet-grip{height:var(--rm-bant)}
+  .yg-app .yg-panel.sheet-peek .yg-sheet-grip::before{top:8px}
+  /* Özet satırı: tek eylem ("Listeyi Gör"; ˄ kalkar), satırın tamamı dokunma ve sürükleme alanı */
+  .yg-app .yg-panel .yg-sheet-ctx{min-height:calc(var(--rm-ozet) + var(--rm-sa));padding:0 16px var(--rm-sa) 18px;touch-action:none}
+  .yg-app .yg-sheet-ctx-go{display:none}
+  /* Bulgu #4: "Haritayı Gör / Listeyi Gör" segmenti kalkar (kipleri özet satırı, tutamak ve sürükleme yapar). Rota Kur | Güzergâhlarım kanon
+     segmenti (`.sekmeler.esit`, Katmanlar'daki Araç segmentiyle aynı jetonlar) */
+  .yg-app .yg-viewtoggle{display:none}
+  .yg-app .yg-tabs{gap:var(--bosluk-4);margin:0 var(--bosluk-16) var(--bosluk-8);padding:var(--bosluk-4);border:var(--cizgi-1) solid var(--cizgi);border-radius:var(--yuvarlak-md);background:var(--kagit)}
+  .yg-app .yg-tab{height:auto;min-height:44px;border:0;border-radius:var(--yuvarlak-sm);background:transparent;color:var(--metin-ikincil);font-size:var(--yazi-13);font-weight:var(--agirlik-kalin);box-shadow:none}
+  .yg-app .yg-tab.is-active{background:var(--aksan-koyu);color:var(--kagit);box-shadow:none}
+  /* İçerik alt payı: yarım kipte alt sayfanın pencere dışındaki parçası (48dvh − 60) + canlı 28 px; tam kipte güvenli alan */
+  .yg-app .yg-panel .yg-view{padding-bottom:calc(28px + var(--rm-sa))}
+  .yg-app .yg-panel #viewAll .yg-all-body{padding-bottom:calc(26px + var(--rm-sa))}
+  .yg-app .yg-panel.sheet-half .yg-view,.yg-app .yg-panel.yg-klavye .yg-view{padding-bottom:calc(48dvh - 60px + 28px)}
+  .yg-app .yg-panel.sheet-half #viewAll .yg-all-body,.yg-app .yg-panel.yg-klavye #viewAll .yg-all-body{padding-bottom:calc(48dvh - 60px + 26px)}
+  /* Bulgu #7: klavye açıkken üst denetimler gizli, girdi tutamağın hemen altında */
+  .yg-app .yg-panel.yg-klavye .yg-tabs{display:none}
+  /* Bulgu #9: mekân detayı alt sayfada (Keşif yüksekliğinde; yukarı çekince tam). Kanon `.sheet` köşesi, tutamak bandı, güvenli alan */
+  .yg-app #ygDetail{position:fixed;top:auto;left:0;right:0;bottom:0;width:auto;z-index:35;max-height:calc(var(--rm-ozet) + var(--rm-sa) + var(--rm-serit-h,217px));padding-top:var(--rm-bant);padding-bottom:var(--rm-sa);border:0;border-radius:var(--yuvarlak-xl) var(--yuvarlak-xl) 0 0;box-shadow:0 -12px 38px rgba(33,30,22,.17);overflow-y:auto;overscroll-behavior:contain;transition:max-height .34s var(--ease)}
+  .yg-app #ygDetail.rm-detay-tam{max-height:calc(100dvh - 60px)}
+  .yg-app #ygDetail::before{content:"";position:absolute;top:8px;left:50%;width:38px;height:4px;border-radius:99px;background:var(--line-2);transform:translateX(-50%)}
+  .yg-app:has(#ygDetail.rm-detay-tam:not([hidden])) :is(.leaflet-top.leaflet-left,#ygLocate){visibility:hidden}
+}
+@media (max-width:860px){
+  /* İlk görünen kısımda ad, konum, yol üstü etiketi ve "Güzergâha Ekle" / "Durak Yap"; sapma cümlesi ve doğrulama notu altta (içerik aynı). Telefon ve yan sütun */
+  .yg-app #ygDetail .yg-detail-body{display:flex;flex-direction:column}
+  .yg-app #ygDetail .yg-detail-add{order:1}
+  .yg-app #ygDetail .yg-detail-stop{order:2}
+  .yg-app #ygDetail .yg-detail-detour{order:3;margin-top:var(--bosluk-12)}
+  .yg-app #ygDetail .yg-detail-verify{order:4}
+  .yg-app #ygDetail :is(.yg-detail-visit,.yg-detail-more,.yg-detail-sec){order:5}
+  /* Bulgu #5/#6: içerik sırası (yalnız CSS `order`; içerik aynı). Rota yokken girdiler üstte; rota varken özet ve Kaydet üstte,
+     açıklama, pilotlar ve prototip notu en altta. Bölüm aralığı tek ritim (20 px; flex'te kenar payları birleşmez). Telefon ve yan sütun */
+  .yg-app #viewRoute:not([hidden]){display:flex;flex-direction:column;row-gap:var(--bosluk-20)}
+  .yg-app #viewRoute>*{margin-top:0;margin-bottom:0;flex:none}
+  .yg-app #viewRoute>.yg-sec-head{order:1;margin-bottom:calc(var(--bosluk-16) - var(--bosluk-20))}
+  .yg-app #viewRoute>.yg-route{order:2}
+  .yg-app #viewRoute>.yg-pilots-block{order:3}
+  .yg-app #viewRoute>#ygQuickWrap{order:4}
+  .yg-app #viewRoute>.yg-katman{order:5}
+  .yg-app #viewRoute>.yg-intro{order:20}
+  .yg-app #viewRoute>#ygDemo{order:21}
+  .yg-app #viewRoute:has(#ygSummary:not([hidden]))>#ygSummary{order:1}
+  .yg-app #viewRoute:has(#ygSummary:not([hidden]))>#ygBrowseCta{order:2}
+  .yg-app #viewRoute:has(#ygSummary:not([hidden]))>#ygSave{order:3}
+  .yg-app #viewRoute:has(#ygSummary:not([hidden]))>#ygCorr{order:4}
+  .yg-app #viewRoute:has(#ygSummary:not([hidden]))>#ygQuickWrap{order:5}
+  .yg-app #viewRoute:has(#ygSummary:not([hidden]))>.yg-sec-head{order:6}
+  .yg-app #viewRoute:has(#ygSummary:not([hidden]))>.yg-route{order:7}
+  .yg-app #viewRoute:has(#ygSummary:not([hidden]))>#ygAlts{order:8}
+  .yg-app #viewRoute:has(#ygSummary:not([hidden]))>#ygMine{order:9}
+  .yg-app #viewRoute:has(#ygSummary:not([hidden]))>#ygPlan{order:10}
+  .yg-app #viewRoute:has(#ygSummary:not([hidden]))>#ygIller{order:11}
+  .yg-app #viewRoute:has(#ygSummary:not([hidden]))>.yg-katman{order:12}
+  .yg-app #viewRoute:has(#ygSummary:not([hidden]))>#ygAktar{order:13}
+  .yg-app #viewRoute:has(#ygSummary:not([hidden]))>.yg-pilots-block{order:19}
+  .yg-app #ygSummary .yg-divider{display:none}
+  .yg-app #ygBrowseCta:not([hidden]){margin-top:0}
+  /* RM-11 · Bulgu #6 (Beyar 11 Kas): rota varken durak girdileri tek satıra katlanır (`rota-sahte.js` `durakKatlaKur`). Satır akordeon başlığı:
+     görünümü durak girdisinin aynısı (`.yg-stop-input`: 46 px, `--line-2` çizgi, `--radius-md`, `--bg` zemin, 14,5/600, odakta domates
+     halka), solda rota ikonu (`.yg-add i` gibi domates), sağda akordeon oku (kanon `.akordeon-ok`: açıkken 180° döner). Katlıyken durak
+     bölümü ile Konumumu kullan / Başlangıç ve Varışı Değiştir gizli; Yeni Rota Oluştur başlıkta kalır. Açıkken satır → girdiler 12 px */
+  .yg-app #viewRoute>.rm-durak-ozet{order:7;display:flex;align-items:center;gap:10px;width:100%;min-height:46px;margin-bottom:calc(var(--bosluk-12) - var(--bosluk-20));padding:0 13px;border:1px solid var(--line-2);border-radius:var(--radius-md);background:var(--bg);color:var(--slate);font:inherit;font-size:14.5px;font-weight:600;text-align:left;cursor:pointer;transition:.16s var(--ease)}
+  .yg-app #viewRoute>.rm-durak-ozet[hidden]{display:none}
+  .yg-app .rm-durak-ozet:hover{border-color:var(--tomato)}
+  .yg-app .rm-durak-ozet:focus-visible{outline:none;border-color:var(--tomato);background:var(--paper);box-shadow:0 0 0 3px var(--tomato-tint)}
+  .yg-app .rm-durak-ozet .fa-route{flex:none;font-size:12px;color:var(--tomato)}
+  .yg-app .rm-durak-metin{flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  .yg-app .rm-durak-ek{flex:none;color:var(--muted);font-weight:500}
+  .yg-app .rm-durak-ek:empty{display:none}
+  .yg-app .rm-durak-ok{flex:none;font-size:12px;color:var(--muted);transition:transform .16s var(--ease)}
+  .yg-app .rm-durak-ozet[aria-expanded="true"] .rm-durak-ok{transform:rotate(180deg)}
+  .yg-app #viewRoute.rm-durak-katli>.yg-route,.yg-app #viewRoute.rm-durak-katli>.yg-sec-head :is(#ygUseLocation,#ygReverse){display:none}
+}
+/* RM-11 · harita denetimleri (dikey telefon ve yan sütun): konum düğmesi ve +/− alt yığının (`--rm-alt`, `rota-sahte.js` ölçer) 16 px üstünde.
+   Bulgu #17 (Beyar): dokunmatik telefonda +/− ALT SAĞDA, konum düğmesinin üstünde (başparmak bölgesi); tam kipte ve klavyede gizli */
+.yg-app .rm-atif,.yg-app .rm-durak-ozet{display:none}
+@media (max-width:860px){
+  .yg-app #ygLocate{bottom:calc(var(--rm-alt,0px) + 16px)}
+  .yg-top{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right))}
+  .yg-app .leaflet-popup-close-button::before{content:"";position:absolute;inset:-10px}
+  /* Bulgu #16: atıf telefonda (i) ile kapalı başlar (Mekânlar/Etkinlikler MapLibre kalıbı: 24 px düğme, saydam payla 44) */
+  .yg-app .leaflet-bottom.leaflet-right .leaflet-control-attribution{display:none}
+  .yg-app .leaflet-bottom.leaflet-right.rm-atif-acik .leaflet-control-attribution{display:block}
+  .yg-app .rm-atif{position:relative;float:right;clear:both;width:24px;height:24px;margin:0 10px 0 0;display:grid;place-items:center;padding:0;border:var(--cizgi-1) solid var(--cizgi);border-radius:var(--yuvarlak-daire);background:var(--kagit);color:var(--metin-ikincil);font-size:var(--yazi-12);cursor:pointer;pointer-events:auto}
+  .yg-app .rm-atif::after{content:"";position:absolute;inset:-10px}
+  .yg-app .leaflet-bottom.leaflet-right.rm-atif-acik .rm-atif{margin-bottom:4px}
+}
+@media (max-width:860px) and (pointer:coarse){
+  .yg-app .leaflet-top.leaflet-left{top:auto;left:auto;right:19px;bottom:calc(var(--rm-alt,0px) + 16px + 44px + 8px);transition:bottom .2s var(--ease)}
+  .yg-app .leaflet-top.leaflet-left .leaflet-control{margin:0}
+  .yg-app:is([data-rm-kip="tam"],[data-rm-klavye],[data-rm-zoom-yok]) .leaflet-top.leaflet-left{visibility:hidden}
+}
+@media (max-width:640px),(max-width:699px) and (min-height:501px){
+  .yg-app:is([data-rm-kip="tam"],[data-rm-klavye]) :is(#ygLocate,.rm-atif,.leaflet-control-attribution){opacity:0;pointer-events:none}
+}
+/* Bulgu #15: telefonda "Kapat" yalnız × ikonu, 44 × 44 (kanon `.ff-sheet` kapat ölçüsü, `--yuvarlak-md`); erişilebilir ad `aria-label`da */
+@media (max-width:640px){
+  .yg-top .yg-close{width:44px;height:44px;padding:0;gap:0;justify-content:center;font-size:0;text-decoration:none;border-radius:var(--yuvarlak-md)}
+  .yg-top .yg-close i{font-size:16px}
+}
+/* RM-11 · Bulgu #2 + #20: yatay/kısa ekran (641–860 ve yükseklik ≤500) ve 700–860 tablet: alt sayfa sol sütun olur (masaüstü panelinin dar hâli,
+   en çok `--panel-w`, en çok ekranın yarısı), harita sağda tam yükseklik, şerit haritanın altında panelin sağında (masaüstü kalıbı, kendi
+   aç/kapat tutamağıyla). Canlı betik kipi peek'te tutulur (`rota-sahte.js`), görünüm kipten bağımsız */
+@media (min-width:641px) and (max-width:860px) and (max-height:500px),(min-width:700px) and (max-width:860px){
+  .yg-app{--rm-yan:min(var(--panel-w),50vw)}
+  .yg-app .yg-panel,.yg-app .yg-panel.sheet-peek,.yg-app .yg-panel.sheet-half,.yg-app .yg-panel.sheet-full,.yg-app .yg-panel.yg-klavye{top:60px;bottom:0;left:0;right:auto;width:var(--rm-yan);height:auto;transform:none;border-radius:0;border-right:1px solid rgba(255,255,255,.6);box-shadow:8px 0 36px rgba(33,30,22,.12)}
+  .yg-app .yg-sheet-grip,.yg-app .yg-panel .yg-sheet-ctx,.yg-app .yg-viewtoggle,.yg-app .yg-browse-cta{display:none}
+  .yg-app .yg-panel .yg-view,.yg-app .yg-panel.sheet-half .yg-view,.yg-app .yg-panel.yg-klavye .yg-view{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
+  .yg-app .yg-panel #viewAll .yg-all-body,.yg-app .yg-panel.sheet-half #viewAll .yg-all-body,.yg-app .yg-panel.yg-klavye #viewAll .yg-all-body{padding-bottom:26px}
+  .yg-app #ygDash,.yg-app #ygDash:not(.collapsed){left:calc(var(--rm-yan) + 16px);right:16px;bottom:16px}
+  .yg-app #ygDash.collapsed:not(.full-hidden){transform:translateY(calc(100% + 16px))}
+  .yg-app .yg-dash-handle{display:inline-flex}
+  /* Detay haritanın sol üstünde (sağ kenarda konum, +/− ve atıf düğmeleri), şeridin üstünde yüzer (masaüstü kalıbı) */
+  .yg-app #ygDetail{position:absolute;top:74px;right:auto;bottom:auto;left:calc(var(--rm-yan) + 16px);width:286px;max-height:calc(100dvh - 90px)}
+  .yg-app .yg-geo-prompt,.yg-app .yg-toast-wrap{left:calc(var(--rm-yan) + 16px)}
+}
+@media (min-width:641px) and (max-width:860px) and (max-height:500px) and (pointer:fine),(min-width:700px) and (max-width:860px) and (pointer:fine){
+  .yg-app .leaflet-top.leaflet-left{left:calc(var(--rm-yan) + 8px)}
+}
 /* Mekân detayı: künye tam genişlikte kalınca kayan şerit kopyaları yan yana görünüyordu. 1024 ve altında durur, kopyalar gizlenir, sarılır */
 @media(max-width:1024px){
   .kc-chips .chip-row.kc-marquee{overflow:visible}
