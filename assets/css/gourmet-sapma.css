@@ -751,6 +751,9 @@ html:has(.lst-side.open) :is(.yg-fab,.to-top,.feedback-tab,.fb-rail){display:non
    Uzun liste zaten "Tümünü gör" ile açılır; kaydırma masaüstünde sayfada, ≤1024 alt sayfada yalnız `.sheet-body`de.
    Kaydırma çubuğu ince ve marka çizgisi renginde (`.yg-il-govde` ile aynı) */
 .lst-side .fct-body{max-height:none;overflow:visible}
+/* Aynı kural /etkinlikler Konum listesinin `.fct-scroll` kutusunda (canlı 260 px, ≤1024 46vh): 390 alt sayfada `.sheet-body` içinde ikinci
+   kaydırma ve yarım kesik "N şehir daha" düğmesi. Liste zaten "N şehir daha" ile açılır; kutu kalkar, tek kaydırma kalır */
+.lst-side .fct-scroll{max-height:none;overflow:visible;overscroll-behavior:auto}
 .lst-side,.lst-side .sheet-body{scrollbar-width:thin;scrollbar-color:var(--marka-cizgi) transparent}
 
 /* Mekân Bul: dar ekranda "Sonuçları Gör" iki satıra sıkışıyordu; Geri kendi boyunda, birincil düğme kalanı alır */
