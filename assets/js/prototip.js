@@ -689,6 +689,8 @@
     [g, o].forEach(function (x) { x.classList.toggle('show', on); x.classList.toggle('open', on); });
     if (on) { document.getElementById('lgGateTitle').textContent = t.dataset.lgTitle || g.dataset.defTitle; document.getElementById('lgGateDesc').textContent = t.dataset.lgDesc || g.dataset.defDesc; }
   };
+  /* Açık iş B-A1 (12 Kas): kapı Esc ile de kapanır (Favori ekle ve öneri penceresi gibi). Odak tuzağı ve açan öğeye dönüş `KATMAN` gözcüsünde */
+  document.addEventListener('keydown', function (e) { var g = document.getElementById('lgGate'); if (e.key === 'Escape' && g && g.classList.contains('show')) { kapiAc(false); } });
   var kapiOlay = function (e) {
     var t = e.target; if (!t.closest) { return false; }
     if (t.closest('[data-lg-close]') || t.id === 'lgOverlay') { kapiAc(false); return true; }
