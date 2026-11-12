@@ -6,7 +6,7 @@
      gastro       canlı Gastro mutfak ekseni (dadagastro.com/tarifler "Mutfak", eksen_degerleri.mutfak, 50 kalem); `kod` Gastro slug'ı.
                   Bayrak Gastro `SunumHaritasi::BAYRAK` (assets/g/varliklar/flags/<iso>.svg); Balkan'da Gastro'da da bayrak yok.
      canliTercih  canlı KesifTercihiKaydetIstegi::MUTFAK_SECENEKLERI'deki düz ad (4 kalem; adlar katalogdan farklı).
-     oneri        hiçbir canlı listede yok; prototip önerisi, Beyar onayı bekler.
+     oneri        hiçbir canlı listede yok; prototip önerisi (şu an yok: "Marmara ve Trakya Mutfağı" Beyar kararı A1, 12 Kas ile kalktı).
    Grup adlarından ilk ikisi Mekân Bul adım 3 sekmeleriyle aynı (Öğün ve Lezzet, Türk ve Yöresel); Mekân Bul'un "Dünya Mutfakları"
    sekmesi burada yedi coğrafi gruba açılır. Kayıt değeri `kod`; `eski` eşlemesi dünkü 19 adlık kayıtları ve canlı tercih adlarını koda taşır. */
 (function (kok) {
@@ -21,7 +21,6 @@
     { kod: 'turk', ad: 'Türk ve Yöresel', ikon: 'fa-map-location-dot', kalemler: [
       { kod: 'turk-mutfagi', ad: 'Türk Mutfağı', bayrak: 'tr', katalog: true, gastro: true },
       { kod: 'anadolu-mutfagi', ad: 'Anadolu Mutfağı', ikon: 'fa-wheat-awn', katalog: true },
-      { kod: 'marmara-trakya-mutfagi', ad: 'Marmara ve Trakya Mutfağı', ikon: 'fa-bridge', oneri: true },
       { kod: 'ege-mutfagi', ad: 'Ege Mutfağı', ikon: 'fa-leaf', katalog: true },
       { kod: 'akdeniz-mutfagi', ad: 'Akdeniz Mutfağı', ikon: 'fa-lemon', katalog: true },
       { kod: 'karadeniz-mutfagi', ad: 'Karadeniz Mutfağı', ikon: 'fa-fish-fins', katalog: true },

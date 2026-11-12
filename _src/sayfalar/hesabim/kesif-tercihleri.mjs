@@ -7,13 +7,13 @@
 //  - Sekme başına tek başlık (bölüm başı) ve seçim özeti; çift başlık ve iki "Dolu" rozeti kalktı. Sekmede seçim sayısı.
 //  - Tek kaydet akışı: bütün sekmelerdeki değişiklik alttaki yapışkan çubuktan bir kez kaydedilir ya da geri alınır.
 // Gruplama ve ikonlar Mekân Bul sihirbazıyla aynı (mekan-bul ajanı, 10 Kas: mutfak üç aile, ortam konsept ikonları).
-// Mutfak (kesif ajanı, 11 Kas; H6 Seçenek A, lider kararı): GLOBAL liste, 9 grup 62 mutfak, tek kaynak `assets/js/mutfak-veri.js`
-// (canlı katalog 18 + Ev Yemekleri + Gastro mutfak ekseni + 1 öneri). Bölge akordeonu: kanon §21 `.akordeon` (tek açık grup) +
+// Mutfak (kesif ajanı, 11 Kas; H6 Seçenek A, lider kararı): GLOBAL liste, 9 grup 61 mutfak, tek kaynak `assets/js/mutfak-veri.js`
+// (canlı katalog 18 + Ev Yemekleri + Gastro mutfak ekseni; öneri kalemi A1 ile kalktı). Bölge akordeonu: kanon §21 `.akordeon` (tek açık grup) +
 // Gastro "Dolabında ne var" `.mz-cat-h` başlık anatomisi (ikon, ad, "N mutfak", seçili sayısı, ok); kapalı başlıkta seçilenlerin adı.
 // Çip aynı `.cip.suzgec.tercih-cip`, dünya mutfaklarında Gastro /tarifler bayrağı. Kayıt değeri mutfak KODU (dünkü ad kayıtları JS'te taşınır).
 // Mekân Bul ve /mekanlar süzgeci değişmedi (canlı katalogdaki 18 kalem).
 // H6b (kesif ajanı, 11 Kas, Beyar "tercihler kısımları berbat; bunlar nereden seçiliyor"): sekmeler tek bileşen ailesine çekildi.
-//  - Uzun ve gruplu listeler (mutfak 62, mekân türü 28, şehir 20) aynı BÖLGE AKORDEONU: tek açık grup, kapalı başlıkta seçilenler,
+//  - Uzun ve gruplu listeler (mutfak 61, mekân türü 28, şehir 20) aynı BÖLGE AKORDEONU: tek açık grup, kapalı başlıkta seçilenler,
 //    Tümünü seç, bütün gruplarda arama. Konsept listesindeki "daha fazla göster" kalktı.
 //  - Kısa listeler (etkinlik 10, beslenme 8, alerjen 12, ortam 11) eşit kolonlu ikonlu çip IZGARASI; tek gruplu sekmede sekme
 //    başlığını tekrarlayan grup başlığı yok; "Fark etmez" ızgaradan ayrı satırda (Mekân Bul'un fa-shuffle ikonu).
@@ -229,7 +229,7 @@ const pane = (s, i) => {
 ${s.duzen === 'akordeon' ? akordeon(s) : s.duzen === 'aralik' ? aralik(s) : izgara(s)}
             </div>
           </div>
-          <div class="alt-not"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> <span>${s.not} Bu bir <b>hesap ayarı değil</b>: yanıtın Gourmet’in <b>öneri motorunu</b> besler. Bildirim, güvenlik ve veri hakların <a href="{{kok}}hesabim/ayarlar/">Hesap Ayarları</a>’nda.</span></div>
+          <div class="alt-not"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> <span>${s.not} Bu bir <b>hesap ayarı değil</b>: yanıtın kaydedilir; ileride Gourmet’in önerilerinde kullanılacak. Bildirim, güvenlik ve veri hakların <a href="{{kok}}hesabim/ayarlar/">Hesap Ayarları</a>’nda.</span></div>
         </div>
       </div>`;
 };
