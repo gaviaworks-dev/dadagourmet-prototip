@@ -220,6 +220,11 @@ Dada Route hiçbir yerde Türkiye varsaymaz. Kaynak `assets/js/rota-ulke.js` (`w
   düğmelerin 12 px üstünde biter. Görüş Bildir sekmesiyle kesişme Gastro ve Diet'teki gibi kabul (kart üstte). Alt bar: başlık kolonunun
   iç kenarları (`header .h-top .wrap`), 80 px (≤600: 64 px, 12 px kenar), telefonun alt çubuğu varsa onun 12 px üstü; eylem çubuğu
   olan sayfada yok. Kapat (×) 24 px daire, 44 px dokunma alanı. Kurallar `reklam-yerlesim.json` `kurallar.side*`.
+- Side kartı kırpılmaz (E6, 12 Kas; Beyar: CTA alttan kesik). Kanon "kalan yüksekliği medya doldurur": mesaj (logo, Sponsorlu, başlık,
+  metin, CTA) doğal boyunda, medya kalanı alır; medyanın alt sınırı kanonda sabit 280 px idi, yüzen düğme payı kutuyu ~502 px'in altına
+  indirince (1440×≤793) CTA kesiliyordu. Şimdi `reklam.js` mesajı ölçer, `--rk-side-medya-min` = min(`sideGorsel` 280, kutu − mesaj − kenar)
+  yazar (`assets/css/reklam.css`); kutu kısaysa görsel küçülür, görsele `sideGorselEnAz` (120 px) kalmıyorsa yan basılmaz
+  (`data-rk-side-reason` "yan kartı sığmıyor"). CTA'nın altında her ölçüde kanonun 16 px'i kalır.
 - Yapışkan marka (lider, 12 Kas; aşağıdaki eski seçimin yerine): STD-SIDE/LEFT/ALTBAR/POPUP sayfadaki gövde birimlerinin (hero dahil; birimin `data-rk-govde-marka`sı) markasını asla tekrar etmez, iki yan farklı marka; önce sayfada olmayan ana marka, sonra benzer marka (havuzlarda Pegasus, Starbucks, Visa, Mastercard, Mado, Simit Sarayı; restoran süzgeci geçerli), yoksa o yapışkan basılmaz. Eski kural: Marka seçimi
   (reklam-duzeltici): tavan izin veriyorsa sayfada basılmamış marka, yoksa akışta en az birimi olan marka (hero rozeti sayılmaz; eşitlikte ilk
   birimi en aşağıda olan); side çiftinin iki yanı farklı marka
