@@ -929,7 +929,22 @@ body.gastronomi-kapali .yg-dash.yg-dash--katmanli:not([hidden]){display:block!im
    kenar `--tehlike-cizgi-yumusak` #f3cdc0. "Yola yakın" `--uyari` #8a4b00 kehribar ve "Yol üstü" yeşilden ayrı ton */
 .yg-yakit,.yg-yakit-pin,.yg-katman .sekme[data-arac="yakit"]{--sarj-renk:var(--eko-gastro);--sarj-koyu:var(--tehlike-koyu);--sarj-acik:var(--tehlike-yikama-2);--sarj-kenar:var(--tehlike-cizgi-yumusak)}
 /* Segmentte etkin değilken ikon kendi kartının rengi (Yakıtlı yakıt, Elektrikli şarj mavisi); etkin segment beyaz kalır */
-.yg-katman .sekme:not(.aktif) i{color:var(--sarj-renk);opacity:1}
+.yg-arac .sekme:not(.aktif) i{color:var(--sarj-renk);opacity:1}
+/* E1 (12 Kas) · Katmanlar kompakt. Araç segmenti 54 → 34 px: düğme 28 px, iç pay 2 px; görünmez pay vuruş alanını 44 px tutar
+   (`.yg-katman .cip::before` kalıbı). "İhtiyaç" ve "Gastro · haritada göster" çipleri (D11 şeridi, 390'da "Karavan parkı" solmanın altında
+   kesikti; telefonda 44 px çip) aynı segment kalıbında tek satır, çoklu seçim: her düğme kendi `aria-pressed`ini taşır,
+   basılı olan Araç'taki etkin segment gibi dolu. D11 `.yg-katman .cipler` kuralları artık eşleşmez. Düğme içerik kadar pay alır; üç ad 360 ve üstünde tek satır, daha dar ekranda ad iki satıra kırılır (kaydırma ve kırpma yok).
+   Yakıt ve şarj kartı kapalıyken çerçevesiz tek satır (32 px); açılınca canlı kart çerçevesi geri gelir */
+.yg-katman .sekmeler{padding:var(--bosluk-2)}
+.yg-katman .sekme{position:relative;min-height:28px;padding:0 var(--bosluk-12)}
+.yg-katman :is(.sekme,.yg-sarj-toggle)::before{content:"";position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);height:44px}
+.yg-katman .sekme[aria-pressed="true"]{background:var(--aksan-koyu);color:var(--kagit)}
+.yg-katman .yg-katman-sec .sekme{flex:1 1 auto;gap:var(--bosluk-4);padding:0 var(--bosluk-6);font-size:var(--yazi-12-5);white-space:normal;line-height:1.15;text-align:center}
+/* 360 sınıfında üç ad ikonla sığmıyor (334 px içerik, 322 px yer): ikon düşer, ad ve vuruş alanı kalır */
+@media(max-width:379px){.yg-katman .yg-katman-sec .sekme i{display:none}}
+.yg-katman .yg-sarj:has(>.yg-sarj-toggle[aria-pressed="false"]:not([hidden])){padding:0;border-color:transparent;background:none}
+.yg-katman .yg-sarj-toggle{position:relative;min-height:32px}
+.yg-katman .yg-sarj-toggle i{flex-basis:26px;width:26px;height:26px}
 /* D13 (Beyar 11 Kas) · Kart içi metin kart genişliğinde kırılır. Canlı `.yg-sarj-credit{white-space:nowrap}` canlının kısa atfı içindir;
    prototipin uzun "Kaynak: prototip örneği …" satırı 1440'ta 66 px, 390'da 75 px taşıyordu. Uzun istasyon adı ve operatör de kırılır */
 .yg-katman .yg-sarj-credit{white-space:normal;overflow-wrap:anywhere}
