@@ -79,6 +79,7 @@
 <script defer src="../../assets/o/assets/gourmet-public/js/shared/scroll-affordance.js"></script>
 <script defer src="../../assets/js/sayfa/rez-takvim.js"></script>
 <script defer src="../../assets/o/assets/gourmet-public/js/mekan-detay.js"></script>
+<script defer src="../../assets/js/liste-veri.js"></script>
 <script defer src="../../assets/js/sayfa/mekan-eylem.js"></script>
 <script defer src="../../assets/js/mentor-fab.js"></script>
 </head>
@@ -861,6 +862,16 @@
     <a class="vd-actbar__act" target="_blank" rel="noopener" href="https://wa.me/?text=Mikla+%E2%80%94+https%3A%2F%2Fdadagourmet.com%2Fmekan%2Fmikla">
         <i class="fa-solid fa-share-nodes" aria-hidden="true"></i> Arkadaşımla Paylaş
     </a>
+</div>
+<!-- A8 (Beyar 12 Kas): Listeye Ekle canlı Gourmet `#mdListPop` (donör Backend Projects/dadagourmet resources/views/gourmet/mekan-detay/_actions.blade.php 105-115,
+     panel resources/views/site/mekanlar/_actions.blade.php; alan adları paneldeki gibi liste_id / liste_adi). Açma, konum ve dışarı tıklayınca kapanma canlı
+     `mekan-detay.js`; listeler (canlıda @foreach $userLists) ve kayıt `mekan-eylem.js`. Popover barın dışında, kardeş (bar overflow-x:auto) -->
+<div class="kc-pop vd-pop" id="mdListPop" hidden role="dialog" aria-label="Listeye ekle">
+    <form method="POST" data-yerel="">
+        <label class="kc-pop-radio"><input type="radio" name="liste_id" value="" checked> Yeni liste</label>
+        <input type="text" name="liste_adi" class="fk-input" maxlength="120" placeholder="Yeni liste adı" aria-label="Yeni liste adı">
+        <button class="btn btn-primary btn-sm" type="submit" style="width:100%;margin-top:8px">Ekle</button>
+    </form>
 </div>
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Görsel önizleme">
     <span class="lb-cap" id="lbCap"></span>

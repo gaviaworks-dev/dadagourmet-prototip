@@ -1,6 +1,9 @@
 /* Listelerim (H5): Gastronomi Rotalarım satırları ve liste detayı.
    - Rotalar `window.dgRota` deposundan (prototip.js): Dada Route › Güzergâhlarım ile aynı kayıtlar.
-   - Liste detayı: sıra (yukarı/aşağı), çıkarma, görünürlük ve paylaşım bağlantısı. Durum `dgKayit('liste-durum')`ta, yalnız bu tarayıcıda. */
+   - Liste detayı: sıra (yukarı/aşağı), çıkarma, görünürlük ve paylaşım bağlantısı. Durum `dgKayit('liste-durum')`ta, yalnız bu tarayıcıda.
+   - A8 (Beyar 12 Kas): mekân sayfasındaki Listeye Ekle'nin yazdığı kalemler (`dgKayit('liste-kalem')`, kimlik `<liste>|<mekân>`) detayda
+     örnek kalemlerin ardına, sayfadaki `<template data-kalem-kalip>` satırıyla basılır. Yeni liste (`dgKayit('lstYeniPnl')`) tek detay
+     ekranında açılır (`hesabim/listeler/yeni/?liste=<kimlik>`). Listelerim satırlarındaki "N mekân" sayısı bu kayıtlarla güncellenir. */
 (function kur() {
   'use strict'; document.addEventListener('dg:sekme', kur); /* H8: sekme yerinde değişince Rotalarım satırları yeniden basılır */
   var K = window.dgKayit, R = window.dgRota, kok = document.documentElement.dataset.kok || './';
@@ -27,9 +30,51 @@
     }).join('') : '<div class="bos-durum"><span class="bos-ikon"><i class="fa-solid fa-route" aria-hidden="true"></i></span><h4>Henüz kayıtlı rotan yok</h4><p>Dada Route’ta bir güzergâh kurup kaydettiğinde burada görünür.</p></div>';
   }
 
+  /* ---- Listelerim satırlarında mekân sayısı: örnek kalemler + eklenenler, kayıtlı sıra varsa o ---- */
+  var KATALOG = window.DG_LISTELER || [];
+  var kalemSayisi = function (lid) {
+    if (!K) { return null; }
+    var d = K.oku('liste-durum').filter(function (k) { return k.id === lid; })[0]; if (d) { return d.sira.length; }
+    var o = KATALOG.filter(function (l) { return l.id === lid; })[0], sl = o ? o.kalem.map(function (k) { return k[0]; }) : [];
+    K.oku('liste-kalem').forEach(function (k) { if (k.liste === lid && sl.indexOf(k.slug) < 0) { sl.push(k.slug); } });
+    return sl.length;
+  };
+  [].forEach.call(document.querySelectorAll('.kalem-satiri'), function (r) {
+    var a = r.querySelector('.ks-metin a'), m = a && (a.getAttribute('href') || '').match(/hesabim\/listeler\/([a-z0-9-]+)\/(?:\?liste=([^&#]+))?$/);
+    var lid = m ? (m[1] === 'yeni' ? decodeURIComponent(m[2] || '') : m[1]) : '', alt = r.querySelector('.ks-metin small');
+    if (!lid || !alt || !/^\d+ mekân/.test(alt.textContent)) { return; }
+    var n = kalemSayisi(lid); if (n !== null) { alt.textContent = alt.textContent.replace(/^\d+ mekân/, n + ' mekân'); }
+  });
+
   /* ---- Liste detayı ---- */
   var pane = document.querySelector('[data-liste]'); if (!pane || !K) { return; }
   var id = pane.getAttribute('data-liste'), liste = pane.querySelector('.fp-list[id^="lstKalem-"]');
+  /* Yeni liste: kimlik ve bilgiler `?liste=` kaydından; kayıt yoksa boş durum */
+  if (pane.hasAttribute('data-liste-kayit')) {
+    var kid = new URLSearchParams(location.search).get('liste') || '', kayit = K.oku('lstYeniPnl').filter(function (k) { return k.id === kid; })[0];
+    if (!kayit) {
+      liste.innerHTML = '<div class="bos-durum"><span class="bos-ikon"><i class="fa-solid fa-list" aria-hidden="true"></i></span><h4>Liste bulunamadı</h4><p>Bu liste bu tarayıcıda kayıtlı değil. Listelerim’den bir liste aç ya da yeni liste oluştur.</p><a class="dugme birincil" href="' + kok + 'hesabim/listeler/"><i class="fa-solid fa-list-ul" aria-hidden="true"></i> Listelerim</a></div>';
+      [].forEach.call(pane.querySelectorAll('[data-liste-paylasim], [data-kalem-sayi]'), function (e) { e.hidden = true; });
+      return;
+    }
+    id = kayit.id;
+    var adY = kayit.ad || 'Yeni liste', h2 = pane.querySelector('h2'), gm = pane.querySelector('.giris-metni'), cur = document.querySelector('.kirinti .cur');
+    if (h2) { h2.textContent = adY; } if (cur) { cur.textContent = adY; } document.title = document.title.replace(/^Yeni liste/, adY);
+    if (gm) { gm.textContent = kayit.aciklama || ''; gm.hidden = !kayit.aciklama; }
+    var zaman = +(String(kayit.id).match(/-(\d{10,})$/) || [])[1], gun = pane.querySelector('[data-liste-guncel]');
+    if (gun && zaman) { gun.textContent = new Date(zaman).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' }); }
+    var gr = pane.querySelector('input[name="gorunurluk"][value="' + (kayit.gorunurluk === 'paylasilabilir' ? 'paylasilabilir' : 'ozel') + '"]'); if (gr) { gr.checked = true; }
+  }
+  /* Mekân sayfasından eklenen kalemler: eklenme sırasıyla örneklerin ardına */
+  var kalip = document.querySelector('template[data-kalem-kalip]');
+  if (kalip && liste) {
+    K.oku('liste-kalem').filter(function (k) { return k.liste === id; }).reverse().forEach(function (k) {
+      if (liste.querySelector('[data-kalem="' + k.slug + '"]')) { return; }
+      var b = liste.querySelector('.bos-durum'); if (b) { b.remove(); }
+      var h = kalip.innerHTML.replace(/\{slug\}/g, kac(k.slug)).replace(/\{ad\}/g, kac(k.ad)).replace(/\{alt\}/g, kac(k.alt || '')).replace(/\{sira\}/g, '');
+      liste.insertAdjacentHTML('beforeend', h);
+    });
+  }
   var durumOku = function () { return K.oku('liste-durum').filter(function (k) { return k.id === id; })[0] || null; };
   var durumYaz = function () {
     var v = { id: id, sira: [].map.call(liste.querySelectorAll('[data-kalem]'), function (s) { return s.getAttribute('data-kalem'); }), gorunurluk: (pane.querySelector('input[name="gorunurluk"]:checked') || {}).value || 'ozel' };
@@ -58,6 +103,7 @@
     d.sira.forEach(function (k) { if (var_[k]) { liste.appendChild(var_[k]); } });
     var r = pane.querySelector('input[name="gorunurluk"][value="' + d.gorunurluk + '"]'); if (r) { r.checked = true; gorunurlukUygula(d.gorunurluk); }
   }
+  if (pane.hasAttribute('data-liste-kayit')) { var gs = pane.querySelector('input[name="gorunurluk"]:checked'); if (gs) { gorunurlukUygula(gs.value); } }
   numarala();
 
   pane.addEventListener('click', function (e) {
@@ -86,6 +132,7 @@
     /* Canlı `ListeServisi::paylas()` her paylaşımda yeni belirteç üretir; prototip örnek bir kod yazar */
     if (g === 'paylasilabilir' && b && /yeni-baglanti$/.test(b.value)) { b.value = b.getAttribute('data-bag-ornek') + Math.random().toString(36).slice(2, 8); }
     gorunurlukUygula(g); durumYaz();
+    if (pane.hasAttribute('data-liste-kayit')) { K.guncelle('lstYeniPnl', id, { gorunurluk: g }); } /* Listelerim satırının rozeti aynı kayıttan */
     bildir(g === 'paylasilabilir' ? 'Liste paylaşıma açıldı; bağlantısı olan görebilir.' : 'Paylaşım kapatıldı; liste yalnız sana görünür.');
   });
 })();

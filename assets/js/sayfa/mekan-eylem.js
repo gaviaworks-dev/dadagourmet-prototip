@@ -165,13 +165,65 @@
   /* Fotoğraf Ekle kısayolu formdaki fotoğraf alanına götürür */
   $$('.vd-actbar__act[data-pane-link="yorumlar"]').forEach(function (b) { if (/Fotoğraf/.test(b.textContent)) { b.addEventListener('click', function () { if (window.dgUye() && foto) { setTimeout(function () { foto.click(); }, 300); } }); } });
 
-  /* Ziyaret Ettim, Listeye Ekle: üyede panele yazar */
-  $$('.vd-actbar__act[data-lg-gate], #mdListBtn').forEach(function (b) {
+  /* Ziyaret Ettim: üyede Ziyaret Geçmişim'e yazar */
+  $$('.vd-actbar__act[data-lg-gate]').forEach(function (b) {
     b.addEventListener('click', function () {
-      if (/Ziyaret/.test(b.textContent)) { if (!K.var('ziyaret', 'mikla')) { K.ekle('ziyaret', { id: 'mikla', mekan: MEKAN, yer: 'Beyoğlu, İstanbul', gun: new Date().toLocaleDateString('tr-TR') }); } bildir('Ziyaret Geçmişim\'e eklendi.'); return; }
-      if (b.id === 'mdListBtn') { if (!K.var('favori', 'mekan-mikla')) { K.ekle('favori', { id: 'mekan-mikla', tur: 'Mekân', ad: MEKAN, mekan: 'Beyoğlu, İstanbul' }); } bildir('Gurme Favorilerim\'e eklendi.');  kaydetBoya(); }
+      if (/Ziyaret/.test(b.textContent)) { if (!K.var('ziyaret', 'mikla')) { K.ekle('ziyaret', { id: 'mikla', mekan: MEKAN, yer: 'Beyoğlu, İstanbul', gun: new Date().toLocaleDateString('tr-TR') }); } bildir('Ziyaret Geçmişim\'e eklendi.'); }
     });
   });
+
+  /* Listeye Ekle (A8, Beyar 12 Kas): favori kalbinden ayrı akış; canlı `#mdListPop` (liste seç ya da yeni liste, canlı `ListeServisi::mekanaEkle`).
+     Popover'ı canlı `mekan-detay.js` açar, konumlar ve dışarı tıklayınca kapatır; burada seçenekler, kayıt, Esc ve odak.
+     Listeler: Listelerim örnekleri (`DG_LISTELER`, liste-veri.js) ve bu tarayıcıda kurulanlar (`dgKayit('lstYeniPnl')`, Listelerim'in Yeni liste deposu).
+     Kalem `dgKayit('liste-kalem')` (`<liste>|<mekân>`); liste detayı ve Listelerim sayısı bunu okur. Liste detayında kayıtlı sıra varsa mekân sona eklenir.
+     Misafirde düğme giriş kapısını açar (`data-lg-gate`, prototip.js yakalama evresi), popover açılmaz */
+  var lBtn = $('#mdListBtn'), lPop = $('#mdListPop'), lForm = lPop && $('form', lPop);
+  if (lBtn && lPop && lForm) {
+    var KATALOG = window.DG_LISTELER || [], SLUG = 'mikla';
+    var kac = function (t) { return String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); };
+    /* Mekânın satır bilgisi örnek listedeki kalemden (DG_MEKANLAR'dan aynen): tür · ilçe · fiyat */
+    var ornekKalem = null; KATALOG.forEach(function (l) { l.kalem.forEach(function (k) { if (k[0] === SLUG) { ornekKalem = k; } }); });
+    var ALT = ornekKalem ? [ornekKalem[3], ornekKalem[2], ornekKalem[4]].filter(Boolean).join(' · ') : 'Beyoğlu';
+    var durum = function (lid) { return K.oku('liste-durum').filter(function (k) { return k.id === lid; })[0] || null; };
+    var ornekte = function (lid) { var o = KATALOG.filter(function (l) { return l.id === lid; })[0]; return !!(o && o.kalem.some(function (k) { return k[0] === SLUG; })); };
+    var listedeMi = function (lid) {
+      var d = durum(lid); if (d) { return d.sira.indexOf(SLUG) > -1; }
+      return ornekte(lid) || K.var('liste-kalem', lid + '|' + SLUG);
+    };
+    var listeler = function () {
+      return K.oku('lstYeniPnl').map(function (k) { return { id: k.id, ad: k.ad || 'Yeni liste' }; }).concat(KATALOG.map(function (l) { return { id: l.id, ad: l.ad }; }));
+    };
+    var yeniRadyo = function () { return $('input[name="liste_id"][value=""]', lForm); };
+    var adGirdi = $('input[name="liste_adi"]', lForm), yeniSecenek = yeniRadyo().closest('label');
+    var secenekDoldur = function () {
+      $$('[data-liste-secenek]', lForm).forEach(function (e) { e.parentNode.removeChild(e); });
+      yeniSecenek.insertAdjacentHTML('beforebegin', listeler().map(function (l) {
+        var icinde = listedeMi(l.id);
+        return '<label class="kc-pop-radio" data-liste-secenek=""><input type="radio" name="liste_id" value="' + kac(l.id) + '"' + (icinde ? ' disabled' : '') + '> ' + kac(l.ad) + (icinde ? ' · listede' : '') + '</label>';
+      }).join(''));
+      yeniRadyo().checked = true; adGirdi.value = ''; adGirdi.required = true;
+    };
+    var kapat = function (odak) { if (lPop.hidden) { return; } lPop.hidden = true; lBtn.setAttribute('aria-expanded', 'false'); if (odak) { lBtn.focus(); } };
+    /* Popover'ı canlı dinleyici açar (kayıt sırası sayfa yüklenişine bağlı); açıldığı an `hidden` gözcüsüyle yakalanır: seçenekler tazelenir,
+       odak ilk seçilebilir seçeneğe */
+    var acilinca = function () { if (lPop.hidden) { return; } secenekDoldur(); var ilk = $('input[name="liste_id"]:not([disabled])', lForm); if (ilk) { ilk.focus(); } };
+    if (window.MutationObserver) { new MutationObserver(acilinca).observe(lPop, { attributes: true, attributeFilter: ['hidden'] }); } else { lBtn.addEventListener('click', function () { setTimeout(acilinca, 0); }); }
+    lForm.addEventListener('change', function (e) { if (e.target.name === 'liste_id') { adGirdi.required = !e.target.value; } });
+    adGirdi.addEventListener('focus', function () { yeniRadyo().checked = true; adGirdi.required = true; });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !lPop.hidden) { kapat(true); } });
+    lForm.addEventListener('submit', function (e) {
+      e.preventDefault(); e.stopImmediatePropagation();
+      var secili = $('input[name="liste_id"]:checked', lForm), lid = secili ? secili.value : '', ad = adGirdi.value.trim();
+      if (!lid && !ad) { adGirdi.value = ''; lForm.reportValidity(); return; }
+      if (!lid) { lid = 'lstYeniPnl-' + Date.now(); K.ekle('lstYeniPnl', { ad: ad, gorunurluk: 'ozel', aciklama: '', id: lid }); }
+      var listeAd = (listeler().filter(function (l) { return l.id === lid; })[0] || {}).ad || ad;
+      if (listedeMi(lid)) { bildir(MEKAN + ' zaten “' + listeAd + '” listende.'); kapat(true); return; }
+      if (!ornekte(lid) && !K.var('liste-kalem', lid + '|' + SLUG)) { K.ekle('liste-kalem', { id: lid + '|' + SLUG, liste: lid, slug: SLUG, ad: MEKAN, alt: ALT }); }
+      var d = durum(lid); if (d) { K.guncelle('liste-durum', lid, { sira: d.sira.concat([SLUG]) }); }
+      bildir(MEKAN + ' “' + listeAd + '” listene eklendi. Prototipte yalnız bu tarayıcıda tutulur.');
+      kapat(true);
+    }, true);
+  }
 
   /* Rezervasyon talebi: canlı betik formu `form.submit()` ile gönderir; prototipte sunucu yok. Talep bu tarayıcıya yazılır, onayı mekân sahibi verir (§8 #17) */
   var form = $('#rsvForm');

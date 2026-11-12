@@ -6,6 +6,11 @@
 //    prototip.js; satırları listeler.js basar). Canlıda bu sekme Dada Route'a gidiyordu.
 //  - Her liste satırı liste detayına açılır: hesabim/listeler/<liste>/ (mekânlar ve sırası, görünürlük, paylaşım bağlantısı).
 //  - Örnek listeler prototipteki gerçek mekân kayıtlarından (DG_MEKANLAR); "Fethiye tatili" gibi bağlamsız kayıt kalktı.
+// A8 (Beyar 12 Kas): mekân sayfasındaki "Listeye Ekle" canlı `#mdListPop` ile liste seçer ya da yeni liste kurar.
+//  - Örnek listelerin kimliği ve kalemleri tarayıcıya `assets/js/liste-veri.js` (`window.DG_LISTELER`, build.mjs bu dosyadaki `LISTELER`den yazar).
+//  - Eklenen kalem `dgKayit('liste-kalem')` (kimlik `<liste>|<mekân>`), yeni liste Listelerim'in kendi deposu `dgKayit('lstYeniPnl')`.
+//  - Liste detayı eklenen kalemi örnek kalemlerin ardına basar (satır kalıbı `<template data-kalem-kalip>`, aşağıdaki `kalemSatiri`);
+//    yeni listeler tek detay ekranında açılır: hesabim/listeler/yeni/?liste=<kayıt kimliği>.
 import { bant, sayac, ray, bolumBas, kartBas, kart, pano, satir, rozet, satirDugme, bos, pencere, panelDugme, sayfa, et, kac } from './_kalip.mjs';
 
 const GORUNUR = { ozel: 'Gizli', paylasilabilir: 'Bağlantısı olan görebilir' };
@@ -59,8 +64,10 @@ const yeni = pencere('lstYeniPnl', 'Yeni liste oluştur', 'Listeye bir ad ve gö
         <div class="alan">
           <label class="alan-etiket" for="lstYeni-aciklama">Açıklama <span class="istege-bagli">(opsiyonel)</span></label>
           <textarea class="alan-metin" id="lstYeni-aciklama" name="aciklama" maxlength="1000" placeholder="Bu liste kimin için, neyi topluyor?"></textarea>
-        </div>`, 'Listeyi oluştur', 'data-dm-ikon="fa-solid fa-list" data-dm-alt="0 mekân · {gorunurluk}" data-dm-rozet="{gorunurluk}" data-dm-mesaj="Liste oluşturuldu. Prototipte yalnız bu tarayıcıda tutulur."');
-const JS = { js: ['assets/js/sayfa/listeler.js'] };
+        </div>`, 'Listeyi oluştur', 'data-dm-ikon="fa-solid fa-list" data-dm-alt="0 mekân · {gorunurluk}" data-dm-rozet="{gorunurluk}" data-dm-bag="hesabim/listeler/yeni/?liste={id}" data-dm-mesaj="Liste oluşturuldu. Prototipte yalnız bu tarayıcıda tutulur."');
+const JS = { js: ['assets/js/liste-veri.js', 'assets/js/sayfa/listeler.js'] };
+// Tarayıcıya giden örnek liste kataloğu (build.mjs → assets/js/liste-veri.js): kimlik, ad, görünürlük, taslak, kalemler [slug, ad, ilçe, tür, fiyat]
+export const LISTELER = L.map(({ id, ad, g, taslak, kalem }) => ({ id, ad, g, taslak, kalem }));
 const ust = (aktif) => bant({ cur: 'Listelerim', ikon: 'fa-solid fa-list-ul', giris, serit }) + ray('Listelerim bölümleri', RAY, aktif, 'listelerim');
 
 // Sekme sayfaları (Mekân Listelerim, Paylaştığım, Taslak)
@@ -87,10 +94,13 @@ const rotaSayfasi = () => {
 };
 
 // Liste detayı: mekânlar (sıra), görünürlük, paylaşım bağlantısı
+const kalemSatiri = (slug, ad, alt, sira) => `<div class="kalem-satiri tiklanir" data-kalem="${slug}"><span class="ks-ikon ks-sira" aria-hidden="true">${sira}</span><span class="ks-metin"><b><a href="{{kok}}mekan/${slug}/">${ad}</a></b><small>${alt}</small></span><span class="ks-uc">${satirDugme('', `data-sira="yukari" aria-label="${ad}: yukarı taşı"`, 'fa-solid fa-arrow-up')}${satirDugme('', `data-sira="asagi" aria-label="${ad}: aşağı taşı"`, 'fa-solid fa-arrow-down')}${satirDugme('Çıkar', `data-kalem-cikar="" aria-label="${ad}: listeden çıkar"`, 'fa-solid fa-xmark')}</span></div>`;
 const detaySayfasi = (l) => {
   const aktif = l.taslak ? 'lst-taslak' : l.g === 'paylasilabilir' ? 'lst-paylasilan' : 'lst-mekan';
   // Satırın tamamı mekâna açılır (`.tiklanir`, Dalga 2 mobil: başlık bağı 14px yüksekti); sırala ve Çıkar örtünün üstünde
-  const kalemler = l.kalem.map(([slug, ad, ilce, tur, fiyat], i) => `<div class="kalem-satiri tiklanir" data-kalem="${slug}"><span class="ks-ikon ks-sira" aria-hidden="true">${i + 1}</span><span class="ks-metin"><b><a href="{{kok}}mekan/${slug}/">${kac(ad)}</a></b><small>${[tur, ilce, fiyat].filter(Boolean).map(kac).join(' · ')}</small></span><span class="ks-uc">${satirDugme('', `data-sira="yukari" aria-label="${kac(ad)}: yukarı taşı"`, 'fa-solid fa-arrow-up')}${satirDugme('', `data-sira="asagi" aria-label="${kac(ad)}: aşağı taşı"`, 'fa-solid fa-arrow-down')}${satirDugme('Çıkar', `data-kalem-cikar="" aria-label="${kac(ad)}: listeden çıkar"`, 'fa-solid fa-xmark')}</span></div>`).join('');
+  const kalemler = l.kalem.map(([slug, ad, ilce, tur, fiyat], i) => kalemSatiri(slug, kac(ad), [tur, ilce, fiyat].filter(Boolean).map(kac).join(' · '), i + 1)).join('');
+  // Mekân sayfasından eklenen kalem aynı satırla basılır (listeler.js `{slug}`, `{ad}`, `{alt}`, `{sira}` yerine koyar)
+  const kalip = `<template data-kalem-kalip="">${kalemSatiri('{slug}', '{ad}', '{alt}', '{sira}')}</template>`;
   const bag = `https://dadagourmet.com/liste/${l.kod || 'yeni-baglanti'}`;
   const secim = (deger, ikon, baslik, metin) => `<label class="ayar-satir secim-satir"><span class="as-ikon"><i class="${ikon}" aria-hidden="true"></i></span><span class="as-metin"><b>${baslik}</b><span>${metin}</span></span><input class="secim-radyo" type="radio" name="gorunurluk" value="${deger}"${l.g === deger ? ' checked' : ''}></label>`;
   const paylasim = `<div class="kart" data-liste-paylasim="">
@@ -110,13 +120,16 @@ const detaySayfasi = (l) => {
   const govde = ust(aktif).replace('<span class="cur">Listelerim</span>', `<a href="{{kok}}hesabim/listeler/">Listelerim</a> <i class="fa-solid fa-chevron-right" aria-hidden="true"></i> <span class="cur">${kac(l.ad)}</span>`) + `<div class="modul-govde">${pano({
     id: 'lst-detay',
     bas: bolumBas({ ikon: 'fa-solid fa-list', etiket: l.taslak ? 'Taslak liste' : 'Liste', baslik: kac(l.ad), giris: kac(l.aciklama), arac: `${rozet(KISA[l.g]).replace('class="rozet', 'data-liste-rozet="" class="rozet ikonlu')} ${et}` }),
-    kart: kart({ bas: kartBas('fa-solid fa-utensils', `Mekânlar <span class="sekme-sayi" data-kalem-sayi="">${l.kalem.length}</span>`, `Sıra, listeyi açan herkes için aynıdır. Son düzenleme: ${l.guncel}.`), liste: kalemler, listeId: `lstKalem-${l.id}`, alt: `<a class="dugme hayalet" href="{{kok}}mekanlar/"><i class="fa-solid fa-plus" aria-hidden="true"></i> Mekân ekle</a>` }),
+    kart: kart({ bas: kartBas('fa-solid fa-utensils', `Mekânlar <span class="sekme-sayi" data-kalem-sayi="">${l.kalem.length}</span>`, `Sıra, listeyi açan herkes için aynıdır. Son düzenleme: ${l.guncel}.`), liste: kalemler || bos('fa-solid fa-utensils', 'Listede henüz mekân yok', 'Bir mekânın sayfasındaki <b>Listeye Ekle</b> ile doldurabilirsin.'), listeId: `lstKalem-${l.id}`, alt: `<a class="dugme hayalet" href="{{kok}}mekanlar/"><i class="fa-solid fa-plus" aria-hidden="true"></i> Mekân ekle</a>` }),
     ek: paylasim,
     not: 'Mekân eklemek mekânın kendi sayfasındaki <b>Listeye ekle</b> ile yapılır. Prototipte sıra, çıkarma ve görünürlük yalnız bu tarayıcıda tutulur.',
-  }).replace('data-pane="lst-detay"', `data-pane="lst-detay" data-liste="${l.id}"`)}</div>`;
+  }).replace('data-pane="lst-detay"', `data-pane="lst-detay" data-liste="${l.id}"${l.kayit ? ' data-liste-kayit=""' : ''}`)}${kalip}</div>`;
   return sayfa(`hesabim/listeler/${l.id}`, `${l.ad} · Listelerim`, govde, JS);
 };
+// Yeni liste detayı (A8): Listelerim'de ya da mekân sayfasında kurulan liste bu tarayıcıda (`dgKayit('lstYeniPnl')`); başlık, açıklama,
+// görünürlük ve kalemler `?liste=` kimliğiyle listeler.js'te dolar. Kayıt yoksa boş durum
+const YENI = { id: 'yeni', ad: 'Yeni liste', aciklama: '', g: 'ozel', taslak: false, kod: '', guncel: '<span data-liste-guncel="">bu tarayıcıda</span>', kalem: [], kayit: true };
 
 export default function () {
-  return [...sekmeSayfalari(), rotaSayfasi(), ...L.map(detaySayfasi)];
+  return [...sekmeSayfalari(), rotaSayfasi(), ...L.map(detaySayfasi), detaySayfasi(YENI)];
 }

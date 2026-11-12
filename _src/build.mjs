@@ -169,6 +169,8 @@ for (const f of uretimDosyalari) {
 }
 // Mekânlar süzgecinin istemci verisi: tek kaynak _src/veri ve _src/parcalar
 if (veri['mekan-filtre']) { const kartlar = JSON.parse(oku(path.join(SRC, 'parcalar/mekan-kartlar.json'))); const { mekanlar, secenek, alinma } = veri['mekan-filtre']; for (const slug of Object.keys(kartlar)) kartlar[slug] = kartZengin(kartlar[slug], mekanBySlug[slug]); fs.writeFileSync(path.join(KOK, 'assets/js/mekan-liste-veri.js'), 'window.DG_LISTE=' + JSON.stringify({ alinma, mekanlar, secenek, kartlar }) + ';\n'); }
+// Listelerim örnek kataloğu (A8, 12 Kas): mekân sayfasındaki Listeye Ekle ve liste detayları aynı listeyi okur; tek kaynak `listeler.mjs`
+{ const { LISTELER } = await import(pathToFileURL(path.join(SRC, 'sayfalar/hesabim/listeler.mjs')).href); fs.writeFileSync(path.join(KOK, 'assets/js/liste-veri.js'), '/* Üretilir: _src/sayfalar/hesabim/listeler.mjs `LISTELER` (build.mjs); elle düzenlenmez */\nwindow.DG_LISTELER=' + JSON.stringify(LISTELER) + ';\n'); }
 if (veri.lezzet) fs.writeFileSync(path.join(KOK, 'assets/js/lezzet-veri.js'), 'window.DG_LEZZET=' + JSON.stringify({ ...veri.lezzet, kalip: oku(path.join(SRC, 'parcalar/lezzet-kart.html')).trim() }) + ';\n');
 // Reklam önizlemesinin istemci verisi (reklam-cekirdek, 11 Kas): tek kaynak _src/veri/reklam-*.json, marka renk satırları dahil
 { const { reklamVerisi } = await import(pathToFileURL(path.join(SRC, 'araclar/reklam-veri.mjs')).href); const v = reklamVerisi(veri); if (v) fs.writeFileSync(path.join(KOK, 'assets/js/reklam/veri.js'), v); }
