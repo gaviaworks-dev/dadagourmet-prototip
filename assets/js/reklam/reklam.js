@@ -480,8 +480,9 @@
       stdKatman.forEach(function (f) { f(); }); stdKatman = [];
       durum.yapiskan = null;
       /* Alt bar: eylem çubuğu olan sayfada yok (REKLAM-YERLESIM; Gastro `.rd-actbar`). Telefonun alt çubuğu engel değil: bar onun üstünde */
-      if (genis() && !kapaliMi('STD-SIDE')) { sideKur(); } else if (!genis() && !kapaliMi('STD-ALTBAR') && !document.querySelector('.vd-actbar, .rd-actbar, .evd-actbar, .actbar, .tercih-kaydet')) { altbarKur(); }
+      if (genis() && !kapaliMi('STD-SIDE')) { sideKur(); } else if (!genis() && altbarAday()) { stdKatman.push(altbarKur() || function () {}); }
     };
+    var altbarAday = function () { return !kapaliMi('STD-ALTBAR') && !document.querySelector('.vd-actbar, .rd-actbar, .evd-actbar, .actbar, .tercih-kaydet'); };
     function sideKur() {
       var sag = secStd('STD-SIDE');
       if (sag && durum.markalar.indexOf(sag.marka) < 0) { durum.markalar.push(sag.marka); }
@@ -500,11 +501,20 @@
       var hero = document.querySelector('#pageMain .below-header, #pageMain > .ke-top, main [data-rk-hero], .below-header');
       var altbilgi = document.querySelector('footer.footer, body > footer');
       var red = function (neden) { cift.setAttribute('data-rk-side-reason', neden); yanlar.forEach(function (y) { gorunsun(y, false); }); };
+      /* E6b (12 Kas, lider) · Gastro `chooseFormat` (standart.js:194-197): aday sırası side → altbar, side yalnız `sideRoom` varken;
+         yoksa alt bar (eylem çubuğu yoksa). Gourmet'te yedeğe yalnız DİKEY yer yokluğu düşürür (360 kapısı ya da `sideGorselEnAz`):
+         hero, altbilgi ve çerez kapıları geçici görünürlük durumudur, alt barın kendi kapısı var. Yer geri gelince (pencere büyür) yan döner.
+         Yapışkan sınırı 1 korunur: aynı anda ya yan ya alt bar. */
+      var yedek = null;
+      var yedekAc = function () { if (yedek || !altbarAday()) { return; } yedek = altbarKur() || null; };
+      /* Alt bar kalkınca yüzen düğmeler aşağı iner (BottomClearance geçişi): yan yüksekliği geçiş bitince yeniden ölçülür */
+      var yedekKapat = function () { durum.yapiskan = 'STD-SIDE'; if (!yedek) { return; } yedek(); yedek = null; setTimeout(kaydir, 450); };
       var konum = function () {
         kare = 0;
+        if (!cift.isConnected) { return; } /* sökülmüş çiftin gecikmeli ölçümü yedek alt bar kurmasın */
         var H = window.innerHeight, yer = yanYer();
         if (!yer) { return red('içerikle arasında pay yok'); }
-        if (cerezVar()) { return red('çerez bandı'); }
+        if (yedek && !document.body.contains(document.querySelector('[data-rk-birim="STD-ALTBAR"]'))) { yedek = null; } /* alt bar × ile kapandı */
         var bas = 0;
         [].forEach.call(document.querySelectorAll('header, .header, .topbar'), function (n) { var r = n.getBoundingClientRect(); if (r.height && r.top < 160) { bas = Math.max(bas, r.bottom); } });
         /* Gastro sideHeroBottom: hero'nun üstüne yuvarlak kenarıyla binen sonraki bölüm hero'nun sonu sayılır */
@@ -513,9 +523,6 @@
         /* Gastro visibleFooterTop (Diet prototipi gibi `sticky` de): içeriğin altından açılan altbilgide sınır içeriğin sonu */
         var altUst = altbilgi ? altbilgi.getBoundingClientRect().top : Infinity;
         if (altbilgi && /^(fixed|sticky)$/.test(getComputedStyle(altbilgi).position)) { var ic = document.querySelector('main'); altUst = Math.max(altUst, ic ? ic.getBoundingClientRect().bottom : Infinity); }
-        if (heroAlt !== null && window.scrollY === 0) { return red('hero görünür'); }
-        if (altUst < H) { return red('altbilgi görünür'); }
-        if (heroAlt !== null && heroAlt > bas) { return red('hero başlık çizgisini geçmedi'); }
         var ust = bas + 24, alt = bas + (H - bas - 600) / 2 + 600;
         /* Gourmet: köşedeki yüzen düğmeler (Route, başa dön, Mentör) yanın kutusuna giriyorsa yan onların 12 px üstünde biter */
         var W = document.documentElement.clientWidth;
@@ -525,7 +532,7 @@
           if (r.width && r.top < H && kutu.some(function (x) { return r.left < x[1] && r.right > x[0]; })) { alt = Math.min(alt, r.top - 12); }
         });
         var yuk = Math.round(alt - ust);
-        if (yuk < 360) { return red('yan için dikey alan yok'); }
+        if (yuk < 360) { yedekAc(); return red('yan için dikey alan yok'); }
         cift.style.setProperty('--rk-side-inset', yer.ic + 'px');
         cift.style.setProperty('--rk-side-top', Math.round(ust) + 'px');
         cift.style.setProperty('--rk-side-width', yer.gen + 'px');
@@ -543,8 +550,13 @@
           if (gizli) { y.hidden = true; y.style.visibility = ''; }
         });
         var medyaAlt = Math.min(K.sideGorsel, yuk - gerek);
-        if (medyaAlt < K.sideGorselEnAz) { return red('yan kartı sığmıyor'); }
+        if (medyaAlt < K.sideGorselEnAz) { yedekAc(); return red('yan kartı sığmıyor'); }
+        yedekKapat();
         cift.style.setProperty('--rk-side-medya-min', medyaAlt + 'px');
+        if (cerezVar()) { return red('çerez bandı'); }
+        if (heroAlt !== null && window.scrollY === 0) { return red('hero görünür'); }
+        if (altUst < H) { return red('altbilgi görünür'); }
+        if (heroAlt !== null && heroAlt > bas) { return red('hero başlık çizgisini geçmedi'); }
         var n = yanlar.length === 1 ? 1 : yer.n;
         cift.setAttribute('data-rk-side-count', String(n));
         cift.setAttribute('data-rk-side-gap', String(yer.pay));
@@ -560,7 +572,7 @@
       var cerezG = cerezIzle(kaydir);
       /* E6: mesaj yüksekliği yazı tipine bağlı; yazı tipleri sonradan yüklenirse medya payı yeniden hesaplanır */
       if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function () { if (cift.isConnected) { kaydir(); } }); }
-      var bitir = function () { window.removeEventListener('scroll', kaydir); window.removeEventListener('resize', kaydir); if (gozcu) { gozcu.disconnect(); } if (cerezG) { cerezG.disconnect(); } if (kare) { cancelAnimationFrame(kare); kare = 0; } cift.remove(); };
+      var bitir = function () { window.removeEventListener('scroll', kaydir); window.removeEventListener('resize', kaydir); if (gozcu) { gozcu.disconnect(); } if (cerezG) { cerezG.disconnect(); } if (kare) { cancelAnimationFrame(kare); kare = 0; } if (yedek) { yedek(); yedek = null; } cift.remove(); };
       /* Kapat (×): iki yan birlikte kapanır (Gastro dismiss('side')), 24 saat gelmez */
       cift.addEventListener('click', function (e) {
         if (!e.target.closest('.rk-std-kapat')) { return; }
@@ -571,7 +583,7 @@
     }
     function altbarKur() {
       var k = secStd('STD-ALTBAR');
-      if (!k) { return; }
+      if (!k) { return null; }
       var el = dugum(B.standart('altbar', k, { kod: 'STD-ALTBAR' }));
       el.setAttribute('data-rk-birim', 'STD-ALTBAR');
       el.setAttribute('data-bc-bar', '');
@@ -611,7 +623,7 @@
         kapatKaydet('STD-ALTBAR'); bitir(); durum.yapiskan = null;
       });
       konum();
-      stdKatman.push(bitir);
+      return bitir;
     }
     /* Pop-up: oturumun ilk reklamlı sayfasında yok; oturumda bir kez ve 10 dakikada en çok bir (SunumKurallari popup.*) */
     function popup() {
