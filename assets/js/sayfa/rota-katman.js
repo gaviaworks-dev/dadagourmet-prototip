@@ -100,27 +100,61 @@
   /* ---- Nokta havuzu: [boylam, enlem, ad, nitelik] → tek biçim ---- */
   var ibadetIkon = function (t) { return /Kilise/.test(t) ? 'fa-church' : /Sinagog/.test(t) ? 'fa-synagogue' : /Cemevi|Manastır/.test(t) ? 'fa-place-of-worship' : 'fa-mosque'; };
   var ikonK = { dinlenme: 'fa-bed', karavan: 'fa-caravan', neyenir: 'fa-bowl-food', nealinir: 'fa-basket-shopping' };
-  var bicim = function (k) { return function (n) { return { ad: n[2], lat: n[1], lng: n[0], alt: n[3], ikon: k === 'ibadet' || k === 'tarihi' ? ibadetIkon(n[3] + ' ' + n[2]) : ikonK[k] }; }; };
+  var bicim = function (k) { return function (n) { return { ad: n[2], lat: n[1], lng: n[0], alt: n[3], etiket: n[4], ikon: k === 'ibadet' || k === 'tarihi' ? ibadetIkon(n[3] + ' ' + n[2]) : ikonK[k] }; }; };
+
+  /* ---- İbadethane gösterim kuralı (Beyar 12 Kas, Dada Route İhtiyaçlar › İbadethane) ----
+     Yalnız FAAL, ibadete açık yer gösterilir; tarihi/turistik yapı (müze, ören yeri, harabe, kullanılmayan ya da terk edilmiş yapı)
+     gösterilmez. Kural global, bütün dinler için aynı; girdi OSM etiket kümesi (`amenity=place_of_worship`). Sıra:
+       1) `amenity=place_of_worship` değil (yaşam döngüsü önekli `disused:amenity=…` dahil) → elenir ('ibadethane-degil')
+       2) `tourism=museum` → HER ZAMAN elenir ('muze'), faal işareti olsa da
+       3) `historic=ruins|archaeological_site` ya da `ruins=*` (no dışında) → elenir ('oren')
+       4) `disused*` / `abandoned*` anahtarı (`disused=yes`, `abandoned:building=…` gibi önekliler) → elenir ('terk')
+       5) `historic=*` ya da `tourism=attraction` varsa faal ibadet işareti aranır: `religion` VE (`denomination` | `service_times` |
+          `opening_hours`). İşaret varsa KALIR (Ayasofya gibi hem tarihi hem faal), yoksa elenir ('tarihi')
+       6) Geri kalan ibadethane kalır.
+     Dönen değer: null (göster) ya da elenme nedeni. Panel/canlı OSM çekimi aynı işlevi taşır. */
+  var ibadetElenme = function (t) {
+    if (!t || t.amenity !== 'place_of_worship') { return 'ibadethane-degil'; }
+    if (t.tourism === 'museum') { return 'muze'; }
+    if (t.historic === 'ruins' || t.historic === 'archaeological_site' || (t.ruins && t.ruins !== 'no')) { return 'oren'; }
+    if (Object.keys(t).some(function (a) { return /^(disused|abandoned)(:|$)/.test(a) && t[a] !== 'no'; })) { return 'terk'; }
+    if ((t.historic && t.historic !== 'no') || t.tourism === 'attraction') { return t.religion && (t.denomination || t.service_times || t.opening_hours) ? null : 'tarihi'; }
+    return null;
+  };
+  window.dgIbadetElenme = ibadetElenme;
+  /* Elenen kayıtların sayımı (ölçüm için): kaynak × neden */
+  var ibadetSuzum = window.dgIbadetSuzum = { kalan: 0, elenen: {} };
+  var ibadetSuz = function (kaynak) { return function (n) {
+    var neden = ibadetElenme(n.etiket); if (!neden) { ibadetSuzum.kalan++; return true; }
+    var a = kaynak + ':' + neden; ibadetSuzum.elenen[a] = (ibadetSuzum.elenen[a] || 0) + 1; return false;
+  }; };
   var noktalar = { ibadet: [], tarihi: [], dinlenme: [], karavan: [], neyenir: [], nealinir: [] };
   ['ibadet', 'tarihi', 'dinlenme', 'karavan'].forEach(function (k) { noktalar[k] = (R.katman[k] || []).map(bicim(k)); });
+  ['ibadet', 'tarihi'].forEach(function (k) { noktalar[k] = noktalar[k].filter(ibadetSuz('sabit')); });
   IL.forEach(function (i) {
     var k = K[i.il]; if (!k) { return; }
     (k.yenir || []).forEach(function (u) { var c = urunKonum(i, u, 'yenir'); noktalar.neyenir.push({ ad: u[0] + ' · ' + i.il, lat: c.lat, lng: c.lng, ikon: ikonK.neyenir }); });
     (k.alinir || []).forEach(function (u) { var c = urunKonum(i, u, 'alinir'); noktalar.nealinir.push({ ad: u[0] + ' · ' + i.il, lat: c.lat, lng: c.lng, ikon: ikonK.nealinir }); });
   });
 
-  /* Güzergâhta sabit örnek nokta yoksa çizgi boyunca üretilen örnekler (Beyar, 9 Kas: açılan katman haritada görünsün) */
+  /* Güzergâhta sabit örnek nokta yoksa çizgi boyunca üretilen örnekler (Beyar, 9 Kas: açılan katman haritada görünsün).
+     İbadethane kalıpları da aynı etiketi taşır ve `ibadetElenme`den geçer: tarihi kalıpların üçü de elenir (ziyaret saatli turistik
+     kilise ve sinagog: 'tarihi'; manastır kalıntısı: 'oren'), Beyar 12 Kas */
+  var MUSLIM = { amenity: 'place_of_worship', religion: 'muslim' };
   var URET = {
-    ibadet: [90, 1.2, function (i) { return [{ ad: 'Örnek cami', alt: 'Cami · abdesthane' }, { ad: 'Örnek mescit', alt: 'Mescit · akaryakıt istasyonu içi' }, { ad: 'Örnek cemevi', alt: 'Cemevi' }][i % 3]; }],
-    tarihi: [220, 6, function (i) { return [{ ad: 'Örnek tarihi kilise', alt: 'Kilise · ziyaret saatleri: örnek' }, { ad: 'Örnek tarihi sinagog', alt: 'Sinagog · ziyaret saatleri: örnek' }, { ad: 'Örnek manastır kalıntısı', alt: 'Manastır · ören yeri' }][i % 3]; }],
+    ibadet: [90, 1.2, function (i) { return [{ ad: 'Örnek cami', alt: 'Cami · abdesthane', etiket: { amenity: 'place_of_worship', religion: 'muslim', building: 'mosque' } }, { ad: 'Örnek mescit', alt: 'Mescit · akaryakıt istasyonu içi', etiket: MUSLIM }, { ad: 'Örnek cemevi', alt: 'Cemevi', etiket: { amenity: 'place_of_worship', religion: 'muslim', denomination: 'alevi' } }][i % 3]; }],
+    tarihi: [220, 6, function (i) { return [{ ad: 'Örnek tarihi kilise', alt: 'Kilise · ziyaret saatleri: örnek', etiket: { amenity: 'place_of_worship', religion: 'christian', historic: 'church', tourism: 'attraction' } }, { ad: 'Örnek tarihi sinagog', alt: 'Sinagog · ziyaret saatleri: örnek', etiket: { amenity: 'place_of_worship', religion: 'jewish', historic: 'yes', tourism: 'attraction' } }, { ad: 'Örnek manastır kalıntısı', alt: 'Manastır · ören yeri', etiket: { amenity: 'place_of_worship', religion: 'christian', historic: 'ruins', ruins: 'monastery' } }][i % 3]; }],
     dinlenme: [110, 2, function (i) { return i % 2 ? { ad: 'Örnek bağ evi', alt: 'Konaklamalı · bağ evi lokantası' } : { ad: 'Örnek dinlenme cebi', alt: 'Aydınlatma, tuvalet · araç içi kısa mola' }; }],
     karavan: [170, 3, function (i) { return i % 2 ? { ad: 'Örnek karavan konaklama alanı', alt: 'Çiftlik içi · duş, elektrik' } : { ad: 'Örnek karavan parkı', alt: 'Elektrik, su, atık boşaltma' }; }]
   };
+  /* Üretilen örnek kalıpları da sayılır (kalıp başına bir kez; çizgi boyunca kaç kez basıldığı rotaya bağlı) */
+  ibadetSuzum.kalip = {}; ['ibadet', 'tarihi'].forEach(function (k) { [0, 1, 2].forEach(function (i) { var t = URET[k][2](i), n = ibadetElenme(t.etiket); ibadetSuzum.kalip[k + ':' + t.ad] = n || 'kalir'; }); });
   var katmanNoktalari = function (k) {
     var l = noktalar[k].map(function (n) { var o = olc(n.lat, n.lng, 30); return { n: n, d: o.d, s: o.s }; }).filter(function (x) { return x.d <= KORIDOR[k]; });
     if (!l.length && URET[k] && window.dgRotaOrnek && rotaVar()) {
-      l = window.dgRotaOrnek(URET[k][0], URET[k][1]).map(function (o, i) { var t = URET[k][2](i), n = { ad: t.ad, alt: t.alt, lat: o.lat, lng: o.lng }, m = olc(o.lat, o.lng, 30); n.ikon = k === 'ibadet' || k === 'tarihi' ? ibadetIkon(t.alt) : ikonK[k]; return { n: n, d: m.d, s: m.s }; })
-        .filter(function (x) { return x.d <= KORIDOR[k] + 5; });
+      var ibadetMi = k === 'ibadet' || k === 'tarihi';
+      l = window.dgRotaOrnek(URET[k][0], URET[k][1]).map(function (o, i) { var t = URET[k][2](i), n = { ad: t.ad, alt: t.alt, lat: o.lat, lng: o.lng, etiket: t.etiket }, m = olc(o.lat, o.lng, 30); n.ikon = ibadetMi ? ibadetIkon(t.alt) : ikonK[k]; return { n: n, d: m.d, s: m.s }; })
+        .filter(function (x) { return x.d <= KORIDOR[k] + 5 && !(ibadetMi && ibadetElenme(x.n.etiket)); });
     }
     return l.sort(function (a, b) { return a.s - b.s; });
   };
