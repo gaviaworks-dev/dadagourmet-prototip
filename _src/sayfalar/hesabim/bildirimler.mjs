@@ -15,7 +15,7 @@ const B = [
   ['Dün', 'nt-oneri-narimor', false, 'fa-solid fa-location-dot', false, 'Önerdiğin mekân <b>Narımor Urla</b> yayında · +50 Dada Puan kesinleşti.', 'fa-solid fa-compass', 'Keşif', 'Dün 16:40', 'hesabim/gurme-panelim/topluluk-katkilarim/'],
   ['Bu hafta', 'nt-etk-perugia', false, 'fa-solid fa-calendar-days', false, 'Katılacağın <b>Eurochocolate Perugia 2026</b> 13 Kasım’da başlıyor.', 'fa-solid fa-calendar-days', 'Etkinlik', '7 Kasım', 'etkinlik-detay/?e=eurochocolate-perugia-2026', ETK],
   ['Bu hafta', 'nt-liste-bogaz', false, 'fa-solid fa-list', false, '<b>Boğaz’da akşam yemeği</b> listen paylaşım bağlantısıyla 3 kez açıldı.', 'fa-solid fa-list', 'Liste', '6 Kasım', 'hesabim/listeler/'],
-  ['Daha önce', 'nt-hosgeldin', false, 'fa-solid fa-utensils', true, '<b>Dada Gourmet</b>’e hoş geldin! Keşif tercihlerini seç, sana uygun mekânları öne çıkaralım.', 'fa-solid fa-gear', 'Sistem', '12 Mart', 'hesabim/kesif-tercihleri/'],
+  ['Daha önce', 'nt-hosgeldin', false, 'fa-solid fa-utensils', true, '<b>Dada Gourmet</b>’e hoş geldin! Keşif tercihlerini seç; ileride önerilerde kullanılacak.', 'fa-solid fa-gear', 'Sistem', '12 Mart', 'hesabim/kesif-tercihleri/'],
 ];
 const okunmamis = B.filter((b) => b[2]).length;
 

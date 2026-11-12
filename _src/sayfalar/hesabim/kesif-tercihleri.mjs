@@ -31,12 +31,12 @@ const MUTFAK_AD = Object.fromEntries(MUTFAK.kalemler.map((m) => [m.kod, m.ad]));
 
 // [ad, ikon]
 const ALANLAR = [
-  { a: 'mutfak', ikon: 'fa-utensils', ust: 'Mutfak', baslik: 'Sevdiğim Mutfaklar', kisa: 'Mutfak', giris: 'Hangi mutfakları öne çıkaracağımızı bu belirler. Mekân ve rota önerileri buna göre sıralanır.', duzen: 'akordeon', birim: 'mutfak',
-    not: 'Liste dünya mutfaklarını kapsar (Dada Gastro’nun mutfak listesiyle aynı). Rehberde henüz mekânı olmayan bir mutfağı da seçebilirsin; o mutfakta mekân yayına girdiğinde önerilerde öne çıkar.',
+  { a: 'mutfak', ikon: 'fa-utensils', ust: 'Mutfak', baslik: 'Sevdiğim Mutfaklar', kisa: 'Mutfak', giris: 'Sevdiğin mutfakları seç. Tercihin kaydedilir; ileride mekân ve rota önerilerinde kullanılacak.', duzen: 'akordeon', birim: 'mutfak',
+    not: 'Liste dünya mutfaklarını kapsar (Dada Gastro’nun mutfak listesiyle aynı). Rehberde henüz mekânı olmayan bir mutfağı da seçebilirsin; seçimin saklanır.',
     gruplar: MUTFAK.gruplar.map((g) => [g.ad, g.ikon, g.kalemler.map((m) => [m.ad])]) },
   // Kaynak: canlı `KesifTercihiKaydetIstegi::MEKAN_SECENEKLERI` (28 mekân türü; 21'i `KatalogKategorileriSeeder` mekân kategorisi,
   // 7'si konsept: Butik, Bahçeli, Çiftlikten Sofraya, Şef Restoranı, Vegan, Vejetaryen, Yöresel). İkonlar Mekân Bul adım 2 ile ortak olanlarda aynı.
-  { a: 'konsept', ikon: 'fa-store', ust: 'Mekân türü', baslik: 'Mekân Tercihlerim', kisa: 'Konsept', giris: 'Ne aradığına göre mekân öneririz: manzaralı sofradan saklı esnaf lokantasına.', duzen: 'akordeon', ara: 'Mekân türü ara', birim: 'mekân türü', not: 'Bu türlerin çoğu Mekânlar sayfasındaki <b>Mekân Kategorisi</b> süzgecinde de var.',
+  { a: 'konsept', ikon: 'fa-store', ust: 'Mekân türü', baslik: 'Mekân Tercihlerim', kisa: 'Konsept', giris: 'Hangi mekân türlerini sevdiğini seç: manzaralı sofradan saklı esnaf lokantasına. Tercihin ileride önerilerde kullanılacak.', duzen: 'akordeon', ara: 'Mekân türü ara', birim: 'mekân türü', not: 'Bu türlerin çoğu Mekânlar sayfasındaki <b>Mekân Kategorisi</b> süzgecinde de var.',
     gruplar: [
       ['Restoran', 'fa-utensils', [['Fine Dining Restoranı', 'fa-champagne-glasses'], ['Şef Restoranı', 'fa-star'], ['Butik Restoran', 'fa-gem'], ['Bahçeli Restoran', 'fa-tree'], ['Çiftlikten Sofraya Restoran', 'fa-tractor'], ['Esnaf Lokantası', 'fa-bowl-food'], ['Lokanta', 'fa-plate-wheat'], ['Aile Restoranı', 'fa-people-roof'], ['Casual Dining Restoranı', 'fa-utensils'], ['Fast Casual Restoranı', 'fa-burger'], ['Hızlı Servis Restoranı', 'fa-bolt'], ['Tematik Restoran', 'fa-masks-theater'], ['Restoran', 'fa-kitchen-set']]],
       ['Kahve ve çay', 'fa-mug-hot', [['Üçüncü Nesil Kahveci', 'fa-flask'], ['Kahve Dükkânı', 'fa-shop'], ['Kafe', 'fa-mug-saucer'], ['Çay Evi', 'fa-mug-hot']]],
@@ -46,13 +46,13 @@ const ALANLAR = [
       ['Sokak ve yöresel', 'fa-store', [['Yöresel Lezzet Noktası', 'fa-store'], ['Sokak Lezzetleri Noktası', 'fa-hotdog']]],
     ] },
   // Kaynak: canlı `ETKINLIK_SECENEKLERI` (10) = `EtkinlikKategorileriSeeder` etkinlik türleri (Lezzet Takvimi tür süzgeci)
-  { a: 'etkinlik', ikon: 'fa-calendar-days', ust: 'İlgi', baslik: 'Etkinlik İlgi Alanlarım', kisa: 'Etkinlik', giris: 'Lezzet Takvimi’nde hangi tür etkinlikleri öne çıkaralım?', duzen: 'izgara', birim: 'etkinlik türü', not: 'Seçtiğin türlerde yeni etkinlik açıldığında <b>Bildirimler</b>den haber alabilirsin.',
+  { a: 'etkinlik', ikon: 'fa-calendar-days', ust: 'İlgi', baslik: 'Etkinlik İlgi Alanlarım', kisa: 'Etkinlik', giris: 'Lezzet Takvimi’nde hangi tür etkinlikler ilgini çekiyor?', duzen: 'izgara', birim: 'etkinlik türü', not: 'Seçtiğin türler kaydedilir; ileride yeni etkinlik <b>Bildirimler</b>inde kullanılacak.',
     gruplar: [
       ['Deneyim', 'fa-wine-glass', [['Tadım Etkinlikleri', 'fa-wine-glass'], ['Üretim, Hasat ve Bağ Deneyimleri', 'fa-wheat-awn'], ['Özel Menü ve Gastronomi Geceleri', 'fa-moon'], ['Pop-up ve Konuk Şef Etkinlikleri', 'fa-user-tie'], ['Gastronomi Festivalleri', 'fa-tents']]],
       ['Öğrenme ve buluşma', 'fa-chalkboard-user', [['Şef Buluşmaları ve Söyleşiler', 'fa-microphone'], ['Mutfak Atölyeleri', 'fa-kitchen-set'], ['Gastronomi Eğitimleri', 'fa-graduation-cap'], ['Yarışmalar ve Profesyonel Etkinlikler', 'fa-trophy'], ['Çocuk ve Aile Etkinlikleri', 'fa-children']]],
     ] },
   // Kaynak: canlı `SEHIR_SECENEKLERI` (20 il; rehberin 81 ili `katalog_iller`). Coğrafi bölgeye göre gruplandı.
-  { a: 'sehir', ikon: 'fa-city', ust: 'Bölge', baslik: 'Şehir ve Bölge Tercihlerim', kisa: 'Şehir', giris: 'Hangi şehirlerde arama yaptığını biliyorsak öneriler oraya yaklaşır.', duzen: 'akordeon', ara: 'Şehir ara', birim: 'şehir', not: 'Şehir rehberi yalnız yayında mekânı olan şehirde açılır; şu an <b>1 rehberi olan şehir</b> var.',
+  { a: 'sehir', ikon: 'fa-city', ust: 'Bölge', baslik: 'Şehir ve Bölge Tercihlerim', kisa: 'Şehir', giris: 'Hangi şehirlerde mekân aradığını seç; tercihin ileride önerilerde kullanılacak.', duzen: 'akordeon', ara: 'Şehir ara', birim: 'şehir', not: 'Şehir rehberi yalnız yayında mekânı olan şehirde açılır; şu an <b>1 rehberi olan şehir</b> var.',
     gruplar: [
       ['Marmara', 'fa-bridge', [['İstanbul'], ['Bursa'], ['Çanakkale']]],
       ['Ege', 'fa-sailboat', [['İzmir'], ['Muğla']]],
@@ -63,16 +63,16 @@ const ALANLAR = [
     ] },
   // Kaynak: sitenin fiyat ölçeği = canlı `App\Katalog\Enums\FiyatSeviyesi` (1-4, `katalog_mekanlar.fiyat_seviyesi`),
   // etiket ve ikon `MekanBulSecenekleriServisi::butceSecenekleri()` + `lang/tr/mekan-filtre.php` fiyat. Canlı tercih alanı 3 kademe tek seçim.
-  { a: 'fiyat', ikon: 'fa-coins', ust: 'Bütçe', baslik: 'Fiyat Aralığım', kisa: 'Bütçe', duzen: 'aralik', giris: 'Hangi fiyat seviyeleri arasında mekân arıyorsun? En düşük ve en yüksek seviyeyi seç; tek seviye de olur.', not: 'Fiyat aralığı bir söz değil bir sıralama ipucudur; mekân sayfasında güncel fiyat gösterilmez. Ölçek Mekân Bul ve Mekânlar süzgeciyle aynı.',
+  { a: 'fiyat', ikon: 'fa-coins', ust: 'Bütçe', baslik: 'Fiyat Aralığım', kisa: 'Bütçe', duzen: 'aralik', giris: 'Hangi fiyat seviyeleri arasında mekân arıyorsun? En düşük ve en yüksek seviyeyi seç; tek seviye de olur.', not: 'Fiyat aralığı bir söz değil, ileride önerilerde kullanılacak bir ipucudur; mekân sayfasında güncel fiyat gösterilmez. Ölçek Mekân Bul ve Mekânlar süzgeciyle aynı.',
     gruplar: [['Fiyat seviyesi', 'fa-coins', [['1'], ['2'], ['3'], ['4']]]] },
   // Kaynak: canlı `BESLENME_SECENEKLERI` (8, "Fark etmez" dahil; /mekanlar Beslenme süzgeci ayrı 7 kalem)
-  { a: 'beslenme', ikon: 'fa-seedling', ust: 'Beslenme', baslik: 'Beslenme Tercihlerim', kisa: 'Beslenme', giris: 'Beslenme tercihin, önerdiğimiz mekân ve menüleri eler.', duzen: 'izgara', birim: 'seçenek', not: 'Bu bir sağlık tavsiyesi değildir. Alerjin varsa <b>Alerjen Tercihlerim</b> sekmesini de doldur.', tekil: 'Fark etmez',
+  { a: 'beslenme', ikon: 'fa-seedling', ust: 'Beslenme', baslik: 'Beslenme Tercihlerim', kisa: 'Beslenme', giris: 'Beslenme tercihini seç; ileride önerilen mekân ve menüleri süzmek için kullanılacak.', duzen: 'izgara', birim: 'seçenek', not: 'Bu bir sağlık tavsiyesi değildir. Alerjin varsa <b>Alerjen Tercihlerim</b> sekmesini de doldur.', tekil: 'Fark etmez',
     gruplar: [['Beslenme şekli', 'fa-seedling', [['Vegan', 'fa-seedling'], ['Vejetaryen', 'fa-carrot'], ['Glutensiz', 'fa-wheat-awn-circle-exclamation'], ['Laktozsuz', 'fa-glass-water'], ['Helal', 'fa-certificate'], ['Şekersiz', 'fa-cubes-stacked'], ['Düşük karbonhidrat', 'fa-scale-balanced'], ['Fark etmez', 'fa-shuffle']]]] },
   // Kaynak: canlı `ALERJEN_SECENEKLERI` (12)
-  { a: 'alerjen', ikon: 'fa-triangle-exclamation', ust: 'Alerjen', baslik: 'Alerjen Tercihlerim', kisa: 'Alerjen', giris: 'Kaçındığın alerjenleri işaretle; işaretlediklerini içeren menüleri öne çıkarmayız.', duzen: 'izgara', birim: 'alerjen', not: 'Eleme kesin bir güvence değildir; mekânın kendi beyanına dayanır. Ciddi alerjide mekâna doğrudan sor.',
+  { a: 'alerjen', ikon: 'fa-triangle-exclamation', ust: 'Alerjen', baslik: 'Alerjen Tercihlerim', kisa: 'Alerjen', giris: 'Kaçındığın alerjenleri işaretle; ileride önerilerde bunları içeren menüleri ayıklamak için kullanılacak.', duzen: 'izgara', birim: 'alerjen', not: 'Eleme kesin bir güvence değildir; mekânın kendi beyanına dayanır. Ciddi alerjide mekâna doğrudan sor.',
     gruplar: [['Kaçındığın alerjenler', 'fa-triangle-exclamation', [['Gluten', 'fa-wheat-awn'], ['Süt ve süt ürünleri', 'fa-cow'], ['Yumurta', 'fa-egg'], ['Fındık ve sert kabuklu yemişler', 'fa-tree'], ['Yer fıstığı', 'fa-seedling'], ['Susam', 'fa-circle-dot'], ['Soya', 'fa-leaf'], ['Balık', 'fa-fish'], ['Kabuklu deniz ürünleri', 'fa-shrimp'], ['Hardal', 'fa-jar'], ['Kereviz', 'fa-carrot'], ['Sülfit', 'fa-wine-bottle']]]] },
   // Kaynak: canlı `ORTAM_SECENEKLERI` (11) = `IsletmeBasvuruKaydetIstegi::hizmetler()` (işletme başvurusundaki Sunulan Hizmetler)
-  { a: 'ortam', ikon: 'fa-list-check', ust: 'Ortam', baslik: 'Ortam ve Kullanım Tercihlerim', kisa: 'Ortam', giris: 'Senin için önemli olan hizmet ve ortam özellikleri. Mekân kartlarında etiket olarak görünür.', duzen: 'izgara', birim: 'özellik', not: 'İşletmeler profilinde en fazla 5 hizmet etiketi gösterebilir; seçimin sıralamayı etkiler.',
+  { a: 'ortam', ikon: 'fa-list-check', ust: 'Ortam', baslik: 'Ortam ve Kullanım Tercihlerim', kisa: 'Ortam', giris: 'Senin için önemli olan hizmet ve ortam özellikleri. Mekân kartlarında etiket olarak görünür.', duzen: 'izgara', birim: 'özellik', not: 'İşletmeler profilinde en fazla 5 hizmet etiketi gösterebilir; seçimin ileride sıralamada kullanılacak.',
     gruplar: [
       ['Hizmet', 'fa-bell-concierge', [['Rezervasyon', 'fa-calendar-check'], ['Masada Servis', 'fa-bell-concierge'], ['Kahvaltı Servisi', 'fa-egg'], ['Paket Servis', 'fa-bag-shopping'], ['Kart Geçerli', 'fa-credit-card']]],
       ['Ortam ve erişim', 'fa-umbrella-beach', [['Bahçe / Teras', 'fa-umbrella-beach'], ['Aile Dostu', 'fa-children'], ['Canlı Müzik', 'fa-music'], ['Ücretsiz Wi-Fi', 'fa-wifi'], ['Otopark', 'fa-square-parking'], ['Engelli Erişimi', 'fa-wheelchair-move']]],
@@ -143,7 +143,7 @@ const mutfakIkon = (m) => (m.bayrak ? `<img class="mt-bayrak" src="{{kok}}assets
 // Mutfak grup notu: Mekân Bul'da (canlı katalog) aranabilenler ve öneri kalemi; mekân sayısı yazılmaz
 const grupNotu = (g) => {
   const n = g.kalemler.filter((m) => m.katalog).length, m = g.kalemler.length, oneri = g.kalemler.filter((x) => x.oneri).map((x) => x.ad);
-  const bas = n === m ? 'Hepsi Mekân Bul’da da aranabilir.' : !n ? 'Bu grubun mutfakları henüz Mekân Bul’da yok; seçimin saklanır, mekân eklendikçe önerilerde çıkar.' : n <= 3 ? `${g.kalemler.filter((x) => x.katalog).map((x) => x.ad).join(', ')} Mekân Bul’da da aranabilir.` : `Bu gruptan ${n} mutfak Mekân Bul’da da aranabilir.`;
+  const bas = n === m ? 'Hepsi Mekân Bul’da da aranabilir.' : !n ? 'Bu grubun mutfakları henüz Mekân Bul’da yok; seçimin saklanır, ileride önerilerde kullanılacak.' : n <= 3 ? `${g.kalemler.filter((x) => x.katalog).map((x) => x.ad).join(', ')} Mekân Bul’da da aranabilir.` : `Bu gruptan ${n} mutfak Mekân Bul’da da aranabilir.`;
   return bas + (oneri.length ? ` ${oneri.join(', ')} prototip önerisidir.` : '');
 };
 const akordeonGruplari = (s) => (s.a === 'mutfak'
