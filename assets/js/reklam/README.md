@@ -225,6 +225,10 @@ Dada Route hiçbir yerde Türkiye varsaymaz. Kaynak `assets/js/rota-ulke.js` (`w
   indirince (1440×≤793) CTA kesiliyordu. Şimdi `reklam.js` mesajı ölçer, `--rk-side-medya-min` = min(`sideGorsel` 280, kutu − mesaj − kenar)
   yazar (`assets/css/reklam.css`); kutu kısaysa görsel küçülür, görsele `sideGorselEnAz` (120 px) kalmıyorsa yan basılmaz
   (`data-rk-side-reason` "yan kartı sığmıyor"). CTA'nın altında her ölçüde kanonun 16 px'i kalır.
+- Yan sığmazsa alt bar (E6b, 12 Kas, lider; Gastro `chooseFormat` standart.js:194-197, aday sırası side → altbar). Yalnız dikey yer yokluğu
+  (360 kapısı ya da `sideGorselEnAz`) yedeğe düşürür; hero, altbilgi ve çerez kapıları düşürmez (alt barın kendi kapısı var). Eylem
+  çubuğu olan sayfada (mekân detayı) alt bar yine yok. Pencere büyüyüp yer gelince yan geri döner, alt bar sökülür; yapışkan sınırı 1
+  korunur. Yedek alt barın × kapatması 24 saat geçerli (yedek bir daha kurulmaz); yan × ile kapanınca yedek de söner.
 - Yapışkan marka (lider, 12 Kas; aşağıdaki eski seçimin yerine): STD-SIDE/LEFT/ALTBAR/POPUP sayfadaki gövde birimlerinin (hero dahil; birimin `data-rk-govde-marka`sı) markasını asla tekrar etmez, iki yan farklı marka; önce sayfada olmayan ana marka, sonra benzer marka (havuzlarda Pegasus, Starbucks, Visa, Mastercard, Mado, Simit Sarayı; restoran süzgeci geçerli), yoksa o yapışkan basılmaz. Eski kural: Marka seçimi
   (reklam-duzeltici): tavan izin veriyorsa sayfada basılmamış marka, yoksa akışta en az birimi olan marka (hero rozeti sayılmaz; eşitlikte ilk
   birimi en aşağıda olan); side çiftinin iki yanı farklı marka
