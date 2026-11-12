@@ -1,7 +1,7 @@
 /* Hesabım sekme geçişi (H8, Beyar 11 Kas): sekme rayındaki bağa basınca yalnız rayın altındaki içerik değişir.
    - Her sekme yine ayrı derlenmiş sayfa ve düz bağ; betik yoksa ya da bir şey ters giderse tam sayfa gezinmesi olur.
    - İçerik hedef sekmenin derlenmiş sayfasından gelir (XHR; `prototip.js` yerel GET `fetch`ini sahte yanıtla karşılıyor).
-     Komşu sekmeler sayfa yüklenip boşa çıkınca önden alınır, sekmeye yönelince (fare, odak, dokunuş) de.
+     Sekme yalnız ona yönelince (fare, odak, dokunuş) önden alınır; açılışta komşu sekmeler indirilmez (Beyar kararı A5, 12 Kas).
    - Adres `pushState` ile sekmenin gerçek yoluna geçer; geri/ileri `popstate` ile aynı yoldan döner.
    - Sayfa betikleri `dg:sekme` olayıyla yeni içeriği yeniden kurar (`panel.js`, `listeler.js`, `uye-alan.js`).
    Kapsam: `nav.sekmeler[data-sekme-gecis]` rayı (Gurme Panelim, Listelerim, Etkinliklerim) ve rayın hemen ardındaki
@@ -162,10 +162,7 @@
     gec(location.href, false).catch(function () { location.reload(); });
   });
 
-  /* Önden alma: sekmeye yönelince hemen, sayfa yüklenince boşta kalan zamanda bütün komşu sekmeler */
+  /* Önden alma: yalnız sekmeye yönelince (A5, 12 Kas: açılışta bütün komşuları boşta almak ~67 KB gzip ek yük getiriyordu) */
   var yonel = function (e) { var a = e.target.closest && e.target.closest('a.sekme[href]'); if (a && yerinde.indexOf(a) > -1) { al(a.href); } };
   nav.addEventListener('pointerover', yonel); nav.addEventListener('focusin', yonel); nav.addEventListener('touchstart', yonel, { passive: true });
-  var onden = function () { yerinde.forEach(function (a) { if (bagYolu(a) !== gosterilen) { al(a.href); } }); };
-  var bos = window.requestIdleCallback || function (f) { return setTimeout(f, 300); };
-  if (document.readyState === 'complete') { bos(onden); } else { window.addEventListener('load', function () { bos(onden); }); }
 })();
