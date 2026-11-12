@@ -104,21 +104,31 @@
 
   /* ---- İbadethane gösterim kuralı (Beyar 12 Kas, Dada Route İhtiyaçlar › İbadethane) ----
      Yalnız FAAL, ibadete açık yer gösterilir; tarihi/turistik yapı (müze, ören yeri, harabe, kullanılmayan ya da terk edilmiş yapı)
-     gösterilmez. Kural global, bütün dinler için aynı; girdi OSM etiket kümesi (`amenity=place_of_worship`). Sıra:
-       1) `amenity=place_of_worship` değil (yaşam döngüsü önekli `disused:amenity=…` dahil) → elenir ('ibadethane-degil')
-       2) `tourism=museum` → HER ZAMAN elenir ('muze'), faal işareti olsa da
-       3) `historic=ruins|archaeological_site` ya da `ruins=*` (no dışında) → elenir ('oren')
-       4) `disused*` / `abandoned*` anahtarı (`disused=yes`, `abandoned:building=…` gibi önekliler) → elenir ('terk')
-       5) `historic=*` ya da `tourism=attraction` varsa faal ibadet işareti aranır: `religion` VE (`denomination` | `service_times` |
-          `opening_hours`). İşaret varsa KALIR (Ayasofya gibi hem tarihi hem faal), yoksa elenir ('tarihi')
+     gösterilmez. Kural global, bütün dinler için aynı; girdi OSM etiket kümesi. Panelle AYNI kural (E7, lead onaylı 12 Kas:
+     DadaGourmet-panel `app/Rota/Servisler/IbadethaneFaalligi::degerlendir()`). İlk tutan karar verir:
+       1) `amenity=place_of_worship` yok → elenir ('ibadethane-degil')
+       2) `tourism=museum` → elenir ('muze'); hiçbir etiket kurtarmaz
+       3) `ruins:amenity` dolu | `ruins=yes` | `historic=ruins|archaeological_site` | `building=ruins` → elenir ('oren')
+       4) `disused:amenity` | `abandoned:amenity` | `was:amenity` dolu | `disused=yes` | `abandoned=yes` → elenir ('terk'); yalnız önekli
+          AMENITY sayılır (`was:religion` sayılmaz)
+       5) `historic=<başka değer>` ya da `tourism=attraction` → yalnız AKTİF İŞARET varsa kalır, yoksa elenir ('tarihi').
+          Aktif işaret: `religion` dolu VE (`service_times` | `opening_hours` | herhangi `worship:*` | `building` ya da `building:use`
+          ibadet yapısı türü: AKTIF_YAPI). `denomination` aktif işaret SAYILMAZ.
        6) Geri kalan ibadethane kalır.
-     Dönen değer: null (göster) ya da elenme nedeni. Panel/canlı OSM çekimi aynı işlevi taşır. */
+     Karar örnekleri (gerçek OSM, E7): Ayasofya, Kariye, Sultanahmet, Notre-Dame, Selimiye, Mor Gabriel KALIR; Aya İrini (müze),
+     Sümela (tarihi, yalnız denomination), Göreme kiliseleri (tarihi, building yok), Ani Katedrali (harabe) ELENİR.
+     Dönen değer: null (göster) ya da elenme nedeni. */
+  var AKTIF_YAPI = /^(mosque|church|cathedral|chapel|basilica|synagogue|temple|shrine|monastery|cemevi|gurdwara|mandir|pagoda|kingdom_hall|religious)$/;
   var ibadetElenme = function (t) {
+    var dolu = function (a) { return t[a] != null && String(t[a]).trim() !== ''; };
     if (!t || t.amenity !== 'place_of_worship') { return 'ibadethane-degil'; }
     if (t.tourism === 'museum') { return 'muze'; }
-    if (t.historic === 'ruins' || t.historic === 'archaeological_site' || (t.ruins && t.ruins !== 'no')) { return 'oren'; }
-    if (Object.keys(t).some(function (a) { return /^(disused|abandoned)(:|$)/.test(a) && t[a] !== 'no'; })) { return 'terk'; }
-    if ((t.historic && t.historic !== 'no') || t.tourism === 'attraction') { return t.religion && (t.denomination || t.service_times || t.opening_hours) ? null : 'tarihi'; }
+    if (dolu('ruins:amenity') || t.ruins === 'yes' || t.historic === 'ruins' || t.historic === 'archaeological_site' || t.building === 'ruins') { return 'oren'; }
+    if (dolu('disused:amenity') || dolu('abandoned:amenity') || dolu('was:amenity') || t.disused === 'yes' || t.abandoned === 'yes') { return 'terk'; }
+    if (dolu('historic') || t.tourism === 'attraction') {
+      var aktif = dolu('religion') && (dolu('service_times') || dolu('opening_hours') || Object.keys(t).some(function (a) { return /^worship:/.test(a) && dolu(a); }) || AKTIF_YAPI.test(t.building || '') || AKTIF_YAPI.test(t['building:use'] || ''));
+      return aktif ? null : 'tarihi';
+    }
     return null;
   };
   window.dgIbadetElenme = ibadetElenme;
