@@ -530,6 +530,21 @@
         cift.style.setProperty('--rk-side-top', Math.round(ust) + 'px');
         cift.style.setProperty('--rk-side-width', yer.gen + 'px');
         cift.style.setProperty('--rk-side-height', yuk + 'px');
+        /* E6 (12 Kas, Beyar: CTA alttan kesik) · kart kırpılmaz. Kanon `standart.css` "Side: kalan yüksekliği medya doldurur": mesaj
+           (logo, Sponsorlu, başlık, metin, CTA) `flex:0 0 auto`, medya `flex:1 1 auto; min-height:280px`, kart `overflow:hidden`. Gastro'da
+           yükseklik ≥ 576 olduğu için 280 hep sığar; Gourmet'te yüzen düğme payı kutuyu kısalttığında (1440×800: 509, 1440×760: 469) 280 +
+           mesaj kutuyu aşıyor ve CTA kesiliyordu. Kart bütün kalır: medyanın alt sınırı en çok `sideGorsel` (280, kanon), kutu kısaysa
+           görsel küçülür (mesaj + kenar kutudan düşülür); görsele `sideGorselEnAz`dan az kalıyorsa yan basılmaz (kırpık kart asla). */
+        var gerek = 0;
+        yanlar.forEach(function (y) {
+          var m = y.querySelector('.rk-std-mesaj'), k = y.querySelector('.rk-std-kart'); if (!m || !k) { return; }
+          var gizli = y.hidden; if (gizli) { y.style.visibility = 'hidden'; y.hidden = false; }
+          gerek = Math.max(gerek, m.offsetHeight + k.offsetHeight - k.clientHeight);
+          if (gizli) { y.hidden = true; y.style.visibility = ''; }
+        });
+        var medyaAlt = Math.min(K.sideGorsel, yuk - gerek);
+        if (medyaAlt < K.sideGorselEnAz) { return red('yan kartı sığmıyor'); }
+        cift.style.setProperty('--rk-side-medya-min', medyaAlt + 'px');
         var n = yanlar.length === 1 ? 1 : yer.n;
         cift.setAttribute('data-rk-side-count', String(n));
         cift.setAttribute('data-rk-side-gap', String(yer.pay));
@@ -543,6 +558,8 @@
       var gozcu = window.IntersectionObserver ? new IntersectionObserver(kaydir, { threshold: 0 }) : null;
       if (gozcu) { if (hero) { gozcu.observe(hero); } if (altbilgi) { gozcu.observe(altbilgi); } }
       var cerezG = cerezIzle(kaydir);
+      /* E6: mesaj yüksekliği yazı tipine bağlı; yazı tipleri sonradan yüklenirse medya payı yeniden hesaplanır */
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function () { if (cift.isConnected) { kaydir(); } }); }
       var bitir = function () { window.removeEventListener('scroll', kaydir); window.removeEventListener('resize', kaydir); if (gozcu) { gozcu.disconnect(); } if (cerezG) { cerezG.disconnect(); } if (kare) { cancelAnimationFrame(kare); kare = 0; } cift.remove(); };
       /* Kapat (×): iki yan birlikte kapanır (Gastro dismiss('side')), 24 saat gelmez */
       cift.addEventListener('click', function (e) {

@@ -158,6 +158,9 @@ html.rk-acik .rk-anahtar input:not(:checked)+.anahtar-ray::after{transform:none}
 .rk-std-altbar .rk-std-kapat:hover::before{background:#f1f1ee}
 [data-rk-side-pair] .rk-std-side .rk-std-kapat{width:44px;height:44px;min-width:44px;min-height:44px;top:0;right:0;padding:0 0 8px 8px;border:0;background:transparent;isolation:isolate}
 [data-rk-side-pair] .rk-std-side .rk-std-kapat::before{content:"";position:absolute;inset:6px 6px 14px 14px;border:1px solid #ddd;border-radius:50%;background:#fff;z-index:-1}
+/* E6 (12 Kas) · yan kart kırpılmaz: medyanın alt sınırı kanonda sabit 280 px; reklam.js `--rk-side-medya-min` ile kutuya sığanı yazar
+   (en çok 280, kutu kısaysa görsel küçülür; mesaj ve CTA hep tam). Değişken yoksa kanon değeri */
+[data-rk-side-pair] .rk-std-side .rk-std-medya{min-height:var(--rk-side-medya-min,280px)}
 .rk-std-popup .rk-std-kapat{width:44px;height:44px}
 .rk-pisirme b>button[data-rk-ac]{width:auto;height:auto;min-height:44px;padding:0;border:0;text-align:left;color:inherit;font:inherit;white-space:normal;line-height:1.25}
 .rk-pisirme-metin b{white-space:normal;overflow:visible;text-overflow:clip} /* başlık kesilmez, iki satıra iner */
