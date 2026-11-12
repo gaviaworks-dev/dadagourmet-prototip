@@ -51,15 +51,15 @@ html.dg-isaretci :focus:not(input,textarea,select,[contenteditable]){outline:non
   html.dg-yazim :is(.bottom-nav,#dadaMentor.mini,.to-top,.yg-fab,.feedback-tab){visibility:hidden;opacity:0;pointer-events:none}
 }
 /* Görüş Bildir 641–1024 (Beyar 12 Kas, A12 kararı değişti: "gizlenmesin"). Dikey sekme (52×144, sağ 0) bu aralıkta içeriğin sağ ~20–28px'ini
-   örtüyordu. Yeni markup yok: aynı `a.feedback-tab#fbTab` sağ alt yüzen yığına katılan 48px yuvarlak ikon olur (yazı görsel olarak gizli,
+   örtüyordu. Yeni markup yok: aynı `a.feedback-tab#fbTab` sağ alt yüzen yığına katılan 44px yuvarlak ikon olur (lead onayı: yalnız tablette) (yazı görsel olarak gizli,
    `aria-label` duruyor), yığının dikey ekseninde (Route ve başa dön 54px, sağ 22 → merkez sağ 49). Yeri `--fb-alt`: prototip.js görünür yığın
    öğelerinin en üstünün 12px üstüne koyar (başa dön kaydırınca gelir, Route `bottom-clearance.js` ile kalkar). Sayfa sonunda Route gibi
    çekilir (`dg-sonda`), yazarken öbür yüzen düğmeler gibi gizlenir. 8px kenar çizgisi (`.fb-rail`) bu aralıkta yok. ≤640 kanon (gizli) ve
    masaüstü (≥1025 dikey sekme) değişmez */
 @media(min-width:641px) and (max-width:1024px){
   .fb-rail{display:none}
-  html .feedback-tab{top:auto;bottom:var(--fb-alt,26px);right:25px;width:48px;height:48px;min-height:0;padding:0;gap:0;border-radius:50%;writing-mode:horizontal-tb;transform:none;justify-content:center;font-size:0;letter-spacing:0;transition:background .2s var(--ease),bottom .25s var(--ease),opacity .25s var(--ease),visibility .25s}
-  html .feedback-tab i{font-size:18px}
+  html .feedback-tab{top:auto;bottom:var(--fb-alt,26px);right:27px;width:44px;height:44px;min-height:0;padding:0;gap:0;border-radius:50%;writing-mode:horizontal-tb;transform:none;justify-content:center;font-size:0;letter-spacing:0;transition:background .2s var(--ease),bottom .25s var(--ease),opacity .25s var(--ease),visibility .25s}
+  html .feedback-tab i{font-size:17px}
   html .feedback-tab:hover{transform:none;padding-right:0}
   html.dg-sonda .feedback-tab{opacity:0;visibility:hidden;pointer-events:none}
 }
