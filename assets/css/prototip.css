@@ -141,6 +141,16 @@ header a i.fa-route, nav a i.fa-route { opacity: 1 !important; }
 /* Bağın kendi geçişi `transition:.2s` (all): miras görünürlüğü de .2s geciktirip kapanan grubun bağlarını sekme sırasında tutuyordu */
 .dip-akordeon .foot-col-baglar>*{transition-property:color,padding-left}
 @media (prefers-reduced-motion:reduce){.dip-akordeon :is(.foot-col-baglar,.foot-acc i){transition:none}}
+/* Telefon altbilgisi ortalı (E1, 12 Kas): marka, açıklama, akordeon başlıkları ve açılan bağlar, "Dada Gourmet'i İndir" bloğu ve mağaza
+   düğmeleri ekranın ortasında; kurumsal, yasal ve telif satırı zaten ortalıydı. Akordeon başlığında ad ortada, ok adın yanında; 641+ değişmez */
+@media(max-width:640px){
+  .footer :is(.foot-brand,.foot-col,.foot-app){text-align:center}
+  .footer .foot-lockup{display:flex;justify-content:center}
+  .footer :is(.foot-tag,.foot-app-lead){margin-inline:auto}
+  .footer .foot-col .foot-linkbtn{text-align:center}
+  .dip-akordeon .foot-acc{justify-content:center;text-align:center}
+  .footer .foot-app-btns{justify-content:center}
+}
 /* ==== /Altbilgi akordeonu ==== */
 
 /* Üye zinciri `gourmet.css` yüklemiyor: Route düğmesi ve başa dön kuralları oradan aynen. Yoksa ikisi altbilginin altında düz metin kalıyor */
