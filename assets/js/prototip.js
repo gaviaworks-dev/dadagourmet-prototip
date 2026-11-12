@@ -360,11 +360,39 @@
      düğmesinin kanon kuralı (`site.js` `updateToTop`: sona 120px kala gizlenir) Route düğmesine de uygulanır; sınıf köke, kural prototip.css */
   var sonda = function () { document.documentElement.classList.toggle('dg-sonda', document.documentElement.scrollHeight - window.innerHeight - window.scrollY <= 120); };
   window.addEventListener('scroll', sonda, { passive: true }); window.addEventListener('resize', sonda); window.addEventListener('load', sonda);
+  /* A12 (Beyar 12 Kas): Görüş Bildir 641–1024'te sağ alt yüzen yığının üstünde yuvarlak düğme (biçim prototip.css). Yığının yüksekliği değişken
+     (başa dön kaydırınca gelir, `bottom-clearance.js` Route'u çubukların üstüne kaldırır, sonda Route çekilir); düğme görünür yığın öğelerinin
+     (başa dön, Route) en üstünün 12px üstüne oturur, görünür öğe yoksa köşede (alt 26px). Başka aralıkta `--fb-alt` silinir */
+  var gorusYigin = window.matchMedia('(min-width:641px) and (max-width:1024px)'), gorusKare = 0;
+  var gorusYer = function () {
+    gorusKare = 0;
+    var fb = document.getElementById('fbTab'); if (!fb) { return; }
+    if (!gorusYigin.matches) { fb.style.removeProperty('--fb-alt'); return; }
+    var f = fb.getBoundingClientRect(), H = window.innerHeight, ust = H - 26 + 12;
+    ['.to-top', '.yg-fab'].forEach(function (s) {
+      var e = document.querySelector(s); if (!e) { return; }
+      var r = e.getBoundingClientRect(), gor = r.width > 0 && (!e.checkVisibility || e.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true }));
+      if (gor && r.left < f.right && r.right > f.left && r.top < H) { ust = Math.min(ust, r.top); }
+    });
+    fb.style.setProperty('--fb-alt', Math.round(H - ust + 12) + 'px');
+  };
+  var gorusIste = function () { if (!gorusKare) { gorusKare = window.requestAnimationFrame(gorusYer); } };
+  window.addEventListener('scroll', gorusIste, { passive: true }); window.addEventListener('resize', gorusIste); window.addEventListener('load', gorusIste);
+  document.addEventListener('transitionend', gorusIste, true);
+  document.addEventListener('DOMContentLoaded', function () {
+    gorusIste();
+    if (!window.MutationObserver) { return; }
+    var g = new MutationObserver(gorusIste);
+    ['.to-top', '.yg-fab'].forEach(function (s) { var e = document.querySelector(s); if (e) { g.observe(e, { attributes: true, attributeFilter: ['class', 'style', 'hidden'] }); } });
+    g.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  });
   /* Harita denetimleri (11 Kas, mobil-rota bulgusu): yüzen düğmeler (başa dön, Route, küçük Mentör) `bottom-clearance.js` ile çerez bandının ya da
      alt çubuğun üstüne kalkınca harita yakınlaştırma ve bilgi düğmelerinin üstüne biniyordu (Mekânlar harita görünümü 390, çerez bandı açık:
      başa dön "−" düğmesini 37×16 örtüyor; 768'de başa dön / Route bilgi düğmesini). Yüzen düğme görünür bir harita denetimiyle kesişirken
      çekilir (`.dg-harita-ortusu`, kural prototip.css); kesişme bitince geri gelir. Ölçüm yalnız sayfada harita denetimi varken koşar */
-  var YUZEN = ['.to-top', '.yg-fab', '#dadaMentor'];
+  var YUZEN = ['.to-top', '.yg-fab', '#dadaMentor', '.feedback-tab'];
+  /* Görüş Bildir yalnız 641–1024'te yüzen düğme (A12); masaüstündeki dikey sekmeye bu ölçümler dokunmaz */
+  var yuzenMi = function (e) { return (e.id !== 'dadaMentor' || e.classList.contains('mini')) && (!e.classList.contains('feedback-tab') || window.matchMedia('(min-width:641px) and (max-width:1024px)').matches); };
   var HARITA_DENETIM = '.maplibregl-ctrl-group,.maplibregl-ctrl-attrib,.leaflet-control-zoom,.leaflet-control-attribution';
   var haritaKare = 0;
   var haritaBak = function () {
@@ -372,7 +400,7 @@
     var d = [].filter.call(document.querySelectorAll(HARITA_DENETIM), function (c) { var r = c.getBoundingClientRect(); return r.width > 0 && r.bottom > 0 && r.top < window.innerHeight && c.offsetParent !== null; });
     YUZEN.forEach(function (s) {
       var e = document.querySelector(s); if (!e) { return; }
-      var a = e.getBoundingClientRect(), kes = a.width > 0 && (e.id !== 'dadaMentor' || e.classList.contains('mini')) && d.some(function (c) { var r = c.getBoundingClientRect(); return a.left < r.right + 4 && a.right > r.left - 4 && a.top < r.bottom + 4 && a.bottom > r.top - 4; });
+      var a = e.getBoundingClientRect(), kes = a.width > 0 && yuzenMi(e) && d.some(function (c) { var r = c.getBoundingClientRect(); return a.left < r.right + 4 && a.right > r.left - 4 && a.top < r.bottom + 4 && a.bottom > r.top - 4; });
       e.classList.toggle('dg-harita-ortusu', kes);
     });
   };
@@ -393,7 +421,7 @@
     var d = acikMi ? [].filter.call(document.querySelectorAll(REKLAM_HEDEF), function (c) { if (c.closest('.rk-std-popup')) { return false; } var r = c.getBoundingClientRect(); return r.width > 0 && r.bottom > H - 260 && r.top < H && (!c.checkVisibility || c.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true })); }) : [];
     YUZEN.forEach(function (s) {
       var e = document.querySelector(s); if (!e) { return; }
-      var a = e.getBoundingClientRect(), kes = a.width > 0 && (e.id !== 'dadaMentor' || e.classList.contains('mini')) && d.some(function (c) { var r = c.getBoundingClientRect(); return a.left < r.right + 4 && a.right > r.left - 4 && a.top < r.bottom + 4 && a.bottom > r.top - 4; });
+      var a = e.getBoundingClientRect(), kes = a.width > 0 && yuzenMi(e) && d.some(function (c) { var r = c.getBoundingClientRect(); return a.left < r.right + 4 && a.right > r.left - 4 && a.top < r.bottom + 4 && a.bottom > r.top - 4; });
       e.classList.toggle('dg-reklam-ortusu', kes);
     });
   };

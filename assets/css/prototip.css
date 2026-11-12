@@ -48,19 +48,27 @@ html.dg-isaretci :focus:not(input,textarea,select,[contenteditable]){outline:non
    (küçük Mentör, Route, başa dön) odaktaki alanı ve açık tarih seçiciyi örtmesin. Kaydırma (`transform`) değil görünmezlik:
    `bottom-clearance.js` alt çubuğu yerinde ölçmeye devam eder, kapalı süzgeç sayfası kalkmaz. Kapsam sorgusu prototip.js ile aynı */
 @media(max-width:640px),(pointer:coarse) and (max-width:1024px){
-  html.dg-yazim :is(.bottom-nav,#dadaMentor.mini,.to-top,.yg-fab){visibility:hidden;opacity:0;pointer-events:none}
+  html.dg-yazim :is(.bottom-nav,#dadaMentor.mini,.to-top,.yg-fab,.feedback-tab){visibility:hidden;opacity:0;pointer-events:none}
 }
-/* Görüş Bildir dikey sekmesi (52×144, sağ 0) 641–1024'te içerik kenar payı 24–32px olduğu için içeriğin sağ ~20–28px'ini örtüyordu.
-   Kanonda bu aralık için kural yok; daraltma 44px dokunma alanını korurken payın içine sığmıyor. ≤640'taki kanon kuralı (`display:none`)
-   1024'e kadar uzatılır: bu aralıkta başlıkta çekmece var, giriş çekmecedeki "Görüş Bildir" ve altbilgideki "Öneri ve Şikâyet"ten
-   (ikisi de aynı pencereyi açar). Masaüstü (≥1025) konumu değişmez */
-@media(min-width:641px) and (max-width:1024px){.feedback-tab,.fb-rail{display:none}}
+/* Görüş Bildir 641–1024 (Beyar 12 Kas, A12 kararı değişti: "gizlenmesin"). Dikey sekme (52×144, sağ 0) bu aralıkta içeriğin sağ ~20–28px'ini
+   örtüyordu. Yeni markup yok: aynı `a.feedback-tab#fbTab` sağ alt yüzen yığına katılan 48px yuvarlak ikon olur (yazı görsel olarak gizli,
+   `aria-label` duruyor), yığının dikey ekseninde (Route ve başa dön 54px, sağ 22 → merkez sağ 49). Yeri `--fb-alt`: prototip.js görünür yığın
+   öğelerinin en üstünün 12px üstüne koyar (başa dön kaydırınca gelir, Route `bottom-clearance.js` ile kalkar). Sayfa sonunda Route gibi
+   çekilir (`dg-sonda`), yazarken öbür yüzen düğmeler gibi gizlenir. 8px kenar çizgisi (`.fb-rail`) bu aralıkta yok. ≤640 kanon (gizli) ve
+   masaüstü (≥1025 dikey sekme) değişmez */
+@media(min-width:641px) and (max-width:1024px){
+  .fb-rail{display:none}
+  html .feedback-tab{top:auto;bottom:var(--fb-alt,26px);right:25px;width:48px;height:48px;min-height:0;padding:0;gap:0;border-radius:50%;writing-mode:horizontal-tb;transform:none;justify-content:center;font-size:0;letter-spacing:0;transition:background .2s var(--ease),bottom .25s var(--ease),opacity .25s var(--ease),visibility .25s}
+  html .feedback-tab i{font-size:18px}
+  html .feedback-tab:hover{transform:none;padding-right:0}
+  html.dg-sonda .feedback-tab{opacity:0;visibility:hidden;pointer-events:none}
+}
 /* Sayfa sonu (641–1024): Route düğmesi altbilgi imzasını örtmesin; başa dön düğmesi gibi sona 120px kala çekilir (masaüstünde kesişim yok) */
 @media(min-width:641px) and (max-width:1024px){html.dg-sonda .yg-fab{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s var(--ease),visibility .25s}}
 /* Harita denetimiyle kesişen yüzen düğme çekilir (prototip.js `haritaBak`) */
-:is(.to-top,.yg-fab,#dadaMentor).dg-harita-ortusu{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+:is(.to-top,.yg-fab,#dadaMentor,.feedback-tab).dg-harita-ortusu{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
 /* reklam-duzeltici (11 Kas): reklam çağrısıyla kesişen yüzen düğme de aynı biçimde çekilir (prototip.js `reklamBak`); yumuşak geçiş */
-:is(.to-top,.yg-fab,#dadaMentor).dg-reklam-ortusu{opacity:0!important;visibility:hidden!important;pointer-events:none!important;transition:opacity .2s var(--ease),visibility .2s}
+:is(.to-top,.yg-fab,#dadaMentor,.feedback-tab).dg-reklam-ortusu{opacity:0!important;visibility:hidden!important;pointer-events:none!important;transition:opacity .2s var(--ease),visibility .2s}
 /* ==== /Dalga 2 mobil · kabuk ==== */
 /* Süzgeç sayfası (641–1024, Mekânlar ve Etkinlikler) ana içeriğin içinde; Gourmet sayfası başlığın üstünden açılıyor (canlı Gastro'da başlığın
    altından başlar). Ana içeriğin z-index 2 yığını sayfayı başlığın (60) ve üst bandın (70) altında bırakıp üst şeridini örtüyordu: açıkken yığın
