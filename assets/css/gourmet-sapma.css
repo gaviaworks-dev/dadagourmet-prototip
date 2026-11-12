@@ -746,6 +746,12 @@ html:has(.lst-side.open) :is(.yg-fab,.to-top,.feedback-tab,.fb-rail){display:non
    (top −192: Filtrele başlığı, Temizle ve kapat düğmesi erişilemez); 360'ta alt çubuk varken bile tepe başlığa 20px biniyordu.
    Boy, kalkış payı ve başlık (`--kabuk-h`) düşülerek sınırlanır; tepe her durumda başlığın 12px altında kalır */
 @media(max-width:1024px){html #lstSide.lst-side{max-height:min(82vh,calc(100dvh - var(--bc-lift,0px) - var(--kabuk-h,63px) - 12px))}}
+/* Süzgeç grupları kırpılmaz, tek kaydırma (E1, 12 Kas; Gastro G89 kuralı, `revize/p1/tarifler.css`): kanon jetonundaki
+   `.fct-body{max-height:240px;overflow:auto}` Konum bloğunu ve içindeki Şehir listesini ayrı ayrı kaydırıyor, "Muğla" yarım kesiliyordu.
+   Uzun liste zaten "Tümünü gör" ile açılır; kaydırma masaüstünde sayfada, ≤1024 alt sayfada yalnız `.sheet-body`de.
+   Kaydırma çubuğu ince ve marka çizgisi renginde (`.yg-il-govde` ile aynı) */
+.lst-side .fct-body{max-height:none;overflow:visible}
+.lst-side,.lst-side .sheet-body{scrollbar-width:thin;scrollbar-color:var(--marka-cizgi) transparent}
 
 /* Mekân Bul: dar ekranda "Sonuçları Gör" iki satıra sıkışıyordu; Geri kendi boyunda, birincil düğme kalanı alır */
 @media(max-width:640px){
