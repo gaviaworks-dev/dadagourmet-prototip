@@ -81,8 +81,9 @@ yaz('iletisim/index', { baslik: 'İletişim', zincir: 'iletisim', donor: 'https:
   return m.innerHTML; }));
 // Hukuki örnek: canlı Gourmet KVKK metni; yer tutucular görünür etikete bağlanır
 p = await ac(dom('o-kvkk'));
-yaz('yasal/kvkk/index', { baslik: 'KVKK Aydınlatma Metni', zincir: 'kvkk', donor: 'https://dadagourmet.com/yasal/kvkk + https://dadagastro.com/yasal/kvkk' }, await p.evaluate(() => { kok(document.body); const m = document.querySelector('main');
+yaz('yasal/kvkk/index', { baslik: 'KVKK Aydınlatma Metni', zincir: 'kvkk', js: ['assets/o/assets/gourmet-public/js/shared/scroll-affordance.js'], donor: 'https://dadagourmet.com/yasal/kvkk + https://dadagastro.com/yasal/kvkk' }, await p.evaluate(() => { kok(document.body); const m = document.querySelector('main');
   const sil = (e) => e.parentNode?.removeChild(e);
+  /* B-A3 (12 Kas): telefonda yatay kayan menü şeridi ortak kenar solmasını alır (`[data-scroll-fade]`, prototip.css) */ m.querySelectorAll('.lg-menu').forEach((e) => e.setAttribute('data-scroll-fade', ''));
   const yaprak = (re) => [...m.querySelectorAll('li,p,tr,dd,dt,div')].filter((e) => re.test(e.textContent) && ![...e.querySelectorAll('li,p,tr,dd,dt,div')].some((c) => re.test(c.textContent)));
   yaprak(/\[(MERSİS no|vergi dairesi \/ vergi no|KEP adresi)\]/).forEach(sil);
   yaprak(/Durum: Taslak/).forEach(sil); yaprak(/taslak olarak hazırl/).forEach(sil);
