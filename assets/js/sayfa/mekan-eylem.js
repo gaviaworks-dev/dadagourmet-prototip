@@ -174,7 +174,9 @@
 
   /* Listeye Ekle (A8, Beyar 12 Kas): favori kalbinden ayrı akış; canlı `#mdListPop` (liste seç ya da yeni liste, canlı `ListeServisi::mekanaEkle`).
      Popover'ı canlı `mekan-detay.js` açar, konumlar ve dışarı tıklayınca kapatır; burada seçenekler, kayıt, Esc ve odak.
-     Listeler: Listelerim örnekleri (`DG_LISTELER`, liste-veri.js) ve bu tarayıcıda kurulanlar (`dgKayit('lstYeniPnl')`, Listelerim'in Yeni liste deposu).
+     Listeler: ilk ve varsayılan "Favorilerim" (A8 düzeltme, Beyar 12 Kas): içeriği favori kalbinin deposu `dgKayit('favori')`; buradan seçmek
+     kalple aynı kaydı yazar (`mekan-<slug>`), kalp de yeniden boyanır. Ardından bu tarayıcıda kurulanlar (`dgKayit('lstYeniPnl')`, Listelerim'in
+     Yeni liste deposu) ve Listelerim örnekleri (`DG_LISTELER`, liste-veri.js). Varsayılan seçim: mekânı henüz içermeyen ilk liste.
      Kalem `dgKayit('liste-kalem')` (`<liste>|<mekân>`); liste detayı ve Listelerim sayısı bunu okur. Liste detayında kayıtlı sıra varsa mekân sona eklenir.
      Misafirde düğme giriş kapısını açar (`data-lg-gate`, prototip.js yakalama evresi), popover açılmaz */
   var lBtn = $('#mdListBtn'), lPop = $('#mdListPop'), lForm = lPop && $('form', lPop);
@@ -186,12 +188,14 @@
     var ALT = ornekKalem ? [ornekKalem[3], ornekKalem[2], ornekKalem[4]].filter(Boolean).join(' · ') : 'Beyoğlu';
     var durum = function (lid) { return K.oku('liste-durum').filter(function (k) { return k.id === lid; })[0] || null; };
     var ornekte = function (lid) { var o = KATALOG.filter(function (l) { return l.id === lid; })[0]; return !!(o && o.kalem.some(function (k) { return k[0] === SLUG; })); };
+    var FAVORI = 'favorilerim', FAVORI_ID = 'mekan-' + SLUG;
     var listedeMi = function (lid) {
+      if (lid === FAVORI) { return K.var('favori', FAVORI_ID); }
       var d = durum(lid); if (d) { return d.sira.indexOf(SLUG) > -1; }
       return ornekte(lid) || K.var('liste-kalem', lid + '|' + SLUG);
     };
     var listeler = function () {
-      return K.oku('lstYeniPnl').map(function (k) { return { id: k.id, ad: k.ad || 'Yeni liste' }; }).concat(KATALOG.map(function (l) { return { id: l.id, ad: l.ad }; }));
+      return [{ id: FAVORI, ad: 'Favorilerim' }].concat(K.oku('lstYeniPnl').map(function (k) { return { id: k.id, ad: k.ad || 'Yeni liste' }; }), KATALOG.map(function (l) { return { id: l.id, ad: l.ad }; }));
     };
     var yeniRadyo = function () { return $('input[name="liste_id"][value=""]', lForm); };
     var adGirdi = $('input[name="liste_adi"]', lForm), yeniSecenek = yeniRadyo().closest('label');
@@ -201,7 +205,8 @@
         var icinde = listedeMi(l.id);
         return '<label class="kc-pop-radio" data-liste-secenek=""><input type="radio" name="liste_id" value="' + kac(l.id) + '"' + (icinde ? ' disabled' : '') + '> ' + kac(l.ad) + (icinde ? ' · listede' : '') + '</label>';
       }).join(''));
-      yeniRadyo().checked = true; adGirdi.value = ''; adGirdi.required = true;
+      var ilkBos = $('input[name="liste_id"]:not([disabled])', lForm);
+      ilkBos.checked = true; adGirdi.value = ''; adGirdi.required = !ilkBos.value;
     };
     var kapat = function (odak) { if (lPop.hidden) { return; } lPop.hidden = true; lBtn.setAttribute('aria-expanded', 'false'); if (odak) { lBtn.focus(); } };
     /* Popover'ı canlı dinleyici açar (kayıt sırası sayfa yüklenişine bağlı); açıldığı an `hidden` gözcüsüyle yakalanır: seçenekler tazelenir,
@@ -218,6 +223,10 @@
       if (!lid) { lid = 'lstYeniPnl-' + Date.now(); K.ekle('lstYeniPnl', { ad: ad, gorunurluk: 'ozel', aciklama: '', id: lid }); }
       var listeAd = (listeler().filter(function (l) { return l.id === lid; })[0] || {}).ad || ad;
       if (listedeMi(lid)) { bildir(MEKAN + ' zaten “' + listeAd + '” listende.'); kapat(true); return; }
+      if (lid === FAVORI) {
+        K.ekle('favori', { id: FAVORI_ID, tur: 'Mekân', ad: MEKAN, mekan: 'Beyoğlu, İstanbul' }); kaydetBoya();
+        bildir(MEKAN + ' Favorilerim listene eklendi.'); kapat(true); return;
+      }
       if (!ornekte(lid) && !K.var('liste-kalem', lid + '|' + SLUG)) { K.ekle('liste-kalem', { id: lid + '|' + SLUG, liste: lid, slug: SLUG, ad: MEKAN, alt: ALT }); }
       var d = durum(lid); if (d) { K.guncelle('liste-durum', lid, { sira: d.sira.concat([SLUG]) }); }
       bildir(MEKAN + ' “' + listeAd + '” listene eklendi. Prototipte yalnız bu tarayıcıda tutulur.');

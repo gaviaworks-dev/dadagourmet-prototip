@@ -11,6 +11,9 @@
 //  - Eklenen kalem `dgKayit('liste-kalem')` (kimlik `<liste>|<mekân>`), yeni liste Listelerim'in kendi deposu `dgKayit('lstYeniPnl')`.
 //  - Liste detayı eklenen kalemi örnek kalemlerin ardına basar (satır kalıbı `<template data-kalem-kalip>`, aşağıdaki `kalemSatiri`);
 //    yeni listeler tek detay ekranında açılır: hesabim/listeler/yeni/?liste=<kayıt kimliği>.
+// A8 düzeltme (Beyar 12 Kas): "Favorilerim" varsayılan İLK liste. İçeriği favori kalbinin deposu `dgKayit('favori')` (mekân kartı, mekân
+// detayı kalbi, Gurme Favorilerim aynı kayıtları yazar); taşıma yok, mevcut favoriler aynen okunur. Mekân Listelerim'de ilk satır, satır
+// Gurme Favorilerim'e açılır (favorinin kendi ekranı: ekle, çıkar, süz). Sayı ve adlar listeler.js'te depodan.
 import { bant, sayac, ray, bolumBas, kartBas, kart, pano, satir, rozet, satirDugme, bos, pencere, panelDugme, sayfa, et, kac } from './_kalip.mjs';
 
 const GORUNUR = { ozel: 'Gizli', paylasilabilir: 'Bağlantısı olan görebilir' };
@@ -43,8 +46,11 @@ const RAY = [
   ['lst-paylasilan', 'hesabim/listeler/paylasilan/', 'fa-solid fa-share-nodes', 'Paylaştığım Listeler'],
   ['lst-taslak', 'hesabim/listeler/taslak/', 'fa-solid fa-pen-to-square', 'Taslak Listeler'],
 ];
+// Favorilerim satırı: her üyede var, hep ilk. `data-dm-sabit` uye-alan.js'in yeni satırları bunun ALTINA koymasını sağlar
+const FAVORI_SATIR = satir('fa-solid fa-heart', 'Favorilerim', '<span data-favori-ozet="">Favori kalbiyle kaydettiklerin</span>', `${rozet('Varsayılan')}<i class="fa-solid fa-chevron-right ks-ok" aria-hidden="true"></i>`, 'hesabim/gurme-panelim/gurme-favorilerim/')
+  .replace('class="kalem-satiri"', 'class="kalem-satiri tiklanir" data-dm-sabit="" data-liste-favori=""');
 const serit = sayac('Listelerim özeti', [
-  ['fa-solid fa-list-ul', 'Liste', L.filter(PANO.mekan.sec).length],
+  ['fa-solid fa-list-ul', 'Liste', L.filter(PANO.mekan.sec).length + 1],
   ['fa-solid fa-route', 'Rota', ROTA_ORNEK_SAYI],
   ['fa-solid fa-share-nodes', 'Paylaşılan', L.filter(PANO.paylasilan.sec).length],
   ['fa-solid fa-pen-to-square', 'Taslak', L.filter(PANO.taslak.sec).length],
@@ -72,11 +78,11 @@ const ust = (aktif) => bant({ cur: 'Listelerim', ikon: 'fa-solid fa-list-ul', gi
 
 // Sekme sayfaları (Mekân Listelerim, Paylaştığım, Taslak)
 const sekmeSayfalari = () => Object.values(PANO).map((p) => {
-  const l = L.filter(p.sec);
+  const l = L.filter(p.sec), fav = p.pano === 'lst-mekan';
   const govde = ust(p.pano) + `<div class="modul-govde">${pano({
     id: p.pano,
-    bas: bolumBas({ ikon: p.ikon, etiket: p.etiket, baslik: p.baslik, giris: p.giris, arac: `${rozet(`${l.length} ${p.birim}`)} ${et}` }),
-    kart: kart({ bas: kartBas(p.ikon, p.kartBaslik, p.kartGiris), liste: l.length ? l.map(sat).join('') : bos(p.ikon, ...p.bos), alt: panelDugme('lstYeniPnl', 'fa-solid fa-plus', 'Yeni Liste Oluştur') }).replace('<div class="fp-list">', `<div class="fp-list"${p.pano === 'lst-mekan' ? ' data-dm-hedef="lstYeniPnl"' : ''}>`),
+    bas: bolumBas({ ikon: p.ikon, etiket: p.etiket, baslik: p.baslik, giris: p.giris, arac: `${rozet(`${l.length + (fav ? 1 : 0)} ${p.birim}`)} ${et}` }),
+    kart: kart({ bas: kartBas(p.ikon, p.kartBaslik, p.kartGiris), liste: (fav ? FAVORI_SATIR : '') + (l.length ? l.map(sat).join('') : fav ? '' : bos(p.ikon, ...p.bos)), alt: panelDugme('lstYeniPnl', 'fa-solid fa-plus', 'Yeni Liste Oluştur') }).replace('<div class="fp-list">', `<div class="fp-list"${p.pano === 'lst-mekan' ? ' data-dm-hedef="lstYeniPnl"' : ''}>`),
     not: p.not,
   })}</div>`;
   return sayfa(p.yol, 'Listelerim', govde, { disi: yeni, ...JS });

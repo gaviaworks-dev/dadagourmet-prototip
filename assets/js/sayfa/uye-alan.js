@@ -46,7 +46,9 @@
     /* `data-dm-bag` varsa satırın tamamı kaydın detayına açılır (A8: yeni liste → hesabim/listeler/yeni/?liste=<kimlik>); örnek satırlarla aynı `.tiklanir` + ok */
     var bag = f.getAttribute('data-dm-bag'), kok = document.documentElement.dataset.kok || './';
     var adHtml = bag ? '<a href="' + kac(kok + sablon(bag)) + '">' + kac(ad) + '</a>' : kac(ad);
-    hedef.insertAdjacentHTML('afterbegin', '<div class="kalem-satiri' + (bag ? ' tiklanir' : '') + '"' + (veri.id ? ' data-dm-kayit="' + kac(veri.id) + '"' : '') + '><span class="ks-ikon"><i class="' + (f.getAttribute('data-dm-ikon') || 'fa-solid fa-list') + '" aria-hidden="true"></i></span><span class="ks-metin"><b>' + adHtml + '</b><small>' + kac(alt) + '</small></span><span class="ks-uc"><span class="rozet bekleme">' + kac(sablon(f.getAttribute('data-dm-rozet') || 'Yeni')) + '</span>' + (bag ? '<i class="fa-solid fa-chevron-right ks-ok" aria-hidden="true"></i>' : '') + '</span></div>');
+    /* Sabit baş satırlar (`data-dm-sabit`, ör. Listelerim › Favorilerim) hep üstte kalır; yeni satır onların ardına */
+    var sabit = [].filter.call(hedef.children, function (c) { return c.hasAttribute('data-dm-sabit'); }).pop();
+    (sabit || hedef).insertAdjacentHTML(sabit ? 'afterend' : 'afterbegin', '<div class="kalem-satiri' + (bag ? ' tiklanir' : '') + '"' + (veri.id ? ' data-dm-kayit="' + kac(veri.id) + '"' : '') + '><span class="ks-ikon"><i class="' + (f.getAttribute('data-dm-ikon') || 'fa-solid fa-list') + '" aria-hidden="true"></i></span><span class="ks-metin"><b>' + adHtml + '</b><small>' + kac(alt) + '</small></span><span class="ks-uc"><span class="rozet bekleme">' + kac(sablon(f.getAttribute('data-dm-rozet') || 'Yeni')) + '</span>' + (bag ? '<i class="fa-solid fa-chevron-right ks-ok" aria-hidden="true"></i>' : '') + '</span></div>');
   };
   var doldur = function (kapsam) {
     if (!window.dgKayit) { return; }

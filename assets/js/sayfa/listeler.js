@@ -46,6 +46,12 @@
     var n = kalemSayisi(lid); if (n !== null) { alt.textContent = alt.textContent.replace(/^\d+ mekân/, n + ' mekân'); }
   });
 
+  /* ---- Favorilerim (A8 düzeltme): varsayılan ilk liste, içerik favori deposu; satırda sayı ve ilk üç ad ---- */
+  if (K) {
+    var fav = K.oku('favori'), fo = document.querySelector('[data-favori-ozet]');
+    if (fo) { fo.textContent = fav.length ? fav.length + ' favori · ' + fav.slice(0, 3).map(function (k) { return k.ad; }).join(', ') + (fav.length > 3 ? '…' : '') : 'Henüz favorin yok · mekân sayfasındaki kalp ya da Listeye Ekle'; }
+  }
+
   /* ---- Liste detayı ---- */
   var pane = document.querySelector('[data-liste]'); if (!pane || !K) { return; }
   var id = pane.getAttribute('data-liste'), liste = pane.querySelector('.fp-list[id^="lstKalem-"]');
